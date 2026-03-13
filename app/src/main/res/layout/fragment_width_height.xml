@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:background="@drawable/ic_bg_main"
+    tools:context=".ui.onboarding.personalize.WidthHeightFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitle"
+            style="@style/Text.OnBoard.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_24dp"
+            android:layout_marginTop="@dimen/_50dp"
+            android:text="@string/nice_to_meet_you"
+            android:textSize="27sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSubtitle"
+            style="@style/Text.OnBoard.Sub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6dp"
+            android:paddingStart="@dimen/_24dp"
+            android:paddingEnd="@dimen/_48dp"
+            android:text="@string/desc_width_height"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvHeight"
+            style="@style/Text.OnBoard.Sub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_40dp"
+            android:paddingStart="@dimen/_24dp"
+            android:paddingEnd="@dimen/_48dp"
+            android:text="@string/height"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSubtitle" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etHeight"
+            android:layout_width="@dimen/_120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_20dp"
+            android:layout_marginTop="@dimen/_10dp"
+            android:background="@drawable/bg_et_login"
+            android:drawableEnd="@drawable/ic_et_arrow_down"
+            android:drawablePadding="@dimen/_10dp"
+            android:focusableInTouchMode="false"
+            android:fontFamily="@font/manrope_semibold"
+            android:hint="@string/cm"
+            android:includeFontPadding="false"
+            android:minHeight="52dp"
+            android:paddingHorizontal="@dimen/_24dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white70"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvHeight" />
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etHeightSelect"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_20dp"
+            android:layout_marginTop="@dimen/_10dp"
+            android:background="@drawable/bg_et_login"
+            android:fontFamily="@font/manrope_semibold"
+            android:hint="@string/select"
+            android:includeFontPadding="false"
+            android:inputType="numberDecimal"
+            android:minHeight="52dp"
+            android:paddingHorizontal="@dimen/_24dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white70"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/etHeight"
+            app:layout_constraintTop_toBottomOf="@id/tvHeight" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvHeightInfo"
+            style="@style/Text.OnBoard.Sub"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6dp"
+            android:paddingHorizontal="@dimen/_10dp"
+            app:layout_constraintEnd_toEndOf="@id/etHeightSelect"
+            app:layout_constraintStart_toStartOf="@id/etHeightSelect"
+            app:layout_constraintTop_toBottomOf="@id/etHeightSelect" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvWeight"
+            style="@style/Text.OnBoard.Sub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_40dp"
+            android:paddingStart="@dimen/_24dp"
+            android:paddingEnd="@dimen/_48dp"
+            android:text="@string/weight"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvHeightInfo" />
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etWeight"
+            android:layout_width="@dimen/_120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_20dp"
+            android:layout_marginTop="@dimen/_10dp"
+            android:background="@drawable/bg_et_login"
+            android:drawableEnd="@drawable/ic_et_arrow_down"
+            android:drawablePadding="@dimen/_10dp"
+            android:focusableInTouchMode="false"
+            android:fontFamily="@font/manrope_semibold"
+            android:hint="@string/kg"
+            android:includeFontPadding="false"
+            android:minHeight="52dp"
+            android:paddingHorizontal="@dimen/_24dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white70"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvWeight" />
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etWeightSelect"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_20dp"
+            android:background="@drawable/bg_et_login"
+            android:fontFamily="@font/manrope_semibold"
+            android:hint="@string/select"
+            android:includeFontPadding="false"
+            android:minHeight="52dp"
+            android:paddingHorizontal="@dimen/_24dp"
+            android:textColor="@color/white"
+            android:inputType="numberDecimal"
+            android:textColorHint="@color/white70"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/etHeight"
+            app:layout_constraintTop_toTopOf="@id/etWeight" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvWeightInfo"
+            style="@style/Text.OnBoard.Sub"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6dp"
+            android:paddingHorizontal="@dimen/_10dp"
+            app:layout_constraintEnd_toEndOf="@id/etWeightSelect"
+            app:layout_constraintStart_toStartOf="@id/etWeightSelect"
+            app:layout_constraintTop_toBottomOf="@id/etWeightSelect" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_24dp"
+            android:layout_marginTop="@dimen/_50dp"
+            android:layout_marginBottom="@dimen/_32dp"
+            android:backgroundTint="@color/btn_continue"
+            android:text="@string/next"
+            android:textColor="@color/btn_text_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.core.widget.NestedScrollView>

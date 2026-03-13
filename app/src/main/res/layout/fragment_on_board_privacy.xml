@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context=".ui.onboarding.fragments.OnBoardPrivacyFragment">
+
+    <include layout="@layout/bg_onboard" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl30"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.30" />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_40dp"
+        android:layout_marginHorizontal="@dimen/_50dp"
+        android:src="@drawable/ic_logo_onboard"
+        app:layout_constraintBottom_toTopOf="@id/gl30"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_ob_top_corner"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@id/gl30">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvTitle"
+                    style="@style/Text.OnBoard.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_35dp"
+                    android:paddingStart="@dimen/_24dp"
+                    android:text="@string/first_things_first"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvSubtitle"
+                    style="@style/Text.OnBoard.Sub"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_6dp"
+                    android:paddingStart="@dimen/_24dp"
+                    android:paddingEnd="@dimen/_48dp"
+                    android:text="@string/onboard_privacy_desc"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+
+                <com.kyleduo.switchbutton.SwitchButton
+                    android:id="@+id/cbPrivacy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_24dp"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:checked="false"
+                    android:textColor="@color/custom_text_state_color"
+                    app:kswBackColor="#DDDDDD"
+                    app:kswTextAdjust="-2dp"
+                    app:kswTextExtra="8dp"
+                    app:kswTextOff="off"
+                    app:kswTextOn="on"
+                    app:kswThumbColor="@color/custom_text_state_color"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tvPrivacyTitle" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPrivacyTitle"
+                    style="@style/Text.OnBoard.Title1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10dp"
+                    android:layout_marginTop="@dimen/_50dp"
+                    android:text="@string/onboard_privacy_title1"
+                    app:layout_constraintStart_toEndOf="@id/cbPrivacy"
+                    app:layout_constraintTop_toBottomOf="@id/tvSubtitle" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPrivacyDesc"
+                    style="@style/Text.OnBoard.Sub"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:layout_marginEnd="@dimen/_24dp"
+                    android:text="@string/onboard_privacy_desc1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tvPrivacyTitle"
+                    app:layout_constraintTop_toBottomOf="@id/tvPrivacyTitle" />
+
+
+                <com.kyleduo.switchbutton.SwitchButton
+                    android:id="@+id/cbDataProcessing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_24dp"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:checked="false"
+                    android:textColor="@color/custom_text_state_color"
+                    app:kswBackColor="#DDDDDD"
+                    app:kswTextAdjust="-2dp"
+                    app:kswTextExtra="8dp"
+                    app:kswTextOff="off"
+                    app:kswTextOn="on"
+                    app:kswThumbColor="@color/custom_text_state_color"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tvDataProcessingTitle" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvDataProcessingTitle"
+                    style="@style/Text.OnBoard.Title1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10dp"
+                    android:layout_marginTop="@dimen/_40dp"
+                    android:text="@string/onboard_data_policy_title"
+                    app:layout_constraintStart_toEndOf="@id/cbPrivacy"
+                    app:layout_constraintTop_toBottomOf="@id/tvPrivacyDesc" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvDataProcessingDesc"
+                    style="@style/Text.OnBoard.Sub"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:layout_marginEnd="@dimen/_24dp"
+                    android:text="@string/onboard_privacy_desc1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tvDataProcessingTitle"
+                    app:layout_constraintTop_toBottomOf="@id/tvDataProcessingTitle" />
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSubmit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_24dp"
+                    android:layout_marginTop="@dimen/_50dp"
+                    android:backgroundTint="@color/btn_continue"
+                    android:enabled="false"
+                    android:text="@string/_continue"
+                    android:textColor="@color/btn_text_color"
+                    app:layout_constraintTop_toBottomOf="@id/tvDataProcessingDesc" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

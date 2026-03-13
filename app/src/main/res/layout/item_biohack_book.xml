@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/_20dp">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_120dp"
+        android:layout_marginStart="@dimen/_23dp"
+        android:elevation="@dimen/_10dp"
+        android:src="@drawable/ic_book_biohack"
+        app:layout_constraintDimensionRatio="0.68"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="0dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="@dimen/_40dp"
+        app:cardBackgroundColor="@color/black"
+        app:cardCornerRadius="@dimen/_12dp"
+        app:layout_constraintDimensionRatio="0.90"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeWidth="0dp">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivBookSummary"
+                android:layout_width="@dimen/_40dp"
+                android:layout_height="@dimen/_40dp"
+                android:paddingHorizontal="@dimen/_11dp"
+                android:src="@drawable/ic_book_summary"
+                app:layout_constraintEnd_toStartOf="@id/llFav"
+                app:layout_constraintTop_toTopOf="@id/llFav" />
+
+            <LinearLayout
+                android:id="@+id/llFav"
+                android:layout_width="@dimen/_40dp"
+                android:layout_height="@dimen/_40dp"
+                android:layout_marginTop="@dimen/_24dp"
+                android:layout_marginEnd="@dimen/_26dp"
+                android:gravity="center"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/ivFav"
+                    android:layout_width="@dimen/_19dp"
+                    android:layout_height="@dimen/_17dp"
+                    android:background="@drawable/ic_fav_checkbox"
+                    android:button="@null"
+                    android:clickable="false" />
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTitle"
+                style="@style/Text.14x.Manrope.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_16dp"
+                android:layout_marginTop="@dimen/_80dp"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:text="@string/related_books"
+                android:textColor="@color/textColorWhite"
+                app:layout_constraintBottom_toTopOf="@id/tvAuthor"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvAuthor"
+                style="@style/Text.14x.Manrope.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_16dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:text="@string/related_books"
+                android:textColor="@color/d400"
+                app:layout_constraintBottom_toTopOf="@id/tvTags"
+                app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTags"
+                style="@style/Text.14x.Manrope.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_16dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:layout_marginBottom="@dimen/_10dp"
+                android:text="@string/related_books"
+                android:textColor="@color/d700"
+                app:layout_constraintBottom_toTopOf="@id/btnNext"
+                app:layout_constraintTop_toBottomOf="@id/tvAuthor" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPrice"
+                style="@style/Text.14x.Manrope.Medium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_16dp"
+                android:text="£129.0"
+                android:textColor="@color/textColorPink"
+                app:layout_constraintBottom_toBottomOf="@id/btnAddToCart"
+                app:layout_constraintEnd_toStartOf="@id/btnAddToCart"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/btnAddToCart" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAddToCart"
+                style="@style/Text.14x.Manrope.Bold"
+                android:layout_width="@dimen/_140dp"
+                android:layout_height="@dimen/_40dp"
+                android:layout_marginEnd="@dimen/_16dp"
+                android:layout_marginBottom="@dimen/_30dp"
+                android:backgroundTint="@color/btn_pink"
+                android:padding="0dp"
+                android:text="@string/buy_now"
+                android:textColor="@color/d900"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

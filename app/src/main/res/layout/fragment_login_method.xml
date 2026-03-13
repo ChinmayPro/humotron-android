@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_bg_ob"
+    tools:context=".ui.onboarding.fragments.LoginMethodFragment">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv1"
+        style="@style/Text.OnBoard.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/thank_you_for_nyour_trust"
+        android:textAlignment="center"
+        android:textColor="@color/colorBgBtn"
+        app:layout_constraintBottom_toTopOf="@+id/tv2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv2"
+        style="@style/Text.OnBoard.Desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20dp"
+        android:text="@string/you_re_all_set_to_go"
+        android:textAlignment="center"
+        android:textColor="@color/colorBgBtn"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/gl38"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv1" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl38"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.38" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_ob_top_corner"
+        android:backgroundTint="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@id/gl38">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvTitle"
+                    style="@style/Text.OnBoard.Title1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_40dp"
+                    android:text="@string/how_would_you_like_to_continue"
+                    android:textColor="@color/d100"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:id="@+id/btnGoogle"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_56dp"
+                    android:layout_marginHorizontal="@dimen/_24dp"
+                    android:layout_marginTop="@dimen/_36dp"
+                    android:background="@drawable/bg_btn_social"
+                    android:gravity="center"
+                    app:layout_constraintTop_toBottomOf="@id/tvTitle">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Text.OnBoard.Title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_google"
+                        android:drawablePadding="@dimen/_22dp"
+                        android:gravity="center_vertical"
+                        android:includeFontPadding="false"
+                        android:minHeight="@dimen/_56dp"
+                        android:text="@string/continue_with_google"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/btnApple"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_56dp"
+                    android:layout_marginHorizontal="@dimen/_24dp"
+                    android:layout_marginTop="@dimen/_16dp"
+                    android:background="@drawable/bg_btn_social"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@id/btnGoogle">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Text.OnBoard.Title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_apple"
+                        android:drawablePadding="@dimen/_22dp"
+                        android:gravity="center_vertical"
+                        android:includeFontPadding="false"
+                        android:minHeight="@dimen/_56dp"
+                        android:text="@string/continue_with_apple"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/btnEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_56dp"
+                    android:layout_marginHorizontal="@dimen/_24dp"
+                    android:layout_marginTop="@dimen/_16dp"
+                    android:background="@drawable/bg_btn_email"
+                    android:gravity="center"
+                    app:layout_constraintTop_toBottomOf="@id/btnApple">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Text.OnBoard.Title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:includeFontPadding="false"
+                        android:minHeight="@dimen/_56dp"
+                        android:text="@string/sign_up_with_email"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_40dp"
+                    android:layout_marginHorizontal="@dimen/_50dp"
+                    android:src="@drawable/ic_logo_onboard"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btnEmail" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.core.widget.NestedScrollView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

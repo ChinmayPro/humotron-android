@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@color/black"
+    tools:context=".ui.connect.ConnectInfoFragment">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvHeader"
+        style="@style/Text.OnBoard.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_30dp"
+        android:text="@string/connect_your_humotron_smart_ring"
+        android:textColor="@color/textColorWhite"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toTopOf="@id/tvDeviceName" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvDeviceName"
+        style="@style/Text.OnBoard.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_30dp"
+        android:layout_marginBottom="@dimen/_30dp"
+        android:textColor="@color/textColorWhite"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toTopOf="@id/tvTitle"
+        tools:text="Device Name" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTitle"
+        style="@style/Text.OnBoard.Title1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_30dp"
+        android:layout_marginBottom="@dimen/_30dp"
+        android:text="@string/follow_the_steps"
+        android:textColor="@color/textColorWhite"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@id/tvDesc" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvDesc"
+        style="@style/Text.OnBoard.Sub"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_30dp"
+        android:layout_marginBottom="@dimen/_40dp"
+        android:text="@string/ring_connect_desc"
+        android:textColor="@color/white70"
+        app:layout_constraintBottom_toTopOf="@id/btnSubmit" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_24dp"
+        android:layout_marginTop="@dimen/_50dp"
+        android:layout_marginBottom="@dimen/_20dp"
+        android:backgroundTint="@color/btn_continue"
+        android:text="@string/_continue"
+        android:textColor="@color/btn_text_color"
+        app:layout_constraintBottom_toTopOf="@id/tvContinue" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvContinue"
+        style="@style/Text.OnBoard.Sub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_35dp"
+        android:text="@string/don_t_own_the_ring_yet_shop_now"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

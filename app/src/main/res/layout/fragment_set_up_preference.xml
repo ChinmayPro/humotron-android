@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@color/black"
+    tools:context=".ui.bioHack.SetUpPreferenceFragment">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header_biohack"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:id="@+id/scrollRoot"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textview1"
+                style="@style/Text.24x.Manrope.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_40dp"
+                android:text="@string/your_health_is_shaped_by_what_you_know"
+                android:textColor="@color/textColorPink"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textView2"
+                style="@style/Text.16x.Manrope.SemiBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_16dp"
+                android:text="@string/bio_hack_desc"
+                android:textColor="@color/d60"
+                app:layout_constraintTop_toBottomOf="@id/textview1" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivPrefNuggets"
+                android:layout_width="@dimen/_20dp"
+                android:layout_height="@dimen/_20dp"
+                android:layout_marginStart="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_40dp"
+                android:src="@drawable/ic_nuggets_disable"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textView2" />
+
+            <androidx.appcompat.widget.AppCompatCheckedTextView
+                android:id="@+id/tvNuggets"
+                style="@style/Text.17x.Manrope.Bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10dp"
+                android:layout_marginEnd="@dimen/_20dp"
+                android:includeFontPadding="false"
+                android:text="@string/explore_bite_sized_nuggets"
+                android:textColor="@color/text_checked"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ivPrefNuggets"
+                app:layout_constraintTop_toTopOf="@id/ivPrefNuggets" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvNuggetsDesc"
+                style="@style/Text.16x.Manrope.Regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4dp"
+                android:includeFontPadding="false"
+                android:text="@string/nuggets_desc"
+                android:textColor="@color/d400"
+                app:layout_constraintEnd_toEndOf="@id/tvNuggets"
+                app:layout_constraintStart_toStartOf="@id/tvNuggets"
+                app:layout_constraintTop_toBottomOf="@id/tvNuggets" />
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivPrefBooks"
+                android:layout_width="@dimen/_20dp"
+                android:layout_height="@dimen/_20dp"
+                android:layout_marginStart="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_40dp"
+                android:src="@drawable/ic_books_disable"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvNuggetsDesc" />
+
+            <androidx.appcompat.widget.AppCompatCheckedTextView
+                android:id="@+id/tvBooks"
+                style="@style/Text.17x.Manrope.Bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10dp"
+                android:layout_marginEnd="@dimen/_20dp"
+                android:includeFontPadding="false"
+                android:text="@string/deep_dive_with_books"
+                android:textColor="@color/text_checked"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ivPrefBooks"
+                app:layout_constraintTop_toTopOf="@id/ivPrefBooks" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvBooksDesc"
+                style="@style/Text.16x.Manrope.Regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4dp"
+                android:includeFontPadding="false"
+                android:text="@string/books_desc"
+                android:textColor="@color/d400"
+                app:layout_constraintEnd_toEndOf="@id/tvBooks"
+                app:layout_constraintStart_toStartOf="@id/tvBooks"
+                app:layout_constraintTop_toBottomOf="@id/tvBooks" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivPrefTrack"
+                android:layout_width="@dimen/_20dp"
+                android:layout_height="@dimen/_20dp"
+                android:layout_marginStart="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_40dp"
+                android:src="@drawable/ic_biohack_progress_disable"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvBooksDesc" />
+
+            <androidx.appcompat.widget.AppCompatCheckedTextView
+                android:id="@+id/tvTracks"
+                style="@style/Text.17x.Manrope.Bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10dp"
+                android:layout_marginEnd="@dimen/_20dp"
+                android:includeFontPadding="false"
+                android:text="@string/track_your_mastery"
+                android:textColor="@color/text_checked"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ivPrefTrack"
+                app:layout_constraintTop_toTopOf="@id/ivPrefTrack" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTracksDesc"
+                style="@style/Text.16x.Manrope.Regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4dp"
+                android:includeFontPadding="false"
+                android:text="@string/biohack_progress_desc"
+                android:textColor="@color/d400"
+                app:layout_constraintEnd_toEndOf="@id/tvTracks"
+                app:layout_constraintStart_toStartOf="@id/tvTracks"
+                app:layout_constraintTop_toBottomOf="@id/tvTracks" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSubmit"
+                style="@style/Text.16x.Manrope.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_24dp"
+                android:layout_marginVertical="@dimen/_20dp"
+                android:backgroundTint="@color/textColorPink"
+                android:text="@string/setup_preference"
+                android:textColor="@color/d900"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTracksDesc" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@color/black"
+    tools:context=".ui.bioHack.ProgressFragment">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header_biohack"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ViewAnimator
+        android:id="@+id/viewAnimator"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+
+        <include layout="@layout/shimmer_progress" />
+
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/scrollRoot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/progress"
+                    android:layout_width="@dimen/_150dp"
+                    android:layout_height="@dimen/_150dp"
+                    android:layout_marginTop="@dimen/_40dp"
+                    android:progress="10"
+                    app:indicatorColor="@color/s300"
+                    app:indicatorSize="@dimen/_150dp"
+                    app:indicatorTrackGapSize="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:trackColor="@color/black30"
+                    app:trackCornerRadius="@dimen/_15dp"
+                    app:trackThickness="@dimen/_10dp"
+                    tools:trackColor="@color/white30" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvProgress"
+                    style="@style/Text.24x.Manrope.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="15"
+                    android:textColor="@color/s300"
+                    android:textSize="30sp"
+                    app:layout_constraintBottom_toTopOf="@id/tvScore"
+                    app:layout_constraintEnd_toStartOf="@id/textview1"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="@id/progress"
+                    app:layout_constraintTop_toTopOf="@id/progress"
+                    app:layout_constraintVertical_chainStyle="packed" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textview1"
+                    style="@style/Text.24x.Manrope.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="%"
+                    android:textColor="@color/s300"
+                    android:textSize="24sp"
+                    app:layout_constraintBottom_toBottomOf="@id/tvProgress"
+                    app:layout_constraintEnd_toEndOf="@id/progress"
+                    app:layout_constraintStart_toEndOf="@id/tvProgress" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvScore"
+                    style="@style/Text.12x.Manrope.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_10dp"
+                    android:includeFontPadding="false"
+                    android:text="@string/mastery_score"
+                    android:textColor="@color/d100"
+                    app:layout_constraintBottom_toBottomOf="@id/progress"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvProgress" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvExplore"
+                    style="@style/Text.16x.Manrope.SemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_19dp"
+                    android:drawableEnd="@drawable/ic_explorer"
+                    android:drawablePadding="@dimen/_17dp"
+                    android:includeFontPadding="false"
+                    android:text="@string/explorer"
+                    android:textColor="@color/textColorYellow"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/progress" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textview2"
+                    style="@style/Text.16x.Manrope.SemiBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_60dp"
+                    android:layout_marginTop="@dimen/_19dp"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="@string/you_re__closer_"
+                    android:textColor="@color/d100"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvExplore" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textview3"
+                    style="@style/Text.20x.Manrope.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_24dp"
+                    android:layout_marginTop="@dimen/_60dp"
+                    android:includeFontPadding="false"
+                    android:text="@string/your_learning_streak"
+                    android:textColor="@color/textColorWhite"
+                    app:layout_constraintTop_toBottomOf="@id/textview2" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textview4"
+                    style="@style/Text.14x.Manrope.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_24dp"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:includeFontPadding="false"
+                    android:text="@string/every_nugget_you_consume_builds_your_mastery_keep_the_momentum_going"
+                    android:textColor="@color/d300"
+                    app:layout_constraintTop_toBottomOf="@id/textview3" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvStreak"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_24dp"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/_24dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/textview4" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/llBioHack1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_24dp"
+                    android:layout_marginTop="@dimen/_50dp"
+                    android:background="@drawable/bg_btn_round_rect_8"
+                    android:backgroundTint="@color/black"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="@dimen/_18dp"
+                    android:paddingVertical="@dimen/_11dp"
+                    app:layout_constraintTop_toBottomOf="@id/rvStreak">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Text.14x.Manrope.SemiBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_14dp"
+                        android:layout_weight="1"
+                        android:text="@string/what_is_biohacking"
+                        android:textColor="@color/white" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/_12dp"
+                        android:layout_height="@dimen/_12dp"
+                        android:src="@drawable/ic_expand" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/llBioHack2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_24dp"
+                    android:layout_marginTop="@dimen/_16dp"
+                    android:background="@drawable/bg_btn_round_rect_8"
+                    android:backgroundTint="@color/black"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="@dimen/_18dp"
+                    android:paddingVertical="@dimen/_11dp"
+                    app:layout_constraintTop_toBottomOf="@id/llBioHack1">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Text.14x.Manrope.SemiBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_14dp"
+                        android:layout_weight="1"
+                        android:text="@string/why_should_i_consider_to_master_it"
+                        android:textColor="@color/white" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/_12dp"
+                        android:layout_height="@dimen/_12dp"
+                        android:src="@drawable/ic_expand" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/llBioHack3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_24dp"
+                    android:layout_marginTop="@dimen/_16dp"
+                    android:background="@drawable/bg_btn_round_rect_8"
+                    android:backgroundTint="@color/black"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="@dimen/_18dp"
+                    android:paddingVertical="@dimen/_11dp"
+                    app:layout_constraintTop_toBottomOf="@id/llBioHack2">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Text.14x.Manrope.SemiBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_14dp"
+                        android:layout_weight="1"
+                        android:text="@string/how_is_the_mastery_score_calculated"
+                        android:textColor="@color/white" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/_12dp"
+                        android:layout_height="@dimen/_12dp"
+                        android:src="@drawable/ic_expand" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textview5"
+                    style="@style/Text.20x.Manrope.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_24dp"
+                    android:layout_marginTop="@dimen/_70dp"
+                    android:includeFontPadding="false"
+                    android:text="@string/take_tests_amp_prove_mastery"
+                    android:textColor="@color/textColorWhite"
+                    app:layout_constraintTop_toBottomOf="@id/llBioHack3" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textview6"
+                    style="@style/Text.14x.Manrope.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_24dp"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:layout_marginEnd="@dimen/_70dp"
+                    android:includeFontPadding="false"
+                    android:text="@string/each_test_you_pass_takes_you_closer_to_biohacker_certification"
+                    android:textColor="@color/d300"
+                    app:layout_constraintTop_toBottomOf="@id/textview5" />
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvTests"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20dp"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/_24dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/textview6"
+                    tools:listitem="@layout/item_biohack_test" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textview7"
+                    style="@style/Text.20x.Manrope.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_24dp"
+                    android:layout_marginTop="@dimen/_50dp"
+                    android:includeFontPadding="false"
+                    android:text="@string/your_learning_progress"
+                    android:textColor="@color/textColorWhite"
+                    app:layout_constraintTop_toBottomOf="@id/rvTests" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textview8"
+                    style="@style/Text.14x.Manrope.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_24dp"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:layout_marginEnd="@dimen/_70dp"
+                    android:includeFontPadding="false"
+                    android:text="@string/see_how_your_learning_grows_as_you_consume_nuggets_unlock_tests_at_100_in_a_sub_topic"
+                    android:textColor="@color/d300"
+                    app:layout_constraintTop_toBottomOf="@id/textview7" />
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvProgress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20dp"
+                    android:clipToPadding="false"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="@dimen/_24dp"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/textview8"
+                    app:spanCount="2"
+                    tools:itemCount="4"
+                    tools:listitem="@layout/item_biohack_progress" />
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_24dp"
+                    android:layout_marginTop="@dimen/_40dp"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@id/rvProgress">
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Text.20x.Manrope.Bold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="@string/your_learning_focus"
+                        android:textColor="@color/textColorWhite" />
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Text.14x.Manrope.Medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10dp"
+                        android:includeFontPadding="false"
+                        android:text="@string/see_where_your_knowledge_is_building_up_across_your_selected_categories"
+                        android:textColor="@color/d300" />
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/_20dp">
+
+                        <com.github.mikephil.charting.charts.PieChart
+                            android:id="@+id/pieChart"
+                            android:layout_width="250dp"
+                            android:layout_height="200dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Text.10x.Manrope.SemiBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_20dp"
+                        android:includeFontPadding="false"
+                        android:text="@string/biohack_progress_desc_bottom"
+                        android:textColor="@color/d400" />
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </ViewAnimator>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
+
+    <LinearLayout
+        android:id="@+id/bottomSheetRoot"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/rounded_bottom_sheet_background"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivSummary"
+                android:layout_width="@dimen/_20dp"
+                android:layout_height="@dimen/_20dp"
+                android:layout_marginStart="@dimen/_24dp"
+                android:layout_marginTop="@dimen/_30dp"
+                android:src="@drawable/ic_book_summary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textview1"
+                style="@style/Text.18x.Manrope.SemiBold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12dp"
+                android:layout_marginTop="-3dp"
+                android:includeFontPadding="false"
+                android:text="@string/book_summary"
+                android:textColor="@color/d100"
+                app:layout_constraintEnd_toStartOf="@id/ivShrink"
+                app:layout_constraintStart_toEndOf="@id/ivSummary"
+                app:layout_constraintTop_toTopOf="@id/ivSummary" />
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivShrink"
+                android:layout_width="@dimen/_20dp"
+                android:layout_height="@dimen/_20dp"
+                android:layout_marginEnd="@dimen/_24dp"
+                android:src="@drawable/ic_shrink"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/ivSummary" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_24dp"
+            android:background="@color/black"
+            android:fillViewport="true">
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/_24dp">
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvBookTitle"
+                    style="@style/Text.18x.Manrope.SemiBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="@string/book_summary"
+                    android:textColor="@color/textColorWhite" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvAuthor"
+                    style="@style/Text.14x.Manrope.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="@string/book_summary"
+                    android:textColor="@color/d80" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvShortDesc"
+                    style="@style/Text.14x.Manrope.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20dp"
+                    android:includeFontPadding="false"
+                    android:text="@string/book_summary"
+                    android:textColor="@color/d80" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvLongDesc"
+                    style="@style/Text.14x.Manrope.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20dp"
+                    android:includeFontPadding="false"
+                    android:text="@string/book_summary"
+                    android:textColor="@color/d80" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Text.14x.Manrope.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20dp"
+                    android:includeFontPadding="false"
+                    android:text="@string/key_takeaways"
+                    android:textColor="@color/d80" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvKeyTakeAway"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12dp"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="2"
+                    tools:listitem="@layout/item_key_takeaway" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Text.14x.Manrope.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_40dp"
+                    android:includeFontPadding="false"
+                    android:text="@string/endorsed_by"
+                    android:textColor="@color/d80" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvEndorsed"
+                    style="@style/Text.14x.Manrope.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="@string/endorsed_by"
+                    android:textColor="@color/d80" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Text.14x.Manrope.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_25dp"
+                    android:includeFontPadding="false"
+                    android:text="@string/ai_sumary_title"
+                    android:textColor="@color/d80" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvCrispSummary"
+                    style="@style/Text.14x.Manrope.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:includeFontPadding="false"
+                    android:orientation="vertical"
+                    android:text="@string/endorsed_by"
+                    android:textColor="@color/d80"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

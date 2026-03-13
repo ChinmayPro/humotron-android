@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="#33000000">
+
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:shimmer_auto_start="true"
+        app:shimmer_base_alpha="0.8"
+        app:shimmer_base_color="#ffffff"
+        app:shimmer_colored="true"
+        app:shimmer_duration="1000"
+        app:shimmer_shape="linear">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:layout_width="@dimen/_150dp"
+                android:layout_height="@dimen/_150dp"
+                android:layout_marginTop="@dimen/_40dp"
+                android:progress="0"
+                app:indicatorColor="@color/s300"
+                app:indicatorSize="@dimen/_150dp"
+                app:indicatorTrackGapSize="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:trackColor="@color/black30"
+                app:trackCornerRadius="@dimen/_15dp"
+                app:trackThickness="@dimen/_10dp"
+                tools:trackColor="@color/white30" />
+
+            <View
+                android:layout_width="@dimen/_100dp"
+                android:layout_height="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_15dp"
+                android:background="@color/white_simmer" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_14dp"
+                android:layout_marginHorizontal="@dimen/_60dp"
+                android:layout_marginTop="@dimen/_15dp"
+                android:background="@color/white_simmer" />
+
+            <View
+                android:layout_width="200dp"
+                android:layout_height="@dimen/_14dp"
+                android:layout_marginHorizontal="@dimen/_60dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:background="@color/white_simmer" />
+
+            <View
+                android:layout_width="@dimen/_100dp"
+                android:layout_height="@dimen/_20dp"
+                android:layout_gravity="start"
+                android:layout_marginStart="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_50dp"
+                android:background="@color/white_simmer" />
+
+            <View
+                android:layout_width="@dimen/_150dp"
+                android:layout_height="@dimen/_14dp"
+                android:layout_gravity="start"
+                android:layout_marginStart="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:background="@color/white_simmer" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_20dp"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="@dimen/_60dp"
+                    android:layout_height="@dimen/_60dp"
+                    android:background="@color/white_simmer" />
+
+                <View
+                    android:layout_width="@dimen/_60dp"
+                    android:layout_height="@dimen/_60dp"
+                    android:layout_marginStart="@dimen/_15dp"
+                    android:background="@color/white_simmer" />
+
+                <View
+                    android:layout_width="@dimen/_60dp"
+                    android:layout_height="@dimen/_60dp"
+                    android:layout_marginStart="@dimen/_15dp"
+                    android:background="@color/white_simmer" />
+
+                <View
+                    android:layout_width="@dimen/_60dp"
+                    android:layout_height="@dimen/_60dp"
+                    android:layout_marginStart="@dimen/_15dp"
+                    android:background="@color/white_simmer" />
+
+                <View
+                    android:layout_width="@dimen/_60dp"
+                    android:layout_height="@dimen/_60dp"
+                    android:layout_marginStart="@dimen/_15dp"
+                    android:background="@color/white_simmer" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.chip.Chip xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/chip_chat_prompt"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/_7dp"
+    android:text="✨ What causes low temp?"
+    android:textColor="@color/white"
+    app:chipBackgroundColor="@color/chip_transparent"
+    app:chipCornerRadius="12dp"
+    app:chipStrokeWidth="0dp"
+    app:chipSurfaceColor="@color/chip_transparent"
+    app:closeIconVisible="false"
+    app:rippleColor="@color/white_50">
+
+</com.google.android.material.chip.Chip>

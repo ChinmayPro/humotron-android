@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_main"
+    app:startDestination="@id/fragmentTrack">
+
+    <fragment
+        android:id="@+id/fragmentTrack"
+        android:name="com.humotron.app.ui.track.TrackFragment"
+        tools:layout="@layout/fragment_track" />
+
+    <fragment
+        android:id="@+id/fragmentBioHack"
+        android:name="com.humotron.app.ui.bioHack.BioHackMainFragment" />
+
+    <fragment
+        android:id="@+id/fragmentConnectInfo"
+        android:name="com.humotron.app.ui.connect.ConnectInfoFragment" />
+
+    <fragment
+        android:id="@+id/fragmentDeviceConnection"
+        android:name="com.humotron.app.ui.connect.DeviceConnectionFragment" />
+
+    <fragment
+        android:id="@+id/fragmentBandConnection"
+        android:name="com.humotron.app.ui.connect.BandConnectionFragment" />
+
+    <fragment
+        android:id="@+id/fragmentDeviceConnected"
+        android:name="com.humotron.app.ui.connect.DeviceConnectedFragment" />
+
+    <fragment
+        android:id="@+id/fragmentDeviceData"
+        android:name="com.humotron.app.ui.device.DeviceDataFragment">
+        <action
+            android:id="@+id/action_fragmentDeviceData_to_fragmentMetricDetails"
+            app:destination="@id/fragmentMetricDetails" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentMetric"
+        android:name="com.humotron.app.ui.device.MetricFragment" />
+
+    <fragment
+        android:id="@+id/fragmentMetricDetails"
+        android:name="com.humotron.app.ui.metrics.MetricDetailsFragment">
+        <argument
+            android:name="metric"
+            app:argType="com.humotron.app.domain.modal.response.MetricType" />
+    </fragment>
+
+</navigation>

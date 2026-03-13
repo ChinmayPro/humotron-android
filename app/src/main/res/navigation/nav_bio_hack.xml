@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_bio_hack">
+
+    <fragment
+        android:id="@+id/fragmentSetup"
+        android:name="com.humotron.app.ui.bioHack.SetUpPreferenceFragment" />
+
+    <fragment
+        android:id="@+id/fragmentQuestion"
+        android:name="com.humotron.app.ui.bioHack.TagFragment" />
+
+    <fragment
+        android:id="@+id/fragmentNuggets"
+        android:name="com.humotron.app.ui.bioHack.NuggetsFragment" />
+
+    <fragment
+        android:id="@+id/fragmentCategoryTag"
+        android:name="com.humotron.app.ui.bioHack.CategoryTagFragment"
+        android:label="BioHack Progress" />
+
+    <fragment
+        android:id="@+id/fragmentPreferenceDone"
+        android:name="com.humotron.app.ui.bioHack.PreferenceDoneFragment" />
+
+    <fragment
+        android:id="@+id/fragmentNuggetDetail"
+        android:name="com.humotron.app.ui.bioHack.NuggetsDetailFragment"
+        android:label="Nugget Detail" />
+    <fragment
+        android:id="@+id/fragmentBookDetail"
+        android:name="com.humotron.app.ui.bioHack.BioHackBookFragment" />
+
+    <fragment
+        android:id="@+id/fragmentProgress"
+        android:name="com.humotron.app.ui.bioHack.ProgressFragment"/>
+
+    <fragment
+        android:id="@+id/fragmentExplorer"
+        android:name="com.humotron.app.ui.bioHack.ProgressExplorerFragment" />
+
+</navigation>

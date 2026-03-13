@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.onboarding.fragments.VerifyOtpFragment">
+
+    <include layout="@layout/bg_otp" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTitle"
+                style="@style/Text.OnBoard.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_24dp"
+                android:layout_marginTop="@dimen/_50dp"
+                android:text="@string/verify_your_email"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDesc"
+                style="@style/Text.OnBoard.Sub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_24dp"
+                android:layout_marginTop="@dimen/_18dp"
+                android:text="@string/we_ve_sent_a_6_digit_code_to_s"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+            <com.kevinschildhorn.otpview.OTPView
+                android:id="@+id/otpView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:autofillHints=""
+                android:importantForAutofill="no"
+                android:inputType="number"
+                android:paddingStart="@dimen/_8dp"
+                android:paddingEnd="@dimen/_8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvDesc"
+                app:otp_backgroundImage="@drawable/bg_otp_unselected"
+                app:otp_filledBackgroundImage="@drawable/bg_otp_selected"
+                app:otp_filledTextColor="@color/white"
+                app:otp_filledTextSize="16sp"
+                app:otp_highlightedBackgroundImage="@drawable/bg_otp_selected"
+                app:otp_highlightedTextSize="20sp"
+                app:otp_itemCount="6"
+                app:otp_itemHeight="@dimen/_66dp"
+                app:otp_itemWidth="@dimen/_50dp"
+                app:otp_showCursor="true"
+                app:otp_textSize="16sp"
+                app:otp_underscoreCursor="true" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDesc1"
+                style="@style/Text.OnBoard.Sub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_24dp"
+                android:layout_marginTop="@dimen/_18dp"
+                android:text="@string/didn_t_get_it"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/otpView" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTimer"
+                style="@style/Text.OnBoard.Title1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12dp"
+                android:layout_marginTop="@dimen/_18dp"
+                android:text="@string/send_again_s"
+                android:textColor="@color/white70"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@id/tvDesc1"
+                app:layout_constraintTop_toBottomOf="@id/otpView" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDesc2"
+                style="@style/Text.OnBoard.Sub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_24dp"
+                android:layout_marginTop="@dimen/_18dp"
+                android:text="@string/wrong_email"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTimer" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvEdit"
+                style="@style/Text.OnBoard.Title1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12dp"
+                android:text="@string/edit"
+                android:textColor="@color/white70"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@id/tvDesc1"
+                app:layout_constraintTop_toTopOf="@id/tvDesc2" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

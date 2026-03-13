@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/selectableItemBackground"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="@android:color/black"
+    app:cardCornerRadius="8dp"
+    app:cardPreventCornerOverlap="false"
+    app:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitle"
+            style="@style/Text.15x.Manrope.SemiBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_30dp"
+            android:layout_marginTop="@dimen/_30dp"
+            android:text="Cell Functions - The Lifeline of Your Body"
+            android:textColor="@color/textColorPink"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.humotron.app.view.StoryProgressView
+            android:id="@+id/storyProgress"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_5dp"
+            android:layout_marginHorizontal="@dimen/_30dp"
+            android:layout_marginTop="@dimen/_20dp"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview1"
+            style="@style/Text.12x.Manrope.Regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_30dp"
+            android:layout_marginTop="@dimen/_20dp"
+            android:text="@string/did_you_know"
+            android:textColor="@color/_97"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/storyProgress" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvQuestion"
+            style="@style/Text.26x.Manrope.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+
+            android:textSize="@dimen/_22dp"
+            android:layout_marginHorizontal="@dimen/_30dp"
+            android:layout_marginTop="@dimen/_10dp"
+            android:text="Did you know that consistent lack of sleep can increase the risk of mental health disorders such as depression and anxiety?"
+            app:layout_constraintBottom_toTopOf="@id/tvTags"
+            app:layout_constraintTop_toBottomOf="@id/textview1"
+            tools:ignore="SpUsage" />
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/tvTags"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_30dp"
+            android:layout_marginBottom="@dimen/_15dp"
+            android:gravity="center_vertical"
+            app:layout_constraintBottom_toTopOf="@id/llTags">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/_17dp"
+                android:layout_height="@dimen/_17dp"
+                android:src="@drawable/ic_tags" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvSource"
+                style="@style/Text.14x.Manrope.Regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10dp"
+                android:text="Dopamine Nation - Anna Lembke"
+                android:textColor="@color/d400" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/llTags"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_40dp"
+            android:paddingHorizontal="@dimen/_30dp"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/tvCategory"
+                style="@style/Text.12x.Manrope.Regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_rounded_5"
+                android:paddingHorizontal="@dimen/_8dp"
+                android:textColor="@color/d600"
+                tools:text="TextView 1 sdasd asd" />
+
+            <TextView
+                android:id="@+id/tvPrimaryTag"
+                style="@style/Text.12x.Manrope.Regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_rounded_5"
+                android:paddingHorizontal="@dimen/_8dp"
+                android:textColor="@color/d600"
+                tools:text="TextView 1 asfds asd asd asd asd" />
+
+            <TextView
+                android:id="@+id/tvLearning"
+                style="@style/Text.12x.Manrope.Regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_rounded_5"
+                android:paddingHorizontal="@dimen/_8dp"
+                android:textColor="@color/d600"
+                tools:text="TextView 1 adf asa asdfs" />
+
+            <!-- Flow to arrange the TextViews -->
+            <androidx.constraintlayout.helper.widget.Flow
+                android:id="@+id/flow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="tvCategory,tvPrimaryTag,tvLearning"
+                app:flow_horizontalAlign="start"
+                app:flow_horizontalGap="6dp"
+                app:flow_verticalGap="6dp"
+                app:flow_wrapMode="aligned"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl50"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <View
+            android:id="@+id/nextStory"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/gl50" />
+
+
+        <View
+            android:id="@+id/previousStory"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="@id/gl50"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="0dp" />
+
+        <FrameLayout
+            android:id="@+id/left_overlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15dp"
+            android:layout_marginEnd="@dimen/_20dp"
+            android:rotation="30"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.humotron.app.view.BorderedTextView
+                style="@style/Text.24x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nope"
+                android:textColor="#DC3C3C"
+                app:borderColor="#DC3C3C"
+                app:borderWidth="@dimen/_5dp"
+                app:bottomPadding="@dimen/_10dp"
+                app:cornerRadius="@dimen/_10dp"
+                app:leftPadding="@dimen/_10dp"
+                app:rightPadding="@dimen/_10dp"
+                app:topPadding="@dimen/_10dp" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/bottom_overlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20dp"
+            android:layout_marginTop="@dimen/_25dp"
+            android:rotation="-45"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.humotron.app.view.BorderedTextView
+                style="@style/Text.24x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Like"
+                android:textColor="#0CBA0C"
+                app:borderColor="#0CBA0C"
+                app:borderWidth="@dimen/_4dp"
+                app:bottomPadding="@dimen/_8dp"
+                app:cornerRadius="@dimen/_10dp"
+                app:leftPadding="@dimen/_20dp"
+                app:rightPadding="@dimen/_20dp"
+                app:topPadding="@dimen/_8dp" />
+
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:id="@+id/right_overlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20dp"
+            android:layout_marginTop="@dimen/_25dp"
+            android:rotation="-45"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.humotron.app.view.BorderedTextView
+                style="@style/Text.24x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Like"
+                android:textColor="#0CBA0C"
+                app:borderColor="#0CBA0C"
+                app:borderWidth="@dimen/_4dp"
+                app:bottomPadding="@dimen/_8dp"
+                app:cornerRadius="@dimen/_10dp"
+                app:leftPadding="@dimen/_20dp"
+                app:rightPadding="@dimen/_20dp"
+                app:topPadding="@dimen/_8dp" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/top_overlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_20dp"
+            android:layout_marginBottom="@dimen/_20dp"
+            android:rotation="-45"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.humotron.app.view.BorderedTextView
+                style="@style/Text.24x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Love"
+                android:textColor="#3C3CFF"
+                app:borderColor="#3C3CFF"
+                app:borderWidth="@dimen/_5dp"
+                app:bottomPadding="@dimen/_10dp"
+                app:cornerRadius="@dimen/_10dp"
+                app:leftPadding="@dimen/_10dp"
+                app:rightPadding="@dimen/_10dp"
+                app:topPadding="@dimen/_10dp" />
+
+        </FrameLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

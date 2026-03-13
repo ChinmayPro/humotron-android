@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="@dimen/_10dp">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivWearable"
+        android:layout_width="@dimen/_48dp"
+        android:layout_height="@dimen/_48dp"
+        android:background="@drawable/bg_btn_round_rect_16"
+        android:backgroundTint="@color/white"
+        android:padding="@dimen/_8dp"
+        android:src="@drawable/ic_bg_ring"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvWearableName"
+        style="@style/Text.OnBoard.Desc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_10dp"
+        android:textColor="@color/textColorWhite"
+        app:layout_constraintBottom_toTopOf="@id/tvWearableDesc"
+        app:layout_constraintEnd_toStartOf="@id/ivRightArrow"
+        app:layout_constraintStart_toEndOf="@id/ivWearable"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvWearableDesc"
+        style="@style/Text.OnBoard.Desc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textColorDesc50"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/tvWearableName"
+        app:layout_constraintStart_toStartOf="@id/tvWearableName"
+        app:layout_constraintTop_toBottomOf="@id/tvWearableName" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivRightArrow"
+        android:layout_width="@dimen/_10dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_10dp"
+        android:src="@drawable/ic_right_arrow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

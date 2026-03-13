@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_onboarding"
+    app:startDestination="@id/onBoardFragment">
+
+    <fragment
+        android:id="@+id/onBoardFragment"
+        android:name="com.humotron.app.ui.onboarding.fragments.OnBoardFragment"
+        android:label="OnBoardFragment"
+        tools:layout="@layout/fragment_on_board" />
+
+    <fragment
+        android:id="@+id/onBoardPrivacyFragment"
+        android:name="com.humotron.app.ui.onboarding.fragments.OnBoardPrivacyFragment"
+        android:label="OnBoardPrivacyFragment"
+        tools:layout="@layout/fragment_on_board_privacy" />
+
+    <fragment
+        android:id="@+id/loginMethodFragment"
+        android:name="com.humotron.app.ui.onboarding.fragments.LoginMethodFragment"
+        android:label="LoginMethodFragment"
+        tools:layout="@layout/fragment_login_method" />
+
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.humotron.app.ui.onboarding.fragments.RegisterFragment"
+        android:label="RegisterFragment"
+        tools:layout="@layout/fragment_register" />
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.humotron.app.ui.onboarding.fragments.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login" />
+
+    <fragment
+        android:id="@+id/verifyOtpFragment"
+        android:name="com.humotron.app.ui.onboarding.fragments.VerifyOtpFragment"
+        android:label="VerifyOtpFragment"
+        tools:layout="@layout/fragment_verify_otp" />
+
+    <fragment
+        android:id="@+id/accountCreateFragment"
+        android:name="com.humotron.app.ui.onboarding.fragments.AccountCreateFragment"
+        android:label="AccountCreateFragment"
+        tools:layout="@layout/fragment_account_create" />
+
+    <fragment
+        android:id="@+id/personalizeFragment"
+        android:name="com.humotron.app.ui.onboarding.personalize.PersonalizeFragment"
+        android:label="PersonalizeFragment"
+        tools:layout="@layout/fragment_personalize" />
+
+</navigation>

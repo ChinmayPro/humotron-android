@@ -1,0 +1,74 @@
+package com.humotron.app.ui.device.adapter
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.humotron.app.R
+import com.humotron.app.domain.modal.response.AllMetricsResponse
+import com.humotron.app.util.utcOffsetToLocalTime
+
+class MetricsAdapter(private val onClick: (AllMetricsResponse.Data.Metric, String) -> Unit) :
+    ListAdapter<AllMetricsResponse.Data.Metric, MetricsAdapter.HardwareVH>(DiffCallback()) {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HardwareVH {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_metrics, parent, false)
+        return HardwareVH(view)
+    }
+
+    override fun onBindViewHolder(holder: HardwareVH, position: Int) {
+        holder.bind(getItem(position), onClick)
+    }
+
+    class HardwareVH(view: View) : RecyclerView.ViewHolder(view) {
+
+        private val tvType: TextView = view.findViewById(R.id.tvType)
+        private val tvValue: TextView = view.findViewById(R.id.tvValue)
+        private val tvMetricUnit: TextView = view.findViewById(R.id.tvMetricUnit)
+        private val tvDateTime: TextView = view.findViewById(R.id.tvDateTime)
+        private val mcvMetrics: View = view.findViewById(R.id.mcv_metrics)
+
+        fun bind(
+            item: AllMetricsResponse.Data.Metric,
+            onClick: (AllMetricsResponse.Data.Metric, String) -> Unit,
+        ) {
+            tvType.text = item.metricValue?.fieldLabel
+            tvValue.text = formatValue(item.metricValue?.value)
+            tvMetricUnit.text = item.metricUnit
+            val dateTime = item.metricValue?.timestamp ?: ""
+            val formattedDateTime = utcOffsetToLocalTime(dateTime)
+            tvDateTime.text = formattedDateTime
+            mcvMetrics.setOnClickListener { onClick(item, dateTime) }
+        }
+
+        fun formatValue(value: Any?): String {
+            if (value == null) return "-"
+            val doubleValue = value.toString().toDoubleOrNull()
+            return if (doubleValue != null) {
+                if (doubleValue % 1.0 == 0.0) {
+                    doubleValue.toInt().toString()
+                } else {
+                    doubleValue.toString()
+                }
+            } else {
+                value.toString()
+            }
+        }
+    }
+
+    class DiffCallback : DiffUtil.ItemCallback<AllMetricsResponse.Data.Metric>() {
+        override fun areItemsTheSame(
+            oldItem: AllMetricsResponse.Data.Metric,
+            newItem: AllMetricsResponse.Data.Metric,
+        ) = oldItem.id == newItem.id
+
+        override fun areContentsTheSame(
+            oldItem: AllMetricsResponse.Data.Metric,
+            newItem: AllMetricsResponse.Data.Metric,
+        ) = oldItem == newItem
+    }
+}

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/_24dp"
+    android:layout_marginTop="@dimen/_44dp">
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivBookSummary"
+        android:layout_width="@dimen/_31dp"
+        android:layout_height="@dimen/_36dp"
+        android:src="@drawable/ic_book_summary"
+        app:layout_constraintEnd_toStartOf="@id/tvTitle"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTitle"
+        style="@style/Text.20x.Manrope.Bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15dp"
+        android:text="@string/gist_before_you_buy"
+        android:textColor="@color/d80"
+        app:layout_constraintBottom_toBottomOf="@id/ivBookSummary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ivBookSummary"
+        app:layout_constraintTop_toTopOf="@id/ivBookSummary" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvDesc"
+        style="@style/Text.14x.Manrope.Medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_40dp"
+        android:layout_marginTop="@dimen/_15dp"
+        android:gravity="center"
+        android:text="@string/gist_desc"
+        android:textColor="@color/d200"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivBookSummary" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

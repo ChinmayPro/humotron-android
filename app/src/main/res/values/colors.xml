@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="color_bg_ob">#1B464A</color>
+
+    <color name="textColorWhite">#ffffff</color>
+    <color name="textColorDesc">#FFFEFE</color>
+    <color name="textColorDesc50">#80FFFEFE</color>
+    <color name="textColorSecondary">#99EBEBF5</color>
+    <color name="textColorSub">#454545</color>
+    <color name="textColorPink">#D2B9FE</color>
+    <color name="textColorYellow">#DFF9B2</color>
+
+    <color name="colorBgBtn">#B2F042</color>
+    <color name="colorBgBtn1">#BEF362</color>
+
+    <color name="white10">#1AFFFFFF</color>
+    <color name="white30">#4DFFFFFF</color>
+    <color name="white50">#80FFFFFF</color>
+    <color name="white70">#B3FFFFFF</color>
+    <color name="white80">#CCFFFFFF</color>
+
+    <color name="black30">#4D000000</color>
+    <color name="black40">#66000000</color>
+    <color name="black50">#80000000</color>
+
+    <color name="d100">#959595</color>
+    <color name="d200">#898989</color>
+    <color name="d300">#7E7E7E</color>
+    <color name="d400">#747474</color>
+    <color name="d500">#686868</color>
+    <color name="d600">#5E5E5E</color>
+    <color name="d700">#515151</color>
+    <color name="d900">#3B3B3B</color>
+    <color name="d60">#c2c2c2</color>
+    <color name="d70">#888888</color>
+    <color name="d80">#ADADAD</color>
+    <color name="d9">#4DD9D9D9</color>
+
+    <color name="s100">#6BDE7E</color>
+    <color name="s300">#B286FD</color>
+    <color name="s400">#7D5FB1</color>
+
+
+    <color name="w200">#FFA42B</color>
+
+
+    <color name="p50">#F7FEEC</color>
+    <color name="p75">#DFF9B2</color>
+
+    <color name="_7e">#7e7e7e</color>
+    <color name="_97">#979797</color>
+    <color name="_22">#222222</color>
+    <color name="_b8">#B8B8B8</color>
+    <color name="_1f">#1F1F1f</color>
+    <color name="textColorOrange">#F76937</color>
+    <color name="textColorGray">#DDDCDC</color>
+
+
+    <color name="disconnected">#FF2525</color>
+    <color name="_3B">#3B3B3B</color>
+    <color name="white_simmer">#1F474747</color>
+    <color name="white_simmer1">#474747</color>
+
+    <color name="white_80">#CCFFFFFF</color>
+    <color name="white_70">#B3FFFFFF</color>
+    <color name="white_50">#80FFFFFF</color>
+    <color name="card_translucent">#26FFFFFF</color>
+    <color name="graph_card_bg">#121212</color>
+    <color name="green">#008000</color>
+    <color name="white_60">#99FFFFFF</color>
+    <color name="white_90">#E6FFFFFF</color>
+    <color name="green_1">#8AFF00</color>
+    <color name="green_1_alpha_30">#4D8AFF00</color>
+    <color name="gray_400">#36FFFFFF</color>  <!-- 90% white -->
+    <color name="red_1">#FF3B30</color>
+    <color name="green_2">#4CAF50</color>
+    <color name="week_day_back">#395A67</color>
+    <color name="week_day_back_disabled">#4F6E7A</color>
+    <color name="card_back">#121212</color>
+    <color name="card_stroke">#FF7269</color>
+
+</resources>

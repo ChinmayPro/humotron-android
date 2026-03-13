@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="280dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardRing"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:cardBackgroundColor="@color/black"
+        app:cardCornerRadius="@dimen/_18dp"
+        app:layout_constraintDimensionRatio="1:0.65"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeWidth="0dp"
+        tools:visibility="visible">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvWearableName"
+                style="@style/Text.Home.Light"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_7dp"
+                android:layout_marginStart="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_20dp"
+                android:text="Humotron Smart"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@+id/tvLastSync"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvLastSync"
+                style="@style/Text.Home.ExtraBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_20dp"
+                android:drawableStart="@drawable/ic_sync"
+                android:drawablePadding="@dimen/_5dp"
+                android:textColor="#707070"
+                android:textSize="11sp"
+                app:layout_constraintBottom_toBottomOf="@id/tvWearableName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvWearableName"
+                tools:text="0 days" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_device"
+                android:layout_width="@dimen/_80dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="@dimen/_20dp"
+                android:src="@drawable/ic_ring"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvLastSync" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvHrTitle"
+                style="@style/Text.OnBoard.Title1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_20dp"
+                android:text="HR"
+                android:textColor="@color/_7e"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@id/tvHr"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvWearableName"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvHr"
+                style="@style/Text.OnBoard.Title1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20dp"
+                android:includeFontPadding="false"
+                android:text="00"
+                android:textColor="#FF9100"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toTopOf="@id/btnExploreMore"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvHrTitle" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvHrUnit"
+                style="@style/Text.OnBoard.Title1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20dp"
+                android:layout_marginBottom="6dp"
+                android:includeFontPadding="false"
+                android:text="bpm"
+                android:textColor="@color/_7e"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="@id/tvHr"
+                app:layout_constraintStart_toEndOf="@id/tvHr" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvHrvTitle"
+                style="@style/Text.OnBoard.Title1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_20dp"
+                android:text="HRV"
+                android:textColor="@color/_7e"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@id/tvHrv"
+                app:layout_constraintStart_toEndOf="@id/tvHrUnit"
+                app:layout_constraintTop_toBottomOf="@id/tvWearableName"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvHrv"
+                style="@style/Text.OnBoard.Title1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="00"
+                android:textColor="#00C620"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toTopOf="@id/btnExploreMore"
+                app:layout_constraintStart_toStartOf="@id/tvHrvTitle"
+                app:layout_constraintTop_toBottomOf="@id/tvHrvTitle" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvHrvUnit"
+                style="@style/Text.OnBoard.Title1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20dp"
+                android:layout_marginBottom="6dp"
+                android:includeFontPadding="false"
+                android:text="ms"
+                android:textColor="@color/_7e"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="@id/tvHrv"
+                app:layout_constraintStart_toEndOf="@id/tvHrv" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnExploreMore"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginStart="@dimen/_20dp"
+                android:layout_marginBottom="@dimen/_10dp"
+                android:clickable="false"
+                android:includeFontPadding="false"
+                android:insetLeft="0dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:paddingStart="0dp"
+                android:paddingTop="0dp"
+                android:paddingEnd="@dimen/_3dp"
+                android:paddingBottom="0dp"
+                android:text="@string/explore_more"
+                android:textAllCaps="false"
+                android:textColor="@color/_7e"
+                android:textSize="13sp"
+                app:icon="@drawable/ic_arrow_right_alt_24px"
+                app:iconGravity="textEnd"
+                app:iconTint="@color/_7e"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

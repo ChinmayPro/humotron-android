@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="#33000000"
+    tools:context=".ui.device.DeviceDataFragment">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_16dp"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:indicatorColor="@color/colorBgBtn"
+        app:indicatorSize="@dimen/_24dp"
+        app:layout_constraintBottom_toBottomOf="@id/header"
+        app:layout_constraintEnd_toEndOf="@id/header"
+        app:layout_constraintTop_toTopOf="@id/header" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_20dp"
+            android:background="@color/pluto___transparent"
+            android:backgroundTint="@android:color/transparent"
+            app:elevation="0dp">
+
+            <!-- HEADER -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvDeviceName"
+                    style="@style/Text.17x.Manrope.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20dp"
+                    android:textColor="@color/white50"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="ago" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvLastSyncTime"
+                    style="@style/Text.10x.Manrope.Regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4dp"
+                    android:text="@string/humotron_smart_ring"
+                    android:textColor="@color/white50"
+                    app:layout_constraintStart_toStartOf="@id/tvDeviceName"
+                    app:layout_constraintTop_toBottomOf="@id/tvDeviceName" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/btnTakeReading"
+                    style="@style/Text.12x.Manrope.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_14dp"
+                    android:background="@drawable/bg_btn_round_rect_16"
+                    android:drawableEnd="@drawable/ic_take_reading"
+                    android:drawablePadding="@dimen/_10dp"
+                    android:paddingHorizontal="@dimen/_22dp"
+                    android:paddingVertical="@dimen/_5dp"
+                    android:text="@string/take_readings"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="@id/tvDeviceName"
+                    app:layout_constraintTop_toBottomOf="@id/tvLastSyncTime" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/deviceStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_25dp"
+                    android:background="@drawable/bg_device_connect_status"
+                    android:gravity="center_vertical"
+                    android:minHeight="@dimen/_30dp"
+                    android:paddingVertical="@dimen/_6dp"
+                    app:layout_constraintTop_toBottomOf="@id/btnTakeReading">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivDeviceStatus"
+                        android:layout_width="@dimen/_7dp"
+                        android:layout_height="@dimen/_7dp"
+                        android:layout_marginStart="@dimen/_10dp"
+                        android:src="@drawable/dot_connected" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvDeviceStatus"
+                        style="@style/Text.8x.Manrope.SemiBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_5dp"
+                        android:text="@string/connected"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorBgBtn" />
+
+                    <com.humotron.app.view.BatteryView
+                        android:id="@+id/batteryView"
+                        android:layout_width="@dimen/_20dp"
+                        android:layout_height="@dimen/_10dp"
+                        android:layout_marginStart="@dimen/_30dp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvBatteryLevel"
+                        style="@style/Text.8x.Manrope.Medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_5dp"
+                        android:text="68%"
+                        android:textAlignment="center" />
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_device"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_20dp"
+                    android:layout_marginBottom="-15dp"
+                    android:scaleType="fitEnd"
+                    android:src="@drawable/ic_ring"
+                    app:layout_constraintBottom_toBottomOf="@id/deviceStatus"
+                    app:layout_constraintEnd_toEndOf="@id/deviceStatus" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- STICKY TAB -->
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/pluto___transparent"
+                app:tabGravity="start"
+                app:tabIndicatorColor="@color/colorBgBtn"
+                app:tabTextColor="@color/tab_text_selector">
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/metrics" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/insights" />
+
+            </com.google.android.material.tabs.TabLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/header">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_30dp">
+
+                <include
+                    android:id="@+id/cl_tab_metrics"
+                    layout="@layout/layout_tab_metrics" />
+
+                <include
+                    android:id="@+id/cl_tab_insights"
+                    layout="@layout/layout_tab_insights"
+                    android:visibility="gone" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

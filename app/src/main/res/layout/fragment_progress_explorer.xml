@@ -1,0 +1,618 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@color/black"
+    tools:context=".ui.bioHack.ProgressExplorerFragment">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header_left" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:id="@+id/scrollRoot"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageview"
+                android:layout_width="@dimen/_60dp"
+                android:layout_height="@dimen/_60dp"
+                android:layout_marginTop="@dimen/_40dp"
+                android:src="@drawable/ic_user_explorer"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textview"
+                style="@style/Text.18x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_100dp"
+                android:text="@string/explorer"
+                android:textColor="@color/d70"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imageview" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvNuggetsRemain"
+                style="@style/Text.12x.Manrope.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_100dp"
+                android:layout_marginTop="@dimen/_19dp"
+                android:gravity="center"
+                android:text="@string/you_are_d_nuggets_away_from_an_upgrade"
+                android:textColor="@color/d300"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textview" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textview1"
+                style="@style/Text.16x.Manrope.SemiBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_44dp"
+                android:text="@string/what_does_each_level_mean"
+                android:textColor="@color/textColorWhite"
+                app:layout_constraintTop_toBottomOf="@id/tvNuggetsRemain" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardExplorer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_20dp"
+                app:cardBackgroundColor="@color/black"
+                app:cardCornerRadius="@dimen/_12dp"
+                app:layout_constraintTop_toBottomOf="@id/textview1"
+                app:strokeWidth="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imageview1"
+                        android:layout_width="@dimen/_23dp"
+                        android:layout_height="@dimen/_23dp"
+                        android:layout_marginStart="@dimen/_18dp"
+                        android:layout_marginTop="@dimen/_34dp"
+                        android:src="@drawable/ic_user_explorer"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/textview2"
+                        style="@style/Text.18x.Manrope.Bold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_10dp"
+                        android:layout_marginTop="-3dp"
+                        android:includeFontPadding="false"
+                        android:text="@string/explorer"
+                        android:textColor="@color/d60"
+                        app:layout_constraintEnd_toStartOf="@id/textview3"
+                        app:layout_constraintStart_toEndOf="@id/imageview1"
+                        app:layout_constraintTop_toTopOf="@id/imageview1" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/textview3"
+                        style="@style/Text.12x.Manrope.Medium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_18dp"
+                        android:includeFontPadding="false"
+                        android:text="@string/explorer_points"
+                        android:textColor="@color/d700"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/imageview1" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvLockExplorer"
+                        style="@style/Text.8x.Manrope.SemiBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_18dp"
+                        android:includeFontPadding="false"
+                        android:paddingHorizontal="@dimen/_8dp"
+                        android:paddingVertical="@dimen/_2dp"
+                        android:text="@string/unlocked"
+                        android:background="@drawable/bg_unlocked"
+                        android:textAllCaps="true"
+                        android:textColor="@color/d700"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/textview4"
+                        style="@style/Text.14x.Manrope.Medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_18dp"
+                        android:layout_marginTop="@dimen/_18dp"
+                        android:includeFontPadding="false"
+                        android:text="You’re just getting started—building awareness and curiosity."
+                        android:textColor="@color/d400"
+                        app:layout_constraintTop_toBottomOf="@id/textview2" />
+
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_24dp"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginBottom="@dimen/_20dp"
+                        app:layout_constraintTop_toBottomOf="@id/textview4">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/_20dp">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                style="@style/Text.14x.Manrope.Medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_5dp"
+                                android:src="@drawable/ic_arrow_right_begin"
+                                app:tint="@color/d400" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Text.14x.Manrope.Medium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_8dp"
+                                android:includeFontPadding="false"
+                                android:text="Exploring key health &amp; optimization topics."
+                                android:textColor="@color/d80" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/_20dp"
+                            android:layout_marginTop="@dimen/_6dp">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                style="@style/Text.14x.Manrope.Medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_5dp"
+                                android:src="@drawable/ic_arrow_right_begin"
+                                app:tint="@color/d400" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Text.14x.Manrope.Medium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_8dp"
+                                android:includeFontPadding="false"
+                                android:text="Consuming Nuggets to understand foundational concepts."
+                                android:textColor="@color/d80" />
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/_20dp"
+                            android:layout_marginTop="@dimen/_40dp">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                style="@style/Text.14x.Manrope.Medium"
+                                android:layout_width="@dimen/_26dp"
+                                android:layout_height="@dimen/_24dp"
+                                android:layout_marginTop="@dimen/_5dp"
+                                android:src="@drawable/ic_hint_explorer" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Text.14x.Manrope.Medium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_18dp"
+                                android:includeFontPadding="false"
+                                android:text="Unlock tests &amp; deeper learning by consuming at least 750 Nuggets across 3 major topics."
+                                android:textColor="@color/p50" />
+
+                        </LinearLayout>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardAnalyst"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_60dp"
+                app:cardBackgroundColor="@color/black"
+                app:cardCornerRadius="@dimen/_12dp"
+                app:layout_constraintTop_toBottomOf="@id/cardExplorer"
+                app:strokeWidth="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imageview3"
+                        android:layout_width="@dimen/_23dp"
+                        android:layout_height="@dimen/_23dp"
+                        android:layout_marginStart="@dimen/_18dp"
+                        android:layout_marginTop="@dimen/_34dp"
+                        android:src="@drawable/ic_user_analyst"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/textview9"
+                        style="@style/Text.18x.Manrope.Bold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_10dp"
+                        android:layout_marginTop="-3dp"
+                        android:includeFontPadding="false"
+                        android:text="@string/analyst"
+                        android:textColor="@color/s100"
+                        app:layout_constraintEnd_toStartOf="@id/textview10"
+                        app:layout_constraintStart_toEndOf="@id/imageview3"
+                        app:layout_constraintTop_toTopOf="@id/imageview3" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/textview10"
+                        style="@style/Text.12x.Manrope.Medium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_18dp"
+                        android:includeFontPadding="false"
+                        android:text="@string/analyst_points"
+                        android:textColor="@color/d700"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/imageview3" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvLockAnalyst"
+                        style="@style/Text.8x.Manrope.SemiBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_18dp"
+                        android:includeFontPadding="false"
+                        android:paddingHorizontal="@dimen/_8dp"
+                        android:paddingVertical="@dimen/_2dp"
+                        android:text="@string/locked"
+                        android:background="@drawable/bg_locked"
+                        android:textAllCaps="true"
+                        android:textColor="@color/d300"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/textview11"
+                        style="@style/Text.14x.Manrope.Medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_18dp"
+                        android:layout_marginTop="@dimen/_18dp"
+                        android:includeFontPadding="false"
+                        android:text="You’ve moved beyond learning—you’re analyzing, questioning, and connecting dots."
+                        android:textColor="@color/d400"
+                        app:layout_constraintTop_toBottomOf="@id/textview9" />
+
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_24dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginBottom="@dimen/_20dp"
+                        android:orientation="vertical"
+                        app:layout_constraintTop_toBottomOf="@id/textview11">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/_20dp">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                style="@style/Text.14x.Manrope.Medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_5dp"
+                                android:src="@drawable/ic_arrow_right_begin"
+                                app:tint="@color/d400" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Text.14x.Manrope.Medium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_8dp"
+                                android:includeFontPadding="false"
+                                android:text="Identifying key health patterns &amp; tracking personal data"
+                                android:textColor="@color/d80" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/_20dp"
+                            android:layout_marginTop="@dimen/_6dp">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                style="@style/Text.14x.Manrope.Medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_5dp"
+                                android:src="@drawable/ic_arrow_right_begin"
+                                app:tint="@color/d400" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Text.14x.Manrope.Medium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_8dp"
+                                android:includeFontPadding="false"
+                                android:text="Diving deeper into biological optimization strategies"
+                                android:textColor="@color/d80" />
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/_20dp"
+                            android:layout_marginTop="@dimen/_40dp">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                style="@style/Text.14x.Manrope.Medium"
+                                android:layout_width="@dimen/_26dp"
+                                android:layout_height="@dimen/_24dp"
+                                android:layout_marginTop="@dimen/_5dp"
+                                android:src="@drawable/ic_hint_explorer" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Text.14x.Manrope.Medium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_18dp"
+                                android:includeFontPadding="false"
+                                android:text="Progress to Biohacker by passing all major topic tests &amp; earning 2500+ Mastery Points."
+                                android:textColor="@color/p50" />
+
+                        </LinearLayout>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_60dp"
+                app:cardBackgroundColor="@color/black"
+                app:cardCornerRadius="@dimen/_12dp"
+                app:layout_constraintTop_toBottomOf="@id/cardAnalyst"
+                app:strokeWidth="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imageview4"
+                        android:layout_width="@dimen/_23dp"
+                        android:layout_height="@dimen/_23dp"
+                        android:layout_marginStart="@dimen/_18dp"
+                        android:layout_marginTop="@dimen/_34dp"
+                        android:src="@drawable/ic_user_biohacker"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/textview12"
+                        style="@style/Text.18x.Manrope.Bold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_10dp"
+                        android:layout_marginTop="-3dp"
+                        android:includeFontPadding="false"
+                        android:text="@string/biohacker"
+                        android:textColor="@color/w200"
+                        app:layout_constraintEnd_toStartOf="@id/textview13"
+                        app:layout_constraintStart_toEndOf="@id/imageview4"
+                        app:layout_constraintTop_toTopOf="@id/imageview4" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/textview13"
+                        style="@style/Text.12x.Manrope.Medium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_18dp"
+                        android:includeFontPadding="false"
+                        android:text="@string/biohacker_points"
+                        android:textColor="@color/d700"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/imageview4" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvLockBioHacker"
+                        style="@style/Text.8x.Manrope.SemiBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_18dp"
+                        android:includeFontPadding="false"
+                        android:paddingHorizontal="@dimen/_8dp"
+                        android:paddingVertical="@dimen/_2dp"
+                        android:text="@string/locked"
+                        android:background="@drawable/bg_locked"
+                        android:textAllCaps="true"
+                        android:textColor="@color/d300"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/textview14"
+                        style="@style/Text.14x.Manrope.Medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_18dp"
+                        android:layout_marginTop="@dimen/_18dp"
+                        android:includeFontPadding="false"
+                        android:text="You’re no longer just learning—you’re optimizing, experimenting, and predicting."
+                        android:textColor="@color/d400"
+                        app:layout_constraintTop_toBottomOf="@id/textview12" />
+
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_24dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginBottom="@dimen/_20dp"
+                        android:orientation="vertical"
+                        app:layout_constraintTop_toBottomOf="@id/textview14">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/_20dp">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                style="@style/Text.14x.Manrope.Medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_5dp"
+                                android:src="@drawable/ic_arrow_right_begin"
+                                app:tint="@color/d400" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Text.14x.Manrope.Medium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_8dp"
+                                android:includeFontPadding="false"
+                                android:text="Connecting multiple insights across health, longevity &amp; performance"
+                                android:textColor="@color/d80" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/_20dp"
+                            android:layout_marginTop="@dimen/_6dp">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                style="@style/Text.14x.Manrope.Medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_5dp"
+                                android:src="@drawable/ic_arrow_right_begin"
+                                app:tint="@color/d400" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Text.14x.Manrope.Medium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_8dp"
+                                android:includeFontPadding="false"
+                                android:text="Testing &amp; applying interventions for peak optimization"
+                                android:textColor="@color/d80" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/_20dp"
+                            android:layout_marginTop="@dimen/_6dp">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                style="@style/Text.14x.Manrope.Medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_5dp"
+                                android:src="@drawable/ic_arrow_right_begin"
+                                app:tint="@color/d400" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Text.14x.Manrope.Medium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_8dp"
+                                android:includeFontPadding="false"
+                                android:text="Ready to be a thought leader in self-health mastery"
+                                android:textColor="@color/d80" />
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/_20dp"
+                            android:layout_marginTop="@dimen/_40dp">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                style="@style/Text.14x.Manrope.Medium"
+                                android:layout_width="@dimen/_26dp"
+                                android:layout_height="@dimen/_24dp"
+                                android:layout_marginTop="@dimen/_5dp"
+                                android:src="@drawable/ic_hint_explorer" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Text.14x.Manrope.Medium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_18dp"
+                                android:includeFontPadding="false"
+                                android:text="You have earned your Biohacker Certification."
+                                android:textColor="@color/p50" />
+
+                        </LinearLayout>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

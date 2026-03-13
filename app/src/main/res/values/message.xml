@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="time_out">Time Out</string>
+    <string name="something_went_wrong">Something Went Wrong</string>
+    <string name="unknown_error">Unknown Error</string>
+
+    <string name="unexpected_response">Unexpected response from server!</string>
+    <string name="parsing_error">Parsing error! Please try again after some time!!</string>
+    <string name="connection_timeout">Request Time Out! Please check your internet connection and try again!</string>
+    <string name="no_internet">There is no internet connection! Please make sure you have active internet connection!</string>
+    <string name="loading">Loading…</string>
+
+
+    <string name="cmd_execute_success">Command executed successful.</string>
+    <string name="cmd_execute_failed_1">Command executed failed.</string>
+    <string name="cmd_execute_failed_2">Command executed failed. OEM authentication failed when ring connected.</string>
+    <string name="cmd_execute_failed_3">Command executed failed. Ring is actively measuring.</string>
+    <string name="cmd_execute_failed_4">Command executed failed. Ring is in workout mode.</string>
+    <string name="cmd_execute_failed_5">Command executed failed. Ring is performing APP-initiated measurement.</string>
+    <string name="cmd_execute_failed_6">Command executed failed. Parameter error.</string>
+
+
+    <string name="ring_color_deep_black">Deep black</string>
+    <string name="ring_color_sliver">Sliver</string>
+    <string name="ring_color_golden">Golden</string>
+    <string name="ring_color_rose_gold">Rose Gold</string>
+    <string name="ring_color_gold_silver_mixed">Gold &amp; Silver Mixed</string>
+    <string name="ring_color_purple_silver_mixed">Purple &amp; Silver Mixed</string>
+    <string name="ring_color_rose_gold_silver_mixed">Rose Gold &amp; Silver Mixed</string>
+    <string name="battery_level_charging">Charging</string>
+    <string name="battery_level_discharging">Discharging</string>
+</resources>
