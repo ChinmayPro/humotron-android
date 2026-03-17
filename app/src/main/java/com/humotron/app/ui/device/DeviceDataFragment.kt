@@ -1,33 +1,24 @@
 package com.humotron.app.ui.device
 
-import android.Manifest
-import android.R.attr.data
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothManager
-import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.humotron.app.R
 import com.humotron.app.bt.BleDevice
-import com.humotron.app.bt.OnBleScanCallback
 import com.humotron.app.core.App
-import com.humotron.app.core.Preference
 import com.humotron.app.core.base.BaseFragment
 import com.humotron.app.data.network.Status
 import com.humotron.app.databinding.FragmentDeviceDataBinding
@@ -46,8 +37,6 @@ import com.humotron.app.util.STATE_DEVICE_DISCHARGING
 import com.humotron.app.util.STATE_DEVICE_DISCONNECTED
 import com.humotron.app.util.convertDecimalHours
 import com.humotron.app.util.formatDateToMMMddyyyy
-import com.humotron.app.util.utcOffsetToLocalTime
-import com.permissionx.guolindev.PermissionX
 import com.pluto.plugins.logger.PlutoLog
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
@@ -62,7 +51,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
     private var device: BleDevice? = null
 
     private lateinit var metricsAdapter: MetricsAdapter
-    private val homeViewModel by viewModels<HomeViewModel>()
+    private val homeViewModel by activityViewModels<HomeViewModel>()
     private var wearable: Wearable? = null
 
 
@@ -97,13 +86,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
         initClicks()
         getDataFromServer()
 
-        if (app.deviceManager.connected.value != true) {
-            if (isBlueToothSupported()) {
-                checkForPermission()
-            } else {
-                PlutoLog.e("Bluetooth", "Bluetooth is not supported")
-            }
-        } else {
+        if (app.deviceManager.connected.value == true) {
             app.deviceManager.registerCb()
             viewModel.getDeviceData()
         }
@@ -183,16 +166,13 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
         }
 
         app.deviceManager.connected.observe(viewLifecycleOwner) {
-
             DeviceConnectedFragment.device = device
             homeViewModel.currBtMac = device?.device?.address ?: ""
-            Log.e("TAG", "onViewCreated:device connected ${app.deviceManager.connected.value}")
             if (it) {
                 PlutoLog.e(
                     "Bluetooth",
                     "deviceManager connected"
                 )
-                hideProgress()
                 viewModel.getDeviceData()
             }
         }
@@ -490,101 +470,8 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
         )
     }
 
-    private fun isBlueToothSupported(): Boolean {
-        if (!requireActivity().packageManager.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
-            return false
-        }
-
-        val bluetoothManager =
-            requireContext().getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
-        mBluetoothAdapter = bluetoothManager.adapter
-        if (mBluetoothAdapter == null) {
-            return false
-        }
-        return true
-    }
-
-    fun checkForPermission() {
-        val permission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            arrayOf(
-                Manifest.permission.BLUETOOTH_CONNECT,
-                Manifest.permission.BLUETOOTH_SCAN
-            )
-        } else {
-            arrayOf(
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
-        }
-        PermissionX.init(this).permissions(permission.toList())
-            .request { allGranted, grantedList, deniedList ->
-                if (allGranted) {
-                    PlutoLog.e("Bluetooth", "ALL permission are granted")
-                    checkForBluetooth()
-                } else {
-                    PlutoLog.e(
-                        "Bluetooth",
-                        "Permission granted : $grantedList. Permission denied : $deniedList"
-                    )
-                }
-            }
-    }
-
-    private fun checkForBluetooth() {
-        if (!mBluetoothAdapter!!.isEnabled) {
-            PlutoLog.e(
-                "Bluetooth",
-                "bluetooth is not enabled"
-            )
-            val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
-            blueToothLauncher.launch(enableBtIntent)
-        } else {
-            connectToRing()
-        }
-    }
-
-    private val blueToothLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                connectToRing()
-            }
-        }
-
-    private fun connectToRing() {
-        app.deviceManager.registerCb()
-        val address = prefUtils.getString(Preference.WEARABLE_RING) ?: ""
-        if (address.isNotEmpty()) {
-            showProgress()
-            dialog?.loadingMessage = getString(R.string.connecting)
-            app.bleManager.startScan(300000, object : OnBleScanCallback {
-                @SuppressLint("MissingPermission")
-                override fun onScanning(result: BleDevice) {
-                    if (result.device.address == address) {
-                        PlutoLog.e(
-                            "Bluetooth",
-                            "ring found"
-                        )
-                        device = result
-                        app.deviceManager.connect(result.device.address)
-                    }
-                }
-
-                override fun onScanFinished() {
-
-                }
-
-            })
-        } else {
-            PlutoLog.e(
-                "Bluetooth",
-                "ring address is empty"
-            )
-        }
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         app.deviceManager.unregisterCb()
     }
-
 }

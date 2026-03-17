@@ -1,7 +1,6 @@
 package com.humotron.app.ui.onboarding
 
 import android.content.Context
-import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -10,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import com.humotron.app.R
 import com.humotron.app.core.Preference
-import com.humotron.app.ui.MainActivity
 import com.humotron.app.util.PrefUtils
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -27,23 +25,19 @@ class OnBoardingActivity : AppCompatActivity() {
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main) as NavHostFragment
-        if (prefUtils.isLogin()) {
-            startActivity(Intent(this, MainActivity::class.java))
-            finishAffinity()
-        } else {
-            val isPrivacy = prefUtils.getBoolean(Preference.ONBOARD_PRIVACY)
-            val navController = navHostFragment.navController
-            val navInflater = navController.navInflater
-            val navGraph = navInflater.inflate(R.navigation.nav_onboarding)
-            navGraph.setStartDestination(
-                if (isPrivacy) {
-                    R.id.loginMethodFragment
-                } else {
-                    R.id.onBoardFragment
-                }
-            )
-            navController.graph = navGraph
-        }
+
+        val isPrivacy = prefUtils.getBoolean(Preference.ONBOARD_PRIVACY)
+        val navController = navHostFragment.navController
+        val navInflater = navController.navInflater
+        val navGraph = navInflater.inflate(R.navigation.nav_onboarding)
+        navGraph.setStartDestination(
+            if (isPrivacy) {
+                R.id.loginMethodFragment
+            } else {
+                R.id.onBoardFragment
+            }
+        )
+        navController.graph = navGraph
 
     }
 

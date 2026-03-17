@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.material)
+    implementation(libs.androidx.swiperefreshlayout)
 
     // -------------------- Navigation --------------------
     implementation(libs.androidx.navigation.fragment.ktx)
@@ -130,4 +131,7 @@ dependencies {
     // -------------------- Firebase (Commented) ------------
     //implementation(platform("com.google.firebase:firebase-bom:34.0.0"))
     //implementation("com.google.firebase:firebase-auth")
+
+    // -------------------- Others --------------------
+    implementation(libs.lottie)
 }

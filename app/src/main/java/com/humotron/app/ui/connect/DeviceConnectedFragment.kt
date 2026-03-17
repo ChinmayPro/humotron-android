@@ -3,7 +3,7 @@ package com.humotron.app.ui.connect
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.humotron.app.R
 import com.humotron.app.bt.BleDevice
@@ -16,7 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class DeviceConnectedFragment : Fragment(R.layout.fragment_device_connected) {
 
     private lateinit var binding: FragmentDeviceConnectedBinding
-    private val viewModel by viewModels<HomeViewModel>()
+    private val viewModel by activityViewModels<HomeViewModel>()
     private val app by lazy { requireActivity().application as App }
 
 

@@ -2,6 +2,10 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Humotron" parent="Theme.Material3.Light.NoActionBar">
         <item name="android:windowSplashScreenBackground" tools:targetApi="31">#1B464A</item>
+        <!-- to make the splash screen icon transparent. so it looks splash removed-->
+        <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="31">
+            @android:color/transparent
+        </item>
     </style>
 
     <style name="Theme.Humotron" parent="Base.Theme.Humotron" />

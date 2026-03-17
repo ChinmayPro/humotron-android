@@ -33,10 +33,18 @@ import com.humotron.app.domain.modal.response.TemperatureResponse
 import com.humotron.app.domain.modal.response.WristBandSleepDurationResponse
 import com.humotron.app.util.PrefUtils
 import com.humotron.app.util.loge
+import com.pluto.Pluto
+import com.pluto.plugins.logger.PlutoLog
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
 import lib.linktop.nexring.api.SleepData
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -54,6 +62,11 @@ class SleepRepository(
     private val prefUtils: PrefUtils,
     private val responseHandler: ResponseHandler,
 ) {
+
+    private val _deviceCache =
+        MutableStateFlow<Resource<GetAllDeviceResponse>?>(null)
+
+    val deviceCache = _deviceCache.asStateFlow()
 
     suspend fun saveSleepData(data: SleepEntity) {
         sleepDao.insert(data)
@@ -165,17 +178,19 @@ class SleepRepository(
         emit(responseHandler.handleException(ValidationException(it.message)))
     }
 
-    fun getUserDeviceData(): Flow<Resource<GetAllDeviceResponse>> = flow {
-        try {
-            val response =
-                responseHandler.handleResponse(api.getAllDeviceData(), false)
-            emit(response)
-        } catch (e: Exception) {
-            emit(responseHandler.handleException(e))
-            e.printStackTrace()
+    fun getUserDeviceData(forceRefresh: Boolean = false) {
+        if (!forceRefresh && _deviceCache.value != null) return
+        CoroutineScope(Dispatchers.IO).launch {
+            _deviceCache.value = Resource.loading()
+            try {
+                val response =
+                    responseHandler.handleResponse(api.getAllDeviceData(), false)
+                _deviceCache.value = response
+            } catch (e: Exception) {
+                _deviceCache.value =
+                    responseHandler.handleException(e)
+            }
         }
-    }.catch {
-        emit(responseHandler.handleException(ValidationException(it.message)))
     }
 
     fun getHardwareList(): Flow<Resource<HardwareListData>> = flow {
@@ -212,7 +227,10 @@ class SleepRepository(
         emit(Resource.loading())
         try {
             val response =
-                responseHandler.handleResponse(api.getRingReadingGraphData(endpoint, ringId, param), false)
+                responseHandler.handleResponse(
+                    api.getRingReadingGraphData(endpoint, ringId, param),
+                    false
+                )
             emit(response)
         } catch (e: Exception) {
             emit(responseHandler.handleException(e))
@@ -241,12 +259,15 @@ class SleepRepository(
 
     fun getDailyCalculatedMetrics(
         deviceId: String,
-        param: DailyCalculatedMetricsParam
+        param: DailyCalculatedMetricsParam,
     ): Flow<Resource<DailyCalculatedMetricsResponse>> = flow {
         emit(Resource.loading())
         try {
             val response =
-                responseHandler.handleResponse(api.getDailyCalculatedMetrics(deviceId, param), false)
+                responseHandler.handleResponse(
+                    api.getDailyCalculatedMetrics(deviceId, param),
+                    false
+                )
             emit(response)
         } catch (e: Exception) {
             emit(responseHandler.handleException(e))
@@ -286,7 +307,7 @@ class SleepRepository(
         deviceId: String,
         startDate: String,
         endDate: String,
-        offset: String
+        offset: String,
     ): Flow<Resource<WristBandSleepDurationResponse>> = flow {
         emit(Resource.loading())
         try {

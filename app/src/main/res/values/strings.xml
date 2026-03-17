@@ -213,4 +213,5 @@ To get started:\n
 • We’ll unlock insights after around 30 days of data
 </string>
     <string name="view_all_your_insights_here">View all your insights here.</string>
+    <string name="connecting_to_device">Connecting to device</string>
 </resources>

@@ -13,6 +13,7 @@ import com.humotron.app.util.createDefaultSharedPreferences
 import com.pluto.Pluto
 import com.pluto.plugins.exceptions.PlutoExceptions
 import com.pluto.plugins.exceptions.PlutoExceptionsPlugin
+import com.pluto.plugins.logger.PlutoLog
 import com.pluto.plugins.logger.PlutoLoggerPlugin
 import com.pluto.plugins.logger.PlutoTimberTree
 import com.pluto.plugins.network.PlutoNetworkPlugin

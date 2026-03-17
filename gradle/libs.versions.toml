@@ -23,6 +23,7 @@ navigationFragmentKtx = "2.9.0"
 recyclerview = "1.3.2"
 browser = "1.8.0"
 numberPicker = "2.4.13"
+swiperefreshlayout = "1.2.0"
 wheelviewXd = "1.4.1"
 cardstackview = "2.3.4"
 otpviewVersion = "0.2.5"
@@ -63,6 +64,9 @@ junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 
+#Others
+lottie = "6.7.1"
+
 [libraries]
 
 #Android Core
@@ -70,6 +74,7 @@ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = 
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swiperefreshlayout" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
 
@@ -132,6 +137,9 @@ exceptions = { module = "com.androidpluto.plugins:exceptions", version.ref = "pl
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+
+#Others
+lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

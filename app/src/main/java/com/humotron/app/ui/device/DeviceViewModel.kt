@@ -80,10 +80,24 @@ class DeviceViewModel @Inject constructor(
         return getDeviceListLiveData
     }
 
-    fun getUserDeviceData() {
+   /* fun getUserDeviceData() {
         sleepRepository.getUserDeviceData().onEach { state ->
             getDeviceListLiveData.value = state
         }.launchIn(viewModelScope)
+    }*/
+
+    fun observeUserDeviceData() {
+        sleepRepository.deviceCache
+            .onEach { state ->
+                state?.let {
+                    getDeviceListLiveData.value = it
+                }
+            }
+            .launchIn(viewModelScope)
+    }
+
+    fun refreshUserDeviceData(forceRefresh: Boolean = false) {
+        sleepRepository.getUserDeviceData(forceRefresh)
     }
 
     private val getHardwareListLiveData: MutableLiveData<Resource<HardwareListData>> =

@@ -7,6 +7,8 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.transition.TransitionManager
+import com.google.android.material.transition.MaterialFade
 import com.humotron.app.R
 import com.humotron.app.core.Preference
 import com.humotron.app.core.base.BaseFragment
@@ -15,6 +17,7 @@ import com.humotron.app.databinding.FragmentTrackBinding
 import com.humotron.app.domain.modal.response.GetAllDeviceResponse.Data.Wearable
 import com.humotron.app.ui.connect.dialog.DeviceSelectionBottomSheet
 import com.humotron.app.ui.device.DeviceViewModel
+import com.pluto.plugins.logger.PlutoLog
 import com.yarolegovich.discretescrollview.transform.Pivot
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,13 +43,10 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
     private fun initViews() {
         prefUtils.getString(Preference.WEARABLE_RING).apply {
             if (isNullOrEmpty()) {
-                binding.cardRingEmpty.isVisible = true
                 binding.dsvWearables.isVisible = false
                 viewModel.getHardwareList()
             } else {
-                viewModel.getUserDeviceData()
                 viewModel.getDeviceData()
-                binding.cardRingEmpty.isVisible = false
                 binding.dsvWearables.isVisible = true
             }
         }
@@ -54,9 +54,14 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
 
     private fun initClicks() {
         binding.ivAdd.setOnClickListener(this)
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            binding.swipeRefreshLayout.isRefreshing = false
+            viewModel.refreshUserDeviceData(true)
+        }
     }
 
     private fun initObservers() {
+        viewModel.observeUserDeviceData()
         lifecycleScope.launch {
             viewModel.deviceData.collect {
                 /*it.hrvMapper.let {
@@ -81,12 +86,15 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
                     val data = it.data?.data ?: return@observe
                     if (!data.wearables.isNullOrEmpty()) {
                         setupDiscreteScrollView(data.wearables)
-                        binding.cardRingEmpty.isVisible = false
                         binding.dsvWearables.isVisible = true
                     } else {
-                        binding.cardRingEmpty.isVisible = true
                         binding.dsvWearables.isVisible = false
                     }
+                    val transition = MaterialFade().apply {
+                        duration = 1000
+                    }
+                    TransitionManager.beginDelayedTransition(binding.root, transition)
+                    binding.nsvTrack.isVisible = true
                 }
 
                 Status.ERROR -> {
@@ -115,7 +123,7 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
                                 value
                             )
                         }
-                        viewModel.getUserDeviceData()
+                        viewModel.refreshUserDeviceData(true)
                     }
                 }
 
