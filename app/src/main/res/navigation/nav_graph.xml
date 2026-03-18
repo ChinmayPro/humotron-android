@@ -41,7 +41,10 @@
     <fragment
         android:id="@+id/fragmentMetric"
         android:name="com.humotron.app.ui.device.MetricFragment" />
-
+     <fragment
+        android:id="@+id/assessmentFragment"
+         android:name="com.humotron.app.ui.assesment.AssessmentFragment"
+         android:label="Assessment" />
     <fragment
         android:id="@+id/fragmentMetricDetails"
         android:name="com.humotron.app.ui.metrics.MetricDetailsFragment">

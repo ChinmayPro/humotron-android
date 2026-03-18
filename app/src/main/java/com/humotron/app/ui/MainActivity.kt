@@ -31,6 +31,8 @@ import com.humotron.app.core.App
 import com.humotron.app.core.Preference
 import com.humotron.app.data.local.AppDatabase
 import com.humotron.app.databinding.ActivityMainBinding
+import com.humotron.app.ui.assesment.AssessmentActivity
+import com.humotron.app.ui.assesment.CardiovascularAssessmentBottomSheet
 import com.humotron.app.ui.connect.DeviceConnectedFragment.Companion.device
 import com.humotron.app.ui.onboarding.OnBoardingActivity
 import com.humotron.app.util.PrefUtils
@@ -79,6 +81,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding.llTrack.setOnClickListener(this)
         binding.llBioHack.setOnClickListener(this)
         binding.llProfile.setOnClickListener(this)
+        binding.llDecode.setOnClickListener(this)
     }
 
     private fun initViews() {
@@ -124,8 +127,31 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             binding.llProfile -> {
                 showLogoutDialog()
             }
+
+            binding.llDecode -> {
+                showAssessmentSheet()
+            }
         }
     }
+  /*  private fun showAssessmentSheet() {
+        val sheet = CardiovascularAssessmentBottomSheet.newInstance()
+        sheet.onProceedClicked = {
+            findNavController().navigate(R.id.action_home_to_assessment)
+        }
+        sheet.show(childFragmentManager, CardiovascularAssessmentBottomSheet.TAG)
+    }*/
+  private fun showAssessmentSheet() {
+      val sheet = CardiovascularAssessmentBottomSheet.newInstance()
+
+      sheet.onProceedClicked = {
+//          findNavController().navigate(R.id.assessmentFragment)
+          startActivity(Intent(this, AssessmentActivity::class.java))
+
+
+      }
+
+      sheet.show(supportFragmentManager, CardiovascularAssessmentBottomSheet.TAG)
+  }
 
     private fun highlightView(count: Int) {
         val textList = listOf(binding.tvTrack, binding.tvBioHack)

@@ -11,7 +11,9 @@
     <color name="textColorSub">#454545</color>
     <color name="textColorPink">#D2B9FE</color>
     <color name="textColorYellow">#DFF9B2</color>
-
+    <color name="lime_green">#B8FF4F</color>
+    <color name="surface_dark">#1E1E1E</color>
+    <color name="text_secondary">#888888</color>
     <color name="colorBgBtn">#B2F042</color>
     <color name="colorBgBtn1">#BEF362</color>
 
