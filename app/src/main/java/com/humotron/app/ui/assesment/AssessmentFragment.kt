@@ -1,12 +1,15 @@
 package com.humotron.app.ui.assesment
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.google.android.material.card.MaterialCardView
 import com.humotron.app.R
 import com.humotron.app.databinding.FragmentAssessmentBinding
 
@@ -15,6 +18,8 @@ class AssessmentFragment : Fragment() {
     private var _binding: FragmentAssessmentBinding? = null
     private val binding get() = _binding!!
     private val viewModel: AssessmentViewModel by viewModels()
+    private var isNext = true
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -31,6 +36,7 @@ class AssessmentFragment : Fragment() {
         viewModel.currentIndex.observe(viewLifecycleOwner) { renderQuestion() }
 
         binding.btnNext.setOnClickListener {
+            isNext = true
             if (viewModel.isLastQuestion()) {
                 // Submit
                 val answers = viewModel.getAllAnswers()
@@ -40,9 +46,13 @@ class AssessmentFragment : Fragment() {
             }
         }
 
-        binding.btnPrevious.setOnClickListener { viewModel.goPrevious() }
+        binding.btnPrevious.setOnClickListener {
+            isNext = false
+
+            viewModel.goPrevious() }
 
         binding.tvSkip.setOnClickListener {
+            isNext = true
             if (!viewModel.isLastQuestion()) viewModel.goNext()
         }
     }
@@ -58,8 +68,17 @@ class AssessmentFragment : Fragment() {
         binding.tvHelper.text = question.helperText
 
         // Slide-in animation
-        val slideIn = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_right)
+//        val slideIn = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_right)
+//        binding.contentContainer.startAnimation(slideIn)
+        val animationRes = if (isNext) {
+            R.anim.slide_in_right
+        } else {
+            R.anim.slide_in_left
+        }
+
+        val slideIn = AnimationUtils.loadAnimation(requireContext(), animationRes)
         binding.contentContainer.startAnimation(slideIn)
+
 
         // Hide all question containers
         binding.containerRadioList.root.visibility = View.GONE
@@ -118,18 +137,24 @@ class AssessmentFragment : Fragment() {
         val container = binding.containerYesNo
         val isYes = savedAnswer?.selectedIndex == 1
 
-        updateYesNoButtons(isYes)
+//        updateYesNoButtons(isYes)
+        selectCard(container.cardNo, container.tvNo, container.cardYes, container.tvYes)
 
-        container.btnNo.setOnClickListener {
+
+        container.cardNo.setOnClickListener {
             viewModel.saveAnswer(AssessmentAnswer(viewModel.currentQuestion.id, selectedIndex = 0))
-            updateYesNoButtons(false)
+//            updateYesNoButtons(false)
+            selectCard(container.cardNo, container.tvNo, container.cardYes, container.tvYes)
+
             container.layoutConditional.visibility = View.GONE
             updateNavigationButtons()
         }
 
-        container.btnYes.setOnClickListener {
+        container.cardYes.setOnClickListener {
             viewModel.saveAnswer(AssessmentAnswer(viewModel.currentQuestion.id, selectedIndex = 1))
-            updateYesNoButtons(true)
+//            updateYesNoButtons(true)
+            selectCard(container.cardYes, container.tvYes, container.cardNo, container.tvNo)
+
             if (type.conditionalOptions != null) {
                 container.layoutConditional.visibility = View.VISIBLE
                 container.tvConditionalLabel.text = type.conditionalLabel
@@ -147,19 +172,31 @@ class AssessmentFragment : Fragment() {
             container.layoutConditional.visibility = View.GONE
         }
     }
+    fun selectCard(selected: MaterialCardView, selectedTv: TextView,
+                   unselected: MaterialCardView, unselectedTv: TextView) {
+        // Selected state
+        context?.let { selected.setCardBackgroundColor(it.getColor(R.color.assessmentBnt)) }
+        selected.strokeWidth = 0
+        context?.getColor(R.color.d900)?.let { selectedTv.setTextColor(it ) }
 
-    private fun updateYesNoButtons(isYes: Boolean) {
-        val container = binding.containerYesNo
-        val activeColor = requireContext().getColor(R.color.lime_green)
-        val inactiveColor = requireContext().getColor(R.color.surface_dark)
-        val activeTextColor = requireContext().getColor(R.color.black)
-        val inactiveTextColor = requireContext().getColor(R.color.text_secondary)
-
-        container.btnNo.setBackgroundColor(if (!isYes) activeColor else inactiveColor)
-        container.btnNo.setTextColor(if (!isYes) activeTextColor else inactiveTextColor)
-        container.btnYes.setBackgroundColor(if (isYes) activeColor else inactiveColor)
-        container.btnYes.setTextColor(if (isYes) activeTextColor else inactiveTextColor)
+        // Unselected state
+        unselected.setCardBackgroundColor(Color.TRANSPARENT)
+        unselected.setStrokeColor(Color.parseColor("#4DA1A1A1"))
+        unselected.strokeWidth = 1  // back to border
+        context?.let { unselectedTv.setTextColor(it.getColor(R.color.d60)) }
     }
+//    private fun updateYesNoButtons(isYes: Boolean) {
+//        val container = binding.containerYesNo
+//        val activeColor = requireContext().getColor(R.color.lime_green)
+//        val inactiveColor = requireContext().getColor(R.color.surface_dark)
+//        val activeTextColor = requireContext().getColor(R.color.black)
+//        val inactiveTextColor = requireContext().getColor(R.color.text_secondary)
+//
+//        container.cardNo.setBackgroundColor(if (!isYes) activeColor else inactiveColor)
+//        container.tvNo.setTextColor(if (!isYes) activeTextColor else inactiveTextColor)
+//        container.cardYes.setBackgroundColor(if (isYes) activeColor else inactiveColor)
+//        container.tvYes.setTextColor(if (isYes) activeTextColor else inactiveTextColor)
+//    }
 
     private fun setupConditionalRadioList(options: List<String>) {
         val container = binding.containerYesNo
@@ -231,7 +268,8 @@ class AssessmentFragment : Fragment() {
         binding.btnNext.isEnabled = hasAnswer
         binding.btnNext.alpha = if (hasAnswer) 1f else 0.4f
 
-        binding.btnPrevious.visibility = if (viewModel.isFirstQuestion()) View.INVISIBLE else View.VISIBLE
+        binding.btnPrevious.visibility = if (viewModel.isFirstQuestion()) View.GONE else View.VISIBLE
+        binding.tvSkip.visibility = if (viewModel.isLastQuestion()) View.GONE else View.VISIBLE
     }
 
     override fun onDestroyView() {

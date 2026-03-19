@@ -4,18 +4,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000">
+    android:background="@drawable/ic_assesment_bg"
+    >
 
     <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
         android:layout_height="56dp"
-        android:paddingStart="4dp"
         app:navigationIcon="@drawable/ic_back_arrow"
-        app:navigationIconTint="#FFFFFF"
+        app:navigationIconTint="@color/white"
         app:title="Assessment"
-        app:titleTextColor="#FFFFFF"
+        app:titleTextColor="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:titleTextAppearance="@style/ToolbarTitleStyle"
@@ -24,8 +24,9 @@
     <View
         android:id="@+id/divider"
         android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="#1E1E1E"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/dividerColor"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -55,8 +56,9 @@
                 android:id="@+id/tvQuestionCounter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#888888"
-                android:textSize="14sp"
+                android:textColor="#B38F8F8F"
+                android:textSize="16sp"
+                android:fontFamily="@font/manrope_bold"
                 android:layout_marginBottom="16dp" />
 
             <!-- Question text -->
@@ -64,10 +66,10 @@
                 android:id="@+id/tvQuestion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
+                android:fontFamily="@font/manrope_medium"
                 android:textSize="26sp"
-                android:textStyle="bold"
-                android:lineSpacingExtra="4dp"
+                android:lineSpacingExtra="2dp"
                 android:layout_marginBottom="16dp" />
 
             <!-- Helper text -->
@@ -75,9 +77,9 @@
                 android:id="@+id/tvHelper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#888888"
-                android:textSize="13sp"
-                android:lineSpacingExtra="3dp"
+                android:textColor="#B38F8F8F"
+                android:textSize="15sp"
+                android:lineSpacingExtra="2dp"
                 android:layout_marginBottom="24dp" />
 
             <!-- Radio list container (Q1, Q4) -->
@@ -126,7 +128,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginBottom="10dp"
-            android:weightSum="2">
+            >
 
             <Button
                 android:id="@+id/btnPrevious"
@@ -135,12 +137,12 @@
                 android:layout_weight="1"
                 android:layout_marginEnd="8dp"
                 android:text="Previous"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
                 android:textSize="15sp"
-                android:textStyle="bold"
+                android:fontFamily="@font/manrope_bold"
                 android:backgroundTint="#2A2A2A"
                 android:stateListAnimator="@null"
-                app:cornerRadius="26dp" />
+                app:cornerRadius="36dp" />
 
             <Button
                 android:id="@+id/btnNext"
@@ -149,10 +151,11 @@
                 android:layout_weight="1"
                 android:layout_marginStart="8dp"
                 android:text="Next"
-                android:textColor="#000000"
+                android:textColor="@color/d900"
                 android:textSize="15sp"
+                android:fontFamily="@font/manrope_bold"
                 android:textStyle="bold"
-                android:backgroundTint="#B8FF4F"
+                android:backgroundTint="@color/assessmentBnt"
                 android:stateListAnimator="@null"
                 app:cornerRadius="26dp" />
         </LinearLayout>
@@ -162,10 +165,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Skip this question"
-            android:textColor="#666666"
+            android:textColor="@color/white70"
             android:textSize="13sp"
             android:gravity="center"
             android:paddingTop="4dp"
+            android:fontFamily="@font/manrope_regular"
             android:paddingBottom="4dp" />
 
     </LinearLayout>
