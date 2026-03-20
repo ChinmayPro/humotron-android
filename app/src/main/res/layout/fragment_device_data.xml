@@ -39,7 +39,6 @@
             android:backgroundTint="@android:color/transparent"
             app:elevation="0dp">
 
-            <!-- HEADER -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
@@ -96,10 +95,17 @@
                     app:layout_constraintTop_toBottomOf="@id/btnTakeReading">
 
                     <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_bt_status"
+                        android:layout_width="20dip"
+                        android:layout_height="20dip"
+                        android:layout_marginStart="@dimen/_5dp"
+                        app:srcCompat="@drawable/ic_bluetooth_disabled_24px" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivDeviceStatus"
                         android:layout_width="@dimen/_7dp"
                         android:layout_height="@dimen/_7dp"
-                        android:layout_marginStart="@dimen/_10dp"
+                        android:layout_marginStart="@dimen/_5dp"
                         android:src="@drawable/dot_connected" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -143,7 +149,6 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!-- STICKY TAB -->
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabLayout"
                 android:layout_width="wrap_content"

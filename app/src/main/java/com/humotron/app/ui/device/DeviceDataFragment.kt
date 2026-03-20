@@ -33,6 +33,7 @@ import com.humotron.app.ui.connect.HomeViewModel
 import com.humotron.app.ui.device.adapter.MetricsAdapter
 import com.humotron.app.util.STATE_DEVICE_CHARGING
 import com.humotron.app.util.STATE_DEVICE_CONNECTED
+import com.humotron.app.util.STATE_DEVICE_CONNECTING
 import com.humotron.app.util.STATE_DEVICE_DISCHARGING
 import com.humotron.app.util.STATE_DEVICE_DISCONNECTED
 import com.humotron.app.util.convertDecimalHours
@@ -103,6 +104,10 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
 
         app.deviceManager.batteryLevel.observe(viewLifecycleOwner) {
             when (it.first) {
+                STATE_DEVICE_CONNECTING -> {
+                    binding.tvDeviceStatus.text = "Connecting"
+                }
+
                 STATE_DEVICE_CONNECTED -> {
                     binding.ivDeviceStatus.setImageResource(R.drawable.dot_connected)
                     binding.tvDeviceStatus.text = "Connected"
@@ -175,6 +180,9 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
                 )
                 viewModel.getDeviceData()
             }
+        }
+        app.deviceManager.bleAdapterEnabled.observe(viewLifecycleOwner) { isEnabled ->
+            updateBtStatusIcon(isEnabled)
         }
 
         subscribeToObserver()
@@ -468,6 +476,14 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
             R.id.action_fragmentDeviceData_to_fragmentMetricDetails,
             bundleOf("metric" to metricType)
         )
+    }
+
+    private fun updateBtStatusIcon(isEnabled: Boolean) {
+        if (isEnabled) {
+            binding.ivBtStatus.setImageResource(R.drawable.ic_bluetooth_24px)
+        } else {
+            binding.ivBtStatus.setImageResource(R.drawable.ic_bluetooth_disabled_24px)
+        }
     }
 
     override fun onDestroyView() {

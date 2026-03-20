@@ -214,4 +214,8 @@ To get started:\n
 </string>
     <string name="view_all_your_insights_here">View all your insights here.</string>
     <string name="connecting_to_device">Connecting to device</string>
+    <string name="no_device_found">No device found</string>
+    <string name="complete_your_picture">Complete Your Picture</string>
+    <string name="your_responses_help">Your responses help make insights more accurate, actionable, and personal.</string>
+    <string name="no_data_found">No data found</string>
 </resources>

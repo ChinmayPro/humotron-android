@@ -17,6 +17,7 @@ import com.humotron.app.domain.modal.param.WristBandApiParam
 import com.humotron.app.domain.modal.response.AllMetricsResponse
 import com.humotron.app.domain.modal.response.GetAllDeviceResponse
 import com.humotron.app.domain.modal.response.HardwareListData
+import com.humotron.app.domain.modal.response.MergedAssessmentResponse
 import com.humotron.app.domain.modal.response.MetricResponse
 import com.humotron.app.domain.modal.response.RingReadingData
 import com.humotron.app.domain.modal.response.TemperatureResponse
@@ -190,6 +191,18 @@ class DeviceViewModel @Inject constructor(
             getAllMetricsByDeviceIdLiveData.value = state
         }.launchIn(viewModelScope)
     }
+
+    private val _mergedAssessmentListLiveData: MutableLiveData<Resource<MergedAssessmentResponse>> =
+        MutableLiveData()
+
+    val mergedAssessmentListLiveData: LiveData<Resource<MergedAssessmentResponse>> = _mergedAssessmentListLiveData
+
+    fun getMergedAssessmentList() {
+        sleepRepository.getMergedAssessmentList().onEach { state ->
+            _mergedAssessmentListLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
+
 
     fun getHrLatestData() {
         viewModelScope.launch {

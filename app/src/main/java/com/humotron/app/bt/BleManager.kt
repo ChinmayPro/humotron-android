@@ -1,6 +1,7 @@
 package com.humotron.app.bt
 
 import android.annotation.SuppressLint
+import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattDescriptor
@@ -9,14 +10,15 @@ import android.bluetooth.BluetoothProfile
 import android.bluetooth.le.ScanCallback
 import android.bluetooth.le.ScanResult
 import android.bluetooth.le.ScanSettings
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.appcompat.app.AlertDialog
-import com.google.gson.Gson
 import com.humotron.app.R
 import com.humotron.app.core.App
-import com.humotron.app.core.Preference
 import com.humotron.app.util.handlerRemove
 import com.humotron.app.util.loge
 import com.humotron.app.util.logi
@@ -48,6 +50,42 @@ class BleManager(val app: App) {
     private var bleGatt: BluetoothGatt? = null
     private val scanDevMacList: MutableList<String> = ArrayList()
     var isScanning = false
+
+    private val mBluetoothStateReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            if (BluetoothAdapter.ACTION_STATE_CHANGED == intent.action) {
+                val state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR)
+                when (state) {
+                    BluetoothAdapter.STATE_OFF, BluetoothAdapter.STATE_TURNING_OFF -> {
+                        loge(tag, "Bluetooth state changed to OFF or TURNING_OFF")
+                        bleState = BluetoothProfile.STATE_DISCONNECTED
+                        connectedDevice = null
+                        bleGatt?.close()
+                        disconnect()
+                        postBleState()
+                        postBleAdapterState(false)
+                    }
+
+                    BluetoothAdapter.STATE_ON -> {
+                        loge(tag, "Bluetooth state changed to ON")
+                        postBleAdapterState(true)
+                    }
+                }
+            }
+        }
+    }
+
+    init {
+        val filter = IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            app.registerReceiver(mBluetoothStateReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
+        } else {
+            app.registerReceiver(mBluetoothStateReceiver, filter)
+        }
+        // Handle initial state manually
+        val isEnabled = mBluetoothAdapter?.isEnabled == true
+        postBleAdapterState(isEnabled)
+    }
 
     private val mScanCallback = object : ScanCallback() {
 
@@ -281,6 +319,16 @@ class BleManager(val app: App) {
             synchronized(mOnBleConnectionListeners) {
                 mOnBleConnectionListeners.forEach {
                     it.onBleState(bleState)
+                }
+            }
+        }
+    }
+
+    fun postBleAdapterState(isEnabled: Boolean) {
+        post {
+            synchronized(mOnBleConnectionListeners) {
+                mOnBleConnectionListeners.forEach {
+                    it.onBleAdapterStateChanged(isEnabled)
                 }
             }
         }

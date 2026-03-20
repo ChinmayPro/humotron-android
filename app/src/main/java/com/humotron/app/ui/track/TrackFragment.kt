@@ -7,6 +7,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.TransitionManager
 import com.google.android.material.transition.MaterialFade
 import com.humotron.app.R
@@ -15,8 +16,11 @@ import com.humotron.app.core.base.BaseFragment
 import com.humotron.app.data.network.Status
 import com.humotron.app.databinding.FragmentTrackBinding
 import com.humotron.app.domain.modal.response.GetAllDeviceResponse.Data.Wearable
+import com.humotron.app.domain.modal.response.MergedAssessment
 import com.humotron.app.ui.connect.dialog.DeviceSelectionBottomSheet
 import com.humotron.app.ui.device.DeviceViewModel
+import com.humotron.app.util.fadeIn
+import com.humotron.app.util.showWithFade
 import com.pluto.plugins.logger.PlutoLog
 import com.yarolegovich.discretescrollview.transform.Pivot
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer
@@ -30,6 +34,7 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
     private lateinit var binding: FragmentTrackBinding
     private val viewModel: DeviceViewModel by viewModels()
     private var wearableAdapter: WearableAdapter? = null
+    private var assessmentAdapter: AssessmentAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -50,6 +55,7 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
                 binding.dsvWearables.isVisible = true
             }
         }
+        viewModel.getMergedAssessmentList()
     }
 
     private fun initClicks() {
@@ -57,6 +63,7 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
         binding.swipeRefreshLayout.setOnRefreshListener {
             binding.swipeRefreshLayout.isRefreshing = false
             viewModel.refreshUserDeviceData(true)
+            viewModel.getMergedAssessmentList()
         }
     }
 
@@ -86,15 +93,11 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
                     val data = it.data?.data ?: return@observe
                     if (!data.wearables.isNullOrEmpty()) {
                         setupDiscreteScrollView(data.wearables)
-                        binding.dsvWearables.isVisible = true
+                        binding.dsvWearables.showWithFade { }
                     } else {
                         binding.dsvWearables.isVisible = false
+                        binding.clNoDeviceFound.showWithFade { }
                     }
-                    val transition = MaterialFade().apply {
-                        duration = 1000
-                    }
-                    TransitionManager.beginDelayedTransition(binding.root, transition)
-                    binding.nsvTrack.isVisible = true
                 }
 
                 Status.ERROR -> {
@@ -140,6 +143,35 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
                 }
             }
         }
+
+        viewModel.mergedAssessmentListLiveData.observe(viewLifecycleOwner) {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    hideProgress()
+                    val data = it.data?.data ?: return@observe
+                    if (data.isNotEmpty()) {
+                        setupAssessmentRecyclerView(data)
+                        binding.dsvAssessments.fadeIn()
+                        binding.clNoPictureData.isVisible = false
+                    } else {
+                        binding.dsvAssessments.isVisible = false
+                        binding.clNoPictureData.fadeIn()
+                    }
+                }
+
+                Status.ERROR -> {
+                    hideProgress()
+                }
+
+                Status.EXCEPTION -> {
+                    hideProgress()
+                }
+
+                Status.LOADING -> {
+                    //showProgress()
+                }
+            }
+        }
     }
 
     private fun setupDiscreteScrollView(wearables: List<Wearable>) {
@@ -158,6 +190,26 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
                 .build()
         )
     }
+
+    private fun setupAssessmentRecyclerView(assessments: List<MergedAssessment>) {
+        if (assessmentAdapter == null) {
+            assessmentAdapter = AssessmentAdapter(requireActivity(),assessments) { assessment ->
+                // Handle assessment item click
+            }
+            binding.dsvAssessments.adapter = assessmentAdapter
+            binding.dsvAssessments.setItemTransformer(
+                ScaleTransformer.Builder()
+                    .setMaxScale(1.05f)
+                    .setMinScale(0.8f)
+                    .setPivotX(Pivot.X.CENTER)
+                    .setPivotY(Pivot.Y.CENTER)
+                    .build()
+            )
+        } else {
+            assessmentAdapter?.updateData(assessments)
+        }
+    }
+
 
     override fun onClick(v: View?) {
         when (v) {
