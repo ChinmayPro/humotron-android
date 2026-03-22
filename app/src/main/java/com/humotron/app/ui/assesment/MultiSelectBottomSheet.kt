@@ -1,9 +1,12 @@
 package com.humotron.app.ui.assesment
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
@@ -59,13 +62,44 @@ class MultiSelectBottomSheet : BottomSheetDialogFragment() {
         binding.btnClose.setOnClickListener { dismiss() }
 
         // Build option rows dynamically
-        options.forEach { option ->
+//        options.forEach { option ->
+//            val row = layoutInflater.inflate(
+//                R.layout.item_multiselect_row,
+//                binding.optionsContainer,
+//                false
+//            )
+//            val tvLabel = row.findViewById<android.widget.TextView>(R.id.tvOptionLabel)
+//            val checkbox = row.findViewById<View>(R.id.viewCheckbox)
+//            val checkboxBg = row.findViewById<View>(R.id.viewCheckboxBg)
+//
+//            tvLabel.text = option
+//
+//            fun updateCheckbox() {
+//                val isSelected = selectedItems.contains(option)
+//                checkboxBg.setBackgroundResource(
+//                    if (isSelected) R.drawable.bg_checkbox_selected else R.drawable.bg_checkbox_unselected
+//                )
+//            }
+//            updateCheckbox()
+//
+//            row.setOnClickListener {
+//                if (selectedItems.contains(option)) selectedItems.remove(option)
+//                else selectedItems.add(option)
+//                updateCheckbox()
+//            }
+//
+//            binding.optionsContainer.addView(row)
+//
+//        }
+        options.forEachIndexed { index, option ->
+
             val row = layoutInflater.inflate(
                 R.layout.item_multiselect_row,
                 binding.optionsContainer,
                 false
             )
-            val tvLabel = row.findViewById<android.widget.TextView>(R.id.tvOptionLabel)
+
+            val tvLabel = row.findViewById<TextView>(R.id.tvOptionLabel)
             val checkbox = row.findViewById<View>(R.id.viewCheckbox)
             val checkboxBg = row.findViewById<View>(R.id.viewCheckboxBg)
 
@@ -74,7 +108,8 @@ class MultiSelectBottomSheet : BottomSheetDialogFragment() {
             fun updateCheckbox() {
                 val isSelected = selectedItems.contains(option)
                 checkboxBg.setBackgroundResource(
-                    if (isSelected) R.drawable.bg_checkbox_selected else R.drawable.bg_checkbox_unselected
+                    if (isSelected) R.drawable.bg_checkbox_selected
+                    else R.drawable.bg_checkbox_unselected
                 )
             }
             updateCheckbox()
@@ -86,6 +121,18 @@ class MultiSelectBottomSheet : BottomSheetDialogFragment() {
             }
 
             binding.optionsContainer.addView(row)
+
+            // ✅ Divider add karo (last item skip)
+            if (index != options.lastIndex) {
+                val divider = View(requireContext()).apply {
+                    layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        1
+                    )
+                    setBackgroundColor(Color.parseColor("#4E4E4E"))
+                }
+                binding.optionsContainer.addView(divider)
+            }
         }
 
         binding.btnSave.setOnClickListener {

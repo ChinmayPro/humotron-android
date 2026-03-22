@@ -32,9 +32,13 @@ import com.humotron.app.domain.modal.response.TemperatureResponse
 import com.humotron.app.domain.modal.response.UseCaseResponse
 import com.humotron.app.domain.modal.response.VerifyOtpResponse
 import com.humotron.app.domain.modal.response.WristBandSleepDurationResponse
+import com.humotron.app.domain.modal.response.AssessmentResponse
+import com.humotron.app.domain.modal.response.SubmitAnswerRequest
+import com.humotron.app.domain.modal.response.SubmitAnswerResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -165,4 +169,14 @@ interface AppApi {
     @GET("book/getBookById/{bookId}")
     suspend fun getBookSummary(@Path("bookId") bookId: String): Response<BookDetailResponse>
 
+    @GET("assessment/getAssessmentById/{id}")
+    suspend fun getAssessment(
+        @Path("id") id: String,
+        @Header("Authorization") token: String
+    ): Response<AssessmentResponse>
+    @POST("assessmentsQuestionAnswer/createAssessmentQuestionAnswer")
+    suspend fun submitAssessmentAnswers(
+        @Header("Authorization") token: String,
+        @Body request: SubmitAnswerRequest
+    ): Response<SubmitAnswerResponse>
 }

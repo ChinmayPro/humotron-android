@@ -224,4 +224,6 @@ To get started:\n
     <string name="questions">Questions</string>
     <string name="proceed_to_assessment">Proceed to Assessment</string>
     <string name="note_this_assessment_does_not_replace_professional_medical_advice_if_you_re_experiencing_significant_sleep_issues_it_s_best_to_consult_with_a_healthcare_provider_directly">Note: This assessment does not replace professional medical advice. If you\'re experiencing significant sleep issues, it\'s best to consult with a healthcare provider directly.</string>
+    <string name="select_options">Select options</string>
+    <string name="you_can_select_multiple_options">You can select multiple options.</string>
 </resources>

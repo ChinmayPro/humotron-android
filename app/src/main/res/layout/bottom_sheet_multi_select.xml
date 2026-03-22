@@ -23,17 +23,18 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Select options"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                android:textStyle="bold"
+                android:text="@string/select_options"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:fontFamily="@font/manrope_bold"
                 android:layout_marginBottom="4dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="You can select multiple options."
-                android:textColor="#888888"
+                android:text="@string/you_can_select_multiple_options"
+                android:textColor="@color/text_secondary"
+                android:fontFamily="@font/manrope_regular"
                 android:textSize="13sp" />
         </LinearLayout>
 
@@ -43,6 +44,7 @@
             android:layout_height="36dp"
             android:layout_gravity="end|center_vertical"
             android:src="@drawable/ic_close"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Close" />
     </FrameLayout>
 
@@ -50,7 +52,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#2A2A2A"
+        android:background="#4E4E4E"
         android:layout_marginTop="16dp" />
 
     <!-- Options list -->
@@ -64,22 +66,22 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#2A2A2A" />
+        android:background="#4E4E4E" />
 
     <!-- Save button -->
     <Button
         android:id="@+id/btnSave"
         android:layout_width="match_parent"
-        android:layout_height="52dp"
+        android:layout_height="55dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="28dp"
         android:text="Save"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:backgroundTint="#B8FF4F"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:fontFamily="@font/manrope_bold"
+        android:backgroundTint="@color/colorBgBtn"
         android:stateListAnimator="@null"
         app:cornerRadius="26dp"
         xmlns:app="http://schemas.android.com/apk/res-auto" />
