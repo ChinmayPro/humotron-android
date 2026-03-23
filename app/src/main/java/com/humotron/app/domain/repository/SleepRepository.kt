@@ -27,6 +27,7 @@ import com.humotron.app.domain.modal.response.AllMetricsResponse
 import com.humotron.app.domain.modal.response.DailyCalculatedMetricsResponse
 import com.humotron.app.domain.modal.response.GetAllDeviceResponse
 import com.humotron.app.domain.modal.response.HardwareListData
+import com.humotron.app.domain.modal.response.MergedAssessmentResponse
 import com.humotron.app.domain.modal.response.MetricResponse
 import com.humotron.app.domain.modal.response.RingReadingData
 import com.humotron.app.domain.modal.response.TemperatureResponse
@@ -316,6 +317,20 @@ class SleepRepository(
                     api.getWristBandSleepDurationData(deviceId, startDate, endDate, offset),
                     false
                 )
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun getMergedAssessmentList(): Flow<Resource<MergedAssessmentResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response =
+                responseHandler.handleResponse(api.getMergedAssessmentList(), false)
             emit(response)
         } catch (e: Exception) {
             emit(responseHandler.handleException(e))

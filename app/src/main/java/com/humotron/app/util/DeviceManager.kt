@@ -30,8 +30,11 @@ class DeviceManager(val app: App) : OnBleConnectionListener, OnSleepDataLoadList
     val batteryLevel = MutableLiveData(STATE_DEVICE_DISCONNECTED to 0)
     val sycProgress = MutableLiveData(0)
     val connected = MutableLiveData(false)
+    val bleAdapterEnabled = MutableLiveData<Boolean>()
     var isSyncingData = MutableLiveData<Boolean?>(null)
     var homeViewModel: HomeViewModel? = null
+
+    var lastConnectedAddress: String? = null
 
     override fun onBleState(state: Int) {
         when (state) {
@@ -42,6 +45,7 @@ class DeviceManager(val app: App) : OnBleConnectionListener, OnSleepDataLoadList
             }
 
             BluetoothProfile.STATE_CONNECTED -> {
+                lastConnectedAddress = app.bleManager.connectedDevice?.address
                 batteryLevel.postValue(STATE_DEVICE_CONNECTED to 0)
                 connected.postValue(true)
             }
@@ -67,6 +71,24 @@ class DeviceManager(val app: App) : OnBleConnectionListener, OnSleepDataLoadList
                         }
                     }
                 }
+        }
+    }
+
+    override fun onBleAdapterStateChanged(isEnabled: Boolean) {
+        logi(TAG, "onBleAdapterStateChanged isEnabled: $isEnabled")
+        bleAdapterEnabled.postValue(isEnabled)
+
+        if (isEnabled) {
+            lastConnectedAddress?.let { address ->
+                postDelay({
+                    if (app.bleManager.bleState == BluetoothProfile.STATE_DISCONNECTED) {
+                        loge("DeviceManager", "Auto reconnect to $address")
+                        connect(address)
+                    }
+                }, 1000L) //delay required
+            }
+        } else {
+            connected.postValue(false)
         }
     }
 
