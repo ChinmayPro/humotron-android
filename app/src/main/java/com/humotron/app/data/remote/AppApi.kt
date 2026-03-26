@@ -15,6 +15,7 @@ import com.humotron.app.domain.modal.response.AddDeviceDataResponse
 import com.humotron.app.domain.modal.response.AddHardwareResponse
 import com.humotron.app.domain.modal.response.AddToCartResponse
 import com.humotron.app.domain.modal.response.AllMetricsResponse
+import com.humotron.app.domain.modal.response.AssessmentResponse
 import com.humotron.app.domain.modal.response.BioHackProgressResponse
 import com.humotron.app.domain.modal.response.BookDetailResponse
 import com.humotron.app.domain.modal.response.BookLikeResponse
@@ -29,6 +30,8 @@ import com.humotron.app.domain.modal.response.NuggetPreference
 import com.humotron.app.domain.modal.response.NuggetsReactionResponse
 import com.humotron.app.domain.modal.response.NuggetsTypeAndLevelResponse
 import com.humotron.app.domain.modal.response.RingReadingData
+import com.humotron.app.domain.modal.response.SubmitAnswerRequest
+import com.humotron.app.domain.modal.response.SubmitAnswerResponse
 import com.humotron.app.domain.modal.response.TemperatureResponse
 import com.humotron.app.domain.modal.response.UseCaseResponse
 import com.humotron.app.domain.modal.response.VerifyOtpResponse
@@ -36,6 +39,7 @@ import com.humotron.app.domain.modal.response.WristBandSleepDurationResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -168,4 +172,15 @@ interface AppApi {
 
     @POST("userAssessment/getMergedAssessmentList")
     suspend fun getMergedAssessmentList(): Response<MergedAssessmentResponse>
+
+    @GET("assessment/getAssessmentById/{id}")
+    suspend fun getAssessment(
+        @Path("id") id: String,
+        @Header("Authorization") token: String
+    ): Response<AssessmentResponse>
+    @POST("assessmentsQuestionAnswer/createAssessmentQuestionAnswer")
+    suspend fun submitAssessmentAnswers(
+        @Header("Authorization") token: String,
+        @Body request: SubmitAnswerRequest
+    ): Response<SubmitAnswerResponse>
 }

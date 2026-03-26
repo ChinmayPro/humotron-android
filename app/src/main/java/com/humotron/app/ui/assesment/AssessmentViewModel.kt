@@ -1,14 +1,16 @@
+
 package com.humotron.app.ui.assesment
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.humotron.app.core.AssesmentTempId
 import com.humotron.app.data.network.Status
 import com.humotron.app.data.repository.AssessmentRepository
 import com.humotron.app.domain.modal.response.AnswerItem
 import com.humotron.app.domain.modal.response.Assessment
+import com.humotron.app.domain.modal.response.MergedAssessment
 import com.humotron.app.domain.modal.response.SubmitAnswerRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -32,7 +34,6 @@ class AssessmentViewModel @Inject constructor(
 
     private val answers = mutableMapOf<Int, AssessmentAnswer>()
 
-
     private val _assessment = MutableLiveData<Assessment?>()
     val assessment: LiveData<Assessment?> = _assessment
 
@@ -45,12 +46,17 @@ class AssessmentViewModel @Inject constructor(
     private val _errorMessage = MutableLiveData<String?>()
     val errorMessage: LiveData<String?> = _errorMessage
 
+    private var currentAssessmentId: String = ""
+    private var currentAuthToken: String = ""
 
-    fun loadAssessment() {
+    fun loadAssessment(assessmentId: String, authToken: String) {
+        currentAssessmentId = assessmentId
+        currentAuthToken = authToken
+
         viewModelScope.launch {
             repository.getAssessment(
-                id = AssesmentTempId,
-                token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdE5hbWUiOiJDaGlubWF5IiwibGFzdE5hbWUiOiJCaGF0dCIsImVtYWlsIjoiY2hpbm1heS5iaGF0dEBnbWFpbC5jb20iLCJjb250YWN0Tm8iOiI5ODg5ODk4OTg5IiwidXNlclR5cGUiOiJVU0VSIiwidXNlcklkIjoiNjVjMTcwYzg3N2I5NWM3OGNkM2ZhMmJjIiwiaWF0IjoxNzcxODM5OTgyfQ.Uocg15IrdDB_Z1wz7VAkHhiAxJhmlTao6Gtgu03mtTc"
+                id = assessmentId,
+                token = "Bearer $authToken"
             ).collect { resource ->
                 when (resource.status) {
                     Status.LOADING -> _isLoading.value = true
@@ -64,13 +70,12 @@ class AssessmentViewModel @Inject constructor(
 
                             _assessment.value = it.copy(assessmentQuestions = sorted)
 
-                            // Map API questions → AssessmentQuestion list
                             val mappedQuestions = sorted.mapIndexed { index, q ->
                                 q.toAssessmentQuestion(index + 1)
                             }
                             _questions.value = mappedQuestions
 
-                            // ✅ Restore pre-existing answers from API
+                            // API se existing answers restore karo
                             sorted.forEachIndexed { index, q ->
                                 val questionId = index + 1
 
@@ -79,10 +84,8 @@ class AssessmentViewModel @Inject constructor(
                                     "MULTIOPTIONS" -> {
                                         val existingAnswer = q.assessmentQuestionAnswer.firstOrNull()
                                             ?: return@forEachIndexed
-
                                         val options = q.options.map { it.value }
                                         val selectedIndex = options.indexOf(existingAnswer)
-
                                         if (selectedIndex >= 0) {
                                             answers[questionId] = AssessmentAnswer(
                                                 questionId = questionId,
@@ -94,13 +97,11 @@ class AssessmentViewModel @Inject constructor(
                                     "YESNO" -> {
                                         val existingAnswer = q.assessmentQuestionAnswer.firstOrNull()
                                             ?: return@forEachIndexed
-
                                         val selectedIndex = when (existingAnswer.lowercase()) {
                                             "yes" -> 1
                                             "no"  -> 0
                                             else  -> return@forEachIndexed
                                         }
-
                                         answers[questionId] = AssessmentAnswer(
                                             questionId = questionId,
                                             selectedIndex = selectedIndex
@@ -110,7 +111,6 @@ class AssessmentViewModel @Inject constructor(
                                     "DROPDOWN" -> {
                                         val existingAnswers = q.assessmentQuestionAnswer
                                         if (existingAnswers.isEmpty()) return@forEachIndexed
-
                                         answers[questionId] = AssessmentAnswer(
                                             questionId = questionId,
                                             selectedItems = existingAnswers
@@ -119,8 +119,8 @@ class AssessmentViewModel @Inject constructor(
                                 }
                             }
 
-                            // Reset index & notify UI
-                            _currentIndex.value = 0
+                            val startIndex = getFirstUnansweredIndex()
+                            _currentIndex.value = startIndex
                             _questionsReady.value = true
                         }
                     }
@@ -131,8 +131,68 @@ class AssessmentViewModel @Inject constructor(
             }
         }
     }
-    fun submitAllAnswers() {
-        val assessmentId = AssesmentTempId
+
+    // ✅ Single answer silently API ko bhejo — Next/Save click pe call hoga
+    fun saveAnswerToApi(answer: AssessmentAnswer, mergedAssessment: MergedAssessment?) {
+        val question = _questions.value?.find { it.id == answer.questionId } ?: return
+
+        val followUpQuestionId = _assessment.value?.assessmentQuestions
+            ?.find { it.followUpQuestionId.isNotEmpty() }
+            ?.followUpQuestionId
+
+        val answerStrings: List<String> = when {
+            answer.selectedItems.isNotEmpty() -> answer.selectedItems
+
+            answer.selectedIndex != null -> {
+                when (val type = question.type) {
+                    is QuestionType.YesNo ->
+                        if (answer.selectedIndex == 1) listOf("Yes") else listOf("No")
+                    is QuestionType.RadioList ->
+                        listOf(type.options.getOrElse(answer.selectedIndex) { "" })
+                    is QuestionType.MultiSelect ->
+                        listOf(type.options.getOrElse(answer.selectedIndex) { "" })
+                }
+            }
+
+            else -> return
+        }
+
+        val isFollowUp = followUpQuestionId != null &&
+                question.apiQuestionId == followUpQuestionId
+
+        val answerItem = if (isFollowUp) {
+            AnswerItem(
+                assessmentId = mergedAssessment?.assessmentId ?: "",
+                assessmentQuestionFollowUpId = question.apiQuestionId,
+                assessmentQuestionFollowUpAnswer = answerStrings,
+                shouldSave = true
+            )
+        } else {
+            AnswerItem(
+                assessmentId = mergedAssessment?.assessmentId ?: "",
+                assessmentQuestionId = question.apiQuestionId,
+                assessmentQuestionAnswer = answerStrings,
+                shouldSave = true
+            )
+        }
+
+        // Silent fire-and-forget — failure pe kuch nahi karega
+        viewModelScope.launch {
+            try {
+                repository.submitAnswers(
+                    token = "Bearer $currentAuthToken",
+                    request = SubmitAnswerRequest(data = listOf(answerItem))
+                ).collect { resource ->
+                    Log.d("TAG", "saveAnswerToApi: ${resource.status} for questionId=${answer.questionId}")
+                }
+            } catch (e: Exception) {
+                Log.e("TAG", "saveAnswerToApi: silently failed", e)
+            }
+        }
+    }
+
+    // ✅ Final Save button pe — sabhi answers ek saath bhejo (safety net)
+    fun submitAllAnswers(mergedAssessment: MergedAssessment?, authToken: String?) {
         val followUpQuestionId = _assessment.value?.assessmentQuestions
             ?.find { it.followUpQuestionId.isNotEmpty() }
             ?.followUpQuestionId
@@ -141,7 +201,6 @@ class AssessmentViewModel @Inject constructor(
             val question = _questions.value?.find { it.id == questionId }
                 ?: return@mapNotNull null
 
-            // Answer strings build karo
             val answerStrings: List<String> = when {
                 answer.selectedItems.isNotEmpty() -> answer.selectedItems
 
@@ -149,10 +208,8 @@ class AssessmentViewModel @Inject constructor(
                     when (val type = question.type) {
                         is QuestionType.YesNo ->
                             if (answer.selectedIndex == 1) listOf("Yes") else listOf("No")
-
                         is QuestionType.RadioList ->
                             listOf(type.options.getOrElse(answer.selectedIndex) { "" })
-
                         is QuestionType.MultiSelect ->
                             listOf(type.options.getOrElse(answer.selectedIndex) { "" })
                     }
@@ -165,17 +222,15 @@ class AssessmentViewModel @Inject constructor(
                     question.apiQuestionId == followUpQuestionId
 
             if (isFollowUp) {
-                // Follow-up question
                 AnswerItem(
-                    assessmentId = assessmentId,
+                    assessmentId = mergedAssessment?.assessmentId ?: "",
                     assessmentQuestionFollowUpId = question.apiQuestionId,
                     assessmentQuestionFollowUpAnswer = answerStrings,
                     shouldSave = true
                 )
             } else {
-                // Normal question
                 AnswerItem(
-                    assessmentId = assessmentId,
+                    assessmentId = mergedAssessment?.assessmentId ?: "",
                     assessmentQuestionId = question.apiQuestionId,
                     assessmentQuestionAnswer = answerStrings,
                     shouldSave = true
@@ -184,13 +239,14 @@ class AssessmentViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
+            Log.e("TAG", "submitAllAnswers: $answerItems")
             repository.submitAnswers(
-                token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdE5hbWUiOiJDaGlubWF5IiwibGFzdE5hbWUiOiJCaGF0dCIsImVtYWlsIjoiY2hpbm1heS5iaGF0dEBnbWFpbC5jb20iLCJjb250YWN0Tm8iOiI5ODg5ODk4OTg5IiwidXNlclR5cGUiOiJVU0VSIiwidXNlcklkIjoiNjVjMTcwYzg3N2I5NWM3OGNkM2ZhMmJjIiwiaWF0IjoxNzcxODM5OTgyfQ.Uocg15IrdDB_Z1wz7VAkHhiAxJhmlTao6Gtgu03mtTc",
+                token = "Bearer $authToken",
                 request = SubmitAnswerRequest(data = answerItems)
             ).collect { resource ->
                 when (resource.status) {
-                    Status.LOADING   -> _isLoading.value = true
-                    Status.SUCCESS   -> {
+                    Status.LOADING -> _isLoading.value = true
+                    Status.SUCCESS -> {
                         _isLoading.value = false
                         _submitSuccess.value = true
                         _errorMessage.value = resource.data?.message
@@ -201,59 +257,20 @@ class AssessmentViewModel @Inject constructor(
             }
         }
     }
-    fun submitAllAnswers00() {
-        val assessmentId = AssesmentTempId
 
-        val answerItems = answers.mapNotNull { (questionId, answer) ->
-            val question = _questions.value?.find { it.id == questionId } ?: return@mapNotNull null
-            val answerStrings: List<String> = when {
-                answer.selectedItems.isNotEmpty() -> answer.selectedItems
-
-                answer.selectedIndex != null -> {
-                    val options = when (val type = question.type) {
-                        is QuestionType.RadioList -> type.options
-                        is QuestionType.YesNo -> listOf("No", "Yes")
-                        is QuestionType.MultiSelect -> type.options
-                    }
-                    listOf(options.getOrElse(answer.selectedIndex) { "" })
-                }
-
-                else -> return@mapNotNull null
-            }
-            AnswerItem(
-                assessmentId = assessmentId,
-                assessmentQuestionId = question.apiQuestionId,
-                assessmentQuestionAnswer = answerStrings,
-                shouldSave = true
-            )
+    fun getFirstUnansweredIndex(): Int {
+        val questions = _questions.value ?: return 0
+        if (questions.isEmpty()) return 0
+        val firstUnanswered = questions.indexOfFirst { q -> answers[q.id] == null }
+        return when {
+            firstUnanswered >= 0 -> firstUnanswered
+            else -> questions.size - 1
         }
+    }
 
-        viewModelScope.launch {
-            repository.submitAnswers(
-                token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdE5hbWUiOiJDaGlubWF5IiwibGFzdE5hbWUiOiJCaGF0dCIsImVtYWlsIjoiY2hpbm1heS5iaGF0dEBnbWFpbC5jb20iLCJjb250YWN0Tm8iOiI5ODg5ODk4OTg5IiwidXNlclR5cGUiOiJVU0VSIiwidXNlcklkIjoiNjVjMTcwYzg3N2I5NWM3OGNkM2ZhMmJjIiwiaWF0IjoxNzcxODM5OTgyfQ.Uocg15IrdDB_Z1wz7VAkHhiAxJhmlTao6Gtgu03mtTc",
-                request = SubmitAnswerRequest(data = answerItems)
-            ).collect { resource ->
-
-                when (resource.status) {
-                    Status.LOADING -> _isLoading.value = true
-
-                    Status.SUCCESS -> {
-                        _isLoading.value = false
-                        _submitSuccess.value = true
-                        _errorMessage.value = resource.data?.message
-
-                    }
-
-                    Status.ERROR -> {
-                        _isLoading.value = false
-                    }
-
-                    Status.EXCEPTION -> {
-                        _isLoading.value = false
-                    }
-                }
-            }
-        }
+    fun jumpToIndex(index: Int) {
+        val safeIndex = index.coerceIn(0, (totalQuestions - 1).coerceAtLeast(0))
+        _currentIndex.value = safeIndex
     }
 
     fun getCurrentAnswer(): AssessmentAnswer? = answers[currentQuestion!!.id]
@@ -285,6 +302,4 @@ class AssessmentViewModel @Inject constructor(
 
     fun isLastQuestion() = (_currentIndex.value ?: 0) == totalQuestions - 1
     fun isFirstQuestion() = (_currentIndex.value ?: 0) == 0
-
-    fun getAllAnswers(): Map<Int, AssessmentAnswer> = answers.toMap()
 }

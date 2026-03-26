@@ -3,6 +3,8 @@ package com.humotron.app.core
 object AppConstant {
 
     const val BASE_URL: String = "https://api.humotron.com:4200/api/v1/"
+    const val ASSESSMENT_ID="assessmentId"
+    const val ASSESSMENT="assessment"
 
 
 }
@@ -28,6 +30,8 @@ class Preference {
         const val WEARABLE_RING = "wearable_ring"
         const val HARDWARE_DATA = "hardware_data"
         const val RECORD_DATE = "recorded_time"
+        const val PREF_ASSESSMENT_ANSWERS = "assessment_answers"
+
 
     }
 }

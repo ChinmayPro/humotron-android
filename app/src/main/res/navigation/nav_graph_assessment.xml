@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <navigation
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,6 +7,12 @@
     <fragment
         android:id="@+id/assessmentFragment"
         android:name="com.humotron.app.ui.assesment.AssessmentFragment"
-        android:label="Assessment" />
+        android:label="Assessment">
+
+        <argument
+            android:name="assessment"
+            app:argType="string" />
+
+    </fragment>
 
 </navigation>

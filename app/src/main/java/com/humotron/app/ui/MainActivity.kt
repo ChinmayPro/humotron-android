@@ -129,7 +129,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             binding.llDecode -> {
-                showAssessmentSheet()
+//                showAssessmentSheet()
             }
         }
     }
@@ -140,7 +140,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
         sheet.show(childFragmentManager, CardiovascularAssessmentBottomSheet.TAG)
     }*/
-  private fun showAssessmentSheet() {
+/*  private fun showAssessmentSheet() {
       val sheet = CardiovascularAssessmentBottomSheet.newInstance()
 
       sheet.onProceedClicked = {
@@ -151,7 +151,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
       }
 
       sheet.show(supportFragmentManager, CardiovascularAssessmentBottomSheet.TAG)
-  }
+  }*/
 
     private fun highlightView(count: Int) {
         val textList = listOf(binding.tvTrack, binding.tvBioHack)

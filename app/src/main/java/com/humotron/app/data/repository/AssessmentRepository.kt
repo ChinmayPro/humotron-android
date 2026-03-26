@@ -1,6 +1,5 @@
 package com.humotron.app.data.repository
 
-import android.util.Log
 import com.humotron.app.data.network.Resource
 import com.humotron.app.data.network.ResponseHandler
 import com.humotron.app.data.network.exceptions.ValidationException
@@ -18,8 +17,6 @@ constructor(
     private val api: AppApi,
     private val responseHandler: ResponseHandler,
 ) {
-
-
    suspend fun getAssessment(id: String, token: String): Flow<Resource<AssessmentResponse>> = flow {
         emit(Resource.loading())
         try {

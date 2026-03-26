@@ -218,4 +218,16 @@ To get started:\n
     <string name="complete_your_picture">Complete Your Picture</string>
     <string name="your_responses_help">Your responses help make insights more accurate, actionable, and personal.</string>
     <string name="no_data_found">No data found</string>
+    <string name="assessment_trigger">Assessment Trigger</string>
+    <string name="understanding">Understanding</string>
+    <string name="why_this_matters">Why this matters</string>
+    <string name="what_we_will_explore">What we will explore</string>
+    <string name="suggested_steps">Suggested steps</string>
+    <string name="duration">Duration</string>
+    <string name="_10_mins">10 mins</string>
+    <string name="questions">Questions</string>
+    <string name="proceed_to_assessment">Proceed to Assessment</string>
+    <string name="note_this_assessment_does_not_replace_professional_medical_advice_if_you_re_experiencing_significant_sleep_issues_it_s_best_to_consult_with_a_healthcare_provider_directly">Note: This assessment does not replace professional medical advice. If you\'re experiencing significant sleep issues, it\'s best to consult with a healthcare provider directly.</string>
+    <string name="select_options">Select options</string>
+    <string name="you_can_select_multiple_options">You can select multiple options.</string>
 </resources>
