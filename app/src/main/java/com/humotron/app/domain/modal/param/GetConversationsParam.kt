@@ -9,7 +9,9 @@ data class GetConversationsParam(
     @SerializedName("pageCount")
     val pageCount: Int,
     @SerializedName("promptId")
-    val promptId: String,
+    val promptId: String? = null,
+    @SerializedName("conversationThreadId")
+    val conversationThreadId: String? = null,
     @SerializedName("limit")
     val limit: Int
 ) : Parcelable

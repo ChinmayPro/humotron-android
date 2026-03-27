@@ -22,13 +22,25 @@ class DecodeChatAdapter(
         animatedKeys.clear()
     }
 
+    fun markAllAsAnimated(newList: List<ConversationData>) {
+        newList.forEachIndexed { index, item ->
+            val aiMessage = item.botResponse?.message ?: ""
+            val messageKey = "${index}_${aiMessage.hashCode()}"
+            animatedKeys.add(messageKey)
+        }
+    }
+
     inner class ViewHolder(val binding: ItemDecodeChatMsgBinding) : RecyclerView.ViewHolder(binding.root) {
         private var typingJob: Job? = null
         private var currentAnimatingKey: String? = null
 
         fun bind(item: ConversationData, position: Int) {
-            binding.tvUserMsg.text = item.userMessage
-            binding.tvUserMsgDate.text = formatChatDate(item.createdAt)
+            val hasUserMsg = !item.userMessage.isNullOrEmpty()
+            binding.layoutUserMsg.isVisible = hasUserMsg
+            if (hasUserMsg) {
+                binding.tvUserMsg.text = item.userMessage
+                binding.tvUserMsgDate.text = formatChatDate(item.createdAt)
+            }
 
             binding.ivLink.setOnClickListener {
                 onUserMsgClick(item)
@@ -111,8 +123,11 @@ class DecodeChatAdapter(
 
     override fun getItemCount() = items.size
 
-    fun submitList(newList: List<ConversationData>) {
+    fun submitList(newList: List<ConversationData>, isHistory: Boolean = false) {
         if (items == newList) return
+        if (isHistory) {
+            markAllAsAnimated(newList)
+        }
         items = newList
         notifyDataSetChanged()
     }

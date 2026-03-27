@@ -30,11 +30,15 @@ class DecodeViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var currentConversationThreadId: String? = null
+    private var currentPage: Int = 1
+    private var isLastPage: Boolean = false
 
     fun getThreadId(): String? = currentConversationThreadId
 
     fun resetThreadId() {
         currentConversationThreadId = null
+        currentPage = 1
+        isLastPage = false
     }
 
     private val feltOffQuestionsLiveData: SingleLiveEvent<Resource<FeltOffQuestionsResponse>> =
@@ -142,20 +146,45 @@ class DecodeViewModel @Inject constructor(
         return conversationsLiveData
     }
 
-    fun getConversationsByUserId(promptId: String, metricName: String? = null) {
+    fun getConversationsByUserId(
+        promptId: String? = null,
+        conversationThreadId: String? = null,
+        metricName: String? = null,
+        isLoadMore: Boolean = false
+    ) {
+        if (isLoadMore && isLastPage) return
+
+        if (!isLoadMore) {
+            currentPage = 1
+            isLastPage = false
+        }
+
         viewModelScope.launch {
             repository.getConversationsByUserId(
                 GetConversationsParam(
-                    pageCount = 1,
+                    pageCount = if (isLoadMore) currentPage + 1 else 1,
                     promptId = promptId,
+                    conversationThreadId = conversationThreadId,
                     limit = 10
                 )
             ).onEach { state ->
                 when (state.status) {
                     Status.SUCCESS -> {
                         if (state.data?.data.isNullOrEmpty()) {
-                            startNewChat(promptId, metricName ?: "")
+                            if (!isLoadMore) {
+                                promptId?.let {
+                                    startNewChat(it, metricName ?: "")
+                                }
+                            } else {
+                                isLastPage = true
+                            }
                         } else {
+                            if (isLoadMore) {
+                                currentPage++
+                            }
+                            if ((state.data?.data?.size ?: 0) < 10) {
+                                isLastPage = true
+                            }
                             currentConversationThreadId = state.data?.data?.firstOrNull()?.conversationThreadId
                             conversationsLiveData.value = state
                         }

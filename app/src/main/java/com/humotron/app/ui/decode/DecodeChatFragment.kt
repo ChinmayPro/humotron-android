@@ -76,15 +76,20 @@ class DecodeChatFragment : BaseFragment(R.layout.fragment_decode_chat) {
             override fun onScrolled(recyclerView: androidx.recyclerview.widget.RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 // If the user scrolls up, disable auto-scroll.
-                // canScrollVertically(1) returns true if the view can scroll down (meaning user is NOT at bottom)
                 if (recyclerView.canScrollVertically(1)) {
-                    // Only disable if the user is actively dragging.
                     if (recyclerView.scrollState == androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_DRAGGING) {
                         autoScrollEnabled = false
                     }
                 } else {
-                    // User reached the bottom, enable auto-scroll.
                     autoScrollEnabled = true
+                }
+
+                // Load more when reaching top
+                if (!recyclerView.canScrollVertically(-1) && dy < 0) {
+                    val threadId = viewModel.getThreadId()
+                    if (threadId != null) {
+                        viewModel.getConversationsByUserId(conversationThreadId = threadId, isLoadMore = true)
+                    }
                 }
             }
         })
@@ -172,7 +177,7 @@ class DecodeChatFragment : BaseFragment(R.layout.fragment_decode_chat) {
         if (viewModel.getThreadId() != null) {
             viewModel.postFollowUpConversation(message)
         } else {
-            viewModel.getConversationsByUserId(message)
+            viewModel.getConversationsByUserId(promptId = message)
         }
     }
 
@@ -192,40 +197,39 @@ class DecodeChatFragment : BaseFragment(R.layout.fragment_decode_chat) {
         viewModel.conversationsData().observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
                 Status.SUCCESS -> {
-                    val list = (resource.data?.data ?: emptyList()).reversed() // Reverse to show oldest first if API returns newest first
-                    val latestApiItem = list.lastOrNull()
-                    
-                    if (latestApiItem != null) {
-                        val currentList = chatAdapter.currentList().toMutableList()
-                        if (currentList.isNotEmpty() && currentList.last().id == null) {
-                            // Merge API response into our local/loading item
-                            val updatedItem = currentList.last().copy(
-                                id = latestApiItem.id,
-                                botResponse = latestApiItem.botResponse,
-                                createdAt = latestApiItem.createdAt ?: currentList.last().createdAt
-                            )
-                            currentList[currentList.size - 1] = updatedItem
-                            chatAdapter.submitList(currentList)
+                    val apiList = (resource.data?.data ?: emptyList()).reversed()
+                    val currentList = chatAdapter.currentList().toMutableList()
+
+                    if (apiList.isNotEmpty()) {
+                        // Check if these are new items to prepend (pagination)
+                        val firstApiId = apiList.first().id
+                        val alreadyHasFirst = currentList.any { it.id == firstApiId }
+
+                        if (!alreadyHasFirst && currentList.isNotEmpty() && !currentList.last().id.isNullOrEmpty()) {
+                            // This looks like pagination (older items)
+                            currentList.addAll(0, apiList)
+                            chatAdapter.submitList(currentList, isHistory = true)
                         } else {
-                            // No local item to merge with, likely loading a history thread
-                            chatAdapter.submitList(list)
+                            // Fresh load, history load, or update after sending message.
+                            // If apiList has only 1 item and it matches our last sent message, it's not history.
+                            // But usually, getConversationsByUserId returns the full list.
+                            // If it's the very first load, it's history.
+                            val isFirstLoad = currentList.isEmpty() || (currentList.size == 1 && currentList[0].id == null)
+                            chatAdapter.submitList(apiList, isHistory = isFirstLoad)
                         }
-                    } else if (list.isEmpty()) {
-                        val currentList = chatAdapter.currentList().toMutableList()
-                        if (currentList.isNotEmpty() && currentList.last().id == null) {
-                            // API returned nothing for our prompt, show a 'No data' response
-                            val updatedItem = currentList.last().copy(
-                                botResponse = BotResponse(success = true, message = getString(R.string.chat_bot_no_insights))
-                            )
-                            currentList[currentList.size - 1] = updatedItem
-                            chatAdapter.submitList(currentList)
-                        } else {
-                            chatAdapter.submitList(emptyList())
-                        }
+                    } else if (apiList.isEmpty() && currentList.isNotEmpty() && currentList.last().id == null) {
+                        // API returned nothing for our prompt, show a 'No data' response
+                        val updatedItem = currentList.last().copy(
+                            botResponse = BotResponse(success = true, message = getString(R.string.chat_bot_no_insights))
+                        )
+                        currentList[currentList.size - 1] = updatedItem
+                        chatAdapter.submitList(currentList)
+                    } else {
+                        chatAdapter.submitList(apiList, isHistory = true)
                     }
 
                     binding.rvChat.postDelayed({
-                        if (chatAdapter.itemCount > 0) {
+                        if (chatAdapter.itemCount > 0 && autoScrollEnabled) {
                             binding.rvChat.smoothScrollToPosition(chatAdapter.itemCount - 1)
                         }
                     }, 100)
@@ -304,7 +308,7 @@ class DecodeChatFragment : BaseFragment(R.layout.fragment_decode_chat) {
         )
         chatAdapter.submitList(listOf(loadingItem))
         
-        viewModel.getConversationsByUserId(metric.id, metric.label)
+        viewModel.getConversationsByUserId(promptId = metric.id, metricName = metric.label)
     }
 
     private fun showQuestionChat(question: FeltOffQuestionData) {
@@ -321,7 +325,7 @@ class DecodeChatFragment : BaseFragment(R.layout.fragment_decode_chat) {
         )
         chatAdapter.submitList(listOf(loadingItem))
 
-        viewModel.getConversationsByUserId(question.id ?: "", metricName = question.question)
+        viewModel.getConversationsByUserId(promptId = question.id ?: "", metricName = question.question)
     }
 
     private fun startNewChat() {
@@ -347,6 +351,6 @@ class DecodeChatFragment : BaseFragment(R.layout.fragment_decode_chat) {
         )
         chatAdapter.submitList(listOf(loadingItem))
         
-        viewModel.getConversationsByUserId(conversationId, title)
+        viewModel.getConversationsByUserId(conversationThreadId = conversationId, metricName = title)
     }
 }
