@@ -77,6 +77,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun initClicks() {
         binding.llTrack.setOnClickListener(this)
+        binding.llDecode.setOnClickListener(this)
         binding.llBioHack.setOnClickListener(this)
         binding.llProfile.setOnClickListener(this)
     }
@@ -87,9 +88,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         navController = navHostFragment.navController
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             val isVisible =
-                destination.id == R.id.fragmentTrack || destination.id == R.id.fragmentBioHack
+                destination.id == R.id.fragmentTrack || destination.id == R.id.fragmentBioHack || destination.id == R.id.fragmentDecode || destination.id == R.id.fragmentDecodeMetrics
             binding.rlBottom.isVisible = isVisible
             binding.rlBtnNavigation.isVisible = isVisible
+
+            when (destination.id) {
+                R.id.fragmentTrack -> highlightView(0)
+                R.id.fragmentDecode, R.id.fragmentDecodeMetrics -> highlightView(1)
+                R.id.fragmentBioHack -> highlightView(2)
+            }
         }
         highlightView(0)
         // Start background connection service
@@ -116,9 +123,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 highlightView(0)
             }
 
+            binding.llDecode -> {
+                navController.navigate(R.id.fragmentDecode)
+                highlightView(1)
+            }
+
             binding.llBioHack -> {
                 navController.navigate(R.id.fragmentBioHack)
-                highlightView(1)
+                highlightView(2)
             }
 
             binding.llProfile -> {
@@ -128,7 +140,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun highlightView(count: Int) {
-        val textList = listOf(binding.tvTrack, binding.tvBioHack)
+        val textList = listOf(binding.tvTrack, binding.tvDecode, binding.tvBioHack)
         for (i in 0 until textList.size) {
             if (i == count) {
                 textList[i].setTextColor(ContextCompat.getColor(this, R.color.colorBgBtn))
@@ -137,12 +149,22 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
 
-        if (count == 0) {
-            binding.ivTrack.setImageResource(R.drawable.ic_trends_selected)
-            binding.ivBioHack.setImageResource(R.drawable.ic_bio_hack)
-        } else {
-            binding.ivTrack.setImageResource(R.drawable.ic_trends)
-            binding.ivBioHack.setImageResource(R.drawable.ic_bio_hack_selected)
+        when (count) {
+            0 -> {
+                binding.ivTrack.setImageResource(R.drawable.ic_trends_selected)
+                binding.ivDecode.setImageResource(R.drawable.ic_decode)
+                binding.ivBioHack.setImageResource(R.drawable.ic_bio_hack)
+            }
+            1 -> {
+                binding.ivTrack.setImageResource(R.drawable.ic_trends)
+                binding.ivDecode.setImageResource(R.drawable.ic_decode_selected)
+                binding.ivBioHack.setImageResource(R.drawable.ic_bio_hack)
+            }
+            2 -> {
+                binding.ivTrack.setImageResource(R.drawable.ic_trends)
+                binding.ivDecode.setImageResource(R.drawable.ic_decode)
+                binding.ivBioHack.setImageResource(R.drawable.ic_bio_hack_selected)
+            }
         }
     }
 

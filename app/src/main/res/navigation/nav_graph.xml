@@ -11,6 +11,11 @@
         tools:layout="@layout/fragment_track" />
 
     <fragment
+        android:id="@+id/fragmentDecode"
+        android:name="com.humotron.app.ui.decode.DecodeFragment"
+        tools:layout="@layout/fragment_decode" />
+
+    <fragment
         android:id="@+id/fragmentBioHack"
         android:name="com.humotron.app.ui.bioHack.BioHackMainFragment" />
 
@@ -48,6 +53,23 @@
         <argument
             android:name="metric"
             app:argType="com.humotron.app.domain.modal.response.MetricType" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentDecodeMetrics"
+        android:name="com.humotron.app.ui.decode.DecodeMetricsFragment"
+        tools:layout="@layout/fragment_decode_metrics" />
+
+    <fragment
+        android:id="@+id/fragmentDecodeQuestions"
+        android:name="com.humotron.app.ui.decode.DecodeQuestionsFragment"
+        tools:layout="@layout/fragment_decode_questions">
+        <argument
+            android:name="type"
+            app:argType="string" />
+        <argument
+            android:name="title"
+            app:argType="string" />
     </fragment>
 
 </navigation>

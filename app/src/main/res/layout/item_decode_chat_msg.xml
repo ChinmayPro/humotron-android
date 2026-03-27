@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="20dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutUserMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:background="@drawable/bg_chat_user_msg_bubble"
+        android:paddingTop="15dp"
+        android:paddingBottom="25dp"
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp"
+        android:minWidth="180dp"
+        android:layout_marginStart="40dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvUserMsg"
+            style="@style/Text.14x.Manrope.Regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Help me understand my Recovery Rate over the last 30 days and what I can do to improve it." />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvUserMsgDate"
+            style="@style/Text.10x.Manrope.Regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/white30"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvUserMsg"
+            tools:text="Feb 18, 2026 12:55 pm" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivLink"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/ic_link"
+            app:layout_constraintBottom_toBottomOf="@id/tvUserMsgDate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvUserMsgDate"
+            app:tint="@color/white30" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lavLoading"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/loading_dots"
+        tools:visibility="visible" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvAiResponse"
+        style="@style/Text.14x.Manrope.Regular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/white"
+        tools:text="A noticeable pattern in your Recovery Rate is the consistent spike during the early evening hours..." />
+
+</androidx.appcompat.widget.LinearLayoutCompat>
