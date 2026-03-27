@@ -30,7 +30,7 @@ class DecodeChatAdapter(
             binding.tvUserMsg.text = item.userMessage
             binding.tvUserMsgDate.text = formatChatDate(item.createdAt)
 
-            binding.layoutUserMsg.setOnClickListener {
+            binding.ivLink.setOnClickListener {
                 onUserMsgClick(item)
             }
 

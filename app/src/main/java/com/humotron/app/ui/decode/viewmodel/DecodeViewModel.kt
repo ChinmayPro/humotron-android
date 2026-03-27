@@ -16,6 +16,7 @@ import com.humotron.app.domain.modal.param.StartNewChatParam
 import com.humotron.app.domain.modal.response.GetConversationsResponse
 import com.humotron.app.domain.modal.param.PostFollowUpConversationParam
 import com.humotron.app.domain.modal.response.PostFollowUpConversationResponse
+import com.humotron.app.domain.modal.response.PromptContextResponse
 import com.humotron.app.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -225,6 +226,21 @@ class DecodeViewModel @Inject constructor(
 
 
                 followUpLiveData.value = state
+            }.launchIn(viewModelScope)
+        }
+    }
+
+    private val promptContextLiveData: SingleLiveEvent<Resource<PromptContextResponse>> =
+        SingleLiveEvent()
+
+    fun promptContextData(): SingleLiveEvent<Resource<PromptContextResponse>> {
+        return promptContextLiveData
+    }
+
+    fun getPromptContextByConversationId(conversationId: String) {
+        viewModelScope.launch {
+            repository.getPromptContextByConversationId(conversationId).onEach { state ->
+                promptContextLiveData.value = state
             }.launchIn(viewModelScope)
         }
     }

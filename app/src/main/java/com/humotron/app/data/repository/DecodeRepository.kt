@@ -15,6 +15,7 @@ import com.humotron.app.domain.modal.response.GetConversationsResponse
 import com.humotron.app.domain.modal.param.PostFollowUpConversationParam
 import com.humotron.app.domain.modal.param.StartNewChatParam
 import com.humotron.app.domain.modal.response.PostFollowUpConversationResponse
+import com.humotron.app.domain.modal.response.PromptContextResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
@@ -174,6 +175,21 @@ constructor(
         }
     }.catch {
         emit(responseHandler.handleException<PostFollowUpConversationResponse>(ValidationException(it.message)))
+    }
+
+    fun getPromptContextByConversationId(conversationId: String): Flow<Resource<PromptContextResponse>> = flow {
+        emit(Resource.loading<PromptContextResponse>())
+        try {
+            val response =
+                responseHandler.handleResponse(api.getPromptContextByConversationId(conversationId))
+
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException<PromptContextResponse>(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException<PromptContextResponse>(ValidationException(it.message)))
     }
 }
 

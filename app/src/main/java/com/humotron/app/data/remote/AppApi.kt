@@ -44,6 +44,7 @@ import com.humotron.app.domain.modal.response.GetConversationsResponse
 import com.humotron.app.domain.modal.param.PostFollowUpConversationParam
 import com.humotron.app.domain.modal.param.StartNewChatParam
 import com.humotron.app.domain.modal.response.PostFollowUpConversationResponse
+import com.humotron.app.domain.modal.response.PromptContextResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -218,4 +219,9 @@ interface AppApi {
     suspend fun startNewChat(
         @Body param: StartNewChatParam
     ): Response<PostFollowUpConversationResponse>
+
+    @GET("conversation/getPromptContextByConversationId/{conversationId}")
+    suspend fun getPromptContextByConversationId(
+        @Path("conversationId") conversationId: String
+    ): Response<PromptContextResponse>
 }

@@ -46,10 +46,11 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivLink"
-            android:layout_width="14dp"
-            android:layout_height="14dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginStart="20dp"
-            android:src="@drawable/ic_link"
+            android:src="@drawable/ic_pin"
+            android:padding="5dp"
             app:layout_constraintBottom_toBottomOf="@id/tvUserMsgDate"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tvUserMsgDate"

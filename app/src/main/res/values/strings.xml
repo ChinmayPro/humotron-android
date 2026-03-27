@@ -249,4 +249,12 @@ To get started:\n
     <string name="chat_error_fetch_insights">Failed to fetch insights. Please try again.</string>
     <string name="chat_error_fetch_response">Failed to fetch response. Please try again.</string>
     <string name="chat_history_title">Conversation History</string>
+    <string name="anonymised_metric_data">Anonymised Metric Data</string>
+    <string name="metric_name">Metric Name</string>
+    <string name="date_range">Date Range</string>
+    <string name="basic_demographics">Basic Demographics</string>
+    <string name="age">Age</string>
+    <string name="gender">Gender</string>
+    <string name="bmi">BMI</string>
+    <string name="assessment_responses">Assessment Responses</string>
 </resources>
