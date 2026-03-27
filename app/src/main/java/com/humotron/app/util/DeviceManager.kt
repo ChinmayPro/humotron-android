@@ -7,7 +7,10 @@ import com.humotron.app.bt.OnBleConnectionListener
 import com.humotron.app.bt.OnBleScanCallback
 import com.humotron.app.core.App
 import com.humotron.app.ui.connect.HomeViewModel
+import com.pluto.plugins.logger.PlutoLog
 import lib.linktop.nexring.api.BATTERY_STATE_CHARGING
+import lib.linktop.nexring.api.BatteryInfo
+import lib.linktop.nexring.api.OnBatteryInfoChangedListener
 import lib.linktop.nexring.api.IActivityHistory
 import lib.linktop.nexring.api.LOAD_DATA_EMPTY
 import lib.linktop.nexring.api.LOAD_DATA_STATE_COMPLETED
@@ -39,6 +42,9 @@ class DeviceManager(val app: App) : OnBleConnectionListener, OnSleepDataLoadList
     override fun onBleState(state: Int) {
         when (state) {
             BluetoothProfile.STATE_DISCONNECTED -> {
+                /*NexRingManager.get()
+                    .deviceApi()
+                    .removeBatteryInfoChangedListener(batteryListener)*/ //removeBatteryInfoChangedListener not found
                 isRegisterBattery = false
                 batteryLevel.postValue(STATE_DEVICE_DISCONNECTED to 0)
                 connected.postValue(false)
@@ -53,18 +59,22 @@ class DeviceManager(val app: App) : OnBleConnectionListener, OnSleepDataLoadList
     }
 
     override fun onBleReady() {
+        PlutoLog.e(TAG_RING_DEBUG,"onBleReady")
         postDelay {
             NexRingManager.get()
                 .deviceApi()
                 .getBatteryInfo {
                     if (it.state == BATTERY_STATE_CHARGING) {
+                        PlutoLog.e(TAG_RING_DEBUG,"BATTERY_STATE_CHARGING")
                         batteryLevel.postValue(STATE_DEVICE_CHARGING to it.level)
                     } else {
                         batteryLevel.postValue(STATE_DEVICE_DISCHARGING to it.level)
+                        PlutoLog.e(TAG_RING_DEBUG,"BATTERY_STATE_DISCHARGING")
                     }
                     if (!isRegisterBattery) {
                         isRegisterBattery = true
                         postDelay {
+                            PlutoLog.e(TAG_RING_DEBUG,"syncDataFromDevice")
                             NexRingManager.get()
                                 .sleepApi()
                                 .syncDataFromDev()
@@ -74,8 +84,27 @@ class DeviceManager(val app: App) : OnBleConnectionListener, OnSleepDataLoadList
         }
     }
 
+    private val batteryListener = object : OnBatteryInfoChangedListener {
+        override fun onBatteryInfoChanged(batteryInfo: BatteryInfo) {
+            if (batteryInfo.state == BATTERY_STATE_CHARGING) {
+                batteryLevel.postValue(STATE_DEVICE_CHARGING to batteryInfo.level)
+            } else {
+                batteryLevel.postValue(STATE_DEVICE_DISCHARGING to batteryInfo.level)
+            }
+
+            if (!isRegisterBattery) {
+                isRegisterBattery = true
+                postDelay {
+                    NexRingManager.get()
+                        .sleepApi()
+                        .syncDataFromDev()
+                }
+            }
+        }
+    }
+
     override fun onBleAdapterStateChanged(isEnabled: Boolean) {
-        logi(TAG, "onBleAdapterStateChanged isEnabled: $isEnabled")
+        PlutoLog.e(TAG_RING_DEBUG, "onBleAdapterStateChanged isEnabled: $isEnabled")
         bleAdapterEnabled.postValue(isEnabled)
 
         if (isEnabled) {
@@ -93,10 +122,10 @@ class DeviceManager(val app: App) : OnBleConnectionListener, OnSleepDataLoadList
     }
 
     override fun onSyncDataFromDevice(state: Int, progress: Int) {
-        logi(TAG, "onSyncDataFromDevice state: $state, progress: $progress")
+        PlutoLog.e(TAG_RING_DEBUG, "onSyncDataFromDevice state: $state, progress: $progress")
         when (state) {
             LOAD_DATA_EMPTY -> {
-                logi(TAG, "onSyncDataFromDevice LOAD_DATA_EMPTY")
+                PlutoLog.e(TAG_RING_DEBUG, "onSyncDataFromDevice LOAD_DATA_EMPTY")
                 //TODO Callback when no data is received from the device.
                 connected.postValue(true)
                 isSyncingData.postValue(false)
@@ -104,18 +133,18 @@ class DeviceManager(val app: App) : OnBleConnectionListener, OnSleepDataLoadList
             }
 
             LOAD_DATA_STATE_START -> {
-                logi(TAG, "onSyncDataFromDevice LOAD_DATA_STATE_START")
+                PlutoLog.e(TAG_RING_DEBUG,"onSyncDataFromDevice LOAD_DATA_STATE_START")
                 isSyncingData.postValue(true)
                 sycProgress.postValue(progress)
             }
 
             LOAD_DATA_STATE_PROCESSING -> {
-                logi(TAG, "onSyncDataFromDevice LOAD_DATA_STATE_PROCESSING")
+                PlutoLog.e(TAG_RING_DEBUG, "onSyncDataFromDevice LOAD_DATA_STATE_PROCESSING")
                 sycProgress.postValue(progress)
             }
 
             LOAD_DATA_STATE_COMPLETED -> {
-                logi(TAG, "onSyncDataFromDevice LOAD_DATA_STATE_COMPLETED")
+                PlutoLog.e(TAG_RING_DEBUG, "onSyncDataFromDevice LOAD_DATA_STATE_COMPLETED")
                 sycProgress.postValue(progress)
                 isSyncingData.postValue(false)
                 connected.postValue(true)
@@ -151,6 +180,7 @@ class DeviceManager(val app: App) : OnBleConnectionListener, OnSleepDataLoadList
     }
 
     fun connect(address: String) {
+        PlutoLog.e(TAG_RING_DEBUG,"connect $address")
         with(app.bleManager) {
             when (bleState) {
                 BluetoothProfile.STATE_DISCONNECTED -> {
@@ -161,6 +191,7 @@ class DeviceManager(val app: App) : OnBleConnectionListener, OnSleepDataLoadList
                             object : OnBleScanCallback {
                                 override fun onScanning(result: BleDevice) {
                                     if (result.device.address == address) {
+                                        PlutoLog.e(TAG_RING_DEBUG,"address match connect by device")
                                         connect(result.device)
                                     }
                                 }

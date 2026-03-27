@@ -14,12 +14,14 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -32,8 +34,10 @@ import com.humotron.app.core.Preference
 import com.humotron.app.data.local.AppDatabase
 import com.humotron.app.databinding.ActivityMainBinding
 import com.humotron.app.ui.connect.DeviceConnectedFragment.Companion.device
+import com.humotron.app.ui.connect.HomeViewModel
 import com.humotron.app.ui.onboarding.OnBoardingActivity
 import com.humotron.app.util.PrefUtils
+import com.humotron.app.util.TAG_RING_DEBUG
 import com.permissionx.guolindev.PermissionX
 import com.pluto.plugins.logger.PlutoLog
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,9 +45,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import kotlin.getValue
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), View.OnClickListener {
+
+    private val homeViewModel by viewModels<HomeViewModel>()
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
@@ -208,6 +215,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
 
     private fun connectToRing() {
+        PlutoLog.e(TAG_RING_DEBUG,"connectToRing")
         app.deviceManager.registerCb()
         val address = prefUtils.getString(Preference.WEARABLE_RING) ?: ""
         if (address.isNotEmpty()) {
@@ -215,7 +223,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 override fun onScanning(result: BleDevice) {
                     if (result.device.address == address) {
                         PlutoLog.e(
-                            "Bluetooth",
+                            TAG_RING_DEBUG,
                             "ring found"
                         )
                         device = result
@@ -230,7 +238,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             })
         } else {
             PlutoLog.e(
-                "Bluetooth",
+                TAG_RING_DEBUG,
                 "ring address is empty"
             )
         }

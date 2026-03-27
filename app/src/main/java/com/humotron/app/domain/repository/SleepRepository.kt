@@ -33,6 +33,7 @@ import com.humotron.app.domain.modal.response.RingReadingData
 import com.humotron.app.domain.modal.response.TemperatureResponse
 import com.humotron.app.domain.modal.response.WristBandSleepDurationResponse
 import com.humotron.app.util.PrefUtils
+import com.humotron.app.util.TAG_RING_DEBUG
 import com.humotron.app.util.loge
 import com.pluto.Pluto
 import com.pluto.plugins.logger.PlutoLog
@@ -51,11 +52,9 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
 
-
 val sf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.getDefault()).apply {
     timeZone = TimeZone.getTimeZone("UTC")
 }
-
 
 class SleepRepository(
     private val api: AppApi,
@@ -105,6 +104,7 @@ class SleepRepository(
         val emptyData =
             hrList.isEmpty() && hrvList.isEmpty() && stepList.isEmpty() && sleepList.isEmpty() && tempList.isEmpty()
         if (emptyData) {
+            PlutoLog.e(TAG_RING_DEBUG,"emptyData In SQl")
             emit(Resource.success(AddDeviceDataResponse(null, null, null)))
             return@flow
         }
@@ -153,9 +153,9 @@ class SleepRepository(
         loge("SleepRepository", Gson().toJson(uploadData))
 
         try {
+            PlutoLog.e(TAG_RING_DEBUG,"Send Data to Server")
             val response =
                 responseHandler.handleResponse(api.sendDataToServer(uploadData), false)
-
             emit(response)
         } catch (e: Exception) {
             emit(responseHandler.handleException(e))
@@ -164,7 +164,6 @@ class SleepRepository(
     }.catch {
         emit(responseHandler.handleException(ValidationException(it.message)))
     }
-
 
     fun addHardwareInProfile(hardware: AddHardware): Flow<Resource<AddHardwareResponse>> = flow {
         try {
@@ -340,8 +339,8 @@ class SleepRepository(
         emit(responseHandler.handleException(ValidationException(it.message)))
     }
 
-
     suspend fun updateData(data: AddDeviceDataResponse.Data) {
+        PlutoLog.e(TAG_RING_DEBUG,"Mark data as synced")
         data.hardwareSpecificDetail?.data?.let { deviceData ->
             deviceData.hrv?.mapNotNull { it.date }?.let {
                 sleepDao.syncHrvData(it)
@@ -364,10 +363,7 @@ class SleepRepository(
             }
         }
     }
-
-
 }
-
 
 fun SleepData.toSleepEntity(): SleepEntity {
     return SleepEntity(

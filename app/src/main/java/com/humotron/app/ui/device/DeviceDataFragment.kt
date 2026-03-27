@@ -36,6 +36,7 @@ import com.humotron.app.util.STATE_DEVICE_CONNECTED
 import com.humotron.app.util.STATE_DEVICE_CONNECTING
 import com.humotron.app.util.STATE_DEVICE_DISCHARGING
 import com.humotron.app.util.STATE_DEVICE_DISCONNECTED
+import com.humotron.app.util.TAG_RING_DEBUG
 import com.humotron.app.util.convertDecimalHours
 import com.humotron.app.util.formatDateToMMMddyyyy
 import com.pluto.plugins.logger.PlutoLog
@@ -174,9 +175,8 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
             DeviceConnectedFragment.device = device
             homeViewModel.currBtMac = device?.device?.address ?: ""
             if (it) {
-                PlutoLog.e(
-                    "Bluetooth",
-                    "deviceManager connected"
+                PlutoLog.e(TAG_RING_DEBUG,
+                    "DeviceDataFragment deviceManager connected"
                 )
                 viewModel.getDeviceData()
             }

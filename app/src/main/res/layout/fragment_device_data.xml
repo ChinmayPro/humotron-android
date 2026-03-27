@@ -19,6 +19,7 @@
         android:layout_marginEnd="@dimen/_16dp"
         android:indeterminate="true"
         android:visibility="gone"
+        tools:visibility="visible"
         app:indicatorColor="@color/colorBgBtn"
         app:indicatorSize="@dimen/_24dp"
         app:layout_constraintBottom_toBottomOf="@id/header"

@@ -1,5 +1,6 @@
 package com.humotron.app.bt
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
@@ -16,14 +17,17 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Build
+import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AlertDialog
 import com.humotron.app.R
 import com.humotron.app.core.App
+import com.humotron.app.util.TAG_RING_DEBUG
 import com.humotron.app.util.handlerRemove
 import com.humotron.app.util.loge
 import com.humotron.app.util.logi
 import com.humotron.app.util.post
 import com.humotron.app.util.postDelay
+import com.pluto.plugins.logger.PlutoLog
 import lib.linktop.nexring.api.NexRingBluetoothGattCallback
 import lib.linktop.nexring.api.NexRingManager
 import lib.linktop.nexring.api.OEM_AUTHENTICATION_FAILED_FOR_CHECK_R2
@@ -52,6 +56,7 @@ class BleManager(val app: App) {
     var isScanning = false
 
     private val mBluetoothStateReceiver = object : BroadcastReceiver() {
+        @RequiresPermission(Manifest.permission.BLUETOOTH_CONNECT)
         override fun onReceive(context: Context, intent: Intent) {
             if (BluetoothAdapter.ACTION_STATE_CHANGED == intent.action) {
                 val state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR)
@@ -134,8 +139,8 @@ class BleManager(val app: App) {
             gatt: BluetoothGatt, status: Int, newState: Int,
         ) {
             super.onConnectionStateChange(gatt, status, newState)
-            loge(
-                tag,
+            PlutoLog.e(
+                TAG_RING_DEBUG,
                 "onConnectionStateChange->status:$status, newState:$newState"
             )
             when (newState) {
@@ -227,9 +232,9 @@ class BleManager(val app: App) {
 
     @SuppressLint("MissingPermission", "ObsoleteSdkInt")
     private fun connectInterval(device: BluetoothDevice) {
-        loge(tag, "connect gatt to ${device.address}")
+        PlutoLog.e(TAG_RING_DEBUG, "connect gatt to ${device.address}")
         bleGatt = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            device.connectGatt(context, false, gattCallback)
+            //device.connectGatt(context, false, gattCallback)
             device.connectGatt(app, false, mGattCallback, BluetoothDevice.TRANSPORT_LE)
         } else {
             device.connectGatt(app, false, mGattCallback)
@@ -237,7 +242,7 @@ class BleManager(val app: App) {
     }
 
     fun isSupportBle(): Boolean =
-//         Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2 &&
+        //Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2 &&
         app.applicationContext.packageManager.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)
 
 
@@ -284,13 +289,13 @@ class BleManager(val app: App) {
         val delayConnect = isScanning
         cancelScan()
         if (delayConnect) {
-            loge("JKL", "connect to ${device.address}, delay 200L")
+            PlutoLog.e(TAG_RING_DEBUG, "connect to ${device.address}, delay 200L")
             postDelay({
-                loge("JKL", "delay finish, connect to ${device.address}")
+                PlutoLog.e(TAG_RING_DEBUG, "delay finish, connect to ${device.address}")
                 connectInterval(device)
             }, 200L)
         } else {
-            loge("JKL", "connect to ${device.address} right now.")
+            PlutoLog.e(TAG_RING_DEBUG, "connect to ${device.address} right now.")
             connectInterval(device)
         }
     }

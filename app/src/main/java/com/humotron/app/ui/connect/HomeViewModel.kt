@@ -16,8 +16,10 @@ import com.humotron.app.domain.repository.SleepRepository
 import com.humotron.app.domain.repository.sf
 import com.humotron.app.domain.repository.toSleepEntity
 import com.humotron.app.util.PrefUtils
+import com.humotron.app.util.TAG_RING_DEBUG
 import com.humotron.app.util.loge
 import com.humotron.app.util.todayCalendar
+import com.pluto.plugins.logger.PlutoLog
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -50,9 +52,11 @@ class HomeViewModel @Inject constructor(
     }
 
     fun loadDateData() = Thread {
+        PlutoLog.e(TAG_RING_DEBUG, "HomeViewModel loadDateData")
         with(NexRingManager.get().sleepApi()) {
 
             getDayCount(currBtMac) {
+                PlutoLog.e(TAG_RING_DEBUG,"getDayCount -> $it")
                 if (dayCount.value != it) {
                     dayCount.postValue(it)
                 }
