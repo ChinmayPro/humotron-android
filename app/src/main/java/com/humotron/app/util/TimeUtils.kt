@@ -104,6 +104,27 @@ fun utcOffsetToOrdinalDate(
     }
 }
 
+fun utcOffsetToFullOrdinalDate(
+    utcTime: String?
+): String {
+    return try {
+        if (utcTime.isNullOrBlank()) return ""
+
+        val offsetDateTime = OffsetDateTime.parse(utcTime)
+
+        val localZoned = offsetDateTime
+            .atZoneSameInstant(ZoneId.systemDefault())
+
+        val dayOfWeek = localZoned.format(DateTimeFormatter.ofPattern("EEE"))
+        val ordinalDate = utcOffsetToOrdinalDate(utcTime)
+
+        "$dayOfWeek, $ordinalDate"
+
+    } catch (e: Exception) {
+        ""
+    }
+}
+
 fun formatDateToMMMddyyyy(inputDate: String?): String? {
     return try {
         val inputFormat = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault())
