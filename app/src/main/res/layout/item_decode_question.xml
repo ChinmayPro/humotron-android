@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tvQuestion"
+    style="@style/Text.14x.Manrope.Medium"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="20dp"
+    android:layout_marginBottom="12dp"
+    android:background="@drawable/bg_active_metric_card"
+    android:paddingHorizontal="15dp"
+    android:paddingVertical="12dp"/>

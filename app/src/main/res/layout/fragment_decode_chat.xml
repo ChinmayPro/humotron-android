@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".ui.decode.DecodeChatFragment">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivBg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_bg_main" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/contentRoot"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nsvContent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintBottom_toTopOf="@id/layoutBottom"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvChatHeadline"
+                    style="@style/Text.26x.Manrope.SemiBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="@string/chat_headline"
+                    android:textColor="@color/white30"
+                    android:textSize="28sp"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/llOptions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:orientation="vertical"
+                    android:paddingBottom="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvChatHeadline">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/btnOptionMetrics"
+                        style="@style/Text.14x.Manrope.Regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:background="@drawable/bg_chat_option"
+                        android:paddingHorizontal="15dp"
+                        android:paddingVertical="12dp"
+                        android:text="@string/chat_option_metrics" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/btnOptionFeltOff"
+                        style="@style/Text.14x.Manrope.Regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:background="@drawable/bg_chat_option"
+                        android:paddingHorizontal="15dp"
+                        android:paddingVertical="12dp"
+                        android:text="@string/chat_option_felt_off" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/btnOptionNutrition"
+                        style="@style/Text.14x.Manrope.Regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:background="@drawable/bg_chat_option"
+                        android:paddingHorizontal="15dp"
+                        android:paddingVertical="12dp"
+                        android:text="@string/chat_option_nutrition" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/btnOptionOptimize"
+                        style="@style/Text.14x.Manrope.Regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:background="@drawable/bg_chat_option"
+                        android:paddingHorizontal="15dp"
+                        android:paddingVertical="12dp"
+                        android:text="@string/chat_option_optimize" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvChat"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="60dp"
+            android:paddingBottom="40dp"
+            android:visibility="gone"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintBottom_toTopOf="@id/layoutBottom"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/item_decode_chat_msg"
+            tools:visibility="visible" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutBottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toTopOf="@id/tvDisclaimer">
+
+            <View
+                android:id="@+id/cardBack"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:background="@drawable/bg_chat_back_circle"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivConversations"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:elevation="2dp"
+                android:src="@drawable/ic_double_chevron_left"
+                app:layout_constraintBottom_toBottomOf="@id/cardBack"
+                app:layout_constraintEnd_toEndOf="@id/cardBack"
+                app:layout_constraintStart_toStartOf="@id/cardBack"
+                app:layout_constraintTop_toTopOf="@id/cardBack"
+                app:tint="@color/textColorGray" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etInput"
+                style="@style/Text.14x.Manrope.Regular"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/bg_chat_input"
+                android:gravity="center_vertical"
+                android:hint="@string/chat_hint"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white30"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/ivSend"
+                app:layout_constraintStart_toEndOf="@id/cardBack"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivSend"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/bg_chat_input"
+                android:padding="13dp"
+                android:src="@drawable/ic_send"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/etInput"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/white"
+                tools:visibility="visible" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDisclaimer"
+            style="@style/Text.10x.Manrope.Regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:text="@string/chat_disclaimer"
+            android:textColor="@color/white30"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

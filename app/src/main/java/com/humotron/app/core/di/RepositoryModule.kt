@@ -6,6 +6,7 @@ import com.humotron.app.data.remote.AppApi
 import com.humotron.app.data.remote.AuthApi
 import com.humotron.app.data.repository.AuthRepository
 import com.humotron.app.data.repository.BioHackRepository
+import com.humotron.app.data.repository.DecodeRepository
 import com.humotron.app.data.repository.DeviceRepository
 import com.humotron.app.data.repository.OnBoardingRepository
 import com.humotron.app.domain.repository.SleepRepository
@@ -68,6 +69,13 @@ class RepositoryModule {
         return BioHackRepository(api, responseHandler)
     }
 
-
+    @Singleton
+    @Provides
+    fun provideDecodeRepository(
+        api: AppApi,
+        responseHandler: ResponseHandler,
+    ): DecodeRepository {
+        return DecodeRepository(api, responseHandler)
+    }
 
 }

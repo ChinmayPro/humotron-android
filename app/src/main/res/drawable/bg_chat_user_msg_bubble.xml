@@ -1,0 +1,15 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="267dp"
+    android:height="120dp"
+    android:viewportWidth="267"
+    android:viewportHeight="120">
+    <!-- Using a group with translateX to perfectly align the user's paths skip the 26dp gap -->
+    <group android:translateX="-26">
+        <path
+            android:fillColor="#1A1A1A"
+            android:pathData="M26,12C26,5.37 31.37,0 38,0H281C287.63,0 293,5.37 293,12V97C293,103.63 287.63,109 281,109H38C31.37,109 26,103.63 26,97V12Z" />
+        <path
+            android:fillColor="#1A1A1A"
+            android:pathData="M291,120L254,108H280.21L291,120Z" />
+    </group>
+</vector>

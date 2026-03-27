@@ -10,63 +10,40 @@
 
     <style name="Theme.Humotron" parent="Base.Theme.Humotron" />
 
-
-    <!-- Main Theme -->
-    <style name="IOSBottomSheetTheme" parent="Theme.Material3.Light.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/IOSBottomSheetStyle</item>
-        <item name="android:windowIsFloating">false</item>
-        <item name="android:backgroundDimAmount">0.4</item>
-    </style>
-
-    <!-- BottomSheet Style -->
-    <style name="IOSBottomSheetStyle" parent="Widget.Material3.BottomSheet.Modal">
-        <item name="android:background">@android:color/transparent</item>
-        <item name="backgroundTint">@android:color/transparent</item>
-        <item name="shapeAppearance">@style/BottomSheetShape</item>
-    </style>
-
-    <!-- Animation -->
-    <style name="BottomSheetAnimation">
-        <item name="android:windowEnterAnimation">@anim/slide_up</item>
-        <item name="android:windowExitAnimation">@anim/slide_down</item>
-    </style>
-
-    <!-- Rounded Corners -->
-    <style name="BottomSheetShape" parent="ShapeAppearance.Material3.LargeComponent">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSizeTopLeft">24dp</item>
-        <item name="cornerSizeTopRight">24dp</item>
-        <item name="cornerSizeBottomLeft">0dp</item>
-        <item name="cornerSizeBottomRight">0dp</item>
-    </style>
-
-
-
-    <style name="BottomSheetDialogTheme" parent="Theme.Material3.Light.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/CustomBottomSheet</item>
-        <item name="android:windowIsFloating">false</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-    </style>
-    <style name="CustomBottomSheet" parent="Widget.Material3.BottomSheet.Modal">
-        <item name="android:background">@android:color/transparent</item>
-        <item name="backgroundTint">@android:color/transparent</item>
-        <item name="shapeAppearance">@style/BottomSheetShapeAppearance</item>
-    </style>
-    <style name="BottomSheetShapeAppearance" parent="ShapeAppearance.Material3.LargeComponent">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSizeTopLeft">20dp</item>
-        <item name="cornerSizeTopRight">20dp</item>
-        <item name="cornerSizeBottomLeft">0dp</item>
-        <item name="cornerSizeBottomRight">0dp</item>
-    </style>
-
     <style name="ShapeAppearanceOverlay.MyApp.Button.Circle" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
-    <style name="ToolbarTitleStyle" parent="TextAppearance.MaterialComponents.Headline6">
-        <item name="android:textSize">20sp</item>
-        <item name="android:textColor">#FFFFFF</item>
-        <item name="android:fontFamily">@font/manrope_bold</item>
+
+    <!-- Full screen transparent dialog for side drawer -->
+    <style name="FullScreenDialogTheme" parent="Theme.MaterialComponents.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowAnimationStyle">@style/FragmentOpenAnimation</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
     </style>
+
+    <!-- Animation for side drawer slide in/out from left -->
+    <style name="SideDrawerAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_in_left</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_left</item>
+    </style>
+
+    <!-- Animation for fragment-like open/close from right -->
+    <style name="FragmentOpenAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_right</item>
+    </style>
+
+    <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
 </resources>
