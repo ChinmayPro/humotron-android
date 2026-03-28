@@ -15,7 +15,6 @@ import com.humotron.app.domain.modal.response.AddDeviceDataResponse
 import com.humotron.app.domain.modal.response.AddHardwareResponse
 import com.humotron.app.domain.modal.response.AddToCartResponse
 import com.humotron.app.domain.modal.response.AllMetricsResponse
-import com.humotron.app.domain.modal.response.AssessmentResponse
 import com.humotron.app.domain.modal.response.BioHackProgressResponse
 import com.humotron.app.domain.modal.response.BookDetailResponse
 import com.humotron.app.domain.modal.response.BookLikeResponse
@@ -30,8 +29,6 @@ import com.humotron.app.domain.modal.response.NuggetPreference
 import com.humotron.app.domain.modal.response.NuggetsReactionResponse
 import com.humotron.app.domain.modal.response.NuggetsTypeAndLevelResponse
 import com.humotron.app.domain.modal.response.RingReadingData
-import com.humotron.app.domain.modal.response.SubmitAnswerRequest
-import com.humotron.app.domain.modal.response.SubmitAnswerResponse
 import com.humotron.app.domain.modal.response.TemperatureResponse
 import com.humotron.app.domain.modal.response.UseCaseResponse
 import com.humotron.app.domain.modal.response.VerifyOtpResponse
@@ -39,7 +36,6 @@ import com.humotron.app.domain.modal.response.WristBandSleepDurationResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
-import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -183,4 +179,43 @@ interface AppApi {
         @Header("Authorization") token: String,
         @Body request: SubmitAnswerRequest
     ): Response<SubmitAnswerResponse>
+
+    @POST("conversationThread/getAllConversationThreadsByUserId")
+    suspend fun getAllConversationThreads(
+        @Body param: GetConversationThreadsParam
+    ): Response<ConversationThreadsResponse>
+
+    @POST("conversationThread/deleteAllConversationThreadsByUserId")
+    suspend fun deleteAllConversationThreads(): Response<CommonResponse>
+
+    @POST("conversationThread/deleteConversationThreadById/{threadId}")
+    suspend fun deleteConversationThread(
+        @Path("threadId") threadId: String
+    ): Response<CommonResponse>
+
+    @POST("metric/getMetricTrackingByUserId")
+    suspend fun getMetricTrackingByUserId(): Response<MetricTrackingResponse>
+
+    @POST("metric/getYetToTrackMetricByUserId")
+    suspend fun getYetToTrackMetricByUserId(): Response<YetToTrackMetricResponse>
+
+    @POST("conversation/getConversationsByUserId")
+    suspend fun getConversationsByUserId(
+        @Body param: GetConversationsParam
+    ): Response<GetConversationsResponse>
+
+    @POST("conversation/postFollowUpConversation")
+    suspend fun postFollowUpConversation(
+        @Body param: PostFollowUpConversationParam
+    ): Response<PostFollowUpConversationResponse>
+
+    @POST("conversation/startNewChat")
+    suspend fun startNewChat(
+        @Body param: StartNewChatParam
+    ): Response<PostFollowUpConversationResponse>
+
+    @GET("conversation/getPromptContextByConversationId/{conversationId}")
+    suspend fun getPromptContextByConversationId(
+        @Path("conversationId") conversationId: String
+    ): Response<PromptContextResponse>
 }
