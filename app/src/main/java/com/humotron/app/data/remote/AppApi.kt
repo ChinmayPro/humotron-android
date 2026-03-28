@@ -33,6 +33,18 @@ import com.humotron.app.domain.modal.response.TemperatureResponse
 import com.humotron.app.domain.modal.response.UseCaseResponse
 import com.humotron.app.domain.modal.response.VerifyOtpResponse
 import com.humotron.app.domain.modal.response.WristBandSleepDurationResponse
+import com.humotron.app.domain.modal.param.GetConversationThreadsParam
+import com.humotron.app.domain.modal.response.CommonResponse
+import com.humotron.app.domain.modal.response.ConversationThreadsResponse
+import com.humotron.app.domain.modal.response.FeltOffQuestionsResponse
+import com.humotron.app.domain.modal.response.MetricTrackingResponse
+import com.humotron.app.domain.modal.response.YetToTrackMetricResponse
+import com.humotron.app.domain.modal.param.GetConversationsParam
+import com.humotron.app.domain.modal.response.GetConversationsResponse
+import com.humotron.app.domain.modal.param.PostFollowUpConversationParam
+import com.humotron.app.domain.modal.param.StartNewChatParam
+import com.humotron.app.domain.modal.response.PostFollowUpConversationResponse
+import com.humotron.app.domain.modal.response.PromptContextResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -41,6 +53,12 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface AppApi {
+
+    @GET("chatFeltOff/questions")
+    suspend fun getFeltOffQuestions(): Response<FeltOffQuestionsResponse>
+
+    @GET("chatNutritionIdea/questions")
+    suspend fun getNutritionIdeaQuestions(): Response<FeltOffQuestionsResponse>
 
 
     // user detail
