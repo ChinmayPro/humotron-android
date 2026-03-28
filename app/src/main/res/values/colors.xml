@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
+    <color name="black1">#1A1A1A</color>
     <color name="white">#FFFFFFFF</color>
     <color name="color_bg_ob">#1B464A</color>
 
@@ -11,9 +12,14 @@
     <color name="textColorSub">#454545</color>
     <color name="textColorPink">#D2B9FE</color>
     <color name="textColorYellow">#DFF9B2</color>
-
+    <color name="lime_green">#B8FF4F</color>
+    <color name="surface_dark">#1E1E1E</color>
+    <color name="text_secondary">#888888</color>
     <color name="colorBgBtn">#B2F042</color>
     <color name="colorBgBtn1">#BEF362</color>
+    <color name="dividerColor">#D9D9D9</color>
+    <color name="assessmentBnt">#B1F042</color>
+    <color name="assessment_unselect_stroke">#4DA1A1A1</color>
 
     <color name="white10">#1AFFFFFF</color>
     <color name="white30">#4DFFFFFF</color>

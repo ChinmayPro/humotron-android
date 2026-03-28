@@ -1,27 +1,30 @@
 package com.humotron.app.ui.track
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.transition.TransitionManager
-import com.google.android.material.transition.MaterialFade
+import com.google.gson.Gson
 import com.humotron.app.R
+import com.humotron.app.core.AppConstant.ASSESSMENT
 import com.humotron.app.core.Preference
 import com.humotron.app.core.base.BaseFragment
 import com.humotron.app.data.network.Status
 import com.humotron.app.databinding.FragmentTrackBinding
 import com.humotron.app.domain.modal.response.GetAllDeviceResponse.Data.Wearable
 import com.humotron.app.domain.modal.response.MergedAssessment
+import com.humotron.app.ui.assesment.AssessmentActivity
+import com.humotron.app.ui.assesment.CardiovascularAssessmentBottomSheet
 import com.humotron.app.ui.connect.dialog.DeviceSelectionBottomSheet
 import com.humotron.app.ui.device.DeviceViewModel
 import com.humotron.app.util.fadeIn
 import com.humotron.app.util.showWithFade
-import com.pluto.plugins.logger.PlutoLog
+import com.pluto.utilities.extensions.toast
 import com.yarolegovich.discretescrollview.transform.Pivot
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,7 +32,6 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
-
 
     private lateinit var binding: FragmentTrackBinding
     private val viewModel: DeviceViewModel by viewModels()
@@ -55,6 +57,13 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
                 binding.dsvWearables.isVisible = true
             }
         }
+        viewModel.getMergedAssessmentList()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.swipeRefreshLayout.isRefreshing = false
+        viewModel.refreshUserDeviceData(true)
         viewModel.getMergedAssessmentList()
     }
 
@@ -191,9 +200,59 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
         )
     }
 
+    private fun showAssessmentSheet(assessment: MergedAssessment) {
+
+        val json = Gson().toJson(assessment)
+        Log.e("TAG", "showAddddssessmentSheet: ${json} ")
+        Log.e("TAG", "showAddddssessmentSheet00: ${assessment} ")
+
+        val sheet = CardiovascularAssessmentBottomSheet.newInstance(json)
+
+        sheet.onProceedClicked = {
+
+            if (isAdded) {
+                val intent = Intent(requireContext(), AssessmentActivity::class.java)
+                intent.putExtra(ASSESSMENT, json)
+                startActivity(intent)
+            }
+        }
+
+        sheet.show(parentFragmentManager, CardiovascularAssessmentBottomSheet.TAG)
+    }
+
     private fun setupAssessmentRecyclerView(assessments: List<MergedAssessment>) {
         if (assessmentAdapter == null) {
-            assessmentAdapter = AssessmentAdapter(requireActivity(),assessments) { assessment ->
+            assessmentAdapter = AssessmentAdapter(requireActivity(), assessments) { assessment ->
+                Log.e("TAG", "setupAssedwdddssmentRecyclerView:  $assessment.")
+
+                when (assessment.status) {
+                    "Completed" -> {
+                        toast("the assessment is completed")
+
+
+                    }
+
+                    "Resume" -> {
+                        if (isAdded) {
+                            val json = Gson().toJson(assessment)
+                            val intent = Intent(requireContext(), AssessmentActivity::class.java)
+                            intent.putExtra(ASSESSMENT, json)
+                            startActivity(intent)
+                        }
+
+                    }
+
+                    "Start Now" -> {
+                        showAssessmentSheet(assessment)
+
+                    }
+
+                    else -> {
+
+                    }
+                }
+
+
                 // Handle assessment item click
             }
             binding.dsvAssessments.adapter = assessmentAdapter

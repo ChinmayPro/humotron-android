@@ -67,4 +67,15 @@ class PrefUtils(private val sharedPreferences: SharedPreferences) {
     fun clear() {
         sharedPreferences.edit { clear() }
     }
+    fun saveAssessmentAnswers(assessmentId: String, answersJson: String) {
+        sharedPreferences.edit().putString(Preference.PREF_ASSESSMENT_ANSWERS + assessmentId, answersJson).apply()
+    }
+
+    fun getAssessmentAnswers(assessmentId: String): String? {
+        return sharedPreferences.getString(Preference.PREF_ASSESSMENT_ANSWERS + assessmentId, null)
+    }
+
+    fun clearAssessmentAnswers(assessmentId: String) {
+        sharedPreferences.edit().remove(Preference.PREF_ASSESSMENT_ANSWERS + assessmentId).apply()
+    }
 }
