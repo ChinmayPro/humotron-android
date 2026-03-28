@@ -134,4 +134,6 @@ dependencies {
 
     // -------------------- Others --------------------
     implementation(libs.lottie)
+
+    implementation("com.google.android.flexbox:flexbox:3.0.0")
 }

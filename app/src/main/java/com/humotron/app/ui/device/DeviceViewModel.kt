@@ -1,5 +1,6 @@
 package com.humotron.app.ui.device
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -200,6 +201,8 @@ class DeviceViewModel @Inject constructor(
     fun getMergedAssessmentList() {
         sleepRepository.getMergedAssessmentList().onEach { state ->
             _mergedAssessmentListLiveData.value = state
+            Log.e("TAG", "initObsdwdddfervers: $state ", )
+
         }.launchIn(viewModelScope)
     }
 

@@ -95,9 +95,6 @@ class ResponseHandler(val context: Context, val errorUtils: ErrorUtils) {
             }
 
             return if (response.code() == 401) {
-//                val intent = Intent(AppConstant.SESSION_BROADCAST) //action: "msg"
-//                intent.putExtra(AppConstant.DATA_TYPE, body.errorMessage)
-//                LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
                 Resource.error(body)
             } else if (response.code() == 404) {
                 body.errorCode = 404
