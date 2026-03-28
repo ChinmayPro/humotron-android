@@ -59,22 +59,22 @@ class DeviceManager(val app: App) : OnBleConnectionListener, OnSleepDataLoadList
     }
 
     override fun onBleReady() {
-        PlutoLog.e(TAG_RING_DEBUG,"onBleReady")
+        PlutoLog.e(TAG_RING_DEBUG, "onBleReady")
         postDelay {
             NexRingManager.get()
                 .deviceApi()
                 .getBatteryInfo {
                     if (it.state == BATTERY_STATE_CHARGING) {
-                        PlutoLog.e(TAG_RING_DEBUG,"BATTERY_STATE_CHARGING")
+                        PlutoLog.e(TAG_RING_DEBUG, "BATTERY_STATE_CHARGING")
                         batteryLevel.postValue(STATE_DEVICE_CHARGING to it.level)
                     } else {
                         batteryLevel.postValue(STATE_DEVICE_DISCHARGING to it.level)
-                        PlutoLog.e(TAG_RING_DEBUG,"BATTERY_STATE_DISCHARGING")
+                        PlutoLog.e(TAG_RING_DEBUG, "BATTERY_STATE_DISCHARGING")
                     }
                     if (!isRegisterBattery) {
                         isRegisterBattery = true
                         postDelay {
-                            PlutoLog.e(TAG_RING_DEBUG,"syncDataFromDevice")
+                            PlutoLog.e(TAG_RING_DEBUG, "syncDataFromDevice")
                             NexRingManager.get()
                                 .sleepApi()
                                 .syncDataFromDev()
@@ -130,10 +130,15 @@ class DeviceManager(val app: App) : OnBleConnectionListener, OnSleepDataLoadList
                 connected.postValue(true)
                 isSyncingData.postValue(false)
                 homeViewModel?.loadDateData()
+                homeViewModel?.let {
+                    PlutoLog.e(TAG_RING_DEBUG, "homeViewModel is not null LOAD_DATA_EMPTY")
+                } ?: run {
+                    PlutoLog.e(TAG_RING_DEBUG, "homeViewModel is null LOAD_DATA_EMPTY")
+                }
             }
 
             LOAD_DATA_STATE_START -> {
-                PlutoLog.e(TAG_RING_DEBUG,"onSyncDataFromDevice LOAD_DATA_STATE_START")
+                PlutoLog.e(TAG_RING_DEBUG, "onSyncDataFromDevice LOAD_DATA_STATE_START")
                 isSyncingData.postValue(true)
                 sycProgress.postValue(progress)
             }
@@ -159,6 +164,11 @@ class DeviceManager(val app: App) : OnBleConnectionListener, OnSleepDataLoadList
     override fun onOutputNewSleepData(sleepData: ArrayList<SleepData>?) {
         loge("onOutputNewSleepData")
         homeViewModel?.loadDateData()
+        homeViewModel?.let {
+            PlutoLog.e(TAG_RING_DEBUG, "homeViewModel is not null onOutputNewSleepData")
+        } ?: run {
+            PlutoLog.e(TAG_RING_DEBUG, "homeViewModel is null onOutputNewSleepData")
+        }
     }
 
     override fun onOutputActivityHistoryList(list: List<IActivityHistory>) {
@@ -180,7 +190,7 @@ class DeviceManager(val app: App) : OnBleConnectionListener, OnSleepDataLoadList
     }
 
     fun connect(address: String) {
-        PlutoLog.e(TAG_RING_DEBUG,"connect $address")
+        PlutoLog.e(TAG_RING_DEBUG, "connect $address")
         with(app.bleManager) {
             when (bleState) {
                 BluetoothProfile.STATE_DISCONNECTED -> {
@@ -191,7 +201,10 @@ class DeviceManager(val app: App) : OnBleConnectionListener, OnSleepDataLoadList
                             object : OnBleScanCallback {
                                 override fun onScanning(result: BleDevice) {
                                     if (result.device.address == address) {
-                                        PlutoLog.e(TAG_RING_DEBUG,"address match connect by device")
+                                        PlutoLog.e(
+                                            TAG_RING_DEBUG,
+                                            "address match connect by device"
+                                        )
                                         connect(result.device)
                                     }
                                 }

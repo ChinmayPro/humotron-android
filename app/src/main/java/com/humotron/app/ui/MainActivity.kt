@@ -111,6 +111,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             this,
             Intent(this, RingConnectionService::class.java)
         )*/
+
+        //Force initialize HomeViewModel here so its init{} runs before any Fragment uses it, otherwise homeViewModel?.loadDateData() not work in DeviceManager
+        homeViewModel
         checkBlePermissionsAndStart()
     }
 
