@@ -81,7 +81,7 @@ data class DateRange(
 ) : Parcelable
 
 @Parcelize
-data class Assessment(
+data class AssessmentChat(
     @SerializedName("available")
     val available: Boolean? = null,
     @SerializedName("items")
