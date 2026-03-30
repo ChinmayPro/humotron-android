@@ -63,7 +63,7 @@ class AssessmentViewModel @Inject constructor(
 
                     Status.SUCCESS -> {
                         _isLoading.value = false
-                        val data = resource.data?.data?.Assessment
+                        val data = resource.data?.data?.assessment
                         data?.let {
                             val sorted = it.assessmentQuestions
                                 .sortedBy { q -> q.assessmentQuestionNumber }

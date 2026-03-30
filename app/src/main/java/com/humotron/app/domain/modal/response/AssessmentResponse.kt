@@ -3,20 +3,22 @@ package com.humotron.app.domain.modal.response
 data class AssessmentResponse(
     val status: String,
     val message: String,
-    val data: AssessmentData
+    val data: AssessmentData,
 )
 
 data class AssessmentData(
-    val Assessment: Assessment
+    val assessment: Assessment,
 )
+
 data class Assessment(
     val _id: String,
     val assessmentName: String,
     val assessmentIntro: String,
     val assessmentDuration: String,
     val assessmentNoQuestions: String,
-    val assessmentQuestions: List<Question>
+    val assessmentQuestions: List<Question>,
 )
+
 /*data class Question(
     val _id: String,
     val assessmentQuestionName: String,
@@ -35,9 +37,10 @@ data class Question(
     val followUpToggle: String = "",
     val options: List<Option> = emptyList(),
     val assessmentQuestionAnswer: List<String> = emptyList(),
-    val assessmentQuestionFollowUpAnswer: List<String> = emptyList()
+    val assessmentQuestionFollowUpAnswer: List<String> = emptyList(),
 )
+
 data class Option(
     val key: String,
-    val value: String
+    val value: String,
 )

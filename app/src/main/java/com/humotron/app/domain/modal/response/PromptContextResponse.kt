@@ -39,7 +39,7 @@ data class PromptContext(
     @SerializedName("metrics")
     val metrics: Metrics? = null,
     @SerializedName("assessment")
-    val assessment: Assessment? = null
+    val assessment: AssessmentChat? = null
 ) : Parcelable
 
 @Parcelize
@@ -81,7 +81,7 @@ data class DateRange(
 ) : Parcelable
 
 @Parcelize
-data class Assessment(
+data class AssessmentChat(
     @SerializedName("available")
     val available: Boolean? = null,
     @SerializedName("items")
