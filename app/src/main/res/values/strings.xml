@@ -269,4 +269,9 @@ To get started:\n
     <string name="gender">Gender</string>
     <string name="bmi">BMI</string>
     <string name="assessment_responses">Assessment Responses</string>
+    <string name="history_matters">History matters!</string>
+    <string name="add_health_data_from_past_tests">Add health data from past tests — securely and effortlessly. This further improves the insights generation.</string>
+    <string name="health_reports">Health Reports</string>
+    <string name="we_ll_extract_relevant_data_points">We’ll extract relevant data points from health PDF and sync with your health profile.</string>
+    <string name="upload_or_sync_now">Upload or Sync Now</string>
 </resources>
