@@ -30,6 +30,7 @@ class DecodeChatConversationsFragment : DialogFragment() {
     private lateinit var binding: FragmentDecodeChatConversationsBinding
     private lateinit var adapter: ConversationAdapter
     private val viewModel: DecodeViewModel by viewModels()
+    private var lastDeletedId: String? = null
 
     override fun getTheme(): Int = R.style.FullScreenDialogTheme
 
@@ -82,6 +83,7 @@ class DecodeChatConversationsFragment : DialogFragment() {
                     title = "Confirmation",
                     message = "Are you sure you want to remove \"${conversation.title}\"?",
                 ) {
+                    lastDeletedId = conversation.id
                     viewModel.deleteConversationThread(conversation.id)
                 }
             },
@@ -129,6 +131,9 @@ class DecodeChatConversationsFragment : DialogFragment() {
             when (resource.status) {
                 Status.SUCCESS -> {
                     Toast.makeText(requireContext(), "Conversation deleted", Toast.LENGTH_SHORT).show()
+                    parentFragmentManager.setFragmentResult("conversation_deleted", Bundle().apply { 
+                        putString("deletedId", lastDeletedId)
+                    })
                     viewModel.getAllConversationThreads() // Refresh list
                 }
                 Status.ERROR, Status.EXCEPTION -> {
@@ -142,6 +147,7 @@ class DecodeChatConversationsFragment : DialogFragment() {
             when (resource.status) {
                 Status.SUCCESS -> {
                     Toast.makeText(requireContext(), "All conversations deleted", Toast.LENGTH_SHORT).show()
+                    parentFragmentManager.setFragmentResult("start_new_chat", Bundle().apply { putBoolean("triggered", true) })
                     viewModel.getAllConversationThreads() // Refresh list
                 }
                 Status.ERROR, Status.EXCEPTION -> {

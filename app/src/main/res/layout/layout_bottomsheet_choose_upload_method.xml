@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_bottom_sheet1">
+
+    <!-- Header -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="4dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/choose_your_method"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:fontFamily="@font/manrope_bold"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select how you'd like to import your report"
+                android:textColor="@color/text_secondary"
+                android:fontFamily="@font/manrope_regular"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageButtonClose"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_gravity="end|center_vertical"
+            android:src="@drawable/ic_close"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Close"
+            app:tint="@color/white" />
+    </FrameLayout>
+
+    <!-- Divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#4E4E4E"
+        android:layout_marginTop="16dp" />
+
+    <!-- Option 1: Import from Email -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clImportEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="@dimen/_16dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivEmailIcon"
+            android:layout_width="@dimen/_48dp"
+            android:layout_height="@dimen/_48dp"
+            android:background="@drawable/bg_btn_round_rect_16"
+            android:backgroundTint="@color/white"
+            android:padding="@dimen/_8dp"
+            android:src="@drawable/ic_send"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvEmailTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16dp"
+            android:layout_marginEnd="@dimen/_16dp"
+            android:text="@string/import_from_email"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:fontFamily="@font/manrope_bold"
+            app:layout_constraintBottom_toTopOf="@id/tvEmailDesc"
+            app:layout_constraintEnd_toStartOf="@id/ivEmailArrow"
+            app:layout_constraintStart_toEndOf="@id/ivEmailIcon"
+            app:layout_constraintTop_toTopOf="@id/ivEmailIcon"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvEmailDesc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4dp"
+            android:text="@string/import_from_email_desc"
+            android:textColor="@color/white70"
+            android:textSize="12sp"
+            android:fontFamily="@font/manrope_regular"
+            app:layout_constraintBottom_toBottomOf="@id/ivEmailIcon"
+            app:layout_constraintEnd_toEndOf="@id/tvEmailTitle"
+            app:layout_constraintStart_toStartOf="@id/tvEmailTitle"
+            app:layout_constraintTop_toBottomOf="@id/tvEmailTitle" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivEmailArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_right_arrow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#4E4E4E"
+        android:layout_marginHorizontal="20dp" />
+
+    <!-- Option 2: Device Upload -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clDeviceUpload"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="@dimen/_16dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivDeviceIcon"
+            android:layout_width="@dimen/_48dp"
+            android:layout_height="@dimen/_48dp"
+            android:background="@drawable/bg_btn_round_rect_16"
+            android:backgroundTint="@color/white"
+            android:padding="@dimen/_8dp"
+            android:src="@drawable/ic_sync"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDeviceTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16dp"
+            android:layout_marginEnd="@dimen/_16dp"
+            android:text="@string/device_upload"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:fontFamily="@font/manrope_bold"
+            app:layout_constraintBottom_toTopOf="@id/tvDeviceDesc"
+            app:layout_constraintEnd_toStartOf="@id/ivDeviceArrow"
+            app:layout_constraintStart_toEndOf="@id/ivDeviceIcon"
+            app:layout_constraintTop_toTopOf="@id/ivDeviceIcon"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDeviceDesc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4dp"
+            android:text="@string/device_upload_desc"
+            android:textColor="@color/white70"
+            android:textSize="12sp"
+            android:fontFamily="@font/manrope_regular"
+            app:layout_constraintBottom_toBottomOf="@id/ivDeviceIcon"
+            app:layout_constraintEnd_toEndOf="@id/tvDeviceTitle"
+            app:layout_constraintStart_toStartOf="@id/tvDeviceTitle"
+            app:layout_constraintTop_toBottomOf="@id/tvDeviceTitle" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivDeviceArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_right_arrow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Bottom Padding -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="28dp" />
+
+</LinearLayout>
