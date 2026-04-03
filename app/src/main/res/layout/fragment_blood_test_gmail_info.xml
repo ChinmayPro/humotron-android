@@ -79,7 +79,7 @@
             <!-- Step 1 -->
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvStep1Title"
-                style="@style/Text.20x.Manrope.SemiBold"
+                style="@style/Text.18x.Manrope.SemiBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/step_1_connect_gmail"
@@ -97,7 +97,7 @@
             <!-- Step 2 -->
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvStep2Title"
-                style="@style/Text.20x.Manrope.SemiBold"
+                style="@style/Text.18x.Manrope.SemiBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/step_2_specify_keywords"
@@ -115,7 +115,7 @@
             <!-- Step 3 -->
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvStep3Title"
-                style="@style/Text.20x.Manrope.SemiBold"
+                style="@style/Text.18x.Manrope.SemiBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/step_3_select_reports"
@@ -133,7 +133,7 @@
             <!-- Step 4 -->
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvStep4Title"
-                style="@style/Text.20x.Manrope.SemiBold"
+                style="@style/Text.18x.Manrope.SemiBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/step_4_confirm_import"

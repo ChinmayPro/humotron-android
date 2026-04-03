@@ -19,6 +19,7 @@ import com.humotron.app.databinding.FragmentTrackBinding
 import com.humotron.app.domain.modal.response.GetAllDeviceResponse.Data.Wearable
 import com.humotron.app.domain.modal.response.MergedAssessment
 import com.humotron.app.ui.assesment.AssessmentActivity
+import com.humotron.app.ui.bloodTest.BloodTestActivity
 import com.humotron.app.ui.assesment.CardiovascularAssessmentBottomSheet
 import com.humotron.app.ui.connect.dialog.DeviceSelectionBottomSheet
 import com.humotron.app.ui.device.DeviceViewModel
@@ -69,6 +70,7 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
 
     private fun initClicks() {
         binding.ivAdd.setOnClickListener(this)
+        binding.tvUpload.setOnClickListener(this)
         binding.swipeRefreshLayout.setOnRefreshListener {
             binding.swipeRefreshLayout.isRefreshing = false
             viewModel.refreshUserDeviceData(true)
@@ -281,6 +283,10 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
                     })
                 }
                 bottomSheet.show(childFragmentManager, "device_list")
+            }
+
+            binding.tvUpload -> {
+                startActivity(Intent(requireContext(), BloodTestActivity::class.java))
             }
         }
     }

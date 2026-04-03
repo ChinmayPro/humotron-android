@@ -109,7 +109,7 @@
             <!-- Step 1 -->
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvStep1Title"
-                style="@style/Text.20x.Manrope.SemiBold"
+                style="@style/Text.18x.Manrope.SemiBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/step_1_fetch_report"
@@ -127,7 +127,7 @@
             <!-- Step 2 -->
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvStep2Title"
-                style="@style/Text.20x.Manrope.SemiBold"
+                style="@style/Text.18x.Manrope.SemiBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/step_2_convert_text"
@@ -145,7 +145,7 @@
             <!-- Step 3 -->
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvStep3Title"
-                style="@style/Text.20x.Manrope.SemiBold"
+                style="@style/Text.18x.Manrope.SemiBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/step_3_extract_data"
@@ -163,7 +163,7 @@
             <!-- Step 4 -->
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvStep4Title"
-                style="@style/Text.20x.Manrope.SemiBold"
+                style="@style/Text.18x.Manrope.SemiBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/step_4_save_metrics"

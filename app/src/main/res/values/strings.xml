@@ -312,4 +312,33 @@ To get started:\n
     <string name="step_3_select_reports_desc">Choose specific reports from the search results for import.</string>
     <string name="step_4_confirm_import">Step 4 - Confirm Import</string>
     <string name="step_4_confirm_import_desc">Confirm to upload these reports to your Humotron profile.</string>
+
+    <!-- Email Search Screen -->
+    <string name="email_import">Email Import</string>
+    <string name="review_permissions">Review the permissions</string>
+    <string name="keywords">Keywords</string>
+    <string name="enter_keywords">Enter Keywords</string>
+    <string name="attachments">Attachments</string>
+    <string name="date_range_label">Date Range</string>
+    <string name="labels">Labels</string>
+    <string name="enter_labels">Enter Labels</string>
+    <string name="start_retrieval">Start Retrieval</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="past_2_years">Past 2 Years</string>
+    <string name="past_2_5_years">Past 2 - 5 Years</string>
+    <string name="past_5_10_years">Past 5 - 10 Years</string>
+    <string name="past_10_more_years">Past 10 &amp; More Years</string>
+    <string name="select_import_method_desc">Select how you\'d like to import your report</string>
+    <string name="pdfs_found">Pdfs Found</string>
+    <string name="pdfs_found_desc">These are the matching files found, they have still not been saved with your Humotron profile. Choose the ones that you wish to upload to your profile.</string>
+    <string name="no_matching_pdfs_found">No matching PDF reports found.</string>
+    <string name="pdf_selection_parse_format">%s pdfs selected for data parsing</string>
+    <string name="extract_metrics">Extract Metrics</string>
+    <string name="searching">Searching...</string>
+    <string name="no_matching_pdfs_found_with_filters">No matching PDF reports found. Please try different filters.</string>
+    <string name="no_account_selected_error">No account selected. Please go back and sign in.</string>
+    <string name="attachments_question">Does the email have attachments?</string>
+    <string name="date_range_picker_subtitle">Select a period to search within</string>
+    <string name="pdfs_selected_for_data_parsing">pdfs selected for data parsing</string>
 </resources>

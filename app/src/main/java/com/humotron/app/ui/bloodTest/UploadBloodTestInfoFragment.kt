@@ -13,11 +13,22 @@ import com.humotron.app.R
 import com.humotron.app.core.base.BaseFragment
 import com.humotron.app.databinding.FragmentUploadBloodtestInfoBinding
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.fragment.app.activityViewModels
+import androidx.activity.result.contract.ActivityResultContracts
 
 @AndroidEntryPoint
 class UploadBloodTestInfoFragment : BaseFragment(R.layout.fragment_upload_bloodtest_info) {
 
     private lateinit var binding: FragmentUploadBloodtestInfoBinding
+    private val viewModel: BloodTestViewModel by activityViewModels()
+
+    private val pdfPickerLauncher = registerForActivityResult(
+        androidx.activity.result.contract.ActivityResultContracts.GetMultipleContents()
+    ) { uris ->
+        if (uris.isNotEmpty()) {
+            viewModel.setDevicePdfs(uris, requireContext())
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -25,6 +36,16 @@ class UploadBloodTestInfoFragment : BaseFragment(R.layout.fragment_upload_bloodt
         binding = FragmentUploadBloodtestInfoBinding.bind(view)
         applyInsets()
         initClicks()
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
+        viewModel.navigateToImport.observe(viewLifecycleOwner) { navigate ->
+            if (navigate) {
+                viewModel.onImportNavigated()
+                findNavController().navigate(R.id.action_fragmentUploadBloodTestInfo_to_fragmentBloodTestEmailImport)
+            }
+        }
     }
 
     private fun setupStatusBar() {
@@ -36,11 +57,19 @@ class UploadBloodTestInfoFragment : BaseFragment(R.layout.fragment_upload_bloodt
 
     private fun initClicks() {
         binding.toolbar.setNavigationOnClickListener {
-            findNavController().popBackStack()
+            requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
         binding.btnContinue.setOnClickListener {
-            // TODO: Navigate to actual upload flow when implemented
+            val bottomSheet = com.humotron.app.ui.bloodTest.dialog.ChooseUploadMethodBottomSheet()
+            bottomSheet.setMethodSelectionListener { method ->
+                if (method == "email") {
+                    findNavController().navigate(R.id.action_fragmentUploadBloodTestInfo_to_fragmentBloodTestGmailInfo)
+                } else if (method == "device") {
+                    pdfPickerLauncher.launch("application/pdf")
+                }
+            }
+            bottomSheet.show(childFragmentManager, com.humotron.app.ui.bloodTest.dialog.ChooseUploadMethodBottomSheet.TAG)
         }
 
         binding.tvFooter.setOnClickListener {

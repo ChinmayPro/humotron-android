@@ -12,50 +12,27 @@
         android:layout_height="wrap_content"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="4dp">
+        android:paddingTop="24dp"
+        android:paddingBottom="16dp">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/textViewTitle"
+            style="@style/Text.20x.Manrope.Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textViewTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/choose_your_method"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:fontFamily="@font/manrope_bold"
-                android:layout_marginBottom="4dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Select how you'd like to import your report"
-                android:textColor="@color/text_secondary"
-                android:fontFamily="@font/manrope_regular"
-                android:textSize="13sp" />
-        </LinearLayout>
+            android:layout_gravity="center"
+            android:text="@string/choose_your_method" />
 
         <ImageView
             android:id="@+id/imageButtonClose"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_gravity="end|center_vertical"
             android:src="@drawable/ic_close"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Close"
             app:tint="@color/white" />
     </FrameLayout>
-
-    <!-- Divider -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#4E4E4E"
-        android:layout_marginTop="16dp" />
 
     <!-- Option 1: Import from Email -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -75,21 +52,18 @@
             android:background="@drawable/bg_btn_round_rect_16"
             android:backgroundTint="@color/white"
             android:padding="@dimen/_8dp"
-            android:src="@drawable/ic_send"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvEmailTitle"
+            style="@style/Text.16x.Manrope.Regular"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_16dp"
             android:layout_marginEnd="@dimen/_16dp"
             android:text="@string/import_from_email"
-            android:textColor="@color/white"
-            android:textSize="17sp"
-            android:fontFamily="@font/manrope_bold"
             app:layout_constraintBottom_toTopOf="@id/tvEmailDesc"
             app:layout_constraintEnd_toStartOf="@id/ivEmailArrow"
             app:layout_constraintStart_toEndOf="@id/ivEmailIcon"
@@ -98,13 +72,11 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvEmailDesc"
+            style="@style/Text.12x.Manrope.Regular"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_4dp"
             android:text="@string/import_from_email_desc"
             android:textColor="@color/white70"
-            android:textSize="12sp"
-            android:fontFamily="@font/manrope_regular"
             app:layout_constraintBottom_toBottomOf="@id/ivEmailIcon"
             app:layout_constraintEnd_toEndOf="@id/tvEmailTitle"
             app:layout_constraintStart_toStartOf="@id/tvEmailTitle"
@@ -120,13 +92,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!-- Divider -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#4E4E4E"
-        android:layout_marginHorizontal="20dp" />
 
     <!-- Option 2: Device Upload -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -146,21 +111,18 @@
             android:background="@drawable/bg_btn_round_rect_16"
             android:backgroundTint="@color/white"
             android:padding="@dimen/_8dp"
-            android:src="@drawable/ic_sync"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvDeviceTitle"
+            style="@style/Text.16x.Manrope.Regular"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_16dp"
             android:layout_marginEnd="@dimen/_16dp"
             android:text="@string/device_upload"
-            android:textColor="@color/white"
-            android:textSize="17sp"
-            android:fontFamily="@font/manrope_bold"
             app:layout_constraintBottom_toTopOf="@id/tvDeviceDesc"
             app:layout_constraintEnd_toStartOf="@id/ivDeviceArrow"
             app:layout_constraintStart_toEndOf="@id/ivDeviceIcon"
@@ -169,13 +131,11 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvDeviceDesc"
+            style="@style/Text.12x.Manrope.Regular"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_4dp"
             android:text="@string/device_upload_desc"
             android:textColor="@color/white70"
-            android:textSize="12sp"
-            android:fontFamily="@font/manrope_regular"
             app:layout_constraintBottom_toBottomOf="@id/ivDeviceIcon"
             app:layout_constraintEnd_toEndOf="@id/tvDeviceTitle"
             app:layout_constraintStart_toStartOf="@id/tvDeviceTitle"

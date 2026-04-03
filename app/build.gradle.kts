@@ -43,6 +43,21 @@ android {
         buildConfig = true
         viewBinding = true
     }
+
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "META-INF/DEPENDENCIES"
+            excludes += "META-INF/LICENSE"
+            excludes += "META-INF/LICENSE.txt"
+            excludes += "META-INF/license.txt"
+            excludes += "META-INF/NOTICE"
+            excludes += "META-INF/NOTICE.txt"
+            excludes += "META-INF/notice.txt"
+            excludes += "META-INF/ASL2.0"
+            excludes += "META-INF/*.kotlin_module"
+        }
+    }
 }
 
 dependencies {
@@ -82,6 +97,12 @@ dependencies {
     implementation(libs.androidx.credentials)
     implementation(libs.credentials.play.services.auth)
     implementation(libs.googleid)
+
+    // -------------------- Google API Client / Gmail API -
+    implementation(libs.google.api.client.android)
+    implementation(libs.google.api.services.gmail)
+    implementation(libs.google.http.client.android)
+    implementation(libs.google.http.client.gson)
 
     // -------------------- OTP --------------------
     implementation(libs.kevinschildhorn.otpview)

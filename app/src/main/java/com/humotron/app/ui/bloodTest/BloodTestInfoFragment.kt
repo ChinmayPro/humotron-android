@@ -14,12 +14,15 @@ import androidx.navigation.fragment.findNavController
 import android.view.animation.AnimationUtils
 import com.humotron.app.R
 import com.humotron.app.databinding.FragmentBloodTestInfoBinding
+import androidx.fragment.app.activityViewModels
+import androidx.activity.result.contract.ActivityResultContracts
 import com.humotron.app.ui.bloodTest.dialog.ChooseUploadMethodBottomSheet
 
 class BloodTestInfoFragment : Fragment() {
 
     private var _binding: FragmentBloodTestInfoBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: BloodTestViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,12 +38,30 @@ class BloodTestInfoFragment : Fragment() {
         setupStatusBar()
         applyInsets()
         initClicks()
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
+        viewModel.navigateToImport.observe(viewLifecycleOwner) { navigate ->
+            if (navigate) {
+                viewModel.onImportNavigated()
+                findNavController().navigate(R.id.action_fragmentBloodTestInfo_to_fragmentBloodTestEmailImport)
+            }
+        }
     }
 
     private fun setupStatusBar() {
         requireActivity().window.apply {
             statusBarColor = Color.BLACK
             WindowInsetsControllerCompat(this, decorView).isAppearanceLightStatusBars = false
+        }
+    }
+
+    private val pdfPickerLauncher = registerForActivityResult(
+        ActivityResultContracts.GetMultipleContents()
+    ) { uris ->
+        if (uris.isNotEmpty()) {
+            viewModel.setDevicePdfs(uris, requireContext())
         }
     }
 
@@ -54,6 +75,8 @@ class BloodTestInfoFragment : Fragment() {
             bottomSheet.setMethodSelectionListener { key ->
                 if (key == "email") {
                     findNavController().navigate(R.id.action_fragmentBloodTestInfo_to_fragmentBloodTestGmailInfo)
+                } else if (key == "device") {
+                    pdfPickerLauncher.launch("application/pdf")
                 }
             }
             bottomSheet.show(childFragmentManager, "choose_upload_method")
