@@ -1,4 +1,4 @@
-package com.humotron.app.bt
+package com.humotron.app.bt.ring
 
 interface OnBleConnectionListener {
 

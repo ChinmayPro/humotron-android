@@ -2,6 +2,7 @@ package com.humotron.app.domain.repository
 
 import com.google.gson.Gson
 import com.humotron.app.core.Preference
+import com.humotron.app.data.local.entity.BandHrvData
 import com.humotron.app.data.local.dao.SleepDao
 import com.humotron.app.data.local.entity.DoubleUploadMapper
 import com.humotron.app.data.local.entity.HrData
@@ -14,10 +15,14 @@ import com.humotron.app.data.local.entity.TempData
 import com.humotron.app.data.local.entity.UploadData
 import com.humotron.app.data.local.entity.UploadDeviceData
 import com.humotron.app.data.network.Resource
+import com.humotron.app.data.network.Status
 import com.humotron.app.data.network.ResponseHandler
 import com.humotron.app.data.network.exceptions.ValidationException
 import com.humotron.app.data.remote.AppApi
 import com.humotron.app.domain.modal.param.AddHardware
+import com.humotron.app.domain.modal.param.BandHrvUploadMapper
+import com.humotron.app.domain.modal.param.BandUploadData
+import com.humotron.app.domain.modal.param.BandUploadDeviceData
 import com.humotron.app.domain.modal.param.DailyCalculatedMetricsParam
 import com.humotron.app.domain.modal.param.RingReadingParam
 import com.humotron.app.domain.modal.param.WristBandApiParam
@@ -37,6 +42,7 @@ import com.humotron.app.util.TAG_RING_DEBUG
 import com.humotron.app.util.loge
 import com.pluto.Pluto
 import com.pluto.plugins.logger.PlutoLog
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -88,12 +94,17 @@ class SleepRepository(
         sleepDao.insertTemperature(data)
     }
 
+    suspend fun insertBandHrvList(data: List<BandHrvData>) {
+        sleepDao.insertBandHrvList(data)
+    }
+
 
     val hrFlow = sleepDao.getUnSyncHr()
     val hrvFlow = sleepDao.getUnSyncHrv()
     val stepFlow = sleepDao.getUnSyncStepData()
     val sleepFlow = sleepDao.getUnSyncSleepData()
     val tempFlow = sleepDao.getUnSyncTemp()
+    val bandHrvFlow = sleepDao.getUnSyncBandHrv()
 
     fun getUnSyncData(): Flow<Resource<AddDeviceDataResponse>> = flow {
         val hrList = hrFlow.first()
@@ -163,6 +174,56 @@ class SleepRepository(
         }
     }.catch {
         emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    suspend fun syncBandDataOnce(): Resource<AddDeviceDataResponse> {
+        val bandHrvList = bandHrvFlow.first()
+        return syncBandHrvInternal(bandHrvList)
+    }
+
+    private suspend fun syncBandHrvInternal(
+        bandHrvList: List<BandHrvData>,
+    ): Resource<AddDeviceDataResponse> {
+        if (bandHrvList.isEmpty()) {
+            return Resource.success(AddDeviceDataResponse(null, null, null))
+        }
+
+        val hardwareId = prefUtils.getBandHardwareId().orEmpty()
+        if (hardwareId.isBlank()) {
+            return Resource.success(AddDeviceDataResponse(null, null, null))
+        }
+
+        val hrvUpload = bandHrvList.map {
+            BandHrvUploadMapper(
+                date = it.date,
+                highBP = it.highBP,
+                lowBP = it.lowBP,
+                heartRate = it.heartRate,
+                stress = it.stress,
+                hrv = it.hrv,
+                vascularAging = it.vascularAging,
+            )
+        }
+
+        val uploadData = BandUploadData(
+            hardwareId = hardwareId,
+            data = BandUploadDeviceData(hrv = hrvUpload),
+            recordTimestamp = System.currentTimeMillis() / 1000,
+        )
+
+        return try {
+            PlutoLog.e(TAG_RING_DEBUG, "Send Band Data to Server")
+            val response =
+                responseHandler.handleResponse(api.sendBandDataToServer(uploadData), false)
+            if (response.status == Status.SUCCESS) {
+                PlutoLog.e(TAG_RING_DEBUG, "Send band data to server success")
+                sleepDao.syncBandHrvData(bandHrvList.map { it.id })
+            }
+            response
+        } catch (e: Exception) {
+            e.printStackTrace()
+            responseHandler.handleException(e)
+        }
     }
 
     fun addHardwareInProfile(hardware: AddHardware): Flow<Resource<AddHardwareResponse>> = flow {

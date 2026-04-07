@@ -68,7 +68,7 @@ class BatteryView  @JvmOverloads constructor(
                 close()
             }
             val boltPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-                color = Color.YELLOW
+                color = Color.WHITE
             }
             canvas.drawPath(boltPath, boltPaint)
         }

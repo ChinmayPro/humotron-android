@@ -11,6 +11,7 @@ import com.humotron.app.domain.modal.param.GetConversationsParam
 import com.humotron.app.domain.modal.param.NuggetsInteraction
 import com.humotron.app.domain.modal.param.PostFollowUpConversationParam
 import com.humotron.app.domain.modal.param.RingReadingParam
+import com.humotron.app.domain.modal.param.BandUploadData
 import com.humotron.app.domain.modal.param.StartNewChatParam
 import com.humotron.app.domain.modal.param.SubmitPersonalInfoParam
 import com.humotron.app.domain.modal.param.WeightHeightParam
@@ -92,6 +93,9 @@ interface AppApi {
 
     @POST("hardwareSpecificDetail/addHardwareSpecificDetail")
     suspend fun sendDataToServer(@Body data: UploadData): Response<AddDeviceDataResponse>
+
+    @POST("hardwareSpecificDetail/addHardwareSpecificDetail")
+    suspend fun sendBandDataToServer(@Body data: BandUploadData): Response<AddDeviceDataResponse>
 
     @POST("userHardware/addUserHardware")
     suspend fun addHardwareId(@Body data: AddHardware): Response<AddHardwareResponse>

@@ -64,11 +64,29 @@ class PrefUtils(private val sharedPreferences: SharedPreferences) {
         return data?.id
     }
 
+    fun setBandHardwareData(data: UserHardware) {
+        sharedPreferences.edit { putString(Preference.BAND_HARDWARE_DATA, Gson().toJson(data)) }
+    }
+
+    fun getBandHardwareType(): String? {
+        val hardwareString = sharedPreferences.getString(Preference.BAND_HARDWARE_DATA, "{}")
+        val data = Gson().fromJson(hardwareString, UserHardware::class.java)
+        return data?.hardwareType
+    }
+
+    fun getBandHardwareId(): String? {
+        val hardwareString = sharedPreferences.getString(Preference.BAND_HARDWARE_DATA, "{}")
+        val data = Gson().fromJson(hardwareString, UserHardware::class.java)
+        return data?.id
+    }
+
     fun clear() {
         sharedPreferences.edit { clear() }
     }
+
     fun saveAssessmentAnswers(assessmentId: String, answersJson: String) {
-        sharedPreferences.edit().putString(Preference.PREF_ASSESSMENT_ANSWERS + assessmentId, answersJson).apply()
+        sharedPreferences.edit()
+            .putString(Preference.PREF_ASSESSMENT_ANSWERS + assessmentId, answersJson).apply()
     }
 
     fun getAssessmentAnswers(assessmentId: String): String? {

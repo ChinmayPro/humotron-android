@@ -29,6 +29,4 @@ class DeviceConnectionViewModel @Inject constructor(val repository: SleepReposit
         }.launchIn(viewModelScope)
 
     }
-
-
 }

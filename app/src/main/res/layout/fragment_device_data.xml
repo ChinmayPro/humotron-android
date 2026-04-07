@@ -19,12 +19,12 @@
         android:layout_marginEnd="@dimen/_16dp"
         android:indeterminate="true"
         android:visibility="gone"
-        tools:visibility="visible"
         app:indicatorColor="@color/colorBgBtn"
         app:indicatorSize="@dimen/_24dp"
         app:layout_constraintBottom_toBottomOf="@id/header"
         app:layout_constraintEnd_toEndOf="@id/header"
-        app:layout_constraintTop_toTopOf="@id/header" />
+        app:layout_constraintTop_toTopOf="@id/header"
+        tools:visibility="visible" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -107,7 +107,7 @@
                         android:layout_width="@dimen/_7dp"
                         android:layout_height="@dimen/_7dp"
                         android:layout_marginStart="@dimen/_5dp"
-                        android:src="@drawable/dot_connected" />
+                        android:src="@drawable/dot_disconnected" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvDeviceStatus"
@@ -115,9 +115,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_5dp"
-                        android:text="@string/connected"
+                        android:text="@string/disconnected"
                         android:textAlignment="center"
-                        android:textColor="@color/colorBgBtn" />
+                        android:textColor="@color/disconnected" />
 
                     <com.humotron.app.view.BatteryView
                         android:id="@+id/batteryView"
@@ -131,9 +131,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_5dp"
-                        android:text="68%"
+                        android:text="0%"
                         android:textAlignment="center" />
-
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

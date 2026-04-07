@@ -36,7 +36,7 @@ data class BioHackProgressResponse(
             @SerializedName("count")
             val count: Int?,
             @SerializedName("percentage")
-            val percentage: Int?
+            val percentage: Double?
         ) : Parcelable
 
         @Parcelize

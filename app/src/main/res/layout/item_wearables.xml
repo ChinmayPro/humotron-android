@@ -150,14 +150,14 @@
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:layout_marginStart="@dimen/_20dp"
+                android:layout_marginStart="@dimen/_10dp"
                 android:layout_marginBottom="@dimen/_10dp"
                 android:clickable="false"
                 android:includeFontPadding="false"
                 android:insetLeft="0dp"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
-                android:paddingStart="0dp"
+                android:paddingStart="@dimen/_10dp"
                 android:paddingTop="0dp"
                 android:paddingEnd="@dimen/_3dp"
                 android:paddingBottom="0dp"
@@ -169,7 +169,8 @@
                 app:iconGravity="textEnd"
                 app:iconTint="@color/_7e"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

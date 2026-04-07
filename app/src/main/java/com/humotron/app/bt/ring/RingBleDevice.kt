@@ -1,8 +1,8 @@
-package com.humotron.app.bt
+package com.humotron.app.bt.ring
 
 import android.bluetooth.BluetoothDevice
 
-data class BleDevice(
+data class RingBleDevice(
     val device: BluetoothDevice,
     val cid: String? = null,
     val color: Int,
@@ -15,5 +15,5 @@ data class BleDevice(
     var rssi: Int,
 )
 
-val BleDevice.isCharging: Boolean
+val RingBleDevice.isCharging: Boolean
     get() = batteryState == 1

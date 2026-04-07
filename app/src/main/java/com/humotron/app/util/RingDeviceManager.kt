@@ -2,9 +2,9 @@ package com.humotron.app.util
 
 import android.bluetooth.BluetoothProfile
 import androidx.lifecycle.MutableLiveData
-import com.humotron.app.bt.BleDevice
-import com.humotron.app.bt.OnBleConnectionListener
-import com.humotron.app.bt.OnBleScanCallback
+import com.humotron.app.bt.ring.RingBleDevice
+import com.humotron.app.bt.ring.OnBleConnectionListener
+import com.humotron.app.bt.ring.OnBleScanCallback
 import com.humotron.app.core.App
 import com.humotron.app.ui.connect.HomeViewModel
 import com.pluto.plugins.logger.PlutoLog
@@ -26,7 +26,7 @@ const val STATE_DEVICE_DISCONNECTED = -3
 const val STATE_DEVICE_CONNECTING = -2
 const val STATE_DEVICE_CONNECTED = -1
 
-class DeviceManager(val app: App) : OnBleConnectionListener, OnSleepDataLoadListener {
+class RingDeviceManager(val app: App) : OnBleConnectionListener, OnSleepDataLoadListener {
 
 
     private var isRegisterBattery = false
@@ -51,7 +51,8 @@ class DeviceManager(val app: App) : OnBleConnectionListener, OnSleepDataLoadList
             }
 
             BluetoothProfile.STATE_CONNECTED -> {
-                lastConnectedAddress = app.bleManager.connectedDevice?.address
+                PlutoLog.e(TAG_RING_DEBUG,"STATE_CONNECTED Check Check")
+                lastConnectedAddress = app.ringBleManager.connectedDevice?.address
                 batteryLevel.postValue(STATE_DEVICE_CONNECTED to 0)
                 connected.postValue(true)
             }
@@ -110,8 +111,8 @@ class DeviceManager(val app: App) : OnBleConnectionListener, OnSleepDataLoadList
         if (isEnabled) {
             lastConnectedAddress?.let { address ->
                 postDelay({
-                    if (app.bleManager.bleState == BluetoothProfile.STATE_DISCONNECTED) {
-                        loge("DeviceManager", "Auto reconnect to $address")
+                    if (app.ringBleManager.bleState == BluetoothProfile.STATE_DISCONNECTED) {
+                        loge("RingDeviceManager", "Auto reconnect to $address")
                         connect(address)
                     }
                 }, 1000L) //delay required
@@ -176,8 +177,24 @@ class DeviceManager(val app: App) : OnBleConnectionListener, OnSleepDataLoadList
     }
 
     fun registerCb() {
-        app.bleManager.addOnBleConnectionListener(this)
+        app.ringBleManager.addOnBleConnectionListener(this)
         NexRingManager.get().sleepApi().setOnSleepDataLoadListener(this)
+        // Re-emit current manager state for newly attached UI observers (e.g. reopening DeviceDataFragment).
+        /*val currentBleState = app.ringBleManager.bleState
+        onBleState(currentBleState)
+        if (currentBleState == BluetoothProfile.STATE_CONNECTED) {
+            postDelay {
+                NexRingManager.get()
+                    .deviceApi()
+                    .getBatteryInfo {
+                        if (it.state == BATTERY_STATE_CHARGING) {
+                            batteryLevel.postValue(STATE_DEVICE_CHARGING to it.level)
+                        } else {
+                            batteryLevel.postValue(STATE_DEVICE_DISCHARGING to it.level)
+                        }
+                    }
+            }
+        }*/
     }
 
     fun unregisterCb() {
@@ -186,12 +203,12 @@ class DeviceManager(val app: App) : OnBleConnectionListener, OnSleepDataLoadList
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        app.bleManager.removeOnBleConnectionListener(this)
+        app.ringBleManager.removeOnBleConnectionListener(this)
     }
 
     fun connect(address: String) {
         PlutoLog.e(TAG_RING_DEBUG, "connect $address")
-        with(app.bleManager) {
+        with(app.ringBleManager) {
             when (bleState) {
                 BluetoothProfile.STATE_DISCONNECTED -> {
                     batteryLevel.postValue(STATE_DEVICE_CONNECTING to 0)
@@ -199,7 +216,7 @@ class DeviceManager(val app: App) : OnBleConnectionListener, OnSleepDataLoadList
                         startScan(
                             50 * 1000L,
                             object : OnBleScanCallback {
-                                override fun onScanning(result: BleDevice) {
+                                override fun onScanning(result: RingBleDevice) {
                                     if (result.device.address == address) {
                                         PlutoLog.e(
                                             TAG_RING_DEBUG,

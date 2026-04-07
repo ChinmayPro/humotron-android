@@ -2,7 +2,6 @@ package com.humotron.app.ui.connect
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -10,9 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.humotron.app.R
-import com.humotron.app.bt.BleDevice
-import com.humotron.app.bt.OnBleScanCallback
-import com.humotron.app.bt.isCharging
+import com.humotron.app.bt.ring.RingBleDevice
+import com.humotron.app.bt.ring.OnBleScanCallback
+import com.humotron.app.bt.ring.isCharging
 import com.humotron.app.core.App
 import com.humotron.app.core.Preference
 import com.humotron.app.data.network.Status
@@ -35,8 +34,14 @@ class DeviceConnectionFragment : Fragment(R.layout.fragment_device_connection) {
     lateinit var prefUtils: PrefUtils
 
     private val app by lazy { requireActivity().application as App }
-    private var device: BleDevice? = null
+
+    //private var device: RingBleDevice? = null
     var dialog: LoadingDialog? = null
+
+    companion object {
+        private const val TAG = "DCF"
+        var device: RingBleDevice? = null
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,12 +56,12 @@ class DeviceConnectionFragment : Fragment(R.layout.fragment_device_connection) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentDeviceConnectionBinding.bind(view)
-        app.deviceManager.registerCb()
+        app.ringDeviceManager.registerCb()
         binding.ringsView.startAnimation()
 
-        app.bleManager.startScan(30000, object : OnBleScanCallback {
+        app.ringBleManager.startScan(30000, object : OnBleScanCallback {
             @SuppressLint("MissingPermission")
-            override fun onScanning(result: BleDevice) {
+            override fun onScanning(result: RingBleDevice) {
                 if (result.generation != null && result.batteryLevel != null && result.isCharging) {
                     binding.tvNoDeviceFound.isVisible = false
                     binding.llConnectionNotes.isVisible = false
@@ -87,7 +92,7 @@ class DeviceConnectionFragment : Fragment(R.layout.fragment_device_connection) {
 
         binding.btnSubmit.setOnClickListener { v ->
             device?.let {
-                app.deviceManager.connect(it.device.address)
+                app.ringDeviceManager.connect(it.device.address)
                 showProgress()
             }
         }
@@ -96,10 +101,12 @@ class DeviceConnectionFragment : Fragment(R.layout.fragment_device_connection) {
             binding.cbDeviceChecked.isChecked = true
         }
 
-        app.deviceManager.connected.observe(viewLifecycleOwner) {
-            if (it) {
+        app.ringDeviceManager.connected.observe(viewLifecycleOwner) { isConnected ->
+            if (isConnected && device != null) {
                 DeviceConnectedFragment.device = device
-                prefUtils.setString(Preference.WEARABLE_RING, device!!.device.address)
+                device?.device?.address?.let {
+                    prefUtils.setString(Preference.WEARABLE_RING, it)
+                }
                 if (prefUtils.getHardwareId().isNullOrEmpty()) {
                     viewModel.addHardwareInProfile(
                         AddHardware(

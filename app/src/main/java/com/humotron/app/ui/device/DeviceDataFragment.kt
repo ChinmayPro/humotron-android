@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -13,15 +12,18 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.humotron.app.R
-import com.humotron.app.bt.BleDevice
+import com.humotron.app.bt.band.BandBleManager
+import com.humotron.app.bt.ring.RingBleDevice
 import com.humotron.app.core.App
 import com.humotron.app.core.base.BaseFragment
 import com.humotron.app.data.network.Status
 import com.humotron.app.databinding.FragmentDeviceDataBinding
+import com.humotron.app.domain.modal.DeviceType
 import com.humotron.app.domain.modal.response.ExerciseIntensityMetric
 import com.humotron.app.domain.modal.response.GetAllDeviceResponse.Data.Wearable
 import com.humotron.app.domain.modal.response.MetricType
@@ -31,6 +33,7 @@ import com.humotron.app.domain.modal.response.StressScoreMetric
 import com.humotron.app.ui.connect.DeviceConnectedFragment
 import com.humotron.app.ui.connect.HomeViewModel
 import com.humotron.app.ui.device.adapter.MetricsAdapter
+import com.humotron.app.ui.navigation.NavKeys
 import com.humotron.app.util.STATE_DEVICE_CHARGING
 import com.humotron.app.util.STATE_DEVICE_CONNECTED
 import com.humotron.app.util.STATE_DEVICE_CONNECTING
@@ -40,8 +43,14 @@ import com.humotron.app.util.TAG_RING_DEBUG
 import com.humotron.app.util.convertDecimalHours
 import com.humotron.app.util.formatDateToMMMddyyyy
 import com.pluto.plugins.logger.PlutoLog
+import com.jstyle.blesdk2208a.Util.BleSDK
+import com.jstyle.blesdk2208a.callback.DataListener2025
+import com.jstyle.blesdk2208a.constant.BleConst
+import com.jstyle.blesdk2208a.constant.DeviceKey
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
+import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnClickListener {
@@ -49,8 +58,12 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
     private lateinit var binding: FragmentDeviceDataBinding
     private val viewModel: DeviceViewModel by viewModels()
     private val app by lazy { requireActivity().application as App }
+
+    @Inject
+    lateinit var bandBleManager: BandBleManager
+
     private var mBluetoothAdapter: BluetoothAdapter? = null
-    private var device: BleDevice? = null
+    private var device: RingBleDevice? = null
 
     private lateinit var metricsAdapter: MetricsAdapter
     private val homeViewModel by activityViewModels<HomeViewModel>()
@@ -61,13 +74,24 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentDeviceDataBinding.bind(view)
-        binding.header.title.text = "Humotron Smart Ring Metrics"
-
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        initClicks()
+        initViews()
+        subscribeToApiObserver()
+    }
+
+    private fun initViews() {
+        wearable = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            arguments?.getParcelable(NavKeys.WEARABLE, Wearable::class.java)
+        } else {
+            arguments?.getParcelable(NavKeys.WEARABLE)
+        }
+        binding.header.title.text = "Humotron Smart Ring Metrics"
 
         metricsAdapter = MetricsAdapter { item, dateTime ->
             val deviceId = wearable?.id
@@ -85,15 +109,45 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
             }
         }
         binding.clTabMetrics.rvMetrics.adapter = metricsAdapter
-        initClicks()
-        getDataFromServer()
 
-        if (app.deviceManager.connected.value == true) {
-            app.deviceManager.registerCb()
+        val deviceId = wearable?.id
+        deviceId?.let { deviceId ->
+            val deviceType = DeviceType.from(wearable?.deviceName)
+            when (deviceType) {
+                DeviceType.BAND -> {
+                    observeBand()
+                    viewModel.getAllMetricsByDeviceId(deviceId)
+                }
+
+                DeviceType.RING -> {
+                    observeRing()
+                    viewModel.getRingReadingData(deviceId)
+                    viewModel.getAllMetricsByDeviceId(deviceId)
+                }
+
+                DeviceType.UNKNOWN -> {
+
+                }
+            }
+        }
+
+        val deviceImage = wearable?.deviceImage
+        deviceImage?.let {
+            Glide.with(requireActivity())
+                .load("${it[0]}")
+                .into(binding.ivDevice)
+        }
+        binding.tvDeviceName.text = wearable?.deviceName ?: ""
+        binding.header.title.text = "${wearable?.deviceFacingName} Metrics"
+    }
+
+    private fun observeRing() {
+        if (app.ringDeviceManager.connected.value == true) {
+            app.ringDeviceManager.registerCb()
             viewModel.getDeviceData()
         }
 
-        app.deviceManager.isSyncingData.observe(viewLifecycleOwner) { isSyncing ->
+        app.ringDeviceManager.isSyncingData.observe(viewLifecycleOwner) { isSyncing ->
             isSyncing?.let {
                 if (!it) {
                     binding.progress.isVisible = false
@@ -103,7 +157,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
             }
         }
 
-        app.deviceManager.batteryLevel.observe(viewLifecycleOwner) {
+        app.ringDeviceManager.batteryLevel.observe(viewLifecycleOwner) {
             when (it.first) {
                 STATE_DEVICE_CONNECTING -> {
                     binding.tvDeviceStatus.text = "Connecting"
@@ -171,24 +225,99 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
             binding.tvBatteryLevel.text = "${it.second}%"
         }
 
-        app.deviceManager.connected.observe(viewLifecycleOwner) {
+        app.ringDeviceManager.connected.observe(viewLifecycleOwner) {
             DeviceConnectedFragment.device = device
             homeViewModel.currBtMac = device?.device?.address ?: ""
             if (it) {
-                PlutoLog.e(TAG_RING_DEBUG,
+                PlutoLog.e(
+                    TAG_RING_DEBUG,
                     "DeviceDataFragment deviceManager connected"
                 )
                 viewModel.getDeviceData()
             }
         }
-        app.deviceManager.bleAdapterEnabled.observe(viewLifecycleOwner) { isEnabled ->
+
+        app.ringDeviceManager.bleAdapterEnabled.observe(viewLifecycleOwner) { isEnabled ->
             updateBtStatusIcon(isEnabled)
         }
-
-        subscribeToObserver()
     }
 
-    private fun subscribeToObserver() {
+    private fun observeBand() {
+        // Band connection status from new band manager.
+        viewLifecycleOwner.lifecycleScope.launch {
+            bandBleManager.connectionState.collect { connected ->
+                if (connected) {
+                    binding.ivDeviceStatus.setImageResource(R.drawable.dot_connected)
+                    binding.tvDeviceStatus.text = "Connected"
+                    binding.tvDeviceStatus.setTextColor(
+                        ContextCompat.getColor(requireContext(), R.color.colorBgBtn)
+                    )
+                    binding.batteryView.isVisible = true
+                    binding.tvBatteryLevel.isVisible = true
+                    binding.btnTakeReading.isEnabled = true
+                    binding.btnTakeReading.alpha = 1f
+
+                    // Request current battery level once connected.
+                    bandBleManager.writeValue(BleSDK.GetDeviceBatteryLevel())
+                } else {
+                    binding.ivDeviceStatus.setImageResource(R.drawable.dot_disconnected)
+                    binding.tvDeviceStatus.text = "Disconnected"
+                    binding.tvDeviceStatus.setTextColor(
+                        ContextCompat.getColor(requireContext(), R.color.disconnected)
+                    )
+                    binding.batteryView.isVisible = false
+                    binding.tvBatteryLevel.isVisible = false
+                    binding.batteryView.isCharging = false
+                    binding.btnTakeReading.isEnabled = false
+                    binding.btnTakeReading.alpha = 0.5f
+                }
+            }
+        }
+
+        // Listen to band BLE packets and parse battery level reply (0x13).
+        viewLifecycleOwner.lifecycleScope.launch {
+            bandBleManager.bleEvents.collect { event ->
+                if (event.action != BandBleManager.ACTION_DATA_AVAILABLE) return@collect
+                val value = event.value ?: return@collect
+                if (value.isEmpty()) return@collect
+
+                try {
+                    BleSDK.DataParsingWithData(value, object : DataListener2025 {
+                        override fun dataCallback(maps: MutableMap<String, Any>?) {
+                            if (maps == null) return
+                            val dataType = maps[DeviceKey.DataType] as? String ?: return
+                            when (dataType) {
+                                BleConst.GetDeviceBatteryLevel -> {
+                                    val data = maps[DeviceKey.Data] as? Map<*, *> ?: return
+                                    val levelStr = data[DeviceKey.BatteryLevel] as? String ?: return
+                                    val level = levelStr.toIntOrNull() ?: return
+                                    binding.batteryView.batteryLevel = level
+                                    binding.tvBatteryLevel.text = "$level%"
+                                    // SDK battery callback currently reports only level.
+                                    binding.batteryView.isCharging = false
+                                }
+
+                                BleConst.DeviceSendDataToAPP -> {
+                                    // Charger plug/unplug may arrive here with empty data map.
+                                    // Intentionally ignored to avoid null switch crashes from demo.
+                                }
+                            }
+                        }
+
+                        override fun dataCallback(value: ByteArray?) = Unit
+                    })
+                } catch (_: Exception) {
+                    // Ignore unknown/partial packets to keep device screen stable.
+                }
+            }
+        }
+
+        app.ringDeviceManager.bleAdapterEnabled.observe(viewLifecycleOwner) { isEnabled ->
+            updateBtStatusIcon(isEnabled)
+        }
+    }
+
+    private fun subscribeToApiObserver() {
         /* lifecycleScope.launch {
              viewModel.deviceData.collect {
                  it.hrMapper.let { hr ->
@@ -262,14 +391,23 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
 
                     val deviceName = wearable?.deviceName
                     deviceName?.let {
-                        when (deviceName) {
-                            "WristBand" -> {
+                        val deviceType = DeviceType.from(deviceName)
+                        when (deviceType) {
+                            DeviceType.RING -> {
+
+                            }
+
+                            DeviceType.BAND -> {
                                 setComputedMetricsData(
                                     data.wristbandMetrics?.exerciseIntensityMetric,
                                     data.wristbandMetrics?.physicalRecoveryMetric,
                                     data.wristbandMetrics?.stressScoreMetric,
                                     data.wristbandMetrics?.sleepDurationMetric
                                 )
+                            }
+
+                            DeviceType.UNKNOWN -> {
+
                             }
                         }
                     }
@@ -343,36 +481,6 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
         } ?: run {
             //binding.cardSleepMetrics.visibility = View.GONE
         }
-    }
-
-    private fun getDataFromServer() {
-        wearable = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            arguments?.getParcelable("wearable", Wearable::class.java)
-        } else {
-            arguments?.getParcelable("wearable")
-        }
-        val deviceId = wearable?.id
-        deviceId?.let {
-            when (wearable?.deviceName) {
-                "WristBand" -> {
-                    viewModel.getAllMetricsByDeviceId(it)
-                }
-
-                else -> {
-                    viewModel.getRingReadingData(it)
-                    viewModel.getAllMetricsByDeviceId(it)
-                }
-            }
-        }
-
-        val deviceImage = wearable?.deviceImage
-        deviceImage?.let {
-            Glide.with(requireActivity())
-                .load("${it[0]}")
-                .into(binding.ivDevice)
-        }
-        binding.tvDeviceName.text = wearable?.deviceName ?: ""
-        binding.header.title.text = "${wearable?.deviceFacingName} Metrics"
     }
 
     private fun initClicks() {
@@ -488,6 +596,6 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
 
     override fun onDestroyView() {
         super.onDestroyView()
-        app.deviceManager.unregisterCb()
+        app.ringDeviceManager.unregisterCb()
     }
 }

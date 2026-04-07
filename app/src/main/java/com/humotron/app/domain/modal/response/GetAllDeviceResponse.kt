@@ -52,6 +52,8 @@ data class GetAllDeviceResponse(
             val metrics: List<Metric>?,
             @SerializedName("orderStatus")
             val orderStatus: String?
+
+
         ) : Parcelable {
             @Parcelize
             data class Metric(

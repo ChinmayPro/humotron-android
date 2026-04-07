@@ -116,6 +116,8 @@ dependencies {
     implementation(project(":sdkAAR"))
     implementation(project(":sleepAlgo"))
     implementation(project(":libraryDiscreteScrollView"))
+    //Band
+    implementation(project(":blesdk_2208"))
 
     // -------------------- Debug Tools --------------------
     debugImplementation(libs.pluto)

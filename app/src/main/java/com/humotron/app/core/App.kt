@@ -4,16 +4,16 @@ import android.app.Application
 import android.content.Context
 import android.os.StrictMode
 import android.util.Log
-import com.humotron.app.bt.BleManager
+import com.humotron.app.bt.ring.RingBleManager
 import com.humotron.app.util.ActivityLifecycleCb
-import com.humotron.app.util.DeviceManager
+import com.humotron.app.util.BandSyncManager
 import com.humotron.app.util.FontScaleContextWrapper
 import com.humotron.app.util.PrefUtils
+import com.humotron.app.util.RingDeviceManager
 import com.humotron.app.util.createDefaultSharedPreferences
 import com.pluto.Pluto
 import com.pluto.plugins.exceptions.PlutoExceptions
 import com.pluto.plugins.exceptions.PlutoExceptionsPlugin
-import com.pluto.plugins.logger.PlutoLog
 import com.pluto.plugins.logger.PlutoLoggerPlugin
 import com.pluto.plugins.logger.PlutoTimberTree
 import com.pluto.plugins.network.PlutoNetworkPlugin
@@ -25,23 +25,35 @@ import kotlin.system.exitProcess
 
 @HiltAndroidApp
 class App : Application() {
+
+    companion object {
+        @JvmStatic
+        lateinit var instance: App
+            private set
+    }
+
     val mActivityLifecycleCb = ActivityLifecycleCb()
 
     @Inject
     lateinit var prefUtils: PrefUtils
 
+    @Inject
+    lateinit var bandSyncManager: BandSyncManager
+
     val accountSp by lazy { createDefaultSharedPreferences() }
-    val bleManager by lazy {
+    val ringBleManager by lazy {
         NexRingManager.init(this)
-        BleManager(this)
+        RingBleManager(this)
     }
-    val deviceManager by lazy { DeviceManager(this) }
+    val ringDeviceManager by lazy { RingDeviceManager(this) }
 
 
     override fun onCreate() {
+        instance = this
         initializeStrictMode()
         super.onCreate()
         registerActivityLifecycleCallbacks(mActivityLifecycleCb)
+        bandSyncManager.start()
         initPluto()
     }
 

@@ -12,8 +12,8 @@ import android.content.pm.ServiceInfo
 import android.os.Build
 import android.os.IBinder
 import androidx.core.app.ServiceCompat
-import com.humotron.app.bt.BleDevice
-import com.humotron.app.bt.OnBleScanCallback
+import com.humotron.app.bt.ring.RingBleDevice
+import com.humotron.app.bt.ring.OnBleScanCallback
 import com.humotron.app.core.App
 import com.humotron.app.core.Preference
 import com.humotron.app.util.NotificationManagerService
@@ -47,7 +47,7 @@ class RingConnectionService : Service() {
         )
 
         // Do nothing if already connected
-        if (app.deviceManager.connected.value == true) {
+        if (app.ringDeviceManager.connected.value == true) {
             PlutoLog.e("RingConnectionService", "Device already connected. Stopping service.")
             stopSelf()
             return START_NOT_STICKY
@@ -66,28 +66,28 @@ class RingConnectionService : Service() {
     }
 
     private fun connectToRing() {
-        app.deviceManager.registerCb()
+        app.ringDeviceManager.registerCb()
         val address = prefUtils.getString(Preference.WEARABLE_RING) ?: ""
         if (address.isNotEmpty()) {
             PlutoLog.e("RingConnectionService", "Starting scan for ring: $address")
             // Scan for a limited time to avoid battery drain
-            app.bleManager.startScan(60000, object : OnBleScanCallback {
+            app.ringBleManager.startScan(60000, object : OnBleScanCallback {
                 @SuppressLint("MissingPermission")
-                override fun onScanning(result: BleDevice) {
+                override fun onScanning(result: RingBleDevice) {
                     PlutoLog.e(
                         "RingConnectionService",
                         "Scanning for ring: ${result.device.address}"
                     )
                     if (result.device.address == address) {
                         PlutoLog.e("RingConnectionService", "Ring found, attempting to connect.")
-                        app.deviceManager.connect(result.device.address)
-                        app.bleManager.cancelScan() // Stop scanning once found
+                        app.ringDeviceManager.connect(result.device.address)
+                        app.ringBleManager.cancelScan() // Stop scanning once found
                     }
                 }
 
                 override fun onScanFinished() {
                     PlutoLog.e("RingConnectionService", "Scan finished.")
-                    if (app.deviceManager.connected.value != true) {
+                    if (app.ringDeviceManager.connected.value != true) {
                         PlutoLog.e("RingConnectionService", "Ring not found during scan.")
                     }
                     stopSelf() // Stop the service
@@ -144,7 +144,7 @@ class RingConnectionService : Service() {
 
     override fun onDestroy() {
         // Stop scanning if the service is destroyed for any reason
-        app.bleManager.cancelScan()
+        app.ringBleManager.cancelScan()
         PlutoLog.e("RingConnectionService", "Service destroyed.")
         super.onDestroy()
     }

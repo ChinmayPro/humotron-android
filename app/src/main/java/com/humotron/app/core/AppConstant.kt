@@ -3,8 +3,8 @@ package com.humotron.app.core
 object AppConstant {
 
     const val BASE_URL: String = "https://api.humotron.com:4200/api/v1/"
-    const val ASSESSMENT_ID="assessmentId"
-    const val ASSESSMENT="assessment"
+    const val ASSESSMENT_ID = "assessmentId"
+    const val ASSESSMENT = "assessment"
 
 
 }
@@ -28,7 +28,11 @@ class Preference {
         const val LOGIN_USER_EMAIL = "login_user_email"
         const val LOGIN = "login"
         const val WEARABLE_RING = "wearable_ring"
+
+        /** Saved MAC for J-style smart band (BLE). */
+        const val WEARABLE_BAND = "wearable_band"
         const val HARDWARE_DATA = "hardware_data"
+        const val BAND_HARDWARE_DATA = "band_hardware_data"
         const val RECORD_DATE = "recorded_time"
         const val PREF_ASSESSMENT_ANSWERS = "assessment_answers"
 
@@ -37,5 +41,5 @@ class Preference {
 }
 
 //var AssesmentTempId  = "67a29b40d4e4e815a8401275"
-var AssesmentTempId  = "67a24f1bd4e4e815a840102c"
+var AssesmentTempId = "67a24f1bd4e4e815a840102c"
 //var AssesmentTempId  = "67a28001d4e4e815a8401147"

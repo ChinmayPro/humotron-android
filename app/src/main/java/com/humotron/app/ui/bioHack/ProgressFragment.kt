@@ -22,6 +22,7 @@ import com.humotron.app.ui.bioHack.adapter.LearningProgressAdapter
 import com.humotron.app.ui.bioHack.adapter.StreakAdapter
 import com.humotron.app.ui.bioHack.adapter.TestAdapter
 import com.humotron.app.ui.bioHack.viewModel.NuggetsViewModel
+import com.pluto.plugins.logger.PlutoLog
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -80,7 +81,7 @@ class ProgressFragment : BaseFragment(R.layout.fragment_progress) {
             dialog.arguments = Bundle().apply {
                 putInt("type", 1)
             }
-            dialog.show(childFragmentManager,"BioHackFaqsFragment")
+            dialog.show(childFragmentManager, "BioHackFaqsFragment")
         }
 
         binding.llBioHack2.setOnClickListener {
@@ -92,7 +93,7 @@ class ProgressFragment : BaseFragment(R.layout.fragment_progress) {
             dialog.arguments = Bundle().apply {
                 putInt("type", 2)
             }
-            dialog.show(childFragmentManager,"BioHackFaqsFragment")
+            dialog.show(childFragmentManager, "BioHackFaqsFragment")
         }
 
         binding.llBioHack3.setOnClickListener {
@@ -104,7 +105,7 @@ class ProgressFragment : BaseFragment(R.layout.fragment_progress) {
             dialog.arguments = Bundle().apply {
                 putInt("type", 3)
             }
-            dialog.show(childFragmentManager,"BioHackFaqsFragment")
+            dialog.show(childFragmentManager, "BioHackFaqsFragment")
         }
 
         binding.tvExplore.setOnClickListener {
@@ -127,11 +128,11 @@ class ProgressFragment : BaseFragment(R.layout.fragment_progress) {
                 }
 
                 Status.ERROR -> {
-
+                    PlutoLog.e("ERROR", it.error?.errorMessage ?: "")
                 }
 
                 Status.EXCEPTION -> {
-
+                    PlutoLog.e("Exception", it.error?.errorMessage ?: "")
                 }
 
                 Status.LOADING -> {

@@ -274,4 +274,5 @@ To get started:\n
     <string name="health_reports">Health Reports</string>
     <string name="we_ll_extract_relevant_data_points">We’ll extract relevant data points from health PDF and sync with your health profile.</string>
     <string name="upload_or_sync_now">Upload or Sync Now</string>
+    <string name="disconnected">Disconnected</string>
 </resources>

@@ -2,6 +2,7 @@ package com.humotron.app.ui
 
 import android.Manifest
 import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -21,21 +22,20 @@ import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.humotron.app.R
-import com.humotron.app.bt.BleDevice
-import com.humotron.app.bt.OnBleScanCallback
+import com.humotron.app.bt.ring.RingBleDevice
+import com.humotron.app.bt.ring.OnBleScanCallback
+import com.humotron.app.bt.band.BandBleManager
 import com.humotron.app.core.App
 import com.humotron.app.core.Preference
 import com.humotron.app.data.local.AppDatabase
 import com.humotron.app.databinding.ActivityMainBinding
-import com.humotron.app.ui.assesment.AssessmentActivity
-import com.humotron.app.ui.assesment.CardiovascularAssessmentBottomSheet
-import com.humotron.app.ui.connect.DeviceConnectedFragment.Companion.device
+import com.humotron.app.ui.connect.DeviceConnectedFragment
+import com.humotron.app.ui.connect.DeviceConnectionFragment
 import com.humotron.app.ui.connect.HomeViewModel
 import com.humotron.app.ui.onboarding.OnBoardingActivity
 import com.humotron.app.util.PrefUtils
@@ -63,7 +63,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     @Inject
     lateinit var prefUtils: PrefUtils
 
+    @Inject
+    lateinit var bandBleManager: BandBleManager
+
     private val app by lazy { application as App }
+
+    var device: RingBleDevice? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
@@ -115,13 +120,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             Intent(this, RingConnectionService::class.java)
         )*/
 
-        //Force initialize HomeViewModel here so its init{} runs before any Fragment uses it, otherwise homeViewModel?.loadDateData() not work in DeviceManager
+        //Force initialize HomeViewModel here so its init{} runs before any Fragment uses it, otherwise homeViewModel?.loadDateData() not work in RingDeviceManager
         homeViewModel
         checkBlePermissionsAndStart()
     }
 
     private fun initObservers() {
-
+        app.ringDeviceManager.connected.observe(this) { isConnected ->
+            if (isConnected) {
+                device?.let {
+                    homeViewModel.currBtMac = it.device.address ?: ""
+                    DeviceConnectedFragment.device = device
+                    DeviceConnectionFragment.device = device
+                }
+            }
+        }
     }
 
     fun showOrHideBottomNav(show: Boolean) {
@@ -155,25 +168,25 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
     }
-  /*  private fun showAssessmentSheet() {
-        val sheet = CardiovascularAssessmentBottomSheet.newInstance()
-        sheet.onProceedClicked = {
-            findNavController().navigate(R.id.action_home_to_assessment)
-        }
-        sheet.show(childFragmentManager, CardiovascularAssessmentBottomSheet.TAG)
-    }*/
-/*  private fun showAssessmentSheet() {
-      val sheet = CardiovascularAssessmentBottomSheet.newInstance()
+    /*  private fun showAssessmentSheet() {
+          val sheet = CardiovascularAssessmentBottomSheet.newInstance()
+          sheet.onProceedClicked = {
+              findNavController().navigate(R.id.action_home_to_assessment)
+          }
+          sheet.show(childFragmentManager, CardiovascularAssessmentBottomSheet.TAG)
+      }*/
+    /*  private fun showAssessmentSheet() {
+          val sheet = CardiovascularAssessmentBottomSheet.newInstance()
 
-      sheet.onProceedClicked = {
-//          findNavController().navigate(R.id.assessmentFragment)
-          startActivity(Intent(this, AssessmentActivity::class.java))
+          sheet.onProceedClicked = {
+    //          findNavController().navigate(R.id.assessmentFragment)
+              startActivity(Intent(this, AssessmentActivity::class.java))
 
 
-      }
+          }
 
-      sheet.show(supportFragmentManager, CardiovascularAssessmentBottomSheet.TAG)
-  }*/
+          sheet.show(supportFragmentManager, CardiovascularAssessmentBottomSheet.TAG)
+      }*/
 
     private fun highlightView(count: Int) {
         val textList = listOf(binding.tvTrack, binding.tvDecode, binding.tvBioHack)
@@ -191,11 +204,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 binding.ivDecode.setImageResource(R.drawable.ic_decode)
                 binding.ivBioHack.setImageResource(R.drawable.ic_bio_hack)
             }
+
             1 -> {
                 binding.ivTrack.setImageResource(R.drawable.ic_trends)
                 binding.ivDecode.setImageResource(R.drawable.ic_decode_selected)
                 binding.ivBioHack.setImageResource(R.drawable.ic_bio_hack)
             }
+
             2 -> {
                 binding.ivTrack.setImageResource(R.drawable.ic_trends)
                 binding.ivDecode.setImageResource(R.drawable.ic_decode)
@@ -230,6 +245,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                         requestEnableBluetooth()
                     } else {
                         connectToRing()
+                        connectToBand()
                     }
                 } else {
                     if (deniedList.isNotEmpty()) {
@@ -242,13 +258,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     fun isBleSupported(): Boolean {
         val pm = packageManager
         val hasBleFeature = pm.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)
-        val adapterAvailable = BluetoothAdapter.getDefaultAdapter() != null
+        val bluetoothManager = getSystemService(BluetoothManager::class.java)
+        val adapterAvailable = bluetoothManager?.adapter != null
         return hasBleFeature && adapterAvailable
     }
 
     fun isBluetoothEnabled(): Boolean {
-        val adapter = BluetoothAdapter.getDefaultAdapter()
-        return adapter?.isEnabled == true
+        val bluetoothManager = getSystemService(BluetoothManager::class.java)
+        return bluetoothManager?.adapter?.isEnabled == true
     }
 
     fun requestEnableBluetooth() {
@@ -260,25 +277,26 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (isBluetoothEnabled()) {
                 connectToRing()
+                connectToBand()
             } else {
                 Toast.makeText(this, "Bluetooth not enabled", Toast.LENGTH_SHORT).show()
             }
         }
 
     private fun connectToRing() {
-        PlutoLog.e(TAG_RING_DEBUG,"connectToRing")
-        app.deviceManager.registerCb()
+        PlutoLog.e(TAG_RING_DEBUG, "connectToRing")
+        app.ringDeviceManager.registerCb()
         val address = prefUtils.getString(Preference.WEARABLE_RING) ?: ""
         if (address.isNotEmpty()) {
-            app.bleManager.startScan(300000, object : OnBleScanCallback {
-                override fun onScanning(result: BleDevice) {
+            app.ringBleManager.startScan(300000, object : OnBleScanCallback {
+                override fun onScanning(result: RingBleDevice) {
                     if (result.device.address == address) {
                         PlutoLog.e(
                             TAG_RING_DEBUG,
                             "ring found"
                         )
                         device = result
-                        app.deviceManager.connect(result.device.address)
+                        app.ringDeviceManager.connect(result.device.address)
                     }
                 }
 
@@ -295,6 +313,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    private fun connectToBand() {
+        val address = prefUtils.getString(Preference.WEARABLE_BAND) ?: ""
+        if (address.isNotEmpty() && bandBleManager.isBluetoothEnabled()) {
+            bandBleManager.connectDevice(address)
+        }
+    }
 
     override fun attachBaseContext(newBase: Context?) {
         val newOverride = Configuration(newBase?.resources?.configuration)

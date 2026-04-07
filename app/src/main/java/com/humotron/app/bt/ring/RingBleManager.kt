@@ -1,4 +1,4 @@
-package com.humotron.app.bt
+package com.humotron.app.bt.ring
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -42,9 +42,9 @@ private const val OEM_STEP_AUTHENTICATE_OEM = 1
 private const val OEM_STEP_TIMESTAMP_SYNC = 2
 private const val OEM_STEP_PROCESS_COMPLETED = 3
 
-class BleManager(val app: App) {
+class RingBleManager(val app: App) {
 
-    private val tag = "BleManager"
+    private val tag = "RingBleManager"
     private val mBluetoothAdapter =
         (app.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager).adapter
 
@@ -103,10 +103,10 @@ class BleManager(val app: App) {
                     val bytes = scanRecord.bytes
                     val address = result.device.address
                     if (!scanDevMacList.contains(address).apply {
-                            loge("scanDevMacList contains address($address) = ${!this}")
+                            //loge("scanDevMacList contains address($address) = ${!this}")
                         }) {
                         val bleDevice = bytes.parseScanRecord().run {
-                            BleDevice(
+                            RingBleDevice(
                                 result.device, cid, color, size,
                                 batteryState, batteryLevel,
                                 /*chipMode,*/ generation, sn,
@@ -161,6 +161,7 @@ class BleManager(val app: App) {
                 }
 
                 BluetoothProfile.STATE_CONNECTED -> {
+                    PlutoLog.e(TAG_RING_DEBUG,"STATE_CONNECTED Ring Ble Manager")
                     bleState = BluetoothProfile.STATE_CONNECTED
                     connectedDevice = gatt.device
                     postBleState()

@@ -29,7 +29,7 @@ class ConnectInfoFragment : Fragment(R.layout.fragment_connect_info) {
     ) { permissions ->
 
         if (!permissions.entries.map { it.value }.contains(false)) {
-            checkForBluetooth()
+            isBluetoothEnabled()
         }
     }
 
@@ -70,7 +70,7 @@ class ConnectInfoFragment : Fragment(R.layout.fragment_connect_info) {
         }
     }
 
-    private fun checkForBluetooth() {
+    private fun isBluetoothEnabled() {
         if (mBluetoothAdapter?.isEnabled == false) {
             val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
             blueToothLauncher.launch(enableBtIntent)
@@ -90,10 +90,7 @@ class ConnectInfoFragment : Fragment(R.layout.fragment_connect_info) {
         val bluetoothManager =
             requireContext().getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
         mBluetoothAdapter = bluetoothManager.adapter
-        if (mBluetoothAdapter == null) {
-            return false
-        }
-        return true
+        return mBluetoothAdapter != null
     }
 
     private fun navigateToConnection() {

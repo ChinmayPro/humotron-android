@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
+import com.humotron.app.bt.band.BandBleManager
 import com.humotron.app.core.App
 import com.humotron.app.core.Preference
 import com.humotron.app.data.local.entity.HrData
@@ -33,6 +34,7 @@ class HomeViewModel @Inject constructor(
     application: Application,
     val repository: SleepRepository,
     val prefUtils: PrefUtils,
+    private val bandBleManager: BandBleManager,
 ) : AndroidViewModel(application) {
 
     var currBtMac: String = ""
@@ -42,17 +44,18 @@ class HomeViewModel @Inject constructor(
 
 
     init {
-        getApplication<App>().deviceManager.homeViewModel = this
+        getApplication<App>().ringDeviceManager.homeViewModel = this
     }
 
     override fun onCleared() {
-        getApplication<App>().deviceManager.homeViewModel = null
-        getApplication<App>().bleManager.disconnect()
+        getApplication<App>().ringDeviceManager.homeViewModel = null
+        getApplication<App>().ringBleManager.disconnect()
+        bandBleManager.disconnect()
         super.onCleared()
     }
 
     fun loadDateData() = Thread {
-        PlutoLog.e(TAG_RING_DEBUG, "HomeViewModel loadDateData")
+        PlutoLog.e(TAG_RING_DEBUG, "HomeViewModel loadDateData $currBtMac")
         with(NexRingManager.get().sleepApi()) {
 
             getDayCount(currBtMac) {

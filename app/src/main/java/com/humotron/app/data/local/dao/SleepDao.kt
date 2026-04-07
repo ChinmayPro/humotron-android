@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import com.humotron.app.data.local.entity.BandHrvData
 import com.humotron.app.data.local.entity.HrData
 import com.humotron.app.data.local.entity.HrvData
 import com.humotron.app.data.local.entity.SleepEntity
@@ -79,5 +80,13 @@ interface SleepDao {
     @Query("UPDATE `temp` SET sync = 1 WHERE timeStamp IN (:timeStamps)")
     suspend fun syncTempData(timeStamps: List<String>)
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertBandHrvList(data: List<BandHrvData>)
+
+    @Query("select * from band_hrv where sync = 0 order by measuredAt asc")
+    fun getUnSyncBandHrv(): Flow<List<BandHrvData>>
+
+    @Query("UPDATE band_hrv SET sync = 1 WHERE id IN (:ids)")
+    suspend fun syncBandHrvData(ids: List<Long>)
 
 }

@@ -16,12 +16,14 @@ import com.humotron.app.core.Preference
 import com.humotron.app.core.base.BaseFragment
 import com.humotron.app.data.network.Status
 import com.humotron.app.databinding.FragmentTrackBinding
+import com.humotron.app.domain.modal.DeviceType
 import com.humotron.app.domain.modal.response.GetAllDeviceResponse.Data.Wearable
 import com.humotron.app.domain.modal.response.MergedAssessment
 import com.humotron.app.ui.assesment.AssessmentActivity
 import com.humotron.app.ui.assesment.CardiovascularAssessmentBottomSheet
 import com.humotron.app.ui.connect.dialog.DeviceSelectionBottomSheet
 import com.humotron.app.ui.device.DeviceViewModel
+import com.humotron.app.ui.navigation.NavKeys
 import com.humotron.app.util.fadeIn
 import com.humotron.app.util.showWithFade
 import com.pluto.utilities.extensions.toast
@@ -127,16 +129,27 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
             when (it.status) {
                 Status.SUCCESS -> {
                     val data = it.data?.data ?: return@observe
-                    data.hardwareDetails?.firstOrNull { it.hardwareType == "HumotronRing" }?.let {
-                        prefUtils.setHardwareData(it)
-                        it.userHardwareUUID?.let { value ->
-                            prefUtils.setString(
-                                Preference.WEARABLE_RING,
-                                value
-                            )
+                    data.hardwareDetails?.firstOrNull { it.hardwareType == DeviceType.RING.value }
+                        ?.let {
+                            prefUtils.setHardwareData(it)
+                            it.userHardwareUUID?.let { value ->
+                                prefUtils.setString(
+                                    Preference.WEARABLE_RING,
+                                    value
+                                )
+                            }
+                            viewModel.refreshUserDeviceData(true)
                         }
-                        viewModel.refreshUserDeviceData(true)
-                    }
+                    data.hardwareDetails?.firstOrNull { it.hardwareType == DeviceType.BAND.value }
+                        ?.let {
+                            prefUtils.setBandHardwareData(it)
+                            it.userHardwareUUID?.let { value ->
+                                prefUtils.setString(
+                                    Preference.WEARABLE_BAND,
+                                    value
+                                )
+                            }
+                        }
                 }
 
                 Status.ERROR -> {
@@ -186,7 +199,7 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
     private fun setupDiscreteScrollView(wearables: List<Wearable>) {
         wearableAdapter = WearableAdapter(wearables) { wearable ->
             findNavController().navigate(R.id.fragmentDeviceData, Bundle().apply {
-                putParcelable("wearable", wearable)
+                putParcelable(NavKeys.WEARABLE, wearable)
             })
         }
         binding.dsvWearables.adapter = wearableAdapter

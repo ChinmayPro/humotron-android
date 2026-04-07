@@ -99,9 +99,10 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivDeviceImage"
-                android:layout_width="@dimen/_80dp"
+                android:layout_width="@dimen/_60dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_ring_horizontal"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_smart_band"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -111,7 +112,7 @@
                 style="@style/Text.OnBoard.Sub.Medium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Humotron Smart Ring"
+                android:text="Humotron Wrist Band"
                 android:textColor="@color/textColorGray"
                 android:textSize="13sp"
                 app:layout_constraintBottom_toTopOf="@id/tvDeviceModel"
@@ -181,7 +182,6 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

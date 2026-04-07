@@ -23,5 +23,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Humotron"
-include(":app", ":ecgAlgo", ":oemAuth", ":sdkAAR", ":sleepAlgo", ":libraryDiscreteScrollView")
-
+include(":app", ":ecgAlgo", ":oemAuth", ":sdkAAR", ":sleepAlgo", ":libraryDiscreteScrollView",":blesdk_2208")

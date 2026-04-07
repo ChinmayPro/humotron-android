@@ -12,7 +12,6 @@
         layout="@layout/layout_header_biohack"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <ViewAnimator
         android:id="@+id/viewAnimator"
         android:layout_width="match_parent"
@@ -20,9 +19,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header">
 
-
         <include layout="@layout/shimmer_progress" />
-
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -392,9 +389,9 @@
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.core.widget.NestedScrollView>
 
     </ViewAnimator>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
