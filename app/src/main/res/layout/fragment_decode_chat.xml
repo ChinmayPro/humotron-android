@@ -156,6 +156,8 @@
                 android:background="@drawable/bg_chat_input"
                 android:gravity="center_vertical"
                 android:hint="@string/chat_hint"
+                android:imeOptions="actionDone"
+                android:inputType="text"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:textColor="@color/white"

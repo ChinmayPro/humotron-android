@@ -66,6 +66,9 @@
             android:name=".ui.assesment.AssessmentActivity"
             android:exported="true" />
         <activity
+            android:name=".ui.bloodTest.BloodTestActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.MainActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustNothing" />

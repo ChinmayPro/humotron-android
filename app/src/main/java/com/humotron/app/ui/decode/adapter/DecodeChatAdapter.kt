@@ -23,9 +23,10 @@ class DecodeChatAdapter(
     }
 
     fun markAllAsAnimated(newList: List<ConversationData>) {
-        newList.forEachIndexed { index, item ->
+        newList.forEach { item ->
             val aiMessage = item.botResponse?.message ?: ""
-            val messageKey = "${index}_${aiMessage.hashCode()}"
+            val itemKey = item.id ?: "${item.createdAt}_${item.userMessage?.hashCode()}"
+            val messageKey = "${itemKey}_${aiMessage.hashCode()}"
             animatedKeys.add(messageKey)
         }
     }
@@ -58,7 +59,10 @@ class DecodeChatAdapter(
                 return
             }
 
-            val messageKey = "${position}_${aiMessage.hashCode()}"
+            // Stable key using ID if available, otherwise a combination of timestamp and user message hash
+            // This prevents animation restarts on scrolling or list updates
+            val itemKey = item.id ?: "${item.createdAt}_${item.userMessage?.hashCode()}"
+            val messageKey = "${itemKey}_${aiMessage.hashCode()}"
             
             // Only animate if it's the latest item and this specific content hasn't been animated
             val isLatest = position == itemCount - 1
@@ -71,7 +75,7 @@ class DecodeChatAdapter(
             } else {
                 typingJob?.cancel()
                 currentAnimatingKey = null
-                binding.tvAiResponse.text = aiMessage
+                binding.tvAiResponse.text = androidx.core.text.HtmlCompat.fromHtml(convertMarkdownToHtml(aiMessage), androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT)
             }
         }
 
@@ -84,19 +88,54 @@ class DecodeChatAdapter(
             view.post {
                 val lifecycleOwner = view.findViewTreeLifecycleOwner()
                 if (lifecycleOwner == null) {
-                    view.text = text
+                    view.text = androidx.core.text.HtmlCompat.fromHtml(convertMarkdownToHtml(text), androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT)
                     return@post
                 }
                 typingJob = lifecycleOwner.lifecycleScope.launch {
                     val words = text.split(" ")
-                    for (i in words.indices) {
-                        view.append(words[i])
-                        if (i < words.size - 1) view.append(" ")
-                        onAnimateTyping(bindingAdapterPosition)
-                        delay(60) // Natural word-by-word typing speed (50ms)
+                    val totalWords = words.size
+                    
+                    // Dynamic typing speed: faster for longer messages to keep user engaged without extreme waiting
+                    // Shorter messages: ~60ms per word
+                    // Longer messages: Reduces down to ~15ms per word for 500+ words
+                    val typingDelay = when {
+                        totalWords > 400 -> 15L
+                        totalWords > 200 -> 30L
+                        totalWords > 100 -> 45L
+                        else -> 60L
                     }
+
+                    val builder = StringBuilder()
+                    for (i in words.indices) {
+                        builder.append(words[i])
+                        if (i < words.size - 1) builder.append(" ")
+                        
+                        val currentHtml = convertMarkdownToHtml(builder.toString())
+                        view.text = androidx.core.text.HtmlCompat.fromHtml(currentHtml, androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT)
+                        
+                        // Scroll request
+                        onAnimateTyping(bindingAdapterPosition)
+                        
+                        // Small optimization: for very long responses, we can type multiple words per frame
+                        // to make it look smooth but faster.
+                        val wordsToWait = if (totalWords > 300) 2 else 1
+                        if (i % wordsToWait == 0) {
+                            delay(typingDelay)
+                        }
+                    }
+                    // Ensure full text is set at the end just in case
+                    view.text = androidx.core.text.HtmlCompat.fromHtml(convertMarkdownToHtml(text), androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT)
                 }
             }
+        }
+
+        private fun convertMarkdownToHtml(text: String): String {
+            return text
+                .replace(Regex("\\*\\*(.*?)\\*\\*"), "<b>$1</b>")
+                .replace(Regex("__(.*?)__"), "<b>$1</b>")
+                .replace(Regex("\\*(.*?)\\*"), "<i>$1</i>")
+                .replace(Regex("_(.*?)_"), "<i>$1</i>")
+                .replace("\n", "<br>")
         }
 
         private fun formatChatDate(dateStr: String?): String {

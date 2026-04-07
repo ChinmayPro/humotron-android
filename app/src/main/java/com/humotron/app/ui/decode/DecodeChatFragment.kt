@@ -29,7 +29,8 @@ class DecodeChatFragment : BaseFragment(R.layout.fragment_decode_chat) {
     private lateinit var binding: FragmentDecodeChatBinding
     private val viewModel: DecodeViewModel by viewModels()
     private var autoScrollEnabled = true
-    private val chatAdapter by lazy { 
+    private var isHistoryLoading = false
+    private val chatAdapter: DecodeChatAdapter by lazy { 
         DecodeChatAdapter(
             onAnimateTyping = { position ->
                 if (autoScrollEnabled) {
@@ -66,6 +67,12 @@ class DecodeChatFragment : BaseFragment(R.layout.fragment_decode_chat) {
                 loadConversation(conversationId, conversationTitle)
             }
         }
+        childFragmentManager.setFragmentResultListener("conversation_deleted", viewLifecycleOwner) { _, bundle ->
+            val deletedId = bundle.getString("deletedId")
+            if (deletedId != null && deletedId == viewModel.getThreadId()) {
+                startNewChat()
+            }
+        }
     }
 
     private fun initViews() {
@@ -98,6 +105,17 @@ class DecodeChatFragment : BaseFragment(R.layout.fragment_decode_chat) {
             binding.ivSend.isVisible = !text.isNullOrEmpty()
         }
 
+        binding.etInput.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == android.view.inputmethod.EditorInfo.IME_ACTION_DONE) {
+                val imm = requireContext().getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as android.view.inputmethod.InputMethodManager
+                imm.hideSoftInputFromWindow(binding.etInput.windowToken, 0)
+                binding.etInput.clearFocus()
+                true
+            } else {
+                false
+            }
+        }
+
         ViewCompat.setOnApplyWindowInsetsListener(binding.contentRoot) { v, insets ->
             val imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime())
             val systemInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -114,6 +132,9 @@ class DecodeChatFragment : BaseFragment(R.layout.fragment_decode_chat) {
             v.updatePadding(bottom = paddingBottom)
             
             binding.tvDisclaimer.isVisible = !isKeyboardVisible
+            if (!isKeyboardVisible && binding.etInput.isFocused) {
+                binding.etInput.clearFocus()
+            }
             
             val params = binding.layoutBottom.layoutParams as ConstraintLayout.LayoutParams
             if (isKeyboardVisible) {
@@ -210,13 +231,22 @@ class DecodeChatFragment : BaseFragment(R.layout.fragment_decode_chat) {
                             currentList.addAll(0, apiList)
                             chatAdapter.submitList(currentList, isHistory = true)
                         } else {
-                            // Fresh load, history load, or update after sending message.
-                            // If apiList has only 1 item and it matches our last sent message, it's not history.
-                            // But usually, getConversationsByUserId returns the full list.
-                            // If it's the very first load, it's history.
+                            // Fresh load or update.
                             val isFirstLoad = currentList.isEmpty() || (currentList.size == 1 && currentList[0].id == null)
-                            chatAdapter.submitList(apiList, isHistory = isFirstLoad)
+                            
+                            if (isFirstLoad && currentList.isNotEmpty() && apiList.isNotEmpty()) {
+                                // Keep our local userMessage for the first message to avoid flickering/changing text
+                                val mergedList = apiList.toMutableList()
+                                val firstItem = mergedList[0].copy(userMessage = currentList[0].userMessage)
+                                mergedList[0] = firstItem
+                                chatAdapter.submitList(mergedList, isHistory = isHistoryLoading)
+                            } else {
+                                chatAdapter.submitList(apiList, isHistory = isHistoryLoading)
+                            }
                         }
+                        
+                        // Reset history flag after submitting
+                        isHistoryLoading = false
                     } else if (apiList.isEmpty() && currentList.isNotEmpty() && currentList.last().id == null) {
                         // API returned nothing for our prompt, show a 'No data' response
                         val updatedItem = currentList.last().copy(
@@ -294,6 +324,7 @@ class DecodeChatFragment : BaseFragment(R.layout.fragment_decode_chat) {
 
 
     private fun showMetricChat(metric: ActiveMetric) {
+        isHistoryLoading = false
         selectedMetricLabel = metric.label ?: ""
         binding.nsvContent.isVisible = false
         binding.rvChat.isVisible = true
@@ -312,6 +343,7 @@ class DecodeChatFragment : BaseFragment(R.layout.fragment_decode_chat) {
     }
 
     private fun showQuestionChat(question: FeltOffQuestionData) {
+        isHistoryLoading = false
         selectedMetricLabel = ""
         binding.nsvContent.isVisible = false
         binding.rvChat.isVisible = true
@@ -329,6 +361,7 @@ class DecodeChatFragment : BaseFragment(R.layout.fragment_decode_chat) {
     }
 
     private fun startNewChat() {
+        isHistoryLoading = false
         viewModel.resetThreadId()
         binding.nsvContent.isVisible = true
         binding.rvChat.isVisible = false
@@ -337,6 +370,7 @@ class DecodeChatFragment : BaseFragment(R.layout.fragment_decode_chat) {
     }
 
     private fun loadConversation(conversationId: String, title: String? = null) {
+        isHistoryLoading = true
         selectedMetricLabel = ""
         binding.nsvContent.isVisible = false
         binding.rvChat.isVisible = true

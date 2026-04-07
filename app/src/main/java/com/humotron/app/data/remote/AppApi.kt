@@ -10,6 +10,7 @@ import com.humotron.app.domain.modal.param.GetConversationThreadsParam
 import com.humotron.app.domain.modal.param.GetConversationsParam
 import com.humotron.app.domain.modal.param.NuggetsInteraction
 import com.humotron.app.domain.modal.param.PostFollowUpConversationParam
+import com.humotron.app.domain.modal.param.RemovePdfParam
 import com.humotron.app.domain.modal.param.RingReadingParam
 import com.humotron.app.domain.modal.param.BandUploadData
 import com.humotron.app.domain.modal.param.StartNewChatParam
@@ -28,10 +29,13 @@ import com.humotron.app.domain.modal.response.BookPreferenceResponse
 import com.humotron.app.domain.modal.response.CommonResponse
 import com.humotron.app.domain.modal.response.ConversationThreadsResponse
 import com.humotron.app.domain.modal.response.DailyCalculatedMetricsResponse
+import com.humotron.app.domain.modal.response.ExtractMetricsResponse
 import com.humotron.app.domain.modal.response.FeltOffQuestionsResponse
+import com.humotron.app.domain.modal.response.GenerateMetricResponse
 import com.humotron.app.domain.modal.response.GetAllDeviceResponse
 import com.humotron.app.domain.modal.response.GetConversationsResponse
 import com.humotron.app.domain.modal.response.HardwareListData
+import com.humotron.app.domain.modal.response.MedicalPdfResponse
 import com.humotron.app.domain.modal.response.MergedAssessmentResponse
 import com.humotron.app.domain.modal.response.MetricResponse
 import com.humotron.app.domain.modal.response.MetricTrackingResponse
@@ -49,15 +53,27 @@ import com.humotron.app.domain.modal.response.UseCaseResponse
 import com.humotron.app.domain.modal.response.VerifyOtpResponse
 import com.humotron.app.domain.modal.response.WristBandSleepDurationResponse
 import com.humotron.app.domain.modal.response.YetToTrackMetricResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface AppApi {
+
+    @Multipart
+    @POST("medicalDetails/createClinicalDocuments/{isCreateNugget}")
+    suspend fun createClinicalDocuments(
+        @Path("isCreateNugget") isCreateNugget: Boolean,
+        @Part("uploadType") uploadType: RequestBody,
+        @Part file: MultipartBody.Part
+    ): Response<ExtractMetricsResponse>
 
     @GET("chatFeltOff/questions")
     suspend fun getFeltOffQuestions(): Response<FeltOffQuestionsResponse>
@@ -195,6 +211,9 @@ interface AppApi {
     @POST("userAssessment/getMergedAssessmentList")
     suspend fun getMergedAssessmentList(): Response<MergedAssessmentResponse>
 
+    @POST("medicalDetails/getAllPdfList")
+    suspend fun getAllPdfList(): Response<MedicalPdfResponse>
+
     @GET("assessment/getAssessmentById/{id}")
     suspend fun getAssessment(
         @Path("id") id: String,
@@ -244,4 +263,10 @@ interface AppApi {
     suspend fun getPromptContextByConversationId(
         @Path("conversationId") conversationId: String
     ): Response<PromptContextResponse>
+
+    @POST("medicalDetails/generateMetricByPdfId")
+    suspend fun generateMetricByPdfId(@Body param: com.humotron.app.domain.modal.param.GenerateMetricParam): Response<GenerateMetricResponse>
+
+    @POST("medicalDetails/removePdfByPdfId")
+    suspend fun removePdfByPdfId(@Body param: RemovePdfParam): Response<CommonResponse>
 }

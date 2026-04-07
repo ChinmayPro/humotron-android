@@ -42,6 +42,11 @@ credentials = "1.5.0"
 credentialsPlayServicesAuth = "1.5.0"
 googleid = "1.1.1"
 
+#Google API Client / Gmail API
+googleApiClient = "2.0.0"
+googleHttpClient = "1.42.3"
+googleApiServicesGmail = "v1-rev20220404-2.0.0"
+
 #Dependency Injection
 hiltAndroid = "2.56.1"
 
@@ -106,6 +111,12 @@ play-services-auth = { group = "com.google.android.gms", name = "play-services-a
 androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "credentials" }
 credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "credentialsPlayServicesAuth" }
 googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }
+
+#Google API Client / Gmail API
+google-api-client-android = { module = "com.google.api-client:google-api-client-android", version.ref = "googleApiClient" }
+google-api-services-gmail = { module = "com.google.apis:google-api-services-gmail", version.ref = "googleApiServicesGmail" }
+google-http-client-android = { module = "com.google.http-client:google-http-client-android", version.ref = "googleHttpClient" }
+google-http-client-gson = { module = "com.google.http-client:google-http-client-gson", version.ref = "googleHttpClient" }
 
 #Database
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }

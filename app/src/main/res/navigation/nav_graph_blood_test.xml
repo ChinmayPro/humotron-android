@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_blood_test"
+    app:startDestination="@id/fragmentUploadBloodTestInfo">
+
+    <fragment
+        android:id="@+id/fragmentUploadBloodTestInfo"
+        android:name="com.humotron.app.ui.bloodTest.UploadBloodTestInfoFragment"
+        android:label="Upload Blood Test Info"
+        tools:layout="@layout/fragment_upload_bloodtest_info">
+        <action
+            android:id="@+id/action_fragmentUploadBloodTestInfo_to_fragmentBloodTestInfo"
+            app:destination="@id/fragmentBloodTestInfo"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentUploadBloodTestInfo_to_fragmentBloodTestGmailInfo"
+            app:destination="@id/fragmentBloodTestGmailInfo"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentUploadBloodTestInfo_to_fragmentBloodTestEmailImport"
+            app:destination="@id/fragmentBloodTestEmailImport"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentBloodTestInfo"
+        android:name="com.humotron.app.ui.bloodTest.BloodTestInfoFragment"
+        android:label="Blood Test Info"
+        tools:layout="@layout/fragment_blood_test_info">
+        <action
+            android:id="@+id/action_fragmentBloodTestInfo_to_fragmentBloodTestGmailInfo"
+            app:destination="@id/fragmentBloodTestGmailInfo"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentBloodTestInfo_to_fragmentBloodTestEmailImport"
+            app:destination="@id/fragmentBloodTestEmailImport"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentBloodTestGmailInfo"
+        android:name="com.humotron.app.ui.bloodTest.BloodTestGmailInfoFragment"
+        android:label="Blood Test Gmail Info"
+        tools:layout="@layout/fragment_blood_test_gmail_info">
+        <action
+            android:id="@+id/action_fragmentBloodTestGmailInfo_to_fragmentBloodTestEmailSearch"
+            app:destination="@id/fragmentBloodTestEmailSearch"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentBloodTestEmailSearch"
+        android:name="com.humotron.app.ui.bloodTest.BloodTestEmailSearchFragment"
+        android:label="Blood Test Email Search"
+        tools:layout="@layout/fragment_blood_test_email_search">
+        <action
+            android:id="@+id/action_fragmentBloodTestEmailSearch_to_fragmentBloodTestEmailImport"
+            app:destination="@id/fragmentBloodTestEmailImport"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentBloodTestEmailImport"
+        android:name="com.humotron.app.ui.bloodTest.BloodTestEmailImportFragment"
+        android:label="Blood Test Email Import"
+        tools:layout="@layout/fragment_blood_test_email_import">
+        <argument
+            android:name="keywords"
+            app:argType="string[]" />
+        <argument
+            android:name="labels"
+            app:argType="string[]" />
+        <argument
+            android:name="hasAttachments"
+            app:argType="boolean" />
+        <argument
+            android:name="dateRange"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_fragmentBloodTestEmailImport_to_fragmentUploadedReports"
+            app:destination="@id/fragmentUploadedReports"
+            app:popUpTo="@id/fragmentUploadBloodTestInfo"
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentUploadedReports"
+        android:name="com.humotron.app.ui.bloodTest.UploadedReportsFragment"
+        android:label="Uploaded Reports"
+        tools:layout="@layout/fragment_uploaded_reports" />
+
+</navigation>

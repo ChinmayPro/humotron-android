@@ -61,10 +61,10 @@
         android:id="@+id/lavLoading"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginTop="16dp"
         android:visibility="gone"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
+        app:lottie_colorFilter="@color/white"
         app:lottie_rawRes="@raw/loading_dots"
         tools:visibility="visible" />
 
