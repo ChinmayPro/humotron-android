@@ -13,11 +13,14 @@ import com.humotron.app.data.local.entity.TempMapper
 import com.humotron.app.data.network.Resource
 import com.humotron.app.data.network.Status
 import com.humotron.app.data.repository.DeviceRepository
+import com.humotron.app.data.repository.MedicalRepository
 import com.humotron.app.domain.modal.param.RingReadingParam
 import com.humotron.app.domain.modal.param.WristBandApiParam
 import com.humotron.app.domain.modal.response.AllMetricsResponse
+import com.humotron.app.domain.modal.response.CommonResponse
 import com.humotron.app.domain.modal.response.GetAllDeviceResponse
 import com.humotron.app.domain.modal.response.HardwareListData
+import com.humotron.app.domain.modal.response.MedicalPdfResponse
 import com.humotron.app.domain.modal.response.MergedAssessmentResponse
 import com.humotron.app.domain.modal.response.MetricResponse
 import com.humotron.app.domain.modal.response.RingReadingData
@@ -27,6 +30,7 @@ import com.humotron.app.util.DefaultDayReadingTimeSlotNavigator
 import com.humotron.app.util.DefaultHourReadingTimeSlotNavigator
 import com.humotron.app.util.DefaultWeekReadingTimeSlotNavigator
 import com.humotron.app.util.ReadingTimeSlotNavigator
+import com.humotron.app.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -45,6 +49,7 @@ import javax.inject.Inject
 class DeviceViewModel @Inject constructor(
     val repository: DeviceRepository,
     val sleepRepository: SleepRepository,
+    val medicalRepository: MedicalRepository,
 ) : ViewModel() {
 
     private var navigator: ReadingTimeSlotNavigator? = null
@@ -198,11 +203,40 @@ class DeviceViewModel @Inject constructor(
 
     val mergedAssessmentListLiveData: LiveData<Resource<MergedAssessmentResponse>> = _mergedAssessmentListLiveData
 
-    fun getMergedAssessmentList() {
+    fun getMergedAssessmentList(forceRefresh: Boolean = false) {
+        if (!forceRefresh && _mergedAssessmentListLiveData.value?.status == Status.SUCCESS) return
+        
         sleepRepository.getMergedAssessmentList().onEach { state ->
             _mergedAssessmentListLiveData.value = state
             Log.e("TAG", "initObsdwdddfervers: $state ", )
 
+        }.launchIn(viewModelScope)
+    }
+
+    private val _medicalPdfListLiveData: MutableLiveData<Resource<MedicalPdfResponse>> =
+        MutableLiveData()
+
+    val medicalPdfListLiveData: LiveData<Resource<MedicalPdfResponse>> = _medicalPdfListLiveData
+
+    fun getMedicalPdfList(forceRefresh: Boolean = false) {
+        if (!forceRefresh && _medicalPdfListLiveData.value?.status == Status.SUCCESS) return
+        
+        medicalRepository.getAllPdfList().onEach { state ->
+            _medicalPdfListLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
+
+    private val _removePdfLiveData: SingleLiveEvent<Resource<CommonResponse>> =
+        SingleLiveEvent()
+
+    val removePdfLiveData: LiveData<Resource<CommonResponse>> = _removePdfLiveData
+
+    fun removePdfByPdfId(pdfId: String) {
+        medicalRepository.removePdfByPdfId(pdfId).onEach { state ->
+            _removePdfLiveData.value = state
+            if (state.status == Status.SUCCESS) {
+                getMedicalPdfList(true)
+            }
         }.launchIn(viewModelScope)
     }
 

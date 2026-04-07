@@ -83,12 +83,8 @@ class BloodTestEmailImportFragment : Fragment() {
                     // Handled by isLoading observer
                 }
                 com.humotron.app.data.network.Status.SUCCESS -> {
-                    val message = resource.data?.message ?: "Upload successful!"
-                    if (message.isNotEmpty()) {
-                        android.widget.Toast.makeText(requireContext(), message, android.widget.Toast.LENGTH_SHORT).show()
-                    }
-                    viewModel.resetUploadState()
-                    // Stay on screen
+                    // Navigate to Uploaded Reports
+                    findNavController().navigate(R.id.action_fragmentBloodTestEmailImport_to_fragmentUploadedReports)
                 }
                 com.humotron.app.data.network.Status.ERROR -> {
                     val errorMessage = resource.error?.errorMessage ?: ""

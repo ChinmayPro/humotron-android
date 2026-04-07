@@ -98,6 +98,12 @@
         <item name="android:fontFamily">@font/manrope_bold</item>
     </style>
 
+    <style name="Text.28x.Manrope.Bold" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">28sp</item>
+        <item name="android:textColor">@color/textColorWhite</item>
+        <item name="android:fontFamily">@font/manrope_bold</item>
+    </style>
+
     <style name="Text.8x.Manrope.SemiBold" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">8sp</item>
         <item name="android:textColor">@color/textColorWhite</item>

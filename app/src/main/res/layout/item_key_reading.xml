@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    android:background="@drawable/bg_uploaded_report_card"
+    android:clipToOutline="true">
+
+    <!-- Top Details Section -->
+    <TextView
+        android:id="@+id/tvMetricReading"
+        style="@style/Text.18x.Manrope.SemiBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10dp"
+        android:layout_marginTop="@dimen/_10dp"
+        android:textColor="@color/lime_green"
+        android:textSize="28sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="15.5" />
+
+    <TextView
+        android:id="@+id/tvMetricName"
+        style="@style/Text.14x.Manrope.SemiBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="13sp"
+        app:layout_constraintStart_toStartOf="@+id/tvMetricReading"
+        app:layout_constraintTop_toBottomOf="@+id/tvMetricReading"
+        tools:text="Hemoglobin" />
+
+    <TextView
+        android:id="@+id/tvMetricDesc"
+        style="@style/Text.12x.Manrope.Regular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white70"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/tvMetricName"
+        app:layout_constraintTop_toBottomOf="@+id/tvMetricName"
+        tools:text="Hemoglobin" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivIndicatorLeft"
+        android:layout_width="@dimen/_15dp"
+        android:layout_height="@dimen/_15dp"
+        android:layout_marginTop="@dimen/_10dp"
+        android:src="@drawable/ic_un_checked"
+        app:layout_constraintStart_toStartOf="@+id/tvMetricDesc"
+        app:layout_constraintTop_toBottomOf="@+id/tvMetricDesc" />
+
+    <TextView
+        android:id="@+id/tvIndicatorLeftLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5dp"
+        android:text="N/A"
+        android:textColor="@color/white30"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/ivIndicatorLeft"
+        app:layout_constraintTop_toBottomOf="@+id/ivIndicatorLeft" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivIndicatorRight"
+        android:layout_width="@dimen/_15dp"
+        android:layout_height="@dimen/_15dp"
+        android:layout_marginEnd="@dimen/_10dp"
+        android:src="@drawable/ic_triangle_down"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ivIndicatorLeft"
+        app:tint="@color/white30" />
+
+    <TextView
+        android:id="@+id/tvIndicatorRightLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5dp"
+        android:text="N/A"
+        android:textColor="@color/white30"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/ivIndicatorRight"
+        app:layout_constraintTop_toBottomOf="@+id/ivIndicatorRight" />
+
+    <!-- Manage Through Section Background -->
+    <View
+        android:id="@+id/viewBottomBg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_10dp"
+        android:layout_marginStart="@dimen/_1dp"
+        android:layout_marginEnd="@dimen/_1dp"
+        android:layout_marginBottom="@dimen/_1dp"
+        android:background="@drawable/bg_key_reading_footer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvIndicatorLeftLabel" />
+
+    <TextView
+        android:id="@+id/tvManageThroughTitle"
+        style="@style/Text.14x.Manrope.SemiBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10dp"
+        android:layout_marginTop="@dimen/_10dp"
+        android:text="Manage Through"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/viewBottomBg" />
+
+    <!-- Supplement Pill Button -->
+    <LinearLayout
+        android:id="@+id/llSupplements"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10dp"
+        android:layout_marginBottom="@dimen/_15dp"
+        android:background="@drawable/bg_metric_supplement_pill"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/_8dp"
+        android:paddingVertical="@dimen/_5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tvManageThroughTitle"
+        app:layout_constraintTop_toBottomOf="@+id/tvManageThroughTitle">
+
+        <TextView
+            android:id="@+id/tvSupplements"
+            style="@style/Text.12x.Manrope.Regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textColor="@color/white"
+            tools:text="0 Supplements" />
+    </LinearLayout>
+
+    <!-- Recipes Pill Button -->
+    <LinearLayout
+        android:id="@+id/llRecipes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_12dp"
+        android:background="@drawable/bg_metric_recipe_pill"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/_8dp"
+        android:paddingVertical="@dimen/_5dp"
+        app:layout_constraintStart_toEndOf="@+id/llSupplements"
+        app:layout_constraintTop_toTopOf="@+id/llSupplements">
+
+        <TextView
+            android:id="@+id/tvRecipes"
+            style="@style/Text.12x.Manrope.Regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textColor="@color/white"
+            tools:text="0 Recipes" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

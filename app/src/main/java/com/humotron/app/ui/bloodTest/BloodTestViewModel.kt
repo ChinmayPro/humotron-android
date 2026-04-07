@@ -5,7 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.humotron.app.data.network.Resource
+import com.humotron.app.data.network.Status
+import com.humotron.app.data.network.error.Error
 import com.humotron.app.domain.modal.response.CommonResponse
+import com.humotron.app.domain.modal.response.ExtractMetricsResponse
+import com.humotron.app.domain.modal.response.GenerateMetricResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
@@ -82,8 +86,23 @@ class BloodTestViewModel @Inject constructor(
         }
     }
 
-    private val _uploadState = MutableLiveData<Resource<CommonResponse>>()
-    val uploadState: LiveData<Resource<CommonResponse>> = _uploadState
+    private val _uploadState = MutableLiveData<Resource<ExtractMetricsResponse>?>()
+    val uploadState: LiveData<Resource<ExtractMetricsResponse>?> = _uploadState
+
+    private val _metricState = MutableLiveData<Resource<GenerateMetricResponse>?>()
+    val metricState: LiveData<Resource<GenerateMetricResponse>?> = _metricState
+
+    fun setUploadResult(result: ExtractMetricsResponse, initialIndex: Int = 0) {
+        _selectedReportIndex.value = initialIndex
+        _uploadState.value = Resource.success(result)
+    }
+
+    private val _selectedReportIndex = MutableLiveData<Int>(0)
+    val selectedReportIndex: LiveData<Int> = _selectedReportIndex
+
+    fun setSelectedReportIndex(index: Int) {
+        _selectedReportIndex.value = index
+    }
 
     fun setDevicePdfs(uris: List<android.net.Uri>, context: android.content.Context) {
         val results = uris.map { uri ->
@@ -149,8 +168,25 @@ class BloodTestViewModel @Inject constructor(
                         file = file
                     ).collect { resource ->
                         _uploadState.value = resource
-                        if (resource.status != com.humotron.app.data.network.Status.LOADING) {
-                            _isLoading.value = false
+                        when (resource.status) {
+                            com.humotron.app.data.network.Status.SUCCESS -> {
+                                android.util.Log.d("BloodTestViewModel", "uploadSelectedPdfs SUCCESS: ${resource.data?.message}")
+                                _isLoading.value = false
+                            }
+                            com.humotron.app.data.network.Status.ERROR -> {
+                                android.util.Log.e("BloodTestViewModel", "uploadSelectedPdfs ERROR: ${resource.error?.errorMessage}")
+                                _isLoading.value = false
+                                _error.value = resource.error?.errorMessage ?: "Upload failed"
+                            }
+                            com.humotron.app.data.network.Status.EXCEPTION -> {
+                                android.util.Log.e("BloodTestViewModel", "uploadSelectedPdfs EXCEPTION: ${resource.error?.errorMessage}")
+                                _isLoading.value = false
+                                _error.value = resource.error?.errorMessage ?: "Unexpected error"
+                            }
+                            com.humotron.app.data.network.Status.LOADING -> {
+                                android.util.Log.d("BloodTestViewModel", "uploadSelectedPdfs LOADING...")
+                                _isLoading.value = true
+                            }
                         }
                     }
                 } else {
@@ -185,7 +221,9 @@ class BloodTestViewModel @Inject constructor(
         _noResultsEvent.value = false
         _navigateToImport.value = false
         _uploadState.value = null
+        _metricState.value = null
         _error.value = null
+        lastParsedPdfId = null
     }
 
     fun resetUploadState() {
@@ -195,4 +233,36 @@ class BloodTestViewModel @Inject constructor(
 
     private val _error = MutableLiveData<String?>(null)
     val error: LiveData<String?> = _error
+
+    private var lastParsedPdfId: String? = null
+
+    fun generateMetricByPdfId(pdfId: String) {
+        if (pdfId == lastParsedPdfId) {
+            android.util.Log.d("BloodTestViewModel", "generateMetricByPdfId: Skipping call, same PDF ID: $pdfId")
+            return
+        }
+        
+        lastParsedPdfId = pdfId
+        viewModelScope.launch {
+            medicalRepository.generateMetricByPdfId(pdfId).collect { resource ->
+                _metricState.value = resource
+                when (resource.status) {
+                    com.humotron.app.data.network.Status.SUCCESS -> {
+                        android.util.Log.d("BloodTestViewModel", "generateMetricByPdfId SUCCESS: ${resource.data}")
+                    }
+                    com.humotron.app.data.network.Status.ERROR -> {
+                        android.util.Log.e("BloodTestViewModel", "generateMetricByPdfId ERROR: ${resource.error?.errorMessage}")
+                        _error.value = resource.error?.errorMessage ?: "Failed to generate metrics"
+                    }
+                    com.humotron.app.data.network.Status.EXCEPTION -> {
+                        android.util.Log.e("BloodTestViewModel", "generateMetricByPdfId EXCEPTION: ${resource.error?.errorMessage}")
+                        _error.value = resource.error?.errorMessage ?: "Unexpected error"
+                    }
+                    com.humotron.app.data.network.Status.LOADING -> {
+                        android.util.Log.d("BloodTestViewModel", "generateMetricByPdfId LOADING...")
+                    }
+                }
+            }
+        }
+    }
 }

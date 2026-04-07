@@ -17,12 +17,18 @@ import com.humotron.app.core.base.BaseFragment
 import com.humotron.app.data.network.Status
 import com.humotron.app.databinding.FragmentTrackBinding
 import com.humotron.app.domain.modal.response.GetAllDeviceResponse.Data.Wearable
+import com.humotron.app.domain.modal.response.MedicalPdf
 import com.humotron.app.domain.modal.response.MergedAssessment
 import com.humotron.app.ui.assesment.AssessmentActivity
 import com.humotron.app.ui.bloodTest.BloodTestActivity
+import com.humotron.app.ui.bloodTest.BloodTestViewModel
 import com.humotron.app.ui.assesment.CardiovascularAssessmentBottomSheet
 import com.humotron.app.ui.connect.dialog.DeviceSelectionBottomSheet
 import com.humotron.app.ui.device.DeviceViewModel
+import com.humotron.app.domain.modal.response.toPdfReportData
+import androidx.fragment.app.activityViewModels
+import com.humotron.app.ui.dialogs.DeleteConfirmationBottomSheet
+import com.humotron.app.util.DialogUtils
 import com.humotron.app.util.fadeIn
 import com.humotron.app.util.showWithFade
 import com.pluto.utilities.extensions.toast
@@ -36,8 +42,10 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
 
     private lateinit var binding: FragmentTrackBinding
     private val viewModel: DeviceViewModel by viewModels()
+    private val bloodTestViewModel: BloodTestViewModel by activityViewModels()
     private var wearableAdapter: WearableAdapter? = null
     private var assessmentAdapter: AssessmentAdapter? = null
+    private var healthReportAdapter: HealthReportAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -59,13 +67,15 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
             }
         }
         viewModel.getMergedAssessmentList()
+        viewModel.getMedicalPdfList()
     }
 
     override fun onResume() {
         super.onResume()
         binding.swipeRefreshLayout.isRefreshing = false
         viewModel.refreshUserDeviceData(true)
-        viewModel.getMergedAssessmentList()
+        viewModel.getMergedAssessmentList(true)
+        viewModel.getMedicalPdfList(true)
     }
 
     private fun initClicks() {
@@ -74,7 +84,8 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
         binding.swipeRefreshLayout.setOnRefreshListener {
             binding.swipeRefreshLayout.isRefreshing = false
             viewModel.refreshUserDeviceData(true)
-            viewModel.getMergedAssessmentList()
+            viewModel.getMergedAssessmentList(true)
+            viewModel.getMedicalPdfList(true)
         }
     }
 
@@ -120,7 +131,10 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
                 }
 
                 Status.LOADING -> {
-                    showProgress()
+                    // Only show progress if we don't have any wearables yet
+                    if (wearableAdapter == null || wearableAdapter?.itemCount == 0) {
+                        showProgress()
+                    }
                 }
             }
         }
@@ -150,7 +164,10 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
                 }
 
                 Status.LOADING -> {
-                    showProgress()
+                    // Only show progress if we don't have any wearables yet
+                    if (wearableAdapter == null || wearableAdapter?.itemCount == 0) {
+                        showProgress()
+                    }
                 }
             }
         }
@@ -180,6 +197,53 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
 
                 Status.LOADING -> {
                     //showProgress()
+                }
+            }
+        }
+
+        viewModel.medicalPdfListLiveData.observe(viewLifecycleOwner) {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    hideProgress()
+                    val data = it.data?.data?.pdfData ?: return@observe
+                    if (data.isNotEmpty()) {
+                        setupHealthReportRecyclerView(data)
+                        binding.clHealthReportsHeader.fadeIn()
+                    } else {
+                        binding.clHealthReportsHeader.isVisible = false
+                    }
+                    // History Matters should always be visible below according to the user's request
+                    binding.tvTitleHistoryMatters.isVisible = true
+                    binding.tvDescription.isVisible = true
+                    binding.clHistMatter.isVisible = true
+                }
+
+                Status.ERROR, Status.EXCEPTION -> {
+                    hideProgress()
+                    binding.clHealthReportsHeader.isVisible = false
+                }
+
+                Status.LOADING -> {
+                    // Only show progress if we don't have any health reports yet
+                    if (healthReportAdapter == null || healthReportAdapter?.itemCount == 0) {
+                        showProgress()
+                    }
+                }
+            }
+        }
+
+        viewModel.removePdfLiveData.observe(viewLifecycleOwner) {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    hideProgress()
+                    toast(it.data?.message ?: "Report deleted successfully")
+                }
+                Status.ERROR, Status.EXCEPTION -> {
+                    hideProgress()
+                    toast(it.error?.errorMessage ?: "Failed to delete report")
+                }
+                Status.LOADING -> {
+                    showProgress()
                 }
             }
         }
@@ -225,15 +289,9 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
     private fun setupAssessmentRecyclerView(assessments: List<MergedAssessment>) {
         if (assessmentAdapter == null) {
             assessmentAdapter = AssessmentAdapter(requireActivity(), assessments) { assessment ->
-                Log.e("TAG", "setupAssedwdddssmentRecyclerView:  $assessment.")
-
+                // ... click handling remains same
                 when (assessment.status) {
-                    "Completed" -> {
-                        toast("the assessment is completed")
-
-
-                    }
-
+                    "Completed" -> toast("the assessment is completed")
                     "Resume" -> {
                         if (isAdded) {
                             val json = Gson().toJson(assessment)
@@ -241,34 +299,75 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
                             intent.putExtra(ASSESSMENT, json)
                             startActivity(intent)
                         }
-
                     }
-
-                    "Start Now" -> {
-                        showAssessmentSheet(assessment)
-
-                    }
-
-                    else -> {
-
-                    }
+                    "Start Now" -> showAssessmentSheet(assessment)
                 }
-
-
-                // Handle assessment item click
             }
-            binding.dsvAssessments.adapter = assessmentAdapter
-            binding.dsvAssessments.setItemTransformer(
-                ScaleTransformer.Builder()
-                    .setMaxScale(1.05f)
-                    .setMinScale(0.8f)
-                    .setPivotX(Pivot.X.CENTER)
-                    .setPivotY(Pivot.Y.CENTER)
-                    .build()
-            )
         } else {
             assessmentAdapter?.updateData(assessments)
         }
+        
+        // Always re-set adapter and transformer for the new view instance
+        binding.dsvAssessments.adapter = assessmentAdapter
+        binding.dsvAssessments.setItemTransformer(
+            ScaleTransformer.Builder()
+                .setMaxScale(1.05f)
+                .setMinScale(0.8f)
+                .setPivotX(Pivot.X.CENTER)
+                .setPivotY(Pivot.Y.CENTER)
+                .build()
+        )
+    }
+
+    private fun setupHealthReportRecyclerView(reports: List<MedicalPdf>) {
+        if (healthReportAdapter == null) {
+            healthReportAdapter = HealthReportAdapter(requireActivity(), reports) { report, action ->
+                when (action) {
+                    HealthReportAdapter.Action.VIEW, HealthReportAdapter.Action.ITEM_CLICK -> {
+                        // Map all current PDFs to PdfReportData for the carousel detail view
+                        val pdfReportDataList = reports.map { it.toPdfReportData() }
+                        val extractMetricsResponse = com.humotron.app.domain.modal.response.ExtractMetricsResponse(
+                            status = "success",
+                            message = "Data found",
+                            data = com.humotron.app.domain.modal.response.MetricsData(
+                                pdfData = pdfReportDataList,
+                                userId = "",
+                                uploadType = "MANUAL",
+                                pdfCount = pdfReportDataList.size,
+                                id = ""
+                            )
+                        )
+                        val clickedIndex = reports.indexOf(report).coerceAtLeast(0)
+                        bloodTestViewModel.setUploadResult(extractMetricsResponse, clickedIndex)
+                        findNavController().navigate(
+                            R.id.action_fragmentTrack_to_fragmentUploadedReports,
+                            android.os.Bundle().apply { putBoolean("isFromTrack", true) }
+                        )
+                    }
+                    HealthReportAdapter.Action.DELETE -> {
+                        val bottomSheet = DeleteConfirmationBottomSheet.newInstance {
+                            report.id.let { pdfId ->
+                                viewModel.removePdfByPdfId(pdfId)
+                            }
+                        }
+                        bottomSheet.show(childFragmentManager, DeleteConfirmationBottomSheet.TAG)
+                    }
+                }
+            }
+        } else {
+            healthReportAdapter?.updateData(reports)
+        }
+        
+        // Always re-set adapter and transformer for the new view instance
+        binding.dsvHealthReports.adapter = healthReportAdapter
+        binding.dsvHealthReports.setItemTransformer(
+            ScaleTransformer.Builder()
+                .setMaxScale(1.05f)
+                .setMinScale(0.8f)
+                .setPivotX(Pivot.X.CENTER)
+                .setPivotY(Pivot.Y.CENTER)
+                .build()
+        )
     }
 
 

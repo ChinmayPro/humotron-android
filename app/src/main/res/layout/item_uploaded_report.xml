@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="320dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_uploaded_report_card"
+        android:paddingHorizontal="@dimen/_20dp"
+        android:paddingVertical="@dimen/_25dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivPdf"
+            android:layout_width="@dimen/_32dp"
+            android:layout_height="@dimen/_40dp"
+            android:src="@drawable/ic_pdf"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvPdfName"
+            style="@style/Text.12x.Manrope.Bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivPdf"
+            app:layout_constraintTop_toTopOf="@id/ivPdf"
+            tools:text="FE36C8BE-83B7-4811-BD34-23954F59A225complete-bl..." />
+
+        <LinearLayout
+            android:id="@+id/llDevice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@id/tvPdfName"
+            app:layout_constraintTop_toBottomOf="@id/tvPdfName">
+
+            <TextView
+                android:id="@+id/tvDeviceLabel"
+                style="@style/Text.12x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Device"
+                android:textColor="@color/colorBgBtn1" />
+
+            <TextView
+                android:id="@+id/tvDeviceValue"
+                style="@style/Text.12x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_14dp"
+                android:textColor="@color/colorBgBtn1"
+                tools:text="NA" />
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_24dp"
+            app:layout_constraintTop_toBottomOf="@id/ivPdf">
+
+            <LinearLayout
+                android:id="@+id/llName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toStartOf="@id/llLab"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    style="@style/Text.14x.Manrope.Regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Name" />
+
+                <TextView
+                    android:id="@+id/tvNameValue"
+                    style="@style/Text.15x.Manrope.SemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/medium_gray"
+                    tools:text="NA" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llLab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toStartOf="@id/llDaysOld"
+                app:layout_constraintStart_toEndOf="@id/llName"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    style="@style/Text.14x.Manrope.Regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lab" />
+
+                <TextView
+                    android:id="@+id/tvLabValue"
+                    style="@style/Text.15x.Manrope.SemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/medium_gray"
+                    tools:text="NA" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llDaysOld"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/llLab"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    style="@style/Text.14x.Manrope.Regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Days Old" />
+
+                <TextView
+                    android:id="@+id/tvDaysOldValue"
+                    style="@style/Text.15x.Manrope.SemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/medium_gray"
+                    tools:text="5350" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

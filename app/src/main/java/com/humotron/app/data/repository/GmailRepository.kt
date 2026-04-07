@@ -42,11 +42,6 @@ class GmailRepository @Inject constructor() {
                 credential
             ).setApplicationName("Humotron").build()
 
-            if (!hasAttachments) {
-                Log.d(TAG, "Search skipped: hasAttachments is false.")
-                return@withContext emptyList()
-            }
-
             val query = buildQuery(keywords, labels, dateRange, hasAttachments)
             Log.d(TAG, "Gmail Query: $query")
 
@@ -83,28 +78,63 @@ class GmailRepository @Inject constructor() {
         hasAttachments: Boolean
     ): String {
         return buildString {
-            keywords.forEach { append("$it ") }
-            // Treat Labels as additional keywords for better search probability
-            labels.forEach { append("$it ") }
-            
+            // Attachment status
             if (hasAttachments) {
-                append("has:attachment ")
-                append("filename:pdf ")
+                append("(has:attachment) ")
+            } else {
+                append("(!has:attachment) ")
             }
-            
-            val calendar = Calendar.getInstance()
+
+            // Subject Search (e.g. subject:Blood OR subject:Report)
+            if (keywords.isNotEmpty()) {
+                val subjectQuery = keywords.joinToString(" OR ") { "subject:$it" }
+                append("($subjectQuery) ")
+            }
+
+            // Body Search (using Keywords and Labels as general terms)
+            val bodyWords = (keywords + labels).distinct()
+            if (bodyWords.isNotEmpty()) {
+                append("${bodyWords.joinToString(" ")} ")
+            }
+
+            // Date Range logic
+            val calendarAfter = Calendar.getInstance()
+            val calendarBefore = Calendar.getInstance()
+            calendarBefore.add(Calendar.DAY_OF_YEAR, 1) // "before" is exclusive, so tomorrow includes today
+
+            var useAfter = true
+            var useBefore = true
+
             when (dateRange) {
-                "Past 2 Years" -> calendar.add(Calendar.YEAR, -2)
-                "Past 2-5 Years" -> calendar.add(Calendar.YEAR, -5) // Simplification for search (shows after 5 years ago)
-                "Past 5-10 Years" -> calendar.add(Calendar.YEAR, -10)
-                "Past 10+ Years" -> calendar.add(Calendar.YEAR, -20)
+                "Past 2 Years" -> {
+                    calendarAfter.add(Calendar.YEAR, -2)
+                }
+                "Past 2 - 5 Years" -> {
+                    calendarAfter.add(Calendar.YEAR, -5)
+                    calendarBefore.add(Calendar.YEAR, -2)
+                }
+                "Past 5 - 10 Years" -> {
+                    calendarAfter.add(Calendar.YEAR, -10)
+                    calendarBefore.add(Calendar.YEAR, -5)
+                }
+                "Past 10 & More Years" -> {
+                    calendarBefore.add(Calendar.YEAR, -10)
+                    useAfter = false
+                }
+                else -> {
+                    // Fallback to simple "after 2 years" if string doesn't match
+                    calendarAfter.add(Calendar.YEAR, -2)
+                    useBefore = true
+                }
             }
-            
-            // Format date as YYYY/MM/DD for Gmail query
-            val year = calendar.get(Calendar.YEAR)
-            val month = calendar.get(Calendar.MONTH) + 1
-            val day = calendar.get(Calendar.DAY_OF_MONTH)
-            append("after:$year/${String.format("%02d", month)}/${String.format("%02d", day)} ")
+
+            val sdf = java.text.SimpleDateFormat("yyyy/MM/dd", Locale.US)
+            if (useAfter) {
+                append("after:${sdf.format(calendarAfter.time)} ")
+            }
+            if (useBefore) {
+                append("before:${sdf.format(calendarBefore.time)} ")
+            }
         }.trim()
     }
 

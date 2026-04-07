@@ -8,7 +8,15 @@
     <fragment
         android:id="@+id/fragmentTrack"
         android:name="com.humotron.app.ui.track.TrackFragment"
-        tools:layout="@layout/fragment_track" />
+        tools:layout="@layout/fragment_track">
+        <action
+            android:id="@+id/action_fragmentTrack_to_fragmentUploadedReports"
+            app:destination="@id/fragmentUploadedReports"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
 
     <fragment
         android:id="@+id/fragmentDecode"
@@ -74,5 +82,11 @@
             android:name="title"
             app:argType="string" />
     </fragment>
+
+    <fragment
+        android:id="@+id/fragmentUploadedReports"
+        android:name="com.humotron.app.ui.bloodTest.UploadedReportsFragment"
+        android:label="Uploaded Reports"
+        tools:layout="@layout/fragment_uploaded_reports" />
 
 </navigation>

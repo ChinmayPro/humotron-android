@@ -341,4 +341,10 @@ To get started:\n
     <string name="attachments_question">Does the email have attachments?</string>
     <string name="date_range_picker_subtitle">Select a period to search within</string>
     <string name="pdfs_selected_for_data_parsing">pdfs selected for data parsing</string>
+    <string name="uploaded_health_reports">Uploaded Health Reports</string>
+    <string name="view">View</string>
+    <string name="synced">Synced</string>
+    <string name="alert_title">Alert</string>
+    <string name="delete_confirmation_msg">Are you sure you want to delete?</string>
+    <string name="key_readings_desc">General copy to inform customers that parsing is prone to error. so requesting to review the metrics and report incorrect inf the see issues.</string>
 </resources>
