@@ -1,45 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="230dp"
     android:layout_height="wrap_content"
     android:layout_marginEnd="12dp"
     android:background="@drawable/bg_active_metric_card"
-    android:paddingVertical="20dp"
-    android:paddingHorizontal="15dp">
+    android:minHeight="132dp"
+    android:paddingHorizontal="15dp"
+    android:paddingVertical="20dp">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvValue"
         style="@style/Text.14x.Manrope.Bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="98 bpm"
         android:singleLine="true"
         android:textColor="@color/white80"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="98 bpm" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvLabel"
         style="@style/Text.14x.Manrope.SemiBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Heart Rate"
         android:singleLine="true"
         android:textColor="@color/white80"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvValue" />
+        app:layout_constraintTop_toBottomOf="@id/tvValue"
+        tools:text="Heart Rate" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvDateRange"
-        style="@style/Text.10x.Manrope.Regular"
+        style="@style/Text.12x.Manrope.Regular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="07 Jan - 06 Feb'25"
+        android:layout_marginTop="5dp"
         android:textColor="@color/white50"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvLabel" />
+        app:layout_constraintTop_toBottomOf="@id/tvLabel"
+        tools:text="07 Jan - 06 Feb'25" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvDeviceName"
+        style="@style/Text.12x.Manrope.Regular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:textColor="@color/white50"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDateRange"
+        tools:text="HumotronRing" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

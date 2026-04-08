@@ -34,7 +34,7 @@ class DecodeMetricsFragment : BaseFragment(R.layout.fragment_decode_metrics) {
 
     private fun initViews() {
         initObservers()
-        viewModel.getMetricTrackingByUserId()
+        viewModel.getHealthMetricTrackingByUserId()
         viewModel.getYetToTrackMetricByUserId()
     }
 
@@ -52,7 +52,8 @@ class DecodeMetricsFragment : BaseFragment(R.layout.fragment_decode_metrics) {
                                 it.id ?: "",
                                 "${it.metricReading} ${it.metricUnit ?: it.metricReadingUnit ?: ""}",
                                 it.metricUserFacingName ?: it.metricName ?: "",
-                                it.metricDuration ?: ""
+                                it.metricDuration ?: "",
+                                it.deviceName ?: ""
                             )
                         }
                         setupActiveMetrics(activeMetrics)

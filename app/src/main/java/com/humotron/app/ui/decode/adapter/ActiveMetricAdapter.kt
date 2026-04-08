@@ -33,6 +33,8 @@ class ActiveMetricAdapter(
             binding.tvValue.text = item.value
             binding.tvLabel.text = item.label
             binding.tvDateRange.text = item.dateRange
+            binding.tvDateRange.visibility = if (item.dateRange.isNullOrEmpty()) android.view.View.GONE else android.view.View.VISIBLE
+            binding.tvDeviceName.text = item.deviceName
             binding.root.setOnClickListener { onItemClick(item) }
         }
     }

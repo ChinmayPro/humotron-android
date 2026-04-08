@@ -116,9 +116,9 @@ class DecodeViewModel @Inject constructor(
         return metricTrackingLiveData
     }
 
-    fun getMetricTrackingByUserId() {
+    fun getHealthMetricTrackingByUserId() {
         viewModelScope.launch {
-            repository.getMetricTrackingByUserId().onEach { state ->
+            repository.getHealthMetricTrackingByUserId().onEach { state ->
                 metricTrackingLiveData.value = state
             }.launchIn(viewModelScope)
         }

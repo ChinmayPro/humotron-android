@@ -238,8 +238,8 @@ interface AppApi {
         @Path("threadId") threadId: String
     ): Response<CommonResponse>
 
-    @POST("metric/getMetricTrackingByUserId")
-    suspend fun getMetricTrackingByUserId(): Response<MetricTrackingResponse>
+    @POST("metric/getHealthMetricTrackingByUserId")
+    suspend fun getHealthMetricTrackingByUserId(): Response<MetricTrackingResponse>
 
     @POST("metric/getYetToTrackMetricByUserId")
     suspend fun getYetToTrackMetricByUserId(): Response<YetToTrackMetricResponse>
