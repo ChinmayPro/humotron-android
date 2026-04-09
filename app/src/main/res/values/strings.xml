@@ -348,4 +348,14 @@ To get started:\n
     <string name="alert_title">Alert</string>
     <string name="delete_confirmation_msg">Are you sure you want to delete?</string>
     <string name="key_readings_desc">General copy to inform customers that parsing is prone to error. so requesting to review the metrics and report incorrect inf the see issues.</string>
+    <string name="console">Console</string>
+    <string name="active_plan">Active Plan</string>
+    <string name="add_ons">Add-ons</string>
+    <string name="manage_account">Manage Account</string>
+    <string name="activated_count">%1$d Activated</string>
+    <string name="basic">Basic</string>
+    <string name="shop">Shop</string>
+    <string name="order">Order</string>
+    <string name="cart">Cart</string>
+    <string name="recipes">Recipes</string>
 </resources>

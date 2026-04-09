@@ -89,4 +89,20 @@
         android:label="Uploaded Reports"
         tools:layout="@layout/fragment_uploaded_reports" />
 
+    <fragment
+        android:id="@+id/fragmentProfile"
+        android:name="com.humotron.app.ui.profile.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_fragmentProfile_to_nav_graph_shop"
+            app:destination="@id/nav_graph_shop"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <include app:graph="@navigation/nav_graph_shop" />
+
 </navigation>
