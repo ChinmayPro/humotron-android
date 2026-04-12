@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/_10dp"
+    android:layout_marginVertical="@dimen/_10dp"
+    app:cardBackgroundColor="@color/black"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp"
+    app:strokeWidth="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/_20dp"
+        android:paddingHorizontal="@dimen/_15dp">
+
+        <!-- Image Placeholder -->
+        <View
+            android:id="@+id/ivDeviceImage"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:background="@color/white_simmer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Title Placeholder -->
+        <View
+            android:id="@+id/tvDeviceName"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="16dp"
+            android:background="@color/white_simmer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivDeviceImage"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Subtitle Placeholder -->
+        <View
+            android:id="@+id/tvDeviceCategory"
+            android:layout_width="100dp"
+            android:layout_height="16dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/white_simmer"
+            app:layout_constraintStart_toStartOf="@id/tvDeviceName"
+            app:layout_constraintTop_toBottomOf="@id/tvDeviceName" />
+
+        <!-- Metrics Label Placeholder -->
+        <View
+            android:id="@+id/tvKeyMetricsLabel"
+            android:layout_width="80dp"
+            android:layout_height="14dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/white_simmer"
+            app:layout_constraintStart_toStartOf="@id/tvDeviceName"
+            app:layout_constraintTop_toBottomOf="@id/tvDeviceCategory" />
+
+        <!-- Metrics List Placeholder -->
+        <View
+            android:id="@+id/tvMetrics"
+            android:layout_width="140dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/white_simmer"
+            app:layout_constraintStart_toStartOf="@id/tvDeviceName"
+            app:layout_constraintTop_toBottomOf="@id/tvKeyMetricsLabel" />
+
+        <!-- Bottom Section -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvMetrics">
+
+            <!-- Price Placeholder -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <View
+                    android:layout_width="60dp"
+                    android:layout_height="20dp"
+                    android:background="@color/white_simmer" />
+                <View
+                    android:layout_width="40dp"
+                    android:layout_height="14dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/white_simmer" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <!-- Button Placeholder -->
+            <View
+                android:layout_width="120dp"
+                android:layout_height="32dp"
+                android:background="@drawable/bg_btn_round_corner"
+                android:backgroundTint="@color/white_simmer" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

@@ -33,6 +33,8 @@ import com.humotron.app.domain.modal.response.ExtractMetricsResponse
 import com.humotron.app.domain.modal.response.FeltOffQuestionsResponse
 import com.humotron.app.domain.modal.response.GenerateMetricResponse
 import com.humotron.app.domain.modal.response.GetAllDeviceResponse
+import com.humotron.app.domain.modal.response.DeviceDetailResponse
+import com.humotron.app.domain.modal.response.GetShopDevicesResponse
 import com.humotron.app.domain.modal.response.GetConversationsResponse
 import com.humotron.app.domain.modal.response.HardwareListData
 import com.humotron.app.domain.modal.response.MedicalPdfResponse
@@ -119,6 +121,9 @@ interface AppApi {
     @POST("device/getAllDeviceByUserId")
     suspend fun getAllDeviceData(): Response<GetAllDeviceResponse>
 
+    @POST("device/getAllDeviceWithMetrics")
+    suspend fun getAllDeviceWithMetrics(): Response<GetShopDevicesResponse>
+
     @GET("userHardware/getHardwareListByUserId")
     suspend fun getHardwareList(): Response<HardwareListData>
 
@@ -126,6 +131,11 @@ interface AppApi {
     suspend fun getRingReadingData(
         @Path("deviceId") deviceId: String,
     ): Response<RingReadingData>
+
+    @GET("device/getDeviceDetailsById/{deviceId}")
+    suspend fun getDeviceDetailsById(
+        @Path("deviceId") deviceId: String,
+    ): Response<DeviceDetailResponse>
 
     @POST("device/{endpoint}/{ringId}")
     suspend fun getRingReadingGraphData(

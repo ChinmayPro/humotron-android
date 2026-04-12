@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clHeaderContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shimmer_auto_start="false">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvShopTitle"
+                style="@style/Text.20x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/header_devices" />
+
+            <View
+                android:id="@+id/viewTitlePlaceholder"
+                android:layout_width="120dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/white_simmer"
+                android:visibility="gone" />
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <LinearLayout
+            android:id="@+id/llShopTabs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- Devices Tab -->
+            <LinearLayout
+                android:id="@+id/tabDevices"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingHorizontal="8dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivDevices"
+                    android:layout_width="@dimen/_18dp"
+                    android:layout_height="@dimen/_18dp"
+                    android:src="@drawable/ic_store"
+                    app:tint="@color/colorBgBtn" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvDevices"
+                    style="@style/Text.10x.Manrope.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5dp"
+                    android:text="@string/header_devices"
+                    android:textColor="@color/colorBgBtn" />
+            </LinearLayout>
+
+            <!-- Scans Tab -->
+            <LinearLayout
+                android:id="@+id/tabScans"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingHorizontal="8dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivScans"
+                    android:layout_width="@dimen/_18dp"
+                    android:layout_height="@dimen/_18dp"
+                    android:src="@drawable/ic_track"
+                    app:tint="@color/white30" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvScans"
+                    style="@style/Text.10x.Manrope.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5dp"
+                    android:text="@string/header_scans"
+                    android:textColor="@color/white30" />
+            </LinearLayout>
+
+            <!-- Optimize Tab -->
+            <LinearLayout
+                android:id="@+id/tabOptimize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingHorizontal="8dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivOptimize"
+                    android:layout_width="@dimen/_18dp"
+                    android:layout_height="@dimen/_18dp"
+                    android:src="@drawable/ic_optimize"
+                    app:tint="@color/white30" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvOptimize"
+                    style="@style/Text.10x.Manrope.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5dp"
+                    android:text="@string/optimize"
+                    android:textColor="@color/white30" />
+            </LinearLayout>
+
+            <!-- Books Tab -->
+            <LinearLayout
+                android:id="@+id/tabBooks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingHorizontal="8dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivBooks"
+                    android:layout_width="@dimen/_18dp"
+                    android:layout_height="@dimen/_18dp"
+                    android:src="@drawable/ic_book_summary"
+                    app:tint="@color/white30" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvBooks"
+                    style="@style/Text.10x.Manrope.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5dp"
+                    android:text="@string/header_books"
+                    android:textColor="@color/white30" />
+            </LinearLayout>
+
+            <!-- Tools Tab -->
+            <LinearLayout
+                android:id="@+id/tabTools"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingHorizontal="8dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivTools"
+                    android:layout_width="@dimen/_18dp"
+                    android:layout_height="@dimen/_18dp"
+                    android:src="@drawable/ic_settings"
+                    app:tint="@color/white30" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvTools"
+                    style="@style/Text.10x.Manrope.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5dp"
+                    android:text="@string/header_tools"
+                    android:textColor="@color/white30" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/white10"
+        app:layout_constraintTop_toBottomOf="@id/clHeaderContent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

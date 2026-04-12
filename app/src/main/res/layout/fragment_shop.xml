@@ -15,16 +15,16 @@
 
     <include
         android:id="@+id/header"
-        layout="@layout/layout_header"
+        layout="@layout/layout_shop_header"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvShopPlaceholder"
-        style="@style/Text.18x.Manrope.Bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/shop"
-        android:textColor="@color/white70"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/nav_host_fragment_shop"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_shop_tabs"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

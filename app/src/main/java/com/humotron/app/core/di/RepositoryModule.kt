@@ -78,4 +78,13 @@ class RepositoryModule {
         return DecodeRepository(api, responseHandler)
     }
 
+    @Singleton
+    @Provides
+    fun provideShopRepository(
+        api: AppApi,
+        responseHandler: ResponseHandler,
+    ): com.humotron.app.data.repository.ShopRepository {
+        return com.humotron.app.data.repository.ShopRepository(api, responseHandler)
+    }
+
 }

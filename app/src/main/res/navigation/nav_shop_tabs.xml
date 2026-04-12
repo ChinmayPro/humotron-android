@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_shop_tabs"
+    app:startDestination="@id/fragmentShopDevices">
+
+    <fragment
+        android:id="@+id/fragmentShopDevices"
+        android:name="com.humotron.app.ui.shop.ShopDevicesFragment"
+        android:label="Devices"
+        tools:layout="@layout/fragment_shop_devices" />
+
+    <fragment
+        android:id="@+id/fragmentShopScans"
+        android:name="com.humotron.app.ui.shop.ShopScansFragment"
+        android:label="Scans"
+        tools:layout="@layout/fragment_shop_scans" />
+
+    <fragment
+        android:id="@+id/fragmentShopOptimize"
+        android:name="com.humotron.app.ui.shop.ShopOptimizeFragment"
+        android:label="Optimize"
+        tools:layout="@layout/fragment_shop_optimize" />
+
+    <fragment
+        android:id="@+id/fragmentShopBooks"
+        android:name="com.humotron.app.ui.shop.ShopBooksFragment"
+        android:label="Books"
+        tools:layout="@layout/fragment_shop_books" />
+
+    <fragment
+        android:id="@+id/fragmentShopTools"
+        android:name="com.humotron.app.ui.shop.ShopToolsFragment"
+        android:label="Tools"
+        tools:layout="@layout/fragment_shop_tools" />
+
+</navigation>

@@ -25,6 +25,7 @@ import androidx.core.view.isVisible
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.humotron.app.R
@@ -165,29 +166,30 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(p0: View?) {
+        val options = NavOptions.Builder()
+            .setPopUpTo(navController.graph.startDestinationId, false)
+            .setLaunchSingleTop(true)
+            .build()
+
         when (p0) {
             binding.llTrack -> {
-                navController.navigate(R.id.fragmentTrack)
+                navController.navigate(R.id.fragmentTrack, null, options)
                 highlightView(0)
             }
 
             binding.llDecode -> {
-                navController.navigate(R.id.fragmentDecode)
+                navController.navigate(R.id.fragmentDecode, null, options)
                 highlightView(1)
             }
 
             binding.llBioHack -> {
-                navController.navigate(R.id.fragmentBioHack)
+                navController.navigate(R.id.fragmentBioHack, null, options)
                 highlightView(2)
             }
 
             binding.llProfile -> {
-                navController.navigate(R.id.fragmentProfile)
+                navController.navigate(R.id.fragmentProfile, null, options)
                 highlightView(3)
-            }
-
-            binding.llDecode -> {
-//                showAssessmentSheet()
             }
         }
     }

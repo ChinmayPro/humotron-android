@@ -358,4 +358,8 @@ To get started:\n
     <string name="order">Order</string>
     <string name="cart">Cart</string>
     <string name="recipes">Recipes</string>
+    <string name="header_devices">Devices</string>
+    <string name="header_scans">Scans</string>
+    <string name="header_books">Books</string>
+    <string name="header_tools">Tools</string>
 </resources>

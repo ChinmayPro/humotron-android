@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="150dp"
+    android:layout_height="190dp"
+    android:layout_marginEnd="@dimen/_12dp"
+    app:cardBackgroundColor="@color/black"
+    app:cardCornerRadius="@dimen/_12dp"
+    app:strokeWidth="1dp"
+    app:strokeColor="@color/white10">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_15dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvMetricName"
+            style="@style/Text.18x.Manrope.SemiBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Heart Rate" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvMetricWhat"
+            style="@style/Text.14x.Manrope.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15dp"
+            android:ellipsize="end"
+            android:maxLines="4"
+            android:lineSpacingExtra="@dimen/_2dp"
+            android:textColor="@color/white50"
+            app:layout_constraintTop_toBottomOf="@id/tvMetricName"
+            tools:text="Heart rate measures how many times your heart beats per minute..." />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
