@@ -34,6 +34,7 @@ import com.humotron.app.domain.modal.response.FeltOffQuestionsResponse
 import com.humotron.app.domain.modal.response.GenerateMetricResponse
 import com.humotron.app.domain.modal.response.GetAllDeviceResponse
 import com.humotron.app.domain.modal.response.DeviceDetailResponse
+import com.humotron.app.domain.modal.response.DeviceFaqResponse
 import com.humotron.app.domain.modal.response.GetShopDevicesResponse
 import com.humotron.app.domain.modal.response.GetConversationsResponse
 import com.humotron.app.domain.modal.response.HardwareListData
@@ -55,6 +56,7 @@ import com.humotron.app.domain.modal.response.UseCaseResponse
 import com.humotron.app.domain.modal.response.VerifyOtpResponse
 import com.humotron.app.domain.modal.response.WristBandSleepDurationResponse
 import com.humotron.app.domain.modal.response.YetToTrackMetricResponse
+import com.humotron.app.domain.modal.response.ProductVariantResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -136,6 +138,17 @@ interface AppApi {
     suspend fun getDeviceDetailsById(
         @Path("deviceId") deviceId: String,
     ): Response<DeviceDetailResponse>
+
+    @GET("deviceFaq/faqByDeviceId/{deviceId}")
+    suspend fun getDeviceFaqs(
+        @Path("deviceId") deviceId: String,
+    ): Response<DeviceFaqResponse>
+
+    @POST("device/deviceLikeDislike/{deviceId}")
+    suspend fun deviceLikeDislike(
+        @Path("deviceId") deviceId: String,
+        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0))
+    ): Response<CommonResponse>
 
     @POST("device/{endpoint}/{ringId}")
     suspend fun getRingReadingGraphData(
@@ -279,4 +292,9 @@ interface AppApi {
 
     @POST("medicalDetails/removePdfByPdfId")
     suspend fun removePdfByPdfId(@Body param: RemovePdfParam): Response<CommonResponse>
+
+    @GET("device/getProductVariantById/{deviceId}")
+    suspend fun getProductVariantById(
+        @Path("deviceId") deviceId: String
+    ): Response<ProductVariantResponse>
 }

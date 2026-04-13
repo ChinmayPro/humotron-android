@@ -15,5 +15,9 @@ class ShopScansFragment : BaseFragment(R.layout.fragment_shop_scans) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentShopScansBinding.bind(view)
+
+        binding.btnBookNow.setOnClickListener {
+            // TODO: Implement booking logic
+        }
     }
 }

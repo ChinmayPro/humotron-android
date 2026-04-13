@@ -47,7 +47,7 @@
                 android:layout_height="@dimen/_30dp"
                 android:padding="4dp"
                 android:src="@drawable/ic_shop_plus"
-                android:alpha="0.7"
+                android:alpha="0.4"
                 app:tint="@color/white" />
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -57,7 +57,7 @@
                 android:layout_marginStart="@dimen/_10dp"
                 android:padding="4dp"
                 android:src="@drawable/ic_share"
-                android:alpha="0.7"
+                android:alpha="0.4"
                 app:tint="@color/white" />
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -66,9 +66,7 @@
                 android:layout_height="@dimen/_30dp"
                 android:layout_marginStart="@dimen/_10dp"
                 android:padding="4dp"
-                android:src="@drawable/ic_fav_checkbox"
-                android:alpha="0.7"
-                app:tint="@color/white" />
+                android:src="@drawable/ic_fav_checkbox" />
 
         </LinearLayout>
 
@@ -175,7 +173,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="Onwards"
+                    android:text="@string/onwards"
                     android:textColor="@color/white70" />
             </LinearLayout>
 
@@ -206,7 +204,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_30dp"
-                android:text="Key Metrics"
+                android:text="@string/key_metrics"
                 android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvWorksWith" />
@@ -229,7 +227,7 @@
                 android:layout_height="40dp"
                 android:layout_marginTop="@dimen/_40dp"
                 android:background="@drawable/bg_btn_round_corner"
-                android:text="Buy Now ➔"
+                android:text="@string/buy_now_arrow"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
                 app:layout_constraintTop_toBottomOf="@id/rvMetrics" />
@@ -255,7 +253,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_24dp"
                 android:layout_marginBottom="@dimen/_30dp"
-                android:text="Frequently Asked Questions >"
+                android:text="@string/faq_arrow"
                 android:textColor="@color/white50"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

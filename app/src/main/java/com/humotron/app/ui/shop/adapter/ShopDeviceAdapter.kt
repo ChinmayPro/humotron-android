@@ -82,6 +82,9 @@ class ShopDeviceAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             binding.root.setOnClickListener {
                 onItemClick?.invoke(device)
             }
+            binding.btnExplore.setOnClickListener {
+                onItemClick?.invoke(device)
+            }
             // Set basic details
             binding.tvDeviceName.text = device.deviceFacingName ?: device.deviceName
             binding.tvDeviceCategory.text = device.deviceName // Using internal name as sub-label or model

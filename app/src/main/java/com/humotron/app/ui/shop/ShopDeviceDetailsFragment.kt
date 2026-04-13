@@ -19,6 +19,8 @@ import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.humotron.app.ui.shop.adapter.DeviceGalleryAdapter
+import com.humotron.app.domain.modal.response.DeviceDetailResponse
+import com.humotron.app.domain.modal.response.DeviceFaqResponse
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,6 +29,9 @@ class ShopDeviceDetailsFragment : BaseFragment(R.layout.fragment_shop_device_det
     private lateinit var binding: FragmentShopDeviceDetailsBinding
     private val viewModel: ShopViewModel by viewModels()
     private var device: GetShopDevicesResponse.Device? = null
+    private var faqsList: List<DeviceFaqResponse.FaqData> = emptyList()
+    private var isDeviceLiked: Boolean = false
+    private var galleryPageChangeCallback: ViewPager2.OnPageChangeCallback? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -37,7 +42,10 @@ class ShopDeviceDetailsFragment : BaseFragment(R.layout.fragment_shop_device_det
         setupObservers()
         initViews()
 
-        device?.id?.let { viewModel.fetchDeviceDetail(it) }
+        device?.id?.let { 
+            viewModel.fetchDeviceDetail(it) 
+            viewModel.fetchDeviceFaqs(it)
+        }
     }
 
     private fun setupObservers() {
@@ -57,7 +65,7 @@ class ShopDeviceDetailsFragment : BaseFragment(R.layout.fragment_shop_device_det
                         
                         binding.tvPrice.text = "£${detail.deviceModel?.deviceModelPrice}"
                         binding.tvDescription.text = detail.deviceCategory?.deviceCategoryLongDesc
-                        binding.tvWorksWith.text = "Works with: Humotron App"
+                        binding.tvWorksWith.text = getString(R.string.works_with_app)
 
                         val category = detail.deviceCategoryName ?: ""
                         val subCategory = detail.deviceSubCategory?.deviceSubCategoryName ?: ""
@@ -70,14 +78,15 @@ class ShopDeviceDetailsFragment : BaseFragment(R.layout.fragment_shop_device_det
                         setupGallery(detail.deviceImage ?: emptyList())
                         
                         // Setup Connect with app text with bold "click here"
-                        val connectText = "If you already have a device and\nwant to connect with app, click here >"
+                        val connectText = getString(R.string.connect_app_desc)
                         val spannable = android.text.SpannableStringBuilder(connectText)
-                        val clickStart = connectText.indexOf("click here")
+                        val clickHere = getString(R.string.click_here)
+                        val clickStart = connectText.indexOf(clickHere)
                         if (clickStart != -1) {
                             spannable.setSpan(
                                 android.text.style.StyleSpan(android.graphics.Typeface.BOLD),
                                 clickStart,
-                                clickStart + "click here".length,
+                                clickStart + clickHere.length,
                                 android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                             )
                         }
@@ -90,14 +99,51 @@ class ShopDeviceDetailsFragment : BaseFragment(R.layout.fragment_shop_device_det
 
                         // Buy Now button
                         binding.btnBuyNow.setOnClickListener { _ ->
+                            val bundle = Bundle().apply {
+                                putString("deviceId", detail.id)
+                            }
+                            findNavController().navigate(R.id.action_fragmentShopDeviceDetails_to_fragmentShopBuyNow, bundle)
+                        }
+
+                        // Share button
+                        binding.btnShare.setOnClickListener { _ ->
+                            val url = detail.deviceUrl?.firstOrNull() ?: ""
+                            val shareText = getString(R.string.share_device_text, url)
+                            val sendIntent: android.content.Intent = android.content.Intent().apply {
+                                action = android.content.Intent.ACTION_SEND
+                                putExtra(android.content.Intent.EXTRA_TEXT, shareText)
+                                type = "text/plain"
+                            }
+                            val shareIntent = android.content.Intent.createChooser(sendIntent, null)
+                            startActivity(shareIntent)
+                        }
+
+                        // Compare button (Open URL in Browser)
+                        binding.btnCompare.setOnClickListener { _ ->
                             val url = detail.deviceUrl?.firstOrNull()
                             if (!url.isNullOrEmpty()) {
                                 try {
-                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                                    val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse(url))
                                     startActivity(intent)
                                 } catch (e: Exception) {
                                     e.printStackTrace()
                                 }
+                            }
+                        }
+
+                        // Like button
+                        isDeviceLiked = detail.isLiked ?: false
+                        binding.btnLike.setImageResource(if (isDeviceLiked) R.drawable.ic_fav_selected else R.drawable.ic_fav_checkbox)
+                        var lastClickTime: Long = 0
+                        binding.btnLike.setOnClickListener {
+                            if (android.os.SystemClock.elapsedRealtime() - lastClickTime < 1000) {
+                                return@setOnClickListener
+                            }
+                            lastClickTime = android.os.SystemClock.elapsedRealtime()
+                            device?.id?.let { id ->
+                                isDeviceLiked = !isDeviceLiked
+                                binding.btnLike.setImageResource(if (isDeviceLiked) R.drawable.ic_fav_selected else R.drawable.ic_fav_checkbox)
+                                viewModel.likeDislikeDevice(id)
                             }
                         }
                     } else {
@@ -116,72 +162,116 @@ class ShopDeviceDetailsFragment : BaseFragment(R.layout.fragment_shop_device_det
                 }
             }
         }
+
+        viewModel.getDeviceFaqsLiveData().observe(viewLifecycleOwner) { resource ->
+            when (resource.status) {
+                Status.SUCCESS -> {
+                    faqsList = resource.data?.data ?: emptyList()
+                    val hasFaqs = faqsList.isNotEmpty()
+                    binding.tvFaq.visibility = if (hasFaqs) android.view.View.VISIBLE else android.view.View.GONE
+                }
+                Status.ERROR, Status.EXCEPTION -> {
+                    faqsList = emptyList()
+                    binding.tvFaq.visibility = android.view.View.GONE
+                }
+                Status.LOADING -> {
+                    binding.tvFaq.visibility = android.view.View.GONE
+                }
+            }
+        }
     }
 
     private fun setupGallery(images: List<String>) {
         if (images.isEmpty()) return
         
-        val adapter = DeviceGalleryAdapter(images)
-        binding.vpImageGallery.adapter = adapter
+        // Only set the adapter if it's currently null or has changed
+        if (binding.vpImageGallery.adapter == null) {
+            val adapter = DeviceGalleryAdapter(images)
+            binding.vpImageGallery.adapter = adapter
+            
+            val compositePageTransformer = CompositePageTransformer()
+            compositePageTransformer.addTransformer(MarginPageTransformer(resources.getDimensionPixelSize(R.dimen._20dp)))
+            compositePageTransformer.addTransformer { page, position ->
+                val r = 1 - Math.abs(position)
+                page.scaleY = 0.85f + r * 0.15f
+                page.alpha = 0.5f + r * 0.5f
+            }
+            
+            binding.vpImageGallery.apply {
+                setPageTransformer(compositePageTransformer)
+                offscreenPageLimit = 3
+                getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+            }
+        }
         
         setupIndicators(images.size)
         
-        val compositePageTransformer = CompositePageTransformer()
-        compositePageTransformer.addTransformer(MarginPageTransformer(resources.getDimensionPixelSize(R.dimen._20dp)))
-        compositePageTransformer.addTransformer { page, position ->
-            val r = 1 - Math.abs(position)
-            page.scaleY = 0.85f + r * 0.15f
-            page.alpha = 0.5f + r * 0.5f
-        }
-        
-        binding.vpImageGallery.apply {
-            setPageTransformer(compositePageTransformer)
-            offscreenPageLimit = 3
-            getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
-        }
-        
-        binding.vpImageGallery.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        // Manage listeners correctly
+        galleryPageChangeCallback?.let { binding.vpImageGallery.unregisterOnPageChangeCallback(it) }
+        galleryPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 updateIndicator(position)
             }
-        })
+        }
+        galleryPageChangeCallback?.let { binding.vpImageGallery.registerOnPageChangeCallback(it) }
+        
+        // Initial state
+        updateIndicator(binding.vpImageGallery.currentItem)
     }
 
     private fun setupIndicators(count: Int) {
+        // Only re-add if count changed
+        if (binding.llIndicator.childCount == count) return
+        
         binding.llIndicator.removeAllViews()
         if (count <= 1) return
         
+        val margin = dpToPx(6)
         for (i in 0 until count) {
             val dot = android.widget.ImageView(requireContext())
             val params = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             ).apply {
-                setMargins(8, 0, 8, 0)
+                setMargins(margin, 0, margin, 0)
             }
             dot.layoutParams = params
             dot.setImageResource(R.drawable.bg_gallery_indicator_inactive)
             binding.llIndicator.addView(dot)
         }
-        updateIndicator(0)
     }
 
     private fun updateIndicator(position: Int) {
+        if (binding.llIndicator.childCount == 0) return
+        
         for (i in 0 until binding.llIndicator.childCount) {
-            val dot = binding.llIndicator.getChildAt(i) as android.widget.ImageView
-            if (i == position) {
-                dot.setImageResource(R.drawable.bg_gallery_indicator_active)
-            } else {
-                dot.setImageResource(R.drawable.bg_gallery_indicator_inactive)
+            val child = binding.llIndicator.getChildAt(i)
+            if (child is android.widget.ImageView) {
+                if (i == position) {
+                    child.setImageResource(R.drawable.bg_gallery_indicator_active)
+                } else {
+                    child.setImageResource(R.drawable.bg_gallery_indicator_inactive)
+                }
             }
         }
     }
 
+    private fun dpToPx(dp: Int): Int {
+        return (dp * resources.displayMetrics.density).toInt()
+    }
+
     private fun initViews() {
-        // Back button
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
+        }
+
+        binding.tvFaq.setOnClickListener {
+            val dName = device?.deviceName ?: ""
+            if (faqsList.isNotEmpty()) {
+                val bottomSheet = ShopDeviceFaqBottomSheet.newInstance(dName, faqsList)
+                bottomSheet.show(childFragmentManager, "ShopDeviceFaqBottomSheet")
+            }
         }
     }
 }

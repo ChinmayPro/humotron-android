@@ -112,6 +112,23 @@
         <argument
             android:name="device"
             app:argType="com.humotron.app.domain.modal.response.GetShopDevicesResponse$Device" />
+        <action
+            android:id="@+id/action_fragmentShopDeviceDetails_to_fragmentShopBuyNow"
+            app:destination="@id/fragmentShopBuyNow"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentShopBuyNow"
+        android:name="com.humotron.app.ui.shop.ShopBuyNowFragment"
+        android:label="Buy Now"
+        tools:layout="@layout/fragment_shop_buy_now">
+        <argument
+            android:name="deviceId"
+            app:argType="string" />
     </fragment>
 
 </navigation>
