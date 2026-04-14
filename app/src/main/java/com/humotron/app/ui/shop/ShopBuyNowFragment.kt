@@ -29,6 +29,9 @@ class ShopBuyNowFragment : BaseFragment(R.layout.fragment_shop_buy_now) {
     private var deviceId: String? = null
     private var isLiked: Boolean = false
     private var deviceUrl: String? = null
+    private var cartItemId: String? = null
+    private var isInitialLoad: Boolean = true
+    private var preSelectedVariantId: String? = null
     
     private var colorAdapter: ColorVariantAdapter? = null
     private var sizeAdapter: SizeVariantAdapter? = null
@@ -52,6 +55,9 @@ class ShopBuyNowFragment : BaseFragment(R.layout.fragment_shop_buy_now) {
         }
 
         deviceId = arguments?.getString("deviceId")
+        cartItemId = arguments?.getString("cartItemId")
+        quantity = arguments?.getInt("quantity", 1) ?: 1
+        preSelectedVariantId = arguments?.getString("variantId")
         
         binding.layoutLoader.tvLoadingMessage.text = getString(R.string.loading_product_variant)
         
@@ -97,20 +103,26 @@ class ShopBuyNowFragment : BaseFragment(R.layout.fragment_shop_buy_now) {
                         Glide.with(requireContext()).load(it).into(binding.ivProduct)
                     }
 
-                    // Setup Colors
-                    data?.color?.let { colors ->
-                        colorAdapter = ColorVariantAdapter(colors) { selectedColor ->
-                            updateSelectedColorDetails(selectedColor)
-                            filterSizesByColor(selectedColor.colorName)
-                        }
-                        binding.rvColors.adapter = colorAdapter
-                    }
-
                     // Setup Sizes
                     data?.size?.let { sizes ->
                         allSizes = sizes
-                        val firstColor = data.color?.firstOrNull()?.colorName
-                        filterSizesByColor(firstColor)
+                        val targetVariant = if (isInitialLoad) sizes.find { it.id == preSelectedVariantId } else null
+                        val initialColorName = targetVariant?.colorName ?: data.color?.firstOrNull()?.colorName
+                        
+                        // Setup Colors
+                        data.color?.let { colors ->
+                            colorAdapter = ColorVariantAdapter(colors) { selectedColor ->
+                                updateSelectedColorDetails(selectedColor)
+                                filterSizesByColor(selectedColor.colorName)
+                            }
+                            binding.rvColors.adapter = colorAdapter
+                            if (isInitialLoad && initialColorName != null) {
+                                colorAdapter?.setSelectedPositionByColorName(initialColorName)
+                                updateSelectedColorDetails(colors.find { it.colorName == initialColorName } ?: colors[0])
+                            }
+                        }
+
+                        filterSizesByColor(initialColorName)
                     }
                 }
                 Status.ERROR, Status.EXCEPTION -> {
@@ -130,6 +142,35 @@ class ShopBuyNowFragment : BaseFragment(R.layout.fragment_shop_buy_now) {
                 }
             }
         }
+
+        viewModel.getAddToCartLiveData().observe(viewLifecycleOwner) { resource ->
+            when (resource.status) {
+                Status.SUCCESS -> {
+                    hideCartLoading()
+                    if (cartItemId.isNullOrEmpty()) {
+                        findNavController().navigate(R.id.action_fragmentShopBuyNow_to_fragmentCart)
+                    } else {
+                        findNavController().popBackStack()
+                    }
+                }
+                Status.ERROR, Status.EXCEPTION -> {
+                    hideCartLoading()
+                    Toast.makeText(requireContext(), resource.error?.errorMessage ?: "Failed to add to cart", Toast.LENGTH_SHORT).show()
+                }
+                Status.LOADING -> {
+                    showCartLoading()
+                }
+            }
+        }
+    }
+
+    private fun showCartLoading() {
+        binding.layoutLoader.root.visibility = android.view.View.VISIBLE
+        binding.layoutLoader.tvLoadingMessage.text = "Adding to cart..."
+    }
+
+    private fun hideCartLoading() {
+        binding.layoutLoader.root.visibility = android.view.View.GONE
     }
 
     private fun initViews() {
@@ -202,12 +243,26 @@ class ShopBuyNowFragment : BaseFragment(R.layout.fragment_shop_buy_now) {
 
         // Continue Button
         binding.btnContinue.setOnClickListener {
-            if (selectedSize == null) {
+            val data = viewModel.getProductVariantLiveData().value?.data?.data
+            val isUniversal = data?.isUniversal ?: false
+            
+            if (!isUniversal && selectedSize == null) {
                 Toast.makeText(requireContext(), getString(R.string.msg_select_size), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            Toast.makeText(requireContext(), getString(R.string.msg_checkout_items, quantity), Toast.LENGTH_SHORT).show()
+            
+            val param = com.humotron.app.domain.modal.param.AddToCartParam(
+                productId = deviceId,
+                variantId = selectedSize?.id ?: "",
+                productType = "device",
+                quantity = quantity,
+                cartItemId = cartItemId ?: ""
+            )
+            
+            viewModel.addToCart(param)
         }
+
+        updateQuantityUi()
     }
 
     private fun filterSizesByColor(colorName: String?) {
@@ -215,7 +270,9 @@ class ShopBuyNowFragment : BaseFragment(R.layout.fragment_shop_buy_now) {
         if (sizeAdapter == null) {
             sizeAdapter = SizeVariantAdapter(filtered) { size ->
                 selectedSize = size
-                quantity = 1 // Reset quantity on size change
+                if (!isInitialLoad) {
+                    quantity = 1 // Reset quantity on size change
+                }
                 updateQuantityUi()
                 
                 // Update price if size-specific
@@ -224,15 +281,19 @@ class ShopBuyNowFragment : BaseFragment(R.layout.fragment_shop_buy_now) {
                 }
             }
             binding.rvSizes.adapter = sizeAdapter
-        } else {
-            sizeAdapter?.updateList(filtered)
         }
         
-        // Auto-select first size for the new color
+        sizeAdapter?.updateList(filtered, if (isInitialLoad) preSelectedVariantId else null)
+        
+        // Auto-select first size for the new color (this is now handled by updateList)
         if (filtered.isNotEmpty()) {
-            selectedSize = filtered[0]
-            quantity = 1
-            updateQuantityUi()
+            val index = if (isInitialLoad) {
+                filtered.indexOfFirst { it.id == preSelectedVariantId }.takeIf { it != -1 } ?: 0
+            } else {
+                0
+            }
+            selectedSize = filtered[index]
+            isInitialLoad = false
         }
     }
 

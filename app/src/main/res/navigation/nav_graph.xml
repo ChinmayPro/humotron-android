@@ -54,10 +54,12 @@
     <fragment
         android:id="@+id/fragmentMetric"
         android:name="com.humotron.app.ui.device.MetricFragment" />
-     <fragment
+
+    <fragment
         android:id="@+id/assessmentFragment"
-         android:name="com.humotron.app.ui.assesment.AssessmentFragment"
-         android:label="Assessment" />
+        android:name="com.humotron.app.ui.assesment.AssessmentFragment"
+        android:label="Assessment" />
+
     <fragment
         android:id="@+id/fragmentMetricDetails"
         android:name="com.humotron.app.ui.metrics.MetricDetailsFragment">
@@ -89,36 +91,17 @@
         android:label="Uploaded Reports"
         tools:layout="@layout/fragment_uploaded_reports" />
 
-    <fragment
-        android:id="@+id/fragmentProfile"
-        android:name="com.humotron.app.ui.profile.ProfileFragment"
-        android:label="Profile"
-        tools:layout="@layout/fragment_profile">
-        <action
-            android:id="@+id/action_fragmentProfile_to_nav_graph_shop"
-            app:destination="@id/nav_graph_shop"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
-    </fragment>
-
+    <include app:graph="@navigation/nav_graph_profile" />
     <include app:graph="@navigation/nav_graph_shop" />
 
     <fragment
-        android:id="@+id/fragmentShopDeviceDetails"
-        android:name="com.humotron.app.ui.shop.ShopDeviceDetailsFragment"
-        android:label="Device Details">
-        <argument
-            android:name="device"
-            app:argType="com.humotron.app.domain.modal.response.GetShopDevicesResponse$Device" />
+        android:id="@+id/fragmentCart"
+        android:name="com.humotron.app.ui.cart.CartFragment"
+        android:label="Cart"
+        tools:layout="@layout/fragment_cart">
         <action
-            android:id="@+id/action_fragmentShopDeviceDetails_to_fragmentShopBuyNow"
-            app:destination="@id/fragmentShopBuyNow"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            android:id="@+id/action_fragmentCart_to_fragmentShopBuyNow"
+            app:destination="@id/fragmentShopBuyNow" />
     </fragment>
 
     <fragment
@@ -129,6 +112,27 @@
         <argument
             android:name="deviceId"
             app:argType="string" />
+        <argument
+            android:name="cartItemId"
+            android:defaultValue=""
+            app:argType="string" />
+        <argument
+            android:name="quantity"
+            android:defaultValue="1"
+            app:argType="integer" />
+        <argument
+            android:name="variantId"
+            android:defaultValue=""
+            app:argType="string" />
+        <action
+            android:id="@+id/action_fragmentShopBuyNow_to_fragmentCart"
+            app:destination="@id/fragmentCart"
+            app:popUpTo="@id/nav_graph_shop"
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
 </navigation>

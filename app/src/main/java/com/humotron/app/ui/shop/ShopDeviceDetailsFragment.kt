@@ -21,6 +21,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.humotron.app.ui.shop.adapter.DeviceGalleryAdapter
 import com.humotron.app.domain.modal.response.DeviceDetailResponse
 import com.humotron.app.domain.modal.response.DeviceFaqResponse
+import com.humotron.app.ui.shop.dialog.ShopDeviceFaqBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -99,10 +100,10 @@ class ShopDeviceDetailsFragment : BaseFragment(R.layout.fragment_shop_device_det
 
                         // Buy Now button
                         binding.btnBuyNow.setOnClickListener { _ ->
-                            val bundle = Bundle().apply {
-                                putString("deviceId", detail.id)
-                            }
-                            findNavController().navigate(R.id.action_fragmentShopDeviceDetails_to_fragmentShopBuyNow, bundle)
+//                            val bundle = Bundle().apply {
+//                                putString("deviceId", detail.id)
+//                            }
+//                            findNavController().navigate(R.id.action_fragmentShopDeviceDetails_to_fragmentShopBuyNow, bundle)
                         }
 
                         // Share button

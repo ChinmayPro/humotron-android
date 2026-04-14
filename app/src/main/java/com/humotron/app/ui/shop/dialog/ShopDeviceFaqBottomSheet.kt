@@ -1,4 +1,4 @@
-package com.humotron.app.ui.shop
+package com.humotron.app.ui.shop.dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,21 +7,21 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.humotron.app.databinding.LayoutBottomSheetFaqBinding
+import com.humotron.app.databinding.LayoutBottomsheetShopDeviceFaqBinding
 import com.humotron.app.domain.modal.response.DeviceFaqResponse
 import com.humotron.app.ui.shop.adapter.ShopFaqAdapter
 import java.util.ArrayList
 
 class ShopDeviceFaqBottomSheet : BottomSheetDialogFragment() {
 
-    private var _binding: LayoutBottomSheetFaqBinding? = null
+    private var _binding: LayoutBottomsheetShopDeviceFaqBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = LayoutBottomSheetFaqBinding.inflate(inflater, container, false)
+        _binding = LayoutBottomsheetShopDeviceFaqBinding.inflate(inflater, container, false)
         return binding.root
     }
 

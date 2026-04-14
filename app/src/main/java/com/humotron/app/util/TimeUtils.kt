@@ -158,3 +158,31 @@ fun parseIsoToLocalDate(isoDate: String): LocalDate {
         LocalDate.now()
     }
 }
+
+fun formatCartDate(dateStr: String?, timeStr: String?): String {
+    if (dateStr.isNullOrBlank()) return timeStr ?: ""
+    return try {
+        val dateOnly = dateStr.take(10)
+        val inputDateSdf = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault())
+        val dateObj = inputDateSdf.parse(dateOnly)
+
+        val outDateSdf = java.text.SimpleDateFormat("dd MMM''yy", java.util.Locale.ENGLISH)
+        val formattedDate = outDateSdf.format(dateObj!!).lowercase()
+
+        if (timeStr.isNullOrBlank()) return formattedDate
+
+        val inputTimeSdf = java.text.SimpleDateFormat("HH:mm", java.util.Locale.getDefault())
+        val timeObj = try {
+            java.text.SimpleDateFormat("HH:mm:ss", java.util.Locale.getDefault()).parse(timeStr)
+        } catch (e: Exception) {
+            inputTimeSdf.parse(timeStr)
+        }
+
+        val outTimeSdf = java.text.SimpleDateFormat("hh:mm a", java.util.Locale.ENGLISH)
+        val formattedTime = outTimeSdf.format(timeObj!!).replace(" ", "")
+
+        "$formattedDate, $formattedTime"
+    } catch (e: Exception) {
+        "${dateStr.take(10)} ${timeStr ?: ""}".trim()
+    }
+}

@@ -19,9 +19,11 @@ class ShopBuyNowViewModel @Inject constructor(
 
     private val productVariantLiveData: MutableLiveData<Resource<ProductVariantResponse>> = MutableLiveData()
     private val likeDislikeDeviceLiveData: SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.CommonResponse>> = SingleLiveEvent()
+    private val addToCartLiveData: SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.ShopAddToCartResponse>> = SingleLiveEvent()
 
     fun getProductVariantLiveData(): MutableLiveData<Resource<ProductVariantResponse>> = productVariantLiveData
     fun getLikeDislikeDeviceLiveData(): SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.CommonResponse>> = likeDislikeDeviceLiveData
+    fun getAddToCartLiveData(): SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.ShopAddToCartResponse>> = addToCartLiveData
 
     fun getProductVariantById(id: String) {
         repository.getProductVariantById(id).onEach { state ->
@@ -32,6 +34,12 @@ class ShopBuyNowViewModel @Inject constructor(
     fun likeDislikeDevice(id: String) {
         repository.likeDislikeDevice(id).onEach { state ->
             likeDislikeDeviceLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
+
+    fun addToCart(param: com.humotron.app.domain.modal.param.AddToCartParam) {
+        repository.addToCart(param).onEach { state ->
+            addToCartLiveData.value = state
         }.launchIn(viewModelScope)
     }
 }

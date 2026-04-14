@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivBg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_bg_main" />
+
+    <!-- Top Sticky Bar -->
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Empty Cart State -->
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/groupEmptyCart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="ivEmptyCart,tvEmptyCartTitle,tvEmptyCartDesc" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivEmptyCart"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/ic_store"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintVertical_bias="0.4"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:tint="@color/white30" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvEmptyCartTitle"
+        style="@style/Text.20x.Manrope.Bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Your cart is empty"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivEmptyCart" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvEmptyCartDesc"
+        style="@style/Text.14x.Manrope.Medium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="60dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="Looks like you haven't added anything to your cart yet."
+        android:textColor="@color/white50"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvEmptyCartTitle" />
+
+    <!-- Order Details Header -->
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvOrderDetailsLabel"
+        style="@style/Text.18x.Manrope.Bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Order Details"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        tools:visibility="visible" />
+
+    <!-- Cart Items -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCartItems"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:clipToPadding="false"
+        android:paddingBottom="20dp"
+        android:visibility="gone"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/btnCheckout"
+        app:layout_constraintTop_toBottomOf="@id/tvOrderDetailsLabel"
+        tools:listitem="@layout/item_cart" />
+
+    <!-- Checkout Button -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnCheckout"
+        style="@style/Button.style.primary.roundRect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="10dp"
+        android:text="Confirm Order"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

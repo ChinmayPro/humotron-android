@@ -81,4 +81,17 @@ class ShopRepository @Inject constructor(
     }.catch {
         emit(responseHandler.handleException<ProductVariantResponse>(ValidationException(it.message)))
     }
+
+    fun addToCart(param: com.humotron.app.domain.modal.param.AddToCartParam): Flow<Resource<com.humotron.app.domain.modal.response.ShopAddToCartResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.addToCartDevice(param), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
 }

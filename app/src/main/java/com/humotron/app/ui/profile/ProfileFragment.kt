@@ -60,6 +60,30 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         binding.clShop.setOnClickListener {
             findNavController().navigate(R.id.action_fragmentProfile_to_nav_graph_shop)
         }
+
+        binding.clCart.setOnClickListener {
+//            findNavController().navigate(R.id.action_fragmentProfile_to_fragmentCart)
+        }
+
+        binding.clPrivacy.setOnClickListener {
+            // TODO: Navigate to Privacy screen
+        }
+
+        binding.clSupport.setOnClickListener {
+            // TODO: Navigate to Support screen
+        }
+
+        binding.clFaq.setOnClickListener {
+            // TODO: Navigate to FAQ screen
+        }
+
+        binding.clLegal.setOnClickListener {
+            // TODO: Navigate to Legal screen
+        }
+
+        binding.clLogout.setOnClickListener {
+            (activity as? com.humotron.app.ui.MainActivity)?.showLogoutDialog()
+        }
     }
 
 

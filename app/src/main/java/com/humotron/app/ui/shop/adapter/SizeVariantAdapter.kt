@@ -42,12 +42,17 @@ class SizeVariantAdapter(
 
     override fun getItemCount(): Int = list.size
 
-    fun updateList(newList: List<SizeVariant>) {
+    fun updateList(newList: List<SizeVariant>, preSelectedVariantId: String? = null) {
         this.list = newList
-        selectedPosition = 0 // Reset selection on color change
+        val index = if (preSelectedVariantId != null) {
+            list.indexOfFirst { it.id == preSelectedVariantId }.takeIf { it != -1 } ?: 0
+        } else {
+            0
+        }
+        selectedPosition = index
         notifyDataSetChanged()
         if (list.isNotEmpty()) {
-            onSizeSelected(list[0])
+            onSizeSelected(list[index])
         }
     }
 }

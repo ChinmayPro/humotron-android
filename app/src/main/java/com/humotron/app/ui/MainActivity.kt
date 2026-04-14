@@ -188,7 +188,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             binding.llProfile -> {
-                navController.navigate(R.id.fragmentProfile, null, options)
+                navController.navigate(R.id.nav_graph_profile, null, options)
                 highlightView(3)
             }
         }

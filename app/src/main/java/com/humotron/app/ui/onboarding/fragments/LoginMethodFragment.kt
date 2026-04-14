@@ -6,24 +6,23 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.credentials.CredentialManager
-import androidx.credentials.CustomCredential
-import androidx.credentials.GetCredentialRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.google.android.libraries.identity.googleid.GetGoogleIdOption
-import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.humotron.app.BuildConfig
 import com.humotron.app.R
 import com.humotron.app.core.base.BaseFragment
 import com.humotron.app.data.network.Status
 import com.humotron.app.databinding.FragmentLoginMethodBinding
 import com.humotron.app.domain.modal.param.LoginParam
 import com.humotron.app.ui.MainActivity
-import com.humotron.app.ui.onboarding.fragments.GoogleAuth.Companion.googleSignIn
+import com.humotron.app.ui.onboarding.OAuth
 import com.humotron.app.ui.onboarding.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -31,6 +30,50 @@ class LoginMethodFragment : BaseFragment(R.layout.fragment_login_method) {
 
     private lateinit var binding: FragmentLoginMethodBinding
     private val viewModel: LoginViewModel by viewModels()
+
+    private val googleSignInLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+        try {
+            val account = task.getResult(ApiException::class.java)
+            val serverAuthCode = account?.serverAuthCode
+            if (serverAuthCode != null) {
+                exchangeCodeForToken(serverAuthCode)
+            } else {
+                Toast.makeText(requireContext(), "Failed to get Server Auth Code", Toast.LENGTH_SHORT).show()
+            }
+        } catch (e: ApiException) {
+            Log.e("GoogleAuth", "Sign-in failed: ${e.message}")
+            Toast.makeText(requireContext(), "Google Sign-In failed: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun exchangeCodeForToken(serverAuthCode: String) {
+        lifecycleScope.launch {
+            showProgress()
+            try {
+                val response = OAuth.googleAuthApi.getAccessToken(
+                    code = serverAuthCode,
+                    clientId = BuildConfig.GOOGLE_CLIENT_ID,
+                    clientSecret = BuildConfig.GOOGLE_CLIENT_SECRET,
+                    redirectUri = "https://humotron.com"
+                )
+                hideProgress()
+                viewModel.loginWithGoogle(
+                    LoginParam(
+                        mode = "GOOGLE",
+                        googleToken = response.accessToken,
+                        platform = "android"
+                    )
+                )
+            } catch (e: Exception) {
+                hideProgress()
+                Log.e("GoogleAuth", "Token exchange failed: ", e)
+                Toast.makeText(requireContext(), "Token exchange failed: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,14 +85,17 @@ class LoginMethodFragment : BaseFragment(R.layout.fragment_login_method) {
         }
 
         binding.btnGoogle.setOnClickListener {
-            googleSignIn(requireContext(), lifecycleScope) { token ->
-                viewModel.loginWithGoogle(
-                    LoginParam(
-                        mode = "GOOGLE",
-                        googleToken = token,
-                        platform = "android"
-                    )
-                )
+            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .requestProfile()
+                .requestServerAuthCode(BuildConfig.GOOGLE_CLIENT_ID)
+                .build()
+            
+            val signInClient = GoogleSignIn.getClient(requireActivity(), gso)
+            
+            // Sign out first to force account selection
+            signInClient.signOut().addOnCompleteListener {
+                googleSignInLauncher.launch(signInClient.signInIntent)
             }
         }
 
@@ -104,60 +150,3 @@ class LoginMethodFragment : BaseFragment(R.layout.fragment_login_method) {
     }
 }
 
-
-class GoogleAuth {
-
-    companion object {
-        fun googleSignIn(
-            context: Context,
-            scope: CoroutineScope,
-            onLogin: (String) -> Unit
-        ) {
-
-            val credentialManager = CredentialManager.create(context)
-
-            val request = GetCredentialRequest.Builder()
-                .addCredentialOption(getCredentialOptions())
-                .build()
-
-            scope.launch {
-                try {
-
-                    val result = credentialManager.getCredential(context, request)
-                    when (result.credential) {
-                        is CustomCredential -> {
-                            if (result.credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
-                                val googleIdTokenCredential =
-                                    GoogleIdTokenCredential.createFrom(result.credential.data)
-                                val googleTokenId = googleIdTokenCredential.idToken
-                                onLogin(googleTokenId)
-
-                            }
-                        }
-                    }
-
-                } catch (e: Exception) {
-                    Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
-                    Log.e("TAG", "googleSignIn: ", e)
-
-                }
-            }
-        }
-
-        /*fun getCredentialOptions(): CredentialOption {
-
-            return GetGoogleIdOption.Builder()
-                .setFilterByAuthorizedAccounts(false)
-                .setAutoSelectEnabled(false)
-                .setServerClientId("376945095750-qg9easanekribira9ljd4r01q25kpu1c.apps.googleusercontent.com")
-                .build()
-        }*/
-
-        fun getCredentialOptions(): GetGoogleIdOption {
-            return GetGoogleIdOption.Builder()
-                .setFilterByAuthorizedAccounts(false)
-                .setServerClientId("YOUR_SERVER_CLIENT_ID")
-                .build()
-        }
-    }
-}

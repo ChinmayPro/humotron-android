@@ -1,4 +1,5 @@
 import com.android.build.gradle.ProguardFiles.getDefaultProguardFile
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
@@ -13,6 +14,15 @@ android {
     namespace = "com.humotron.app"
     compileSdk = 36
 
+    val localProperties = Properties()
+    val localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        localProperties.load(localPropertiesFile.inputStream())
+    }
+
+    val googleClientId = localProperties.getProperty("GOOGLE_CLIENT_ID") ?: ""
+    val googleClientSecret = localProperties.getProperty("GOOGLE_CLIENT_SECRET") ?: ""
+
     defaultConfig {
         applicationId = "com.humotron.app"
         minSdk = 26
@@ -21,6 +31,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "GOOGLE_CLIENT_ID", "\"$googleClientId\"")
+        buildConfigField("String", "GOOGLE_CLIENT_SECRET", "\"$googleClientSecret\"")
     }
 
     buildTypes {

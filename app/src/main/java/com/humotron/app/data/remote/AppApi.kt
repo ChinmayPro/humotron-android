@@ -23,6 +23,7 @@ import com.humotron.app.domain.modal.response.AddToCartResponse
 import com.humotron.app.domain.modal.response.AllMetricsResponse
 import com.humotron.app.domain.modal.response.AssessmentResponse
 import com.humotron.app.domain.modal.response.BioHackProgressResponse
+import com.humotron.app.domain.modal.response.GetCartResponse
 import com.humotron.app.domain.modal.response.BookDetailResponse
 import com.humotron.app.domain.modal.response.BookLikeResponse
 import com.humotron.app.domain.modal.response.BookPreferenceResponse
@@ -57,6 +58,7 @@ import com.humotron.app.domain.modal.response.VerifyOtpResponse
 import com.humotron.app.domain.modal.response.WristBandSleepDurationResponse
 import com.humotron.app.domain.modal.response.YetToTrackMetricResponse
 import com.humotron.app.domain.modal.response.ProductVariantResponse
+import com.humotron.app.domain.modal.response.ShopAddToCartResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -221,6 +223,11 @@ interface AppApi {
         @Body bookId: AddToCartParam,
     ): Response<AddToCartResponse>
 
+    @POST("cart/createCart")
+    suspend fun addToCartDevice(
+        @Body param: AddToCartParam,
+    ): Response<ShopAddToCartResponse>
+
 
     @GET("book/getBookByUserPreference")
     suspend fun getBookDetail(): Response<BookPreferenceResponse>
@@ -292,6 +299,9 @@ interface AppApi {
 
     @POST("medicalDetails/removePdfByPdfId")
     suspend fun removePdfByPdfId(@Body param: RemovePdfParam): Response<CommonResponse>
+
+    @POST("cart/getCartByUserId")
+    suspend fun getCartByUserId(): Response<GetCartResponse>
 
     @GET("device/getProductVariantById/{deviceId}")
     suspend fun getProductVariantById(

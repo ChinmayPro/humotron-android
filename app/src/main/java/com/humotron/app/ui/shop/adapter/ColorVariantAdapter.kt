@@ -54,4 +54,15 @@ class ColorVariantAdapter(
         this.list = newList
         notifyDataSetChanged()
     }
+
+    fun setSelectedPositionByColorName(colorName: String?) {
+        if (colorName == null) return
+        val index = list.indexOfFirst { it.colorName == colorName }
+        if (index != -1) {
+            val oldPosition = selectedPosition
+            selectedPosition = index
+            notifyItemChanged(oldPosition)
+            notifyItemChanged(selectedPosition)
+        }
+    }
 }

@@ -11,4 +11,21 @@
         android:label="Shop"
         tools:layout="@layout/fragment_shop" />
 
+    <fragment
+        android:id="@+id/fragmentShopDeviceDetails"
+        android:name="com.humotron.app.ui.shop.ShopDeviceDetailsFragment"
+        android:label="Device Details">
+        <argument
+            android:name="device"
+            app:argType="com.humotron.app.domain.modal.response.GetShopDevicesResponse$Device" />
+        <action
+            android:id="@+id/action_fragmentShopDeviceDetails_to_fragmentShopBuyNow"
+            app:destination="@id/fragmentShopBuyNow"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+
 </navigation>
