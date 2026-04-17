@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.humotron.app.databinding.ItemWearablesBinding
 import com.humotron.app.domain.modal.response.GetAllDeviceResponse.Data.Wearable
 import java.text.SimpleDateFormat
+import java.time.Instant
 import java.util.Locale
 
 class WearableAdapter(
@@ -52,20 +53,16 @@ class WearableAdapter(
                 binding.tvHrUnit.text = ""
             }
 
-            try {
-                if (!wearable.dataSync.isNullOrEmpty()) {
-                    val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.UK)
-                    val date = formatter.parse(wearable.dataSync)
-                    if (date != null) {
-                        binding.tvLastSync.text = getTimeAgo(date.time)
-                    } else {
-                        binding.tvLastSync.text = "-"
-                    }
-                } else {
+            if (!wearable.dataSync.isNullOrEmpty()) {
+                try {
+                    // Always parses correctly (UTC-aware)
+                    val timeInMillis = Instant.parse(wearable.dataSync).toEpochMilli()
+                    binding.tvLastSync.text = getTimeAgo(timeInMillis)
+                } catch (e: Exception) {
+                    e.printStackTrace()
                     binding.tvLastSync.text = "-"
                 }
-            } catch (e: Exception) {
-                e.printStackTrace()
+            } else {
                 binding.tvLastSync.text = "-"
             }
 
@@ -84,6 +81,8 @@ class WearableAdapter(
             val now = System.currentTimeMillis()
             val diff = now - timeInMillis
 
+            if (diff < 0) return "just now"
+
             val seconds = diff / 1000
             val minutes = seconds / 60
             val hours = minutes / 60
@@ -91,6 +90,7 @@ class WearableAdapter(
             val weeks = days / 7
 
             return when {
+                seconds < 5 -> "just now"
                 seconds < 60 -> "$seconds seconds ago"
                 minutes < 60 -> "$minutes minutes ago"
                 hours < 24 -> "$hours hours ago"

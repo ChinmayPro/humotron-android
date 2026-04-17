@@ -9,26 +9,26 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.humotron.app.R
-import com.humotron.app.bt.ring.RingBleDevice
 import com.humotron.app.bt.ring.OnBleScanCallback
+import com.humotron.app.bt.ring.RingBleDevice
 import com.humotron.app.bt.ring.isCharging
 import com.humotron.app.core.App
 import com.humotron.app.core.Preference
 import com.humotron.app.data.network.Status
-import com.humotron.app.databinding.FragmentDeviceConnectionBinding
+import com.humotron.app.databinding.FragmentRingConnectionBinding
 import com.humotron.app.domain.modal.param.AddHardware
+import com.humotron.app.ui.connect.adapter.RingDeviceAdapter
 import com.humotron.app.ui.dialogs.LoadingDialog
 import com.humotron.app.util.PrefUtils
-import com.humotron.app.util.toRingColor
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class DeviceConnectionFragment : Fragment(R.layout.fragment_device_connection) {
+class RingConnectionFragment : Fragment(R.layout.fragment_ring_connection) {
 
-    private lateinit var binding: FragmentDeviceConnectionBinding
-    private val viewModel: DeviceConnectionViewModel by viewModels()
+    private lateinit var binding: FragmentRingConnectionBinding
+    private val viewModel: RingConnectionViewModel by viewModels()
 
     @Inject
     lateinit var prefUtils: PrefUtils
@@ -53,29 +53,30 @@ class DeviceConnectionFragment : Fragment(R.layout.fragment_device_connection) {
         super.onDestroy()
     }
 
+    private val adapter by lazy {
+        RingDeviceAdapter { selected ->
+            device = selected
+            binding.btnSubmit.isEnabled = selected != null
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentDeviceConnectionBinding.bind(view)
+        binding = FragmentRingConnectionBinding.bind(view)
         app.ringDeviceManager.registerCb()
         binding.ringsView.startAnimation()
+
+        binding.rvDevices.adapter = adapter
 
         app.ringBleManager.startScan(30000, object : OnBleScanCallback {
             @SuppressLint("MissingPermission")
             override fun onScanning(result: RingBleDevice) {
                 if (result.generation != null && result.batteryLevel != null && result.isCharging) {
-                    binding.tvNoDeviceFound.isVisible = false
+                    binding.clNoDeviceFound.isVisible = false
                     binding.llConnectionNotes.isVisible = false
                     binding.tvDeviceDiscoverStatus.setText(R.string.showing_devices)
-                    binding.clDevice.isVisible = true
-                    binding.tvDeviceModel.text = result.device.name
-
-                    binding.tvDeviceColor.text = requireActivity().toRingColor(result.color)
-                    binding.tvDeviceGeneration.text =
-                        getString(R.string.device_generation, result.generation)
-                    binding.tvDeviceSize.text =
-                        getString(R.string.device_size_us, result.size)
+                    adapter.addDevice(result)
                     binding.ringsView.stopAnimation()
-                    device = result
                 }
             }
 
@@ -85,20 +86,11 @@ class DeviceConnectionFragment : Fragment(R.layout.fragment_device_connection) {
 
         })
 
-
-        binding.cbDeviceChecked.setOnCheckedChangeListener { buttonView, isChecked ->
-            binding.btnSubmit.isEnabled = isChecked
-        }
-
         binding.btnSubmit.setOnClickListener { v ->
             device?.let {
                 app.ringDeviceManager.connect(it.device.address)
                 showProgress()
             }
-        }
-
-        binding.clDevice.setOnClickListener {
-            binding.cbDeviceChecked.isChecked = true
         }
 
         app.ringDeviceManager.connected.observe(viewLifecycleOwner) { isConnected ->
@@ -173,6 +165,4 @@ class DeviceConnectionFragment : Fragment(R.layout.fragment_device_connection) {
             dialog?.dismiss()
         }
     }
-
-
 }

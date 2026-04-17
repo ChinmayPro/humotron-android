@@ -23,4 +23,15 @@ class SleepConverters {
     @TypeConverter
     fun toSleepStates(value: String): List<SleepState> =
         gson.fromJson(value, object : TypeToken<List<SleepState>>() {}.type)
+
+    @TypeConverter
+    fun fromIntList(value: List<Int>): String {
+        return value.joinToString(",")
+    }
+
+    @TypeConverter
+    fun toIntList(value: String): List<Int> {
+        return if (value.isEmpty()) emptyList()
+        else value.split(",").map { it.toInt() }
+    }
 }

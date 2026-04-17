@@ -5,12 +5,17 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.humotron.app.data.local.converters.SleepConverters
 import com.humotron.app.data.local.dao.SleepDao
-import com.humotron.app.data.local.entity.BandHrvData
 import com.humotron.app.data.local.entity.HrData
 import com.humotron.app.data.local.entity.HrvData
 import com.humotron.app.data.local.entity.SleepEntity
 import com.humotron.app.data.local.entity.StepData
 import com.humotron.app.data.local.entity.TempData
+import com.humotron.app.data.local.entity.band.BandDetailActivityData
+import com.humotron.app.data.local.entity.band.BandHrData
+import com.humotron.app.data.local.entity.band.BandHrvData
+import com.humotron.app.data.local.entity.band.BandSleepData
+import com.humotron.app.data.local.entity.band.BandSpO2Data
+import com.humotron.app.data.local.entity.band.BandTotalActivityData
 
 @Database(
     entities = [
@@ -20,8 +25,13 @@ import com.humotron.app.data.local.entity.TempData
         StepData::class,
         TempData::class,
         BandHrvData::class,
+        BandHrData::class,
+        BandSpO2Data::class,
+        BandDetailActivityData::class,
+        BandTotalActivityData::class,
+        BandSleepData::class,
     ],
-    version = 2
+    version = 4
 )
 @TypeConverters(SleepConverters::class)
 abstract class AppDatabase : RoomDatabase() {

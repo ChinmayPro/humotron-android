@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
-class DeviceConnectionViewModel @Inject constructor(val repository: SleepRepository) : ViewModel() {
+class RingConnectionViewModel @Inject constructor(val repository: SleepRepository) : ViewModel() {
 
     private val addHardwareLiveData: MutableLiveData<Resource<AddHardwareResponse>> =
         MutableLiveData()

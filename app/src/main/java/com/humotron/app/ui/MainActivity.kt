@@ -35,7 +35,7 @@ import com.humotron.app.core.Preference
 import com.humotron.app.data.local.AppDatabase
 import com.humotron.app.databinding.ActivityMainBinding
 import com.humotron.app.ui.connect.DeviceConnectedFragment
-import com.humotron.app.ui.connect.DeviceConnectionFragment
+import com.humotron.app.ui.connect.RingConnectionFragment
 import com.humotron.app.ui.connect.HomeViewModel
 import com.humotron.app.ui.onboarding.OnBoardingActivity
 import com.humotron.app.util.PrefUtils
@@ -131,7 +131,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 device?.let {
                     homeViewModel.currBtMac = it.device.address ?: ""
                     DeviceConnectedFragment.device = device
-                    DeviceConnectionFragment.device = device
+                    RingConnectionFragment.device = device
                 }
             }
         }
