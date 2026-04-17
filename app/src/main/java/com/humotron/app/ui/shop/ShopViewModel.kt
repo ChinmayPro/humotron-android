@@ -6,6 +6,7 @@ import com.humotron.app.data.network.Resource
 import com.humotron.app.data.repository.ShopRepository
 import com.humotron.app.domain.modal.response.DeviceDetailResponse
 import com.humotron.app.domain.modal.response.DeviceFaqResponse
+import com.humotron.app.domain.modal.response.GetOptimizedRecipeWithMetricsResponse
 import com.humotron.app.domain.modal.response.GetShopDevicesResponse
 import com.humotron.app.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,10 +22,12 @@ class ShopViewModel @Inject constructor(
     private val devicesLiveData: SingleLiveEvent<Resource<GetShopDevicesResponse>> = SingleLiveEvent()
     private val deviceDetailLiveData: SingleLiveEvent<Resource<DeviceDetailResponse>> = SingleLiveEvent()
     private val deviceFaqsLiveData: SingleLiveEvent<Resource<DeviceFaqResponse>> = SingleLiveEvent()
+    private val optimizedRecipeLiveData: SingleLiveEvent<Resource<GetOptimizedRecipeWithMetricsResponse>> = SingleLiveEvent()
 
     fun getDevicesLiveData(): SingleLiveEvent<Resource<GetShopDevicesResponse>> = devicesLiveData
     fun getDeviceDetailLiveData(): SingleLiveEvent<Resource<DeviceDetailResponse>> = deviceDetailLiveData
     fun getDeviceFaqsLiveData(): SingleLiveEvent<Resource<DeviceFaqResponse>> = deviceFaqsLiveData
+    fun getOptimizedRecipeLiveData(): SingleLiveEvent<Resource<GetOptimizedRecipeWithMetricsResponse>> = optimizedRecipeLiveData
 
     fun fetchShopDevices() {
         repository.getShopDevices().onEach { state ->
@@ -50,6 +53,12 @@ class ShopViewModel @Inject constructor(
     fun likeDislikeDevice(id: String) {
         repository.likeDislikeDevice(id).onEach { state ->
             likeDislikeDeviceLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
+
+    fun fetchOptimizedRecipe() {
+        repository.getOptimizedRecipeWithMetrics().onEach { state ->
+            optimizedRecipeLiveData.value = state
         }.launchIn(viewModelScope)
     }
 }

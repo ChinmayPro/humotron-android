@@ -57,7 +57,7 @@ class LoginMethodFragment : BaseFragment(R.layout.fragment_login_method) {
                     code = serverAuthCode,
                     clientId = BuildConfig.GOOGLE_CLIENT_ID,
                     clientSecret = BuildConfig.GOOGLE_CLIENT_SECRET,
-                    redirectUri = "https://humotron.com"
+                    redirectUri = ""
                 )
                 hideProgress()
                 viewModel.loginWithGoogle(
@@ -69,8 +69,14 @@ class LoginMethodFragment : BaseFragment(R.layout.fragment_login_method) {
                 )
             } catch (e: Exception) {
                 hideProgress()
-                Log.e("GoogleAuth", "Token exchange failed: ", e)
-                Toast.makeText(requireContext(), "Token exchange failed: ${e.message}", Toast.LENGTH_SHORT).show()
+                if (e is retrofit2.HttpException) {
+                    val errorBody = e.response()?.errorBody()?.string()
+                    Log.e("GoogleAuth", "Token exchange failed (HTTP ${e.code()}): $errorBody")
+                    Toast.makeText(requireContext(), "Token exchange failed: $errorBody", Toast.LENGTH_LONG).show()
+                } else {
+                    Log.e("GoogleAuth", "Token exchange failed: ", e)
+                    Toast.makeText(requireContext(), "Token exchange failed: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

@@ -23,6 +23,7 @@ import com.humotron.app.domain.modal.response.AddToCartResponse
 import com.humotron.app.domain.modal.response.AllMetricsResponse
 import com.humotron.app.domain.modal.response.AssessmentResponse
 import com.humotron.app.domain.modal.response.BioHackProgressResponse
+import com.humotron.app.domain.modal.response.GetOptimizedRecipeWithMetricsResponse
 import com.humotron.app.domain.modal.response.GetCartResponse
 import com.humotron.app.domain.modal.response.BookDetailResponse
 import com.humotron.app.domain.modal.response.BookLikeResponse
@@ -307,4 +308,7 @@ interface AppApi {
     suspend fun getProductVariantById(
         @Path("deviceId") deviceId: String
     ): Response<ProductVariantResponse>
+
+    @POST("metric/getOptimizedRecipeWithMetrics")
+    suspend fun getOptimizedRecipeWithMetrics(): Response<GetOptimizedRecipeWithMetricsResponse>
 }

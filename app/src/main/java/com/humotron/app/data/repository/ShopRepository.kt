@@ -6,6 +6,7 @@ import com.humotron.app.data.network.exceptions.ValidationException
 import com.humotron.app.data.remote.AppApi
 import com.humotron.app.domain.modal.response.DeviceDetailResponse
 import com.humotron.app.domain.modal.response.DeviceFaqResponse
+import com.humotron.app.domain.modal.response.GetOptimizedRecipeWithMetricsResponse
 import com.humotron.app.domain.modal.response.GetShopDevicesResponse
 import com.humotron.app.domain.modal.response.ProductVariantResponse
 import kotlinx.coroutines.flow.Flow
@@ -86,6 +87,19 @@ class ShopRepository @Inject constructor(
         emit(Resource.loading())
         try {
             val response = responseHandler.handleResponse(api.addToCartDevice(param), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun getOptimizedRecipeWithMetrics(): Flow<Resource<GetOptimizedRecipeWithMetricsResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.getOptimizedRecipeWithMetrics(), false)
             emit(response)
         } catch (e: Exception) {
             emit(responseHandler.handleException(e))

@@ -5,6 +5,7 @@ import android.view.View
 import com.humotron.app.R
 import com.humotron.app.core.base.BaseFragment
 import com.humotron.app.databinding.FragmentShopScansBinding
+import com.humotron.app.ui.shop.dialog.CardiacTestDetailsBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -17,7 +18,7 @@ class ShopScansFragment : BaseFragment(R.layout.fragment_shop_scans) {
         binding = FragmentShopScansBinding.bind(view)
 
         binding.btnBookNow.setOnClickListener {
-            // TODO: Implement booking logic
+            CardiacTestDetailsBottomSheet.newInstance().show(childFragmentManager, "CardiacTestDetailsBottomSheet")
         }
     }
 }

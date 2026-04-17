@@ -25,7 +25,7 @@ data class GetCartResponse(
         @SerializedName("totalAmount")
         val totalAmount: Double?,
         @SerializedName("couponDetails")
-        val couponDetails: String?, // Based on JSON null
+        val couponDetails: CouponDetails?,
         @SerializedName("address")
         val address: Address?
     ) : Parcelable
@@ -55,6 +55,34 @@ data class GetCartResponse(
     ) : Parcelable
 
     @Parcelize
+    data class CouponDetails(
+        @SerializedName("_id")
+        val id: String?,
+        @SerializedName("promoCode")
+        val promoCode: String?,
+        @SerializedName("discountType")
+        val discountType: String?,
+        @SerializedName("discountValue")
+        val discountValue: Double?,
+        @SerializedName("startDate")
+        val startDate: String?,
+        @SerializedName("endDate")
+        val endDate: String?,
+        @SerializedName("promoCodeName")
+        val promoCodeName: String?,
+        @SerializedName("minAmount")
+        val minAmount: Double?,
+        @SerializedName("qty")
+        val qty: Int?,
+        @SerializedName("isDeleted")
+        val isDeleted: Boolean?,
+        @SerializedName("createdAt")
+        val createdAt: String?,
+        @SerializedName("updatedAt")
+        val updatedAt: String?
+    ) : Parcelable
+
+    @Parcelize
     data class CartItem(
         @SerializedName("_id")
         val id: String?,
@@ -71,11 +99,27 @@ data class GetCartResponse(
         @SerializedName("totalAmount")
         val totalAmount: Double?,
         @SerializedName("visitAddress")
-        val visitAddress: String?, // Based on JSON null
+        val visitAddress: VisitAddress?,
         @SerializedName("productDetails")
         val productDetails: ProductDetails?,
         @SerializedName("bookingDetails")
         val bookingDetails: BookingDetails?
+    ) : Parcelable
+
+    @Parcelize
+    data class VisitAddress(
+        @SerializedName("line1")
+        val line1: String?,
+        @SerializedName("line2")
+        val line2: String?,
+        @SerializedName("line3")
+        val line3: String?,
+        @SerializedName("city")
+        val city: String?,
+        @SerializedName("postcode")
+        val postcode: String?,
+        @SerializedName("country")
+        val country: String?
     ) : Parcelable
 
     @Parcelize

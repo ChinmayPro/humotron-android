@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bottom_sheet_background_shape"
+    android:orientation="vertical">
+
+    <!-- Header -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="24dp"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_title"
+            style="@style/Text.24x.Manrope.Bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/btn_close"
+            android:layout_marginEnd="16dp"
+            android:text="@string/cardiac_test_details_title"
+            android:textColor="@color/white" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_close" />
+    </RelativeLayout>
+
+    <!-- Scrollable Content -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <!-- Test Overview -->
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Text.20x.Manrope.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/test_overview_title"
+                android:textColor="@color/white" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Text.14x.Manrope.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:lineSpacingExtra="4dp"
+                android:text="@string/test_overview_desc"
+                android:textColor="@color/white70" />
+
+            <!-- Purpose of Test -->
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Text.20x.Manrope.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/purpose_of_test_title"
+                android:textColor="@color/white" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Text.14x.Manrope.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:lineSpacingExtra="4dp"
+                android:text="@string/purpose_of_test_desc"
+                android:textColor="@color/white70" />
+
+            <!-- Preparation for Test -->
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Text.20x.Manrope.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/preparation_for_test_title"
+                android:textColor="@color/white" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Text.14x.Manrope.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="12dp"
+                    android:text="@string/prep_fasting"
+                    android:textColor="@color/white70"
+                    app:drawableStartCompat="@drawable/ic_bullet_point" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Text.14x.Manrope.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:drawablePadding="12dp"
+                    android:text="@string/prep_medication"
+                    android:textColor="@color/white70"
+                    app:drawableStartCompat="@drawable/ic_bullet_point" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Text.14x.Manrope.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:drawablePadding="12dp"
+                    android:text="@string/prep_hydration"
+                    android:textColor="@color/white70"
+                    app:drawableStartCompat="@drawable/ic_bullet_point" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Text.14x.Manrope.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:drawablePadding="12dp"
+                    android:text="@string/prep_when_to_test"
+                    android:textColor="@color/white70"
+                    app:drawableStartCompat="@drawable/ic_bullet_point" />
+
+            </LinearLayout>
+
+            <!-- Duration -->
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Text.20x.Manrope.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/duration_title"
+                android:textColor="@color/white" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Text.14x.Manrope.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:lineSpacingExtra="4dp"
+                android:text="@string/duration_desc"
+                android:textColor="@color/white70" />
+
+            <!-- Results Turnaround -->
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Text.20x.Manrope.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/results_turnaround_title"
+                android:textColor="@color/white" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Text.14x.Manrope.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:lineSpacingExtra="4dp"
+                android:text="@string/results_turnaround_desc1"
+                android:textColor="@color/white70" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Text.14x.Manrope.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:lineSpacingExtra="4dp"
+                android:text="@string/results_turnaround_desc2"
+                android:textColor="@color/white70" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Footer Button -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="24dp">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_proceed"
+            style="@style/Text.14x.Manrope.Bold"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_btn_round_corner"
+            android:text="@string/btn_proceed_to_booking"
+            android:textAllCaps="false"
+            android:textColor="@color/black" />
+    </LinearLayout>
+
+</LinearLayout>

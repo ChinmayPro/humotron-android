@@ -23,24 +23,33 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/cardShadow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_track_card_shadow"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivScanDiagram" />
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvScanTitle"
             style="@style/Text.24x.Manrope.Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:text="@string/deep_scan_title"
             android:textColor="@color/colorBgBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ivScanDiagram" />
+            app:layout_constraintTop_toBottomOf="@id/cardShadow" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvScanSubtitle"
             style="@style/Text.18x.Manrope.SemiBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="3dp"
             android:text="@string/deep_scan_subtitle"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
@@ -49,10 +58,10 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvScanDesc"
-            style="@style/Text.14x.Manrope.Medium"
+            style="@style/Text.14x.Manrope.SemiBold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="20dp"
             android:gravity="center"
             android:lineSpacingExtra="4dp"
             android:text="@string/deep_scan_desc"
@@ -61,10 +70,10 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnBookNow"
-            style="@style/Text.16x.Manrope.Bold"
-            android:layout_width="220dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="32dp"
+            style="@style/Text.14x.Manrope.SemiBold"
+            android:layout_width="180dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="25dp"
             android:background="@drawable/bg_btn_round_corner"
             android:text="@string/book_now_arrow"
             android:textAllCaps="false"

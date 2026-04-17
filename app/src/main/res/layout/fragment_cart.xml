@@ -19,93 +19,348 @@
         layout="@layout/layout_header"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Empty Cart State -->
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/groupEmptyCart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <!-- Lottie Loader -->
+    <include
+        android:id="@+id/layoutLoader"
+        layout="@layout/layout_bar_loader"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:visibility="gone"
-        app:constraint_referenced_ids="ivEmptyCart,tvEmptyCartTitle,tvEmptyCartDesc" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ivEmptyCart"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:src="@drawable/ic_store"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/header"
-        app:layout_constraintVertical_bias="0.4"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:tint="@color/white30" />
+        app:layout_constraintTop_toBottomOf="@id/header" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvEmptyCartTitle"
-        style="@style/Text.20x.Manrope.Bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Your cart is empty"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivEmptyCart" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvEmptyCartDesc"
-        style="@style/Text.14x.Manrope.Medium"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="60dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:text="Looks like you haven't added anything to your cart yet."
-        android:textColor="@color/white50"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvEmptyCartTitle" />
-
-    <!-- Order Details Header -->
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvOrderDetailsLabel"
-        style="@style/Text.18x.Manrope.Bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="20dp"
-        android:text="Order Details"
-        android:textColor="@color/white"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/header"
-        tools:visibility="visible" />
-
-    <!-- Cart Items -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvCartItems"
+    <!-- Scrollable Content -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="@dimen/_10dp"
         android:clipToPadding="false"
-        android:paddingBottom="20dp"
-        android:visibility="gone"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:scrollbars="none"
         app:layout_constraintBottom_toTopOf="@id/btnCheckout"
-        app:layout_constraintTop_toBottomOf="@id/tvOrderDetailsLabel"
-        tools:listitem="@layout/item_cart" />
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Order Details Header -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvOrderDetailsLabel"
+                style="@style/Text.18x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/order_details"
+                android:textColor="@color/white"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <!-- Cart Items -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvCartItems"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"
+                android:paddingBottom="10dp"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_cart"
+                tools:visibility="visible" />
+
+            <!-- Summary Sections Container -->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llCartSummary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <!-- Add Another Product -->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvAddMore"
+                    style="@style/Text.14x.Manrope.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/add_another_product"
+                    android:textColor="@color/white50" />
+
+                <!-- Apply Coupon -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clCoupon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bg_cart_item"
+                    android:padding="15dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvApplyCouponLabel"
+                        style="@style/Text.18x.Manrope.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/apply_coupon"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/bg_add_button"
+                        android:padding="3dp"
+                        android:src="@drawable/ic_plus"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/black" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!-- Shipping Address Section -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_cart_item"
+                    android:padding="15dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvShippingAddressLabel"
+                        style="@style/Text.18x.Manrope.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/shipping_address"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvAddressName"
+                        style="@style/Text.14x.Manrope.Medium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10dp"
+                        android:textColor="@color/white50"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvShippingAddressLabel"
+                        tools:text="Ravi Patel" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvAddressPhone"
+                        style="@style/Text.14x.Manrope.Medium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:textColor="@color/white50"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvAddressName"
+                        tools:text="9978782894" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvAddressDetails"
+                        style="@style/Text.14x.Manrope.Medium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:textColor="@color/white50"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvAddressPhone"
+                        tools:text="65, Varachha, surat, india, 395006" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/btnAddNewAddress"
+                        style="@style/Text.14x.Manrope.Medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/add_new_address"
+                        android:textColor="@color/lime_green" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/btnChangeAddress"
+                        style="@style/Text.14x.Manrope.Medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/change_address"
+                        android:textColor="@color/lime_green" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <!-- Select Shipping Method -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clShippingMethod"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bg_cart_item"
+                    android:padding="15dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvShippingMethodLabel"
+                        style="@style/Text.18x.Manrope.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/select_shipping_method"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/bg_add_button"
+                        android:padding="3dp"
+                        android:src="@drawable/ic_plus"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/black" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!-- To Pay -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clToPay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bg_cart_item"
+                    android:padding="15dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvToPayLabel"
+                        style="@style/Text.18x.Manrope.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/to_pay"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvTotalAmount"
+                        style="@style/Text.18x.Manrope.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/lime_green"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="£965.58" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/btnViewDetailedBill"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvToPayLabel">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Text.12x.Manrope.Medium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/view_detailed_bill"
+                            android:textColor="@color/white70" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:src="@drawable/ic_keyboard_arrow_down_24px"
+                            app:tint="@color/white70" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!-- Footer Labels -->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvTrustInfo"
+                    style="@style/Text.14x.Manrope.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="30dp"
+                    android:alpha="0.6"
+                    android:text="@string/cart_trust_info"
+                    android:textColor="@color/white" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPolicyInfo"
+                    style="@style/Text.14x.Manrope.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="120dp"
+                    android:alpha="0.6"
+                    android:text="@string/cart_policy_info"
+                    android:textColor="@color/white" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Bottom Shadow Background -->
+    <View
+        android:id="@+id/bottomShadow"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@drawable/gradation_black"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:visibility="visible" />
 
     <!-- Checkout Button -->
-    <androidx.appcompat.widget.AppCompatButton
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/btnCheckout"
-        style="@style/Button.style.primary.roundRect"
+        style="@style/Text.16x.Manrope.SemiBold"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginBottom="30dp"
-        android:layout_marginTop="10dp"
-        android:text="Confirm Order"
+        android:background="@drawable/bg_btn_confirm_order"
+        android:gravity="center"
+        android:text="@string/confirm_order"
+        android:textColor="@color/white"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

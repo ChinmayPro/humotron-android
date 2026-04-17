@@ -374,6 +374,22 @@ To get started:\n
     <string name="deep_scan_subtitle">60+ biomarkers</string>
     <string name="deep_scan_desc">Two simple, non-invasive tests—blood and saliva. Combined with wearables and environment data, we deliver clear steps for better sleep, sharper focus, and a healthier life.</string>
     <string name="book_now_arrow">Book Now ➔</string>
+    <string name="cardiac_test_details_title">Cardiac Biomarker\nTest Details</string>
+    <string name="test_overview_title">Test Overview</string>
+    <string name="test_overview_desc">Gain comprehensive insights into your heart health with our Cardiac Biomarker Test. This test measures key biomarkers, including LDL (bad cholesterol), HDL (good cholesterol), Triglycerides, and HbA1c, which together offer a detailed picture of your cardiovascular health.</string>
+    <string name="purpose_of_test_title">Purpose of Test</string>
+    <string name="purpose_of_test_desc">This test is designed to identify risk factors for heart disease and help tailor your health management plan. It\'s a proactive step towards ensuring long-term heart wellness.</string>
+    <string name="preparation_for_test_title">Preparation for Test</string>
+    <string name="prep_fasting">Fasting Requirement: Yes, fast for at least 8-12 hours before the test for accurate results.</string>
+    <string name="prep_medication">Medication: Continue your medications unless your doctor advises otherwise.</string>
+    <string name="prep_hydration">Hydration: Drink plenty of water; it helps with sample collection.</string>
+    <string name="prep_when_to_test">When to Test: Morning is the ideal time as your body is in a rested state, providing the most stable results.</string>
+    <string name="duration_title">Duration</string>
+    <string name="duration_desc">The test itself will only take a few minutes, but please allow a 30-minute window for the appointment.</string>
+    <string name="results_turnaround_title">Results Turnaround</string>
+    <string name="results_turnaround_desc1">You will receive your results within 2-3 business days, with a comprehensive explanation of what they mean for your heart health.</string>
+    <string name="results_turnaround_desc2">A follow-up consultation will be scheduled to discuss your results and next steps.</string>
+    <string name="btn_proceed_to_booking">Proceed to Booking</string>
     <string name="share_device_text">Check out this awesome link: %1$s</string>
     <string name="frequently_asked_questions">Frequently Asked Questions</string>
     <string name="product_name_label">Product Name:</string>
@@ -393,4 +409,25 @@ To get started:\n
     <string name="faq_label">FAQ</string>
     <string name="legal_privacy_center">Legal &amp; Privacy Center</string>
     <string name="logout">Logout</string>
+    <string name="confirm_order">Confirm Order</string>
+    <string name="order_details">Order Details</string>
+    <string name="add_another_product">Add Another Product</string>
+    <string name="apply_coupon">Apply Coupon</string>
+    <string name="shipping_address">Shipping Address</string>
+    <string name="add_new_address">Add New Address</string>
+    <string name="change_address">Change Address</string>
+    <string name="select_shipping_method">Select Shipping Method</string>
+    <string name="to_pay">To Pay</string>
+    <string name="view_detailed_bill">View Detailed Bill</string>
+    <string name="cart_trust_info">Incl. VAT &amp; shipping fees</string>
+    <string name="cart_policy_info">100%% secure payments • 7-day easy return</string>
+
+    <!-- Optimize Tab -->
+    <string name="optimize_title">Suggestions to Optimize\nYour Metrics</string>
+    <string name="optimize_subtitle">Backed by data, powered by AI — these suggestions are not medical advice, but a guide to help you take action.</string>
+    <string name="category_supplements">Supplements</string>
+    <string name="category_recipes">Recipes</string>
+    <string name="category_recommendations">Recommendations</string>
+    <string name="action_explore_buy">Explore &amp; Buy  →</string>
+    <string name="metric_info_template">%1$s • %2$s • </string>
 </resources>

@@ -100,10 +100,10 @@ class ShopDeviceDetailsFragment : BaseFragment(R.layout.fragment_shop_device_det
 
                         // Buy Now button
                         binding.btnBuyNow.setOnClickListener { _ ->
-//                            val bundle = Bundle().apply {
-//                                putString("deviceId", detail.id)
-//                            }
-//                            findNavController().navigate(R.id.action_fragmentShopDeviceDetails_to_fragmentShopBuyNow, bundle)
+                            val bundle = Bundle().apply {
+                                putString("deviceId", detail.id)
+                            }
+                            findNavController().navigate(R.id.action_fragmentShopDeviceDetails_to_fragmentShopBuyNow, bundle)
                         }
 
                         // Share button

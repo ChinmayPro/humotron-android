@@ -1,6 +1,8 @@
 package com.humotron.app.ui.onboarding
 
 import com.google.gson.annotations.SerializedName
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Field
@@ -24,9 +26,18 @@ interface GoogleAuthApi {
 
 object OAuth {
 
+    private val logging = HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BODY
+    }
+
+    private val client = OkHttpClient.Builder()
+        .addInterceptor(logging)
+        .build()
+
     val retrofit = Retrofit.Builder()
         .baseUrl("https://oauth2.googleapis.com/")
         .addConverterFactory(GsonConverterFactory.create())
+        .client(client)
         .build()
 
     val googleAuthApi = retrofit.create(GoogleAuthApi::class.java)
