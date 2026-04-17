@@ -36,17 +36,11 @@ class UploadedReportsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupStatusBar()
         initViews()
         observeViewModel()
     }
 
-    private fun setupStatusBar() {
-        requireActivity().window.apply {
-            statusBarColor = android.graphics.Color.BLACK
-            androidx.core.view.WindowInsetsControllerCompat(this, decorView).isAppearanceLightStatusBars = false
-        }
-    }
+
 
 
 

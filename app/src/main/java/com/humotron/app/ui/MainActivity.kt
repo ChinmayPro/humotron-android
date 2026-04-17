@@ -22,8 +22,10 @@ import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.humotron.app.R
@@ -103,7 +105,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         navController = navHostFragment.navController
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             val isVisible =
-                destination.id == R.id.fragmentTrack || destination.id == R.id.fragmentBioHack || destination.id == R.id.fragmentDecode || destination.id == R.id.fragmentDecodeMetrics
+                destination.id == R.id.fragmentTrack || destination.id == R.id.fragmentBioHack || destination.id == R.id.fragmentDecode || destination.id == R.id.fragmentDecodeMetrics || destination.id == R.id.fragmentProfile || destination.id == R.id.fragmentShop
             binding.rlBottom.isVisible = isVisible
             binding.rlBtnNavigation.isVisible = isVisible
 
@@ -111,6 +113,27 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 R.id.fragmentTrack -> highlightView(0)
                 R.id.fragmentDecode, R.id.fragmentDecodeMetrics -> highlightView(1)
                 R.id.fragmentBioHack -> highlightView(2)
+                R.id.fragmentProfile -> highlightView(3)
+            }
+
+            // Centralized Status Bar Management
+            val window = this.window
+            val decorView = window.decorView
+            val controller = WindowInsetsControllerCompat(window, decorView)
+            
+            when (destination.id) {
+                R.id.fragmentProfile, R.id.fragmentUploadedReports -> {
+                    window.statusBarColor = android.graphics.Color.BLACK
+                    controller.isAppearanceLightStatusBars = false
+                }
+                R.id.fragmentShop -> {
+                    window.statusBarColor = android.graphics.Color.TRANSPARENT
+                    controller.isAppearanceLightStatusBars = false
+                }
+                else -> {
+                    window.statusBarColor = android.graphics.Color.TRANSPARENT
+                    controller.isAppearanceLightStatusBars = false
+                }
             }
         }
         highlightView(0)
@@ -143,28 +166,30 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(p0: View?) {
+        val options = NavOptions.Builder()
+            .setPopUpTo(navController.graph.startDestinationId, false)
+            .setLaunchSingleTop(true)
+            .build()
+
         when (p0) {
             binding.llTrack -> {
-                navController.navigate(R.id.fragmentTrack)
+                navController.navigate(R.id.fragmentTrack, null, options)
                 highlightView(0)
             }
 
             binding.llDecode -> {
-                navController.navigate(R.id.fragmentDecode)
+                navController.navigate(R.id.fragmentDecode, null, options)
                 highlightView(1)
             }
 
             binding.llBioHack -> {
-                navController.navigate(R.id.fragmentBioHack)
+                navController.navigate(R.id.fragmentBioHack, null, options)
                 highlightView(2)
             }
 
             binding.llProfile -> {
-                showLogoutDialog()
-            }
-
-            binding.llDecode -> {
-//                showAssessmentSheet()
+                navController.navigate(R.id.nav_graph_profile, null, options)
+                highlightView(3)
             }
         }
     }
@@ -203,18 +228,28 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 binding.ivTrack.setImageResource(R.drawable.ic_trends_selected)
                 binding.ivDecode.setImageResource(R.drawable.ic_decode)
                 binding.ivBioHack.setImageResource(R.drawable.ic_bio_hack)
+                binding.ivProfile.setImageResource(R.drawable.ic_profile)
             }
 
             1 -> {
                 binding.ivTrack.setImageResource(R.drawable.ic_trends)
                 binding.ivDecode.setImageResource(R.drawable.ic_decode_selected)
                 binding.ivBioHack.setImageResource(R.drawable.ic_bio_hack)
+                binding.ivProfile.setImageResource(R.drawable.ic_profile)
             }
 
             2 -> {
                 binding.ivTrack.setImageResource(R.drawable.ic_trends)
                 binding.ivDecode.setImageResource(R.drawable.ic_decode)
                 binding.ivBioHack.setImageResource(R.drawable.ic_bio_hack_selected)
+                binding.ivProfile.setImageResource(R.drawable.ic_profile)
+            }
+
+            3 -> {
+                binding.ivTrack.setImageResource(R.drawable.ic_trends)
+                binding.ivDecode.setImageResource(R.drawable.ic_decode)
+                binding.ivBioHack.setImageResource(R.drawable.ic_bio_hack)
+                binding.ivProfile.setImageResource(R.drawable.ic_profile)
             }
         }
     }

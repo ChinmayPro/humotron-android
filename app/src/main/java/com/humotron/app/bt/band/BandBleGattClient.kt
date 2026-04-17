@@ -216,11 +216,17 @@ internal class BandBleGattClient(
         }
         mainHandler.post {
             val adapter = mBluetoothAdapter ?: return@post
-            val device = adapter.getRemoteDevice(mac.uppercase())
+            val upperMac = mac.uppercase()
+            if (!BluetoothAdapter.checkBluetoothAddress(upperMac)) {
+                Log.e(TAG, "Invalid Bluetooth address: $upperMac. Connection aborted.")
+                return@post
+            }
             try {
+                val device = adapter.getRemoteDevice(upperMac)
                 needReconnect = true
                 mGatt = openGatt(device)
-            } catch (_: Exception) {
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to get remote device or open GATT: ${e.message}")
             }
         }
     }

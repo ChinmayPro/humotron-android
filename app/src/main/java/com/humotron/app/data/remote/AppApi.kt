@@ -23,6 +23,7 @@ import com.humotron.app.domain.modal.response.AddToCartResponse
 import com.humotron.app.domain.modal.response.AllMetricsResponse
 import com.humotron.app.domain.modal.response.AssessmentResponse
 import com.humotron.app.domain.modal.response.BioHackProgressResponse
+import com.humotron.app.domain.modal.response.GetCartResponse
 import com.humotron.app.domain.modal.response.BookDetailResponse
 import com.humotron.app.domain.modal.response.BookLikeResponse
 import com.humotron.app.domain.modal.response.BookPreferenceResponse
@@ -33,6 +34,9 @@ import com.humotron.app.domain.modal.response.ExtractMetricsResponse
 import com.humotron.app.domain.modal.response.FeltOffQuestionsResponse
 import com.humotron.app.domain.modal.response.GenerateMetricResponse
 import com.humotron.app.domain.modal.response.GetAllDeviceResponse
+import com.humotron.app.domain.modal.response.DeviceDetailResponse
+import com.humotron.app.domain.modal.response.DeviceFaqResponse
+import com.humotron.app.domain.modal.response.GetShopDevicesResponse
 import com.humotron.app.domain.modal.response.GetConversationsResponse
 import com.humotron.app.domain.modal.response.HardwareListData
 import com.humotron.app.domain.modal.response.MedicalPdfResponse
@@ -53,6 +57,8 @@ import com.humotron.app.domain.modal.response.UseCaseResponse
 import com.humotron.app.domain.modal.response.VerifyOtpResponse
 import com.humotron.app.domain.modal.response.WristBandSleepDurationResponse
 import com.humotron.app.domain.modal.response.YetToTrackMetricResponse
+import com.humotron.app.domain.modal.response.ProductVariantResponse
+import com.humotron.app.domain.modal.response.ShopAddToCartResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -119,6 +125,9 @@ interface AppApi {
     @POST("device/getAllDeviceByUserId")
     suspend fun getAllDeviceData(): Response<GetAllDeviceResponse>
 
+    @POST("device/getAllDeviceWithMetrics")
+    suspend fun getAllDeviceWithMetrics(): Response<GetShopDevicesResponse>
+
     @GET("userHardware/getHardwareListByUserId")
     suspend fun getHardwareList(): Response<HardwareListData>
 
@@ -126,6 +135,22 @@ interface AppApi {
     suspend fun getRingReadingData(
         @Path("deviceId") deviceId: String,
     ): Response<RingReadingData>
+
+    @GET("device/getDeviceDetailsById/{deviceId}")
+    suspend fun getDeviceDetailsById(
+        @Path("deviceId") deviceId: String,
+    ): Response<DeviceDetailResponse>
+
+    @GET("deviceFaq/faqByDeviceId/{deviceId}")
+    suspend fun getDeviceFaqs(
+        @Path("deviceId") deviceId: String,
+    ): Response<DeviceFaqResponse>
+
+    @POST("device/deviceLikeDislike/{deviceId}")
+    suspend fun deviceLikeDislike(
+        @Path("deviceId") deviceId: String,
+        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0))
+    ): Response<CommonResponse>
 
     @POST("device/{endpoint}/{ringId}")
     suspend fun getRingReadingGraphData(
@@ -198,6 +223,11 @@ interface AppApi {
         @Body bookId: AddToCartParam,
     ): Response<AddToCartResponse>
 
+    @POST("cart/createCart")
+    suspend fun addToCartDevice(
+        @Body param: AddToCartParam,
+    ): Response<ShopAddToCartResponse>
+
 
     @GET("book/getBookByUserPreference")
     suspend fun getBookDetail(): Response<BookPreferenceResponse>
@@ -238,8 +268,8 @@ interface AppApi {
         @Path("threadId") threadId: String
     ): Response<CommonResponse>
 
-    @POST("metric/getMetricTrackingByUserId")
-    suspend fun getMetricTrackingByUserId(): Response<MetricTrackingResponse>
+    @POST("metric/getHealthMetricTrackingByUserId")
+    suspend fun getHealthMetricTrackingByUserId(): Response<MetricTrackingResponse>
 
     @POST("metric/getYetToTrackMetricByUserId")
     suspend fun getYetToTrackMetricByUserId(): Response<YetToTrackMetricResponse>
@@ -269,4 +299,12 @@ interface AppApi {
 
     @POST("medicalDetails/removePdfByPdfId")
     suspend fun removePdfByPdfId(@Body param: RemovePdfParam): Response<CommonResponse>
+
+    @POST("cart/getCartByUserId")
+    suspend fun getCartByUserId(): Response<GetCartResponse>
+
+    @GET("device/getProductVariantById/{deviceId}")
+    suspend fun getProductVariantById(
+        @Path("deviceId") deviceId: String
+    ): Response<ProductVariantResponse>
 }

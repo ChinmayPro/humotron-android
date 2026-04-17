@@ -102,11 +102,11 @@ constructor(
         emit(responseHandler.handleException(ValidationException(it.message)))
     }
 
-    fun getMetricTrackingByUserId(): Flow<Resource<MetricTrackingResponse>> = flow {
+    fun getHealthMetricTrackingByUserId(): Flow<Resource<MetricTrackingResponse>> = flow {
         emit(Resource.loading())
         try {
             val response =
-                responseHandler.handleResponse(api.getMetricTrackingByUserId())
+                responseHandler.handleResponse(api.getHealthMetricTrackingByUserId())
 
             emit(response)
         } catch (e: Exception) {

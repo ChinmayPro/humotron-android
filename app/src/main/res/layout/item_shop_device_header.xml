@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingHorizontal="20dp"
+    android:paddingTop="24dp"
+    android:paddingBottom="16dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvMainHeading"
+        style="@style/Text.24x.Manrope.Bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Discover &amp; shop\nfor Humotron Devices"
+        android:textColor="@color/colorBgBtn"
+        android:lineSpacingExtra="4dp" />
+
+</LinearLayout>

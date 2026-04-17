@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    android:background="@drawable/bg_faq_card"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Question Section -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvQPrefix"
+            style="@style/Text.14x.Manrope.Regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white50"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Q1." />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvQuestion"
+            style="@style/Text.14x.Manrope.Regular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:textColor="@color/white70"
+            app:layout_constraintEnd_toStartOf="@+id/ivArrow"
+            app:layout_constraintStart_toEndOf="@+id/tvQPrefix"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Can I use the Humotron Ring while swimming, showering, or in the sauna?" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivArrow"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_chevron_right_24px"
+            app:layout_constraintBottom_toBottomOf="@+id/tvQuestion"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvQuestion"
+            app:tint="@color/white70" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Answer Section -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clAnswer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvAPrefix"
+            style="@style/Text.14x.Manrope.Regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="A1."
+            android:textColor="@color/white50"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvAnswer"
+            style="@style/Text.14x.Manrope.Regular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:textColor="@color/white50"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvAPrefix"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Yes, the ring is water-resistant up to 50 meters—safe for swimming and showers. However, we advise against sauna use due to high heat, which may impact internal sensors over time." />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

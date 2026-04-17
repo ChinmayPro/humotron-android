@@ -154,6 +154,7 @@
             app:layout_constraintStart_toEndOf="@id/llBioHack">
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivProfile"
                 android:layout_width="@dimen/_34dp"
                 android:layout_height="@dimen/_34dp"
                 android:src="@drawable/ic_profile" />
