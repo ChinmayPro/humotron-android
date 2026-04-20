@@ -163,6 +163,7 @@
     <string name="biohack_progress_desc_bottom">Your learning journey is shaping up! Based on your engagement, you\'ve shown strong interest in some categories than others. Now, you can choose how to progress further.</string>
     <string name="master_biohacking">Master Biohacking</string>
     <string name="remove_cart">Remove from cart</string>
+    <string name="add_to_cart">Add To Cart</string>
     <string name="book_summary">Book Summary</string>
     <string name="endorsed_by">Endorsed By</string>
     <string name="ai_sumary_title">AI Generate Summary of User Feedback</string>
@@ -430,4 +431,9 @@ To get started:\n
     <string name="category_recommendations">Recommendations</string>
     <string name="action_explore_buy">Explore &amp; Buy  →</string>
     <string name="metric_info_template">%1$s • %2$s • </string>
+    <string name="remove_item_title">Remove Item?</string>
+    <string name="remove_item_msg">Are you sure you want to remove this item from your cart?</string>
+    <string name="remove">Remove</string>
+    <string name="cancel">Cancel</string>
+    <string name="shop_loading_message">Curating your reading list...</string>
 </resources>

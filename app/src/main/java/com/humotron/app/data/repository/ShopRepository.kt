@@ -4,6 +4,9 @@ import com.humotron.app.data.network.Resource
 import com.humotron.app.data.network.ResponseHandler
 import com.humotron.app.data.network.exceptions.ValidationException
 import com.humotron.app.data.remote.AppApi
+import com.humotron.app.domain.modal.response.BookAddToCartResponse
+import com.humotron.app.domain.modal.response.BookLikeResponse
+import com.humotron.app.domain.modal.response.BookPreferenceResponse
 import com.humotron.app.domain.modal.response.DeviceDetailResponse
 import com.humotron.app.domain.modal.response.DeviceFaqResponse
 import com.humotron.app.domain.modal.response.GetOptimizedRecipeWithMetricsResponse
@@ -96,10 +99,78 @@ class ShopRepository @Inject constructor(
         emit(responseHandler.handleException(ValidationException(it.message)))
     }
 
+    fun createBookCart(param: com.humotron.app.domain.modal.param.AddToCartParam): Flow<Resource<com.humotron.app.domain.modal.response.BookAddToCartResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.createBookCart(param), false)
+            if (response.status == com.humotron.app.data.network.Status.SUCCESS) {
+                response.data?.data?.id = param.productId
+            }
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun deleteCartItem(itemId: String): Flow<Resource<com.humotron.app.domain.modal.response.CommonResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.deleteCartItemById(itemId), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun getCartByUserId(): Flow<Resource<com.humotron.app.domain.modal.response.GetCartResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.getCartByUserId(), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
     fun getOptimizedRecipeWithMetrics(): Flow<Resource<GetOptimizedRecipeWithMetricsResponse>> = flow {
         emit(Resource.loading())
         try {
             val response = responseHandler.handleResponse(api.getOptimizedRecipeWithMetrics(), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun getBookByUserPreference(): Flow<Resource<BookPreferenceResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.getBookDetail(), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun likeBook(bookId: String): Flow<Resource<com.humotron.app.domain.modal.response.BookLikeResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.likeBook(bookId), false)
             emit(response)
         } catch (e: Exception) {
             emit(responseHandler.handleException(e))

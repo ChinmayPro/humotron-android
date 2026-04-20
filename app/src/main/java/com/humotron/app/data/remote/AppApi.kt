@@ -20,6 +20,7 @@ import com.humotron.app.domain.modal.param.WristBandApiParam
 import com.humotron.app.domain.modal.response.AddDeviceDataResponse
 import com.humotron.app.domain.modal.response.AddHardwareResponse
 import com.humotron.app.domain.modal.response.AddToCartResponse
+import com.humotron.app.domain.modal.response.BookAddToCartResponse
 import com.humotron.app.domain.modal.response.AllMetricsResponse
 import com.humotron.app.domain.modal.response.AssessmentResponse
 import com.humotron.app.domain.modal.response.BioHackProgressResponse
@@ -113,7 +114,6 @@ interface AppApi {
 
 
     // device
-
     @POST("hardwareSpecificDetail/addHardwareSpecificDetail")
     suspend fun sendDataToServer(@Body data: UploadData): Response<AddDeviceDataResponse>
 
@@ -223,11 +223,21 @@ interface AppApi {
     suspend fun addToCart(
         @Body bookId: AddToCartParam,
     ): Response<AddToCartResponse>
+    
+    @POST("cart/createCart")
+    suspend fun createBookCart(
+        @Body bookId: AddToCartParam,
+    ): Response<BookAddToCartResponse>
 
     @POST("cart/createCart")
     suspend fun addToCartDevice(
         @Body param: AddToCartParam,
     ): Response<ShopAddToCartResponse>
+
+    @POST("cart/deleteCartItemById/{itemId}")
+    suspend fun deleteCartItemById(
+        @Path("itemId") itemId: String,
+    ): Response<CommonResponse>
 
 
     @GET("book/getBookByUserPreference")

@@ -21,8 +21,29 @@ class CartAdapter : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
 
     @SuppressLint("NotifyDataSetChanged")
     fun setItems(items: List<GetCartResponse.CartItem>) {
+        val diffCallback = object : androidx.recyclerview.widget.DiffUtil.Callback() {
+            override fun getOldListSize(): Int = cartItems.size
+            override fun getNewListSize(): Int = items.size
+            override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                return cartItems[oldItemPosition].id == items[newItemPosition].id
+            }
+            override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                return cartItems[oldItemPosition] == items[newItemPosition]
+            }
+        }
+        val diffResult = androidx.recyclerview.widget.DiffUtil.calculateDiff(diffCallback)
         this.cartItems = items
-        notifyDataSetChanged()
+        diffResult.dispatchUpdatesTo(this)
+    }
+
+    fun removeItem(itemId: String) {
+        val index = cartItems.indexOfFirst { it.id == itemId }
+        if (index != -1) {
+            val mutableList = cartItems.toMutableList()
+            mutableList.removeAt(index)
+            cartItems = mutableList
+            notifyItemRemoved(index)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
@@ -83,10 +104,14 @@ class CartAdapter : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
             }
 
             // Load Image
-            val imageUrl = item.variantDetails?.image
-            Glide.with(binding.ivProductImage.context)
-                .load(imageUrl)
-                .into(binding.ivProductImage)
+            if (item.productType == "book") {
+                binding.ivProductImage.setImageResource(R.drawable.ic_book_biohack)
+            } else {
+                val imageUrl = item.variantDetails?.image
+                Glide.with(binding.ivProductImage.context)
+                    .load(imageUrl)
+                    .into(binding.ivProductImage)
+            }
 
             // Edit button visibility (only for certain types if needed, though image shows for ring and review)
             binding.ivEdit.visibility = if (item.productType != "book") View.VISIBLE else View.GONE

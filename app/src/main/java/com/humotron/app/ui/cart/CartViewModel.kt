@@ -17,12 +17,20 @@ class CartViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val cartLiveData: SingleLiveEvent<Resource<GetCartResponse>> = SingleLiveEvent()
-
     fun getCartLiveData(): SingleLiveEvent<Resource<GetCartResponse>> = cartLiveData
+
+    private val deleteCartItemLiveData: SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.CommonResponse>> = SingleLiveEvent()
+    fun getDeleteCartItemLiveData(): SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.CommonResponse>> = deleteCartItemLiveData
 
     fun fetchCart() {
         repository.getCartByUserId().onEach { state ->
             cartLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
+
+    fun deleteCartItem(itemId: String) {
+        repository.deleteCartItemById(itemId).onEach { state ->
+            deleteCartItemLiveData.value = state
         }.launchIn(viewModelScope)
     }
 }

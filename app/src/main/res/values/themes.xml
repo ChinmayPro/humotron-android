@@ -101,4 +101,12 @@
         <item name="android:backgroundDimEnabled">true</item>
     </style>
 
+    <style name="MaterialAlertDialog_Rounded" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.Material3.AlertDialog.Rounded</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.Material3.AlertDialog.Rounded" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
 </resources>

@@ -183,8 +183,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             binding.llBioHack -> {
-                navController.navigate(R.id.fragmentBioHack, null, options)
-                highlightView(2)
+                navigateToBioHack()
             }
 
             binding.llProfile -> {
@@ -192,6 +191,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 highlightView(3)
             }
         }
+    }
+
+    fun navigateToBioHack() {
+        val options = NavOptions.Builder()
+            .setPopUpTo(navController.graph.startDestinationId, false)
+            .setLaunchSingleTop(true)
+            .build()
+        navController.navigate(R.id.fragmentBioHack, null, options)
+        highlightView(2)
     }
     /*  private fun showAssessmentSheet() {
           val sheet = CardiovascularAssessmentBottomSheet.newInstance()

@@ -11,8 +11,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import android.view.ViewGroup
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.humotron.app.databinding.FragmentCartBinding
 import com.humotron.app.ui.cart.adapter.CartAdapter
+import com.humotron.app.domain.modal.response.GetCartResponse
+import com.humotron.app.ui.dialogs.DeleteConfirmationBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,6 +24,9 @@ class CartFragment : BaseFragment(R.layout.fragment_cart) {
     private lateinit var binding: FragmentCartBinding
     private val viewModel: CartViewModel by viewModels()
     private val cartAdapter by lazy { CartAdapter() }
+    
+    // Track the item being deleted for smooth removal
+    private var itemIdBeingDeleted: String? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -55,8 +61,7 @@ class CartFragment : BaseFragment(R.layout.fragment_cart) {
         }
 
         cartAdapter.onDeleteClicked = { item ->
-            android.util.Log.d("CartFragment", "Delete Item: ${item.id}")
-            // Logic to delete item via API can be added here
+            showDeleteConfirmationDialog(item)
         }
 
         cartAdapter.onEditClicked = { item ->
@@ -70,13 +75,20 @@ class CartFragment : BaseFragment(R.layout.fragment_cart) {
         }
     }
 
+    private fun showDeleteConfirmationDialog(item: GetCartResponse.CartItem) {
+        val bottomSheet = DeleteConfirmationBottomSheet.newInstance {
+            itemIdBeingDeleted = item.id
+            item.id?.let { viewModel.deleteCartItem(it) }
+        }
+        bottomSheet.show(childFragmentManager, DeleteConfirmationBottomSheet.TAG)
+    }
+
     private fun setupObservers() {
         viewModel.getCartLiveData().observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
                 Status.SUCCESS -> {
                     hideLoading()
                     val cartItems = resource.data?.data?.cart ?: emptyList()
-                    android.util.Log.d("CartFragment", "Cart Data received: ${cartItems.size} items")
                     
                     if (cartItems.isEmpty()) {
                         showEmptyState()
@@ -86,11 +98,34 @@ class CartFragment : BaseFragment(R.layout.fragment_cart) {
                 }
                 Status.ERROR, Status.EXCEPTION -> {
                     hideLoading()
-                    android.util.Log.e("CartFragment", "Error fetching cart: ${resource.error?.errorMessage}")
                     showEmptyState()
                 }
                 Status.LOADING -> {
-                    showLoading()
+                    if (cartAdapter.itemCount == 0) {
+                        showLoading()
+                    }
+                }
+            }
+        }
+
+        viewModel.getDeleteCartItemLiveData().observe(viewLifecycleOwner) { resource ->
+            when (resource.status) {
+                Status.SUCCESS -> {
+                    // Smoothly remove the item from the adapter first
+                    itemIdBeingDeleted?.let { id ->
+                        cartAdapter.removeItem(id)
+                    }
+                    itemIdBeingDeleted = null
+                    
+                    // Refresh cart in background to update totals without blocking the UI
+                    viewModel.fetchCart()
+                }
+                Status.ERROR, Status.EXCEPTION -> {
+                    itemIdBeingDeleted = null
+                    // Optionally show error message
+                }
+                Status.LOADING -> {
+                    // Optional: show loading overlay during delete
                 }
             }
         }
@@ -113,6 +148,7 @@ class CartFragment : BaseFragment(R.layout.fragment_cart) {
         binding.rvCartItems.visibility = View.GONE
         binding.btnCheckout.visibility = View.GONE
         binding.bottomShadow.visibility = View.GONE
+        binding.llCartSummary.visibility = View.GONE
     }
 
     private fun showCartItems(data: com.humotron.app.domain.modal.response.GetCartResponse.Data?) {
@@ -123,6 +159,7 @@ class CartFragment : BaseFragment(R.layout.fragment_cart) {
         binding.bottomShadow.visibility = View.VISIBLE
         binding.llCartSummary.visibility = View.VISIBLE
         
+        // Pass the updated list to adapter
         cartAdapter.setItems(items)
 
         // Bind Address
