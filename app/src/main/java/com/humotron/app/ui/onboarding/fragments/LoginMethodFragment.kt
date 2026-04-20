@@ -41,17 +41,26 @@ class LoginMethodFragment : BaseFragment(R.layout.fragment_login_method) {
             if (serverAuthCode != null) {
                 exchangeCodeForToken(serverAuthCode)
             } else {
+                setGoogleLoading(false)
                 Toast.makeText(requireContext(), "Failed to get Server Auth Code", Toast.LENGTH_SHORT).show()
             }
         } catch (e: ApiException) {
+            setGoogleLoading(false)
             Log.e("GoogleAuth", "Sign-in failed: ${e.message}")
-            Toast.makeText(requireContext(), "Google Sign-In failed: ${e.message}", Toast.LENGTH_SHORT).show()
+            if (e.statusCode != 12501) { // 12501 is SIGN_IN_CANCELLED
+                Toast.makeText(requireContext(), "Google Sign-In failed: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
         }
+    }
+
+    private fun setGoogleLoading(isLoading: Boolean) {
+        binding.btnGoogle.isEnabled = !isLoading
+        binding.tvGoogle.visibility = if (isLoading) View.GONE else View.VISIBLE
+        binding.pbGoogle.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     private fun exchangeCodeForToken(serverAuthCode: String) {
         lifecycleScope.launch {
-            showProgress()
             try {
                 val response = OAuth.googleAuthApi.getAccessToken(
                     code = serverAuthCode,
@@ -59,7 +68,6 @@ class LoginMethodFragment : BaseFragment(R.layout.fragment_login_method) {
                     clientSecret = BuildConfig.GOOGLE_CLIENT_SECRET,
                     redirectUri = ""
                 )
-                hideProgress()
                 viewModel.loginWithGoogle(
                     LoginParam(
                         mode = "GOOGLE",
@@ -68,7 +76,7 @@ class LoginMethodFragment : BaseFragment(R.layout.fragment_login_method) {
                     )
                 )
             } catch (e: Exception) {
-                hideProgress()
+                setGoogleLoading(false)
                 if (e is retrofit2.HttpException) {
                     val errorBody = e.response()?.errorBody()?.string()
                     Log.e("GoogleAuth", "Token exchange failed (HTTP ${e.code()}): $errorBody")
@@ -91,6 +99,7 @@ class LoginMethodFragment : BaseFragment(R.layout.fragment_login_method) {
         }
 
         binding.btnGoogle.setOnClickListener {
+            setGoogleLoading(true)
             val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .requestProfile()
@@ -112,6 +121,7 @@ class LoginMethodFragment : BaseFragment(R.layout.fragment_login_method) {
         viewModel.loginData().observe(viewLifecycleOwner) { networkStatus ->
             when (networkStatus.status) {
                 Status.SUCCESS -> {
+                    setGoogleLoading(false)
                     hideProgress()
                     val data = networkStatus.data ?: return@observe
                     if (data.data != null) {
@@ -141,15 +151,17 @@ class LoginMethodFragment : BaseFragment(R.layout.fragment_login_method) {
                 }
 
                 Status.ERROR -> {
+                    setGoogleLoading(false)
                     hideProgress()
                 }
 
                 Status.EXCEPTION -> {
+                    setGoogleLoading(false)
                     hideProgress()
                 }
 
                 Status.LOADING -> {
-                    showProgress()
+                    // showProgress()
                 }
             }
         }

@@ -73,20 +73,21 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <LinearLayout
+                <FrameLayout
                     android:id="@+id/btnGoogle"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_56dp"
                     android:layout_marginHorizontal="@dimen/_24dp"
                     android:layout_marginTop="@dimen/_36dp"
                     android:background="@drawable/bg_btn_social"
-                    android:gravity="center"
                     app:layout_constraintTop_toBottomOf="@id/tvTitle">
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvGoogle"
                         style="@style/Text.OnBoard.Title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:drawableStart="@drawable/ic_google"
                         android:drawablePadding="@dimen/_22dp"
                         android:gravity="center_vertical"
@@ -95,7 +96,15 @@
                         android:text="@string/continue_with_google"
                         android:textSize="16sp" />
 
-                </LinearLayout>
+                    <ProgressBar
+                        android:id="@+id/pbGoogle"
+                        android:layout_width="@dimen/_24dp"
+                        android:layout_height="@dimen/_24dp"
+                        android:layout_gravity="center"
+                        android:indeterminateTint="@color/white"
+                        android:visibility="gone" />
+
+                </FrameLayout>
 
                 <LinearLayout
                     android:id="@+id/btnApple"
