@@ -33,7 +33,7 @@
 
     <fragment
         android:id="@+id/fragmentDeviceConnection"
-        android:name="com.humotron.app.ui.connect.DeviceConnectionFragment" />
+        android:name="com.humotron.app.ui.connect.RingConnectionFragment" />
 
     <fragment
         android:id="@+id/fragmentBandConnection"

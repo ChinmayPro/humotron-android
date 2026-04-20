@@ -263,7 +263,7 @@ class RingBleManager(val app: App) {
     fun cancelScan() {
         if (isScanning) {
             isScanning = false
-            mBluetoothAdapter.bluetoothLeScanner.stopScan(mScanCallback)
+            mBluetoothAdapter?.bluetoothLeScanner?.stopScan(mScanCallback)
             post {
                 mOnBleScanCallback?.onScanFinished()
                 mOnBleScanCallback = null

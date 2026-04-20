@@ -43,6 +43,7 @@ import kotlin.system.exitProcess
 val DEBUG_ON: Boolean = BuildConfig.DEBUG
 const val TAG = "NexRingSdkApp"
 const val TAG_RING_DEBUG = "Ring Debug"
+const val TAG_BAND_DEBUG = "Band Debug"
 
 const val ONE_DAY_TS = 86400000L
 const val ONE_HOUR_MINUTES = 60

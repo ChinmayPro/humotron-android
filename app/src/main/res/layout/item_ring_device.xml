@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="@dimen/_4dp"
+    android:background="@drawable/bg_btn_round_rect_8"
+    android:backgroundTint="@color/black"
+    android:padding="@dimen/_8dp">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivDeviceImage"
+        android:layout_width="@dimen/_80dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_ring_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvDeviceName"
+        style="@style/Text.OnBoard.Sub.Medium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Humotron Smart Ring"
+        android:textColor="@color/textColorGray"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toTopOf="@id/tvDeviceModel"
+        app:layout_constraintStart_toEndOf="@id/ivDeviceImage"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvDeviceModel"
+        style="@style/Text.OnBoard.Sub.Medium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="#b2b1b1"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="@id/tvDeviceName"
+        app:layout_constraintStart_toStartOf="@id/tvDeviceName"
+        app:layout_constraintTop_toBottomOf="@id/tvDeviceName" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvDeviceColor"
+        style="@style/Text.OnBoard.Sub.Medium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="#b2b1b1"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tvDeviceName"
+        app:layout_constraintTop_toBottomOf="@id/tvDeviceModel"
+        tools:text="Test" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvDeviceGeneration"
+        style="@style/Text.OnBoard.Sub.Medium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_3dp"
+        android:textColor="#b2b1b1"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvDeviceColor"
+        app:layout_constraintTop_toBottomOf="@id/tvDeviceModel"
+        tools:text="Test" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvDeviceSize"
+        style="@style/Text.OnBoard.Sub.Medium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_3dp"
+        android:textColor="#b2b1b1"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvDeviceGeneration"
+        app:layout_constraintTop_toBottomOf="@id/tvDeviceModel"
+        tools:text="Test" />
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/cbDeviceChecked"
+        android:layout_width="@dimen/_16dp"
+        android:layout_height="@dimen/_16dp"
+        android:layout_marginEnd="@dimen/_24dp"
+        android:background="@drawable/chekbox_device"
+        android:button="@null"
+        android:clickable="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

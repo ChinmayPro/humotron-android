@@ -123,7 +123,7 @@ class RingDeviceManager(val app: App) : OnBleConnectionListener, OnSleepDataLoad
     }
 
     override fun onSyncDataFromDevice(state: Int, progress: Int) {
-        PlutoLog.e(TAG_RING_DEBUG, "onSyncDataFromDevice state: $state, progress: $progress")
+        //PlutoLog.e(TAG_RING_DEBUG, "onSyncDataFromDevice state: $state, progress: $progress")
         when (state) {
             LOAD_DATA_EMPTY -> {
                 PlutoLog.e(TAG_RING_DEBUG, "onSyncDataFromDevice LOAD_DATA_EMPTY")

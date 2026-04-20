@@ -2,6 +2,7 @@ package com.humotron.app.ui.device
 
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -39,6 +40,7 @@ import com.humotron.app.util.STATE_DEVICE_CONNECTED
 import com.humotron.app.util.STATE_DEVICE_CONNECTING
 import com.humotron.app.util.STATE_DEVICE_DISCHARGING
 import com.humotron.app.util.STATE_DEVICE_DISCONNECTED
+import com.humotron.app.util.TAG_BAND_DEBUG
 import com.humotron.app.util.TAG_RING_DEBUG
 import com.humotron.app.util.convertDecimalHours
 import com.humotron.app.util.formatDateToMMMddyyyy
@@ -48,8 +50,10 @@ import com.jstyle.blesdk2208a.callback.DataListener2025
 import com.jstyle.blesdk2208a.constant.BleConst
 import com.jstyle.blesdk2208a.constant.DeviceKey
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import java.util.Locale
 import javax.inject.Inject
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -145,6 +149,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
         if (app.ringDeviceManager.connected.value == true) {
             app.ringDeviceManager.registerCb()
             viewModel.getDeviceData()
+            updateConnectionUi(true)
         }
 
         app.ringDeviceManager.isSyncingData.observe(viewLifecycleOwner) { isSyncing ->
@@ -164,19 +169,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
                 }
 
                 STATE_DEVICE_CONNECTED -> {
-                    binding.ivDeviceStatus.setImageResource(R.drawable.dot_connected)
-                    binding.tvDeviceStatus.text = "Connected"
-                    binding.tvDeviceStatus.setTextColor(
-                        ContextCompat.getColor(
-                            requireContext(),
-                            R.color.colorBgBtn
-                        )
-                    )
-                    binding.batteryView.isVisible = true
-                    binding.tvBatteryLevel.isVisible = true
-                    binding.batteryView.isCharging = false
-                    binding.btnTakeReading.isEnabled = true
-                    binding.btnTakeReading.alpha = 1f
+                    updateConnectionUi(true)
                     PlutoLog.e(
                         "Bluetooth",
                         "STATE_DEVICE_CONNECTED"
@@ -185,19 +178,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
                 }
 
                 STATE_DEVICE_DISCONNECTED -> {
-                    binding.ivDeviceStatus.setImageResource(R.drawable.dot_disconnected)
-                    binding.tvDeviceStatus.text = "Disconnected"
-                    binding.tvDeviceStatus.setTextColor(
-                        ContextCompat.getColor(
-                            requireContext(),
-                            R.color.disconnected
-                        )
-                    )
-                    binding.batteryView.isVisible = false
-                    binding.tvBatteryLevel.isVisible = false
-                    binding.batteryView.isCharging = false
-                    binding.btnTakeReading.isEnabled = false
-                    binding.btnTakeReading.alpha = 0.5f
+                    updateConnectionUi(false)
                     PlutoLog.e(
                         "Bluetooth",
                         "STATE_DEVICE_DISCONNECTED"
@@ -246,30 +227,15 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
         // Band connection status from new band manager.
         viewLifecycleOwner.lifecycleScope.launch {
             bandBleManager.connectionState.collect { connected ->
+                PlutoLog.e(TAG_BAND_DEBUG, "DeviceDataFragment bandManager connected: $connected")
                 if (connected) {
-                    binding.ivDeviceStatus.setImageResource(R.drawable.dot_connected)
-                    binding.tvDeviceStatus.text = "Connected"
-                    binding.tvDeviceStatus.setTextColor(
-                        ContextCompat.getColor(requireContext(), R.color.colorBgBtn)
-                    )
-                    binding.batteryView.isVisible = true
-                    binding.tvBatteryLevel.isVisible = true
-                    binding.btnTakeReading.isEnabled = true
-                    binding.btnTakeReading.alpha = 1f
-
+                    updateConnectionUi(true)
                     // Request current battery level once connected.
+                    delay(1000)
+                    PlutoLog.e(TAG_BAND_DEBUG, "Request current battery level")
                     bandBleManager.writeValue(BleSDK.GetDeviceBatteryLevel())
                 } else {
-                    binding.ivDeviceStatus.setImageResource(R.drawable.dot_disconnected)
-                    binding.tvDeviceStatus.text = "Disconnected"
-                    binding.tvDeviceStatus.setTextColor(
-                        ContextCompat.getColor(requireContext(), R.color.disconnected)
-                    )
-                    binding.batteryView.isVisible = false
-                    binding.tvBatteryLevel.isVisible = false
-                    binding.batteryView.isCharging = false
-                    binding.btnTakeReading.isEnabled = false
-                    binding.btnTakeReading.alpha = 0.5f
+                    updateConnectionUi(false)
                 }
             }
         }
@@ -288,6 +254,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
                             val dataType = maps[DeviceKey.DataType] as? String ?: return
                             when (dataType) {
                                 BleConst.GetDeviceBatteryLevel -> {
+                                    PlutoLog.e(TAG_BAND_DEBUG, "GetDeviceBatteryLevel: $maps")
                                     val data = maps[DeviceKey.Data] as? Map<*, *> ?: return
                                     val levelStr = data[DeviceKey.BatteryLevel] as? String ?: return
                                     val level = levelStr.toIntOrNull() ?: return
@@ -315,6 +282,39 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
         app.ringDeviceManager.bleAdapterEnabled.observe(viewLifecycleOwner) { isEnabled ->
             updateBtStatusIcon(isEnabled)
         }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            app.bandSyncManager.isBandSyncingLocal.combine(app.bandSyncManager.isBandUploading) { syncing, uploading ->
+                syncing || uploading
+            }.collect { isBusy ->
+                PlutoLog.e(TAG_BAND_DEBUG, "isBusy: $isBusy")
+                binding.progress.isVisible = isBusy
+            }
+        }
+    }
+
+    private fun updateConnectionUi(isConnected: Boolean) = with(binding) {
+        ivDeviceStatus.setImageResource(
+            if (isConnected) R.drawable.dot_connected
+            else R.drawable.dot_disconnected
+        )
+
+        tvDeviceStatus.text = if (isConnected) "Connected" else "Disconnected"
+
+        tvDeviceStatus.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                if (isConnected) R.color.colorBgBtn else R.color.disconnected
+            )
+        )
+
+        batteryView.isVisible = isConnected
+        tvBatteryLevel.isVisible = isConnected
+
+        batteryView.isCharging = false
+
+        btnTakeReading.isEnabled = isConnected
+        btnTakeReading.alpha = if (isConnected) 1f else 0.5f
     }
 
     private fun subscribeToApiObserver() {
@@ -485,6 +485,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
 
     private fun initClicks() {
         binding.header.ivBack.setOnClickListener(this)
+        binding.ivDevice.setOnClickListener(this)
         binding.clTabMetrics.cardExerciseIntensity.setOnClickListener(this)
         binding.clTabMetrics.cardPhysicalRecovery.setOnClickListener(this)
         binding.clTabMetrics.cardStressScore.setOnClickListener(this)
@@ -547,6 +548,10 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
         when (p0) {
             binding.header.ivBack -> {
                 findNavController().popBackStack(R.id.fragmentTrack, false)
+            }
+
+            binding.ivDevice -> {
+                startActivity(Intent(requireContext(), BandTestActivity::class.java))
             }
 
             binding.clTabMetrics.cardExerciseIntensity -> {

@@ -55,7 +55,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun loadDateData() = Thread {
-        PlutoLog.e(TAG_RING_DEBUG, "HomeViewModel loadDateData $currBtMac")
+        //PlutoLog.e(TAG_RING_DEBUG, "HomeViewModel loadDateData $currBtMac")
         with(NexRingManager.get().sleepApi()) {
 
             getDayCount(currBtMac) {
@@ -84,7 +84,7 @@ class HomeViewModel @Inject constructor(
 
             }
             getHrList(currBtMac, 0, Long.MAX_VALUE) {
-                loge("DCF", "getHrList list stat -> ${Gson().toJson(it)}")
+                //loge("DCF", "getHrList list stat -> ${Gson().toJson(it)}")
                 viewModelScope.launch {
                     val hrData = it?.second?.map {
                         HrData(time = it.ts, hr = it.value, timeStamp = sf.format(it.ts))
@@ -94,7 +94,7 @@ class HomeViewModel @Inject constructor(
             }
 
             getHrvList(currBtMac, 0, Long.MAX_VALUE) {
-                loge("DCF", "getHrvList list stat ->  ${Gson().toJson(it)}")
+                //loge("DCF", "getHrvList list stat ->  ${Gson().toJson(it)}")
                 viewModelScope.launch {
                     val hrvData = it?.second?.map {
                         HrvData(time = it.ts, hrv = it.value, timeStamp = sf.format(it.ts))
@@ -104,7 +104,7 @@ class HomeViewModel @Inject constructor(
             }
 
             getStepsList(currBtMac, 0, Long.MAX_VALUE) {
-                loge("DCF", "getStepsList  list stat -> ${Gson().toJson(it)}")
+                //loge("DCF", "getStepsList  list stat -> ${Gson().toJson(it)}")
                 viewModelScope.launch {
                     val stepData = it?.map {
                         StepData(time = it.ts, step = it.value, timeStamp = sf.format(it.ts))
@@ -114,7 +114,7 @@ class HomeViewModel @Inject constructor(
             }
 
             getFingerTemperatureList(currBtMac, 0, Long.MAX_VALUE) {
-                loge("DCF", "getFingerTemperatureList  list stat -> ${Gson().toJson(it)}")
+                //loge("DCF", "getFingerTemperatureList  list stat -> ${Gson().toJson(it)}")
                 viewModelScope.launch {
                     val tempData = it?.second?.map {
                         TempData(time = it.ts, temp = it.value, timeStamp = sf.format(it.ts))
@@ -129,7 +129,6 @@ class HomeViewModel @Inject constructor(
 
 
     fun uploadData() {
-        loge("Upload device data ")
         repository.getUnSyncData().onEach {
             if (it.status == Status.SUCCESS) {
                 it.data?.data?.let { data -> repository.updateData(data) }

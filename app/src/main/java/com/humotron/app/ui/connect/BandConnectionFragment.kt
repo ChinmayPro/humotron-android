@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 class BandConnectionFragment : Fragment(R.layout.fragment_band_connection) {
 
     private lateinit var binding: FragmentBandConnectionBinding
-    private val viewModel: DeviceConnectionViewModel by viewModels()
+    private val viewModel: RingConnectionViewModel by viewModels()
 
     @Inject
     lateinit var prefUtils: PrefUtils
