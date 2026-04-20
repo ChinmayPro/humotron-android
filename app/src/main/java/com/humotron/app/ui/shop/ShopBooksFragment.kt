@@ -54,10 +54,11 @@ class ShopBooksFragment : BaseFragment(R.layout.fragment_shop_books), ShopBookAd
             when (resource.status) {
                 Status.SUCCESS -> {
                     binding.layoutLoader.root.visibility = View.GONE
-                    binding.rvShopSections.visibility = View.VISIBLE
 
                     val allCategories = resource.data?.data?.books
                     if (allCategories != null && allCategories.isNotEmpty()) {
+                        binding.tvNoData.visibility = View.GONE
+                        binding.rvShopSections.visibility = View.VISIBLE
                         val items = mutableListOf<ShopSectionItem>()
                         
                         // Always add Header
@@ -81,16 +82,22 @@ class ShopBooksFragment : BaseFragment(R.layout.fragment_shop_books), ShopBookAd
                         items.add(ShopSectionItem.SeeMoreSection)
                         
                         parentAdapter.setItems(items)
+                    } else {
+                        binding.tvNoData.visibility = View.VISIBLE
+                        binding.rvShopSections.visibility = View.GONE
                     }
                 }
                 Status.ERROR, Status.EXCEPTION -> {
                     binding.layoutLoader.root.visibility = View.GONE
+                    binding.rvShopSections.visibility = View.GONE
+                    binding.tvNoData.visibility = View.VISIBLE
                 }
                 Status.LOADING -> {
                     binding.layoutLoader.root.visibility = View.VISIBLE
                     binding.layoutLoader.tvLoadingMessage.text = getString(R.string.shop_loading_message)
                     binding.layoutLoader.lottieLoader.playAnimation()
                     binding.rvShopSections.visibility = View.GONE
+                    binding.tvNoData.visibility = View.GONE
                 }
             }
         }

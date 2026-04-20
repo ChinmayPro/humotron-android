@@ -137,6 +137,7 @@ class CartFragment : BaseFragment(R.layout.fragment_cart) {
         binding.tvOrderDetailsLabel.visibility = View.GONE
         binding.btnCheckout.visibility = View.GONE
         binding.bottomShadow.visibility = View.GONE
+        binding.tvNoData.visibility = View.GONE
     }
 
     private fun hideLoading() {
@@ -149,10 +150,12 @@ class CartFragment : BaseFragment(R.layout.fragment_cart) {
         binding.btnCheckout.visibility = View.GONE
         binding.bottomShadow.visibility = View.GONE
         binding.llCartSummary.visibility = View.GONE
+        binding.tvNoData.visibility = View.VISIBLE
     }
 
     private fun showCartItems(data: com.humotron.app.domain.modal.response.GetCartResponse.Data?) {
         val items = data?.cart ?: emptyList()
+        binding.tvNoData.visibility = View.GONE
         binding.tvOrderDetailsLabel.visibility = View.VISIBLE
         binding.rvCartItems.visibility = View.VISIBLE
         binding.btnCheckout.visibility = View.VISIBLE

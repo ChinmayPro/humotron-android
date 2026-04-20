@@ -47,24 +47,30 @@ class ShopOptimizeFragment : BaseFragment(R.layout.fragment_shop_optimize) {
             when (resource.status) {
                 Status.SUCCESS -> {
                     binding.layoutLoader.root.visibility = View.GONE
-                    binding.nsvContent.visibility = View.VISIBLE
                     
                     val data = resource.data?.data
-                    if (data != null) {
-                        val uiItems = prepareUIItems(data)
+                    val uiItems = if (data != null) prepareUIItems(data) else emptyList()
+                    
+                    if (uiItems.isEmpty()) {
+                        binding.tvNoData.visibility = View.VISIBLE
+                        binding.nsvContent.visibility = View.GONE
+                    } else {
+                        binding.tvNoData.visibility = View.GONE
+                        binding.nsvContent.visibility = View.VISIBLE
                         adapter.updateItems(uiItems)
                     }
                 }
                 Status.ERROR, Status.EXCEPTION -> {
                     binding.layoutLoader.root.visibility = View.GONE
-                    binding.nsvContent.visibility = View.VISIBLE
-                    // Handle error
+                    binding.nsvContent.visibility = View.GONE
+                    binding.tvNoData.visibility = View.VISIBLE
                 }
                 Status.LOADING -> {
                     binding.layoutLoader.root.visibility = View.VISIBLE
                     binding.layoutLoader.tvLoadingMessage.text = "Analyzing your health metrics..."
                     binding.layoutLoader.lottieLoader.playAnimation()
                     binding.nsvContent.visibility = View.GONE
+                    binding.tvNoData.visibility = View.GONE
                 }
             }
         }
