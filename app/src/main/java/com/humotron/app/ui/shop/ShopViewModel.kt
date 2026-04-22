@@ -8,6 +8,10 @@ import com.humotron.app.domain.modal.response.DeviceDetailResponse
 import com.humotron.app.domain.modal.response.DeviceFaqResponse
 import com.humotron.app.domain.modal.response.GetOptimizedRecipeWithMetricsResponse
 import com.humotron.app.domain.modal.response.GetShopDevicesResponse
+import com.humotron.app.domain.modal.response.BookingTypeResponse
+import com.humotron.app.domain.modal.param.UpdateAddressRequest
+import com.humotron.app.domain.modal.response.UpdateAddressResponse
+import com.humotron.app.domain.modal.response.GetAllAddressResponse
 import com.humotron.app.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -18,6 +22,8 @@ import javax.inject.Inject
 class ShopViewModel @Inject constructor(
     private val repository: ShopRepository
 ) : ViewModel() {
+
+    var lastSelectedTabId: Int = com.humotron.app.R.id.fragmentShopDevices
 
     private val devicesLiveData: SingleLiveEvent<Resource<GetShopDevicesResponse>> = SingleLiveEvent()
     private val deviceDetailLiveData: SingleLiveEvent<Resource<DeviceDetailResponse>> = SingleLiveEvent()
@@ -112,6 +118,43 @@ class ShopViewModel @Inject constructor(
     fun fetchCart() {
         repository.getCartByUserId().onEach { state ->
             cartLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
+
+    private val bookingTypeLiveData: SingleLiveEvent<Resource<BookingTypeResponse>> = SingleLiveEvent()
+    fun getBookingTypeLiveData(): SingleLiveEvent<Resource<BookingTypeResponse>> = bookingTypeLiveData
+
+    fun fetchBookingTypes() {
+        repository.getAllTestBookingsType().onEach { state ->
+            bookingTypeLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
+
+    private val defaultConfigLiveData: SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.GetDefaultConfigResponse>> = SingleLiveEvent()
+    fun getDefaultConfigLiveData(): SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.GetDefaultConfigResponse>> = defaultConfigLiveData
+
+    fun fetchDefaultConfig(payload: String, iv: String) {
+        val request = com.humotron.app.domain.modal.param.DefaultConfigRequest(payload, iv)
+        repository.getDefaultConfiguration(request).onEach { state ->
+            defaultConfigLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
+
+    private val allAddressLiveData: SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.GetAllAddressResponse>> = SingleLiveEvent()
+    fun getAllAddressLiveData(): SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.GetAllAddressResponse>> = allAddressLiveData
+
+    fun fetchAllAddress() {
+        repository.getAllAddressByUserId().onEach { state ->
+            allAddressLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
+
+    private val updateAddressLiveData: SingleLiveEvent<Resource<UpdateAddressResponse>> = SingleLiveEvent()
+    fun getUpdateAddressLiveData(): SingleLiveEvent<Resource<UpdateAddressResponse>> = updateAddressLiveData
+
+    fun updateAddress(addressId: String, request: UpdateAddressRequest) {
+        repository.updateAddressById(addressId, request).onEach { state ->
+            updateAddressLiveData.value = state
         }.launchIn(viewModelScope)
     }
 }

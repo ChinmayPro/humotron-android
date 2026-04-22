@@ -14,14 +14,14 @@ android {
     namespace = "com.humotron.app"
     compileSdk = 36
 
-    val localProperties = Properties()
-    val localPropertiesFile = rootProject.file("local.properties")
-    if (localPropertiesFile.exists()) {
-        localProperties.load(localPropertiesFile.inputStream())
+    val googleProperties = Properties()
+    val googlePropertiesFile = rootProject.file("googlekey.properties")
+    if (googlePropertiesFile.exists()) {
+        googleProperties.load(googlePropertiesFile.inputStream())
     }
 
-    val googleClientId = localProperties.getProperty("GOOGLE_CLIENT_ID") ?: ""
-    val googleClientSecret = localProperties.getProperty("GOOGLE_CLIENT_SECRET") ?: ""
+    val googleClientId = googleProperties.getProperty("GOOGLE_CLIENT_ID") ?: ""
+    val googleClientSecret = googleProperties.getProperty("GOOGLE_CLIENT_SECRET") ?: ""
 
     defaultConfig {
         applicationId = "com.humotron.app"
@@ -94,6 +94,7 @@ dependencies {
     implementation(libs.wheelview.xd)
     implementation(libs.cardstackview)
     implementation(libs.shimmer)
+    implementation(libs.ccp)
 
     // -------------------- Charts --------------------
     implementation(libs.mpandroidchart)

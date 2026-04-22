@@ -2,6 +2,7 @@ package com.humotron.app.ui.shop
 
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import com.humotron.app.R
 import com.humotron.app.core.base.BaseFragment
 import com.humotron.app.databinding.FragmentShopScansBinding
@@ -18,7 +19,13 @@ class ShopScansFragment : BaseFragment(R.layout.fragment_shop_scans) {
         binding = FragmentShopScansBinding.bind(view)
 
         binding.btnBookNow.setOnClickListener {
-            CardiacTestDetailsBottomSheet.newInstance().show(childFragmentManager, "CardiacTestDetailsBottomSheet")
+            val bottomSheet = CardiacTestDetailsBottomSheet.newInstance()
+            bottomSheet.onProceedClicked = {
+                // Navigate using parent fragment's navController to reach fragmentBookingType
+                // which is defined in nav_graph_shop
+                parentFragment?.parentFragment?.findNavController()?.navigate(R.id.action_fragmentShop_to_fragmentBookingType)
+            }
+            bottomSheet.show(childFragmentManager, "CardiacTestDetailsBottomSheet")
         }
     }
 }
