@@ -468,4 +468,9 @@ To get started:\n
     <string name="thu">THU</string>
     <string name="fri">FRI</string>
     <string name="sat">SAT</string>
+    <string name="verify_booking_title">Please verify your\ntest booking</string>
+    <string name="booking_time_date_label">Booking time &amp; Date</string>
+    <string name="address_label">Address</string>
+    <string name="confirm_booking">Confirm Booking</string>
+    <string name="msg_booking_confirmed">Booking Confirmed!</string>
 </resources>

@@ -8,6 +8,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.humotron.app.R
@@ -24,6 +25,7 @@ import java.util.Locale
 class ChooseDateTimeFragment : BaseFragment(R.layout.fragment_choose_date_time) {
 
     private lateinit var binding: FragmentChooseDateTimeBinding
+    private val viewModel: ShopViewModel by activityViewModels()
     private lateinit var calendarAdapter: CalendarAdapter
     private lateinit var timeSlotAdapter: TimeSlotAdapter
     
@@ -92,7 +94,8 @@ class ChooseDateTimeFragment : BaseFragment(R.layout.fragment_choose_date_time) 
         }
 
         binding.btnContinue.setOnClickListener {
-            // Proceed to Summary/Payment
+            viewModel.setSelectedDateTime(selectedDate, selectedTime)
+            findNavController().navigate(R.id.action_fragmentChooseDateTime_to_fragmentVerifyBooking)
         }
     }
 

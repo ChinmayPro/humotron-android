@@ -6,7 +6,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.humotron.app.R
 import com.humotron.app.core.base.BaseFragment
@@ -19,8 +19,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class BookingTypeFragment : BaseFragment(R.layout.fragment_booking_type) {
 
     private lateinit var binding: FragmentBookingTypeBinding
-    private val viewModel: ShopViewModel by viewModels()
+    private val viewModel: ShopViewModel by activityViewModels()
     private lateinit var adapter: BookingTypeAdapter
+    private var selectedType: com.humotron.app.domain.modal.response.BookingTypeResponse.BookingType? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -54,11 +55,13 @@ class BookingTypeFragment : BaseFragment(R.layout.fragment_booking_type) {
         }
 
         adapter = BookingTypeAdapter { selectedItem ->
+            selectedType = selectedItem
             binding.btnContinue.isEnabled = selectedItem != null
         }
         binding.rvBookingTypes.adapter = adapter
 
         binding.btnContinue.setOnClickListener {
+            viewModel.setSelectedBookingType(selectedType)
             findNavController().navigate(R.id.action_fragmentBookingType_to_fragmentSelectAddress)
         }
     }

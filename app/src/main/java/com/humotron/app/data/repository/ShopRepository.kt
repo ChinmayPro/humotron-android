@@ -16,6 +16,8 @@ import com.humotron.app.domain.modal.response.BookingTypeResponse
 import com.humotron.app.domain.modal.param.UpdateAddressRequest
 import com.humotron.app.domain.modal.response.UpdateAddressResponse
 import com.humotron.app.domain.modal.response.GetAllAddressResponse
+import com.humotron.app.domain.modal.response.AddressAutocompleteResponse
+import com.humotron.app.domain.modal.response.FullAddressResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
@@ -227,6 +229,32 @@ class ShopRepository @Inject constructor(
         emit(Resource.loading())
         try {
             val response = responseHandler.handleResponse(api.updateAddressById(addressId, request), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(com.humotron.app.data.network.exceptions.ValidationException(it.message)))
+    }
+
+    fun getAddressAutocomplete(term: String): Flow<Resource<AddressAutocompleteResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.getAddressAutocomplete(term), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(com.humotron.app.data.network.exceptions.ValidationException(it.message)))
+    }
+
+    fun getFullAddress(id: String): Flow<Resource<FullAddressResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.getFullAddress(id), false)
             emit(response)
         } catch (e: Exception) {
             emit(responseHandler.handleException(e))

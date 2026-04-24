@@ -12,6 +12,9 @@ import com.humotron.app.domain.modal.response.BookingTypeResponse
 import com.humotron.app.domain.modal.param.UpdateAddressRequest
 import com.humotron.app.domain.modal.response.UpdateAddressResponse
 import com.humotron.app.domain.modal.response.GetAllAddressResponse
+import com.humotron.app.domain.modal.response.GetCartResponse
+import com.humotron.app.domain.modal.response.AddressAutocompleteResponse
+import com.humotron.app.domain.modal.response.FullAddressResponse
 import com.humotron.app.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -24,6 +27,25 @@ class ShopViewModel @Inject constructor(
 ) : ViewModel() {
 
     var lastSelectedTabId: Int = com.humotron.app.R.id.fragmentShopDevices
+    
+    // Booking Flow Data
+    private var selectedBookingType: BookingTypeResponse.BookingType? = null
+    private var selectedAddress: GetCartResponse.Address? = null
+    private var selectedDate: java.util.Calendar? = null
+    private var selectedTime: String? = null
+
+    fun setSelectedBookingType(type: BookingTypeResponse.BookingType?) { selectedBookingType = type }
+    fun getSelectedBookingType() = selectedBookingType
+
+    fun setSelectedAddress(address: GetCartResponse.Address?) { selectedAddress = address }
+    fun getSelectedAddress() = selectedAddress
+
+    fun setSelectedDateTime(date: java.util.Calendar?, time: String?) {
+        selectedDate = date
+        selectedTime = time
+    }
+    fun getSelectedDate() = selectedDate
+    fun getSelectedTime() = selectedTime
 
     private val devicesLiveData: SingleLiveEvent<Resource<GetShopDevicesResponse>> = SingleLiveEvent()
     private val deviceDetailLiveData: SingleLiveEvent<Resource<DeviceDetailResponse>> = SingleLiveEvent()
@@ -36,6 +58,12 @@ class ShopViewModel @Inject constructor(
     fun getDeviceFaqsLiveData(): SingleLiveEvent<Resource<DeviceFaqResponse>> = deviceFaqsLiveData
     fun getOptimizedRecipeLiveData(): SingleLiveEvent<Resource<GetOptimizedRecipeWithMetricsResponse>> = optimizedRecipeLiveData
     fun getBookPreferenceLiveData(): SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.BookPreferenceResponse>> = bookPreferenceLiveData
+    
+    private val addressAutocompleteLiveData: SingleLiveEvent<Resource<AddressAutocompleteResponse>> = SingleLiveEvent()
+    fun getAddressAutocompleteLiveData(): SingleLiveEvent<Resource<AddressAutocompleteResponse>> = addressAutocompleteLiveData
+
+    private val fullAddressLiveData: SingleLiveEvent<Resource<FullAddressResponse>> = SingleLiveEvent()
+    fun getFullAddressLiveData(): SingleLiveEvent<Resource<FullAddressResponse>> = fullAddressLiveData
 
     fun fetchShopDevices() {
         repository.getShopDevices().onEach { state ->
@@ -155,6 +183,18 @@ class ShopViewModel @Inject constructor(
     fun updateAddress(addressId: String, request: UpdateAddressRequest) {
         repository.updateAddressById(addressId, request).onEach { state ->
             updateAddressLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
+
+    fun fetchAddressAutocomplete(term: String) {
+        repository.getAddressAutocomplete(term).onEach { state ->
+            addressAutocompleteLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
+
+    fun fetchFullAddress(id: String) {
+        repository.getFullAddress(id).onEach { state ->
+            fullAddressLiveData.value = state
         }.launchIn(viewModelScope)
     }
 }

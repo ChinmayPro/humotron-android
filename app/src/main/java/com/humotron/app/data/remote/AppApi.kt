@@ -65,6 +65,8 @@ import com.humotron.app.domain.modal.response.ShopAddToCartResponse
 import com.humotron.app.domain.modal.response.GetDefaultConfigResponse
 import com.humotron.app.domain.modal.param.UpdateAddressRequest
 import com.humotron.app.domain.modal.response.UpdateAddressResponse
+import com.humotron.app.domain.modal.response.AddressAutocompleteResponse
+import com.humotron.app.domain.modal.response.FullAddressResponse
 import com.humotron.app.domain.modal.response.GetAllAddressResponse
 import com.humotron.app.domain.modal.param.DefaultConfigRequest
 import okhttp3.MultipartBody
@@ -344,4 +346,16 @@ interface AppApi {
         @Path("addressId") addressId: String,
         @Body request: UpdateAddressRequest
     ): Response<UpdateAddressResponse>
+
+    @GET("https://api.getaddress.io/autocomplete/{term}")
+    suspend fun getAddressAutocomplete(
+        @Path("term") term: String,
+        @Query("api-key") apiKey: String = "Mh0BQoYe8UeAX5lplKtd1A45644"
+    ): Response<AddressAutocompleteResponse>
+
+    @GET("https://api.getaddress.io/get/{id}")
+    suspend fun getFullAddress(
+        @Path("id") id: String,
+        @Query("api-key") apiKey: String = "Mh0BQoYe8UeAX5lplKtd1A45644"
+    ): Response<FullAddressResponse>
 }

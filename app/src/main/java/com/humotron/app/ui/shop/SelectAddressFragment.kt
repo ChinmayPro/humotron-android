@@ -5,8 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.humotron.app.R
 import com.humotron.app.core.base.BaseFragment
@@ -22,7 +23,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class SelectAddressFragment : BaseFragment(R.layout.fragment_select_address) {
 
     private lateinit var binding: FragmentSelectAddressBinding
-    private val viewModel: ShopViewModel by viewModels()
+    private val viewModel: ShopViewModel by activityViewModels()
+    private var selectedAddress: GetCartResponse.Address? = null
     private var currentAddressId: String? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -60,6 +62,7 @@ class SelectAddressFragment : BaseFragment(R.layout.fragment_select_address) {
         }
 
         binding.btnContinue.setOnClickListener {
+            viewModel.setSelectedAddress(selectedAddress)
             findNavController().navigate(R.id.action_fragmentSelectAddress_to_fragmentChooseDateTime)
         }
 
@@ -78,6 +81,7 @@ class SelectAddressFragment : BaseFragment(R.layout.fragment_select_address) {
 
     private fun showSelectAddressBottomSheet() {
         SelectAddressBottomSheet.newInstance(currentAddressId) { selectedAddress ->
+            this.selectedAddress = selectedAddress
             currentAddressId = selectedAddress.id
             bindAddress(selectedAddress)
         }.show(childFragmentManager, SelectAddressBottomSheet::class.java.simpleName)
@@ -102,6 +106,7 @@ class SelectAddressFragment : BaseFragment(R.layout.fragment_select_address) {
                         binding.cvNoAddress.visibility = View.GONE
                         binding.btnContinue.isEnabled = true
                         currentAddressId = address.id
+                        selectedAddress = address
                         bindAddress(address)
                     } else {
                         binding.cvAddress.visibility = View.GONE
