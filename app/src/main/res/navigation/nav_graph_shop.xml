@@ -83,4 +83,20 @@
         android:label="VerifyBookingFragment"
         tools:layout="@layout/fragment_verify_booking" />
 
+    <fragment
+        android:id="@+id/fragmentShopOptimizeDetail"
+        android:name="com.humotron.app.ui.shop.ShopOptimizeDetailFragment"
+        android:label="Optimize Details">
+        <argument
+            android:name="supplement"
+            android:defaultValue="@null"
+            app:argType="com.humotron.app.domain.modal.response.SupplementItem"
+            app:nullable="true" />
+        <argument
+            android:name="recipe"
+            android:defaultValue="@null"
+            app:argType="com.humotron.app.domain.modal.response.RecipeItem"
+            app:nullable="true" />
+    </fragment>
+
 </navigation>

@@ -59,6 +59,7 @@ import com.humotron.app.domain.modal.response.UseCaseResponse
 import com.humotron.app.domain.modal.response.VerifyOtpResponse
 import com.humotron.app.domain.modal.response.WristBandSleepDurationResponse
 import com.humotron.app.domain.modal.response.YetToTrackMetricResponse
+import com.humotron.app.domain.modal.response.ProductDetailResponse
 import com.humotron.app.domain.modal.response.ProductVariantResponse
 import com.humotron.app.domain.modal.response.BookingTypeResponse
 import com.humotron.app.domain.modal.response.ShopAddToCartResponse
@@ -358,4 +359,9 @@ interface AppApi {
         @Path("id") id: String,
         @Query("api-key") apiKey: String = "Mh0BQoYe8UeAX5lplKtd1A45644"
     ): Response<FullAddressResponse>
+
+    @GET("product/getProductById/{productId}")
+    suspend fun getProductById(
+        @Path("productId") productId: String
+    ): Response<ProductDetailResponse>
 }

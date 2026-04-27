@@ -20,7 +20,7 @@ sealed class OptimizeUIItem {
 
 class OptimizeAdapter(
     private var items: List<OptimizeUIItem>,
-    private val onExploreClick: (id: String, type: String) -> Unit,
+    private val onExploreClick: (item: OptimizeUIItem) -> Unit,
     private val onChatPromptClick: (promptId: String, title: String) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -102,7 +102,7 @@ class OptimizeAdapter(
             Glide.with(binding.ivProduct).load(data.productImage).into(binding.ivProduct)
 
             binding.btnExplore.setOnClickListener { 
-                data.productId?.let { id: String -> onExploreClick(id, "supplement") }
+                onExploreClick(item)
             }
             binding.clPrompt.setOnClickListener {
                 data.productChatPrompt?.let { prompt -> onChatPromptClick(prompt.id ?: "", prompt.title ?: "") }
@@ -139,7 +139,7 @@ class OptimizeAdapter(
             Glide.with(binding.ivProduct).load(data.recipeBundleImage).into(binding.ivProduct)
 
             binding.btnExplore.setOnClickListener {
-                data.recipeBundleId?.let { id: String -> onExploreClick(id, "recipe") }
+                onExploreClick(item)
             }
             binding.clPrompt.setOnClickListener {
                 data.chatPrompt?.let { prompt -> onChatPromptClick(prompt.id ?: "", prompt.title ?: "") }
@@ -164,7 +164,7 @@ class OptimizeAdapter(
             binding.tvProductName.layoutParams = params
 
             binding.btnExplore.setOnClickListener {
-                data.id?.let { id: String -> onExploreClick(id, data.type ?: "recommendation") }
+                onExploreClick(item)
             }
         }
     }

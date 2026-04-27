@@ -8,6 +8,7 @@ import com.humotron.app.domain.modal.response.DeviceDetailResponse
 import com.humotron.app.domain.modal.response.DeviceFaqResponse
 import com.humotron.app.domain.modal.response.GetOptimizedRecipeWithMetricsResponse
 import com.humotron.app.domain.modal.response.GetShopDevicesResponse
+import com.humotron.app.domain.modal.response.ProductDetailResponse
 import com.humotron.app.domain.modal.response.BookingTypeResponse
 import com.humotron.app.domain.modal.param.UpdateAddressRequest
 import com.humotron.app.domain.modal.response.UpdateAddressResponse
@@ -195,6 +196,15 @@ class ShopViewModel @Inject constructor(
     fun fetchFullAddress(id: String) {
         repository.getFullAddress(id).onEach { state ->
             fullAddressLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
+
+    private val productDetailLiveData: SingleLiveEvent<Resource<ProductDetailResponse>> = SingleLiveEvent()
+    fun getProductDetailLiveData(): SingleLiveEvent<Resource<ProductDetailResponse>> = productDetailLiveData
+
+    fun fetchProductDetail(id: String) {
+        repository.getProductDetail(id).onEach { state ->
+            productDetailLiveData.value = state
         }.launchIn(viewModelScope)
     }
 }

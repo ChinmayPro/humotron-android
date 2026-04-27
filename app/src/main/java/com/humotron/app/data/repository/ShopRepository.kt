@@ -11,6 +11,7 @@ import com.humotron.app.domain.modal.response.DeviceDetailResponse
 import com.humotron.app.domain.modal.response.DeviceFaqResponse
 import com.humotron.app.domain.modal.response.GetOptimizedRecipeWithMetricsResponse
 import com.humotron.app.domain.modal.response.GetShopDevicesResponse
+import com.humotron.app.domain.modal.response.ProductDetailResponse
 import com.humotron.app.domain.modal.response.ProductVariantResponse
 import com.humotron.app.domain.modal.response.BookingTypeResponse
 import com.humotron.app.domain.modal.param.UpdateAddressRequest
@@ -262,5 +263,18 @@ class ShopRepository @Inject constructor(
         }
     }.catch {
         emit(responseHandler.handleException(com.humotron.app.data.network.exceptions.ValidationException(it.message)))
+    }
+
+    fun getProductDetail(id: String): Flow<Resource<ProductDetailResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.getProductById(id), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
     }
 }
