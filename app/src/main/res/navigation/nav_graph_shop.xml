@@ -99,4 +99,18 @@
             app:nullable="true" />
     </fragment>
 
+    <fragment
+        android:id="@+id/fragmentTronChat"
+        android:name="com.humotron.app.ui.decode.TronChatFragment"
+        tools:layout="@layout/fragment_tron_chat">
+        <argument
+            android:name="chat_prompt_id"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="chat_prompt_title"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+
 </navigation>

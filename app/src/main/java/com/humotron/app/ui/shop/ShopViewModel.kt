@@ -93,6 +93,15 @@ class ShopViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
+    private val productLikeDislikeLiveData: SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.CommonResponse>> = SingleLiveEvent()
+    fun getProductLikeDislikeLiveData(): SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.CommonResponse>> = productLikeDislikeLiveData
+
+    fun productLikeDislike(id: String) {
+        repository.productLikeDislike(id).onEach { state ->
+            productLikeDislikeLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
+
     fun fetchOptimizedRecipe() {
         repository.getOptimizedRecipeWithMetrics().onEach { state ->
             optimizedRecipeLiveData.value = state

@@ -30,3 +30,11 @@ fun Context.toast(@StringRes tip: Int) {
     toast = Toast.makeText(this, tip, Toast.LENGTH_SHORT)
         .apply { show() }
 }
+
+fun androidx.fragment.app.Fragment.toast(tip: String) {
+    context?.toast(tip)
+}
+
+fun androidx.fragment.app.Fragment.toast(@StringRes tip: Int) {
+    context?.toast(tip)
+}

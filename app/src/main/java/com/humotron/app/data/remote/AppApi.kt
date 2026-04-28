@@ -162,6 +162,12 @@ interface AppApi {
         @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0))
     ): Response<CommonResponse>
 
+    @POST("product/productLikeDislike/{productId}")
+    suspend fun productLikeDislike(
+        @Path("productId") productId: String,
+        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0))
+    ): Response<CommonResponse>
+
     @POST("device/{endpoint}/{ringId}")
     suspend fun getRingReadingGraphData(
         @Path("endpoint") endpoint: String,

@@ -114,16 +114,42 @@ class VerifyBookingFragment : BaseFragment(R.layout.fragment_verify_booking) {
             time
         }
 
-        val bookingDetails = BookingDetails(
-            date = formattedDate,
-            time = formattedTime,
-            addressId = address.id
-        )
+        val (productType, bookingType) = when (type.title) {
+            "At-Home Service" -> "blood_home" to "homeVisit"
+            "Self- Collection kit" -> "blood_self" to "selfCollection"
+            "Lab visit" -> "blood_lab" to "labVisit"
+            else -> "blood_home" to "homeVisit"
+        }
+
+        val bookingDetails = when (bookingType) {
+            "selfCollection" -> {
+                BookingDetails(
+                    date = null,
+                    time = null,
+                    addressId = address.id
+                )
+            }
+            "labVisit" -> {
+                BookingDetails(
+                    date = formattedDate,
+                    time = formattedTime,
+                    labId = address.id // Using address.id as labId for lab visits
+                )
+            }
+            else -> {
+                BookingDetails(
+                    date = formattedDate,
+                    time = formattedTime,
+                    addressId = address.id
+                )
+            }
+        }
 
         val param = AddToCartParam(
             cartItemId = "",
-            productId = type.id ?: "69cca8017deeffebfbacc07d",
-            productType = "expert_review",
+            productId = type.id,
+            productType = productType,
+            bookingType = bookingType,
             quantity = 1,
             variantId = "",
             bookingDetails = bookingDetails

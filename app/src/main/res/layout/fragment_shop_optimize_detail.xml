@@ -130,7 +130,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="DIETARY SUPPLEMENT"
+                android:text="@string/dietary_supplement"
                 android:textAllCaps="true"
                 android:textColor="@color/white70" />
 
@@ -166,7 +166,7 @@
                     style="@style/Text.14x.Manrope.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="By: "
+                    android:text="@string/by_prefix"
                     android:textColor="@color/white50" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -241,7 +241,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="Daily Servings"
+                            android:text="@string/daily_servings"
                             android:textColor="@color/s300" />
 
                     </LinearLayout>
@@ -278,7 +278,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="Supply Duration"
+                            android:text="@string/supply_duration"
                             android:textColor="@color/s300" />
 
                     </LinearLayout>
@@ -293,7 +293,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:text="Suggestions for optimal results:"
+                android:text="@string/suggestions_header"
                 android:textColor="@color/white50"
                 app:layout_constraintTop_toBottomOf="@id/llInfoCards" />
 
@@ -336,7 +336,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="Course Length"
+                            android:text="@string/course_length"
                             android:textColor="@color/s300" />
 
                     </LinearLayout>
@@ -373,7 +373,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="When to take?"
+                            android:text="@string/when_to_take_question"
                             android:textColor="@color/s300" />
 
                     </LinearLayout>
@@ -417,7 +417,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Usage Instructions"
+                                android:text="@string/usage_instructions"
                                 android:textColor="@color/white70" />
 
                             <androidx.appcompat.widget.AppCompatImageView
@@ -476,7 +476,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Key Ingredients"
+                                android:text="@string/key_ingredients"
                                 android:textColor="@color/white70" />
 
                             <androidx.appcompat.widget.AppCompatImageView
@@ -534,7 +534,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="How It Works"
+                                android:text="@string/how_it_works"
                                 android:textColor="@color/white70" />
 
                             <androidx.appcompat.widget.AppCompatImageView
@@ -592,14 +592,14 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Frequently Asked Questions"
+                                android:text="@string/frequently_asked_questions"
                                 android:textColor="@color/white70" />
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/ivFaqArrow"
-                                android:layout_width="18dp"
-                                android:layout_height="21dp"
-                                android:src="@drawable/ic_book_summary"
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"
+                                android:src="@drawable/ic_copy"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
@@ -633,7 +633,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:paddingHorizontal="20dp"
-                android:text="Why Product?"
+                android:text="@string/why_product"
                 android:textColor="@color/white" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -679,7 +679,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/bg_btn_round_corner"
-            android:text="Buy Now →"
+            android:text="@string/buy_now_with_arrow"
             android:textAllCaps="false"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent" />

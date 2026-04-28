@@ -16,6 +16,8 @@ import com.humotron.app.domain.modal.response.ProductDetailResponse
 import com.humotron.app.domain.modal.response.RecipeItem
 import com.humotron.app.domain.modal.response.SupplementItem
 import com.humotron.app.ui.shop.dialog.ProductFaqBottomSheet
+import com.humotron.app.ui.shop.dialog.SelectQuantityBottomSheet
+import com.humotron.app.util.toast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,6 +25,8 @@ class ShopOptimizeDetailFragment : BaseFragment(R.layout.fragment_shop_optimize_
 
     private lateinit var binding: FragmentShopOptimizeDetailBinding
     private val viewModel: ShopViewModel by viewModels()
+    private var currentProduct: ProductDetailResponse.Product? = null
+    private var isLiked: Boolean = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -63,6 +67,29 @@ class ShopOptimizeDetailFragment : BaseFragment(R.layout.fragment_shop_optimize_
         binding.clUsageHeader.setOnClickListener { toggleSection(binding.tvUsageContent, binding.ivUsageArrow) }
         binding.clIngredientsHeader.setOnClickListener { toggleSection(binding.tvIngredientsContent, binding.ivIngredientsArrow) }
         binding.clHowItWorksHeader.setOnClickListener { toggleSection(binding.tvHowItWorksContent, binding.ivHowItWorksArrow) }
+
+        binding.btnLike.setOnClickListener {
+            currentProduct?.id?.let { id ->
+                isLiked = !isLiked
+                updateLikeUi()
+                viewModel.productLikeDislike(id)
+            }
+        }
+
+        binding.btnBuyNow.setOnClickListener {
+            val bottomSheet = SelectQuantityBottomSheet.newInstance()
+            bottomSheet.setOnContinueListener { selectedQuantity ->
+                currentProduct?.let { product ->
+                    val param = com.humotron.app.domain.modal.param.AddToCartParam(
+                        productId = product.id,
+                        productType = "supplement",
+                        quantity = selectedQuantity
+                    )
+                    viewModel.addToCart(param)
+                }
+            }
+            bottomSheet.show(childFragmentManager, "SelectQuantity")
+        }
     }
 
     private fun toggleSection(content: View, arrow: View) {
@@ -101,18 +128,63 @@ class ShopOptimizeDetailFragment : BaseFragment(R.layout.fragment_shop_optimize_
                     binding.clBottom.visibility = View.GONE
                     binding.tvNoData.visibility = View.GONE
                 }
+                Status.EXCEPTION -> {
+                    handleLoader(false)
+                }
+                else -> {}
+            }
+        }
+
+        viewModel.getAddToCartLiveData().observe(viewLifecycleOwner) { resource ->
+            when (resource.status) {
+                Status.SUCCESS -> {
+                    handleLoader(false)
+                    if (resource.data?.status == "success") {
+                        findNavController().navigate(R.id.fragmentCart)
+                    } else {
+                        toast(resource.data?.message ?: getString(R.string.something_went_wrong))
+                    }
+                }
+                Status.ERROR, Status.EXCEPTION -> {
+                    handleLoader(false)
+                    toast(resource.error?.errorMessage ?: getString(R.string.something_went_wrong))
+                }
+                Status.LOADING -> {
+                    handleLoader(true)
+                }
+                else -> {}
+            }
+        }
+
+        viewModel.getProductLikeDislikeLiveData().observe(viewLifecycleOwner) { resource ->
+            when (resource.status) {
+                Status.ERROR, Status.EXCEPTION -> {
+                    // Revert UI if API fails
+                    isLiked = !isLiked
+                    updateLikeUi()
+                    toast(resource.error?.errorMessage ?: getString(R.string.something_went_wrong))
+                }
                 else -> {}
             }
         }
     }
 
+    private fun updateLikeUi() {
+        binding.btnLike.setImageResource(if (isLiked) R.drawable.ic_fav_selected else R.drawable.ic_fav_checkbox)
+        binding.btnLike.alpha = 1.0f
+    }
+
     private fun bindProductData(product: ProductDetailResponse.Product) {
+        currentProduct = product
         binding.tvProductName.text = product.productName
-        binding.tvPrice.text = "£ ${product.productPrice}"
+        binding.tvPrice.text = getString(R.string.price_format, "£", product.productPrice)
         binding.tvBrand.text = product.brandName
-        binding.tvPackSize.text = "Pack Size: ${product.packSize} / ${product.courseLength}"
+        binding.tvPackSize.text = getString(R.string.pack_size_format, product.packSize, product.courseLength)
         binding.tvDescription.text = product.productDesc
         
+        isLiked = product.isLiked ?: false
+        updateLikeUi()
+
         // Daily Servings and Supply Duration cards
         binding.tvDailyServingsValue.text = product.productDossage
         binding.tvSupplyDurationValue.text = product.supplyDuration
@@ -122,7 +194,7 @@ class ShopOptimizeDetailFragment : BaseFragment(R.layout.fragment_shop_optimize_
         binding.tvWhenToTakeValue.text = product.whenToTakeOneWord
 
         // Usage Instructions
-        val usage = "• When to Take: ${product.whenToTakeSentence}\n\n• How to Take: ${product.howToTake}"
+        val usage = getString(R.string.usage_format, product.whenToTakeSentence, product.howToTake)
         binding.tvUsageContent.text = usage
 
         // Key Ingredients
@@ -133,7 +205,9 @@ class ShopOptimizeDetailFragment : BaseFragment(R.layout.fragment_shop_optimize_
         binding.tvHowItWorksContent.text = product.howToWork
 
         // FAQs
-        val faqs = product.productFaqs?.joinToString("\n\n") { "Q: ${it.question}\nA: ${it.answer}" }
+        val faqs = product.productFaqs?.joinToString("\n\n") { 
+            getString(R.string.faq_format, it.question, it.answer)
+        }
         binding.tvFaqContent.text = faqs
 
         // Why Product?
@@ -234,7 +308,11 @@ class ShopOptimizeDetailFragment : BaseFragment(R.layout.fragment_shop_optimize_
             holder.binding.tvPrompt.text = item.title
             
             holder.itemView.setOnClickListener {
-                // Handle prompt click if needed
+                val bundle = Bundle().apply { 
+                    putString("chat_prompt_id", item.id)
+                    putString("chat_prompt_title", item.title)
+                }
+                findNavController().navigate(R.id.fragmentTronChat, bundle)
             }
         }
 

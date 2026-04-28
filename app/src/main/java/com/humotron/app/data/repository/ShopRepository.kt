@@ -80,6 +80,19 @@ class ShopRepository @Inject constructor(
         emit(responseHandler.handleException(ValidationException(it.message)))
     }
 
+    fun productLikeDislike(id: String): Flow<Resource<com.humotron.app.domain.modal.response.CommonResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.productLikeDislike(id), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
     fun getProductVariantById(id: String): Flow<Resource<ProductVariantResponse>> = flow {
         emit(Resource.loading<ProductVariantResponse>())
         try {
