@@ -26,29 +26,38 @@ import com.humotron.app.data.network.exceptions.ValidationException
 import com.humotron.app.data.remote.AppApi
 import com.humotron.app.domain.modal.param.AddHardware
 import com.humotron.app.domain.modal.param.BandHrv
+import com.humotron.app.domain.modal.param.BandSleep
 import com.humotron.app.domain.modal.param.BandUploadData
 import com.humotron.app.domain.modal.param.BandUploadDeviceData
+import com.humotron.app.domain.modal.param.BaselineScanDataParam
 import com.humotron.app.domain.modal.param.DailyCalculatedMetricsParam
 import com.humotron.app.domain.modal.param.DetailActivityData
+import com.humotron.app.domain.modal.param.GetAllScanByTypeParam
 import com.humotron.app.domain.modal.param.HeartRateData
 import com.humotron.app.domain.modal.param.RingReadingParam
 import com.humotron.app.domain.modal.param.Spo2Data
 import com.humotron.app.domain.modal.param.TotalActivityData
 import com.humotron.app.domain.modal.param.WristBandApiParam
+import com.humotron.app.domain.modal.param.SaveScanDataParam
 import com.humotron.app.domain.modal.response.AddDeviceDataResponse
+import com.humotron.app.domain.modal.response.CommonResponse
 import com.humotron.app.domain.modal.response.AddHardwareResponse
 import com.humotron.app.domain.modal.response.AllMetricsResponse
 import com.humotron.app.domain.modal.response.DailyCalculatedMetricsResponse
 import com.humotron.app.domain.modal.response.GetAllDeviceResponse
 import com.humotron.app.domain.modal.response.HardwareListData
+import com.humotron.app.domain.modal.response.HealthScanResponse
+import com.humotron.app.domain.modal.response.HrvSaveScanResponse
 import com.humotron.app.domain.modal.response.MergedAssessmentResponse
 import com.humotron.app.domain.modal.response.MetricResponse
+import com.humotron.app.domain.modal.response.PastScanResponse
 import com.humotron.app.domain.modal.response.RingReadingData
 import com.humotron.app.domain.modal.response.TemperatureResponse
 import com.humotron.app.domain.modal.response.WristBandSleepDurationResponse
 import com.humotron.app.util.PrefUtils
 import com.humotron.app.util.TAG_BAND_DEBUG
 import com.humotron.app.util.TAG_RING_DEBUG
+import com.humotron.app.util.formatMillisToIso
 import com.humotron.app.util.loge
 import com.pluto.plugins.logger.PlutoLog
 import kotlinx.coroutines.CoroutineScope
@@ -196,7 +205,7 @@ class SleepRepository(
         loge("SleepRepository", Gson().toJson(uploadData))
 
         try {
-            PlutoLog.e(TAG_RING_DEBUG,"Send Data to Server")
+            PlutoLog.e(TAG_RING_DEBUG, "Send Data to Server")
             val response =
                 responseHandler.handleResponse(api.sendDataToServer(uploadData), false)
             emit(response)
@@ -292,12 +301,12 @@ class SleepRepository(
                     )
                 },
                 sleep = bandSleep.map {
-                    com.humotron.app.domain.modal.param.BandSleep(
+                    BandSleep(
                         arraySleepQuality = it.arraySleepQuality,
                         totalSleepTime = it.totalSleepTime,
                         sleepUnitLength = it.sleepUnitLength,
                         startTime_SleepData = it.startTimeSleepData,
-                        date = it.date,
+                        date = formatMillisToIso(it.measuredAt)
                     )
                 }
             ),
@@ -458,6 +467,55 @@ class SleepRepository(
     }.catch {
         emit(responseHandler.handleException(ValidationException(it.message)))
     }
+
+    fun getBaselineScanData(baselineScanDataParam: BaselineScanDataParam): Flow<Resource<HealthScanResponse>> =
+        flow {
+            try {
+                val response =
+                    responseHandler.handleResponse(
+                        api.getBaselineScanData(param = baselineScanDataParam),
+                        false
+                    )
+                emit(response)
+            } catch (e: Exception) {
+                emit(responseHandler.handleException(e))
+                e.printStackTrace()
+            }
+        }.catch {
+            emit(responseHandler.handleException(ValidationException(it.message)))
+        }
+
+    fun saveScanData(saveScanDataParam: SaveScanDataParam): Flow<Resource<HrvSaveScanResponse>> =
+        flow {
+            emit(Resource.loading())
+            try {
+                val response =
+                    responseHandler.handleResponse(
+                        api.saveScanData(param = saveScanDataParam),
+                        false
+                    )
+                emit(response)
+            } catch (e: Exception) {
+                emit(responseHandler.handleException(e))
+                e.printStackTrace()
+            }
+        }.catch {
+            emit(responseHandler.handleException(ValidationException(it.message)))
+        }
+
+    fun getAllScanByType(param: GetAllScanByTypeParam): Flow<Resource<PastScanResponse>> =
+        flow {
+            emit(Resource.loading())
+            try {
+                val response = responseHandler.handleResponse(api.getAllScanByType(param), false)
+                emit(response)
+            } catch (e: Exception) {
+                emit(responseHandler.handleException(e))
+                e.printStackTrace()
+            }
+        }.catch {
+            emit(responseHandler.handleException(ValidationException(it.message)))
+        }
 
     fun getWristBandSleepDurationData(
         deviceId: String,

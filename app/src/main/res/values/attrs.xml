@@ -18,4 +18,11 @@
         <attr name="topPadding" format="dimension" />
         <attr name="bottomPadding" format="dimension" />
     </declare-styleable>
+
+    <declare-styleable name="InfoCardView">
+        <attr name="cardTitle" format="string" />
+        <attr name="cardDescription" format="string" />
+        <attr name="cardStrokeColor" format="color" />
+        <attr name="cardStrokeWidth" format="dimension" />
+    </declare-styleable>
 </resources>

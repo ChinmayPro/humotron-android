@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="#33000000">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/btnGoBack"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/_20dp">
+
+            <TextView
+                android:id="@+id/tvStatus"
+                style="@style/Text.28x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/balanced"
+                android:textColor="@color/card_text_green"
+                android:textSize="32sp" />
+
+            <TextView
+                android:id="@+id/tvTitle"
+                style="@style/Text.18x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/current_stress_levels"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/tvTimestamp"
+                style="@style/Text.12x.Manrope.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="4:30pm  |  Feb 26, 2024"
+                android:textColor="@color/dark_orange" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="@color/card_text_green"
+                app:cardCornerRadius="12dp"
+                app:strokeWidth="0dp">
+
+                <TextView
+                    android:id="@+id/tvMessage"
+                    style="@style/Text.14x.Manrope.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="@string/hrv_stable_message"
+                    android:textColor="@color/white" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                style="@style/Text.18x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/metric_readings"
+                android:textColor="@color/white" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@color/card_background"
+                    app:cardCornerRadius="12dp"
+                    app:strokeWidth="0dp">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:id="@+id/tvAvgHrvValue"
+                            style="@style/Text.20x.Manrope.Bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="75"
+                            android:textColor="@color/card_text_green" />
+
+                        <TextView
+                            style="@style/Text.14x.Manrope.Bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/average_hrv"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            style="@style/Text.10x.Manrope.Medium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:minLines="2"
+                            android:text="@string/baseline"
+                            android:textColor="@color/white50" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@color/card_background"
+                    app:cardCornerRadius="12dp"
+                    app:strokeWidth="0dp">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:id="@+id/tvCurrentHrvValue"
+                            style="@style/Text.20x.Manrope.Bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="75"
+                            android:textColor="@color/card_text_green" />
+
+                        <TextView
+                            style="@style/Text.14x.Manrope.Bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/current_hrv"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            style="@style/Text.10x.Manrope.Medium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:minLines="2"
+                            android:text="@string/current_reading_2_mins_ago"
+                            android:textColor="@color/white50" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!-- TODO: Stress Chart / Visualization -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginTop="24dp"
+                app:cardCornerRadius="12dp"
+                app:strokeWidth="0dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@color/red_1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="@string/stressed"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+                <!-- Inner rectangles for Thriving, Balanced, Alert, Challenged -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="250dp"
+                    android:layout_height="180dp"
+                    android:layout_gravity="bottom|start"
+                    app:cardBackgroundColor="@color/w200"
+                    app:cardCornerRadius="0dp"
+                    app:strokeWidth="0dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:text="@string/challenged"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="180dp"
+                    android:layout_height="130dp"
+                    android:layout_gravity="bottom|start"
+                    app:cardBackgroundColor="#FFC107"
+                    app:cardCornerRadius="0dp"
+                    app:strokeWidth="0dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:text="@string/alert"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="100dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="bottom|start"
+                    app:cardBackgroundColor="@color/card_text_green"
+                    app:cardCornerRadius="0dp"
+                    app:strokeWidth="0dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
+                        android:text="@string/balanced"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="bottom|start"
+                    app:cardBackgroundColor="#2196F3"
+                    app:cardCornerRadius="0dp"
+                    app:strokeWidth="0dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:text="@string/thriving"
+                        android:textColor="@color/black"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+                </com.google.android.material.card.MaterialCardView>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                style="@style/Text.18x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/tips"
+                android:textColor="@color/white" />
+
+            <TextView
+                style="@style/Text.14x.Manrope.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/congratulations_on_maintaining_a_balanced_stress_level"
+                android:textColor="@color/white" />
+
+            <TextView
+                style="@style/Text.14x.Manrope.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/tips_to_stay_balanced"
+                android:textColor="@color/white" />
+
+            <TextView
+                style="@style/Text.14x.Manrope.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/tip_1_title"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/Text.14x.Manrope.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:text="@string/tip_1_desc"
+                android:textColor="@color/white70" />
+
+            <TextView
+                style="@style/Text.14x.Manrope.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/tip_2_title"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/Text.14x.Manrope.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:text="@string/tip_2_desc"
+                android:textColor="@color/white70" />
+
+            <TextView
+                style="@style/Text.14x.Manrope.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/tip_3_title"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/Text.14x.Manrope.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:text="@string/tip_3_desc"
+                android:textColor="@color/white70" />
+
+            <TextView
+                style="@style/Text.18x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/faqs"
+                android:textColor="@color/white" />
+
+            <com.humotron.app.view.ExpandableCardView
+                android:id="@+id/ecvFaq1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardDescription="@string/faq_a1"
+                app:cardStrokeColor="@color/card_border"
+                app:cardStrokeWidth="1dp"
+                app:cardTitle="@string/faq_q1" />
+
+            <com.humotron.app.view.ExpandableCardView
+                android:id="@+id/ecvFaq2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:cardDescription="@string/faq_a2"
+                app:cardStrokeColor="@color/card_border"
+                app:cardStrokeWidth="1dp"
+                app:cardTitle="@string/faq_q2" />
+
+            <com.humotron.app.view.ExpandableCardView
+                android:id="@+id/ecvFaq3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:cardDescription="@string/faq_a3"
+                app:cardStrokeColor="@color/card_border"
+                app:cardStrokeWidth="1dp"
+                app:cardTitle="@string/faq_q3" />
+
+            <TextView
+                android:id="@+id/tvDownloadReport"
+                style="@style/Text.14x.Manrope.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/download_stress_report"
+                android:textColor="#8078BF" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnGoBack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginBottom="@dimen/_60dp"
+        android:backgroundTint="@color/colorBgBtn"
+        android:fontFamily="@font/manrope_bold"
+        android:paddingHorizontal="@dimen/_24dp"
+        android:paddingVertical="@dimen/_12dp"
+        android:text="@string/go_back"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        app:cornerRadius="40dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -33,6 +33,9 @@ import com.humotron.app.domain.modal.response.SleepDurationMetric
 import com.humotron.app.domain.modal.response.StressScoreMetric
 import com.humotron.app.ui.connect.DeviceConnectedFragment
 import com.humotron.app.ui.connect.HomeViewModel
+import com.humotron.app.ui.device.adapter.HealthScanAdapter
+import com.humotron.app.ui.device.adapter.HealthScanItem
+import com.humotron.app.ui.device.adapter.HealthScanType
 import com.humotron.app.ui.device.adapter.MetricsAdapter
 import com.humotron.app.ui.navigation.NavKeys
 import com.humotron.app.util.STATE_DEVICE_CHARGING
@@ -70,6 +73,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
     private var device: RingBleDevice? = null
 
     private lateinit var metricsAdapter: MetricsAdapter
+    private lateinit var healthScanAdapter: HealthScanAdapter
     private val homeViewModel by activityViewModels<HomeViewModel>()
     private var wearable: Wearable? = null
 
@@ -113,6 +117,8 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
             }
         }
         binding.clTabMetrics.rvMetrics.adapter = metricsAdapter
+
+        setupHealthScanAdapter()
 
         val deviceId = wearable?.id
         deviceId?.let { deviceId ->
@@ -582,6 +588,62 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
                 }
             }
         }
+    }
+
+    private fun setupHealthScanAdapter() {
+        healthScanAdapter = HealthScanAdapter(
+            onScanNowClick = { item ->
+                findNavController().navigate(
+                    R.id.fragmentHealthScan,
+                    bundleOf(
+                        NavKeys.HEALTH_SCAN_ITEM to item,
+                        NavKeys.WEARABLE to wearable
+                    )
+                )
+            },
+            onPastScansClick = { item ->
+                findNavController().navigate(
+                    R.id.fragmentPastScans,
+                    bundleOf(
+                        NavKeys.HEALTH_SCAN_ITEM to item,
+                        NavKeys.WEARABLE to wearable
+                    )
+                )
+            }
+        )
+        binding.rvStaticContent.adapter = healthScanAdapter
+
+        val healthScans = listOf(
+            HealthScanItem(
+                "Instant\nStress Scan",
+                "Stress",
+                "Quick 2 min stress scan to get a quick sense of your stress levels",
+                HealthScanType.HRV,
+                "Stress"
+            ),
+            HealthScanItem(
+                "Body\nLoad Scan",
+                "Body Load",
+                "Not doing much, but still feel tired or wired? Check if your body is working harder than it should.",
+                HealthScanType.HR,
+                "Heart Rate"
+            ),
+            HealthScanItem(
+                "Oxygen\nCheck",
+                "Oxygen",
+                "Brain fog? Low energy? Check if low oxygen is draining your energy.",
+                HealthScanType.SPO2,
+                "Oxygen"
+            ),
+            HealthScanItem(
+                "Thermal\nScan",
+                "Thermal",
+                "Feeling unusually warm, restless, or off? Detect early physical strain.",
+                HealthScanType.TEMPERATURE,
+                "Temperature"
+            )
+        )
+        healthScanAdapter.submitList(healthScans)
     }
 
     private fun navigateToMetricDetails(metricType: MetricType) {

@@ -11,7 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class DecodeFragment : BaseFragment(R.layout.fragment_decode) {
 
     private lateinit var binding: FragmentDecodeBinding
-    
+
     companion object {
         var selectedTabPosition = 0
     }
@@ -42,8 +42,10 @@ class DecodeFragment : BaseFragment(R.layout.fragment_decode) {
 
     fun selectTab(position: Int) {
         // Reset all tabs
-        val inactiveColor = androidx.core.content.ContextCompat.getColor(requireContext(), R.color.white30)
-        val activeColor = androidx.core.content.ContextCompat.getColor(requireContext(), R.color.colorBgBtn)
+        val inactiveColor =
+            androidx.core.content.ContextCompat.getColor(requireContext(), R.color.white30)
+        val activeColor =
+            androidx.core.content.ContextCompat.getColor(requireContext(), R.color.colorBgBtn)
 
         binding.ivInsights.setColorFilter(inactiveColor)
         binding.tvInsights.setTextColor(inactiveColor)
@@ -61,27 +63,31 @@ class DecodeFragment : BaseFragment(R.layout.fragment_decode) {
                 binding.tvInsights.setTextColor(activeColor)
                 DecodeInsightsFragment()
             }
+
             1 -> {
                 binding.tvInsightsTitle.text = getString(R.string.deep_dives)
                 binding.ivDeepDives.setColorFilter(activeColor)
                 binding.tvDeepDives.setTextColor(activeColor)
                 DecodeDeepDivesFragment()
             }
+
             2 -> {
                 binding.tvInsightsTitle.text = getString(R.string.optimize)
                 binding.ivOptimize.setColorFilter(activeColor)
                 binding.tvOptimize.setTextColor(activeColor)
                 DecodeOptimizeFragment()
             }
+
             3 -> {
                 binding.tvInsightsTitle.text = getString(R.string.chat)
                 binding.ivChat.setColorFilter(activeColor)
                 binding.tvChat.setTextColor(activeColor)
                 DecodeChatFragment()
             }
+
             else -> DecodeInsightsFragment()
         }
-        
+
         selectedTabPosition = position
         loadFragment(fragment)
     }

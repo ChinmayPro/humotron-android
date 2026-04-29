@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/_16dp"
+    app:cardBackgroundColor="@color/black1"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp"
+    app:strokeWidth="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/_20dp"
+        android:paddingVertical="@dimen/_10dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitle"
+            style="@style/Text.22x.Manrope.Bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:minLines="2"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Instant\nStress Scan" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDescription"
+            style="@style/Text.12x.Manrope.Regular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5dp"
+            android:minLines="3"
+            android:textColor="@color/white70"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            tools:text="Quick 2 min stress scan to get a quick sense of your stress levels" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPastScans"
+            style="@style/Text.14x.Manrope.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_chevron_right_24px"
+            android:drawablePadding="@dimen/_8dp"
+            android:gravity="center_vertical"
+            android:includeFontPadding="false"
+            android:text="@string/past_scans"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/btnScanNow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/btnScanNow" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnScanNow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10dp"
+            android:backgroundTint="@color/colorBgBtn"
+            android:fontFamily="@font/manrope_bold"
+            android:paddingHorizontal="@dimen/_24dp"
+            android:paddingVertical="@dimen/_12dp"
+            android:text="@string/scan_now"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvDescription" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

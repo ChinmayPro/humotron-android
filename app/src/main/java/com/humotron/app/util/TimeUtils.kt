@@ -186,3 +186,13 @@ fun formatCartDate(dateStr: String?, timeStr: String?): String {
         "${dateStr.take(10)} ${timeStr ?: ""}".trim()
     }
 }
+
+fun formatMillisToIso(millis: Long): String {
+    return try {
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+            .withZone(ZoneId.systemDefault())
+        formatter.format(Instant.ofEpochMilli(millis))
+    } catch (e: Exception) {
+        ""
+    }
+}

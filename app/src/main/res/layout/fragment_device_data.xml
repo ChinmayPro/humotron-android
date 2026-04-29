@@ -42,7 +42,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16dp"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -146,6 +147,29 @@
                     android:src="@drawable/ic_ring"
                     app:layout_constraintBottom_toBottomOf="@id/deviceStatus"
                     app:layout_constraintEnd_toEndOf="@id/deviceStatus" />
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/bottomBarrier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="bottom"
+                    app:constraint_referenced_ids="iv_device,deviceStatus" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvStaticContent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16dp"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="@dimen/_20dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/bottomBarrier"
+                    tools:itemCount="4"
+                    tools:listitem="@layout/item_health_scan" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
