@@ -29,6 +29,7 @@ cardstackview = "2.3.4"
 otpviewVersion = "0.2.5"
 shimmer = "0.5.0"
 libraryVersion = "2.1.0"
+ccp = "2.7.3"
 
 #Charts
 mpandroidchart = "v3.1.0"
@@ -99,6 +100,7 @@ wheelview-xd = { module = "com.github.youxiaochen:WheelView-3d", version.ref = "
 cardstackview = { module = "com.github.yuyakaido:cardstackview", version.ref = "cardstackview" }
 kevinschildhorn-otpview = { module = "com.github.KevinSchildhorn:OTPView", version.ref = "otpviewVersion" }
 shimmer = { module = "com.facebook.shimmer:shimmer", version.ref = "shimmer" }
+ccp = { module = "com.hbb20:ccp", version.ref = "ccp" }
 
 #Charts / Visualization
 mpandroidchart = { module = "com.github.PhilJay:MPAndroidChart", version.ref = "mpandroidchart" }

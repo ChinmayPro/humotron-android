@@ -96,4 +96,6 @@
     <color name="card_text_green">#00C620</color>
     <color name="text_light_gray">#707070</color>
     <color name="dark_orange">#FF9100</color>
+    <color name="gray_300">#D1D5DB</color>
+    <color name="gray_400_ui">#9CA3AF</color>
 </resources>

@@ -5,6 +5,7 @@ import android.view.View
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.humotron.app.R
@@ -15,6 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ShopFragment : BaseFragment(R.layout.fragment_shop) {
 
+    private val viewModel by viewModels<ShopViewModel>()
     private lateinit var binding: FragmentShopBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,8 +41,8 @@ class ShopFragment : BaseFragment(R.layout.fragment_shop) {
         binding.header.tabBooks.setOnClickListener { selectTab(R.id.fragmentShopBooks) }
         binding.header.tabTools.setOnClickListener { selectTab(R.id.fragmentShopTools) }
 
-        // Set default selection
-        selectTab(R.id.fragmentShopDevices)
+        // Set default selection from ViewModel
+        selectTab(viewModel.lastSelectedTabId)
     }
 
     private fun selectTab(destinationId: Int) {
@@ -58,6 +60,7 @@ class ShopFragment : BaseFragment(R.layout.fragment_shop) {
     }
 
     private fun updateTabUI(destinationId: Int) {
+        viewModel.lastSelectedTabId = destinationId
         val selectedColor = requireContext().getColor(R.color.colorBgBtn)
         val unselectedColor = requireContext().getColor(R.color.white30)
 

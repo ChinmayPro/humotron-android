@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_back_arrow">
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            style="@style/ToolbarTitleStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/choose_date_time" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:alpha="0.1"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/btnContinue"
+        app:layout_constraintTop_toBottomOf="@id/divider">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="24dp">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvCalendar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="24dp"
+                app:cardBackgroundColor="@color/black"
+                app:cardCornerRadius="12dp"
+                app:contentPadding="16dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="@color/gray_400"
+                app:strokeWidth="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/llHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="4dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/tvMonthYear"
+                            style="@style/Text.18x.Manrope.Bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            tools:text="July 2032" />
+
+                        <ImageView
+                            android:id="@+id/ivTitleChevron"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginStart="4dp"
+                            android:src="@drawable/ic_chevron_right_green" />
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/ivPrevMonth"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="16dp"
+                        android:alpha="0.3"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_chevron_left_green"
+                        app:layout_constraintBottom_toBottomOf="@id/llHeader"
+                        app:layout_constraintEnd_toStartOf="@id/ivNextMonth"
+                        app:layout_constraintTop_toTopOf="@id/llHeader" />
+
+                    <ImageView
+                        android:id="@+id/ivNextMonth"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_chevron_right_green"
+                        app:layout_constraintBottom_toBottomOf="@id/llHeader"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/llHeader" />
+
+                    <!-- Day View Group -->
+                    <LinearLayout
+                        android:id="@+id/llWeekDays"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintTop_toBottomOf="@id/llHeader">
+
+                        <TextView
+                            style="@style/CalendarWeekDayStyle"
+                            android:text="@string/sun" />
+
+                        <TextView
+                            style="@style/CalendarWeekDayStyle"
+                            android:text="@string/mon" />
+
+                        <TextView
+                            style="@style/CalendarWeekDayStyle"
+                            android:text="@string/tue" />
+
+                        <TextView
+                            style="@style/CalendarWeekDayStyle"
+                            android:text="@string/wed" />
+
+                        <TextView
+                            style="@style/CalendarWeekDayStyle"
+                            android:text="@string/thu" />
+
+                        <TextView
+                            style="@style/CalendarWeekDayStyle"
+                            android:text="@string/fri" />
+
+                        <TextView
+                            style="@style/CalendarWeekDayStyle"
+                            android:text="@string/sat" />
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvCalendar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toBottomOf="@id/llWeekDays"
+                        tools:itemCount="30"
+                        tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        tools:listitem="@layout/item_calendar_day"
+                        tools:spanCount="7" />
+
+                    <!-- Dual Wheel Picker (Initially Gone) -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clWheelPicker"
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        android:layout_marginTop="24dp"
+                        android:visibility="gone"
+                        app:layout_constraintTop_toBottomOf="@id/llHeader"
+                        tools:visibility="gone">
+
+                        <View
+                            android:id="@+id/viewPickerHighlight"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:background="@drawable/bg_picker_highlight"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent">
+
+                            <com.shawnlin.numberpicker.NumberPicker
+                                android:id="@+id/monthPicker"
+                                android:layout_width="120dp"
+                                android:layout_height="match_parent"
+                                app:np_dividerColor="@android:color/transparent"
+                                app:np_fadingEdgeEnabled="true"
+                                app:np_selectedTextColor="@color/white"
+                                app:np_selectedTextSize="22sp"
+                                app:np_textColor="@color/white50"
+                                app:np_textSize="16sp"
+                                app:np_wheelItemCount="5" />
+
+                            <com.shawnlin.numberpicker.NumberPicker
+                                android:id="@+id/yearPicker"
+                                android:layout_width="80dp"
+                                android:layout_height="match_parent"
+                                app:np_dividerColor="@android:color/transparent"
+                                app:np_fadingEdgeEnabled="true"
+                                app:np_selectedTextColor="@color/white"
+                                app:np_selectedTextSize="22sp"
+                                app:np_textColor="@color/white50"
+                                app:np_textSize="16sp"
+                                app:np_wheelItemCount="5" />
+
+                        </LinearLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/tvChooseTimeLabel"
+                style="@style/Text.18x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="32dp"
+                android:text="@string/choose_time"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cvCalendar" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvTimeSlots"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                app:layout_constraintTop_toBottomOf="@id/tvChooseTimeLabel"
+                tools:itemCount="9"
+                tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                tools:listitem="@layout/item_time_slot"
+                tools:spanCount="3" />
+
+            <!-- Summary Section (Initially Gone) -->
+            <LinearLayout
+                android:id="@+id/llSummary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/rvTimeSlots"
+                tools:visibility="visible">
+
+                <TextView
+                    android:id="@+id/tvSelectedDateTimeLabel"
+                    style="@style/Text.20x.Manrope.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/selected_date_time"
+                    android:textColor="@color/white" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingHorizontal="20dp">
+
+                    <TextView
+                        android:id="@+id/tvSelectedDateTime"
+                        style="@style/Text.16x.Manrope.SemiBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/lime_green"
+                        app:layout_constraintEnd_toStartOf="@id/ivEdit"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Monday, Apr 27' 2026 | 11:30 AM" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivEdit"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_edit"
+                        app:layout_constraintBottom_toBottomOf="@id/tvSelectedDateTime"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/tvSelectedDateTime"
+                        app:tint="@color/white" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/tvPreparationLabel"
+                    style="@style/Text.20x.Manrope.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="40dp"
+                    android:text="@string/preparation_for_test_title"
+                    android:textColor="@color/white" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="20dp">
+
+                    <!-- Fasting -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/Text.14x.Manrope.Medium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="•"
+                            android:textColor="@color/white70" />
+
+                        <TextView
+                            style="@style/Text.14x.Manrope.Medium"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:lineSpacingExtra="2dp"
+                            android:text="@string/prep_fasting"
+                            android:textColor="@color/white70" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:alpha="0.05"
+                        android:background="@color/white" />
+
+                    <!-- Medication -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/Text.14x.Manrope.Medium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="•"
+                            android:textColor="@color/white70" />
+
+                        <TextView
+                            style="@style/Text.14x.Manrope.Medium"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:lineSpacingExtra="2dp"
+                            android:text="@string/prep_medication"
+                            android:textColor="@color/white70" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:alpha="0.05"
+                        android:background="@color/white" />
+
+                    <!-- Hydration -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/Text.14x.Manrope.Medium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="•"
+                            android:textColor="@color/white70" />
+
+                        <TextView
+                            style="@style/Text.14x.Manrope.Medium"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:lineSpacingExtra="2dp"
+                            android:text="@string/prep_hydration"
+                            android:textColor="@color/white70" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:alpha="0.05"
+                        android:background="@color/white" />
+
+                    <!-- When to Test -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/Text.14x.Manrope.Medium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="•"
+                            android:textColor="@color/white70" />
+
+                        <TextView
+                            style="@style/Text.14x.Manrope.Medium"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:lineSpacingExtra="2dp"
+                            android:text="@string/prep_when_to_test"
+                            android:textColor="@color/white70" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnContinue"
+        style="@style/Text.16x.Manrope.SemiBold"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/selector_btn_booking"
+        android:text="@string/_continue"
+        android:textAllCaps="false"
+        android:textColor="@color/selector_btn_text_booking"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

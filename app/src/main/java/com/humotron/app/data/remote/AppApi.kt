@@ -66,7 +66,15 @@ import com.humotron.app.domain.modal.response.VerifyOtpResponse
 import com.humotron.app.domain.modal.response.WristBandSleepDurationResponse
 import com.humotron.app.domain.modal.response.YetToTrackMetricResponse
 import com.humotron.app.domain.modal.response.ProductVariantResponse
+import com.humotron.app.domain.modal.response.BookingTypeResponse
 import com.humotron.app.domain.modal.response.ShopAddToCartResponse
+import com.humotron.app.domain.modal.response.GetDefaultConfigResponse
+import com.humotron.app.domain.modal.param.UpdateAddressRequest
+import com.humotron.app.domain.modal.response.UpdateAddressResponse
+import com.humotron.app.domain.modal.response.AddressAutocompleteResponse
+import com.humotron.app.domain.modal.response.FullAddressResponse
+import com.humotron.app.domain.modal.response.GetAllAddressResponse
+import com.humotron.app.domain.modal.param.DefaultConfigRequest
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -343,4 +351,33 @@ interface AppApi {
 
     @POST("metric/getOptimizedRecipeWithMetrics")
     suspend fun getOptimizedRecipeWithMetrics(): Response<GetOptimizedRecipeWithMetricsResponse>
+
+    @POST("product/getAllTestBookingsType")
+    suspend fun getAllTestBookingsType(): Response<BookingTypeResponse>
+
+    @POST("order/getDefaultConfiguration")
+    suspend fun getDefaultConfiguration(
+        @Body request: DefaultConfigRequest
+    ): Response<GetDefaultConfigResponse>
+
+    @POST("address/getAllAddressByUserId")
+    suspend fun getAllAddressByUserId(): Response<GetAllAddressResponse>
+
+    @POST("address/updateAddressById/{addressId}")
+    suspend fun updateAddressById(
+        @Path("addressId") addressId: String,
+        @Body request: UpdateAddressRequest
+    ): Response<UpdateAddressResponse>
+
+    @GET("https://api.getaddress.io/autocomplete/{term}")
+    suspend fun getAddressAutocomplete(
+        @Path("term") term: String,
+        @Query("api-key") apiKey: String = "Mh0BQoYe8UeAX5lplKtd1A45644"
+    ): Response<AddressAutocompleteResponse>
+
+    @GET("https://api.getaddress.io/get/{id}")
+    suspend fun getFullAddress(
+        @Path("id") id: String,
+        @Query("api-key") apiKey: String = "Mh0BQoYe8UeAX5lplKtd1A45644"
+    ): Response<FullAddressResponse>
 }

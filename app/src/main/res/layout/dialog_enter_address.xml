@@ -1,0 +1,280 @@
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:cardBackgroundColor="@color/black"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="0dp"
+    app:shapeAppearanceOverlay="@style/BottomSheetShape"
+    app:strokeColor="@android:color/transparent"
+    app:strokeWidth="0dp">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_bg_main"
+            app:shapeAppearanceOverlay="@style/BottomSheetShape" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="24dp"
+                android:paddingTop="24dp">
+
+                <TextView
+                    android:id="@+id/tvTitle"
+                    style="@style/Text.20x.Manrope.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/enter_address_details"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/ivClose"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_close"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/white" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:fillViewport="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="24dp">
+
+                    <EditText
+                        android:id="@+id/etFirstName"
+                        style="@style/Text.14x.Manrope.Regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@drawable/bg_edittext_address"
+                        android:hint="@string/first_name"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPersonName"
+                        android:paddingHorizontal="16dp"
+                        android:singleLine="true"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white30" />
+
+                    <EditText
+                        android:id="@+id/etLastName"
+                        style="@style/Text.14x.Manrope.Regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/bg_edittext_address"
+                        android:hint="@string/last_name"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPersonName"
+                        android:paddingHorizontal="16dp"
+                        android:singleLine="true"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white30" />
+
+                    <LinearLayout
+                        android:id="@+id/llPhone"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/bg_edittext_address"
+                        android:orientation="horizontal">
+
+                        <com.hbb20.CountryCodePicker
+                            android:id="@+id/ccp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/bg_btn_round_rect_8"
+                            android:backgroundTint="@color/gray_300"
+                            android:gravity="center"
+                            android:paddingHorizontal="12dp"
+                            app:ccp_arrowColor="@color/black"
+                            app:ccp_contentColor="@color/black"
+                            app:ccp_showNameCode="false"
+                            app:ccp_showFullName="false"
+                            app:ccp_showFlag="false"
+                            app:ccp_showPhoneCode="true" />
+
+                        <EditText
+                            android:id="@+id/etPhone"
+                            style="@style/Text.14x.Manrope.Regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@android:color/transparent"
+                            android:hint="@string/phone_hint"
+                            android:imeOptions="actionNext"
+                            android:inputType="phone"
+                            android:paddingHorizontal="16dp"
+                            android:singleLine="true"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white30" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llPostalCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="16dp"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/etPostalCode"
+                            style="@style/Text.14x.Manrope.Regular"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_edittext_address"
+                            android:drawableStart="@drawable/ic_search"
+                            android:drawablePadding="12dp"
+                            android:hint="@string/postal_code"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:paddingHorizontal="16dp"
+                            android:singleLine="true"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white30" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btnSearch"
+                            style="@style/Text.14x.Manrope.SemiBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="12dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/bg_btn_round_rect_8"
+                            android:backgroundTint="@color/gray_400_ui"
+                            android:elevation="0dp"
+                            android:enabled="false"
+                            android:stateListAnimator="@null"
+                            android:text="@string/search"
+                            android:textAllCaps="false"
+                            android:textColor="@color/black" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llAddressDetails"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <EditText
+                            android:id="@+id/etAddress1"
+                            style="@style/Text.14x.Manrope.Regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginTop="16dp"
+                            android:background="@drawable/bg_edittext_address"
+                            android:hint="@string/address_line_1_hint"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:paddingHorizontal="16dp"
+                            android:singleLine="true"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white30" />
+
+                        <EditText
+                            android:id="@+id/etAddress2"
+                            style="@style/Text.14x.Manrope.Regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginTop="16dp"
+                            android:background="@drawable/bg_edittext_address"
+                            android:hint="@string/address_line_2_hint"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:paddingHorizontal="16dp"
+                            android:singleLine="true"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white30" />
+
+                        <EditText
+                            android:id="@+id/etAddress3"
+                            style="@style/Text.14x.Manrope.Regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginTop="16dp"
+                            android:background="@drawable/bg_edittext_address"
+                            android:hint="@string/address_line_3_hint"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:paddingHorizontal="16dp"
+                            android:singleLine="true"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white30" />
+
+                        <EditText
+                            android:id="@+id/etCity"
+                            style="@style/Text.14x.Manrope.Regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginTop="16dp"
+                            android:background="@drawable/bg_edittext_address"
+                            android:hint="@string/city_hint"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:paddingHorizontal="16dp"
+                            android:singleLine="true"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white30" />
+
+                        <EditText
+                            android:id="@+id/etCountry"
+                            style="@style/Text.14x.Manrope.Regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginTop="16dp"
+                            android:background="@drawable/bg_edittext_address"
+                            android:hint="@string/country_hint"
+                            android:imeOptions="actionDone"
+                            android:inputType="text"
+                            android:paddingHorizontal="16dp"
+                            android:singleLine="true"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white30" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btnSave"
+                            style="@style/Text.16x.Manrope.Bold"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginTop="40dp"
+                            android:layout_marginBottom="16dp"
+                            android:background="@drawable/bg_btn_round_corner"
+                            android:backgroundTint="@color/lime_green"
+                            android:text="@string/save_address"
+                            android:textAllCaps="false"
+                            android:textColor="@color/black" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</com.google.android.material.card.MaterialCardView>

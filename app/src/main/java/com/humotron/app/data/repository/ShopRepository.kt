@@ -12,6 +12,12 @@ import com.humotron.app.domain.modal.response.DeviceFaqResponse
 import com.humotron.app.domain.modal.response.GetOptimizedRecipeWithMetricsResponse
 import com.humotron.app.domain.modal.response.GetShopDevicesResponse
 import com.humotron.app.domain.modal.response.ProductVariantResponse
+import com.humotron.app.domain.modal.response.BookingTypeResponse
+import com.humotron.app.domain.modal.param.UpdateAddressRequest
+import com.humotron.app.domain.modal.response.UpdateAddressResponse
+import com.humotron.app.domain.modal.response.GetAllAddressResponse
+import com.humotron.app.domain.modal.response.AddressAutocompleteResponse
+import com.humotron.app.domain.modal.response.FullAddressResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
@@ -178,5 +184,83 @@ class ShopRepository @Inject constructor(
         }
     }.catch {
         emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun getAllTestBookingsType(): Flow<Resource<BookingTypeResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.getAllTestBookingsType(), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun getDefaultConfiguration(request: com.humotron.app.domain.modal.param.DefaultConfigRequest): Flow<Resource<com.humotron.app.domain.modal.response.GetDefaultConfigResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse<com.humotron.app.domain.modal.response.GetDefaultConfigResponse>(api.getDefaultConfiguration(request), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(com.humotron.app.data.network.exceptions.ValidationException(it.message)))
+    }
+
+    fun getAllAddressByUserId(): Flow<Resource<GetAllAddressResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.getAllAddressByUserId(), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(com.humotron.app.data.network.exceptions.ValidationException(it.message)))
+    }
+
+    fun updateAddressById(addressId: String, request: UpdateAddressRequest): Flow<Resource<UpdateAddressResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.updateAddressById(addressId, request), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(com.humotron.app.data.network.exceptions.ValidationException(it.message)))
+    }
+
+    fun getAddressAutocomplete(term: String): Flow<Resource<AddressAutocompleteResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.getAddressAutocomplete(term), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(com.humotron.app.data.network.exceptions.ValidationException(it.message)))
+    }
+
+    fun getFullAddress(id: String): Flow<Resource<FullAddressResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.getFullAddress(id), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(com.humotron.app.data.network.exceptions.ValidationException(it.message)))
     }
 }

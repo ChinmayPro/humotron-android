@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".ui.decode.DecodeOptimizeFragment">
 
-    <include layout="@layout/layout_temp_matters" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvViewMetricsTitle"
+        style="@style/Text.20x.Manrope.Bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_20dp"
+        android:layout_marginTop="@dimen/_20dp"
+        android:text="Optimize"
+        android:textAlignment="textStart"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

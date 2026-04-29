@@ -17,6 +17,8 @@ class CardiacTestDetailsBottomSheet : BaseBottomSheetDialogFragment() {
     private var _binding: LayoutBottomsheetCardiacTestDetailsBinding? = null
     private val binding get() = _binding!!
 
+    var onProceedClicked: (() -> Unit)? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -53,8 +55,8 @@ class CardiacTestDetailsBottomSheet : BaseBottomSheetDialogFragment() {
         }
 
         binding.btnProceed.setOnClickListener {
-            // Dismiss for now as per the plan. 
             dismiss()
+            onProceedClicked?.invoke()
         }
     }
 
