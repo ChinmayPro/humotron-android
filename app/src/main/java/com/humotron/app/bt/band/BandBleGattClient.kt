@@ -423,4 +423,6 @@ internal class BandBleGattClient(
     }
 
     fun isConnected(): Boolean = isConnected
+
+    fun isBusy(): Boolean = isWriting || queues.isNotEmpty()
 }

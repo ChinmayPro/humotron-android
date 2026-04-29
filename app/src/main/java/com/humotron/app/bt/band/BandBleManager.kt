@@ -143,6 +143,8 @@ class BandBleManager @Inject constructor(
 
     fun isConnected(): Boolean = gattClient.isConnected()
 
+    fun isBusy(): Boolean = gattClient.isBusy()
+
     @SuppressLint("MissingPermission")
     fun stopDeviceScan() {
         isScanning = false

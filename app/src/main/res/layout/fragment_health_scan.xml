@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="#33000000">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header_2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@id/btnStartScan"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!--card baseline-->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/ll_base"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_25dp"
+                android:orientation="vertical"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvBaseline"
+                    style="@style/Text.20x.Manrope.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/your_baseline_"
+                    android:textAlignment="center"
+                    android:textColor="@color/textColorWhite" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/mcv_baseline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_25dp"
+                    app:cardBackgroundColor="@color/card_background"
+                    app:cardCornerRadius="@dimen/_8dp"
+                    app:strokeColor="@color/card_border"
+                    app:strokeWidth="1dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_20dp">
+
+                        <com.facebook.shimmer.ShimmerFrameLayout
+                            android:id="@+id/shimmer_baseline"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:shimmer_auto_start="true">
+
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvValue"
+                                    style="@style/Text.24x.Manrope.Bold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="--"
+                                    android:textColor="@color/card_text_green" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvScanUnit"
+                                    style="@style/Text.12x.Manrope.Medium"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="bottom"
+                                    android:layout_marginStart="@dimen/_5dp"
+                                    android:layout_marginBottom="@dimen/_3dp"
+                                    android:text=""
+                                    android:textColor="@color/d500" />
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        </com.facebook.shimmer.ShimmerFrameLayout>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvScanType"
+                            style="@style/Text.14x.Manrope.Bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/average_"
+                            android:textColor="@color/white"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/shimmer_baseline" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_right_arrow" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <!--card no baseline data-->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardNoBaseline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_25dp"
+                    android:visibility="gone"
+                    app:cardBackgroundColor="@color/card_background"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/card_border"
+                    app:strokeWidth="1dp"
+                    tools:visibility="gone">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="20dp">
+
+                        <TextView
+                            android:id="@+id/tvNoBaselineTitle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/average_data_message"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tvNoBaselineDes"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="@string/baseline_ready_message"
+                            android:textColor="@color/white_70"
+                            android:textSize="14sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tvNoBaselineTitle" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Text.20x.Manrope.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_30dp"
+                    android:text="@string/know_more_before_starting_the_scan"
+                    android:textAlignment="center"
+                    android:textColor="@color/textColorWhite" />
+
+                <com.humotron.app.view.ExpandableCardView
+                    android:id="@+id/ecv_when_should"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_25dp"
+                    app:cardDescription="@string/ans_1_hrv"
+                    app:cardStrokeColor="@color/card_border"
+                    app:cardStrokeWidth="1dp"
+                    app:cardTitle="@string/when_should_i_run_a_" />
+
+                <com.humotron.app.view.ExpandableCardView
+                    android:id="@+id/ecv_what_does_scan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20dp"
+                    app:cardDescription="@string/ans_2_hrv"
+                    app:cardStrokeColor="@color/card_border"
+                    app:cardStrokeWidth="1dp"
+                    app:cardTitle="@string/what_does_this_scan_actually_measure" />
+
+                <com.humotron.app.view.ExpandableCardView
+                    android:id="@+id/ecv_what_should_id_do"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20dp"
+                    app:cardDescription="@string/ans_3_hrv"
+                    app:cardStrokeColor="@color/card_border"
+                    app:cardStrokeWidth="1dp"
+                    app:cardTitle="@string/what_should_i_do_with_the_result" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!--HRV Stress scan-->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/ll_hrv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_25dp"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="gone">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_hrv_scan_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/_60dp"
+                    android:fontFamily="@font/manrope_medium"
+                    android:text="@string/hrv_title_initiating"
+                    android:textColor="@color/textColorWhite"
+                    android:textSize="@dimen/_28dp" />
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/lottieAnimationView"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="@dimen/_30dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:lottie_autoPlay="false"
+                    app:lottie_imageAssetsFolder="images/"
+                    app:lottie_rawRes="@raw/hrv_lottie"
+                    app:lottie_repeatCount="-1" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvHRVTime"
+                    style="@style/Text.20x.Manrope.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15dp"
+                    android:text="02:00"
+                    android:textColor="@color/textColorWhite" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_hrv_scan_des"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20dp"
+                    android:fontFamily="@font/manrope_regular"
+                    android:text="@string/hrv_desc_initiating"
+                    android:textColor="@color/white70"
+                    android:textSize="@dimen/_20dp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!--HR Body Load-->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/ll_hr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_25dp"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="gone">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_40dp"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvLiveValue"
+                        style="@style/Text.28x.Manrope.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="00"
+                        android:textColor="@color/white"
+                        android:textSize="60sp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvLiveUnit"
+                        style="@style/Text.14x.Manrope.Medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10dp"
+                        android:layout_marginBottom="@dimen/_15dp"
+                        android:text="bpm"
+                        android:textColor="@color/white" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvLiveType"
+                    style="@style/Text.18x.Manrope.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_semibold"
+                    android:text="@string/heart_rate"
+                    android:textColor="@color/white" />
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/lottieViewHR"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="@dimen/_30dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:lottie_autoPlay="false"
+                    app:lottie_imageAssetsFolder="images/"
+                    app:lottie_rawRes="@raw/hrv_lottie"
+                    app:lottie_repeatCount="-1" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvTimer"
+                    style="@style/Text.28x.Manrope.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_25dp"
+                    android:fontFamily="@font/manrope_semibold"
+                    android:text="00:00"
+                    android:textColor="@color/white" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!--oxygen SPO2-->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/ll_oxygen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_25dp"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="gone">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_40dp"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvLiveOxygenValue"
+                        style="@style/Text.28x.Manrope.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="00"
+                        android:textColor="@color/white"
+                        android:textSize="100sp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Text.14x.Manrope.Medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10dp"
+                        android:layout_marginBottom="@dimen/_25dp"
+                        android:text="%"
+                        android:textColor="@color/white"
+                        android:textSize="24sp" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_medium"
+                    android:text="Oxygen Saturation\n(SpO2)"
+                    android:textColor="@color/white"
+                    android:textSize="28sp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvOxygenTimer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_60dp"
+                    android:fontFamily="@font/manrope_medium"
+                    android:text="00:00:00"
+                    android:textColor="@color/white"
+                    android:textSize="32sp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!--thermal-->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/ll_thermal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_25dp"
+                android:orientation="vertical"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_40dp"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvLiveThermalValue"
+                        style="@style/Text.28x.Manrope.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="00"
+                        android:textColor="@color/white"
+                        android:textSize="100sp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Text.14x.Manrope.Medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10dp"
+                        android:layout_marginBottom="@dimen/_25dp"
+                        android:text="°C"
+                        android:textColor="@color/white"
+                        android:textSize="24sp" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_medium"
+                    android:text="@string/skin_temperature"
+                    android:textColor="@color/white"
+                    android:textSize="28sp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvThermalTimer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_60dp"
+                    android:fontFamily="@font/manrope_medium"
+                    android:text="00:00"
+                    android:textColor="@color/white"
+                    android:textSize="32sp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_ver_center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <!--Analysis complete-->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/ll_scan_done"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_25dp"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/guideline_ver_center"
+                app:layout_constraintTop_toTopOf="@id/guideline_ver_center"
+                tools:visibility="gone">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="@font/manrope_medium"
+                    android:gravity="center"
+                    android:text="@string/analysis_complete_results_are_ready"
+                    android:textColor="#D9D9D9"
+                    android:textSize="26sp"
+                    app:fontFamily="@font/manrope_semibold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="44dp"
+                    android:fontFamily="@font/manrope_regular"
+                    android:gravity="center"
+                    android:text="@string/the_results_are_ready"
+                    android:textColor="@color/text_light_gray"
+                    android:textSize="15sp"
+                    app:fontFamily="@font/manrope_semibold" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!--Analysis incomplete-->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/ll_scan_incomplete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_25dp"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/guideline_ver_center"
+                app:layout_constraintTop_toTopOf="@id/guideline_ver_center"
+                tools:visibility="gone">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="@font/manrope_medium"
+                    android:gravity="center"
+                    android:text="@string/analysis_incomplete"
+                    android:textColor="#D9D9D9"
+                    android:textSize="26sp"
+                    app:fontFamily="@font/manrope_semibold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="44dp"
+                    android:fontFamily="@font/manrope_regular"
+                    android:gravity="center"
+                    android:text="@string/please_scan_again"
+                    android:textColor="@color/text_light_gray"
+                    android:textSize="15sp"
+                    app:fontFamily="@font/manrope_semibold" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnStartScan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginBottom="@dimen/_60dp"
+        android:backgroundTint="@color/colorBgBtn"
+        android:fontFamily="@font/manrope_bold"
+        android:paddingHorizontal="@dimen/_24dp"
+        android:paddingVertical="@dimen/_12dp"
+        android:text="@string/start_scan"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnViewResults"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginBottom="@dimen/_60dp"
+        android:backgroundTint="@color/colorBgBtn"
+        android:fontFamily="@font/manrope_bold"
+        android:paddingHorizontal="@dimen/_24dp"
+        android:paddingVertical="@dimen/_12dp"
+        android:text="@string/view_results"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

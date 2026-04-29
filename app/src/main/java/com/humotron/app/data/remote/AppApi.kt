@@ -13,6 +13,9 @@ import com.humotron.app.domain.modal.param.PostFollowUpConversationParam
 import com.humotron.app.domain.modal.param.RemovePdfParam
 import com.humotron.app.domain.modal.param.RingReadingParam
 import com.humotron.app.domain.modal.param.BandUploadData
+import com.humotron.app.domain.modal.param.BaselineScanDataParam
+import com.humotron.app.domain.modal.param.GetAllScanByTypeParam
+import com.humotron.app.domain.modal.param.SaveScanDataParam
 import com.humotron.app.domain.modal.param.StartNewChatParam
 import com.humotron.app.domain.modal.param.SubmitPersonalInfoParam
 import com.humotron.app.domain.modal.param.WeightHeightParam
@@ -41,6 +44,8 @@ import com.humotron.app.domain.modal.response.DeviceFaqResponse
 import com.humotron.app.domain.modal.response.GetShopDevicesResponse
 import com.humotron.app.domain.modal.response.GetConversationsResponse
 import com.humotron.app.domain.modal.response.HardwareListData
+import com.humotron.app.domain.modal.response.HealthScanResponse
+import com.humotron.app.domain.modal.response.HrvSaveScanResponse
 import com.humotron.app.domain.modal.response.MedicalPdfResponse
 import com.humotron.app.domain.modal.response.MergedAssessmentResponse
 import com.humotron.app.domain.modal.response.MetricResponse
@@ -49,6 +54,7 @@ import com.humotron.app.domain.modal.response.NuggetDetailResponse
 import com.humotron.app.domain.modal.response.NuggetPreference
 import com.humotron.app.domain.modal.response.NuggetsReactionResponse
 import com.humotron.app.domain.modal.response.NuggetsTypeAndLevelResponse
+import com.humotron.app.domain.modal.response.PastScanResponse
 import com.humotron.app.domain.modal.response.PostFollowUpConversationResponse
 import com.humotron.app.domain.modal.response.PromptContextResponse
 import com.humotron.app.domain.modal.response.RingReadingData
@@ -90,7 +96,7 @@ interface AppApi {
     suspend fun createClinicalDocuments(
         @Path("isCreateNugget") isCreateNugget: Boolean,
         @Part("uploadType") uploadType: RequestBody,
-        @Part file: MultipartBody.Part
+        @Part file: MultipartBody.Part,
     ): Response<ExtractMetricsResponse>
 
     @GET("chatFeltOff/questions")
@@ -160,7 +166,7 @@ interface AppApi {
     @POST("device/deviceLikeDislike/{deviceId}")
     suspend fun deviceLikeDislike(
         @Path("deviceId") deviceId: String,
-        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0))
+        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0)),
     ): Response<CommonResponse>
 
     @POST("product/productLikeDislike/{productId}")
@@ -185,7 +191,7 @@ interface AppApi {
     @POST("device/getDailyCalculatedMetrics/{device_id}")
     suspend fun getDailyCalculatedMetrics(
         @Path("device_id") deviceId: String,
-        @Body param: DailyCalculatedMetricsParam
+        @Body param: DailyCalculatedMetricsParam,
     ): Response<DailyCalculatedMetricsResponse>
 
     @POST("metric/getRecommendationsByMetricId/{metricId}")
@@ -198,12 +204,27 @@ interface AppApi {
         @Path("deviceId") deviceId: String,
     ): Response<AllMetricsResponse>
 
+    @POST("device/getBaselineScanData")
+    suspend fun getBaselineScanData(
+        @Body param: BaselineScanDataParam,
+    ): Response<HealthScanResponse>
+
+    @POST("device/saveScanData")
+    suspend fun saveScanData(
+        @Body param: SaveScanDataParam,
+    ): Response<HrvSaveScanResponse>
+
+    @POST("device/getAllScanByType")
+    suspend fun getAllScanByType(
+        @Body param: GetAllScanByTypeParam,
+    ): Response<PastScanResponse>
+
     @GET("device/getWristBandSleepDurationData/{device_id}")
     suspend fun getWristBandSleepDurationData(
         @Path("device_id") deviceId: String,
         @Query("startDate") startDate: String,
         @Query("endDate") endDate: String,
-        @Query("offset") offset: String
+        @Query("offset") offset: String,
     ): Response<WristBandSleepDurationResponse>
 
 
@@ -239,7 +260,7 @@ interface AppApi {
     suspend fun addToCart(
         @Body bookId: AddToCartParam,
     ): Response<AddToCartResponse>
-    
+
     @POST("cart/createCart")
     suspend fun createBookCart(
         @Body bookId: AddToCartParam,
@@ -274,17 +295,18 @@ interface AppApi {
     @GET("assessment/getAssessmentById/{id}")
     suspend fun getAssessment(
         @Path("id") id: String,
-        @Header("Authorization") token: String
+        @Header("Authorization") token: String,
     ): Response<AssessmentResponse>
+
     @POST("assessmentsQuestionAnswer/createAssessmentQuestionAnswer")
     suspend fun submitAssessmentAnswers(
         @Header("Authorization") token: String,
-        @Body request: SubmitAnswerRequest
+        @Body request: SubmitAnswerRequest,
     ): Response<SubmitAnswerResponse>
 
     @POST("conversationThread/getAllConversationThreadsByUserId")
     suspend fun getAllConversationThreads(
-        @Body param: GetConversationThreadsParam
+        @Body param: GetConversationThreadsParam,
     ): Response<ConversationThreadsResponse>
 
     @POST("conversationThread/deleteAllConversationThreadsByUserId")
@@ -292,7 +314,7 @@ interface AppApi {
 
     @POST("conversationThread/deleteConversationThreadById/{threadId}")
     suspend fun deleteConversationThread(
-        @Path("threadId") threadId: String
+        @Path("threadId") threadId: String,
     ): Response<CommonResponse>
 
     @POST("metric/getHealthMetricTrackingByUserId")
@@ -303,22 +325,22 @@ interface AppApi {
 
     @POST("conversation/getConversationsByUserId")
     suspend fun getConversationsByUserId(
-        @Body param: GetConversationsParam
+        @Body param: GetConversationsParam,
     ): Response<GetConversationsResponse>
 
     @POST("conversation/postFollowUpConversation")
     suspend fun postFollowUpConversation(
-        @Body param: PostFollowUpConversationParam
+        @Body param: PostFollowUpConversationParam,
     ): Response<PostFollowUpConversationResponse>
 
     @POST("conversation/startNewChat")
     suspend fun startNewChat(
-        @Body param: StartNewChatParam
+        @Body param: StartNewChatParam,
     ): Response<PostFollowUpConversationResponse>
 
     @GET("conversation/getPromptContextByConversationId/{conversationId}")
     suspend fun getPromptContextByConversationId(
-        @Path("conversationId") conversationId: String
+        @Path("conversationId") conversationId: String,
     ): Response<PromptContextResponse>
 
     @POST("medicalDetails/generateMetricByPdfId")
@@ -332,7 +354,7 @@ interface AppApi {
 
     @GET("device/getProductVariantById/{deviceId}")
     suspend fun getProductVariantById(
-        @Path("deviceId") deviceId: String
+        @Path("deviceId") deviceId: String,
     ): Response<ProductVariantResponse>
 
     @POST("metric/getOptimizedRecipeWithMetrics")

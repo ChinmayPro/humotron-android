@@ -367,19 +367,22 @@ class BandSyncManager @Inject constructor(
         val entities = rows.mapNotNull { row ->
             val date = row[DeviceKey.Date] as? String ?: return@mapNotNull null
             val measuredAt = parseEpochMillis(normalizeDate(date)) ?: return@mapNotNull null
-            val arraySleepQuality = (row[DeviceKey.ArraySleep] as? String).orEmpty().trim()
+            val arraySleepQuality = (row[DeviceKey.ArraySleep] as? String)
+                .orEmpty()
+                .trim()
                 .split(" ")
                 .mapNotNull { it.toIntOrNull() }
+            val sleepUnitLength = (row[DeviceKey.sleepUnitLength] as? String)?.toIntOrNull()
+                ?: (row[DeviceKey.sleepUnitLength] as? Int)
+                ?: 0
 
             BandSleepData(
                 hardwareId = hardwareId,
                 measuredAt = measuredAt,
                 date = date,
                 arraySleepQuality = arraySleepQuality,
-                totalSleepTime = (row["totalSleepTime"] as? String)?.toIntOrNull()
-                    ?: (row["totalSleepTime"] as? Int) ?: 0,
-                sleepUnitLength = (row[DeviceKey.sleepUnitLength] as? String)?.toIntOrNull()
-                    ?: (row[DeviceKey.sleepUnitLength] as? Int) ?: 0,
+                totalSleepTime = arraySleepQuality.size * sleepUnitLength,
+                sleepUnitLength = sleepUnitLength,
                 startTimeSleepData = (row["startTime_SleepData"] as? String).orEmpty(),
             )
         }

@@ -1,4 +1,6 @@
 import com.android.build.gradle.ProguardFiles.getDefaultProguardFile
+import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Properties
 
 plugins {
@@ -69,6 +71,17 @@ android {
             excludes += "META-INF/notice.txt"
             excludes += "META-INF/ASL2.0"
             excludes += "META-INF/*.kotlin_module"
+        }
+    }
+    applicationVariants.all {
+        outputs.all {
+            val appName = rootProject.name
+            val dateTime = SimpleDateFormat("yyyy_MM_dd-HH_mm_ss").format(Date())
+
+            val outputFileName =
+                "${appName}_v${versionName}(${versionCode})_${buildType.name}_${dateTime}.apk"
+            (this as com.android.build.gradle.internal.api.BaseVariantOutputImpl).outputFileName =
+                outputFileName
         }
     }
 }

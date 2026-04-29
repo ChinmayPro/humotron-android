@@ -126,7 +126,7 @@ class RingDeviceManager(val app: App) : OnBleConnectionListener, OnSleepDataLoad
         //PlutoLog.e(TAG_RING_DEBUG, "onSyncDataFromDevice state: $state, progress: $progress")
         when (state) {
             LOAD_DATA_EMPTY -> {
-                PlutoLog.e(TAG_RING_DEBUG, "onSyncDataFromDevice LOAD_DATA_EMPTY")
+                //PlutoLog.e(TAG_RING_DEBUG, "onSyncDataFromDevice LOAD_DATA_EMPTY")
                 //TODO Callback when no data is received from the device.
                 connected.postValue(true)
                 isSyncingData.postValue(false)
@@ -139,18 +139,18 @@ class RingDeviceManager(val app: App) : OnBleConnectionListener, OnSleepDataLoad
             }
 
             LOAD_DATA_STATE_START -> {
-                PlutoLog.e(TAG_RING_DEBUG, "onSyncDataFromDevice LOAD_DATA_STATE_START")
+                //PlutoLog.e(TAG_RING_DEBUG, "onSyncDataFromDevice LOAD_DATA_STATE_START")
                 isSyncingData.postValue(true)
                 sycProgress.postValue(progress)
             }
 
             LOAD_DATA_STATE_PROCESSING -> {
-                PlutoLog.e(TAG_RING_DEBUG, "onSyncDataFromDevice LOAD_DATA_STATE_PROCESSING")
+                //PlutoLog.e(TAG_RING_DEBUG, "onSyncDataFromDevice LOAD_DATA_STATE_PROCESSING")
                 sycProgress.postValue(progress)
             }
 
             LOAD_DATA_STATE_COMPLETED -> {
-                PlutoLog.e(TAG_RING_DEBUG, "onSyncDataFromDevice LOAD_DATA_STATE_COMPLETED")
+                //PlutoLog.e(TAG_RING_DEBUG, "onSyncDataFromDevice LOAD_DATA_STATE_COMPLETED")
                 sycProgress.postValue(progress)
                 isSyncingData.postValue(false)
                 connected.postValue(true)

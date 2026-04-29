@@ -14,6 +14,7 @@ import com.humotron.app.data.network.Resource
 import com.humotron.app.data.network.Status
 import com.humotron.app.data.repository.DeviceRepository
 import com.humotron.app.data.repository.MedicalRepository
+import com.humotron.app.domain.modal.param.GetAllScanByTypeParam
 import com.humotron.app.domain.modal.param.RingReadingParam
 import com.humotron.app.domain.modal.param.WristBandApiParam
 import com.humotron.app.domain.modal.response.AllMetricsResponse
@@ -23,6 +24,7 @@ import com.humotron.app.domain.modal.response.HardwareListData
 import com.humotron.app.domain.modal.response.MedicalPdfResponse
 import com.humotron.app.domain.modal.response.MergedAssessmentResponse
 import com.humotron.app.domain.modal.response.MetricResponse
+import com.humotron.app.domain.modal.response.PastScanResponse
 import com.humotron.app.domain.modal.response.RingReadingData
 import com.humotron.app.domain.modal.response.TemperatureResponse
 import com.humotron.app.domain.repository.SleepRepository
@@ -240,6 +242,17 @@ class DeviceViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
+
+    private val _pastScanLiveData: MutableLiveData<Resource<PastScanResponse>> =
+        MutableLiveData()
+
+    val pastScanLiveData: LiveData<Resource<PastScanResponse>> = _pastScanLiveData
+
+    fun getAllScanByType(type: String, deviceId: String) {
+        sleepRepository.getAllScanByType(GetAllScanByTypeParam(type, deviceId)).onEach { state ->
+            _pastScanLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
 
     fun getHrLatestData() {
         viewModelScope.launch {

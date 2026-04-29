@@ -93,6 +93,11 @@
     <color name="medium_gray">#444444</color>
     <color name="accent_gold">#E5C08C</color>
     <color name="brown">#7E3F11</color>
+    <color name="card_background">#1E1E1E</color>
+    <color name="card_border">#4E4E4E</color>
+    <color name="card_text_green">#00C620</color>
+    <color name="text_light_gray">#707070</color>
+    <color name="dark_orange">#FF9100</color>
     <color name="gray_300">#D1D5DB</color>
     <color name="gray_400_ui">#9CA3AF</color>
     <color name="stroke_card">#333333</color>

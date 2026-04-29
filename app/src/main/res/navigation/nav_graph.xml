@@ -135,4 +135,44 @@
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
+    <fragment
+        android:id="@+id/fragmentHealthScan"
+        android:name="com.humotron.app.ui.device.HealthScanFragment"
+        tools:layout="@layout/fragment_health_scan">
+        <argument
+            android:name="healthScanItem"
+            app:argType="com.humotron.app.ui.device.adapter.HealthScanItem" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentPastScans"
+        android:name="com.humotron.app.ui.device.PastScansFragment"
+        tools:layout="@layout/fragment_past_scans">
+        <argument
+            android:name="healthScanItem"
+            app:argType="com.humotron.app.ui.device.adapter.HealthScanItem" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentHealthScanResult"
+        android:name="com.humotron.app.ui.device.HealthScanResultFragment"
+        tools:layout="@layout/fragment_health_scan_result">
+        <argument
+            android:name="result"
+            app:argType="com.humotron.app.domain.modal.ui.HealthScanResult" />
+        <argument
+            android:name="healthScanItem"
+            app:argType="com.humotron.app.ui.device.adapter.HealthScanItem" />
+        <argument
+            android:name="baseLine"
+            app:argType="float" />
+        <argument
+            android:name="current"
+            app:argType="float" />
+        <argument
+            android:name="wearable"
+            app:argType="com.humotron.app.domain.modal.response.GetAllDeviceResponse$Data$Wearable"
+            app:nullable="true" />
+    </fragment>
+
 </navigation>
