@@ -92,109 +92,127 @@ class VerifyBookingFragment : BaseFragment(R.layout.fragment_verify_booking) {
     private fun confirmBooking() {
         val type = viewModel.getSelectedBookingType()
         val address = viewModel.getSelectedAddress()
+        val lab = viewModel.getSelectedLab()
         val date = viewModel.getSelectedDate()
         val time = viewModel.getSelectedTime()
 
-        if (type == null || address == null || date == null || time == null) {
-            android.widget.Toast.makeText(requireContext(), "Please select all details", android.widget.Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        // Format Date: yyyy-MM-dd
-        val sdfDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        val formattedDate = sdfDate.format(date.time)
-
-        // Format Time: hh:mm a
-        val sdfTime24 = SimpleDateFormat("HH:mm", Locale.getDefault())
-        val sdfTime12 = SimpleDateFormat("hh:mm a", Locale.getDefault())
-        val formattedTime = try {
-            val dateObj = sdfTime24.parse(time)
-            sdfTime12.format(dateObj!!).uppercase()
-        } catch (e: Exception) {
-            time
-        }
-
-        val (productType, bookingType) = when (type.title) {
+        val (productType, bookingType) = when (type?.title) {
             "At-Home Service" -> "blood_home" to "homeVisit"
             "Self- Collection kit" -> "blood_self" to "selfCollection"
             "Lab visit" -> "blood_lab" to "labVisit"
             else -> "blood_home" to "homeVisit"
         }
 
+        if (isBookingDataInvalid(type, date, time, bookingType, address, lab)) {
+            android.widget.Toast.makeText(requireContext(), getString(R.string.please_select_details), android.widget.Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val formattedDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date!!.time)
+        val formattedTime = formatTime(time ?: "")
+
         val bookingDetails = when (bookingType) {
-            "selfCollection" -> {
-                BookingDetails(
-                    date = null,
-                    time = null,
-                    addressId = address.id
-                )
-            }
-            "labVisit" -> {
-                BookingDetails(
-                    date = formattedDate,
-                    time = formattedTime,
-                    labId = address.id // Using address.id as labId for lab visits
-                )
-            }
-            else -> {
-                BookingDetails(
-                    date = formattedDate,
-                    time = formattedTime,
-                    addressId = address.id
-                )
-            }
+            "selfCollection" -> BookingDetails(date = null, time = null, addressId = address?.id)
+            "labVisit" -> BookingDetails(date = formattedDate, time = formattedTime, labId = lab?.id)
+            else -> BookingDetails(date = formattedDate, time = formattedTime, addressId = address?.id)
         }
 
         val param = AddToCartParam(
-            cartItemId = "",
-            productId = type.id,
+            productId = type!!.id,
             productType = productType,
             bookingType = bookingType,
             quantity = 1,
-            variantId = "",
             bookingDetails = bookingDetails
         )
 
         viewModel.createBookCart(param)
     }
 
+    private fun isBookingDataInvalid(
+        type: BookingTypeResponse.BookingType?,
+        date: java.util.Calendar?,
+        time: String?,
+        bookingType: String,
+        address: GetCartResponse.Address?,
+        lab: com.humotron.app.domain.modal.response.GetAllLabResponse.Lab?
+    ): Boolean {
+        return type == null || date == null || time == null || 
+               (bookingType != "labVisit" && address == null) || 
+               (bookingType == "labVisit" && lab == null)
+    }
+
     private fun displayBookingData() {
+        val type = viewModel.getSelectedBookingType()
+        val date = viewModel.getSelectedDate()
+        val time = viewModel.getSelectedTime()
+
         // Display Test Details
-        viewModel.getSelectedBookingType()?.let { type: BookingTypeResponse.BookingType ->
-            binding.tvBookingTypeTitle.text = type.title
-            binding.tvBookingTypeDesc.text = type.description
-            binding.tvPrice.text = getString(R.string.price_format, type.currency ?: "$", type.price)
+        type?.let {
+            binding.tvBookingTypeTitle.text = it.title
+            binding.tvBookingTypeDesc.text = it.description
+            binding.tvPrice.text = getString(R.string.price_format, it.currency ?: "$", it.price)
+            binding.tvAddressLabel.text = if (it.title == "Lab visit") getString(R.string.selected_lab) else getString(R.string.address_label)
         }
 
         // Display Date & Time
-        val date = viewModel.getSelectedDate()
-        val time = viewModel.getSelectedTime()
         if (date != null && time != null) {
             val sdf = SimpleDateFormat("EEEE, MMM dd' 'yyyy", Locale.getDefault())
-            val dateStr = sdf.format(date.time)
-            val timeStr = formatTime(time)
-            binding.tvSelectedDateTime.text = "$dateStr | $timeStr"
+            binding.tvSelectedDateTime.text = "${sdf.format(date.time)} | ${formatTime(time)}"
         }
 
-        // Display Address
-        viewModel.getSelectedAddress()?.let { address: GetCartResponse.Address ->
-            bindAddress(address)
+        // Display Address or Lab
+        if (type?.title == "Lab visit") {
+            // Style to match Lab List Item design
+            val padding = (16 * resources.displayMetrics.density).toInt()
+            binding.cvAddress.setContentPadding(padding, padding, padding, padding)
+            binding.cvAddress.setCardBackgroundColor(androidx.core.content.ContextCompat.getColor(requireContext(), R.color.surface_dark))
+            binding.cvAddress.strokeColor = androidx.core.content.ContextCompat.getColor(requireContext(), R.color.stroke_card)
+            binding.cvAddress.strokeWidth = (1 * resources.displayMetrics.density).toInt()
+            binding.cvAddress.cardElevation = (0 * resources.displayMetrics.density)
+            binding.ivEditAddress.visibility = android.view.View.GONE
+            
+            viewModel.getSelectedLab()?.let { lab ->
+                val labAddress = lab.address
+                val addressParts = listOfNotNull(
+                    lab.labName,
+                    labAddress?.line1,
+                    labAddress?.line2,
+                    labAddress?.city,
+                    labAddress?.postcode,
+                    labAddress?.country
+                ).filter { it.isNullOrBlank().not() }
+                binding.tvAddressDetails.text = addressParts.joinToString("\n")
+            }
+        } else {
+            // Style as Plain View for others (Home visit, etc.)
+            binding.cvAddress.setContentPadding(0, 0, 0, 0)
+            binding.cvAddress.setCardBackgroundColor(android.graphics.Color.TRANSPARENT)
+            binding.cvAddress.strokeColor = android.graphics.Color.TRANSPARENT
+            binding.cvAddress.strokeWidth = 0
+            binding.cvAddress.cardElevation = 0f
+            binding.ivEditAddress.visibility = android.view.View.VISIBLE
+            
+            viewModel.getSelectedAddress()?.let { address ->
+                bindAddress(address)
+            }
         }
     }
 
     private fun bindAddress(address: GetCartResponse.Address) {
-        val addressParts = mutableListOf<String>()
+        val name = getString(R.string.full_name_format, address.firstName ?: "", address.lastName ?: "").trim()
+        val phone = address.contactNo ?: ""
         
-        val streetAddress = listOfNotNull(
-            address.address1,
-            address.address2,
-            address.address3
-        ).filter { it.isNotBlank() }.joinToString(", ")
+        val streetAddress = listOfNotNull(address.address1, address.address2, address.address3)
+            .filter { it.isNullOrBlank().not() }.joinToString(", ")
         
-        if (streetAddress.isNotBlank()) addressParts.add(streetAddress)
-        address.postcode?.let { if (it.isNotBlank()) addressParts.add(it) }
-        address.city?.let { if (it.isNotBlank()) addressParts.add(it) }
-        address.country?.let { if (it.isNotBlank()) addressParts.add(it) }
+        val addressParts = listOfNotNull(
+            name,
+            if (phone.isNotBlank()) phone else null,
+            if (streetAddress.isNotBlank()) streetAddress else null,
+            address.postcode,
+            address.city,
+            address.country
+        ).filter { it.isNullOrBlank().not() }
         
         binding.tvAddressDetails.text = addressParts.joinToString("\n")
     }
@@ -202,9 +220,9 @@ class VerifyBookingFragment : BaseFragment(R.layout.fragment_verify_booking) {
     private fun formatTime(time: String): String {
         return try {
             val sdf24 = SimpleDateFormat("HH:mm", Locale.getDefault())
-            val sdf12 = SimpleDateFormat("hh:mm a", Locale.getDefault())
+            val sdf12 = SimpleDateFormat("h:mm a", Locale.getDefault())
             val date = sdf24.parse(time)
-            sdf12.format(date!!).uppercase()
+            sdf12.format(date!!).lowercase()
         } catch (e: Exception) {
             time
         }

@@ -334,8 +334,6 @@ To get started:\n
     <string name="step_3_select_reports_desc">Choose specific reports from the search results for import.</string>
     <string name="step_4_confirm_import">Step 4 - Confirm Import</string>
     <string name="step_4_confirm_import_desc">Confirm to upload these reports to your Humotron profile.</string>
-
-    <!-- Email Search Screen -->
     <string name="email_import">Email Import</string>
     <string name="review_permissions">Review the permissions</string>
     <string name="keywords">Keywords</string>
@@ -441,8 +439,6 @@ To get started:\n
     <string name="view_detailed_bill">View Detailed Bill</string>
     <string name="cart_trust_info">Incl. VAT &amp; shipping fees</string>
     <string name="cart_policy_info">100%% secure payments • 7-day easy return</string>
-
-    <!-- Optimize Tab -->
     <string name="optimize_title">Suggestions to Optimize\nYour Metrics</string>
     <string name="optimize_subtitle">Backed by data, powered by AI — these suggestions are not medical advice, but a guide to help you take action.</string>
     <string name="category_supplements">Supplements</string>
@@ -459,7 +455,6 @@ To get started:\n
     <string name="cardiac_test_details">Cardiac Biomarker Test Details</string>
     <string name="choose_date_time">Choose Date &amp; Time</string>
     <string name="select_address">Select Address</string>
-    <!-- Enter Address Details -->
     <string name="enter_address_details">Enter Address Details</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
@@ -497,5 +492,10 @@ To get started:\n
     <string name="suggested_quantity_desc">Based on the recommended 3-month course, we suggest purchasing 3 jars to ensure you stay consistent with your health journey.</string>
     <string name="shelf_life_desc">Shelf Life: Don’t worry about storage—each jar has a shelf life of 18 months, so you can stock up without hesitation.</string>
     <string name="edit_quantity_footer">You can edit the quantity above if you wish to.</string>
-    <string name="continue_label">Continue</string>
+    <string name="enable_location_pincode_title">Enable Location\nAccess or\nProvide Your Post Code\nto Proceed</string>
+    <string name="access_to_location">Access to Location</string>
+    <string name="or">Or</string>
+    <string name="enter_pincode_label">Enter Pincode</string>
+    <string name="selected_lab">Selected Lab</string>
+    <string name="please_select_details">Please select all details</string>
 </resources>

@@ -24,6 +24,7 @@
 
     <color name="white05">#0DFFFFFF</color>
     <color name="white10">#1AFFFFFF</color>
+    <color name="white20">#33FFFFFF</color>
     <color name="white30">#4DFFFFFF</color>
     <color name="white40">#66FFFFFF</color>
     <color name="white50">#80FFFFFF</color>
@@ -94,4 +95,5 @@
     <color name="brown">#7E3F11</color>
     <color name="gray_300">#D1D5DB</color>
     <color name="gray_400_ui">#9CA3AF</color>
+    <color name="stroke_card">#333333</color>
 </resources>

@@ -16,6 +16,7 @@ import com.humotron.app.domain.modal.response.GetAllAddressResponse
 import com.humotron.app.domain.modal.response.GetCartResponse
 import com.humotron.app.domain.modal.response.AddressAutocompleteResponse
 import com.humotron.app.domain.modal.response.FullAddressResponse
+import com.humotron.app.domain.modal.response.GetAllLabResponse
 import com.humotron.app.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -31,12 +32,16 @@ class ShopViewModel @Inject constructor(
     
     // Booking Flow Data
     private var selectedBookingType: BookingTypeResponse.BookingType? = null
+    private var selectedLab: com.humotron.app.domain.modal.response.GetAllLabResponse.Lab? = null
     private var selectedAddress: GetCartResponse.Address? = null
     private var selectedDate: java.util.Calendar? = null
     private var selectedTime: String? = null
 
     fun setSelectedBookingType(type: BookingTypeResponse.BookingType?) { selectedBookingType = type }
     fun getSelectedBookingType() = selectedBookingType
+
+    fun setSelectedLab(lab: com.humotron.app.domain.modal.response.GetAllLabResponse.Lab?) { selectedLab = lab }
+    fun getSelectedLab() = selectedLab
 
     fun setSelectedAddress(address: GetCartResponse.Address?) { selectedAddress = address }
     fun getSelectedAddress() = selectedAddress
@@ -65,6 +70,9 @@ class ShopViewModel @Inject constructor(
 
     private val fullAddressLiveData: SingleLiveEvent<Resource<FullAddressResponse>> = SingleLiveEvent()
     fun getFullAddressLiveData(): SingleLiveEvent<Resource<FullAddressResponse>> = fullAddressLiveData
+
+    private val labsLiveData: SingleLiveEvent<Resource<GetAllLabResponse>> = SingleLiveEvent()
+    fun getLabsLiveData(): SingleLiveEvent<Resource<GetAllLabResponse>> = labsLiveData
 
     fun fetchShopDevices() {
         repository.getShopDevices().onEach { state ->
@@ -214,6 +222,12 @@ class ShopViewModel @Inject constructor(
     fun fetchProductDetail(id: String) {
         repository.getProductDetail(id).onEach { state ->
             productDetailLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
+
+    fun fetchAllLabs(postcode: String) {
+        repository.getAllLabName(postcode).onEach { state ->
+            labsLiveData.value = state
         }.launchIn(viewModelScope)
     }
 }

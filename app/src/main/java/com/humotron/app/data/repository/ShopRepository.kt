@@ -19,6 +19,7 @@ import com.humotron.app.domain.modal.response.UpdateAddressResponse
 import com.humotron.app.domain.modal.response.GetAllAddressResponse
 import com.humotron.app.domain.modal.response.AddressAutocompleteResponse
 import com.humotron.app.domain.modal.response.FullAddressResponse
+import com.humotron.app.domain.modal.response.GetAllLabResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
@@ -282,6 +283,19 @@ class ShopRepository @Inject constructor(
         emit(Resource.loading())
         try {
             val response = responseHandler.handleResponse(api.getProductById(id), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun getAllLabName(postcode: String): Flow<Resource<GetAllLabResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.getAllLabName(postcode), false)
             emit(response)
         } catch (e: Exception) {
             emit(responseHandler.handleException(e))

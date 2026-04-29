@@ -1,5 +1,6 @@
 package com.humotron.app.ui.shop
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.ViewCompat
@@ -97,12 +98,12 @@ class ShopFragment : BaseFragment(R.layout.fragment_shop) {
     }
 
     private fun resetTab(imageView: android.widget.ImageView, textView: android.widget.TextView, color: Int) {
-        imageView.setColorFilter(color)
+        imageView.imageTintList = ColorStateList.valueOf(color)
         textView.setTextColor(color)
     }
 
     private fun highlightTab(imageView: android.widget.ImageView, textView: android.widget.TextView, color: Int) {
-        imageView.setColorFilter(color)
+        imageView.imageTintList = ColorStateList.valueOf(color)
         textView.setTextColor(color)
     }
 

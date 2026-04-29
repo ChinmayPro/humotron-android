@@ -69,6 +69,7 @@ import com.humotron.app.domain.modal.response.UpdateAddressResponse
 import com.humotron.app.domain.modal.response.AddressAutocompleteResponse
 import com.humotron.app.domain.modal.response.FullAddressResponse
 import com.humotron.app.domain.modal.response.GetAllAddressResponse
+import com.humotron.app.domain.modal.response.GetAllLabResponse
 import com.humotron.app.domain.modal.param.DefaultConfigRequest
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -370,4 +371,9 @@ interface AppApi {
     suspend fun getProductById(
         @Path("productId") productId: String
     ): Response<ProductDetailResponse>
+
+    @GET("lab/getAllLabName")
+    suspend fun getAllLabName(
+        @Query("postcode") postcode: String
+    ): Response<GetAllLabResponse>
 }
