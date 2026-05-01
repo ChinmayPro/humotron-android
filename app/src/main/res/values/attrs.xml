@@ -25,4 +25,20 @@
         <attr name="cardStrokeColor" format="color" />
         <attr name="cardStrokeWidth" format="dimension" />
     </declare-styleable>
+
+    <declare-styleable name="LayeredCardView">
+
+        <attr name="titleTextSize" format="dimension" />
+        <attr name="descriptionTextSize" format="dimension" />
+        <attr name="plusTextSize" format="dimension" />
+
+        <attr name="titleTextColor" format="color" />
+        <attr name="descriptionTextColor" format="color" />
+        <attr name="plusTextColor" format="color" />
+
+        <attr name="titleFontFamily" format="reference|string" />
+        <attr name="descriptionFontFamily" format="reference|string" />
+        <attr name="plusFontFamily" format="reference|string" />
+
+    </declare-styleable>
 </resources>

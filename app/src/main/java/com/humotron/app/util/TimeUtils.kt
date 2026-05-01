@@ -187,12 +187,36 @@ fun formatCartDate(dateStr: String?, timeStr: String?): String {
     }
 }
 
-fun formatMillisToIso(millis: Long): String {
+fun formatMillisToIsoUtc(millis: Long): String {
     return try {
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-            .withZone(ZoneId.systemDefault())
+        val formatter = DateTimeFormatter
+            .ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+            .withZone(ZoneOffset.UTC)
+
         formatter.format(Instant.ofEpochMilli(millis))
     } catch (e: Exception) {
         ""
+    }
+}
+
+fun getTimeAgo(timeInMillis: Long): String {
+    val now = System.currentTimeMillis()
+    val diff = now - timeInMillis
+
+    if (diff < 0) return "just now"
+
+    val seconds = diff / 1000
+    val minutes = seconds / 60
+    val hours = minutes / 60
+    val days = hours / 24
+    val weeks = days / 7
+
+    return when {
+        seconds < 5 -> "just now"
+        seconds < 60 -> "$seconds seconds ago"
+        minutes < 60 -> "$minutes minutes ago"
+        hours < 24 -> "$hours hours ago"
+        days < 7 -> "$days days ago"
+        else -> "$weeks weeks ago"
     }
 }

@@ -41,6 +41,8 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.time.Duration
+import java.time.Instant
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -371,25 +373,57 @@ class DeviceViewModel @Inject constructor(
         }
     }
 
-    fun getDaysAgoString(dataSync: String?): String {
+    fun getTimeAgo(dataSync: String?): String {
         if (dataSync.isNullOrBlank()) return "NA"
 
         return try {
-            val syncDate = runCatching {
-                java.time.OffsetDateTime.parse(dataSync).toLocalDate()
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+
+            val syncInstant = runCatching {
+                OffsetDateTime.parse(dataSync).toInstant()
             }.recoverCatching {
-                val formatter =
-                    java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-                java.time.OffsetDateTime.parse(dataSync, formatter).toLocalDate()
+                OffsetDateTime.parse(dataSync, formatter).toInstant()
             }.getOrNull() ?: return "NA"
 
-            val today = java.time.LocalDate.now()
-            val daysAgo = java.time.temporal.ChronoUnit.DAYS.between(syncDate, today)
+            val now = Instant.now()
+            val seconds = Duration.between(syncInstant, now).seconds
 
-            when (daysAgo) {
-                0L -> "Today"
-                1L -> "1 day ago"
-                else -> "$daysAgo days ago"
+            when {
+                seconds < 0 -> "Just now"
+
+                seconds < 10 -> "Just now"
+
+                seconds < 60 -> "$seconds seconds ago"
+
+                seconds < 3600 -> {
+                    val minutes = seconds / 60
+                    if (minutes == 1L) "1 minute ago"
+                    else "$minutes minutes ago"
+                }
+
+                seconds < 86400 -> {
+                    val hours = seconds / 3600
+                    if (hours == 1L) "1 hour ago"
+                    else "$hours hours ago"
+                }
+
+                seconds < 604800 -> {
+                    val days = seconds / 86400
+                    if (days == 1L) "1 day ago"
+                    else "$days days ago"
+                }
+
+                seconds < 2592000 -> {
+                    val weeks = seconds / 604800
+                    if (weeks == 1L) "1 week ago"
+                    else "$weeks weeks ago"
+                }
+
+                else -> {
+                    val months = seconds / 2592000
+                    if (months == 1L) "1 month ago"
+                    else "$months months ago"
+                }
             }
 
         } catch (e: Exception) {

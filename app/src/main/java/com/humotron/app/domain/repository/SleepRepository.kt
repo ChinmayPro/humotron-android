@@ -35,12 +35,11 @@ import com.humotron.app.domain.modal.param.DetailActivityData
 import com.humotron.app.domain.modal.param.GetAllScanByTypeParam
 import com.humotron.app.domain.modal.param.HeartRateData
 import com.humotron.app.domain.modal.param.RingReadingParam
+import com.humotron.app.domain.modal.param.SaveScanDataParam
 import com.humotron.app.domain.modal.param.Spo2Data
 import com.humotron.app.domain.modal.param.TotalActivityData
 import com.humotron.app.domain.modal.param.WristBandApiParam
-import com.humotron.app.domain.modal.param.SaveScanDataParam
 import com.humotron.app.domain.modal.response.AddDeviceDataResponse
-import com.humotron.app.domain.modal.response.CommonResponse
 import com.humotron.app.domain.modal.response.AddHardwareResponse
 import com.humotron.app.domain.modal.response.AllMetricsResponse
 import com.humotron.app.domain.modal.response.DailyCalculatedMetricsResponse
@@ -57,7 +56,7 @@ import com.humotron.app.domain.modal.response.WristBandSleepDurationResponse
 import com.humotron.app.util.PrefUtils
 import com.humotron.app.util.TAG_BAND_DEBUG
 import com.humotron.app.util.TAG_RING_DEBUG
-import com.humotron.app.util.formatMillisToIso
+import com.humotron.app.util.formatMillisToIsoUtc
 import com.humotron.app.util.loge
 import com.pluto.plugins.logger.PlutoLog
 import kotlinx.coroutines.CoroutineScope
@@ -260,12 +259,12 @@ class SleepRepository(
                 spo2 = bandSpO2.map {
                     Spo2Data(
                         automaticSpo2Data = it.automaticSpo2Data,
-                        date = it.date,
+                        date = formatMillisToIsoUtc(it.measuredAt),
                     )
                 },
                 hrv = bandHrv.map {
                     BandHrv(
-                        date = it.date,
+                        date = formatMillisToIsoUtc(it.measuredAt),
                         systolicBP = it.highBP,
                         diastolicBP = it.lowBP,
                         heartRate = it.heartRate,
@@ -276,7 +275,7 @@ class SleepRepository(
                 },
                 detailActivity = bandDetail.map {
                     DetailActivityData(
-                        date = it.date,
+                        date = formatMillisToIsoUtc(it.measuredAt),
                         arraySteps = it.arraySteps,
                         step = it.step,
                         distance = it.distance,
@@ -285,7 +284,7 @@ class SleepRepository(
                 },
                 hr = bandHr.map {
                     HeartRateData(
-                        date = it.date,
+                        date = formatMillisToIsoUtc(it.measuredAt),
                         singleHR = it.singleHR,
                     )
                 },
@@ -294,7 +293,7 @@ class SleepRepository(
                         goal = it.goal,
                         distance = it.distance,
                         calories = it.calories,
-                        date = it.date,
+                        date = formatMillisToIsoUtc(it.measuredAt),
                         activeMinutes = it.activeMinutes,
                         step = it.step,
                         exerciseMinutes = it.exerciseMinutes,
@@ -306,7 +305,7 @@ class SleepRepository(
                         totalSleepTime = it.totalSleepTime,
                         sleepUnitLength = it.sleepUnitLength,
                         startTime_SleepData = it.startTimeSleepData,
-                        date = formatMillisToIso(it.measuredAt)
+                        date = formatMillisToIsoUtc(it.measuredAt)
                     )
                 }
             ),
@@ -314,7 +313,7 @@ class SleepRepository(
         )
 
         return try {
-            PlutoLog.e(TAG_RING_DEBUG, "Send Band Data to Server")
+            PlutoLog.e(TAG_BAND_DEBUG, "Send Band Data to Server")
             val response = responseHandler.handleResponse(api.sendBandDataToServer(payload), false)
             if (response.status == Status.SUCCESS) {
                 sleepDao.syncBandSpO2Data(bandSpO2.map { it.id })
