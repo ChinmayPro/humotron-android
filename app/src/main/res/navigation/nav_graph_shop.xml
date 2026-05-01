@@ -47,6 +47,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentBookingType_to_enterPincodeFragment"
+            app:destination="@id/enterPincodeFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -82,5 +89,80 @@
         android:name="com.humotron.app.ui.shop.VerifyBookingFragment"
         android:label="VerifyBookingFragment"
         tools:layout="@layout/fragment_verify_booking" />
+
+    <fragment
+        android:id="@+id/fragmentShopOptimizeDetail"
+        android:name="com.humotron.app.ui.shop.ShopOptimizeDetailFragment"
+        android:label="Optimize Details">
+        <argument
+            android:name="supplement"
+            android:defaultValue="@null"
+            app:argType="com.humotron.app.domain.modal.response.SupplementItem"
+            app:nullable="true" />
+        <argument
+            android:name="recipe"
+            android:defaultValue="@null"
+            app:argType="com.humotron.app.domain.modal.response.RecipeItem"
+            app:nullable="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/enterPincodeFragment"
+        android:name="com.humotron.app.ui.shop.EnterPincodeFragment"
+        android:label="Enter Pincode"
+        tools:layout="@layout/fragment_enter_pincode">
+        <action
+            android:id="@+id/action_enterPincodeFragment_to_fragmentSelectLab"
+            app:destination="@id/fragmentSelectLab"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_enterPincodeFragment_to_fragmentSelectAddress"
+            app:destination="@id/fragmentSelectAddress"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentSelectLab"
+        android:name="com.humotron.app.ui.shop.SelectLabFragment"
+        android:label="Select Lab"
+        tools:layout="@layout/fragment_select_lab">
+        <argument
+            android:name="postcode"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_fragmentSelectLab_to_fragmentSelectAddress"
+            app:destination="@id/fragmentSelectAddress"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentSelectLab_to_fragmentChooseDateTime"
+            app:destination="@id/fragmentChooseDateTime"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentTronChat"
+        android:name="com.humotron.app.ui.decode.TronChatFragment"
+        tools:layout="@layout/fragment_tron_chat">
+        <argument
+            android:name="chat_prompt_id"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="chat_prompt_title"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 
 </navigation>

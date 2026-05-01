@@ -234,12 +234,16 @@ To get started:\n
     <string name="deep_dives">Deep Dives</string>
     <string name="optimize">Optimize</string>
     <string name="chat">Chat</string>
+    <string name="tron_chat_title">Tron beta</string>
+    <string name="tron_chat_name">Tron</string>
+    <string name="tron_chat_beta">beta</string>
     <string name="no_insight_yet">No insight yet.</string>
     <string name="your_baseline">Your Baseline</string>
     <string name="what_is_temperature">What is Temperature?</string>
     <string name="why_it_matters_question">Why it matters?</string>
     <string name="stress_score">Stress Score</string>
     <string name="chat_headline">What would you like to chat with the Tron\nabout?</string>
+    <string name="tron_chat_headline">You are chatting\nwith Tron!</string>
     <string name="chat_option_metrics">Metrics you are tracking</string>
     <string name="chat_option_felt_off">Something that\'s felt off lately</string>
     <string name="chat_option_nutrition">A nutrition idea you\'re curious about</string>
@@ -250,6 +254,21 @@ To get started:\n
     <string name="chat_start_new_conversation">Start a new conversation</string>
     <string name="chat_delete_all_conversations">Delete All Conversations</string>
     <string name="chat_data_shared_info">What kind of data is shared?</string>
+    <string name="pack_size_format">Pack Size: %1$s / %2$s</string>
+    <string name="usage_format">• When to Take: %1$s\n\n• How to Take: %2$s</string>
+    <string name="faq_format">Q: %1$s\nA: %2$s</string>
+    <string name="dietary_supplement">Dietary Supplement</string>
+    <string name="by_prefix">By: </string>
+    <string name="daily_servings">Daily Servings</string>
+    <string name="supply_duration">Supply Duration</string>
+    <string name="suggestions_header">Suggestions for optimal results:</string>
+    <string name="course_length">Course Length</string>
+    <string name="when_to_take_question">When to take?</string>
+    <string name="usage_instructions">Usage Instructions</string>
+    <string name="key_ingredients">Key Ingredients</string>
+    <string name="how_it_works">How It Works</string>
+    <string name="why_product">Why Product?</string>
+    <string name="buy_now_with_arrow">Buy Now →</string>
     <string name="chat_manage_settings_info">Manage AI Chat Settings\nin the Control Panel</string>
     <string name="chat_choose_metric_headline">Choose the metric\nyou want to talk to\nTron about?</string>
     <string name="chat_active_metrics_header">Active Metrics</string>
@@ -315,8 +334,6 @@ To get started:\n
     <string name="step_3_select_reports_desc">Choose specific reports from the search results for import.</string>
     <string name="step_4_confirm_import">Step 4 - Confirm Import</string>
     <string name="step_4_confirm_import_desc">Confirm to upload these reports to your Humotron profile.</string>
-
-    <!-- Email Search Screen -->
     <string name="email_import">Email Import</string>
     <string name="review_permissions">Review the permissions</string>
     <string name="keywords">Keywords</string>
@@ -422,8 +439,6 @@ To get started:\n
     <string name="view_detailed_bill">View Detailed Bill</string>
     <string name="cart_trust_info">Incl. VAT &amp; shipping fees</string>
     <string name="cart_policy_info">100%% secure payments • 7-day easy return</string>
-
-    <!-- Optimize Tab -->
     <string name="optimize_title">Suggestions to Optimize\nYour Metrics</string>
     <string name="optimize_subtitle">Backed by data, powered by AI — these suggestions are not medical advice, but a guide to help you take action.</string>
     <string name="category_supplements">Supplements</string>
@@ -521,7 +536,6 @@ To get started:\n
     <string name="cardiac_test_details">Cardiac Biomarker Test Details</string>
     <string name="choose_date_time">Choose Date &amp; Time</string>
     <string name="select_address">Select Address</string>
-    <!-- Enter Address Details -->
     <string name="enter_address_details">Enter Address Details</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
@@ -554,4 +568,15 @@ To get started:\n
     <string name="address_label">Address</string>
     <string name="confirm_booking">Confirm Booking</string>
     <string name="msg_booking_confirmed">Booking Confirmed!</string>
+    <string name="select_quantity_title">Select Quantity</string>
+    <string name="suggested_quantity_title">Suggested Quantity for Your Course</string>
+    <string name="suggested_quantity_desc">Based on the recommended 3-month course, we suggest purchasing 3 jars to ensure you stay consistent with your health journey.</string>
+    <string name="shelf_life_desc">Shelf Life: Don’t worry about storage—each jar has a shelf life of 18 months, so you can stock up without hesitation.</string>
+    <string name="edit_quantity_footer">You can edit the quantity above if you wish to.</string>
+    <string name="enable_location_pincode_title">Enable Location\nAccess or\nProvide Your Post Code\nto Proceed</string>
+    <string name="access_to_location">Access to Location</string>
+    <string name="or">Or</string>
+    <string name="enter_pincode_label">Enter Pincode</string>
+    <string name="selected_lab">Selected Lab</string>
+    <string name="please_select_details">Please select all details</string>
 </resources>

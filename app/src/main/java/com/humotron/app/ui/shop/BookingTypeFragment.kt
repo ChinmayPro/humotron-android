@@ -62,7 +62,11 @@ class BookingTypeFragment : BaseFragment(R.layout.fragment_booking_type) {
 
         binding.btnContinue.setOnClickListener {
             viewModel.setSelectedBookingType(selectedType)
-            findNavController().navigate(R.id.action_fragmentBookingType_to_fragmentSelectAddress)
+            if (selectedType?.title == "Lab visit") {
+                findNavController().navigate(R.id.action_fragmentBookingType_to_enterPincodeFragment)
+            } else {
+                findNavController().navigate(R.id.action_fragmentBookingType_to_fragmentSelectAddress)
+            }
         }
     }
 

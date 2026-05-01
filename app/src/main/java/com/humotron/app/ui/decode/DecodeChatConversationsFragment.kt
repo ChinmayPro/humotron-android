@@ -213,7 +213,9 @@ class DecodeChatConversationsFragment : DialogFragment() {
             view?.setBackgroundColor(Color.argb(alpha, 0, 0, 0))
         }
         animator.withEndAction {
-            super.dismiss()
+            if (isAdded && parentFragmentManager != null) {
+                dismissAllowingStateLoss()
+            }
         }
         animator.start()
     }

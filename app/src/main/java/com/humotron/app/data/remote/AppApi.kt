@@ -65,6 +65,7 @@ import com.humotron.app.domain.modal.response.UseCaseResponse
 import com.humotron.app.domain.modal.response.VerifyOtpResponse
 import com.humotron.app.domain.modal.response.WristBandSleepDurationResponse
 import com.humotron.app.domain.modal.response.YetToTrackMetricResponse
+import com.humotron.app.domain.modal.response.ProductDetailResponse
 import com.humotron.app.domain.modal.response.ProductVariantResponse
 import com.humotron.app.domain.modal.response.BookingTypeResponse
 import com.humotron.app.domain.modal.response.ShopAddToCartResponse
@@ -74,6 +75,7 @@ import com.humotron.app.domain.modal.response.UpdateAddressResponse
 import com.humotron.app.domain.modal.response.AddressAutocompleteResponse
 import com.humotron.app.domain.modal.response.FullAddressResponse
 import com.humotron.app.domain.modal.response.GetAllAddressResponse
+import com.humotron.app.domain.modal.response.GetAllLabResponse
 import com.humotron.app.domain.modal.param.DefaultConfigRequest
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -165,6 +167,12 @@ interface AppApi {
     suspend fun deviceLikeDislike(
         @Path("deviceId") deviceId: String,
         @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0)),
+    ): Response<CommonResponse>
+
+    @POST("product/productLikeDislike/{productId}")
+    suspend fun productLikeDislike(
+        @Path("productId") productId: String,
+        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0))
     ): Response<CommonResponse>
 
     @POST("device/{endpoint}/{ringId}")
@@ -380,4 +388,14 @@ interface AppApi {
         @Path("id") id: String,
         @Query("api-key") apiKey: String = "Mh0BQoYe8UeAX5lplKtd1A45644"
     ): Response<FullAddressResponse>
+
+    @GET("product/getProductById/{productId}")
+    suspend fun getProductById(
+        @Path("productId") productId: String
+    ): Response<ProductDetailResponse>
+
+    @GET("lab/getAllLabName")
+    suspend fun getAllLabName(
+        @Query("postcode") postcode: String
+    ): Response<GetAllLabResponse>
 }

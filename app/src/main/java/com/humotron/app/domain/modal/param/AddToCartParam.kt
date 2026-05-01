@@ -17,6 +17,8 @@ data class AddToCartParam(
     val quantity: Int?,
     @SerializedName("variantId")
     val variantId: String? = "",
+    @SerializedName("bookingType")
+    val bookingType: String? = null,
     @SerializedName("bookingDetails")
     val bookingDetails: BookingDetails? = null
 ) : Parcelable
@@ -28,5 +30,7 @@ data class BookingDetails(
     @SerializedName("time")
     val time: String?,
     @SerializedName("addressId")
-    val addressId: String?
+    val addressId: String? = null,
+    @SerializedName("labId")
+    val labId: String? = null
 ) : Parcelable

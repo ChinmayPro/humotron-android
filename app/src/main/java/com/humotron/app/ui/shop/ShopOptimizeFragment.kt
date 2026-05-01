@@ -11,6 +11,8 @@ import com.humotron.app.domain.modal.response.OptimizedRecipeData
 import com.humotron.app.ui.shop.adapter.OptimizeAdapter
 import com.humotron.app.ui.shop.adapter.OptimizeUIItem
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.navigation.fragment.findNavController
+import com.humotron.app.domain.modal.response.GetShopDevicesResponse
 
 @AndroidEntryPoint
 class ShopOptimizeFragment : BaseFragment(R.layout.fragment_shop_optimize) {
@@ -32,10 +34,27 @@ class ShopOptimizeFragment : BaseFragment(R.layout.fragment_shop_optimize) {
     private fun setupAdapter() {
         adapter = OptimizeAdapter(
             items = emptyList(),
-            onExploreClick = { id, type ->
-                // TODO: Navigate to details based on type if needed
+            onExploreClick = { item ->
+                val bundle = Bundle()
+                when (item) {
+                    is OptimizeUIItem.Supplement -> {
+                        bundle.putParcelable("supplement", item.data)
+                    }
+                    is OptimizeUIItem.Recipe -> {
+                        bundle.putParcelable("recipe", item.data)
+                    }
+                    is OptimizeUIItem.Recommendation -> {
+                        // Recommendations might lead elsewhere or to a generic detail
+                    }
+                    else -> {}
+                }
+                
+                if (!bundle.isEmpty) {
+                    (parentFragment?.parentFragment as? ShopFragment)?.findNavController()
+                        ?.navigate(R.id.fragmentShopOptimizeDetail, bundle)
+                }
             },
-            onChatPromptClick = { promptId, title ->
+            onChatPromptClick = { _, _ ->
                 // TODO: Handle chat prompt click
             }
         )
@@ -83,6 +102,20 @@ class ShopOptimizeFragment : BaseFragment(R.layout.fragment_shop_optimize) {
             if (supplements.isNotEmpty()) {
                 list.add(OptimizeUIItem.Header(getString(R.string.category_supplements)))
                 supplements.forEach { list.add(OptimizeUIItem.Supplement(it)) }
+            }
+        }
+
+        data.recipes?.let { recipes ->
+            if (recipes.isNotEmpty()) {
+                list.add(OptimizeUIItem.Header(getString(R.string.category_recipes)))
+                recipes.forEach { list.add(OptimizeUIItem.Recipe(it)) }
+            }
+        }
+
+        data.recommendations?.let { recommendations ->
+            if (recommendations.isNotEmpty()) {
+                list.add(OptimizeUIItem.Header(getString(R.string.category_recommendations)))
+                recommendations.forEach { list.add(OptimizeUIItem.Recommendation(it)) }
             }
         }
 
