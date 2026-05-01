@@ -65,6 +65,10 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             findNavController().navigate(R.id.action_fragmentProfile_to_fragmentCart)
         }
 
+        binding.btnPreferences.setOnClickListener {
+            findNavController().navigate(R.id.action_fragmentProfile_to_fragmentPreferences)
+        }
+
         binding.clPrivacy.setOnClickListener {
             // TODO: Navigate to Privacy screen
         }

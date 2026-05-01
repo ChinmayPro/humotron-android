@@ -77,6 +77,7 @@ import com.humotron.app.domain.modal.response.FullAddressResponse
 import com.humotron.app.domain.modal.response.GetAllAddressResponse
 import com.humotron.app.domain.modal.response.GetAllLabResponse
 import com.humotron.app.domain.modal.param.DefaultConfigRequest
+import com.humotron.app.domain.modal.response.DeliveryOptionResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -124,6 +125,17 @@ interface AppApi {
         @Path("userId") userId: String,
         @Body data: CompleteOnboardingParam,
     ): Response<VerifyOtpResponse>
+
+    @POST("user/updateUserById/{userId}")
+    suspend fun updateUserById(
+        @Path("userId") userId: String,
+        @Body data: HashMap<String, Any>,
+    ): Response<com.humotron.app.domain.modal.response.CommonResponse>
+    
+    @GET("promoCode/removePromoCodeByUser/{userId}")
+    suspend fun removePromoCodeByUser(
+        @Path("userId") userId: String
+    ): Response<com.humotron.app.domain.modal.response.CommonResponse>
 
     @POST("interests/getAllInterest")
     suspend fun getInterests(): Response<UseCaseResponse>
@@ -368,6 +380,16 @@ interface AppApi {
         @Body request: DefaultConfigRequest
     ): Response<GetDefaultConfigResponse>
 
+    @POST("order/getDefaultConfiguration")
+    suspend fun getDefaultConfigurationNoBody(
+        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0))
+    ): Response<GetDefaultConfigResponse>
+
+    @POST("deliveryOption/getAllDeliveryOptionByLimit")
+    suspend fun getAllDeliveryOptionByLimit(
+        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0))
+    ): Response<DeliveryOptionResponse>
+
     @POST("address/getAllAddressByUserId")
     suspend fun getAllAddressByUserId(): Response<GetAllAddressResponse>
 
@@ -398,4 +420,9 @@ interface AppApi {
     suspend fun getAllLabName(
         @Query("postcode") postcode: String
     ): Response<GetAllLabResponse>
+
+    @GET("promoCode/getPromoCodeDetailsByPromoCode/{promoCode}")
+    suspend fun getPromoCodeDetailsByPromoCode(
+        @Path("promoCode") promoCode: String
+    ): Response<com.humotron.app.domain.modal.response.PromoCodeDetailsResponse>
 }

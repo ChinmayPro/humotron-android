@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_dialog_top_rounded"
+    android:backgroundTint="#1C1C1C"
+    android:paddingHorizontal="@dimen/_20dp"
+    android:paddingTop="@dimen/_25dp"
+    android:paddingBottom="@dimen/_20dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTitle"
+        style="@style/Text.20x.Manrope.Bold"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toStartOf="@id/ivClose"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivClose"
+        android:layout_width="@dimen/_24dp"
+        android:layout_height="@dimen/_24dp"
+        android:src="@drawable/ic_close"
+        app:tint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvTitle"
+        app:layout_constraintBottom_toBottomOf="@id/tvTitle" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etCode"
+        style="@style/Text.16x.Manrope.Regular"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50dp"
+        android:layout_marginTop="@dimen/_30dp"
+        android:background="@drawable/bg_edittext_address"
+        android:paddingHorizontal="@dimen/_16dp"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white30"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvError"
+        style="@style/Text.12x.Manrope.Regular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5dp"
+        android:textColor="@android:color/holo_red_dark"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/etCode"
+        tools:text="Invalid VAT Number"
+        tools:visibility="visible" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSave"
+        style="@style/Text.16x.Manrope.SemiBold"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50dp"
+        android:layout_marginTop="@dimen/_30dp"
+        android:background="@drawable/bg_btn_round_corner"
+        android:text="@string/save"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvError" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

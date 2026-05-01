@@ -105,7 +105,7 @@ class ShopOptimizeFragment : BaseFragment(R.layout.fragment_shop_optimize) {
             }
         }
 
-        data.recipes?.let { recipes ->
+        /*data.recipes?.let { recipes ->
             if (recipes.isNotEmpty()) {
                 list.add(OptimizeUIItem.Header(getString(R.string.category_recipes)))
                 recipes.forEach { list.add(OptimizeUIItem.Recipe(it)) }
@@ -117,7 +117,7 @@ class ShopOptimizeFragment : BaseFragment(R.layout.fragment_shop_optimize) {
                 list.add(OptimizeUIItem.Header(getString(R.string.category_recommendations)))
                 recommendations.forEach { list.add(OptimizeUIItem.Recommendation(it)) }
             }
-        }
+        }*/
 
         return list
     }

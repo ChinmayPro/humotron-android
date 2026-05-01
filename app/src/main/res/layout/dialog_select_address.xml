@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:cardBackgroundColor="@color/black"
     app:cardCornerRadius="0dp"
     app:cardElevation="0dp"
+    app:cardBackgroundColor="@android:color/transparent"
     app:shapeAppearanceOverlay="@style/BottomSheetShape"
     app:strokeColor="@android:color/transparent"
     app:strokeWidth="0dp">
+
 
     <FrameLayout
         android:layout_width="match_parent"

@@ -24,6 +24,19 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentProfile_to_fragmentPreferences"
+            app:destination="@id/fragmentPreferences"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+
+    <fragment
+        android:id="@+id/fragmentPreferences"
+        android:name="com.humotron.app.ui.profile.PreferencesFragment"
+        android:label="Preferences"
+        tools:layout="@layout/fragment_preferences" />
 
 </navigation>

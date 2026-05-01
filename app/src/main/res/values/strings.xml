@@ -377,6 +377,11 @@ To get started:\n
     <string name="order">Order</string>
     <string name="cart">Cart</string>
     <string name="recipes">Recipes</string>
+    <string name="key_configurations">Key Configurations</string>
+    <string name="preferences">Preferences</string>
+    <string name="chat_with_ai">Chat with AI</string>
+    <string name="recipe_generator">Recipe Generator</string>
+    <string name="learning">Learning</string>
     <string name="header_devices">Devices</string>
     <string name="header_scans">Scans</string>
     <string name="header_books">Books</string>
@@ -580,4 +585,24 @@ To get started:\n
     <string name="enter_pincode_label">Enter Pincode</string>
     <string name="selected_lab">Selected Lab</string>
     <string name="please_select_details">Please select all details</string>
+    <string name="configurations_order_preferences">Configurations › Order Preferences</string>
+    <string name="optimize_checkout_desc">Optimize your checkout flow. Store your essentials here once and breeze through orders.</string>
+    <string name="expected_delivery_colon">Expected Delivery:</string>
+    <string name="vat_number">VAT Number</string>
+    <string name="coupon_code">Coupon Code</string>
+    <string name="add_vat_number">Add VAT Number</string>
+    <string name="email_me_invoices">Email me invoices</string>
+    <string name="select_delivery_method">Select Delivery Method</string>
+    <string name="save">Save</string>
+    <string name="error_fetching_delivery_options">Error fetching delivery options</string>
+    <string name="error_fetching_default_config">Error fetching default config</string>
+    <string name="loading_delivery_options">Loading delivery options...</string>
+    <string name="cannot_be_empty">Cannot be empty</string>
+    <string name="invalid_promo_code">Invalid Promo Code</string>
+    <string name="congratulations">Congratulations! \uD83C\uDF89</string>
+    <string name="promo_code_applied">Your promo code has been successfully applied</string>
+    <string name="coupon_applied">Coupon Applied</string>
+    <string name="discount_label">Discount</string>
+    <string name="ring_finger_size">Ring Finger Size</string>
+    <string name="set_now">SET NOW</string>
 </resources>

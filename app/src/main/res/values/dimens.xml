@@ -54,5 +54,7 @@
     <dimen name="_130dp">130dp</dimen>
     <dimen name="_140dp">140dp</dimen>
     <dimen name="_150dp">150dp</dimen>
+    <dimen name="_200dp">200dp</dimen>
 
+    <dimen name="_280dp">280dp</dimen>
 </resources>
