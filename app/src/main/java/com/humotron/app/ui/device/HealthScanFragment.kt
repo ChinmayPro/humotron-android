@@ -408,7 +408,7 @@ class HealthScanFragment : BaseFragment(R.layout.fragment_health_scan) {
     private fun startTimer(type: HealthScanType) {
         timerJob?.cancel()
         timerJob = lifecycleScope.launch {
-            var seconds = 120
+            var seconds = 10
             while (seconds >= 0) {
                 val timeStr =
                     String.format(Locale.getDefault(), "%02d:%02d", seconds / 60, seconds % 60)
@@ -421,8 +421,17 @@ class HealthScanFragment : BaseFragment(R.layout.fragment_health_scan) {
 
                     HealthScanType.HR -> binding.tvTimer.text = timeStr
                     HealthScanType.SPO2 -> {
-                        val secStr = String.format(Locale.getDefault(), "%02d", seconds % 60)
-                        binding.tvOxygenTimer.text = "00:00:$secStr"
+                        val hours = seconds / 3600
+                        val minutes = (seconds % 3600) / 60
+                        val secs = seconds % 60
+
+                        binding.tvOxygenTimer.text = String.format(
+                            Locale.getDefault(),
+                            "%02d:%02d:%02d",
+                            hours,
+                            minutes,
+                            secs
+                        )
                     }
                     HealthScanType.TEMPERATURE -> {
                         binding.tvThermalTimer.text = timeStr

@@ -21,27 +21,28 @@ import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.isVisible
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.humotron.app.R
-import com.humotron.app.bt.ring.RingBleDevice
-import com.humotron.app.bt.ring.OnBleScanCallback
 import com.humotron.app.bt.band.BandBleManager
+import com.humotron.app.bt.ring.OnBleScanCallback
+import com.humotron.app.bt.ring.RingBleDevice
 import com.humotron.app.core.App
 import com.humotron.app.core.Preference
 import com.humotron.app.data.local.AppDatabase
 import com.humotron.app.databinding.ActivityMainBinding
 import com.humotron.app.ui.connect.DeviceConnectedFragment
-import com.humotron.app.ui.connect.RingConnectionFragment
 import com.humotron.app.ui.connect.HomeViewModel
+import com.humotron.app.ui.connect.RingConnectionFragment
 import com.humotron.app.ui.onboarding.OnBoardingActivity
 import com.humotron.app.util.PrefUtils
 import com.humotron.app.util.TAG_RING_DEBUG
+import com.humotron.app.util.formatMillisToIsoUtc
 import com.permissionx.guolindev.PermissionX
 import com.pluto.plugins.logger.PlutoLog
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,7 +50,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-import kotlin.getValue
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), View.OnClickListener {
@@ -120,16 +120,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             val window = this.window
             val decorView = window.decorView
             val controller = WindowInsetsControllerCompat(window, decorView)
-            
+
             when (destination.id) {
                 R.id.fragmentProfile, R.id.fragmentUploadedReports, R.id.fragmentBookingType, R.id.fragmentSelectAddress, R.id.fragmentChooseDateTime, R.id.fragmentVerifyBooking -> {
                     window.statusBarColor = android.graphics.Color.BLACK
                     controller.isAppearanceLightStatusBars = false
                 }
+
                 R.id.fragmentShop -> {
                     window.statusBarColor = android.graphics.Color.TRANSPARENT
                     controller.isAppearanceLightStatusBars = false
                 }
+
                 else -> {
                     window.statusBarColor = android.graphics.Color.TRANSPARENT
                     controller.isAppearanceLightStatusBars = false

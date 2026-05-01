@@ -51,6 +51,7 @@
                 android:textColor="@color/dark_orange" />
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mcvMessage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -107,10 +108,11 @@
                             android:textColor="@color/card_text_green" />
 
                         <TextView
+                            android:id="@+id/tvAverage"
                             style="@style/Text.14x.Manrope.Bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/average_hrv"
+                            android:text="@string/average_"
                             android:textColor="@color/white" />
 
                         <TextView
@@ -149,10 +151,11 @@
                             android:textColor="@color/card_text_green" />
 
                         <TextView
+                            android:id="@+id/tvCurrent"
                             style="@style/Text.14x.Manrope.Bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/current_hrv"
+                            android:text="@string/current_"
                             android:textColor="@color/white" />
 
                         <TextView
@@ -170,98 +173,18 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <!-- TODO: Stress Chart / Visualization -->
-            <com.google.android.material.card.MaterialCardView
+            <com.humotron.app.view.LayeredCardView
+                android:id="@+id/layeredCardView"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                app:cardCornerRadius="12dp"
-                app:strokeWidth="0dp">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@color/red_1" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:text="@string/stressed"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
-                <!-- Inner rectangles for Thriving, Balanced, Alert, Challenged -->
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="250dp"
-                    android:layout_height="180dp"
-                    android:layout_gravity="bottom|start"
-                    app:cardBackgroundColor="@color/w200"
-                    app:cardCornerRadius="0dp"
-                    app:strokeWidth="0dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:text="@string/challenged"
-                        android:textColor="@color/black"
-                        android:textStyle="bold" />
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="180dp"
-                    android:layout_height="130dp"
-                    android:layout_gravity="bottom|start"
-                    app:cardBackgroundColor="#FFC107"
-                    app:cardCornerRadius="0dp"
-                    app:strokeWidth="0dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:text="@string/alert"
-                        android:textColor="@color/black"
-                        android:textStyle="bold" />
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="100dp"
-                    android:layout_height="80dp"
-                    android:layout_gravity="bottom|start"
-                    app:cardBackgroundColor="@color/card_text_green"
-                    app:cardCornerRadius="0dp"
-                    app:strokeWidth="0dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="4dp"
-                        android:text="@string/balanced"
-                        android:textColor="@color/black"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="50dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="bottom|start"
-                    app:cardBackgroundColor="#2196F3"
-                    app:cardCornerRadius="0dp"
-                    app:strokeWidth="0dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="2dp"
-                        android:text="@string/thriving"
-                        android:textColor="@color/black"
-                        android:textSize="10sp"
-                        android:textStyle="bold" />
-                </com.google.android.material.card.MaterialCardView>
-
-            </com.google.android.material.card.MaterialCardView>
+                app:descriptionTextColor="@color/black"
+                app:descriptionTextSize="12sp"
+                app:plusTextColor="@color/black"
+                app:plusTextSize="15sp"
+                app:titleFontFamily="@font/manrope_bold"
+                app:titleTextColor="@color/black"
+                app:titleTextSize="14sp" />
 
             <TextView
                 style="@style/Text.18x.Manrope.Bold"
@@ -354,30 +277,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:cardDescription="@string/faq_a1"
+                app:cardDescription="@string/faq_a1_hrv"
                 app:cardStrokeColor="@color/card_border"
                 app:cardStrokeWidth="1dp"
-                app:cardTitle="@string/faq_q1" />
+                app:cardTitle="@string/faq_q1_hrv" />
 
             <com.humotron.app.view.ExpandableCardView
                 android:id="@+id/ecvFaq2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                app:cardDescription="@string/faq_a2"
+                app:cardDescription="@string/faq_a2_hrv"
                 app:cardStrokeColor="@color/card_border"
                 app:cardStrokeWidth="1dp"
-                app:cardTitle="@string/faq_q2" />
+                app:cardTitle="@string/faq_q2_hrv" />
 
             <com.humotron.app.view.ExpandableCardView
                 android:id="@+id/ecvFaq3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                app:cardDescription="@string/faq_a3"
+                app:cardDescription="@string/faq_a3_hrv"
                 app:cardStrokeColor="@color/card_border"
                 app:cardStrokeWidth="1dp"
-                app:cardTitle="@string/faq_q3" />
+                app:cardTitle="@string/faq_q3_hrv" />
 
             <TextView
                 android:id="@+id/tvDownloadReport"

@@ -346,7 +346,7 @@
                 android:orientation="vertical"
                 android:visibility="gone"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="gone">
+                tools:visibility="visible">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -403,6 +403,7 @@
                 android:layout_marginHorizontal="@dimen/_20dp"
                 android:layout_marginTop="@dimen/_25dp"
                 android:orientation="vertical"
+                android:visibility="gone"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.appcompat.widget.LinearLayoutCompat

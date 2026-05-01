@@ -36,7 +36,8 @@ class MetricsAdapter(private val onClick: (AllMetricsResponse.Data.Metric, Strin
             item: AllMetricsResponse.Data.Metric,
             onClick: (AllMetricsResponse.Data.Metric, String) -> Unit,
         ) {
-            tvType.text = item.metricValue?.fieldLabel
+            //tvType.text = item.metricValue?.fieldLabel
+            tvType.text = item.metricName
             tvValue.text = formatValue(item.metricValue?.value)
             tvMetricUnit.text = item.metricUnit
             val dateTime = item.metricValue?.timestamp ?: ""

@@ -1,4 +1,4 @@
-package com.humotron.app.ui
+package com.humotron.app.util.analyzer
 
 object HRVAnalyzer {
 
@@ -19,7 +19,7 @@ object HRVAnalyzer {
 
     fun analyze(
         baselineValue: Double,
-        currentValue: Double
+        currentValue: Double,
     ): HRVState {
         val delta = percentageChange(baselineValue, currentValue)
 

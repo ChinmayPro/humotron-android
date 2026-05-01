@@ -6,9 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.humotron.app.databinding.ItemWearablesBinding
 import com.humotron.app.domain.modal.response.GetAllDeviceResponse.Data.Wearable
-import java.text.SimpleDateFormat
+import com.humotron.app.util.getTimeAgo
 import java.time.Instant
-import java.util.Locale
 
 class WearableAdapter(
     private val wearables: List<Wearable>,
@@ -74,28 +73,6 @@ class WearableAdapter(
 
             binding.root.setOnClickListener {
                 onItemClick(wearable)
-            }
-        }
-
-        private fun getTimeAgo(timeInMillis: Long): String {
-            val now = System.currentTimeMillis()
-            val diff = now - timeInMillis
-
-            if (diff < 0) return "just now"
-
-            val seconds = diff / 1000
-            val minutes = seconds / 60
-            val hours = minutes / 60
-            val days = hours / 24
-            val weeks = days / 7
-
-            return when {
-                seconds < 5 -> "just now"
-                seconds < 60 -> "$seconds seconds ago"
-                minutes < 60 -> "$minutes minutes ago"
-                hours < 24 -> "$hours hours ago"
-                days < 7 -> "$days days ago"
-                else -> "$weeks weeks ago"
             }
         }
     }

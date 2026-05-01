@@ -47,6 +47,7 @@ import com.humotron.app.util.TAG_BAND_DEBUG
 import com.humotron.app.util.TAG_RING_DEBUG
 import com.humotron.app.util.convertDecimalHours
 import com.humotron.app.util.formatDateToMMMddyyyy
+import com.humotron.app.util.getTimeAgo
 import com.pluto.plugins.logger.PlutoLog
 import com.jstyle.blesdk2208a.Util.BleSDK
 import com.jstyle.blesdk2208a.callback.DataListener2025
@@ -58,6 +59,7 @@ import java.util.Locale
 import javax.inject.Inject
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
+import java.time.Instant
 
 @AndroidEntryPoint
 class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnClickListener {
@@ -149,6 +151,19 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
         }
         binding.tvDeviceName.text = wearable?.deviceName ?: ""
         binding.header.title.text = "${wearable?.deviceFacingName} Metrics"
+
+        if (!wearable?.dataSync.isNullOrEmpty()) {
+            try {
+                // Always parses correctly (UTC-aware)
+                val timeInMillis = Instant.parse(wearable?.dataSync).toEpochMilli()
+                binding.tvLastSyncTime.text = getTimeAgo(timeInMillis)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                binding.tvLastSyncTime.text = "-"
+            }
+        } else {
+            binding.tvLastSyncTime.text = "-"
+        }
     }
 
     private fun observeRing() {
@@ -392,8 +407,10 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
                             .sortedBy { it.metricOrder }
                         metricsAdapter.submitList(filteredMetrics)
                     }
-                    binding.tvLastSyncTime.text =
-                        viewModel.getDaysAgoString(data.device?.dataSync ?: "")
+
+                    //Commented because of has diff sync time
+                    /*binding.tvLastSyncTime.text =
+                        viewModel.getTimeAgo(data.device?.dataSync ?: "")*/
 
                     val deviceName = wearable?.deviceName
                     deviceName?.let {

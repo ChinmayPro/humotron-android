@@ -1,4 +1,4 @@
-package com.humotron.app.ui
+package com.humotron.app.util.analyzer
 
 import android.graphics.Color
 

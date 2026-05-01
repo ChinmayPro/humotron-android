@@ -7,9 +7,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.humotron.app.databinding.ItemPastScanBinding
 import com.humotron.app.domain.modal.response.PastScanData
-import com.humotron.app.ui.HRVAnalyzer
-import com.humotron.app.ui.HRVState
-import com.humotron.app.util.formatDateToMMMddyyyy
+import com.humotron.app.util.analyzer.BPMLoadAnalyzer
+import com.humotron.app.util.analyzer.HRVAnalyzer
+import com.humotron.app.util.analyzer.SpO2Analyzer
+import com.humotron.app.util.analyzer.ThermalAnalyzer
+import com.humotron.app.util.utcOffsetToLocalTime
 
 class PastScansAdapter(
     private val onItemClick: (PastScanData) -> Unit,
@@ -32,13 +34,39 @@ class PastScansAdapter(
     inner class ViewHolder(private val binding: ItemPastScanBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: PastScanData) {
-            val state = HRVAnalyzer.analyze(
-                item.baseline ?: 0.0,
-                item.current ?: 0.0
-            )
-            binding.tvStatus.text = state.title
-            binding.tvStatus.setTextColor(state.color)
-            binding.tvDate.text = formatDateToMMMddyyyy(item.createdAt)
+            val typeString = item.type ?: "HRV"
+            val baseline = item.baseline ?: 0.0
+            val current = item.current ?: 0.0
+
+            val (title, color) = when (typeString) {
+                HealthScanType.HRV.value -> {
+                    val state = HRVAnalyzer.analyze(baseline, current)
+                    state.title to state.color
+                }
+
+                HealthScanType.TEMPERATURE.value -> {
+                    val state = ThermalAnalyzer.analyze(baseline, current)
+                    state.title to state.color
+                }
+
+                HealthScanType.HR.value -> {
+                    val state = BPMLoadAnalyzer.analyze(baseline, current)
+                    state.title to state.color
+                }
+
+                HealthScanType.SPO2.value -> {
+                    val state = SpO2Analyzer.analyze(baseline, current)
+                    state.title to state.color
+                }
+
+                else -> {
+                    "Stable" to android.graphics.Color.parseColor("#00C620")
+                }
+            }
+
+            binding.tvStatus.text = title
+            binding.tvStatus.setTextColor(color)
+            binding.tvDate.text = utcOffsetToLocalTime(item.createdAt, "dd MMM yyyy, hh:mm a")
             binding.root.setOnClickListener { onItemClick(item) }
         }
     }
