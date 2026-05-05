@@ -288,6 +288,11 @@ interface AppApi {
         @Path("itemId") itemId: String,
     ): Response<CommonResponse>
 
+    @POST("cart/editCartQtyByItemId")
+    suspend fun editCartQtyByItemId(
+        @Body request: HashMap<String, Any>
+    ): Response<CommonResponse>
+
 
     @GET("book/getBookByUserPreference")
     suspend fun getBookDetail(): Response<BookPreferenceResponse>

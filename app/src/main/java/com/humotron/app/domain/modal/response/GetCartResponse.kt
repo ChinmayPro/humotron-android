@@ -98,6 +98,10 @@ data class GetCartResponse(
         val offer: Offer?,
         @SerializedName("totalAmount")
         val totalAmount: Double?,
+        @SerializedName("itemDiscount")
+        val itemDiscount: Double?,
+        @SerializedName("discountedAmount")
+        val discountedAmount: Double?,
         @SerializedName("visitAddress")
         val visitAddress: VisitAddress?,
         @SerializedName("productDetails")

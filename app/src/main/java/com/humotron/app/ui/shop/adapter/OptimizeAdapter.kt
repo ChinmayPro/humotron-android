@@ -93,10 +93,10 @@ class OptimizeAdapter(
             val delta = data.metricDelta?.toDoubleOrNull() ?: 0.0
             if (delta < 0) {
                 binding.ivDeltaIndicator.rotation = 90f // Down
-                binding.vStatusDot.setBackgroundResource(com.humotron.app.R.drawable.bg_red_indicator)
+//                binding.vStatusDot.setBackgroundResource(com.humotron.app.R.drawable.bg_red_indicator)
             } else {
                 binding.ivDeltaIndicator.rotation = -90f // Up
-                binding.vStatusDot.setBackgroundResource(com.humotron.app.R.drawable.bg_round_green)
+//                binding.vStatusDot.setBackgroundResource(com.humotron.app.R.drawable.bg_round_green)
             }
 
             Glide.with(binding.ivProduct).load(data.productImage).into(binding.ivProduct)

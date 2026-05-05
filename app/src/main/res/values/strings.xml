@@ -443,7 +443,7 @@ To get started:\n
     <string name="to_pay">To Pay</string>
     <string name="view_detailed_bill">View Detailed Bill</string>
     <string name="cart_trust_info">Incl. VAT &amp; shipping fees</string>
-    <string name="cart_policy_info">100%% secure payments • 7-day easy return</string>
+    <string name="cart_policy_info">100% secure payments • 7-day easy return</string>
     <string name="optimize_title">Suggestions to Optimize\nYour Metrics</string>
     <string name="optimize_subtitle">Backed by data, powered by AI — these suggestions are not medical advice, but a guide to help you take action.</string>
     <string name="category_supplements">Supplements</string>
@@ -604,4 +604,12 @@ To get started:\n
     <string name="discount_label">Discount</string>
     <string name="ring_finger_size">Ring Finger Size</string>
     <string name="set_now">SET NOW</string>
+    <string name="item_price">Item Price</string>
+    <string name="delivery_charges">Delivery Charges</string>
+    <string name="coupon_discount">Coupon Discount</string>
+    <string name="vat_info_format">Includes a VAT of %1$s%2$s</string>
+    <string name="promo_discount_format">%1$s (-%2$s%3$s)</string>
+    <string name="price_with_currency">%1$s%2$s</string>
+    <string name="discount_text_format">%1$s%2$.2f Discount</string>
+    <string name="price_format_decimal">%1$s%2$.2f</string>
 </resources>

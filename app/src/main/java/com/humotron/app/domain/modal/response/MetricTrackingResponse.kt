@@ -11,7 +11,31 @@ data class MetricTrackingResponse(
     @SerializedName("message")
     val message: String? = null,
     @SerializedName("data")
-    val data: List<MetricTrackingData>? = null
+    val data: MetricTrackingDataWrapper? = null
+) : Parcelable
+
+@Parcelize
+data class MetricTrackingDataWrapper(
+    @SerializedName("individualMetrics")
+    val individualMetrics: List<MetricTrackingData>? = null,
+    @SerializedName("groupMetrics")
+    val groupMetrics: List<GroupMetricData>? = null
+) : Parcelable
+
+@Parcelize
+data class GroupMetricData(
+    @SerializedName("categoryId")
+    val categoryId: String? = null,
+    @SerializedName("categoryName")
+    val categoryName: String? = null,
+    @SerializedName("deviceName")
+    val deviceName: String? = null,
+    @SerializedName("metricOrder")
+    val metricOrder: Int? = null,
+    @SerializedName("metrics")
+    val metrics: List<MetricTrackingData>? = null,
+    @SerializedName("hasMinimumData")
+    val hasMinimumData: Boolean? = null
 ) : Parcelable
 
 @Parcelize

@@ -11,7 +11,27 @@ data class YetToTrackMetricResponse(
     @SerializedName("message")
     val message: String? = null,
     @SerializedName("data")
-    val data: List<YetToTrackMetricData>? = null
+    val data: YetToTrackMetricDataWrapper? = null
+) : Parcelable
+
+@Parcelize
+data class YetToTrackMetricDataWrapper(
+    @SerializedName("individualMetrics")
+    val individualMetrics: List<YetToTrackMetricData>? = null,
+    @SerializedName("groupedMetrics")
+    val groupedMetrics: List<YetToTrackGroupedMetricData>? = null
+) : Parcelable
+
+@Parcelize
+data class YetToTrackGroupedMetricData(
+    @SerializedName("categoryId")
+    val categoryId: String? = null,
+    @SerializedName("categoryName")
+    val categoryName: String? = null,
+    @SerializedName("categoryDescription")
+    val categoryDescription: String? = null,
+    @SerializedName("deviceName")
+    val deviceName: String? = null
 ) : Parcelable
 
 @Parcelize

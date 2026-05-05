@@ -105,7 +105,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         navController = navHostFragment.navController
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             val isVisible =
-                destination.id == R.id.fragmentTrack || destination.id == R.id.fragmentBioHack || destination.id == R.id.fragmentDecode || destination.id == R.id.fragmentDecodeMetrics || destination.id == R.id.fragmentProfile || destination.id == R.id.fragmentShop
+                destination.id == R.id.fragmentTrack || destination.id == R.id.fragmentBioHack || destination.id == R.id.fragmentDecode || destination.id == R.id.fragmentDecodeMetrics || destination.id == R.id.fragmentProfile || destination.id == R.id.fragmentShop || destination.id == R.id.fragmentOrder
             binding.rlBottom.isVisible = isVisible
             binding.rlBtnNavigation.isVisible = isVisible
 
