@@ -29,6 +29,9 @@ class DeleteConfirmationBottomSheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        arguments?.getString("title")?.let { binding.tvTitle.text = it }
+        arguments?.getString("message")?.let { binding.tvMessage.text = it }
+
         binding.ivClose.setOnClickListener {
             dismiss()
         }
@@ -55,9 +58,18 @@ class DeleteConfirmationBottomSheet : BottomSheetDialogFragment() {
     companion object {
         const val TAG = "DeleteConfirmationBottomSheet"
         
-        fun newInstance(onDelete: () -> Unit): DeleteConfirmationBottomSheet {
+        fun newInstance(
+            title: String? = null,
+            message: String? = null,
+            onDelete: () -> Unit
+        ): DeleteConfirmationBottomSheet {
             val sheet = DeleteConfirmationBottomSheet()
             sheet.onDeleteConfirmed = onDelete
+            val args = Bundle().apply {
+                putString("title", title)
+                putString("message", message)
+            }
+            sheet.arguments = args
             return sheet
         }
     }

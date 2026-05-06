@@ -612,4 +612,21 @@ To get started:\n
     <string name="price_with_currency">%1$s%2$s</string>
     <string name="discount_text_format">%1$s%2$.2f Discount</string>
     <string name="price_format_decimal">%1$s%2$.2f</string>
+    <string name="order_track_desc">Track orders for your wearables, smart monitors, and home test kits.</string>
+    <string name="no_orders_yet">No Orders, Yet!</string>
+    <string name="appointments">Appointments</string>
+    <string name="favourite">Favourite</string>
+    <string name="items_count_format">%1$d items</string>
+    <string name="expected_delivery_format">Expected: %1$s</string>
+    <string name="my_order">My Order</string>
+    <string name="applied_coupon">Applied Coupon</string>
+    <string name="shipping_details">Shipping Details</string>
+    <string name="delivery_method">Delivery Method</string>
+    <string name="vat">VAT</string>
+    <string name="days_format">(%1$d-%2$d Days)</string>
+    <string name="charges_format_label">%1$s Charges</string>
+    <string name="track_order">Track Order</string>
+    <string name="contact_support">Contact Support</string>
+    <string name="cancel_order">Cancel Order</string>
+    <string name="cancel_order_confirmation">Are you sure you want to cancel this order?</string>
 </resources>
