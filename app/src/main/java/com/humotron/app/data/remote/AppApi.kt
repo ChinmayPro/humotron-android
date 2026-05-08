@@ -446,4 +446,10 @@ interface AppApi {
     suspend fun cancelOrder(
         @Path("orderId") orderId: String
     ): Response<CommonResponse>
+
+    @POST("order/getOrderTrackingDetails/{orderNumber}")
+    suspend fun getOrderTrackingDetails(
+        @Path("orderNumber") orderNumber: String,
+        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0))
+    ): Response<com.humotron.app.domain.modal.response.GetOrderTrackingResponse>
 }

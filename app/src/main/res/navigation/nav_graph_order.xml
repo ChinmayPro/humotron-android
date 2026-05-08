@@ -27,6 +27,26 @@
         <argument
             android:name="order"
             app:argType="com.humotron.app.domain.modal.response.GetAllOrderResponse$Order" />
+        <action
+            android:id="@+id/action_fragmentOrderDetail_to_fragmentTrackOrder"
+            app:destination="@id/fragmentTrackOrder"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentTrackOrder"
+        android:name="com.humotron.app.ui.order.TrackOrderFragment"
+        android:label="TrackOrder"
+        tools:layout="@layout/fragment_track_order">
+        <argument
+            android:name="orderNumber"
+            app:argType="string" />
+        <argument
+            android:name="orderId"
+            app:argType="string" />
     </fragment>
 
 </navigation>

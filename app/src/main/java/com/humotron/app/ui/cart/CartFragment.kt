@@ -205,8 +205,9 @@ class CartFragment : BaseFragment(R.layout.fragment_cart) {
 
     private fun showLoading() {
         binding.layoutLoader.root.visibility = View.VISIBLE
-        binding.rvCartItems.visibility = View.GONE
         binding.tvOrderDetailsLabel.visibility = View.GONE
+        binding.rvCartItems.visibility = View.GONE
+        binding.clEmptyCart.visibility = View.GONE
         binding.btnCheckout.visibility = View.GONE
         binding.bottomShadow.visibility = View.GONE
         binding.tvNoData.visibility = View.GONE
@@ -217,22 +218,34 @@ class CartFragment : BaseFragment(R.layout.fragment_cart) {
     }
 
     private fun showEmptyState() {
-        binding.tvOrderDetailsLabel.visibility = View.GONE
+        binding.tvNoData.visibility = View.GONE
+        binding.clEmptyCart.visibility = View.VISIBLE
+        
+        binding.tvOrderDetailsLabel.visibility = View.VISIBLE
         binding.rvCartItems.visibility = View.GONE
-        binding.btnCheckout.visibility = View.GONE
-        binding.bottomShadow.visibility = View.GONE
-        binding.llCartSummary.visibility = View.GONE
-        binding.tvNoData.visibility = View.VISIBLE
+        binding.btnCheckout.visibility = View.VISIBLE
+        binding.bottomShadow.visibility = View.VISIBLE
+        binding.llCartSummary.visibility = View.VISIBLE
+        
+        // Reset totals to zero
+        bindDetailedBill(null)
+        bindTotal(null)
+        bindCoupon(null)
+        bindAddress(null)
+        bindShippingMethod(null)
+        binding.llAddressActions.visibility = View.GONE
     }
 
     private fun showCartItems(data: com.humotron.app.domain.modal.response.GetCartResponse.Data?) {
         val items = data?.cart ?: emptyList()
         binding.tvNoData.visibility = View.GONE
+        binding.clEmptyCart.visibility = View.GONE
         binding.tvOrderDetailsLabel.visibility = View.VISIBLE
         binding.rvCartItems.visibility = View.VISIBLE
         binding.btnCheckout.visibility = View.VISIBLE
         binding.bottomShadow.visibility = View.VISIBLE
         binding.llCartSummary.visibility = View.VISIBLE
+        binding.llAddressActions.visibility = View.VISIBLE
         
         // Pass the updated list to adapter
         cartAdapter.setItems(items, data?.couponDetails?.promoCode)
@@ -281,12 +294,10 @@ class CartFragment : BaseFragment(R.layout.fragment_cart) {
     }
 
     private fun bindTotal(data: com.humotron.app.domain.modal.response.GetCartResponse.Data?) {
-        if (data == null) return
-        
-        val itemPrice = calculateItemPrice(data)
-        val vat = data.totalVAT ?: 0.0
+        val itemPrice = if (data != null) calculateItemPrice(data) else 0.0
+        val vat = data?.totalVAT ?: 0.0
         val deliveryPrice = selectedDeliveryMethod?.price ?: 0.0
-        val couponDiscount = data.couponDetails?.discountValue ?: 0.0
+        val couponDiscount = data?.couponDetails?.discountValue ?: 0.0
         
         val finalTotal = itemPrice + vat + deliveryPrice - couponDiscount
         
@@ -294,21 +305,24 @@ class CartFragment : BaseFragment(R.layout.fragment_cart) {
     }
 
     private fun bindDetailedBill(data: com.humotron.app.domain.modal.response.GetCartResponse.Data?) {
-        if (data == null) return
-
-        val itemPrice = calculateItemPrice(data)
-        val vat = data.totalVAT ?: 0.0
+        val itemPrice = if (data != null) calculateItemPrice(data) else 0.0
+        val vat = data?.totalVAT ?: 0.0
         val deliveryPrice = selectedDeliveryMethod?.price ?: 0.0
-        val couponDiscount = data.couponDetails?.discountValue ?: 0.0
+        val couponDiscount = data?.couponDetails?.discountValue ?: 0.0
         
         binding.tvDetailedItemPrice.text = getString(R.string.price_format_decimal, getString(R.string.currency_symbol), itemPrice)
         
         if (selectedDeliveryMethod != null) {
             binding.tvDetailedDeliveryLabel.text = selectedDeliveryMethod?.methodName
-            binding.tvDetailedDeliveryPrice.text = getString(R.string.price_format_decimal, getString(R.string.currency_symbol), selectedDeliveryMethod?.price ?: 0.0)
+            val price = selectedDeliveryMethod?.price ?: 0.0
+            if (price == 0.0) {
+                binding.tvDetailedDeliveryPrice.text = getString(R.string.free)
+            } else {
+                binding.tvDetailedDeliveryPrice.text = getString(R.string.price_format_decimal, getString(R.string.currency_symbol), price)
+            }
         } else {
             binding.tvDetailedDeliveryLabel.text = getString(R.string.delivery_charges)
-            binding.tvDetailedDeliveryPrice.text = getString(R.string.price_format_decimal, getString(R.string.currency_symbol), 0.0)
+            binding.tvDetailedDeliveryPrice.text = getString(R.string.free)
         }
         
         binding.tvDetailedCouponDiscount.text = getString(R.string.price_format_decimal, getString(R.string.currency_symbol), couponDiscount)
@@ -317,7 +331,10 @@ class CartFragment : BaseFragment(R.layout.fragment_cart) {
 
     private fun bindAddress(address: com.humotron.app.domain.modal.response.GetCartResponse.Address?) {
         if (address != null) {
-            binding.clAddress.visibility = View.VISIBLE
+            binding.tvShippingAddressLabel.visibility = View.GONE
+            binding.ivAddAddress.visibility = View.GONE
+            binding.llAddressSelected.visibility = View.VISIBLE
+            
             binding.tvAddressName.text = "${address.firstName} ${address.lastName}"
             binding.tvAddressPhone.text = address.contactNo
             
@@ -331,7 +348,9 @@ class CartFragment : BaseFragment(R.layout.fragment_cart) {
             
             binding.tvAddressDetails.text = addressParts.joinToString(", ")
         } else {
-            binding.clAddress.visibility = View.GONE
+            binding.tvShippingAddressLabel.visibility = View.VISIBLE
+            binding.ivAddAddress.visibility = View.VISIBLE
+            binding.llAddressSelected.visibility = View.GONE
         }
     }
 
@@ -345,10 +364,14 @@ class CartFragment : BaseFragment(R.layout.fragment_cart) {
             val daysRange = if (method.minDays != null && method.maxDays != null) "(${method.minDays}-${method.maxDays} Days)" else ""
             binding.tvSelectedShippingName.text = "${method.methodName}\n$daysRange"
             
-            // Format price: remove trailing .0 if present to match screenshot £5.9
+            // Format price: remove trailing .0 if present to match screenshot £5.9, or show Free if 0
             val price = method.price ?: 0.0
-            val priceText = if (price % 1.0 == 0.0) price.toInt().toString() else price.toString()
-            binding.tvSelectedShippingPrice.text = "${getString(R.string.currency_symbol)}$priceText"
+            if (price == 0.0) {
+                binding.tvSelectedShippingPrice.text = getString(R.string.free)
+            } else {
+                val priceText = if (price % 1.0 == 0.0) price.toInt().toString() else price.toString()
+                binding.tvSelectedShippingPrice.text = "${getString(R.string.currency_symbol)}$priceText"
+            }
             
             binding.tvSelectedShippingDelivery.text = "${getString(R.string.expected_delivery_colon)}\n${method.estimatedDelivery ?: ""}"
         } else {
@@ -385,9 +408,19 @@ class CartFragment : BaseFragment(R.layout.fragment_cart) {
             viewModel.removePromoCode(couponId)
         }
 
-        binding.btnAddNewAddress.setOnClickListener {
+        binding.ivAddAddress.setOnClickListener {
             val enterAddressBottomSheet = com.humotron.app.ui.shop.dialog.EnterAddressBottomSheet.newInstance()
             enterAddressBottomSheet.show(childFragmentManager, com.humotron.app.ui.shop.dialog.EnterAddressBottomSheet::class.java.simpleName)
+        }
+
+        binding.clAddress.setOnClickListener {
+            if (binding.llAddressSelected.visibility == View.GONE) {
+                binding.ivAddAddress.performClick()
+            }
+        }
+
+        binding.btnAddNewAddress.setOnClickListener {
+            binding.ivAddAddress.performClick()
         }
 
         binding.btnChangeAddress.setOnClickListener {
@@ -402,6 +435,12 @@ class CartFragment : BaseFragment(R.layout.fragment_cart) {
                 viewModel.updateUser(userId, map)
             }
             selectAddressBottomSheet.show(childFragmentManager, com.humotron.app.ui.shop.dialog.SelectAddressBottomSheet::class.java.simpleName)
+        }
+
+        binding.clShippingMethod.setOnClickListener {
+            if (binding.llShippingApplied.visibility == View.GONE) {
+                binding.ivAddShipping.performClick()
+            }
         }
 
         binding.ivAddShipping.setOnClickListener {
@@ -427,6 +466,12 @@ class CartFragment : BaseFragment(R.layout.fragment_cart) {
                     viewModel.updateUser(userId, map)
                 }
                 bottomSheet.show(childFragmentManager, com.humotron.app.ui.profile.dialog.SelectDeliveryBottomSheet.TAG)
+            }
+        }
+
+        binding.clCoupon.setOnClickListener {
+            if (binding.llCouponApplied.visibility == View.GONE) {
+                binding.ivApplyCoupon.performClick()
             }
         }
 

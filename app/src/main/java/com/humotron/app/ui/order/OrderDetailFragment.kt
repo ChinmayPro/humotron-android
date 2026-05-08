@@ -56,6 +56,19 @@ class OrderDetailFragment : BaseFragment(R.layout.fragment_order_detail) {
 
         binding.rvOrderItems.adapter = orderItemAdapter
 
+        binding.btnTrackOrder.setOnClickListener {
+            val orderNumber = order?.orderNumber
+            val orderId = order?.id
+            
+            if (orderNumber != null && orderId != null) {
+                val bundle = Bundle().apply {
+                    putString("orderNumber", orderNumber)
+                    putString("orderId", orderId)
+                }
+                findNavController().navigate(R.id.action_fragmentOrderDetail_to_fragmentTrackOrder, bundle)
+            }
+        }
+
         binding.btnCancelOrder.setOnClickListener {
             showCancelOrderDialog()
         }
@@ -167,8 +180,10 @@ class OrderDetailFragment : BaseFragment(R.layout.fragment_order_detail) {
                 }
                 Status.SUCCESS -> {
                     hideProgress()
-                    // Refresh order detail
-                    order?.id?.let { viewModel.fetchOrderDetail(it) }
+                    val msg = resource.data?.message ?: "Order cancelled successfully"
+                    ToastUtils.showShort(requireContext(), msg)
+                    findNavController().getBackStackEntry(R.id.fragmentOrder).savedStateHandle.set("refresh_orders", true)
+                    findNavController().popBackStack(R.id.fragmentOrder, false)
                 }
                 Status.ERROR, Status.EXCEPTION -> {
                     hideProgress()

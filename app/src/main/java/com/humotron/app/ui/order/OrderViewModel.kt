@@ -27,6 +27,9 @@ class OrderViewModel @Inject constructor(
     private val cancelOrderLiveData: SingleLiveEvent<Resource<CommonResponse>> = SingleLiveEvent()
     fun getCancelOrderLiveData(): SingleLiveEvent<Resource<CommonResponse>> = cancelOrderLiveData
 
+    private val orderTrackingLiveData: SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.GetOrderTrackingResponse>> = SingleLiveEvent()
+    fun getOrderTrackingLiveData(): SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.GetOrderTrackingResponse>> = orderTrackingLiveData
+
     private var currentPage = 1
     private var isLastPage = false
     private val limit = 10
@@ -58,6 +61,12 @@ class OrderViewModel @Inject constructor(
     fun cancelOrder(orderId: String) {
         repository.cancelOrder(orderId).onEach { state ->
             cancelOrderLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
+
+    fun fetchOrderTrackingDetails(orderNumber: String) {
+        repository.getOrderTrackingDetails(orderNumber).onEach { state ->
+            orderTrackingLiveData.value = state
         }.launchIn(viewModelScope)
     }
 }

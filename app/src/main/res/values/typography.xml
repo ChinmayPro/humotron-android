@@ -194,6 +194,12 @@
         <item name="android:fontFamily">@font/manrope_medium</item>
     </style>
 
+    <style name="Text.18x.Manrope.Medium" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/textColorWhite</item>
+        <item name="android:fontFamily">@font/manrope_medium</item>
+    </style>
+
     <style name="Text.26x.Manrope.Medium" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">26sp</item>
         <item name="android:textColor">@color/textColorWhite</item>

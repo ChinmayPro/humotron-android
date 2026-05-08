@@ -26,6 +26,16 @@ class SubOrderFragment : BaseFragment(R.layout.fragment_sub_order) {
         binding = FragmentSubOrderBinding.bind(view)
         setupRecyclerView()
         setupObservers()
+        
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>("refresh_orders")
+            ?.observe(viewLifecycleOwner) { refresh ->
+                if (refresh) {
+                    isFirstPage = true
+                    viewModel.fetchOrderList(isFirstPage = true)
+                    findNavController().currentBackStackEntry?.savedStateHandle?.remove<Boolean>("refresh_orders")
+                }
+            }
+
         if (orderAdapter.itemCount == 0) {
             viewModel.fetchOrderList(isFirstPage = true)
         } else {

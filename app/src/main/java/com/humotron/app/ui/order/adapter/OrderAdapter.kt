@@ -42,7 +42,6 @@ class OrderAdapter : RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
         fun bind(order: GetAllOrderResponse.Order) {
             binding.tvOrderId.text = "#${order.orderNumber ?: ""}"
             
-            // Format Date: 05 may 2026
             val formattedDate = utcOffsetToLocalTime(order.updatedAt, "dd MMM yyyy")
             binding.tvOrderDate.text = formattedDate.lowercase()
             

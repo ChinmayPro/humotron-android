@@ -73,7 +73,32 @@
                 android:visibility="gone"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_cart"
-                tools:visibility="visible" />
+                tools:visibility="gone" />
+
+            <!-- Empty Cart Message Box -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clEmptyCart"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_cart_item"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvEmptyCartMessage"
+                    style="@style/Text.18x.Manrope.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Currently no any item in cart!"
+                    android:textColor="@color/white70"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <!-- Summary Sections Container -->
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -202,48 +227,74 @@
                         android:layout_height="wrap_content"
                         android:text="@string/shipping_address"
                         android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvAddressName"
-                        style="@style/Text.14x.Manrope.Medium"
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivAddAddress"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/bg_add_button"
+                        android:padding="3dp"
+                        android:src="@drawable/ic_plus"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/black" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/llAddressSelected"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10dp"
-                        android:textColor="@color/white50"
+                        android:orientation="vertical"
+                        android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvShippingAddressLabel"
-                        tools:text="Ravi Patel" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:visibility="visible">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvAddressPhone"
-                        style="@style/Text.14x.Manrope.Medium"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:textColor="@color/white50"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tvAddressName"
-                        tools:text="9978782894" />
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvShippingAddressSelectedLabel"
+                            style="@style/Text.18x.Manrope.Bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/shipping_address"
+                            android:textColor="@color/white" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvAddressDetails"
-                        style="@style/Text.14x.Manrope.Medium"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:textColor="@color/white50"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tvAddressPhone"
-                        tools:text="65, Varachha, surat, india, 395006" />
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvAddressName"
+                            style="@style/Text.14x.Manrope.Medium"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10dp"
+                            android:textColor="@color/white50"
+                            tools:text="Ravi Patel" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvAddressPhone"
+                            style="@style/Text.14x.Manrope.Medium"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:textColor="@color/white50"
+                            tools:text="9978782894" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvAddressDetails"
+                            style="@style/Text.14x.Manrope.Medium"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:textColor="@color/white50"
+                            tools:text="65, Varachha, surat, india, 395006" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/llAddressActions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="15dp"
