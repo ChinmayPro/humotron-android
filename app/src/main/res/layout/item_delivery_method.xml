@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="@dimen/_15dp">
+
+    <androidx.appcompat.widget.AppCompatRadioButton
+        android:id="@+id/rbSelect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:buttonTint="@color/radio_button_tint"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvMethodName"
+        style="@style/Text.16x.Manrope.SemiBold"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10dp"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toStartOf="@id/tvPrice"
+        app:layout_constraintStart_toEndOf="@id/rbSelect"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Standard Delivery\n(5-7 Days)" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvExpectedDeliveryLabel"
+        style="@style/Text.14x.Manrope.SemiBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5dp"
+        android:text="@string/expected_delivery_colon"
+        android:textColor="@color/green_1"
+        app:layout_constraintStart_toStartOf="@id/tvMethodName"
+        app:layout_constraintTop_toBottomOf="@id/tvMethodName" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvExpectedDeliveryValue"
+        style="@style/Text.14x.Manrope.SemiBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_5dp"
+        android:textColor="@color/white_60"
+        app:layout_constraintBottom_toBottomOf="@id/tvExpectedDeliveryLabel"
+        app:layout_constraintStart_toEndOf="@id/tvExpectedDeliveryLabel"
+        app:layout_constraintTop_toTopOf="@id/tvExpectedDeliveryLabel"
+        tools:text="Tomorrow" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvPrice"
+        style="@style/Text.16x.Manrope.SemiBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="£5.9" />
+
+    <View
+        android:id="@+id/viewDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/_15dp"
+        android:background="@color/white10"
+        app:layout_constraintTop_toBottomOf="@id/tvExpectedDeliveryLabel" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

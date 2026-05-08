@@ -7,7 +7,8 @@
     android:layout_marginHorizontal="15dp"
     android:layout_marginVertical="5dp"
     android:background="@drawable/bg_cart_item"
-    android:padding="15dp">
+    android:paddingVertical="@dimen/_20dp"
+    android:paddingHorizontal="15dp">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivProductImage"
@@ -36,12 +37,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:textColor="@color/white_80"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/tvProductName"
         app:layout_constraintTop_toBottomOf="@id/tvProductName"
-        tools:text="Color : Black"
+        tools:text="Black | Size : Universal"
         tools:visibility="visible" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -49,13 +49,26 @@
         style="@style/Text.12x.Manrope.Medium"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textColor="@color/white50"
+        android:layout_marginTop="6dp"
+        android:textColor="@color/white30"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/tvProductName"
         app:layout_constraintTop_toBottomOf="@id/tvVariant1"
-        tools:text="Size : 7"
+        tools:text="A- 1204, Mithila heights, Abrama, Surat, India, 394101"
+        tools:visibility="visible" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvOriginalPrice"
+        style="@style/Text.18x.Manrope.SemiBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/white30"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@id/tvProductName"
+        app:layout_constraintTop_toBottomOf="@id/tvVariant2"
+        tools:text="£14.0"
         tools:visibility="visible" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -65,9 +78,53 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="@id/tvProductName"
+        app:layout_constraintStart_toEndOf="@id/tvOriginalPrice"
         app:layout_constraintTop_toBottomOf="@id/tvVariant2"
-        tools:text="£26" />
+        tools:layout_marginStart="0dp"
+        tools:text="£89.0" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/llPromoBadge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingVertical="4dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@id/tvProductName"
+        app:layout_constraintTop_toBottomOf="@id/tvPrice"
+        tools:visibility="visible">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_coupon"
+            app:tint="@color/white70" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPromoCodeInfo"
+            style="@style/Text.10x.Manrope.SemiBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:textColor="@color/white70"
+            tools:text="TEST2025FLATQTY (-£1.01)" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvVatInfo"
+        style="@style/Text.10x.Manrope.Regular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:textColor="@color/white30"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@id/tvProductName"
+        app:layout_constraintTop_toBottomOf="@id/llPromoBadge"
+        tools:text="Includes a VAT of £1.82"
+        tools:visibility="visible" />
 
     <!-- Button Row -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -77,14 +134,14 @@
         android:layout_marginTop="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/tvProductName"
-        app:layout_constraintTop_toBottomOf="@id/tvPrice">
+        app:layout_constraintTop_toBottomOf="@id/tvVatInfo">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivMinus"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="@drawable/bg_color_item_selector"
-            android:padding="11dp"
+            android:padding="7dp"
             android:src="@drawable/ic_minus"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -109,7 +166,7 @@
             android:layout_height="30dp"
             android:layout_marginStart="20dp"
             android:background="@drawable/bg_color_item_selector"
-            android:padding="11dp"
+            android:padding="6dp"
             android:src="@drawable/ic_plus"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/tvQuantity"
@@ -122,23 +179,48 @@
             android:layout_width="22dp"
             android:layout_height="22dp"
             android:src="@drawable/ic_delete"
-            android:padding="@dimen/_2dp"
+            android:padding="@dimen/_3dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/card_stroke" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivEdit"
             android:layout_width="22dp"
             android:layout_height="22dp"
             android:layout_marginEnd="20dp"
-            android:padding="@dimen/_2dp"
+            android:padding="@dimen/_3dp"
             android:src="@drawable/ic_edit"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/ivDelete"
             app:layout_constraintTop_toTopOf="parent"
             app:tint="@color/white50" />
+
+        <ProgressBar
+            android:id="@+id/pbPlus"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:indeterminateTint="@color/white"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/ivPlus"
+            app:layout_constraintEnd_toEndOf="@id/ivPlus"
+            app:layout_constraintStart_toStartOf="@id/ivPlus"
+            app:layout_constraintTop_toTopOf="@id/ivPlus"
+            tools:visibility="visible" />
+
+        <ProgressBar
+            android:id="@+id/pbMinus"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:indeterminateTint="@color/white"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/ivMinus"
+            app:layout_constraintEnd_toEndOf="@id/ivMinus"
+            app:layout_constraintStart_toStartOf="@id/ivMinus"
+            app:layout_constraintTop_toTopOf="@id/ivMinus"
+            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

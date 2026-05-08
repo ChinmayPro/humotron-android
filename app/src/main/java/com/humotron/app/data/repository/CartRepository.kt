@@ -39,4 +39,46 @@ class CartRepository @Inject constructor(
     }.catch {
         emit(responseHandler.handleException(ValidationException(it.message)))
     }
+
+    fun editCartQtyByItemId(itemId: String, quantity: Int): Flow<Resource<com.humotron.app.domain.modal.response.CommonResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val request = HashMap<String, Any>()
+            request["cartItemId"] = itemId
+            request["quantity"] = quantity
+            val response = responseHandler.handleResponse(api.editCartQtyByItemId(request), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun removePromoCodeByUser(userId: String): Flow<Resource<com.humotron.app.domain.modal.response.CommonResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.removePromoCodeByUser(userId), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun updateUserById(userId: String, data: HashMap<String, Any>): Flow<Resource<com.humotron.app.domain.modal.response.CommonResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.updateUserById(userId, data), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
 }

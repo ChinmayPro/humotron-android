@@ -46,11 +46,11 @@ class DecodeMetricsFragment : BaseFragment(R.layout.fragment_decode_metrics) {
                 }
                 Status.SUCCESS -> {
                     showActiveShimmer(false)
-                    resource.data?.data?.let { list ->
+                    resource.data?.data?.individualMetrics?.let { list ->
                         val activeMetrics = list.map {
                             ActiveMetric(
                                 it.id ?: "",
-                                "${it.metricReading} ${it.metricUnit ?: it.metricReadingUnit ?: ""}",
+                                "${it.metricReading ?: ""} ${it.metricUnit ?: it.metricReadingUnit ?: ""}",
                                 it.metricUserFacingName ?: it.metricName ?: "",
                                 it.metricDuration ?: "",
                                 it.deviceName ?: ""
@@ -72,7 +72,7 @@ class DecodeMetricsFragment : BaseFragment(R.layout.fragment_decode_metrics) {
                 }
                 Status.SUCCESS -> {
                     showPendingShimmer(false)
-                    resource.data?.data?.let { list ->
+                    resource.data?.data?.individualMetrics?.let { list ->
                         val pendingMetrics = list.map {
                             PendingMetric(it.id ?: "", it.metricUserFacingName ?: it.metricName ?: "")
                         }
@@ -112,7 +112,15 @@ class DecodeMetricsFragment : BaseFragment(R.layout.fragment_decode_metrics) {
     private fun setupPendingMetrics(items: List<PendingMetric>) {
         binding.rvPendingMetrics.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.rvPendingMetrics.adapter = PendingMetricAdapter(items) {
-            // Handle click
+            val activeMetric = ActiveMetric(
+                it.id,
+                "",
+                it.label,
+                "",
+                ""
+            )
+            findNavController().previousBackStackEntry?.savedStateHandle?.set("selected_metric", activeMetric)
+            findNavController().popBackStack()
         }
     }
 }

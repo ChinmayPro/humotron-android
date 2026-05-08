@@ -35,7 +35,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvSubtitle"
-                style="@style/Text.14x.Manrope.Regular"
+                style="@style/Text.12x.Manrope.Regular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"

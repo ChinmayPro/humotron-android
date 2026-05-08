@@ -22,6 +22,7 @@ import com.humotron.app.ui.decode.adapter.DecodeChatAdapter
 import com.humotron.app.domain.modal.response.ConversationData
 import com.humotron.app.domain.modal.response.BotResponse
 import com.humotron.app.domain.modal.response.FeltOffQuestionData
+import androidx.activity.OnBackPressedCallback
 
 @AndroidEntryPoint
 class DecodeChatFragment : BaseFragment(R.layout.fragment_decode_chat) {
@@ -54,6 +55,21 @@ class DecodeChatFragment : BaseFragment(R.layout.fragment_decode_chat) {
         initClicks()
         initObservers()
         initResultListeners()
+        handleBackPress()
+    }
+
+    private fun handleBackPress() {
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (binding.rvChat.isVisible) {
+                    startNewChat()
+                } else {
+                    isEnabled = false
+                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                }
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
     private fun initResultListeners() {
@@ -74,6 +90,7 @@ class DecodeChatFragment : BaseFragment(R.layout.fragment_decode_chat) {
             }
         }
     }
+
 
     private fun initViews() {
         binding.rvChat.adapter = chatAdapter

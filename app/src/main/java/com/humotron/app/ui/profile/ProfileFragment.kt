@@ -61,8 +61,16 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             findNavController().navigate(R.id.action_fragmentProfile_to_nav_graph_shop)
         }
 
+        binding.clOrder.setOnClickListener {
+            findNavController().navigate(R.id.action_fragmentProfile_to_fragmentOrder)
+        }
+
         binding.clCart.setOnClickListener {
             findNavController().navigate(R.id.action_fragmentProfile_to_fragmentCart)
+        }
+
+        binding.btnPreferences.setOnClickListener {
+            findNavController().navigate(R.id.action_fragmentProfile_to_fragmentPreferences)
         }
 
         binding.clPrivacy.setOnClickListener {

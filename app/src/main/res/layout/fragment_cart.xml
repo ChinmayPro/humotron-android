@@ -105,6 +105,7 @@
                     android:background="@drawable/bg_cart_item"
                     android:padding="15dp">
 
+                    <!-- Initial State -->
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvApplyCouponLabel"
                         style="@style/Text.18x.Manrope.Bold"
@@ -117,6 +118,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivApplyCoupon"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:background="@drawable/bg_add_button"
@@ -126,6 +128,60 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:tint="@color/black" />
+
+                    <!-- Applied State (Hidden by default) -->
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/llCouponApplied"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/ivRemoveCoupon"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:visibility="gone">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvCouponAppliedLabel"
+                            style="@style/Text.18x.Manrope.Bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/coupon_applied"
+                            android:textColor="@color/white" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvCouponDiscount"
+                            style="@style/Text.14x.Manrope.Medium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:textColor="@color/white50"
+                            tools:text="£35.0 Discount" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvCouponCode"
+                            style="@style/Text.14x.Manrope.Medium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:textColor="@color/white50"
+                            tools:text="TEST2025FLATQTY" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivRemoveCoupon"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:padding="3dp"
+                        android:src="@drawable/ic_delete"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@id/llCouponApplied"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/llCouponApplied"
+                        app:layout_constraintVertical_bias="0"
+                        tools:visibility="gone" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -226,6 +282,7 @@
                     android:background="@drawable/bg_cart_item"
                     android:padding="15dp">
 
+                    <!-- Default/Unselected State -->
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvShippingMethodLabel"
                         style="@style/Text.18x.Manrope.Bold"
@@ -238,6 +295,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivAddShipping"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:background="@drawable/bg_add_button"
@@ -247,6 +305,49 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:tint="@color/black" />
+
+                    <!-- Applied State (Hidden by default) -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/llShippingApplied"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        tools:visibility="gone">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvSelectedShippingName"
+                            style="@style/Text.18x.Manrope.Bold"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            app:layout_constraintEnd_toStartOf="@id/tvSelectedShippingPrice"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="Standard Delivery\n(5-7 Days)" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvSelectedShippingPrice"
+                            style="@style/Text.16x.Manrope.Regular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            app:layout_constraintBottom_toBottomOf="@id/tvSelectedShippingName"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/tvSelectedShippingName"
+                            tools:text="£5.9" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvSelectedShippingDelivery"
+                            style="@style/Text.14x.Manrope.Bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:textColor="@color/lime_green"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tvSelectedShippingName"
+                            tools:text="Expected Delivery:\n11th - 13th May" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -291,6 +392,7 @@
                         app:layout_constraintTop_toBottomOf="@id/tvToPayLabel">
 
                         <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvViewDetailedBillLabel"
                             style="@style/Text.12x.Manrope.Medium"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -299,6 +401,7 @@
                             android:textColor="@color/white70" />
 
                         <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivViewDetailedBill"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
@@ -307,28 +410,178 @@
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/llDetailedBill"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        app:layout_constraintTop_toBottomOf="@id/btnViewDetailedBill"
+                        tools:visibility="visible">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:alpha="0.1"
+                            android:background="@color/white" />
+
+                        <!-- Item Price -->
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingVertical="12dp">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Text.16x.Manrope.Medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/item_price"
+                                android:textColor="@color/white70"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvDetailedItemPrice"
+                                style="@style/Text.20x.Manrope.Bold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:text="£483.97" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:alpha="0.1"
+                            android:background="@color/white" />
+
+                        <!-- Delivery Charges -->
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingVertical="12dp">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvDetailedDeliveryLabel"
+                                style="@style/Text.16x.Manrope.Medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/delivery_charges"
+                                android:textColor="@color/white70"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvDetailedDeliveryPrice"
+                                style="@style/Text.20x.Manrope.Bold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:text="£5.9" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:alpha="0.1"
+                            android:background="@color/white" />
+
+                        <!-- Coupon Discount -->
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingVertical="12dp">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Text.16x.Manrope.Medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/coupon_discount"
+                                android:textColor="@color/white70"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvDetailedCouponDiscount"
+                                style="@style/Text.20x.Manrope.Bold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/textColorOrange"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:text="£0.0" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:alpha="0.1"
+                            android:background="@color/white" />
+
+                        <!-- VAT -->
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingVertical="12dp">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvDetailedVatLabel"
+                                style="@style/Text.16x.Manrope.Medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="VAT (Taxes at 20%)"
+                                android:textColor="@color/white70"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvDetailedVatValue"
+                                style="@style/Text.20x.Manrope.Bold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:text="£90.78" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <!-- Footer Labels -->
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvTrustInfo"
-                    style="@style/Text.14x.Manrope.Medium"
+                    style="@style/Text.15x.Manrope.SemiBold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="15dp"
                     android:alpha="0.6"
                     android:text="@string/cart_trust_info"
                     android:textColor="@color/white" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvPolicyInfo"
-                    style="@style/Text.14x.Manrope.Bold"
+                    style="@style/Text.15x.Manrope.SemiBold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="120dp"
+                    android:layout_marginBottom="20dp"
                     android:alpha="0.6"
                     android:text="@string/cart_policy_info"
                     android:textColor="@color/white" />

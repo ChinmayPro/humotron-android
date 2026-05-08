@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:background="@drawable/ic_bg_main"
+    tools:background="@drawable/ic_bg_main_dark"
     android:background="@drawable/ic_bg_main"
     tools:context=".ui.profile.ProfileFragment">
 
@@ -156,14 +156,156 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <!-- Key Configurations Header -->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llKeyConfigHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_40dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/clRecipes">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/_24dp"
+                    android:layout_height="@dimen/_24dp"
+                    android:src="@drawable/ic_tune"
+                    app:tint="@color/green_1" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Text.16x.Manrope.SemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10dp"
+                    android:text="@string/key_configurations"
+                    android:textColor="@color/white_80" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!-- Key Configurations Grid -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clKeyConfigs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20dp"
+                app:layout_constraintTop_toBottomOf="@id/llKeyConfigHeader">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guidelineColumn2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.48" />
+
+                <!-- Row 1 -->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/btnDevices"
+                    style="@style/Text.14x.Manrope.SemiBold"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_config_button"
+                    android:gravity="start|center_vertical"
+                    android:paddingStart="@dimen/_30dp"
+                    android:paddingEnd="@dimen/_20dp"
+                    android:paddingVertical="@dimen/_5dp"
+                    android:text="@string/header_devices"
+                    android:textColor="@color/white_80"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/btnPreferences"
+                    style="@style/Text.14x.Manrope.SemiBold"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_config_button"
+                    android:gravity="start|center_vertical"
+                    android:paddingStart="@dimen/_30dp"
+                    android:paddingEnd="@dimen/_20dp"
+                    android:paddingVertical="@dimen/_5dp"
+                    android:text="@string/preferences"
+                    android:textColor="@color/white_80"
+                    app:layout_constraintStart_toStartOf="@id/guidelineColumn2"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <!-- Row 2 -->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/btnChatWithAI"
+                    style="@style/Text.14x.Manrope.SemiBold"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20dp"
+                    android:background="@drawable/bg_config_button"
+                    android:gravity="start|center_vertical"
+                    android:paddingStart="@dimen/_30dp"
+                    android:paddingEnd="@dimen/_20dp"
+                    android:paddingVertical="@dimen/_5dp"
+                    android:text="@string/chat_with_ai"
+                    android:textColor="@color/white_80"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btnDevices" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/btnInsights"
+                    style="@style/Text.14x.Manrope.SemiBold"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20dp"
+                    android:background="@drawable/bg_config_button"
+                    android:gravity="start|center_vertical"
+                    android:paddingStart="@dimen/_30dp"
+                    android:paddingEnd="@dimen/_20dp"
+                    android:paddingVertical="@dimen/_5dp"
+                    android:text="@string/insights"
+                    android:textColor="@color/white_80"
+                    app:layout_constraintStart_toStartOf="@id/guidelineColumn2"
+                    app:layout_constraintTop_toBottomOf="@id/btnDevices" />
+
+                <!-- Row 3 -->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/btnRecipeGenerator"
+                    style="@style/Text.14x.Manrope.SemiBold"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20dp"
+                    android:background="@drawable/bg_config_button"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/_30dp"
+                    android:paddingEnd="@dimen/_20dp"
+                    android:paddingVertical="@dimen/_5dp"
+                    android:text="@string/recipe_generator"
+                    android:textColor="@color/white_80"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btnChatWithAI" />
+
+                <!-- Row 4 -->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/btnLearning"
+                    style="@style/Text.14x.Manrope.SemiBold"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:background="@drawable/bg_config_button"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/_30dp"
+                    android:paddingEnd="@dimen/_20dp"
+                    android:paddingVertical="@dimen/_5dp"
+                    android:text="@string/learning"
+                    android:textColor="@color/white_80"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btnRecipeGenerator" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <!-- Profile Options List -->
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_50dp"
                 android:paddingBottom="@dimen/_20dp"
                 android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@id/clCart">
+                app:layout_constraintTop_toBottomOf="@id/clKeyConfigs">
 
                 <!-- Privacy -->
                 <androidx.constraintlayout.widget.ConstraintLayout
