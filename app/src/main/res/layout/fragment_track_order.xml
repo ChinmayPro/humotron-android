@@ -1,0 +1,650 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivBg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_bg_main" />
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header_left"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clMainContent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_product_faq_item"
+            android:padding="20dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvOrderNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_medium"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@id/tvCurrentStatus"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tvCurrentStatus"
+                    tools:text="#319365235" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvCurrentStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_btn_round_rect_8"
+                    android:fontFamily="@font/manrope_medium"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="3dp"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Order Confirmed" />
+
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/white10"
+                    app:layout_constraintTop_toBottomOf="@id/tvOrderNumber" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvTimestampLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/manrope_medium"
+                    android:text="@string/timestamp_event"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/divider" />
+
+                <androidx.core.widget.NestedScrollView
+                    android:id="@+id/nsvHistory"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    app:layout_constraintBottom_toTopOf="@id/btnContactSupport"
+                    app:layout_constraintTop_toBottomOf="@id/tvTimestampLabel">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/llTrackingHistory"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <!-- Step 1: Order Placed -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clStepPlaced"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <View
+                            android:id="@+id/vLineBottomPlaced"
+                            android:layout_width="1.5dp"
+                            android:layout_height="0dp"
+                            android:background="@color/white20"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@id/ivStatusPlaced"
+                            app:layout_constraintStart_toStartOf="@id/ivStatusPlaced"
+                            app:layout_constraintTop_toBottomOf="@id/ivStatusPlaced" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivStatusPlaced"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_marginTop="14dp"
+                            android:src="@drawable/ic_dot_pending"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvStatusNamePlaced"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:fontFamily="@font/manrope_medium"
+                            android:text="Order Placed"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toBottomOf="@id/ivStatusPlaced"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/ivStatusPlaced"
+                            app:layout_constraintTop_toTopOf="@id/ivStatusPlaced" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvStatusDatePlaced"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="20dp"
+                            android:background="@drawable/bg_btn_round_rect_8"
+                            android:fontFamily="@font/manrope_medium"
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="4dp"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            android:text="Tue, 05 May, 00:00 PM"
+                            android:visibility="invisible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/tvStatusNamePlaced"
+                            app:layout_constraintTop_toBottomOf="@id/tvStatusNamePlaced" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!-- Step 2: Payment Successful -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clStepPayment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <View
+                            android:id="@+id/vLineTopPayment"
+                            android:layout_width="1.5dp"
+                            android:layout_height="10dp"
+                            android:background="@color/white20"
+                            app:layout_constraintEnd_toEndOf="@id/ivStatusPayment"
+                            app:layout_constraintStart_toStartOf="@id/ivStatusPayment"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:id="@+id/vLineBottomPayment"
+                            android:layout_width="1.5dp"
+                            android:layout_height="0dp"
+                            android:background="@color/white20"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@id/ivStatusPayment"
+                            app:layout_constraintStart_toStartOf="@id/ivStatusPayment"
+                            app:layout_constraintTop_toBottomOf="@id/ivStatusPayment" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivStatusPayment"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_marginTop="14dp"
+                            android:src="@drawable/ic_dot_pending"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvStatusNamePayment"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:fontFamily="@font/manrope_medium"
+                            android:text="Payment Successful"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toBottomOf="@id/ivStatusPayment"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/ivStatusPayment"
+                            app:layout_constraintTop_toTopOf="@id/ivStatusPayment" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvStatusDatePayment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="20dp"
+                            android:background="@drawable/bg_btn_round_rect_8"
+                            android:fontFamily="@font/manrope_medium"
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="4dp"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            android:text="Tue, 05 May, 00:00 PM"
+                            android:visibility="invisible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/tvStatusNamePayment"
+                            app:layout_constraintTop_toBottomOf="@id/tvStatusNamePayment" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!-- Step 3: Order Confirmed -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clStepConfirmed"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <View
+                            android:id="@+id/vLineTopConfirmed"
+                            android:layout_width="1.5dp"
+                            android:layout_height="10dp"
+                            android:background="@color/white20"
+                            app:layout_constraintEnd_toEndOf="@id/ivStatusConfirmed"
+                            app:layout_constraintStart_toStartOf="@id/ivStatusConfirmed"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:id="@+id/vLineBottomConfirmed"
+                            android:layout_width="1.5dp"
+                            android:layout_height="0dp"
+                            android:background="@color/white20"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@id/ivStatusConfirmed"
+                            app:layout_constraintStart_toStartOf="@id/ivStatusConfirmed"
+                            app:layout_constraintTop_toBottomOf="@id/ivStatusConfirmed" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivStatusConfirmed"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_marginTop="14dp"
+                            android:src="@drawable/ic_dot_pending"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvStatusNameConfirmed"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:fontFamily="@font/manrope_medium"
+                            android:text="Order Confirmed"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toBottomOf="@id/ivStatusConfirmed"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/ivStatusConfirmed"
+                            app:layout_constraintTop_toTopOf="@id/ivStatusConfirmed" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvStatusDateConfirmed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="20dp"
+                            android:background="@drawable/bg_btn_round_rect_8"
+                            android:fontFamily="@font/manrope_medium"
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="4dp"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            android:text="Tue, 05 May, 00:00 PM"
+                            android:visibility="invisible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/tvStatusNameConfirmed"
+                            app:layout_constraintTop_toBottomOf="@id/tvStatusNameConfirmed" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!-- Step 4: Order Packed -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clStepPacked"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <View
+                            android:id="@+id/vLineTopPacked"
+                            android:layout_width="1.5dp"
+                            android:layout_height="10dp"
+                            android:background="@color/white20"
+                            app:layout_constraintEnd_toEndOf="@id/ivStatusPacked"
+                            app:layout_constraintStart_toStartOf="@id/ivStatusPacked"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:id="@+id/vLineBottomPacked"
+                            android:layout_width="1.5dp"
+                            android:layout_height="0dp"
+                            android:background="@color/white20"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@id/ivStatusPacked"
+                            app:layout_constraintStart_toStartOf="@id/ivStatusPacked"
+                            app:layout_constraintTop_toBottomOf="@id/ivStatusPacked" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivStatusPacked"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_marginTop="14dp"
+                            android:src="@drawable/ic_dot_pending"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvStatusNamePacked"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:fontFamily="@font/manrope_medium"
+                            android:text="Order Packed"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toBottomOf="@id/ivStatusPacked"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/ivStatusPacked"
+                            app:layout_constraintTop_toTopOf="@id/ivStatusPacked" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvStatusDatePacked"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="20dp"
+                            android:background="@drawable/bg_btn_round_rect_8"
+                            android:fontFamily="@font/manrope_medium"
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="4dp"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            android:text="Tue, 05 May, 00:00 PM"
+                            android:visibility="invisible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/tvStatusNamePacked"
+                            app:layout_constraintTop_toBottomOf="@id/tvStatusNamePacked" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!-- Step 5: Ready for Pickup -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clStepPickup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <View
+                            android:id="@+id/vLineTopPickup"
+                            android:layout_width="1.5dp"
+                            android:layout_height="10dp"
+                            android:background="@color/white20"
+                            app:layout_constraintEnd_toEndOf="@id/ivStatusPickup"
+                            app:layout_constraintStart_toStartOf="@id/ivStatusPickup"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:id="@+id/vLineBottomPickup"
+                            android:layout_width="1.5dp"
+                            android:layout_height="0dp"
+                            android:background="@color/white20"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@id/ivStatusPickup"
+                            app:layout_constraintStart_toStartOf="@id/ivStatusPickup"
+                            app:layout_constraintTop_toBottomOf="@id/ivStatusPickup" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivStatusPickup"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_marginTop="14dp"
+                            android:src="@drawable/ic_dot_pending"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvStatusNamePickup"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:fontFamily="@font/manrope_medium"
+                            android:text="Ready for Pickup"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toBottomOf="@id/ivStatusPickup"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/ivStatusPickup"
+                            app:layout_constraintTop_toTopOf="@id/ivStatusPickup" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvStatusDatePickup"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="20dp"
+                            android:background="@drawable/bg_btn_round_rect_8"
+                            android:fontFamily="@font/manrope_medium"
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="4dp"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            android:text="Tue, 05 May, 00:00 PM"
+                            android:visibility="invisible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/tvStatusNamePickup"
+                            app:layout_constraintTop_toBottomOf="@id/tvStatusNamePickup" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!-- Step 6: Courier Picked Up -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clStepCourier"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <View
+                            android:id="@+id/vLineTopCourier"
+                            android:layout_width="1.5dp"
+                            android:layout_height="10dp"
+                            android:background="@color/white20"
+                            app:layout_constraintEnd_toEndOf="@id/ivStatusCourier"
+                            app:layout_constraintStart_toStartOf="@id/ivStatusCourier"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:id="@+id/vLineBottomCourier"
+                            android:layout_width="1.5dp"
+                            android:layout_height="0dp"
+                            android:background="@color/white20"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@id/ivStatusCourier"
+                            app:layout_constraintStart_toStartOf="@id/ivStatusCourier"
+                            app:layout_constraintTop_toBottomOf="@id/ivStatusCourier" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivStatusCourier"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_marginTop="14dp"
+                            android:src="@drawable/ic_dot_pending"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvStatusNameCourier"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:fontFamily="@font/manrope_medium"
+                            android:text="Courier Picked Up"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toBottomOf="@id/ivStatusCourier"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/ivStatusCourier"
+                            app:layout_constraintTop_toTopOf="@id/ivStatusCourier" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvStatusDateCourier"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="20dp"
+                            android:background="@drawable/bg_btn_round_rect_8"
+                            android:fontFamily="@font/manrope_medium"
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="4dp"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            android:text="Tue, 05 May, 00:00 PM"
+                            android:visibility="invisible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/tvStatusNameCourier"
+                            app:layout_constraintTop_toBottomOf="@id/tvStatusNameCourier" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!-- Step 7: Out for Delivery -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clStepDelivery"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <View
+                            android:id="@+id/vLineTopDelivery"
+                            android:layout_width="1.5dp"
+                            android:layout_height="10dp"
+                            android:background="@color/white20"
+                            app:layout_constraintEnd_toEndOf="@id/ivStatusDelivery"
+                            app:layout_constraintStart_toStartOf="@id/ivStatusDelivery"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:id="@+id/vLineBottomDelivery"
+                            android:layout_width="1.5dp"
+                            android:layout_height="0dp"
+                            android:background="@color/white20"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@id/ivStatusDelivery"
+                            app:layout_constraintStart_toStartOf="@id/ivStatusDelivery"
+                            app:layout_constraintTop_toBottomOf="@id/ivStatusDelivery" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivStatusDelivery"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_marginTop="14dp"
+                            android:src="@drawable/ic_dot_pending"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvStatusNameDelivery"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:fontFamily="@font/manrope_medium"
+                            android:text="Out for Delivery"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toBottomOf="@id/ivStatusDelivery"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/ivStatusDelivery"
+                            app:layout_constraintTop_toTopOf="@id/ivStatusDelivery" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvStatusDateDelivery"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="20dp"
+                            android:background="@drawable/bg_btn_round_rect_8"
+                            android:fontFamily="@font/manrope_medium"
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="4dp"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            android:text="Tue, 05 May, 00:00 PM"
+                            android:visibility="invisible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/tvStatusNameDelivery"
+                            app:layout_constraintTop_toBottomOf="@id/tvStatusNameDelivery" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!-- Step 8: Delivered -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clStepDelivered"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <View
+                            android:id="@+id/vLineTopDelivered"
+                            android:layout_width="1.5dp"
+                            android:layout_height="10dp"
+                            android:background="@color/white20"
+                            app:layout_constraintEnd_toEndOf="@id/ivStatusDelivered"
+                            app:layout_constraintStart_toStartOf="@id/ivStatusDelivered"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivStatusDelivered"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_marginTop="14dp"
+                            android:src="@drawable/ic_dot_pending"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvStatusNameDelivered"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:fontFamily="@font/manrope_medium"
+                            android:text="Delivered"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toBottomOf="@id/ivStatusDelivered"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/ivStatusDelivered"
+                            app:layout_constraintTop_toTopOf="@id/ivStatusDelivered" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvStatusDateDelivered"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="20dp"
+                            android:background="@drawable/bg_btn_round_rect_8"
+                            android:fontFamily="@font/manrope_medium"
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="4dp"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            android:text="Tue, 05 May, 00:00 PM"
+                            android:visibility="invisible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/tvStatusNameDelivered"
+                            app:layout_constraintTop_toBottomOf="@id/tvStatusNameDelivered" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </androidx.core.widget.NestedScrollView>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnContactSupport"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/bg_btn_round_corner"
+                    android:fontFamily="@font/manrope_bold"
+                    android:text="@string/contact_support"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toTopOf="@id/tvCancelOrder" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvCancelOrder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_medium"
+                    android:padding="10dp"
+                    android:text="@string/cancel_order"
+                    android:textColor="@color/white50"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>

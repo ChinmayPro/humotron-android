@@ -429,4 +429,26 @@ interface AppApi {
     suspend fun getPromoCodeDetailsByPromoCode(
         @Path("promoCode") promoCode: String
     ): Response<com.humotron.app.domain.modal.response.PromoCodeDetailsResponse>
+
+    @POST("order/getOrderDetailById/{orderId}")
+    suspend fun getOrderDetailById(
+        @Path("orderId") orderId: String
+    ): Response<com.humotron.app.domain.modal.response.GetOrderDetailResponse>
+
+    @POST("order/getAllOrderListByUser")
+    suspend fun getAllOrderListByUser(
+        @Query("page") page: Int,
+        @Query("limit") limit: Int
+    ): Response<com.humotron.app.domain.modal.response.GetAllOrderResponse>
+
+    @POST("order/cancelOrder/{orderId}")
+    suspend fun cancelOrder(
+        @Path("orderId") orderId: String
+    ): Response<CommonResponse>
+
+    @POST("order/getOrderTrackingDetails/{orderNumber}")
+    suspend fun getOrderTrackingDetails(
+        @Path("orderNumber") orderNumber: String,
+        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0))
+    ): Response<com.humotron.app.domain.modal.response.GetOrderTrackingResponse>
 }

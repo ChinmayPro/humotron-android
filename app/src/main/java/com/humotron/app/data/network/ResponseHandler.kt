@@ -86,6 +86,18 @@ class ResponseHandler(val context: Context, val errorUtils: ErrorUtils) {
                             )
                         ), ""
                     )
+                } else if (jsonObject.has("message")) {
+                    body = errorUtils.handleError(
+                        UnauthorizedException(
+                            jsonObject.getString("message")
+                        ), ""
+                    )
+                } else if (jsonObject.has("error")) {
+                    body = errorUtils.handleError(
+                        UnauthorizedException(
+                            jsonObject.getString("error")
+                        ), ""
+                    )
                 } else {
                     body = errorUtils.handleError(null, "")
                 }

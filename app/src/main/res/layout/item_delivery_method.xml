@@ -29,25 +29,23 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvExpectedDeliveryLabel"
-        style="@style/Text.14x.Manrope.SemiBold"
+        style="@style/Text.12x.Manrope.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_5dp"
         android:text="@string/expected_delivery_colon"
-        android:textColor="@color/green_1"
+        android:textColor="@color/lime_green"
         app:layout_constraintStart_toStartOf="@id/tvMethodName"
         app:layout_constraintTop_toBottomOf="@id/tvMethodName" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvExpectedDeliveryValue"
-        style="@style/Text.14x.Manrope.SemiBold"
+        style="@style/Text.12x.Manrope.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_5dp"
-        android:textColor="@color/white_60"
-        app:layout_constraintBottom_toBottomOf="@id/tvExpectedDeliveryLabel"
-        app:layout_constraintStart_toEndOf="@id/tvExpectedDeliveryLabel"
-        app:layout_constraintTop_toTopOf="@id/tvExpectedDeliveryLabel"
+        android:textColor="@color/lime_green"
+        app:layout_constraintStart_toStartOf="@id/tvExpectedDeliveryLabel"
+        app:layout_constraintTop_toBottomOf="@id/tvExpectedDeliveryLabel"
         tools:text="Tomorrow" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -66,6 +64,6 @@
         android:layout_height="1dp"
         android:layout_marginTop="@dimen/_15dp"
         android:background="@color/white10"
-        app:layout_constraintTop_toBottomOf="@id/tvExpectedDeliveryLabel" />
+        app:layout_constraintTop_toBottomOf="@id/tvExpectedDeliveryValue" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
