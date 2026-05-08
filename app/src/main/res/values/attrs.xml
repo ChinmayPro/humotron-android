@@ -24,6 +24,7 @@
         <attr name="cardDescription" format="string" />
         <attr name="cardStrokeColor" format="color" />
         <attr name="cardStrokeWidth" format="dimension" />
+        <attr name="cardBackgroundColor" format="color" />
     </declare-styleable>
 
     <declare-styleable name="LayeredCardView">

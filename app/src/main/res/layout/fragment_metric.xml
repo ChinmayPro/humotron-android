@@ -75,9 +75,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_7dp"
-                            android:text="°C"
                             android:textColor="@color/white_80"
-                            android:textSize="18sp" />
+                            android:textSize="18sp"
+                            tools:text="°C" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -142,9 +142,29 @@
                 android:id="@+id/track_trends"
                 layout="@layout/layout_track_your_trends" />
 
-            <include
-                android:id="@+id/ll_temp_matters"
-                layout="@layout/layout_temp_matters" />
+            <com.humotron.app.view.ExpandableCardView
+                android:id="@+id/ecv_what_is"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_24dp"
+                android:layout_marginTop="32dp"
+                app:cardBackgroundColor="@color/graph_card_bg"
+                app:cardDescription="@string/faq_a1_hrv"
+                app:cardStrokeColor="@color/card_border"
+                app:cardStrokeWidth="0dp"
+                app:cardTitle="@string/what_is" />
+
+            <com.humotron.app.view.ExpandableCardView
+                android:id="@+id/ecv_why_it"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_24dp"
+                android:layout_marginTop="@dimen/_14dp"
+                app:cardBackgroundColor="@color/graph_card_bg"
+                app:cardDescription="@string/faq_a1_hrv"
+                app:cardStrokeColor="@color/card_border"
+                app:cardStrokeWidth="0dp"
+                app:cardTitle="@string/why_it_matters_question" />
 
             <TextView
                 android:id="@+id/tvDecodeTitle"
@@ -268,19 +288,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_red_indicator"
+                    android:includeFontPadding="false"
                     android:paddingHorizontal="@dimen/_14dp"
-                    app:layout_constraintEnd_toStartOf="@id/ivInfoAvg"
-                    app:layout_constraintHorizontal_chainStyle="packed"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    tools:text="Test" />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivInfoAvg"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnInfoAvg"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginStart="8dp"
-                    android:src="@drawable/ic_info_24px"
-                    android:tint="@color/white_50" />
+                    android:insetLeft="0dp"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:paddingTop="0dp"
+                    android:paddingEnd="@dimen/_3dp"
+                    android:paddingBottom="0dp"
+                    app:icon="@drawable/ic_info_24px"
+                    app:iconSize="20dp"
+                    app:iconTint="@color/white"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle" />
 
             </LinearLayout>
 
@@ -361,9 +388,9 @@
                 android:id="@+id/rv_chat_prompts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_24dp"
-                android:layout_marginTop="32dp"
+                android:clipToPadding="false"
                 android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/_24dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_chat_prompts" />
 

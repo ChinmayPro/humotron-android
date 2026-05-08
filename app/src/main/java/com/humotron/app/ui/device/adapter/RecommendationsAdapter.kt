@@ -30,10 +30,20 @@ class RecommendationsAdapter :
             itemView.findViewById(R.id.tvRecommendationsShort)
         private val tvRecommendationsLong: TextView =
             itemView.findViewById(R.id.tvRecommendationsLong)
+        private val ivArrow: android.widget.ImageView =
+            itemView.findViewById(R.id.ivArrow)
 
         fun bind(recommendationItem: RecommendationItem) {
             tvRecommendationsShort.text = recommendationItem.recommendationsShort
             tvRecommendationsLong.text = recommendationItem.recommendationsLong
+
+            val resId = when (recommendationItem.recommendationsTag) {
+                "INCREASE" -> R.drawable.ic_increase
+                "REDUCE" -> R.drawable.ic_decrease
+                "MAINTAIN" -> R.drawable.ic_maintain
+                else -> R.drawable.ic_keyboard_arrow_up_24px
+            }
+            ivArrow.setImageResource(resId)
         }
     }
 

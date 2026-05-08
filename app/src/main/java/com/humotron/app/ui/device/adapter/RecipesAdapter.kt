@@ -3,10 +3,13 @@ package com.humotron.app.ui.device.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.humotron.app.R
 import com.humotron.app.domain.modal.response.RecipeBundle
 
@@ -31,10 +34,18 @@ class RecipesAdapter :
         private val tvRecipeCount: TextView =
             itemView.findViewById(R.id.tvRecipeCount)
 
+        private val ivProductImage: AppCompatImageView =
+            itemView.findViewById(R.id.iv_recipes)
+
+
         fun bind(recipeBundle: RecipeBundle) {
             tvRecipeBundleName.text = recipeBundle.recipeBundleName
             tvRecipeBundleDesc.text = recipeBundle.recipeBundleDesc
             tvRecipeCount.text = "${recipeBundle.recipeCount}"
+
+            Glide.with(itemView.context)
+                .load(recipeBundle.recipeBundleImage)
+                .into(ivProductImage)
         }
     }
 

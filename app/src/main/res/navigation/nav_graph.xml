@@ -53,7 +53,11 @@
 
     <fragment
         android:id="@+id/fragmentMetric"
-        android:name="com.humotron.app.ui.device.MetricFragment" />
+        android:name="com.humotron.app.ui.device.MetricFragment" >
+        <action
+            android:id="@+id/action_fragmentMetric_to_fragmentDecodeChat"
+            app:destination="@id/fragmentDecodeChat" />
+    </fragment>
 
     <fragment
         android:id="@+id/assessmentFragment"
@@ -84,6 +88,11 @@
             android:name="title"
             app:argType="string" />
     </fragment>
+
+    <fragment
+        android:id="@+id/fragmentDecodeChat"
+        android:name="com.humotron.app.ui.decode.DecodeChatFragment"
+        tools:layout="@layout/fragment_decode_chat" />
 
     <fragment
         android:id="@+id/fragmentUploadedReports"

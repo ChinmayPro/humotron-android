@@ -10,5 +10,7 @@ data class RingReadingParam(
     @SerializedName("endDate")
     val endDate: String,
     @SerializedName("offset")
-    val offset: String
+    val offset: String,
+    @SerializedName("metricID")
+    val metricID: String?,
 )

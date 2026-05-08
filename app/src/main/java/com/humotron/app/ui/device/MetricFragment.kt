@@ -5,19 +5,15 @@ import android.graphics.Paint
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColorInt
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.transition.AutoTransition
-import androidx.transition.TransitionManager
 import com.github.mikephil.charting.charts.CandleStickChart
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
@@ -28,6 +24,7 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.android.material.tabs.TabLayout
 import com.humotron.app.R
 import com.humotron.app.core.base.BaseFragment
@@ -36,7 +33,6 @@ import com.humotron.app.databinding.FragmentMetricBinding
 import com.humotron.app.domain.modal.param.RingReadingParam
 import com.humotron.app.domain.modal.param.WristBandApiParam
 import com.humotron.app.domain.modal.response.AllMetricsResponse
-import com.humotron.app.domain.modal.response.MetricType
 import com.humotron.app.domain.modal.response.TemperatureResponse
 import com.humotron.app.domain.modal.response.splitBloodPressure
 import com.humotron.app.ui.device.adapter.ChatPromptAdapter
@@ -44,6 +40,7 @@ import com.humotron.app.ui.device.adapter.InsightAdapter
 import com.humotron.app.ui.device.adapter.RecipesAdapter
 import com.humotron.app.ui.device.adapter.RecommendationsAdapter
 import com.humotron.app.ui.device.adapter.SupplementsAdapter
+import com.humotron.app.ui.dialogs.InfoBottomSheetDialog
 import com.humotron.app.util.utcOffsetToLocalTime
 import com.pluto.plugins.logger.PlutoLog
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer
@@ -89,41 +86,6 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
     private fun initClicks() {
         binding.header.ivBack.setOnClickListener {
             findNavController().popBackStack()
-        }
-
-        binding.llTempMatters.cardWhatIsTemp.setOnClickListener {
-            val isExpanded = binding.llTempMatters.tvMetricWhat.isVisible
-            val transition = AutoTransition().apply {
-                duration = 200
-            }
-            TransitionManager.beginDelayedTransition(
-                binding.root as ViewGroup,
-                transition
-            )
-            binding.llTempMatters.tvMetricWhat.visibility =
-                if (isExpanded) View.GONE else View.VISIBLE
-
-            binding.llTempMatters.ivArrow1.animate()
-                .rotation(if (isExpanded) 0f else 180f)
-                .setDuration(200)
-                .start()
-        }
-
-        binding.llTempMatters.cardWhyItMatters.setOnClickListener {
-            val isExpanded = binding.llTempMatters.tvMetricWhy.isVisible
-            val transition = AutoTransition().apply {
-                duration = 200
-            }
-            TransitionManager.beginDelayedTransition(
-                binding.root as ViewGroup,
-                transition
-            )
-            binding.llTempMatters.tvMetricWhy.visibility =
-                if (isExpanded) View.GONE else View.VISIBLE
-            binding.llTempMatters.ivArrow2.animate()
-                .rotation(if (isExpanded) 0f else 180f)
-                .setDuration(200)
-                .start()
         }
 
         binding.trackTrends.btnPrevious.setOnClickListener {
@@ -183,6 +145,28 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
             }
             false
         }
+
+        binding.trackTrends.btnBaselineInfo.setOnClickListener {
+            InfoBottomSheetDialog.newInstance(
+                title = getString(R.string.your_baseline),
+                message = getString(R.string.your_baseline_info)
+            ).show(childFragmentManager, InfoBottomSheetDialog.TAG)
+        }
+
+        binding.trackTrends.btnTypicalInfo.setOnClickListener {
+            InfoBottomSheetDialog.newInstance(
+                title = getString(R.string.typical_range),
+                message = getString(R.string.typical_range_info)
+            ).show(childFragmentManager, InfoBottomSheetDialog.TAG)
+        }
+
+        binding.btnStartChat.setOnClickListener {
+            findNavController().navigate(R.id.action_fragmentMetric_to_fragmentDecodeChat)
+        }
+
+        binding.btnConsult.setOnClickListener {
+
+        }
     }
 
     private fun initData() {
@@ -230,6 +214,8 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
             binding.header.title.text = metric.metricName
             binding.tvTypeLabel.text = metric.metricName
             binding.tvTemperatureValue.text = metric.metricValue?.value.toString()
+            binding.tvUnit.text = metric.metricUnit
+            binding.ecvWhatIs.setTitle(getString(R.string.what_is, metric.metricName))
             metric.id?.let {
                 viewModel.getRecommendationsByMetricId(it)
             }
@@ -249,8 +235,8 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
                         binding.tvUnit.text = data.metricUnit
                         binding.tvSource.text = data.deviceName
 
-                        binding.llTempMatters.tvMetricWhat.text = data.metricWhat
-                        binding.llTempMatters.tvMetricWhy.text = data.metricWhy
+                        binding.ecvWhatIs.setDescription(data.metricWhat ?: "")
+                        binding.ecvWhyIt.setDescription(data.metricWhy ?: "")
 
                         if (!data.insight.isNullOrEmpty()) {
                             binding.cardNoInsights.visibility = View.GONE
@@ -305,6 +291,13 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
                         binding.tvMetricReadingSubText.text = data.metricReadingSubText ?: ""
                         binding.llMetricReadingSubText.visibility =
                             if (data.metricReadingSubText.isNullOrBlank()) View.GONE else View.VISIBLE
+
+                        binding.btnInfoAvg.setOnClickListener {
+                            InfoBottomSheetDialog.newInstance(
+                                title = "",
+                                message = getString(R.string.how_are_you_info)
+                            ).show(childFragmentManager, InfoBottomSheetDialog.TAG)
+                        }
 
                         binding.tvMetricDuration.text = data.metricDuration
 
@@ -430,21 +423,26 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
                         val sortedList = expandedList.sortedBy { data -> data.time }
 
                         val maxItem = sortedList
-                            .filter { it.value?.toFloatOrNull() != null }
-                            .maxByOrNull { it.value!!.toFloat() }
+                            .filter { it.value?.toIntOrNull() != null }
+                            .maxByOrNull { it.value!!.toInt() }
 
                         val minItem = sortedList
-                            .filter { it.value?.toFloatOrNull() != null }
-                            .minByOrNull { it.value!!.toFloat() }
+                            .filter { it.value?.toIntOrNull() != null }
+                            .minByOrNull { it.value!!.toInt() }
 
                         val rangeText = if (minItem?.value != null && maxItem?.value != null) {
-                            val min = "%.2f".format(minItem.value.toFloat())
-                            val max = "%.2f".format(maxItem.value.toFloat())
-                            "$min-$max"
+                            val min = minItem.value.toIntOrNull()
+                            val max = maxItem.value.toIntOrNull()
+
+                            if (min != null && max != null) {
+                                "$min-$max"
+                            } else {
+                                ""
+                            }
                         } else {
                             ""
                         }
-                        binding.trackTrends.tvRange.text=rangeText
+                        binding.trackTrends.tvRange.text = rangeText
 
                         when (selectedTab) {
                             "Week" -> {
@@ -530,7 +528,8 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
                                         range = selectedText,
                                         startDate = start,
                                         endDate = end,
-                                        offset = "+05:30"
+                                        offset = "+05:30",
+                                        metricID = metric.id
                                     )
 
                                     val endpoint = when (fieldLabel) {
@@ -697,6 +696,11 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
             setDrawFilled(true)
             fillColor = ContextCompat.getColor(requireActivity(), R.color.green_1)
             fillAlpha = 50
+            valueFormatter = object : ValueFormatter() {
+                override fun getPointLabel(entry: Entry?): String {
+                    return entry?.y?.toInt()?.toString() ?: ""
+                }
+            }
         }
 
         val lineData = LineData(dataSet)
@@ -709,7 +713,13 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
                 position = XAxis.XAxisPosition.BOTTOM
                 textColor = Color.WHITE
                 granularity = 1f
+                isGranularityEnabled = false
                 setDrawGridLines(false)
+                /*valueFormatter = object : ValueFormatter() {
+                    override fun getFormattedValue(value: Float): String {
+                        return value.toInt().toString()
+                    }
+                }*/
                 when (tab) {
                     "Hour" -> {
                         axisMinimum = 0f
@@ -724,6 +734,7 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
             }
             // Y Axis
             axisLeft.apply {
+                granularity = 1f
                 textColor = Color.WHITE
                 setDrawGridLines(false)
             }
