@@ -164,7 +164,8 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:visibility="visible">
 
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_width="match_parent"
@@ -179,7 +180,7 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            tools:visibility="visible" />
+                            tools:visibility="gone" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

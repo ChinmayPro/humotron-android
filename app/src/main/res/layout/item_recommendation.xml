@@ -20,7 +20,6 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:src="@drawable/ic_keyboard_arrow_up_24px"
-            android:tint="@color/green"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

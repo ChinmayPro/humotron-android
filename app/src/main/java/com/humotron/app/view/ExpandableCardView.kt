@@ -27,7 +27,6 @@ class ExpandableCardView @JvmOverloads constructor(
         cardElevation = 0f
         radius =
             resources.getDimension(R.dimen._20dp) // or use a fixed value if R.dimen._20dp is not available everywhere
-        setCardBackgroundColor(ContextCompat.getColor(context, R.color.card_background))
 
         context.theme.obtainStyledAttributes(
             attrs,
@@ -45,8 +44,14 @@ class ExpandableCardView @JvmOverloads constructor(
                     R.styleable.InfoCardView_cardStrokeWidth,
                     resources.getDimension(R.dimen._1dp)
                 )
+                val mBackgroundColor = getColor(
+                    R.styleable.InfoCardView_cardBackgroundColor,
+                    ContextCompat.getColor(context, R.color.card_background)
+                )
+
                 strokeWidth = mStrokeWidth.toInt()
                 strokeColor = mStrokeColor
+                setCardBackgroundColor(mBackgroundColor)
 
                 binding.tvTitle.text = title
                 binding.tvDescription.text = description
@@ -133,5 +138,9 @@ class ExpandableCardView @JvmOverloads constructor(
 
     fun setDescription(description: String) {
         binding.tvDescription.text = description
+    }
+
+    fun setCardBgColor(color: Int) {
+        setCardBackgroundColor(color)
     }
 }

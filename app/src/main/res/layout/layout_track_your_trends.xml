@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:background="@color/black">
 
     <TextView
         android:id="@+id/tvTrackTrends"
@@ -132,11 +134,13 @@
         android:layout_marginHorizontal="@dimen/_24dp"
         android:layout_marginTop="24dp">
 
-        <View
+        <TextView
             android:id="@+id/viewBaseline"
-            android:layout_width="32dp"
-            android:layout_height="1dp"
-            android:background="@drawable/ic_dotted_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-----"
+            android:textColor="@color/white_70"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/tvBaseline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tvBaseline" />
@@ -154,16 +158,24 @@
             app:layout_constraintStart_toEndOf="@id/viewBaseline"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivBaselineInfo"
-            android:layout_width="14dp"
-            android:layout_height="14dp"
-            android:layout_marginStart="@dimen/_14dp"
-            android:src="@drawable/ic_info_24px"
-            android:tint="@color/white_50"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnBaselineInfo"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:paddingTop="0dp"
+            android:paddingEnd="@dimen/_3dp"
+            android:paddingBottom="0dp"
+            app:icon="@drawable/ic_info_24px"
+            app:iconSize="20dp"
+            app:iconTint="@color/white"
             app:layout_constraintBottom_toBottomOf="@id/tvBaseline"
             app:layout_constraintStart_toEndOf="@id/tvBaseline"
-            app:layout_constraintTop_toTopOf="@id/tvBaseline" />
+            app:layout_constraintTop_toTopOf="@id/tvBaseline"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle" />
 
         <View
             android:id="@+id/viewTypicalRange"
@@ -179,24 +191,32 @@
             android:id="@+id/tvTypicalRange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_24dp"
             android:text="@string/typical_range"
             android:textColor="@color/white_70"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/ivTypicalInfo"
-            app:layout_constraintEnd_toStartOf="@+id/ivTypicalInfo"
-            app:layout_constraintTop_toTopOf="@+id/ivTypicalInfo" />
+            app:layout_constraintBottom_toBottomOf="@+id/btnTypicalInfo"
+            app:layout_constraintEnd_toStartOf="@+id/btnTypicalInfo"
+            app:layout_constraintTop_toTopOf="@+id/btnTypicalInfo" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivTypicalInfo"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnTypicalInfo"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginStart="4dp"
-            android:src="@drawable/ic_info_24px"
-            android:tint="@color/white_50"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:paddingTop="0dp"
+            android:paddingEnd="0dp"
+            android:paddingBottom="0dp"
+            app:icon="@drawable/ic_info_24px"
+            app:iconSize="20dp"
+            app:iconTint="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

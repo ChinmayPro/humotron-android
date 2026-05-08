@@ -14,6 +14,9 @@ class WearableAdapter(
     private val onItemClick: (Wearable) -> Unit,
 ) : RecyclerView.Adapter<WearableAdapter.WearableViewHolder>() {
 
+    private val HR_KEYS = setOf("heartRate", "singleHR", "HR", "hr", "HeartRate")
+    private val HRV_KEYS = setOf("hrv", "HRV", "variability")
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WearableViewHolder {
         val binding =
             ItemWearablesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -32,7 +35,7 @@ class WearableAdapter(
         fun bind(wearable: Wearable) {
             binding.tvWearableName.text = wearable.deviceFacingName ?: "Unknown Device"
 
-            val hrvMetric = wearable.metrics?.firstOrNull { it.key == "hrv" }
+            val hrvMetric = wearable.metrics.findMetric(HRV_KEYS)
             if (hrvMetric != null) {
                 binding.tvHrv.text = hrvMetric.value
                 binding.tvHrvUnit.text = hrvMetric.unit
@@ -41,8 +44,7 @@ class WearableAdapter(
                 binding.tvHrvUnit.text = ""
             }
 
-            val hrMetric = wearable.metrics?.firstOrNull { it.key == "heartRate" }
-                ?: wearable.metrics?.firstOrNull { it.key == "singleHR" }
+            val hrMetric = wearable.metrics.findMetric(HR_KEYS)
 
             if (hrMetric != null) {
                 binding.tvHr.text = hrMetric.value
@@ -75,5 +77,9 @@ class WearableAdapter(
                 onItemClick(wearable)
             }
         }
+    }
+
+    fun List<Wearable.Metric>?.findMetric(keys: Set<String>): Wearable.Metric? {
+        return this?.firstOrNull { it.key in keys }
     }
 }
