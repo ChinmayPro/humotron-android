@@ -99,10 +99,11 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_bt_status"
-                        android:layout_width="20dip"
-                        android:layout_height="20dip"
+                        android:layout_width="15dip"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_5dp"
-                        app:srcCompat="@drawable/ic_bluetooth_disabled_24px" />
+                        android:adjustViewBounds="true"
+                        app:srcCompat="@drawable/ic_bluetooth_off" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivDeviceStatus"

@@ -11,6 +11,8 @@ data class WristBandApiParam(
     val endDate: String,
     @SerializedName("offset")
     val offset: String,
+    @SerializedName("metricId")
+    val metricId: String?,
     @SerializedName("metricName")
     val metricName: String,
 )

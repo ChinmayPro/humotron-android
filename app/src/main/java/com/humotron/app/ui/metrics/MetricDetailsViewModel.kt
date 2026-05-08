@@ -118,21 +118,26 @@ class MetricDetailsViewModel @Inject constructor(
         val offsetString = String.format("%+03d:%02d", hours, minutes)
 
         viewModelScope.launch {
-            sleepRepository.getWristBandSleepDurationData(deviceId, startDate, endDate, offsetString)
+            sleepRepository.getWristBandSleepDurationData(
+                deviceId,
+                startDate,
+                endDate,
+                offsetString
+            )
                 .collect {
                     _wristBandSleepDuration.postValue(it)
                 }
         }
     }
 
-    fun getRingReadingGraphData(endpoint: String, ringId: String, param: RingReadingParam) {
-        val cacheKey = "${endpoint}_${ringId}_${param.range}_${param.startDate}_${param.endDate}"
+    fun getRingReadingGraphData(ringId: String, param: RingReadingParam) {
+        val cacheKey = "ring_${ringId}_${param.range}_${param.startDate}_${param.endDate}"
         if (temperatureCache.containsKey(cacheKey)) {
             getRingReadingTemperatureLiveData.value = temperatureCache[cacheKey]
             return
         }
 
-        sleepRepository.getRingReadingGraphData(endpoint, ringId, param).onEach { state ->
+        sleepRepository.getRingReadingGraphData(ringId, param).onEach { state ->
             if (state.status == Status.SUCCESS) {
                 temperatureCache[cacheKey] = state
             }
@@ -147,8 +152,10 @@ class MetricDetailsViewModel @Inject constructor(
             return
         }
 
-        sleepRepository.getWristBandGraphData(deviceId,
-            param).onEach { state ->
+        sleepRepository.getWristBandGraphData(
+            deviceId,
+            param
+        ).onEach { state ->
             if (state.status == Status.SUCCESS) {
                 temperatureCache[cacheKey] = state
             }

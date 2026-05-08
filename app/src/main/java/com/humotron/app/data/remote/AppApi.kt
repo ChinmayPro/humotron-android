@@ -187,9 +187,8 @@ interface AppApi {
         @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0))
     ): Response<CommonResponse>
 
-    @POST("device/{endpoint}/{ringId}")
+    @POST("device/ringReadingHandler/{ringId}")
     suspend fun getRingReadingGraphData(
-        @Path("endpoint") endpoint: String,
         @Path("ringId") ringId: String,
         @Body param: RingReadingParam,
     ): Response<TemperatureResponse>

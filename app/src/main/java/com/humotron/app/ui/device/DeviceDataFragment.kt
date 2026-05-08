@@ -673,8 +673,12 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
     private fun updateBtStatusIcon(isEnabled: Boolean) {
         if (isEnabled) {
             binding.ivBtStatus.setImageResource(R.drawable.ic_bluetooth_24px)
+            binding.ivBtStatus.alpha = 1f
+            binding.ivBtStatus.isVisible = false
         } else {
-            binding.ivBtStatus.setImageResource(R.drawable.ic_bluetooth_disabled_24px)
+            binding.ivBtStatus.isVisible = true
+            binding.ivBtStatus.setImageResource(R.drawable.ic_bluetooth_off)
+            binding.ivBtStatus.alpha = 0.5f
         }
     }
 

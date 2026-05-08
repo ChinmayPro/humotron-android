@@ -91,11 +91,11 @@ class DeviceViewModel @Inject constructor(
         return getDeviceListLiveData
     }
 
-   /* fun getUserDeviceData() {
-        sleepRepository.getUserDeviceData().onEach { state ->
-            getDeviceListLiveData.value = state
-        }.launchIn(viewModelScope)
-    }*/
+    /* fun getUserDeviceData() {
+         sleepRepository.getUserDeviceData().onEach { state ->
+             getDeviceListLiveData.value = state
+         }.launchIn(viewModelScope)
+     }*/
 
     fun observeUserDeviceData() {
         sleepRepository.deviceCache
@@ -137,34 +137,34 @@ class DeviceViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private val getRingReadingTemperatureLiveData: MutableLiveData<Resource<TemperatureResponse>> =
+    private val deviceGraphLiveData: MutableLiveData<Resource<TemperatureResponse>> =
         MutableLiveData()
 
-    fun getRingReadingTemperatureData(): LiveData<Resource<TemperatureResponse>> {
-        return getRingReadingTemperatureLiveData
+    fun getDeviceGraphData(): LiveData<Resource<TemperatureResponse>> {
+        return deviceGraphLiveData
     }
 
     private val temperatureCache = mutableMapOf<String, Resource<TemperatureResponse>>()
 
-    fun getRingReadingGraphData(endpoint: String, ringId: String, param: RingReadingParam) {
-        val cacheKey = "${endpoint}_${ringId}_${param.range}_${param.startDate}_${param.endDate}"
+    fun getRingReadingGraphData(ringId: String, param: RingReadingParam) {
+        val cacheKey = "ring_${ringId}_${param.range}_${param.startDate}_${param.endDate}"
         if (temperatureCache.containsKey(cacheKey)) {
-            getRingReadingTemperatureLiveData.value = temperatureCache[cacheKey]
+            deviceGraphLiveData.value = temperatureCache[cacheKey]
             return
         }
 
-        sleepRepository.getRingReadingGraphData(endpoint, ringId, param).onEach { state ->
+        sleepRepository.getRingReadingGraphData(ringId, param).onEach { state ->
             if (state.status == Status.SUCCESS) {
                 temperatureCache[cacheKey] = state
             }
-            getRingReadingTemperatureLiveData.value = state
+            deviceGraphLiveData.value = state
         }.launchIn(viewModelScope)
     }
 
     fun getWristBandGraphData(deviceId: String, param: WristBandApiParam) {
         val cacheKey = "wristBand_${deviceId}_${param.range}_${param.startDate}_${param.endDate}"
         if (temperatureCache.containsKey(cacheKey)) {
-            getRingReadingTemperatureLiveData.value = temperatureCache[cacheKey]
+            deviceGraphLiveData.value = temperatureCache[cacheKey]
             return
         }
 
@@ -172,7 +172,7 @@ class DeviceViewModel @Inject constructor(
             if (state.status == Status.SUCCESS) {
                 temperatureCache[cacheKey] = state
             }
-            getRingReadingTemperatureLiveData.value = state
+            deviceGraphLiveData.value = state
         }.launchIn(viewModelScope)
     }
 
@@ -205,14 +205,15 @@ class DeviceViewModel @Inject constructor(
     private val _mergedAssessmentListLiveData: MutableLiveData<Resource<MergedAssessmentResponse>> =
         MutableLiveData()
 
-    val mergedAssessmentListLiveData: LiveData<Resource<MergedAssessmentResponse>> = _mergedAssessmentListLiveData
+    val mergedAssessmentListLiveData: LiveData<Resource<MergedAssessmentResponse>> =
+        _mergedAssessmentListLiveData
 
     fun getMergedAssessmentList(forceRefresh: Boolean = false) {
         if (!forceRefresh && _mergedAssessmentListLiveData.value?.status == Status.SUCCESS) return
-        
+
         sleepRepository.getMergedAssessmentList().onEach { state ->
             _mergedAssessmentListLiveData.value = state
-            Log.e("TAG", "initObsdwdddfervers: $state ", )
+            Log.e("TAG", "initObsdwdddfervers: $state ")
 
         }.launchIn(viewModelScope)
     }
@@ -224,7 +225,7 @@ class DeviceViewModel @Inject constructor(
 
     fun getMedicalPdfList(forceRefresh: Boolean = false) {
         if (!forceRefresh && _medicalPdfListLiveData.value?.status == Status.SUCCESS) return
-        
+
         medicalRepository.getAllPdfList().onEach { state ->
             _medicalPdfListLiveData.value = state
         }.launchIn(viewModelScope)
