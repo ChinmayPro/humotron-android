@@ -30,6 +30,9 @@ class OrderViewModel @Inject constructor(
     private val orderTrackingLiveData: SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.GetOrderTrackingResponse>> = SingleLiveEvent()
     fun getOrderTrackingLiveData(): SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.GetOrderTrackingResponse>> = orderTrackingLiveData
 
+    private val bloodTestOrdersLiveData: SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.GetBloodTestOrderResponse>> = SingleLiveEvent()
+    fun getBloodTestOrdersLiveData(): SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.GetBloodTestOrderResponse>> = bloodTestOrdersLiveData
+
     private var currentPage = 1
     private var isLastPage = false
     private val limit = 10
@@ -67,6 +70,12 @@ class OrderViewModel @Inject constructor(
     fun fetchOrderTrackingDetails(orderNumber: String) {
         repository.getOrderTrackingDetails(orderNumber).onEach { state ->
             orderTrackingLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
+
+    fun fetchBloodTestOrders() {
+        repository.getBloodTestOrders().onEach { state ->
+            bloodTestOrdersLiveData.value = state
         }.launchIn(viewModelScope)
     }
 }

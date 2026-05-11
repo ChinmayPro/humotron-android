@@ -452,4 +452,9 @@ interface AppApi {
         @Path("orderNumber") orderNumber: String,
         @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0))
     ): Response<com.humotron.app.domain.modal.response.GetOrderTrackingResponse>
+
+    @POST("order/getBloodTestOrders")
+    suspend fun getBloodTestOrders(
+        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0))
+    ): Response<com.humotron.app.domain.modal.response.GetBloodTestOrderResponse>
 }

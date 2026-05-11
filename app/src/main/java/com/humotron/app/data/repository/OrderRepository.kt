@@ -65,4 +65,17 @@ class OrderRepository @Inject constructor(
     }.catch {
         emit(responseHandler.handleException(com.humotron.app.data.network.exceptions.ValidationException(it.message)))
     }
+
+    fun getBloodTestOrders(): Flow<Resource<com.humotron.app.domain.modal.response.GetBloodTestOrderResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.getBloodTestOrders(), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(com.humotron.app.data.network.exceptions.ValidationException(it.message)))
+    }
 }

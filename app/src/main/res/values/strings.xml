@@ -614,6 +614,7 @@ To get started:\n
     <string name="price_format_decimal">%1$s%2$.2f</string>
     <string name="order_track_desc">Track orders for your wearables, smart monitors, and home test kits.</string>
     <string name="no_orders_yet">No Orders, Yet!</string>
+    <string name="no_appointments_yet">No Appointments, Yet!</string>
     <string name="appointments">Appointments</string>
     <string name="favourite">Favourite</string>
     <string name="items_count_format">%1$d items</string>
@@ -637,4 +638,14 @@ To get started:\n
     <string name="your_baseline_info">Your average over the past 30 days. This is your personal \"normal\" and can change over time.</string>
     <string name="typical_range_info">The usual range for people of your age and gender. This is for reference only and not for medical interpretation.</string>
     <string name="what_is">What is %1$s</string>
+    <string name="comprehensive_full_body_checkup">Comprehensive Full Body Checkup</string>
+    <string name="booking_details_format">BOOKING DETAILS - %s</string>
+    <string name="appointment_details">APPOINTMENT DETAILS</string>
+    <string name="audio_only">Audio Only</string>
+    <string name="read_how_to_prepare_html">Read how to prepare &lt;font color=\"#B8FF4F\"&gt;&gt;&gt; &lt;/font&gt;</string>
+    <string name="add_to_calendar_html">Add To Calendar >></string>
+    <string name="booking_date_colon">Booking Date: </string>
+    <string name="cancel_order_label">Cancel Order</string>
+    <string name="reschedule_label">Reschedule</string>
+    <string name="join_here">Join Here</string>
 </resources>

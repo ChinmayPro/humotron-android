@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="8dp"
+    app:cardBackgroundColor="@color/black"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitle"
+            style="@style/Text.17x.Manrope.Bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Comprehensive Full Body Checkup" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvOrderNumber"
+            style="@style/Text.14x.Manrope.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/white70"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            tools:text="#872239609" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvBookingDateLabel"
+            style="@style/Text.12x.Manrope.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/booking_date_colon"
+            android:textColor="@color/white30"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvOrderNumber" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvBookingDate"
+            style="@style/Text.12x.Manrope.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white70"
+            app:layout_constraintBottom_toBottomOf="@id/tvBookingDateLabel"
+            app:layout_constraintStart_toEndOf="@id/tvBookingDateLabel"
+            app:layout_constraintTop_toTopOf="@id/tvBookingDateLabel"
+            tools:text="11 May'26, 12:00 AM" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/white10"
+            app:layout_constraintTop_toBottomOf="@id/tvBookingDateLabel" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvBookingDetailsLabel"
+            style="@style/Text.10x.Manrope.SemiBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/white30"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider"
+            tools:text="BOOKING DETAILS - Lab visit" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivBookingIcon"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="-3dp"
+            android:src="@drawable/ic_appointment_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvBookingDetailsLabel" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSubTitle"
+            style="@style/Text.15x.Manrope.SemiBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/ivCall"
+            app:layout_constraintStart_toEndOf="@id/ivBookingIcon"
+            app:layout_constraintTop_toTopOf="@id/ivBookingIcon"
+            tools:text="Comprehensive Full Body Checkup" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvAppointmentDateTime"
+            style="@style/Text.15x.Manrope.SemiBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:layout_constraintEnd_toEndOf="@id/tvSubTitle"
+            app:layout_constraintStart_toStartOf="@id/tvSubTitle"
+            app:layout_constraintTop_toBottomOf="@id/tvSubTitle"
+            tools:text="11 May'26, 04:02 AM" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvAddToCalendar"
+            style="@style/Text.12x.Manrope.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/add_to_calendar_html"
+            android:textColor="@color/dark_orange"
+            app:layout_constraintStart_toStartOf="@id/tvSubTitle"
+            app:layout_constraintTop_toBottomOf="@id/tvAppointmentDateTime" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivCall"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_round_phone"
+            app:layout_constraintBottom_toTopOf="@+id/ivMessage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/ivBookingIcon"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivMessage"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_round_message"
+            app:layout_constraintBottom_toTopOf="@+id/ivLocation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivCall" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivLocation"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_round_location"
+            app:layout_constraintBottom_toBottomOf="@id/tvAddToCalendar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivMessage" />
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/white10"
+            app:layout_constraintTop_toBottomOf="@id/tvAddToCalendar" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivPrepareIcon"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_read"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider2" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPrepare"
+            style="@style/Text.14x.Manrope.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="@string/read_how_to_prepare_html"
+            android:textColor="@color/white_80"
+            app:layout_constraintBottom_toBottomOf="@id/ivPrepareIcon"
+            app:layout_constraintStart_toEndOf="@id/ivPrepareIcon"
+            app:layout_constraintTop_toTopOf="@id/ivPrepareIcon" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnCancel"
+            style="@style/Text.14x.Manrope.Bold"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_btn_confirm_order"
+            android:text="@string/cancel_order_label"
+            android:textAllCaps="false"
+            android:textColor="@color/white30"
+            app:layout_constraintEnd_toStartOf="@+id/tvReschedule"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivPrepareIcon" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvReschedule"
+            style="@style/Text.14x.Manrope.Bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/reschedule_label"
+            android:textColor="@color/s400"
+            app:layout_constraintBottom_toBottomOf="@id/btnCancel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@id/btnCancel"
+            app:layout_constraintTop_toTopOf="@id/btnCancel" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnJoinHere"
+            style="@style/Text.14x.Manrope.Bold"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_btn_round_rect_8"
+            android:text="@string/join_here"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/ivPrepareIcon" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
