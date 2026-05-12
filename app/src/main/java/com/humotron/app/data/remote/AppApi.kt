@@ -67,6 +67,7 @@ import com.humotron.app.domain.modal.response.WristBandSleepDurationResponse
 import com.humotron.app.domain.modal.response.YetToTrackMetricResponse
 import com.humotron.app.domain.modal.response.ProductDetailResponse
 import com.humotron.app.domain.modal.response.ProductVariantResponse
+import com.humotron.app.domain.modal.response.GetAllLikesResponse
 import com.humotron.app.domain.modal.response.BookingTypeResponse
 import com.humotron.app.domain.modal.response.ShopAddToCartResponse
 import com.humotron.app.domain.modal.response.GetDefaultConfigResponse
@@ -457,4 +458,10 @@ interface AppApi {
     suspend fun getBloodTestOrders(
         @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0))
     ): Response<com.humotron.app.domain.modal.response.GetBloodTestOrderResponse>
+
+    @POST("like/getAllLikes")
+    suspend fun getAllLikes(
+        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0))
+    ): Response<GetAllLikesResponse>
+
 }

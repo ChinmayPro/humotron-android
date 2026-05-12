@@ -19,10 +19,10 @@
             style="@style/Text.17x.Manrope.Bold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:text="@string/comprehensive_full_body_checkup"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Comprehensive Full Body Checkup" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvOrderNumber"
@@ -62,12 +62,13 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="@dimen/_5dp"
             android:background="@color/white10"
             app:layout_constraintTop_toBottomOf="@id/tvBookingDateLabel" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvBookingDetailsLabel"
-            style="@style/Text.10x.Manrope.SemiBold"
+            style="@style/Text.12x.Manrope.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -80,8 +81,8 @@
             android:id="@+id/ivBookingIcon"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_marginTop="16dp"
             android:layout_marginStart="-3dp"
+            android:layout_marginTop="16dp"
             android:src="@drawable/ic_appointment_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvBookingDetailsLabel" />
@@ -93,9 +94,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
             app:layout_constraintEnd_toStartOf="@+id/ivCall"
+            app:layout_goneMarginStart="0dp"
             app:layout_constraintStart_toEndOf="@id/ivBookingIcon"
-            app:layout_constraintTop_toTopOf="@id/ivBookingIcon"
+            app:layout_constraintTop_toBottomOf="@id/tvBookingDetailsLabel"
             tools:text="Comprehensive Full Body Checkup" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -156,7 +159,7 @@
             android:layout_height="1dp"
             android:layout_marginTop="20dp"
             android:background="@color/white10"
-            app:layout_constraintTop_toBottomOf="@id/tvAddToCalendar" />
+            app:layout_constraintTop_toBottomOf="@id/btnJoinHere" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivPrepareIcon"
@@ -211,15 +214,18 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnJoinHere"
             style="@style/Text.14x.Manrope.Bold"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_width="wrap_content"
+            android:minWidth="140dp"
+            android:paddingHorizontal="30dp"
+            android:layout_height="35dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/bg_btn_round_rect_8"
+            android:background="@drawable/bg_btn_round_corner"
             android:text="@string/join_here"
             android:textAllCaps="false"
             android:textColor="@color/black"
             android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/ivPrepareIcon" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvAddToCalendar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

@@ -78,4 +78,17 @@ class OrderRepository @Inject constructor(
     }.catch {
         emit(responseHandler.handleException(com.humotron.app.data.network.exceptions.ValidationException(it.message)))
     }
+
+    fun getAllLikes(): Flow<Resource<com.humotron.app.domain.modal.response.GetAllLikesResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.getAllLikes(), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(com.humotron.app.data.network.exceptions.ValidationException(it.message)))
+    }
 }

@@ -37,11 +37,9 @@ class AppointmentAdapter(
 
         fun bind(appointment: GetBloodTestOrderResponse.BloodTestOrder) {
             val context = binding.root.context
-            binding.tvTitle.text = appointment.title ?: context.getString(com.humotron.app.R.string.comprehensive_full_body_checkup)
             binding.tvOrderNumber.text = "#${appointment.orderNumber ?: ""}"
             
-            // iOS logic: lbl_bookingDate = appointment.date
-            binding.tvBookingDate.text = utcOffsetToLocalTime(appointment.date, "d MMM''yy, hh:mm a")
+            binding.tvBookingDate.text = utcOffsetToLocalTime(appointment.date, "d MMM''yy, hh:mm a", true)
 
             // Default visibility
             binding.ivBookingIcon.visibility = View.VISIBLE
@@ -52,20 +50,19 @@ class AppointmentAdapter(
             binding.tvReschedule.visibility = View.VISIBLE
             binding.btnJoinHere.visibility = View.GONE
 
-            binding.tvBookingDetailsLabel.text = context.getString(com.humotron.app.R.string.booking_details_format, appointment.title ?: "")
 
             if (appointment.bookingType == "expert_review") {
                 binding.ivBookingIcon.visibility = View.GONE
                 binding.ivCall.visibility = View.GONE
                 binding.ivMessage.visibility = View.GONE
                 binding.ivLocation.visibility = View.GONE
-                binding.btnCancel.visibility = View.GONE
-                binding.tvReschedule.visibility = View.GONE
+                binding.btnCancel.visibility = View.VISIBLE
+                binding.tvReschedule.visibility = View.VISIBLE
                 binding.btnJoinHere.visibility = View.VISIBLE
 
                 binding.tvBookingDetailsLabel.text = context.getString(com.humotron.app.R.string.appointment_details)
                 
-                binding.tvSubTitle.text = utcOffsetToLocalTime(appointment.date, "d MMM''yy, hh:mm a")
+                binding.tvSubTitle.text = utcOffsetToLocalTime(appointment.date, "d MMM''yy, hh:mm a", true)
                 
                 binding.tvAppointmentDateTime.text = context.getString(com.humotron.app.R.string.audio_only)
             } else {
@@ -77,6 +74,8 @@ class AppointmentAdapter(
                 binding.ivLocation.visibility = View.VISIBLE
                 binding.btnCancel.visibility = View.VISIBLE
                 binding.tvReschedule.visibility = View.VISIBLE
+
+                binding.tvBookingDetailsLabel.text = context.getString(com.humotron.app.R.string.booking_details_format, appointment.title ?: "")
 
                 // Address formatting matching iOS
                 val addr = appointment.address
@@ -103,7 +102,7 @@ class AppointmentAdapter(
                 }
 
                 // iOS logic: lbl_appointment_date = appointment.paymentDate
-                binding.tvAppointmentDateTime.text = utcOffsetToLocalTime(appointment.paymentDate, "d MMM''yy, hh:mm a")
+                binding.tvAppointmentDateTime.text = utcOffsetToLocalTime(appointment.paymentDate, "d MMM''yy, hh:mm a", true)
             }
 
             val prepareText = context.getString(com.humotron.app.R.string.read_how_to_prepare_html)

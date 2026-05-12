@@ -648,4 +648,6 @@ To get started:\n
     <string name="cancel_order_label">Cancel Order</string>
     <string name="reschedule_label">Reschedule</string>
     <string name="join_here">Join Here</string>
+    <string name="no_favourite_found">No Favourite Found</string>
+    <string name="you_haven_t_liked_anything_yet">You haven\'t liked anything yet</string>
 </resources>

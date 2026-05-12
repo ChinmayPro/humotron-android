@@ -22,7 +22,14 @@ class SubAppointmentsFragment : BaseFragment(R.layout.fragment_sub_appointments)
         binding = FragmentSubAppointmentsBinding.bind(view)
         initRecyclerView()
         setupObservers()
-        
+    }
+
+    override fun onResume() {
+        super.onResume()
+        fetchData()
+    }
+
+    fun fetchData() {
         viewModel.fetchBloodTestOrders()
     }
 
@@ -34,10 +41,12 @@ class SubAppointmentsFragment : BaseFragment(R.layout.fragment_sub_appointments)
         viewModel.getBloodTestOrdersLiveData().observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
                 Status.LOADING -> {
-                    binding.progressBar.visibility = View.VISIBLE
-                    binding.tvMainLabel.visibility = View.GONE
-                    binding.tvSubLabel.visibility = View.GONE
-                    binding.rvAppointments.visibility = View.GONE
+                    if (appointmentAdapter.itemCount == 0) {
+                        binding.progressBar.visibility = View.VISIBLE
+                        binding.tvMainLabel.visibility = View.GONE
+                        binding.tvSubLabel.visibility = View.GONE
+                        binding.rvAppointments.visibility = View.GONE
+                    }
                 }
                 Status.SUCCESS -> {
                     binding.progressBar.visibility = View.GONE
