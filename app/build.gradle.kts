@@ -25,6 +25,23 @@ android {
     val googleClientId = googleProperties.getProperty("GOOGLE_CLIENT_ID") ?: ""
     val googleClientSecret = googleProperties.getProperty("GOOGLE_CLIENT_SECRET") ?: ""
 
+    val keystorePropertiesFile = rootProject.file("keystore.properties")
+    val keystoreProperties = Properties()
+    if (keystorePropertiesFile.exists()) {
+        keystoreProperties.load(keystorePropertiesFile.inputStream())
+    }
+
+    signingConfigs {
+        create("release") {
+            if (keystorePropertiesFile.exists()) {
+                storeFile = file(keystoreProperties.getProperty("storeFile"))
+                storePassword = keystoreProperties.getProperty("storePassword")
+                keyAlias = keystoreProperties.getProperty("keyAlias")
+                keyPassword = keystoreProperties.getProperty("keyPassword")
+            }
+        }
+    }
+
     defaultConfig {
         applicationId = "com.humotron.app"
         minSdk = 26
@@ -45,7 +62,12 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
+    }
+
+    lint {
+        disable += "NullSafeMutableLiveData"
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -169,9 +191,10 @@ dependencies {
 
     // -------------------- Debug Tools --------------------
     debugImplementation(libs.pluto)
-    debugImplementation(libs.network)
-    debugImplementation(libs.logger)
-    debugImplementation(libs.exceptions)
+    debugImplementation(libs.bundle.core)
+    releaseImplementation(libs.pluto.no.op)
+    releaseImplementation(libs.bundle.core.no.op)
+    implementation(libs.timber)
 
     // -------------------- Testing --------------------
     testImplementation(libs.junit)

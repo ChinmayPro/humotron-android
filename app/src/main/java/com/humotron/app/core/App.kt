@@ -17,6 +17,7 @@ import com.pluto.plugins.exceptions.PlutoExceptionsPlugin
 import com.pluto.plugins.logger.PlutoLoggerPlugin
 import com.pluto.plugins.logger.PlutoTimberTree
 import com.pluto.plugins.network.PlutoNetworkPlugin
+import com.humotron.app.BuildConfig
 import dagger.hilt.android.HiltAndroidApp
 import lib.linktop.nexring.api.NexRingManager
 import timber.log.Timber
@@ -50,11 +51,15 @@ class App : Application() {
 
     override fun onCreate() {
         instance = this
-        initializeStrictMode()
+        if (BuildConfig.DEBUG) {
+            initializeStrictMode()
+        }
         super.onCreate()
         registerActivityLifecycleCallbacks(mActivityLifecycleCb)
         bandSyncManager.start()
-        initPluto()
+        if (BuildConfig.DEBUG) {
+            initPluto()
+        }
     }
 
     private fun initPluto() {
