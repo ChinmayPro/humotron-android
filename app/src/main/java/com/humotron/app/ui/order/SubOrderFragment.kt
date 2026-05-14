@@ -26,21 +26,16 @@ class SubOrderFragment : BaseFragment(R.layout.fragment_sub_order) {
         binding = FragmentSubOrderBinding.bind(view)
         setupRecyclerView()
         setupObservers()
-        
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>("refresh_orders")
-            ?.observe(viewLifecycleOwner) { refresh ->
-                if (refresh) {
-                    isFirstPage = true
-                    viewModel.fetchOrderList(isFirstPage = true)
-                    findNavController().currentBackStackEntry?.savedStateHandle?.remove<Boolean>("refresh_orders")
-                }
-            }
+    }
 
-        if (orderAdapter.itemCount == 0) {
-            viewModel.fetchOrderList(isFirstPage = true)
-        } else {
-            isFirstPage = false
-        }
+    override fun onResume() {
+        super.onResume()
+        fetchData()
+    }
+
+    fun fetchData() {
+        isFirstPage = true
+        viewModel.fetchOrderList(isFirstPage = true)
     }
 
     private fun setupRecyclerView() {
@@ -72,7 +67,7 @@ class SubOrderFragment : BaseFragment(R.layout.fragment_sub_order) {
         viewModel.getOrderListLiveData().observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
                 Status.LOADING -> {
-                    if (isFirstPage) {
+                    if (isFirstPage && orderAdapter.itemCount == 0) {
                         binding.progressBar.visibility = View.VISIBLE
                         binding.tvMainLabel.visibility = View.GONE
                         binding.tvSubLabel.visibility = View.GONE

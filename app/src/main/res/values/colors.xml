@@ -101,6 +101,10 @@
     <color name="gray_300">#D1D5DB</color>
     <color name="gray_400_ui">#9CA3AF</color>
     <color name="stroke_card">#333333</color>
-    
+
+    <!-- Missing Pluto Colors -->
+    <color name="pluto___white_20">#33FFFFFF</color>
+    <color name="pluto___transparent">#00000000</color>
+    <color name="pluto___red">#FF3B30</color>
 
 </resources>
