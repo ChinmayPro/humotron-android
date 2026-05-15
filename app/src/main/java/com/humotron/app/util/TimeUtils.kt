@@ -49,7 +49,8 @@ fun utcOffsetToLocalTime1(
 
 fun utcOffsetToLocalTime(
     utcTime: String?,
-    outputPattern: String = "dd-MMM-yyyy hh:mm:ss a"
+    outputPattern: String = "dd-MMM-yyyy hh:mm:ss a",
+    useUtc: Boolean = false
 ): String {
     if (utcTime.isNullOrBlank()) return ""
     return try {
@@ -62,8 +63,8 @@ fun utcOffsetToLocalTime(
         }.getOrNull() ?: return ""
 
         offsetDateTime
-            .atZoneSameInstant(ZoneId.systemDefault())
-            .format(DateTimeFormatter.ofPattern(outputPattern))
+            .atZoneSameInstant(if (useUtc) java.time.ZoneOffset.UTC else ZoneId.systemDefault())
+            .format(DateTimeFormatter.ofPattern(outputPattern, java.util.Locale.ENGLISH))
 
     } catch (e: Exception) {
         ""

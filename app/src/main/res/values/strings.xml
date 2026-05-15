@@ -614,6 +614,7 @@ To get started:\n
     <string name="price_format_decimal">%1$s%2$.2f</string>
     <string name="order_track_desc">Track orders for your wearables, smart monitors, and home test kits.</string>
     <string name="no_orders_yet">No Orders, Yet!</string>
+    <string name="no_appointments_yet">No Appointments, Yet!</string>
     <string name="appointments">Appointments</string>
     <string name="favourite">Favourite</string>
     <string name="items_count_format">%1$d items</string>
@@ -669,4 +670,16 @@ To get started:\n
     <string name="choose_how_often_the_ring_auto_measures">Choose how often the ring auto-measures.</string>
     <string name="every_s_sec">Every %1$d sec</string>
     <string name="frequency_updated_to_s_sec">Frequency updated to %1$d sec</string>
+    <string name="comprehensive_full_body_checkup">Comprehensive Full Body Checkup</string>
+    <string name="booking_details_format">BOOKING DETAILS - %s</string>
+    <string name="appointment_details">APPOINTMENT DETAILS</string>
+    <string name="audio_only">Audio Only</string>
+    <string name="read_how_to_prepare_html">Read how to prepare &lt;font color=\"#B8FF4F\"&gt;&gt;&gt; &lt;/font&gt;</string>
+    <string name="add_to_calendar_html">Add To Calendar >></string>
+    <string name="booking_date_colon">Booking Date: </string>
+    <string name="cancel_order_label">Cancel Order</string>
+    <string name="reschedule_label">Reschedule</string>
+    <string name="join_here">Join Here</string>
+    <string name="no_favourite_found">No Favourite Found</string>
+    <string name="you_haven_t_liked_anything_yet">You haven\'t liked anything yet</string>
 </resources>

@@ -146,6 +146,38 @@
     </fragment>
 
     <fragment
+        android:id="@+id/fragmentShopDeviceDetails"
+        android:name="com.humotron.app.ui.shop.ShopDeviceDetailsFragment"
+        android:label="Device Details">
+        <argument
+            android:name="device"
+            app:argType="com.humotron.app.domain.modal.response.GetShopDevicesResponse$Device" />
+        <action
+            android:id="@+id/action_fragmentShopDeviceDetails_to_fragmentShopBuyNow"
+            app:destination="@id/fragmentShopBuyNow"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentShopOptimizeDetail"
+        android:name="com.humotron.app.ui.shop.ShopOptimizeDetailFragment"
+        android:label="Optimize Details">
+        <argument
+            android:name="supplement"
+            android:defaultValue="@null"
+            app:argType="com.humotron.app.domain.modal.response.SupplementItem"
+            app:nullable="true" />
+        <argument
+            android:name="recipe"
+            android:defaultValue="@null"
+            app:argType="com.humotron.app.domain.modal.response.RecipeItem"
+            app:nullable="true" />
+    </fragment>
+
+    <fragment
         android:id="@+id/fragmentHealthScan"
         android:name="com.humotron.app.ui.device.HealthScanFragment"
         tools:layout="@layout/fragment_health_scan">

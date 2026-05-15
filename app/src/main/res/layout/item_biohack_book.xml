@@ -98,7 +98,6 @@
                 android:layout_marginBottom="@dimen/_10dp"
                 android:text="@string/related_books"
                 android:textColor="@color/d700"
-                app:layout_constraintBottom_toTopOf="@id/btnNext"
                 app:layout_constraintTop_toBottomOf="@id/tvAuthor" />
 
 

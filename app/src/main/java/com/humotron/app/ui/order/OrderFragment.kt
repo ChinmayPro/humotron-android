@@ -63,6 +63,11 @@ class OrderFragment : BaseFragment(R.layout.fragment_order) {
             val color = if (index == position) activeColor else inactiveColor
             icon.imageTintList = android.content.res.ColorStateList.valueOf(color)
             text.setTextColor(color)
+            
+            // Update the main header title based on selection
+            if (index == position) {
+                binding.tvTitle.text = text.text
+            }
         }
     }
 

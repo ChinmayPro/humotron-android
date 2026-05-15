@@ -32,7 +32,7 @@ import androidx.fragment.app.activityViewModels
 import com.humotron.app.ui.dialogs.DeleteConfirmationBottomSheet
 import com.humotron.app.util.fadeIn
 import com.humotron.app.util.showWithFade
-import com.pluto.utilities.extensions.toast
+import com.humotron.app.util.toast
 import com.yarolegovich.discretescrollview.transform.Pivot
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer
 import dagger.hilt.android.AndroidEntryPoint

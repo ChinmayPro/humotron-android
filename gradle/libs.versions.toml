@@ -64,6 +64,8 @@ permissionx = "1.8.1"
 
 #Debug Tools
 pluto = "3.0.0"
+timber = "5.0.1"
+
 
 #Testing
 junit = "4.13.2"
@@ -142,9 +144,10 @@ permissionx = { module = "com.guolindev.permissionx:permissionx", version.ref = 
 
 #Debug Tools
 pluto = { module = "com.androidpluto:pluto", version.ref = "pluto" }
-network = { module = "com.androidpluto.plugins:network", version.ref = "pluto" }
-logger = { module = "com.androidpluto.plugins:logger", version.ref = "pluto" }
-exceptions = { module = "com.androidpluto.plugins:exceptions", version.ref = "pluto" }
+pluto-no-op = { module = "com.androidpluto:pluto-no-op", version.ref = "pluto" }
+bundle-core = { module = "com.androidpluto.plugins:bundle-core", version.ref = "pluto" }
+bundle-core-no-op = { module = "com.androidpluto.plugins:bundle-core-no-op", version.ref = "pluto" }
+timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 
 #Testing
 junit = { group = "junit", name = "junit", version.ref = "junit" }

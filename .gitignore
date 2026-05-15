@@ -12,3 +12,9 @@ local.properties
 /app/src/androidTest/
 /app/src/test/
 /blesdk_2208/build/
+
+# Build Outputs
+/app/release/
+*.apk
+*.aab
+output-metadata.json
