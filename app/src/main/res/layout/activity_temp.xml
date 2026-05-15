@@ -8,22 +8,13 @@
     android:background="#E2000000"
     tools:context=".ui.TempActivity">
 
-    <com.humotron.app.view.LayeredCardView
-        android:id="@+id/layeredCardView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:minHeight="250dp"
-        app:descriptionTextColor="@android:color/white"
-        app:descriptionTextSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:plusTextColor="@android:color/white"
-        app:plusTextSize="15sp"
-        app:titleFontFamily="@font/manrope_bold"
-        app:titleTextColor="@android:color/white"
-        app:titleTextSize="20sp" />
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/lineChart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="@dimen/_12dp"
+        android:layout_marginTop="@dimen/_5dp"
+        android:layout_marginBottom="@dimen/_12dp"
+        android:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

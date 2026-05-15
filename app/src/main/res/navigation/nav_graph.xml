@@ -181,7 +181,7 @@
             app:argType="float" />
         <argument
             android:name="wearable"
-            app:argType="com.humotron.app.domain.modal.response.GetAllDeviceResponse$Data$Wearable"
+            app:argType="com.humotron.app.domain.modal.response.GetAllDeviceResponse$Data$UserDevice"
             app:nullable="true" />
     </fragment>
 

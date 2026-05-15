@@ -12,14 +12,14 @@ data class AddHardwareResponse(
     @SerializedName("message")
     val message: String?,
     @SerializedName("status")
-    val status: String?
+    val status: String?,
 ) : Parcelable {
     @Parcelize
     data class Data(
         @SerializedName("deviceDetails")
         val deviceDetails: DeviceDetails?,
         @SerializedName("userHardware")
-        val userHardware: UserHardware?
+        val userHardware: UserHardware?,
     ) : Parcelable {
         @Parcelize
         data class DeviceDetails(
@@ -52,14 +52,14 @@ data class AddHardwareResponse(
             @SerializedName("metrics")
             val metrics: List<Metric?>?,
             @SerializedName("orderStatus")
-            val orderStatus: String?
+            val orderStatus: String?,
         ) : Parcelable {
             @Parcelize
             data class Metric(
                 @SerializedName("key")
                 val key: String?,
                 @SerializedName("value")
-                val value: String?
+                val value: String?,
             ) : Parcelable
         }
 
@@ -82,5 +82,7 @@ data class UserHardware(
     @SerializedName("userHardwareUUID")
     val userHardwareUUID: String?,
     @SerializedName("userId")
-    val userId: String?
+    val userId: String?,
+    @SerializedName("hardwareSerialNumber")
+    val hardwareSerialNumber: String?,
 ) : Parcelable

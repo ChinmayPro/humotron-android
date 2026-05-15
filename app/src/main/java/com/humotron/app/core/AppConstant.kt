@@ -33,6 +33,7 @@ class Preference {
         const val WEARABLE_BAND = "wearable_band"
         const val HARDWARE_DATA = "hardware_data"
         const val BAND_HARDWARE_DATA = "band_hardware_data"
+        const val HARDWARE_DETAILS_LIST = "hardware_details_list"
         const val RECORD_DATE = "recorded_time"
         const val PREF_ASSESSMENT_ANSWERS = "assessment_answers"
 

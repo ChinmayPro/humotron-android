@@ -19,6 +19,8 @@ import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.humotron.app.R
 import com.humotron.app.bt.band.BandBleManager
+import com.humotron.app.bt.band.STATE_BAND_CONNECTED
+import com.humotron.app.bt.band.STATE_BAND_CONNECTING
 import com.humotron.app.bt.ring.RingBleDevice
 import com.humotron.app.core.App
 import com.humotron.app.core.base.BaseFragment
@@ -26,7 +28,7 @@ import com.humotron.app.data.network.Status
 import com.humotron.app.databinding.FragmentDeviceDataBinding
 import com.humotron.app.domain.modal.DeviceType
 import com.humotron.app.domain.modal.response.ExerciseIntensityMetric
-import com.humotron.app.domain.modal.response.GetAllDeviceResponse.Data.Wearable
+import com.humotron.app.domain.modal.response.GetAllDeviceResponse.Data.UserDevice
 import com.humotron.app.domain.modal.response.MetricType
 import com.humotron.app.domain.modal.response.PhysicalRecoveryMetric
 import com.humotron.app.domain.modal.response.SleepDurationMetric
@@ -48,18 +50,17 @@ import com.humotron.app.util.TAG_RING_DEBUG
 import com.humotron.app.util.convertDecimalHours
 import com.humotron.app.util.formatDateToMMMddyyyy
 import com.humotron.app.util.getTimeAgo
-import com.pluto.plugins.logger.PlutoLog
 import com.jstyle.blesdk2208a.Util.BleSDK
 import com.jstyle.blesdk2208a.callback.DataListener2025
 import com.jstyle.blesdk2208a.constant.BleConst
 import com.jstyle.blesdk2208a.constant.DeviceKey
+import com.pluto.plugins.logger.PlutoLog
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
-import java.util.Locale
-import javax.inject.Inject
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import java.time.Instant
+import java.util.Locale
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnClickListener {
@@ -77,7 +78,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
     private lateinit var metricsAdapter: MetricsAdapter
     private lateinit var healthScanAdapter: HealthScanAdapter
     private val homeViewModel by activityViewModels<HomeViewModel>()
-    private var wearable: Wearable? = null
+    private var userDevice: UserDevice? = null
 
 
     @SuppressLint("SetTextI18n")
@@ -96,16 +97,16 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
     }
 
     private fun initViews() {
-        wearable = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            arguments?.getParcelable(NavKeys.WEARABLE, Wearable::class.java)
+        userDevice = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            arguments?.getParcelable(NavKeys.WEARABLE, UserDevice::class.java)
         } else {
             arguments?.getParcelable(NavKeys.WEARABLE)
         }
         binding.header.title.text = "Humotron Smart Ring Metrics"
 
         metricsAdapter = MetricsAdapter { item, dateTime ->
-            val deviceId = wearable?.id
-            val deviceName = wearable?.deviceName
+            val deviceId = userDevice?.id
+            val deviceName = userDevice?.deviceName
             deviceId?.let {
                 findNavController().navigate(
                     R.id.fragmentMetric,
@@ -122,9 +123,9 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
 
         setupHealthScanAdapter()
 
-        val deviceId = wearable?.id
+        val deviceId = userDevice?.id
         deviceId?.let { deviceId ->
-            val deviceType = DeviceType.from(wearable?.deviceName)
+            val deviceType = DeviceType.from(userDevice?.deviceName)
             when (deviceType) {
                 DeviceType.BAND -> {
                     observeBand()
@@ -143,19 +144,19 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
             }
         }
 
-        val deviceImage = wearable?.deviceImage
+        val deviceImage = userDevice?.deviceImage
         deviceImage?.let {
             Glide.with(requireActivity())
                 .load("${it[0]}")
                 .into(binding.ivDevice)
         }
-        binding.tvDeviceName.text = wearable?.deviceName ?: ""
-        binding.header.title.text = "${wearable?.deviceFacingName} Metrics"
+        binding.tvDeviceName.text = userDevice?.deviceName ?: ""
+        binding.header.title.text = "${userDevice?.deviceFacingName} Metrics"
 
-        if (!wearable?.dataSync.isNullOrEmpty()) {
+        if (!userDevice?.dataSync.isNullOrEmpty()) {
             try {
                 // Always parses correctly (UTC-aware)
-                val timeInMillis = Instant.parse(wearable?.dataSync).toEpochMilli()
+                val timeInMillis = Instant.parse(userDevice?.dataSync).toEpochMilli()
                 binding.tvLastSyncTime.text = getTimeAgo(timeInMillis)
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -247,21 +248,36 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
     private fun observeBand() {
         // Band connection status from new band manager.
         viewLifecycleOwner.lifecycleScope.launch {
-            bandBleManager.connectionState.collect { connected ->
-                PlutoLog.e(TAG_BAND_DEBUG, "DeviceDataFragment bandManager connected: $connected")
-                if (connected) {
-                    updateConnectionUi(true)
-                    // Request current battery level once connected.
-                    delay(1000)
-                    PlutoLog.e(TAG_BAND_DEBUG, "Request current battery level")
-                    bandBleManager.writeValue(BleSDK.GetDeviceBatteryLevel())
-                } else {
-                    updateConnectionUi(false)
+            bandBleManager.connectionState.collect { state ->
+                PlutoLog.e(TAG_BAND_DEBUG, "DeviceDataFragment bandManager state: $state")
+                when (state) {
+                    STATE_BAND_CONNECTED -> {
+                        updateConnectionUi(true)
+                    }
+
+                    STATE_BAND_CONNECTING -> {
+                        updateConnectionUiConnecting()
+                    }
+
+                    else -> {
+                        updateConnectionUi(false)
+                    }
                 }
             }
         }
 
-        // Listen to band BLE packets and parse battery level reply (0x13).
+        // Observe band battery level from manager
+        viewLifecycleOwner.lifecycleScope.launch {
+            bandBleManager.batteryLevel.collect { level ->
+                if (level != null) {
+                    binding.batteryView.batteryLevel = level
+                    binding.tvBatteryLevel.text = "$level%"
+                    binding.batteryView.isCharging = false
+                }
+            }
+        }
+
+        // Listen to band BLE packets
         viewLifecycleOwner.lifecycleScope.launch {
             bandBleManager.bleEvents.collect { event ->
                 if (event.action != BandBleManager.ACTION_DATA_AVAILABLE) return@collect
@@ -274,17 +290,6 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
                             if (maps == null) return
                             val dataType = maps[DeviceKey.DataType] as? String ?: return
                             when (dataType) {
-                                BleConst.GetDeviceBatteryLevel -> {
-                                    PlutoLog.e(TAG_BAND_DEBUG, "GetDeviceBatteryLevel: $maps")
-                                    val data = maps[DeviceKey.Data] as? Map<*, *> ?: return
-                                    val levelStr = data[DeviceKey.BatteryLevel] as? String ?: return
-                                    val level = levelStr.toIntOrNull() ?: return
-                                    binding.batteryView.batteryLevel = level
-                                    binding.tvBatteryLevel.text = "$level%"
-                                    // SDK battery callback currently reports only level.
-                                    binding.batteryView.isCharging = false
-                                }
-
                                 BleConst.DeviceSendDataToAPP -> {
                                     // Charger plug/unplug may arrive here with empty data map.
                                     // Intentionally ignored to avoid null switch crashes from demo.
@@ -336,6 +341,21 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
 
         btnTakeReading.isEnabled = isConnected
         btnTakeReading.alpha = if (isConnected) 1f else 0.5f
+    }
+
+    private fun updateConnectionUiConnecting() = with(binding) {
+        ivDeviceStatus.setImageResource(R.drawable.dot_connecting)
+        tvDeviceStatus.text = "Connecting"
+        tvDeviceStatus.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.w200
+            )
+        )
+        batteryView.isVisible = false
+        tvBatteryLevel.isVisible = false
+        btnTakeReading.isEnabled = false
+        btnTakeReading.alpha = 0.5f
     }
 
     private fun subscribeToApiObserver() {
@@ -412,7 +432,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
                     /*binding.tvLastSyncTime.text =
                         viewModel.getTimeAgo(data.device?.dataSync ?: "")*/
 
-                    val deviceName = wearable?.deviceName
+                    val deviceName = userDevice?.deviceName
                     deviceName?.let {
                         val deviceType = DeviceType.from(deviceName)
                         when (deviceType) {
@@ -540,7 +560,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
     }
 
     override fun onClick(p0: View?) {
-        val isWristBand = wearable?.deviceName == "WristBand"
+        val isWristBand = userDevice?.deviceName == "WristBand"
 
         val exerciseIntensityMetric: ExerciseIntensityMetric?
         val physicalRecoveryMetric: PhysicalRecoveryMetric?
@@ -548,7 +568,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
         val sleepDurationMetric: SleepDurationMetric?
         val deviceId: String?
         val dataSync: String?
-        val deviceName: String = wearable?.deviceName ?: ""
+        val deviceName: String = userDevice?.deviceName ?: ""
 
         if (isWristBand) {
             val data = viewModel.getAllMetricsByDeviceIdData().value?.data?.data
@@ -614,7 +634,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
                     R.id.fragmentHealthScan,
                     bundleOf(
                         NavKeys.HEALTH_SCAN_ITEM to item,
-                        NavKeys.WEARABLE to wearable
+                        NavKeys.WEARABLE to userDevice
                     )
                 )
             },
@@ -623,7 +643,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
                     R.id.fragmentPastScans,
                     bundleOf(
                         NavKeys.HEALTH_SCAN_ITEM to item,
-                        NavKeys.WEARABLE to wearable
+                        NavKeys.WEARABLE to userDevice
                     )
                 )
             }

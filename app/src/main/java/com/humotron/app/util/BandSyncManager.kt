@@ -1,6 +1,7 @@
 package com.humotron.app.util
 
 import com.humotron.app.bt.band.BandBleManager
+import com.humotron.app.bt.band.STATE_BAND_CONNECTED
 import com.humotron.app.data.local.entity.band.BandDetailActivityData
 import com.humotron.app.data.local.entity.band.BandHrData
 import com.humotron.app.data.local.entity.band.BandHrvData
@@ -67,8 +68,8 @@ class BandSyncManager @Inject constructor(
         started = true
 
         scope.launch {
-            bandBleManager.connectionState.collectLatest { connected ->
-                if (!connected) {
+            bandBleManager.connectionState.collectLatest { state ->
+                if (state != STATE_BAND_CONNECTED) {
                     resetSession()
                     return@collectLatest
                 }

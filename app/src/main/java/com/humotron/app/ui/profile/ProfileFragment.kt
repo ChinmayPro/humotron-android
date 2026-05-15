@@ -31,7 +31,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
     private fun initViews() {
         val user = prefUtils.getLoginResponse()
 
-        binding.tvName.text =  "${user.firstName} ${user.lastName}"
+        binding.tvName.text = "${user.firstName} ${user.lastName}"
         binding.tvBadge.text = getString(R.string.basic)
         binding.tvPlanBadge.text = getString(R.string.basic)
         binding.tvAddOnsStatus.text = getString(R.string.activated_count, 2)
@@ -73,6 +73,10 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             findNavController().navigate(R.id.action_fragmentProfile_to_fragmentPreferences)
         }
 
+        binding.btnDevices.setOnClickListener {
+            findNavController().navigate(R.id.action_fragmentProfile_to_fragmentDeviceList)
+        }
+
         binding.clPrivacy.setOnClickListener {
             // TODO: Navigate to Privacy screen
         }
@@ -93,8 +97,6 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             (activity as? com.humotron.app.ui.MainActivity)?.showLogoutDialog()
         }
     }
-
-
 
 
     private fun toggleExpansion() {

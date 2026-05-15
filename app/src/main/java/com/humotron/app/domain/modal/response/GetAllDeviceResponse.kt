@@ -13,15 +13,25 @@ data class GetAllDeviceResponse(
     @SerializedName("message")
     val message: String?,
     @SerializedName("status")
-    val status: String?
+    val status: String?,
 ) : Parcelable {
     @Parcelize
     data class Data(
+        @SerializedName("Connected Devices")
+        val connectedDevices: List<UserDevice>?,
+        @SerializedName("Health")
+        val health: List<UserDevice>?,
         @SerializedName("Wearables")
-        val wearables: List<Wearable>?
+        val wearables: List<UserDevice>?,
+        @SerializedName("Reports")
+        val reports: List<UserDevice>?,
+        @SerializedName("Environmental Metrics")
+        val environmentalMetrics: List<UserDevice>?,
+        @SerializedName("Context")
+        val context: List<UserDevice>?,
     ) : Parcelable {
         @Parcelize
-        data class Wearable(
+        data class UserDevice(
             @SerializedName("dataSync")
             val dataSync: String?,
             @SerializedName("deviceCategoryName")
@@ -51,10 +61,10 @@ data class GetAllDeviceResponse(
             @SerializedName("metrics")
             val metrics: List<Metric>?,
             @SerializedName("orderStatus")
-            val orderStatus: String?
+            val orderStatus: String?,
 
 
-        ) : Parcelable {
+            ) : Parcelable {
             @Parcelize
             data class Metric(
                 @SerializedName("key")
@@ -64,7 +74,7 @@ data class GetAllDeviceResponse(
                 @SerializedName("unit")
                 val unit: String?,
                 @SerializedName("value")
-                val value: String?
+                val value: String?,
             ) : Parcelable
         }
     }

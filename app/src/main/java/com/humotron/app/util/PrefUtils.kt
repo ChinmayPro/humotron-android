@@ -3,6 +3,7 @@ package com.humotron.app.util
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.humotron.app.core.Preference
 import com.humotron.app.domain.modal.response.User
 import com.humotron.app.domain.modal.response.UserHardware
@@ -32,6 +33,10 @@ class PrefUtils(private val sharedPreferences: SharedPreferences) {
 
     fun setString(key: String, value: String) {
         sharedPreferences.edit { putString(key, value) }
+    }
+
+    fun remove(key: String) {
+        sharedPreferences.edit { remove(key) }
     }
 
     fun getString(key: String): String? {
@@ -78,6 +83,20 @@ class PrefUtils(private val sharedPreferences: SharedPreferences) {
         val hardwareString = sharedPreferences.getString(Preference.BAND_HARDWARE_DATA, "{}")
         val data = Gson().fromJson(hardwareString, UserHardware::class.java)
         return data?.id
+    }
+
+    fun setHardwareDetailsList(list: List<UserHardware>) {
+        sharedPreferences.edit { putString(Preference.HARDWARE_DETAILS_LIST, Gson().toJson(list)) }
+    }
+
+    fun getHardwareDetailsList(): List<UserHardware> {
+        val json = sharedPreferences.getString(Preference.HARDWARE_DETAILS_LIST, null)
+        return if (json != null) {
+            val type = object : TypeToken<List<UserHardware>>() {}.type
+            Gson().fromJson(json, type)
+        } else {
+            emptyList()
+        }
     }
 
     fun clear() {

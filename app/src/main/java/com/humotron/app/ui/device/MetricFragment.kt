@@ -464,7 +464,8 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
                                     binding.trackTrends.lineChart,
                                     entries,
                                     selectedTab,
-                                    it.data.averageReading
+                                    it.data.averageReading,
+                                    it.data.typicalRange
                                 )
                             }
                         }
@@ -684,6 +685,7 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
         entries: List<Entry>,
         tab: String?,
         averageReading: Double?,
+        typicalRange: List<Int>?
     ) {
         val dataSet = LineDataSet(entries, "").apply {
             color = ContextCompat.getColor(requireActivity(), R.color.green_1)
@@ -704,7 +706,10 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
             }
         }
 
-        val rangeEntries = createFlatRange(entries, 100f, 119f)
+        val rangeMin = typicalRange?.getOrNull(0)?.toFloat() ?: 0f
+        val rangeMax = typicalRange?.getOrNull(1)?.toFloat() ?: 0f
+
+        val rangeEntries = createFlatRange(tab, entries, rangeMax)
 
         val rangeDataSet = LineDataSet(rangeEntries, "").apply {
             color = Color.TRANSPARENT
@@ -721,8 +726,8 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
             fillFormatter = IFillFormatter { _, _ -> 100f } // bottom of range
         }
 
-        val lineData = LineData(dataSet)
-        //val lineData = LineData(rangeDataSet, dataSet)
+        //val lineData = LineData(dataSet)
+        val lineData = LineData(rangeDataSet, dataSet)
 
         lineChart.apply {
             data = lineData
@@ -755,6 +760,11 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
             val minY = entries.minOfOrNull { it.y } ?: 0f
             val maxY = entries.maxOfOrNull { it.y } ?: 0f
 
+            val minTypical = typicalRange?.minOrNull()?.toFloat() ?: minY
+            val maxTypical = typicalRange?.maxOrNull()?.toFloat() ?: maxY
+
+            val overallMin = minOf(minY, minTypical)
+
             averageReading?.let {
                 val avgLine =
                     LimitLine(averageReading.toFloat() /*getString(R.string.your_baseline)*/).apply {
@@ -771,8 +781,8 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
             axisLeft.apply {
                 granularity = 1f
                 textColor = Color.WHITE
-                axisMinimum = maxOf(0f, minY - 5f)
-                axisMaximum = (maxY + 5)
+                axisMinimum = maxOf(0f, overallMin)
+                axisMaximum = maxOf(maxY, maxTypical) + 5f
                 setDrawGridLines(false)
             }
             axisRight.isEnabled = false
@@ -781,8 +791,18 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
         }
     }
 
-    private fun createFlatRange(entries: List<Entry>, min: Float, max: Float): List<Entry> {
-        return entries.map { Entry(it.x, max) } // only top line needed
+    private fun createFlatRange(tab: String?, entries: List<Entry>, max: Float): List<Entry> {
+        val startX = when (tab) {
+            "Hour" -> 0f
+            "Day" -> 0f
+            else -> entries.firstOrNull()?.x ?: 0f
+        }
+        val endX = when (tab) {
+            "Hour" -> 59f
+            "Day" -> 23f
+            else -> entries.lastOrNull()?.x ?: 0f
+        }
+        return listOf(Entry(startX, max), Entry(endX, max))
     }
 
     private fun setupCandleChart(

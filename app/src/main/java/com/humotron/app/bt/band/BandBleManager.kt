@@ -1,13 +1,11 @@
 package com.humotron.app.bt.band
 
-import android.R.attr.name
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
 import android.bluetooth.le.ScanCallback
 import android.bluetooth.le.ScanFilter
-import android.bluetooth.le.ScanRecord
 import android.bluetooth.le.ScanResult
 import android.bluetooth.le.ScanSettings
 import android.content.Context
@@ -25,10 +23,13 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import lib.linktop.nexring.api.matchFromAdvertisementData
 import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
+
+const val STATE_BAND_CONNECTED = -1
+const val STATE_BAND_CONNECTING = -2
+const val STATE_BAND_DISCONNECTED = -3
 
 /**
  * Application-scoped BLE API for the J-style band (no bound [android.app.Service]).
@@ -61,15 +62,47 @@ class BandBleManager @Inject constructor(
     private val _bleEvents = MutableSharedFlow<BleData>(extraBufferCapacity = 64)
     val bleEvents: SharedFlow<BleData> = _bleEvents.asSharedFlow()
 
-    private val _connectionState = MutableStateFlow(false)
-    val connectionState: StateFlow<Boolean> = _connectionState.asStateFlow()
+    private val _connectionState = MutableStateFlow(STATE_BAND_DISCONNECTED)
+    val connectionState: StateFlow<Int> = _connectionState.asStateFlow()
+
+    private val _batteryLevel = MutableStateFlow<Int?>(null)
+    val batteryLevel: StateFlow<Int?> = _batteryLevel.asStateFlow()
 
     private val gattClient = BandBleGattClient(
         context.applicationContext,
         mainHandler,
-        emit = { data -> _bleEvents.tryEmit(data) },
-        onConnectionFlag = { connected -> _connectionState.value = connected },
+        emit = { data ->
+            _bleEvents.tryEmit(data)
+            handleBleData(data)
+        },
+        onConnectionFlag = { state ->
+            _connectionState.value = state
+            if (state != STATE_BAND_CONNECTED) {
+                _batteryLevel.value = null
+            }
+        },
     )
+
+    private fun handleBleData(data: BleData) {
+        val value = data.value ?: return
+        if (value.isEmpty()) return
+        try {
+            com.jstyle.blesdk2208a.Util.BleSDK.DataParsingWithData(value, object : com.jstyle.blesdk2208a.callback.DataListener2025 {
+                override fun dataCallback(maps: MutableMap<String, Any>?) {
+                    if (maps == null) return
+                    val dataType = maps[com.jstyle.blesdk2208a.constant.DeviceKey.DataType] as? String ?: return
+                    if (dataType == com.jstyle.blesdk2208a.constant.BleConst.GetDeviceBatteryLevel) {
+                        val dataMap = maps[com.jstyle.blesdk2208a.constant.DeviceKey.Data] as? Map<*, *> ?: return
+                        val levelStr = dataMap[com.jstyle.blesdk2208a.constant.DeviceKey.BatteryLevel] as? String ?: return
+                        _batteryLevel.value = levelStr.toIntOrNull()
+                    }
+                }
+                override fun dataCallback(value: ByteArray?) {}
+            })
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 
     private var devicesNameFilter: Array<String>? = null
     private var onScanResult: OnScanResults? = null

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:background="@drawable/ic_bg_main_dark"
     android:background="@drawable/ic_bg_main"
+    tools:background="@drawable/ic_bg_main_dark"
     tools:context=".ui.profile.ProfileFragment">
 
     <!-- Spacer to reserve room for the arrow button in collapsed state -->
@@ -56,8 +56,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/shop"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -87,8 +87,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/order"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -119,8 +119,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/cart"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -129,8 +129,8 @@
                 android:id="@+id/clRecipes"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_100dp"
-                android:layout_marginTop="@dimen/_14dp"
                 android:layout_marginStart="@dimen/_7dp"
+                android:layout_marginTop="@dimen/_14dp"
                 android:background="@drawable/bg_profile_grid_card"
                 android:padding="@dimen/_18dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -151,8 +151,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/recipes"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -206,9 +206,9 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_config_button"
                     android:gravity="start|center_vertical"
+                    android:paddingVertical="@dimen/_5dp"
                     android:paddingStart="@dimen/_30dp"
                     android:paddingEnd="@dimen/_20dp"
-                    android:paddingVertical="@dimen/_5dp"
                     android:text="@string/header_devices"
                     android:textColor="@color/white_80"
                     app:layout_constraintStart_toStartOf="parent"
@@ -221,9 +221,9 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_config_button"
                     android:gravity="start|center_vertical"
+                    android:paddingVertical="@dimen/_5dp"
                     android:paddingStart="@dimen/_30dp"
                     android:paddingEnd="@dimen/_20dp"
-                    android:paddingVertical="@dimen/_5dp"
                     android:text="@string/preferences"
                     android:textColor="@color/white_80"
                     app:layout_constraintStart_toStartOf="@id/guidelineColumn2"
@@ -238,9 +238,9 @@
                     android:layout_marginTop="@dimen/_20dp"
                     android:background="@drawable/bg_config_button"
                     android:gravity="start|center_vertical"
+                    android:paddingVertical="@dimen/_5dp"
                     android:paddingStart="@dimen/_30dp"
                     android:paddingEnd="@dimen/_20dp"
-                    android:paddingVertical="@dimen/_5dp"
                     android:text="@string/chat_with_ai"
                     android:textColor="@color/white_80"
                     app:layout_constraintStart_toStartOf="parent"
@@ -254,9 +254,9 @@
                     android:layout_marginTop="@dimen/_20dp"
                     android:background="@drawable/bg_config_button"
                     android:gravity="start|center_vertical"
+                    android:paddingVertical="@dimen/_5dp"
                     android:paddingStart="@dimen/_30dp"
                     android:paddingEnd="@dimen/_20dp"
-                    android:paddingVertical="@dimen/_5dp"
                     android:text="@string/insights"
                     android:textColor="@color/white_80"
                     app:layout_constraintStart_toStartOf="@id/guidelineColumn2"
@@ -271,9 +271,9 @@
                     android:layout_marginTop="@dimen/_20dp"
                     android:background="@drawable/bg_config_button"
                     android:gravity="center"
+                    android:paddingVertical="@dimen/_5dp"
                     android:paddingStart="@dimen/_30dp"
                     android:paddingEnd="@dimen/_20dp"
-                    android:paddingVertical="@dimen/_5dp"
                     android:text="@string/recipe_generator"
                     android:textColor="@color/white_80"
                     app:layout_constraintStart_toStartOf="parent"
@@ -288,9 +288,9 @@
                     android:layout_marginTop="@dimen/_10dp"
                     android:background="@drawable/bg_config_button"
                     android:gravity="center"
+                    android:paddingVertical="@dimen/_5dp"
                     android:paddingStart="@dimen/_30dp"
                     android:paddingEnd="@dimen/_20dp"
-                    android:paddingVertical="@dimen/_5dp"
                     android:text="@string/learning"
                     android:textColor="@color/white_80"
                     app:layout_constraintStart_toStartOf="parent"
@@ -303,8 +303,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_50dp"
-                android:paddingBottom="@dimen/_20dp"
                 android:orientation="vertical"
+                android:paddingBottom="@dimen/_20dp"
                 app:layout_constraintTop_toBottomOf="@id/clKeyConfigs">
 
                 <!-- Privacy -->
@@ -499,8 +499,8 @@
             android:id="@+id/divider"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:dividerColor="@color/_3B"
             android:layout_marginTop="@dimen/_10dp"
+            app:dividerColor="@color/_3B"
             app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -521,10 +521,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10dp"
-            tools:text="Name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ivProfile" />
+            app:layout_constraintTop_toBottomOf="@id/ivProfile"
+            tools:text="Name" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvBadge"
@@ -535,11 +535,11 @@
             android:background="@drawable/bg_badge_membership"
             android:paddingHorizontal="@dimen/_17dp"
             android:text="@string/basic"
-            tools:text="Basic"
             android:textColor="@color/brown"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvName" />
+            app:layout_constraintTop_toBottomOf="@id/tvName"
+            tools:text="Basic" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -560,9 +560,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_profile_card"
+            android:paddingVertical="@dimen/_12dp"
             android:paddingStart="@dimen/_20dp"
-            android:paddingEnd="@dimen/_15dp"
-            android:paddingVertical="@dimen/_12dp">
+            android:paddingEnd="@dimen/_15dp">
 
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/Text.16x.Manrope.SemiBold"
@@ -578,15 +578,15 @@
                 style="@style/Text.12x.Manrope.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_10dp"
                 android:background="@drawable/bg_badge_membership"
                 android:paddingHorizontal="@dimen/_17dp"
-                android:layout_marginEnd="@dimen/_10dp"
                 android:text="@string/basic"
-                tools:text="Basic"
                 android:textColor="@color/brown"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/ivPlanArrow"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Basic" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivPlanArrow"
@@ -607,9 +607,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_18dp"
             android:background="@drawable/bg_profile_card"
+            android:paddingVertical="@dimen/_12dp"
             android:paddingStart="@dimen/_20dp"
-            android:paddingEnd="@dimen/_15dp"
-            android:paddingVertical="@dimen/_12dp">
+            android:paddingEnd="@dimen/_15dp">
 
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/Text.16x.Manrope.SemiBold"
@@ -627,11 +627,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_10dp"
                 android:text="@string/activated_count"
-                tools:text="2 Activated"
                 android:textColor="@color/green_1"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/ivAddOnsArrow"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="2 Activated" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivAddOnsArrow"

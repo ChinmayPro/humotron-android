@@ -30,7 +30,7 @@ class HealthScanResultFragment : BaseFragment(R.layout.fragment_health_scan_resu
     private var healthScanItem: HealthScanItem? = null
     private var baseLine: Float = 0f
     private var current: Float = 0f
-    private var wearable: GetAllDeviceResponse.Data.Wearable? = null
+    private var userDevice: GetAllDeviceResponse.Data.UserDevice? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -58,10 +58,10 @@ class HealthScanResultFragment : BaseFragment(R.layout.fragment_health_scan_resu
 
         baseLine = arguments?.getFloat("baseLine") ?: 0f
         current = arguments?.getFloat("current") ?: 0f
-        wearable = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        userDevice = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             arguments?.getParcelable(
                 NavKeys.WEARABLE,
-                com.humotron.app.domain.modal.response.GetAllDeviceResponse.Data.Wearable::class.java
+                com.humotron.app.domain.modal.response.GetAllDeviceResponse.Data.UserDevice::class.java
             )
         } else {
             @Suppress("DEPRECATION")
