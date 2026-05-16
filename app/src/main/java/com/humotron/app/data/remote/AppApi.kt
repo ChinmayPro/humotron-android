@@ -463,5 +463,15 @@ interface AppApi {
     suspend fun getAllLikes(
         @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0))
     ): Response<GetAllLikesResponse>
+    
+    @POST("order/placeOrder")
+    suspend fun placeOrder(
+        @Body request: HashMap<String, Any>
+    ): Response<com.humotron.app.domain.modal.response.PlaceOrderResponse>
+    
+    @POST("stripe/createPaymentIntent")
+    suspend fun createPaymentIntent(
+        @Body request: HashMap<String, Any>
+    ): Response<com.humotron.app.domain.modal.response.CreatePaymentIntentResponse>
 
 }

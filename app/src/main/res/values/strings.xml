@@ -650,4 +650,7 @@ To get started:\n
     <string name="join_here">Join Here</string>
     <string name="no_favourite_found">No Favourite Found</string>
     <string name="you_haven_t_liked_anything_yet">You haven\'t liked anything yet</string>
+    <string name="payment_successful">Payment successful!</string>
+    <string name="payment_canceled">Payment canceled</string>
+    <string name="payment_failed">Payment failed: %s</string>
 </resources>

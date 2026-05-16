@@ -37,10 +37,10 @@
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="@dimen/_10dp"
         android:clipToPadding="false"
+        android:paddingBottom="130dp"
         android:scrollbars="none"
-        app:layout_constraintBottom_toTopOf="@id/btnCheckout"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header">
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -666,18 +666,33 @@
         tools:visibility="visible" />
 
     <!-- Checkout Button -->
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/btnCheckout"
-        style="@style/Text.16x.Manrope.SemiBold"
+    <FrameLayout
+        android:id="@+id/flCheckout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginHorizontal="20dp"
-        android:background="@drawable/bg_btn_confirm_order"
-        android:gravity="center"
-        android:text="@string/confirm_order"
-        android:textColor="@color/white"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:visibility="visible" />
+        tools:visibility="visible">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btnCheckout"
+            style="@style/Text.16x.Manrope.SemiBold"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/selector_btn_booking"
+            android:enabled="false"
+            android:gravity="center"
+            android:text="@string/confirm_order"
+            android:textColor="@color/selector_btn_text_booking" />
+
+        <ProgressBar
+            android:id="@+id/pbCheckout"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/white"
+            android:visibility="gone" />
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

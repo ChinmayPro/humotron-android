@@ -9,6 +9,7 @@ plugins {
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
     id("kotlin-parcelize")
+    alias(libs.plugins.kotlin.compose)
     //id("com.google.gms.google-services")
 }
 
@@ -79,6 +80,7 @@ android {
     buildFeatures {
         buildConfig = true
         viewBinding = true
+        compose = true
     }
 
     packaging {
@@ -209,4 +211,11 @@ dependencies {
     implementation(libs.lottie)
 
     implementation("com.google.android.flexbox:flexbox:3.0.0")
+    implementation("com.stripe:stripe-android:21.0.0")
+    
+    // Minimal Compose dependencies required by Stripe SDK
+    implementation(platform("androidx.compose:compose-bom:2024.12.01"))
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.material:material")
+
 }
