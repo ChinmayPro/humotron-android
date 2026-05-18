@@ -5,13 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.humotron.app.databinding.ItemWearablesBinding
-import com.humotron.app.domain.modal.response.GetAllDeviceResponse.Data.Wearable
+import com.humotron.app.domain.modal.response.GetAllDeviceResponse.Data.UserDevice
 import com.humotron.app.util.getTimeAgo
 import java.time.Instant
 
 class WearableAdapter(
-    private val wearables: List<Wearable>,
-    private val onItemClick: (Wearable) -> Unit,
+    private val userDevices: List<UserDevice>,
+    private val onItemClick: (UserDevice) -> Unit,
 ) : RecyclerView.Adapter<WearableAdapter.WearableViewHolder>() {
 
     private val HR_KEYS = setOf("heartRate", "singleHR", "HR", "hr", "HeartRate")
@@ -24,18 +24,18 @@ class WearableAdapter(
     }
 
     override fun onBindViewHolder(holder: WearableViewHolder, position: Int) {
-        holder.bind(wearables[position])
+        holder.bind(userDevices[position])
     }
 
-    override fun getItemCount(): Int = wearables.size
+    override fun getItemCount(): Int = userDevices.size
 
     inner class WearableViewHolder(private val binding: ItemWearablesBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(wearable: Wearable) {
-            binding.tvWearableName.text = wearable.deviceFacingName ?: "Unknown Device"
+        fun bind(userDevice: UserDevice) {
+            binding.tvWearableName.text = userDevice.deviceFacingName ?: "Unknown Device"
 
-            val hrvMetric = wearable.metrics.findMetric(HRV_KEYS)
+            val hrvMetric = userDevice.metrics.findMetric(HRV_KEYS)
             if (hrvMetric != null) {
                 binding.tvHrv.text = hrvMetric.value
                 binding.tvHrvUnit.text = hrvMetric.unit
@@ -44,7 +44,7 @@ class WearableAdapter(
                 binding.tvHrvUnit.text = ""
             }
 
-            val hrMetric = wearable.metrics.findMetric(HR_KEYS)
+            val hrMetric = userDevice.metrics.findMetric(HR_KEYS)
 
             if (hrMetric != null) {
                 binding.tvHr.text = hrMetric.value
@@ -54,10 +54,10 @@ class WearableAdapter(
                 binding.tvHrUnit.text = ""
             }
 
-            if (!wearable.dataSync.isNullOrEmpty()) {
+            if (!userDevice.dataSync.isNullOrEmpty()) {
                 try {
                     // Always parses correctly (UTC-aware)
-                    val timeInMillis = Instant.parse(wearable.dataSync).toEpochMilli()
+                    val timeInMillis = Instant.parse(userDevice.dataSync).toEpochMilli()
                     binding.tvLastSync.text = getTimeAgo(timeInMillis)
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -67,19 +67,19 @@ class WearableAdapter(
                 binding.tvLastSync.text = "-"
             }
 
-            if (!wearable.deviceImage.isNullOrEmpty()) {
+            if (!userDevice.deviceImage.isNullOrEmpty()) {
                 Glide.with(binding.root.context)
-                    .load(wearable.deviceImage[0])
+                    .load(userDevice.deviceImage[0])
                     .into(binding.ivDevice)
             }
 
             binding.root.setOnClickListener {
-                onItemClick(wearable)
+                onItemClick(userDevice)
             }
         }
     }
 
-    fun List<Wearable.Metric>?.findMetric(keys: Set<String>): Wearable.Metric? {
+    fun List<UserDevice.Metric>?.findMetric(keys: Set<String>): UserDevice.Metric? {
         return this?.firstOrNull { it.key in keys }
     }
 }

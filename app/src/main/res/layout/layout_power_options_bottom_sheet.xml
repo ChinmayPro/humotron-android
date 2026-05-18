@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_bottom_sheet_power_option"
+    android:paddingBottom="@dimen/_24dp">
+
+    <View
+        android:id="@+id/viewHandle"
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/white30"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTitle"
+        style="@style/Text.OnBoard.Title1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10dp"
+        android:text="Power Options"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/viewHandle" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10dp"
+        android:text="Manage your device safely"
+        android:textColor="@color/white70"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+    <!-- Restart Card -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvRestart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="@dimen/_12dp"
+        app:cardBackgroundColor="#252D35"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="0dp"
+        app:layout_constraintTop_toBottomOf="@id/tvSubtitle"
+        app:strokeWidth="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/ivRestartIcon"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:insetLeft="0dp"
+                android:insetTop="0dp"
+                android:insetRight="0dp"
+                android:insetBottom="0dp"
+                android:padding="0dp"
+                app:backgroundTint="#338AFF00"
+                app:icon="@drawable/ic_autorenew_24px"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconSize="24dp"
+                app:iconTint="@color/btn_icon_tint"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvRestartTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="Restart Device"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ivRestartIcon"
+                app:layout_constraintTop_toTopOf="@id/ivRestartIcon" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvRestartDesc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Refreshes the device connection and clears temporary issues."
+                android:textColor="@color/white70"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tvRestartTitle"
+                app:layout_constraintTop_toBottomOf="@id/tvRestartTitle" />
+
+            <View
+                android:id="@+id/dividerRestart"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/white10"
+                app:layout_constraintTop_toBottomOf="@id/tvRestartDesc" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvRestartFooter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_7dp"
+                android:text="Use this if your ring isn't syncing properly or feels unresponsive."
+                android:textColor="@color/white50"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/btnRestart"
+                app:layout_constraintEnd_toStartOf="@id/btnRestart"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/btnRestart" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnRestart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Restart"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                app:backgroundTint="@color/lime_green"
+                app:cornerRadius="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dividerRestart" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Shut Down Card -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvShutDown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="12dp"
+        app:cardBackgroundColor="#252D35"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="0dp"
+        app:layout_constraintTop_toBottomOf="@id/cvRestart"
+        app:strokeWidth="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/ivShutDownIcon"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:insetLeft="0dp"
+                android:insetTop="0dp"
+                android:insetRight="0dp"
+                android:insetBottom="0dp"
+                android:padding="0dp"
+                app:backgroundTint="#33FF3B30"
+                app:icon="@drawable/ic_power_settings_new_24px"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconSize="24dp"
+                app:iconTint="@color/red_1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvShutDownTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="Shut Down"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ivShutDownIcon"
+                app:layout_constraintTop_toTopOf="@id/ivShutDownIcon" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvShutDownDesc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Turns off the device completely to save battery."
+                android:textColor="@color/white70"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tvShutDownTitle"
+                app:layout_constraintTop_toBottomOf="@id/tvShutDownTitle" />
+
+            <View
+                android:id="@+id/dividerShutDown"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/white10"
+                app:layout_constraintTop_toBottomOf="@id/tvShutDownDesc" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvShutDownFooter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_7dp"
+                android:text="Use this if you won't be using your ring for an extended period."
+                android:textColor="@color/white50"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/btnShutDown"
+                app:layout_constraintEnd_toStartOf="@id/btnShutDown"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/btnShutDown" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnShutDown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Shut Down"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:backgroundTint="#3A4452"
+                app:cornerRadius="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dividerShutDown" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

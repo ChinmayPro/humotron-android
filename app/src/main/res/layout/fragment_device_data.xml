@@ -99,16 +99,18 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_bt_status"
-                        android:layout_width="20dip"
-                        android:layout_height="20dip"
+                        android:layout_width="15dip"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_5dp"
-                        app:srcCompat="@drawable/ic_bluetooth_disabled_24px" />
+                        android:adjustViewBounds="true"
+                        app:srcCompat="@drawable/ic_bluetooth_off"
+                        tools:visibility="gone" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivDeviceStatus"
                         android:layout_width="@dimen/_7dp"
                         android:layout_height="@dimen/_7dp"
-                        android:layout_marginStart="@dimen/_5dp"
+                        android:layout_marginStart="@dimen/_7dp"
                         android:src="@drawable/dot_disconnected" />
 
                     <androidx.appcompat.widget.AppCompatTextView

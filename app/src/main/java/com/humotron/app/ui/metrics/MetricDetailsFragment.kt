@@ -509,6 +509,7 @@ class MetricDetailsFragment : BaseFragment(R.layout.fragment_metric_details) {
                                 startDate = start,
                                 endDate = end,
                                 offset = "+05:30",
+                                metricId = metricId,
                                 metricName = metricName ?: ""
                             )
                             deviceId?.let { deviceId ->

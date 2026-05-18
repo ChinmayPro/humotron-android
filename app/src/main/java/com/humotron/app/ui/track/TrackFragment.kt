@@ -17,7 +17,7 @@ import com.humotron.app.core.base.BaseFragment
 import com.humotron.app.data.network.Status
 import com.humotron.app.databinding.FragmentTrackBinding
 import com.humotron.app.domain.modal.DeviceType
-import com.humotron.app.domain.modal.response.GetAllDeviceResponse.Data.Wearable
+import com.humotron.app.domain.modal.response.GetAllDeviceResponse.Data.UserDevice
 import com.humotron.app.domain.modal.response.MedicalPdf
 import com.humotron.app.domain.modal.response.MergedAssessment
 import com.humotron.app.ui.assesment.AssessmentActivity
@@ -30,7 +30,6 @@ import com.humotron.app.ui.navigation.NavKeys
 import com.humotron.app.domain.modal.response.toPdfReportData
 import androidx.fragment.app.activityViewModels
 import com.humotron.app.ui.dialogs.DeleteConfirmationBottomSheet
-import com.humotron.app.util.DialogUtils
 import com.humotron.app.util.fadeIn
 import com.humotron.app.util.showWithFade
 import com.humotron.app.util.toast
@@ -59,14 +58,12 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
     }
 
     private fun initViews() {
-        prefUtils.getString(Preference.WEARABLE_RING).apply {
-            if (isNullOrEmpty()) {
-                binding.dsvWearables.isVisible = false
-                viewModel.getHardwareList()
-            } else {
-                viewModel.getDeviceData()
-                binding.dsvWearables.isVisible = true
-            }
+        if (prefUtils.getHardwareDetailsList().isEmpty()) {
+            binding.dsvWearables.isVisible = false
+            viewModel.getHardwareList()
+        } else {
+            viewModel.getDeviceData()
+            binding.dsvWearables.isVisible = true
         }
         viewModel.getMergedAssessmentList()
         viewModel.getMedicalPdfList()
@@ -145,6 +142,9 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
             when (it.status) {
                 Status.SUCCESS -> {
                     val data = it.data?.data ?: return@observe
+                    data.hardwareDetails?.let { list ->
+                        prefUtils.setHardwareDetailsList(list)
+                    }
                     data.hardwareDetails?.firstOrNull { it.hardwareType == DeviceType.RING.value }
                         ?.let {
                             prefUtils.setHardwareData(it)
@@ -154,7 +154,6 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
                                     value
                                 )
                             }
-                            viewModel.refreshUserDeviceData(true)
                         }
                     data.hardwareDetails?.firstOrNull { it.hardwareType == DeviceType.BAND.value }
                         ?.let {
@@ -166,6 +165,9 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
                                 )
                             }
                         }
+                    if (!data.hardwareDetails.isNullOrEmpty()) {
+                        viewModel.refreshUserDeviceData(true)
+                    }
                 }
 
                 Status.ERROR -> {
@@ -251,10 +253,12 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
                     hideProgress()
                     toast(it.data?.message ?: "Report deleted successfully")
                 }
+
                 Status.ERROR, Status.EXCEPTION -> {
                     hideProgress()
                     toast(it.error?.errorMessage ?: "Failed to delete report")
                 }
+
                 Status.LOADING -> {
                     showProgress()
                 }
@@ -262,8 +266,8 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
         }
     }
 
-    private fun setupDiscreteScrollView(wearables: List<Wearable>) {
-        wearableAdapter = WearableAdapter(wearables) { wearable ->
+    private fun setupDiscreteScrollView(userDevices: List<UserDevice>) {
+        wearableAdapter = WearableAdapter(userDevices) { wearable ->
             findNavController().navigate(R.id.fragmentDeviceData, Bundle().apply {
                 putParcelable(NavKeys.WEARABLE, wearable)
             })
@@ -313,6 +317,7 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
                             startActivity(intent)
                         }
                     }
+
                     "Start Now" -> showAssessmentSheet(assessment)
                 }
             }
@@ -334,39 +339,45 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
 
     private fun setupHealthReportRecyclerView(reports: List<MedicalPdf>) {
         if (healthReportAdapter == null) {
-            healthReportAdapter = HealthReportAdapter(requireActivity(), reports) { report, action ->
-                when (action) {
-                    HealthReportAdapter.Action.VIEW, HealthReportAdapter.Action.ITEM_CLICK -> {
-                        // Map all current PDFs to PdfReportData for the carousel detail view
-                        val pdfReportDataList = reports.map { it.toPdfReportData() }
-                        val extractMetricsResponse = com.humotron.app.domain.modal.response.ExtractMetricsResponse(
-                            status = "success",
-                            message = "Data found",
-                            data = com.humotron.app.domain.modal.response.MetricsData(
-                                pdfData = pdfReportDataList,
-                                userId = "",
-                                uploadType = "MANUAL",
-                                pdfCount = pdfReportDataList.size,
-                                id = ""
+            healthReportAdapter =
+                HealthReportAdapter(requireActivity(), reports) { report, action ->
+                    when (action) {
+                        HealthReportAdapter.Action.VIEW, HealthReportAdapter.Action.ITEM_CLICK -> {
+                            // Map all current PDFs to PdfReportData for the carousel detail view
+                            val pdfReportDataList = reports.map { it.toPdfReportData() }
+                            val extractMetricsResponse =
+                                com.humotron.app.domain.modal.response.ExtractMetricsResponse(
+                                    status = "success",
+                                    message = "Data found",
+                                    data = com.humotron.app.domain.modal.response.MetricsData(
+                                        pdfData = pdfReportDataList,
+                                        userId = "",
+                                        uploadType = "MANUAL",
+                                        pdfCount = pdfReportDataList.size,
+                                        id = ""
+                                    )
+                                )
+                            val clickedIndex = reports.indexOf(report).coerceAtLeast(0)
+                            bloodTestViewModel.setUploadResult(extractMetricsResponse, clickedIndex)
+                            findNavController().navigate(
+                                R.id.action_fragmentTrack_to_fragmentUploadedReports,
+                                android.os.Bundle().apply { putBoolean("isFromTrack", true) }
                             )
-                        )
-                        val clickedIndex = reports.indexOf(report).coerceAtLeast(0)
-                        bloodTestViewModel.setUploadResult(extractMetricsResponse, clickedIndex)
-                        findNavController().navigate(
-                            R.id.action_fragmentTrack_to_fragmentUploadedReports,
-                            android.os.Bundle().apply { putBoolean("isFromTrack", true) }
-                        )
-                    }
-                    HealthReportAdapter.Action.DELETE -> {
-                        val bottomSheet = DeleteConfirmationBottomSheet.newInstance {
-                            report.id.let { pdfId ->
-                                viewModel.removePdfByPdfId(pdfId)
-                            }
                         }
-                        bottomSheet.show(childFragmentManager, DeleteConfirmationBottomSheet.TAG)
+
+                        HealthReportAdapter.Action.DELETE -> {
+                            val bottomSheet = DeleteConfirmationBottomSheet.newInstance {
+                                report.id.let { pdfId ->
+                                    viewModel.removePdfByPdfId(pdfId)
+                                }
+                            }
+                            bottomSheet.show(
+                                childFragmentManager,
+                                DeleteConfirmationBottomSheet.TAG
+                            )
+                        }
                     }
                 }
-            }
         } else {
             healthReportAdapter?.updateData(reports)
         }

@@ -1,0 +1,785 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@drawable/ic_bg_main">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header_2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <LinearLayout
+            android:id="@+id/llDeviceConfig"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/_20dp"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvDeviceName"
+                    style="@style/Text.OnBoard.Title1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="Unknown Device"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toStartOf="@+id/btnPower"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnPower"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:insetLeft="0dp"
+                    android:insetTop="0dp"
+                    android:insetRight="0dp"
+                    android:insetBottom="0dp"
+                    android:padding="0dp"
+                    app:backgroundTint="@android:color/transparent"
+                    app:icon="@drawable/ic_power_on"
+                    app:iconGravity="textStart"
+                    app:iconPadding="0dp"
+                    app:iconSize="22dp"
+                    app:iconTint="@color/btn_icon_tint"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvDeviceName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tvDeviceName"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvSerialNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8dp"
+                android:text="Serial Number —"
+                android:textColor="@color/white70"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvDeviceName"
+                tools:text="Serial Number — J2208A 0668A8" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvMacAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MAC:"
+                android:textColor="@color/white70"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvSerialNumber"
+                tools:text="MAC: 21:02:02:06:68:A8" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12dp"
+                app:cardBackgroundColor="@color/black30"
+                app:cardCornerRadius="@dimen/_16dp"
+                app:cardElevation="0dp"
+                app:layout_constraintTop_toBottomOf="@+id/tvMacAddress"
+                app:strokeWidth="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_16dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvDeviceStatusLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/device_status_label"
+                        android:textColor="@color/white70"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivStatusDot"
+                        android:layout_width="@dimen/_8dp"
+                        android:layout_height="@dimen/_8dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvStatus"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvStatus"
+                        app:srcCompat="@drawable/dot_disconnected" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8dp"
+                        android:layout_marginTop="@dimen/_16dp"
+                        android:text="@string/disconnected"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/ivStatusDot"
+                        app:layout_constraintTop_toBottomOf="@id/tvDeviceStatusLabel" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvFirmwareLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_16dp"
+                        android:text="Firmware Version"
+                        android:textColor="@color/text_secondary"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvStatus" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvUpdated"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/dot_connected"
+                        android:drawablePadding="@dimen/_4dp"
+                        android:textColor="@color/lime_green"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvFirmwareLabel"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvFirmwareLabel"
+                        tools:text="-" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvSyncLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8dp"
+                        android:text="Sync:"
+                        android:textColor="@color/text_secondary"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvFirmwareLabel" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvSyncTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvSyncLabel"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvSyncLabel"
+                        tools:text="-" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvBatteryLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8dp"
+                        android:text="Battery:"
+                        android:textColor="@color/text_secondary"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvSyncLabel" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvBatteryValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/dark_orange"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvBatteryLabel"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvBatteryLabel"
+                        tools:text="0%" />
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:id="@+id/divider"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_16dp"
+                        app:dividerColor="@color/dividerColor"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvBatteryLabel" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_local_data_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_16dp"
+                        android:visibility="gone"
+                        app:layout_constraintTop_toBottomOf="@+id/divider"
+                        tools:visibility="gone">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivDelete"
+                            android:layout_width="@dimen/_20dp"
+                            android:layout_height="@dimen/_20dp"
+                            app:layout_constraintBottom_toBottomOf="@id/btnClear"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/btnClear"
+                            app:srcCompat="@drawable/ic_delete_24px" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvLocalDataLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_8dp"
+                            android:text="Local Data Stored:"
+                            android:textColor="@color/white"
+                            app:layout_constraintBottom_toBottomOf="@+id/ivDelete"
+                            app:layout_constraintStart_toEndOf="@+id/ivDelete"
+                            app:layout_constraintTop_toTopOf="@+id/ivDelete" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvLocalDataTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_4dp"
+                            android:textColor="@color/lime_green"
+                            app:layout_constraintBottom_toBottomOf="@+id/tvLocalDataLabel"
+                            app:layout_constraintStart_toEndOf="@+id/tvLocalDataLabel"
+                            app:layout_constraintTop_toTopOf="@+id/tvLocalDataLabel"
+                            tools:text="3 days ago" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnClear"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/clear"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            app:backgroundTint="@color/colorBgBtn"
+                            app:cornerRadius="10dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_device_insight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_16dp"
+                        app:layout_constraintTop_toBottomOf="@+id/divider">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/iv1"
+                            android:layout_width="@dimen/_24dp"
+                            android:layout_height="@dimen/_24dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_emoji_objects_24px" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_8dp"
+                            android:text="@string/device_insight"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/iv1"
+                            app:layout_constraintStart_toEndOf="@+id/iv1"
+                            app:layout_constraintTop_toTopOf="@+id/iv1" />
+
+                        <androidx.constraintlayout.widget.Barrier
+                            android:id="@+id/barrier_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:barrierDirection="bottom"
+                            app:constraint_referenced_ids="iv1,tv1" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvDeviceInsightDesc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_8dp"
+                            android:textColor="@color/white70"
+                            android:textSize="14sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_1"
+                            tools:text="Usage is Low. Ring was warn for 0 days(s) with last 10-day trend available." />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvControlsLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_24dp"
+                android:text="CONTROLS"
+                android:textColor="@color/white70"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cvStatus" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mcvMeasureFreq"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8dp"
+                app:cardBackgroundColor="@color/black30"
+                app:cardCornerRadius="@dimen/_16dp"
+                app:cardElevation="0dp"
+                app:layout_constraintTop_toBottomOf="@+id/tvControlsLabel"
+                app:strokeWidth="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_16dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivMeasureFreqIcon"
+                        android:layout_width="@dimen/_24dp"
+                        android:layout_height="@dimen/_24dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_cell_tower_24px" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvivMeasureFreqIconTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_16dp"
+                        android:layout_marginEnd="@dimen/_16dp"
+                        android:text="@string/measurement_frequency"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toStartOf="@+id/ivivMeasureFreqIconArrow"
+                        app:layout_constraintStart_toEndOf="@+id/ivMeasureFreqIcon"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvivMeasureFreqIconDesc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="--"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="@+id/tvivMeasureFreqIconTitle"
+                        app:layout_constraintStart_toStartOf="@+id/tvivMeasureFreqIconTitle"
+                        app:layout_constraintTop_toBottomOf="@+id/tvivMeasureFreqIconTitle" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivivMeasureFreqIconArrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_right_arrow" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mcvLowPowerMode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8dp"
+                app:cardBackgroundColor="@color/black30"
+                app:cardCornerRadius="@dimen/_16dp"
+                app:cardElevation="0dp"
+                app:layout_constraintTop_toBottomOf="@+id/tvControlsLabel"
+                app:strokeWidth="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_16dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivLowPowerModeIcon"
+                        android:layout_width="@dimen/_24dp"
+                        android:layout_height="@dimen/_24dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_battery_android_bolt_24px" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvLowPowerModeTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_16dp"
+                        android:layout_marginEnd="@dimen/_16dp"
+                        android:text="@string/low_power_mode"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/switchLowPowerMode"
+                        app:layout_constraintStart_toEndOf="@+id/ivLowPowerModeIcon"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/switchLowPowerMode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_right_arrow" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mcvLocalData_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8dp"
+                app:cardBackgroundColor="@color/black30"
+                app:cardCornerRadius="@dimen/_16dp"
+                app:cardElevation="0dp"
+                app:layout_constraintTop_toBottomOf="@+id/tvControlsLabel"
+                app:strokeWidth="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_16dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivDelete2"
+                        android:layout_width="@dimen/_20dp"
+                        android:layout_height="@dimen/_20dp"
+                        app:layout_constraintBottom_toBottomOf="@id/btnClear2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/btnClear2"
+                        app:srcCompat="@drawable/ic_delete_24px" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvLocalDataLabel2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8dp"
+                        android:text="Local Data Stored:"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="@+id/ivDelete2"
+                        app:layout_constraintStart_toEndOf="@+id/ivDelete2"
+                        app:layout_constraintTop_toTopOf="@+id/ivDelete2" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvLocalDataTime2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_4dp"
+                        android:textColor="@color/lime_green"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvLocalDataLabel2"
+                        app:layout_constraintStart_toEndOf="@+id/tvLocalDataLabel2"
+                        app:layout_constraintTop_toTopOf="@+id/tvLocalDataLabel2"
+                        tools:text="3 days ago" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnClear2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/clear"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        app:backgroundTint="@color/colorBgBtn"
+                        app:cornerRadius="10dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvIntervalSettings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8dp"
+                app:cardBackgroundColor="@color/black30"
+                app:cardCornerRadius="@dimen/_16dp"
+                app:cardElevation="0dp"
+                app:layout_constraintTop_toBottomOf="@+id/tvControlsLabel"
+                app:strokeWidth="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_16dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivIntervalIcon"
+                        android:layout_width="@dimen/_24dp"
+                        android:layout_height="@dimen/_24dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_speed_2_24px" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvIntervalTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_16dp"
+                        android:layout_marginEnd="@dimen/_16dp"
+                        android:text="Interval Measurement Settings"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toStartOf="@+id/ivIntervalArrow"
+                        app:layout_constraintStart_toEndOf="@+id/ivIntervalIcon"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvIntervalDesc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Configure automatic monitoring"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="@+id/tvIntervalTitle"
+                        app:layout_constraintStart_toStartOf="@+id/tvIntervalTitle"
+                        app:layout_constraintTop_toBottomOf="@+id/tvIntervalTitle" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivIntervalArrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_right_arrow" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvAlarmClock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12dp"
+                app:cardBackgroundColor="@color/black30"
+                app:cardCornerRadius="@dimen/_16dp"
+                app:cardElevation="0dp"
+                app:layout_constraintTop_toBottomOf="@+id/cvIntervalSettings"
+                app:strokeWidth="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_16dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivAlarmIcon"
+                        android:layout_width="@dimen/_24dp"
+                        android:layout_height="@dimen/_24dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_alarm_24px" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvAlarmTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_16dp"
+                        android:layout_marginEnd="@dimen/_16dp"
+                        android:text="Alarm Clock"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toStartOf="@+id/ivAlarmArrow"
+                        app:layout_constraintStart_toEndOf="@+id/ivAlarmIcon"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvAlarmDesc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Manage alarms on wrist band"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="@+id/tvAlarmTitle"
+                        app:layout_constraintStart_toStartOf="@+id/tvAlarmTitle"
+                        app:layout_constraintTop_toBottomOf="@+id/tvAlarmTitle" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivAlarmArrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_right_arrow" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvSupportLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_24dp"
+                android:text="@string/support_label"
+                android:textColor="@color/white70"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cvAlarmClock" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8dp">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cvWarranty"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_6dp"
+                    app:cardBackgroundColor="@color/black30"
+                    app:cardCornerRadius="@dimen/_16dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintEnd_toStartOf="@+id/cvUserManuals"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:strokeWidth="0dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_16dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivWarrantyIcon"
+                            android:layout_width="@dimen/_24dp"
+                            android:layout_height="@dimen/_24dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_verified_user_24px" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvWarrantyTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_16dp"
+                            android:text="@string/warranty_label"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/ivWarrantyIcon" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvWarrantyStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_4dp"
+                            android:textColor="@color/lime_green"
+                            android:textSize="12sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tvWarrantyTitle"
+                            tools:text="Remaining: 184 days" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cvUserManuals"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="@dimen/_6dp"
+                    app:cardBackgroundColor="@color/black30"
+                    app:cardCornerRadius="@dimen/_16dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/cvWarranty"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/cvWarranty"
+                    app:layout_constraintTop_toTopOf="@+id/cvWarranty"
+                    app:strokeWidth="0dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="@dimen/_16dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivManualsIcon"
+                            android:layout_width="@dimen/_24dp"
+                            android:layout_height="@dimen/_24dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_menu_book_24px" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvManualsTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_16dp"
+                            android:text="@string/user_manuals_label"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDeviceActionsLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_24dp"
+                android:text="@string/device_actions_label"
+                android:textColor="@color/white70"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cvWarranty" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvDeviceActions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8dp"
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2"
+                tools:itemCount="4"
+                tools:listitem="@layout/item_device_action" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrierBottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="rvDeviceActions" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                app:layout_constraintTop_toBottomOf="@id/barrierBottom" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

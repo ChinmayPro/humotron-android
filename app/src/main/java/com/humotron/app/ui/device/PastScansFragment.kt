@@ -24,7 +24,7 @@ class PastScansFragment : BaseFragment(R.layout.fragment_past_scans) {
     private lateinit var adapter: PastScansAdapter
 
     private var healthScanItem: HealthScanItem? = null
-    private var wearable: GetAllDeviceResponse.Data.Wearable? = null
+    private var userDevice: GetAllDeviceResponse.Data.UserDevice? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -37,7 +37,7 @@ class PastScansFragment : BaseFragment(R.layout.fragment_past_scans) {
 
     private fun initViews() {
         healthScanItem = arguments?.getParcelable(NavKeys.HEALTH_SCAN_ITEM)
-        wearable = arguments?.getParcelable(NavKeys.WEARABLE)
+        userDevice = arguments?.getParcelable(NavKeys.WEARABLE)
 
         binding.header.title.text = "Past ${healthScanItem?.metricName?.replace("\n", " ")} Scans"
         binding.tvTitle.text = "${healthScanItem?.metricName} Levels During Past Scans"
@@ -48,7 +48,7 @@ class PastScansFragment : BaseFragment(R.layout.fragment_past_scans) {
         binding.rvPastScans.adapter = adapter
 
         val type = healthScanItem?.type?.name ?: ""
-        val deviceId = wearable?.id ?: ""
+        val deviceId = userDevice?.id ?: ""
         if (type.isNotEmpty() && deviceId.isNotEmpty()) {
             viewModel.getAllScanByType(type, deviceId)
         }
@@ -64,7 +64,7 @@ class PastScansFragment : BaseFragment(R.layout.fragment_past_scans) {
                 R.id.fragmentHealthScan,
                 bundleOf(
                     NavKeys.HEALTH_SCAN_ITEM to healthScanItem,
-                    NavKeys.WEARABLE to wearable
+                    NavKeys.WEARABLE to userDevice
                 )
             )
         }

@@ -13,19 +13,14 @@ import android.bluetooth.BluetoothProfile
 import android.content.Context
 import android.os.Build
 import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import com.humotron.app.bt.band.model.BleData
 import com.humotron.app.util.ResolveData
 import com.humotron.app.util.SDUtil
-import com.humotron.app.util.TAG_BAND_DEBUG
 import com.jstyle.blesdk2208a.Util.BleSDK
 import com.jstyle.blesdk2208a.model.MyDeviceTime
-import com.pluto.plugins.logger.PlutoLog
 import java.lang.reflect.Method
-import java.util.ArrayDeque
 import java.util.Calendar
-import java.util.Queue
 import java.util.UUID
 import java.util.concurrent.ConcurrentLinkedQueue
 
@@ -37,7 +32,7 @@ internal class BandBleGattClient(
     private val appContext: Context,
     private val mainHandler: Handler,
     private val emit: (BleData) -> Unit,
-    private val onConnectionFlag: (Boolean) -> Unit,
+    private val onConnectionFlag: (Int) -> Unit,
 ) {
 
     companion object {
@@ -88,6 +83,7 @@ internal class BandBleGattClient(
                     startScanDevice(false)
                     try {
                         needReconnect = true
+                        onConnectionFlag(STATE_BAND_CONNECTING)
                         mGatt = openGatt(device)
                     } catch (_: Exception) {
                     }
@@ -102,7 +98,7 @@ internal class BandBleGattClient(
                 isConnected = false
                 isWriting = false
                 queues.clear()
-                onConnectionFlag(false)
+                onConnectionFlag(STATE_BAND_DISCONNECTED)
                 if (mGatt != null) {
                     mGatt?.disconnect()
                     mGatt?.close()
@@ -167,8 +163,9 @@ internal class BandBleGattClient(
             stopWriteTimeout()
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 isConnected = true
-                onConnectionFlag(true)
+                onConnectionFlag(STATE_BAND_CONNECTED)
                 // These will be queued and processed one by one
+                offerValue(BleSDK.GetDeviceBatteryLevel())
                 offerValue(buildSetDeviceTimeCommand())
                 offerValue(BleSDK.disableAncs())
                 emit(BleData(action = ACTION_GATT_ON_DESCRIPTOR_WRITE))
@@ -224,6 +221,7 @@ internal class BandBleGattClient(
             try {
                 val device = adapter.getRemoteDevice(upperMac)
                 needReconnect = true
+                onConnectionFlag(STATE_BAND_CONNECTING)
                 mGatt = openGatt(device)
             } catch (e: Exception) {
                 Log.e(TAG, "Failed to get remote device or open GATT: ${e.message}")
@@ -303,7 +301,7 @@ internal class BandBleGattClient(
             }
         }
         isConnected = false
-        onConnectionFlag(false)
+        onConnectionFlag(STATE_BAND_DISCONNECTED)
     }
 
     fun refreshDeviceCache(gatt: BluetoothGatt?): Boolean {

@@ -16,7 +16,7 @@ import com.humotron.app.data.network.Status
 import com.humotron.app.databinding.FragmentHealthScanBinding
 import com.humotron.app.domain.modal.param.BaselineScanDataParam
 import com.humotron.app.domain.modal.param.SaveScanDataParam
-import com.humotron.app.domain.modal.response.GetAllDeviceResponse.Data.Wearable
+import com.humotron.app.domain.modal.response.GetAllDeviceResponse.Data.UserDevice
 import com.humotron.app.domain.modal.ui.HealthScanResult
 import com.humotron.app.domain.modal.ui.SmartBraceletHRVReading
 import com.humotron.app.ui.device.adapter.HealthScanItem
@@ -41,7 +41,7 @@ class HealthScanFragment : BaseFragment(R.layout.fragment_health_scan) {
 
     private lateinit var binding: FragmentHealthScanBinding
     private val viewModel: HealthScanViewModel by viewModels()
-    private var wearable: Wearable? = null
+    private var userDevice: UserDevice? = null
     private var healthScanItem: HealthScanItem? = null
     private var timerJob: Job? = null
     private val scanResults = mutableListOf<HealthScanResult>()
@@ -95,7 +95,7 @@ class HealthScanFragment : BaseFragment(R.layout.fragment_health_scan) {
                 putParcelable(NavKeys.HEALTH_SCAN_ITEM, healthScanItem)
                 putFloat("baseLine", baseLine.toFloat())
                 putFloat("current", current.toFloat())
-                putParcelable(NavKeys.WEARABLE, wearable)
+                putParcelable(NavKeys.WEARABLE, userDevice)
             }
             findNavController().navigate(R.id.fragmentHealthScanResult, bundle)
         }
@@ -216,8 +216,8 @@ class HealthScanFragment : BaseFragment(R.layout.fragment_health_scan) {
     }
 
     private fun initData() {
-        wearable = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            arguments?.getParcelable(NavKeys.WEARABLE, Wearable::class.java)
+        userDevice = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            arguments?.getParcelable(NavKeys.WEARABLE, UserDevice::class.java)
         } else {
             @Suppress("DEPRECATION")
             arguments?.getParcelable(NavKeys.WEARABLE)
@@ -296,7 +296,7 @@ class HealthScanFragment : BaseFragment(R.layout.fragment_health_scan) {
                 )
             binding.ecvWhenShould.setTitle(getString(R.string.when_should_i_run_a_, displayName3))
 
-            wearable?.let { wearable ->
+            userDevice?.let { wearable ->
                 viewModel.getBaselineScanData(
                     BaselineScanDataParam(
                         type = it.type.value,
@@ -464,7 +464,7 @@ class HealthScanFragment : BaseFragment(R.layout.fragment_health_scan) {
                 HealthScanType.TEMPERATURE -> record.temperature.toDouble()
             }
 
-            val deviceId = wearable?.id ?: ""
+            val deviceId = userDevice?.id ?: ""
             if (deviceId.isEmpty()) return
 
             viewModel.saveScanData(

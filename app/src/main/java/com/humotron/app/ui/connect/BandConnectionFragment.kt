@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.humotron.app.R
 import com.humotron.app.bt.band.BandBleManager
+import com.humotron.app.bt.band.STATE_BAND_CONNECTED
 import com.humotron.app.core.Preference
 import com.humotron.app.data.network.Status
 import com.humotron.app.databinding.FragmentBandConnectionBinding
@@ -99,7 +100,7 @@ class BandConnectionFragment : Fragment(R.layout.fragment_band_connection) {
         // When the band connects successfully, store hardware and navigate.
         viewLifecycleOwner.lifecycleScope.launch {
             bandBleManager.connectionState.collect { connected ->
-                if (!connected) return@collect
+                if (connected != STATE_BAND_CONNECTED) return@collect
 
                 // Second time: `MainActivity` may already have connected using the saved MAC,
                 // so scan result may never arrive and `discoveredDevice` can stay null.

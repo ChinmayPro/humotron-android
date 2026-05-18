@@ -39,6 +39,7 @@ import com.humotron.app.domain.modal.response.ExtractMetricsResponse
 import com.humotron.app.domain.modal.response.FeltOffQuestionsResponse
 import com.humotron.app.domain.modal.response.GenerateMetricResponse
 import com.humotron.app.domain.modal.response.GetAllDeviceResponse
+import com.humotron.app.domain.modal.response.GetDeviceConfigResponse
 import com.humotron.app.domain.modal.response.DeviceDetailResponse
 import com.humotron.app.domain.modal.response.DeviceFaqResponse
 import com.humotron.app.domain.modal.response.GetShopDevicesResponse
@@ -132,10 +133,10 @@ interface AppApi {
         @Path("userId") userId: String,
         @Body data: HashMap<String, Any>,
     ): Response<com.humotron.app.domain.modal.response.CommonResponse>
-    
+
     @GET("promoCode/removePromoCodeByUser/{userId}")
     suspend fun removePromoCodeByUser(
-        @Path("userId") userId: String
+        @Path("userId") userId: String,
     ): Response<com.humotron.app.domain.modal.response.CommonResponse>
 
     @POST("interests/getAllInterest")
@@ -154,6 +155,11 @@ interface AppApi {
 
     @POST("device/getAllDeviceByUserId")
     suspend fun getAllDeviceData(): Response<GetAllDeviceResponse>
+
+    @POST("user/getDeviceConfiguration/{id}")
+    suspend fun getDeviceConfiguration(
+        @Path("id") id: String,
+    ): Response<GetDeviceConfigResponse>
 
     @POST("device/getAllDeviceWithMetrics")
     suspend fun getAllDeviceWithMetrics(): Response<GetShopDevicesResponse>
@@ -185,12 +191,11 @@ interface AppApi {
     @POST("product/productLikeDislike/{productId}")
     suspend fun productLikeDislike(
         @Path("productId") productId: String,
-        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0))
+        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0)),
     ): Response<CommonResponse>
 
-    @POST("device/{endpoint}/{ringId}")
+    @POST("device/ringReadingHandler/{ringId}")
     suspend fun getRingReadingGraphData(
-        @Path("endpoint") endpoint: String,
         @Path("ringId") ringId: String,
         @Body param: RingReadingParam,
     ): Response<TemperatureResponse>
@@ -291,7 +296,7 @@ interface AppApi {
 
     @POST("cart/editCartQtyByItemId")
     suspend fun editCartQtyByItemId(
-        @Body request: HashMap<String, Any>
+        @Body request: HashMap<String, Any>,
     ): Response<CommonResponse>
 
 
@@ -383,17 +388,17 @@ interface AppApi {
 
     @POST("order/getDefaultConfiguration")
     suspend fun getDefaultConfiguration(
-        @Body request: DefaultConfigRequest
+        @Body request: DefaultConfigRequest,
     ): Response<GetDefaultConfigResponse>
 
     @POST("order/getDefaultConfiguration")
     suspend fun getDefaultConfigurationNoBody(
-        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0))
+        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0)),
     ): Response<GetDefaultConfigResponse>
 
     @POST("deliveryOption/getAllDeliveryOptionByLimit")
     suspend fun getAllDeliveryOptionByLimit(
-        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0))
+        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0)),
     ): Response<DeliveryOptionResponse>
 
     @POST("address/getAllAddressByUserId")
@@ -402,57 +407,60 @@ interface AppApi {
     @POST("address/updateAddressById/{addressId}")
     suspend fun updateAddressById(
         @Path("addressId") addressId: String,
-        @Body request: UpdateAddressRequest
+        @Body request: UpdateAddressRequest,
     ): Response<UpdateAddressResponse>
 
     @GET("https://api.getaddress.io/autocomplete/{term}")
     suspend fun getAddressAutocomplete(
         @Path("term") term: String,
-        @Query("api-key") apiKey: String = "Mh0BQoYe8UeAX5lplKtd1A45644"
+        @Query("api-key") apiKey: String = "Mh0BQoYe8UeAX5lplKtd1A45644",
     ): Response<AddressAutocompleteResponse>
 
     @GET("https://api.getaddress.io/get/{id}")
     suspend fun getFullAddress(
         @Path("id") id: String,
-        @Query("api-key") apiKey: String = "Mh0BQoYe8UeAX5lplKtd1A45644"
+        @Query("api-key") apiKey: String = "Mh0BQoYe8UeAX5lplKtd1A45644",
     ): Response<FullAddressResponse>
 
     @GET("product/getProductById/{productId}")
     suspend fun getProductById(
-        @Path("productId") productId: String
+        @Path("productId") productId: String,
     ): Response<ProductDetailResponse>
 
     @GET("lab/getAllLabName")
     suspend fun getAllLabName(
-        @Query("postcode") postcode: String
+        @Query("postcode") postcode: String,
     ): Response<GetAllLabResponse>
 
     @GET("promoCode/getPromoCodeDetailsByPromoCode/{promoCode}")
     suspend fun getPromoCodeDetailsByPromoCode(
-        @Path("promoCode") promoCode: String
+        @Path("promoCode") promoCode: String,
     ): Response<com.humotron.app.domain.modal.response.PromoCodeDetailsResponse>
 
     @POST("order/getOrderDetailById/{orderId}")
     suspend fun getOrderDetailById(
-        @Path("orderId") orderId: String
+        @Path("orderId") orderId: String,
     ): Response<com.humotron.app.domain.modal.response.GetOrderDetailResponse>
 
     @POST("order/getAllOrderListByUser")
     suspend fun getAllOrderListByUser(
         @Query("page") page: Int,
-        @Query("limit") limit: Int
+        @Query("limit") limit: Int,
     ): Response<com.humotron.app.domain.modal.response.GetAllOrderResponse>
 
     @POST("order/cancelOrder/{orderId}")
     suspend fun cancelOrder(
-        @Path("orderId") orderId: String
+        @Path("orderId") orderId: String,
     ): Response<CommonResponse>
 
     @POST("order/getOrderTrackingDetails/{orderNumber}")
     suspend fun getOrderTrackingDetails(
         @Path("orderNumber") orderNumber: String,
-        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0))
+        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0)),
     ): Response<com.humotron.app.domain.modal.response.GetOrderTrackingResponse>
+
+    @POST("userHardware/deleteUserHardwareById/{id}")
+    suspend fun deleteUserHardwareById(@Path("id") id: String): Response<CommonResponse>
 
     @POST("order/getBloodTestOrders")
     suspend fun getBloodTestOrders(

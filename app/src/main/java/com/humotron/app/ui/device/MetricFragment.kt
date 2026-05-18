@@ -16,6 +16,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.github.mikephil.charting.charts.CandleStickChart
 import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.LimitLine
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.CandleData
 import com.github.mikephil.charting.data.CandleDataSet
@@ -23,6 +24,7 @@ import com.github.mikephil.charting.data.CandleEntry
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.IFillFormatter
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.android.material.tabs.TabLayout
@@ -397,7 +399,7 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
             }
         }
 
-        viewModel.getRingReadingTemperatureData().observe(viewLifecycleOwner) {
+        viewModel.getDeviceGraphData().observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
                     hideProgress()
@@ -458,7 +460,13 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
                                 binding.trackTrends.lineChart.visibility = View.VISIBLE
 
                                 val entries = createLineChartEntries(sortedList, selectedTab)
-                                setupLineChart(binding.trackTrends.lineChart, entries, selectedTab)
+                                setupLineChart(
+                                    binding.trackTrends.lineChart,
+                                    entries,
+                                    selectedTab,
+                                    it.data.averageReading,
+                                    it.data.typicalRange
+                                )
                             }
                         }
                     }
@@ -516,6 +524,7 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
                                         startDate = start,
                                         endDate = end,
                                         offset = "+05:30",
+                                        metricId = metric.id,
                                         metricName = fieldLabel
                                     )
                                     viewModel.getWristBandGraphData(
@@ -525,22 +534,14 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
                                 } else {
 
                                     val param = RingReadingParam(
-                                        range = selectedText,
                                         startDate = start,
                                         endDate = end,
                                         offset = "+05:30",
-                                        metricID = metric.id
+                                        range = selectedText,
+                                        metricID = metric.id,
+                                        metricName = fieldLabel
                                     )
-
-                                    val endpoint = when (fieldLabel) {
-                                        "Temperature" -> "ringReadingTemperature"
-                                        "HRV" -> "ringReadingHrv"
-                                        "HeartRate" -> "ringReadingHeartRate"
-                                        "STEPS" -> "ringReadingSteps"
-                                        else -> "ringReadingTemperature"
-                                    }
                                     viewModel.getRingReadingGraphData(
-                                        endpoint,
                                         deviceId,
                                         param
                                     )
@@ -576,8 +577,8 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
 
         val entries = mutableListOf<Entry>()
 
-        val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
-        sdf.timeZone = TimeZone.getDefault()
+        val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.getDefault())
+        sdf.timeZone = TimeZone.getTimeZone("UTC") // Parse as UTC
 
         val calendar = Calendar.getInstance()
 
@@ -626,8 +627,8 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
     ): List<CandleEntry> {
         val entries = mutableListOf<CandleEntry>()
 
-        val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
-        sdf.timeZone = TimeZone.getDefault()
+        val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.getDefault())
+        sdf.timeZone = TimeZone.getTimeZone("UTC") // Parse as UTC
 
         val calendar = Calendar.getInstance()
 
@@ -683,6 +684,8 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
         lineChart: LineChart,
         entries: List<Entry>,
         tab: String?,
+        averageReading: Double?,
+        typicalRange: List<Int>?
     ) {
         val dataSet = LineDataSet(entries, "").apply {
             color = ContextCompat.getColor(requireActivity(), R.color.green_1)
@@ -703,7 +706,28 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
             }
         }
 
-        val lineData = LineData(dataSet)
+        val rangeMin = typicalRange?.getOrNull(0)?.toFloat() ?: 0f
+        val rangeMax = typicalRange?.getOrNull(1)?.toFloat() ?: 0f
+
+        val rangeEntries = createFlatRange(tab, entries, rangeMax)
+
+        val rangeDataSet = LineDataSet(rangeEntries, "").apply {
+            color = Color.TRANSPARENT
+            setDrawCircles(false)
+            setDrawValues(false)
+            setDrawFilled(true)
+
+            fillColor = "#353535".toColorInt() // your grey band
+            fillAlpha = 100
+
+            mode = LineDataSet.Mode.LINEAR
+
+            // THIS IS KEY 👇
+            fillFormatter = IFillFormatter { _, _ -> 100f } // bottom of range
+        }
+
+        //val lineData = LineData(dataSet)
+        val lineData = LineData(rangeDataSet, dataSet)
 
         lineChart.apply {
             data = lineData
@@ -732,16 +756,53 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
                     }
                 }
             }
+
+            val minY = entries.minOfOrNull { it.y } ?: 0f
+            val maxY = entries.maxOfOrNull { it.y } ?: 0f
+
+            val minTypical = typicalRange?.minOrNull()?.toFloat() ?: minY
+            val maxTypical = typicalRange?.maxOrNull()?.toFloat() ?: maxY
+
+            val overallMin = minOf(minY, minTypical)
+
+            averageReading?.let {
+                val avgLine =
+                    LimitLine(averageReading.toFloat() /*getString(R.string.your_baseline)*/).apply {
+                        lineWidth = 2f
+                        enableDashedLine(10f, 10f, 0f) // dotted effect
+                        lineColor = Color.parseColor("#353535")
+                        textColor = Color.WHITE
+                        textSize = 10f
+                    }
+                axisLeft.addLimitLine(avgLine)
+            }
+
             // Y Axis
             axisLeft.apply {
                 granularity = 1f
                 textColor = Color.WHITE
+                axisMinimum = maxOf(0f, overallMin)
+                axisMaximum = maxOf(maxY, maxTypical) + 5f
                 setDrawGridLines(false)
             }
             axisRight.isEnabled = false
             legend.isEnabled = false
             invalidate()
         }
+    }
+
+    private fun createFlatRange(tab: String?, entries: List<Entry>, max: Float): List<Entry> {
+        val startX = when (tab) {
+            "Hour" -> 0f
+            "Day" -> 0f
+            else -> entries.firstOrNull()?.x ?: 0f
+        }
+        val endX = when (tab) {
+            "Hour" -> 59f
+            "Day" -> 23f
+            else -> entries.lastOrNull()?.x ?: 0f
+        }
+        return listOf(Entry(startX, max), Entry(endX, max))
     }
 
     private fun setupCandleChart(
@@ -759,6 +820,11 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
             neutralColor = Color.BLUE
             setDrawValues(true)
             valueTextColor = Color.WHITE
+            valueFormatter = object : ValueFormatter() {
+                override fun getFormattedValue(value: Float): String {
+                    return value.toInt().toString()
+                }
+            }
         }
 
         val candleData = CandleData(dataSet)
@@ -787,6 +853,7 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
             axisLeft.apply {
                 textColor = Color.WHITE
                 setDrawGridLines(false)
+                granularity = 1f
             }
             axisRight.isEnabled = false
             legend.isEnabled = false

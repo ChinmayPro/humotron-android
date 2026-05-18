@@ -38,6 +38,37 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentProfile_to_fragmentDeviceList"
+            app:destination="@id/fragmentDeviceList"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentDeviceList"
+        android:name="com.humotron.app.ui.profile.DeviceListFragment"
+        android:label="Device List"
+        tools:layout="@layout/fragment_device_list">
+        <action
+            android:id="@+id/action_fragmentDeviceList_to_fragmentDeviceConfig"
+            app:destination="@id/fragmentDeviceConfig"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentDeviceConfig"
+        android:name="com.humotron.app.ui.profile.DeviceConfigFragment"
+        android:label="Device Config"
+        tools:layout="@layout/fragment_device_config">
+        <argument
+            android:name="wearable"
+            app:argType="com.humotron.app.domain.modal.response.GetAllDeviceResponse$Data$UserDevice" />
     </fragment>
 
 

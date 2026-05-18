@@ -384,7 +384,6 @@ class SleepRepository(
     }
 
     fun getRingReadingGraphData(
-        endpoint: String,
         ringId: String,
         param: RingReadingParam,
     ): Flow<Resource<TemperatureResponse>> = flow {
@@ -392,7 +391,7 @@ class SleepRepository(
         try {
             val response =
                 responseHandler.handleResponse(
-                    api.getRingReadingGraphData(endpoint, ringId, param),
+                    api.getRingReadingGraphData(ringId, param),
                     false
                 )
             emit(response)

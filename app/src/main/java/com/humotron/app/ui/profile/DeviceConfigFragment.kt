@@ -1,0 +1,580 @@
+package com.humotron.app.ui.profile
+
+import android.content.res.ColorStateList
+import android.os.Bundle
+import android.view.View
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.humotron.app.R
+import com.humotron.app.bt.band.BandBleManager
+import com.humotron.app.bt.band.STATE_BAND_CONNECTED
+import com.humotron.app.bt.band.STATE_BAND_CONNECTING
+import com.humotron.app.core.App
+import com.humotron.app.core.Preference
+import com.humotron.app.core.base.BaseFragment
+import com.humotron.app.data.network.Status
+import com.humotron.app.databinding.FragmentDeviceConfigBinding
+import com.humotron.app.domain.modal.DeviceType
+import com.humotron.app.domain.modal.response.GetAllDeviceResponse.Data.UserDevice
+import com.humotron.app.domain.modal.response.GetDeviceConfigResponse
+import com.humotron.app.domain.modal.ui.DeviceAction
+import com.humotron.app.ui.dialogs.MeasureFrequencyBottomSheetDialog
+import com.humotron.app.ui.dialogs.PowerOptionBottomSheetDialog
+import com.humotron.app.ui.profile.adapter.DeviceActionAdapter
+import com.humotron.app.util.DialogUtils
+import com.humotron.app.util.GridSpacingItemDecoration
+import com.humotron.app.util.STATE_DEVICE_CHARGING
+import com.humotron.app.util.STATE_DEVICE_CONNECTED
+import com.humotron.app.util.STATE_DEVICE_CONNECTING
+import com.humotron.app.util.STATE_DEVICE_DISCHARGING
+import com.humotron.app.util.STATE_DEVICE_DISCONNECTED
+import com.humotron.app.util.TAG_BAND_DEBUG
+import com.humotron.app.util.ToastUtils
+import com.humotron.app.util.getTimeAgo
+import com.pluto.plugins.logger.PlutoLog
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import java.time.Instant
+import javax.inject.Inject
+
+@AndroidEntryPoint
+class DeviceConfigFragment : BaseFragment(R.layout.fragment_device_config) {
+
+    private lateinit var binding: FragmentDeviceConfigBinding
+    private val args: DeviceConfigFragmentArgs by navArgs()
+    private val viewModel: DeviceConfigViewModel by viewModels()
+
+    @Inject
+    lateinit var bandBleManager: BandBleManager
+    private val app by lazy { requireActivity().application as App }
+
+    private var userDevice: UserDevice? = null
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding = FragmentDeviceConfigBinding.bind(view)
+
+        initClicks()
+        initObservers()
+        initData()
+    }
+
+    private fun initClicks() {
+        binding.header.ivBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+        binding.btnPower.setOnClickListener {
+            if (isRingDeviceDisconnected()) showRingNotConnectedDialog()
+            else if (isBandDeviceDisconnected()) showBandNotConnectedDialog()
+            else showPowerOptions()
+        }
+
+        //Ring
+        binding.mcvMeasureFreq.setOnClickListener {
+            if (isRingDeviceDisconnected()) showRingNotConnectedDialog()
+            else showMeasureFrequency()
+        }
+        binding.switchLowPowerMode.setOnClickListener {
+            if (isRingDeviceDisconnected()) {
+                binding.switchLowPowerMode.isChecked = !binding.switchLowPowerMode.isChecked
+                showRingNotConnectedDialog()
+            }
+        }
+        binding.btnClear2.setOnClickListener {
+            if (isRingDeviceDisconnected()) showRingNotConnectedDialog()
+            else showClearDataConfirmation()
+        }
+
+        //Band
+        binding.cvIntervalSettings.setOnClickListener {
+            if (isBandDeviceDisconnected()) showBandNotConnectedDialog()
+            else {
+            }
+        }
+        binding.cvAlarmClock.setOnClickListener {
+            if (isBandDeviceDisconnected()) showBandNotConnectedDialog()
+            else {
+            }
+        }
+        binding.btnClear.setOnClickListener {
+            if (isBandDeviceDisconnected()) showBandNotConnectedDialog()
+            else showClearDataConfirmation()
+        }
+
+
+        binding.tvUpdated.setOnClickListener {
+            if (isRingDeviceDisconnected()) showRingNotConnectedDialog()
+            else if (isBandDeviceDisconnected()) showBandNotConnectedDialog()
+        }
+    }
+
+    private fun showClearDataConfirmation() {
+        DialogUtils.showConfirmationDialog(
+            context = requireContext(),
+            title = "Clear Local Data",
+            message = "Are you sure you want to clear all local data stored on this device?",
+            btnPositiveText = "Clear",
+            onPositiveClick = {
+                ToastUtils.showShort(requireContext(), "Data cleared successfully")
+            }
+        )
+    }
+
+    private fun showMeasureFrequency() {
+        MeasureFrequencyBottomSheetDialog.newInstance(60).apply {
+            setOnSaveListener { frequency ->
+                binding.tvivMeasureFreqIconDesc.text = getString(R.string.every_s_sec, frequency)
+                ToastUtils.showShort(
+                    requireContext(),
+                    getString(R.string.frequency_updated_to_s_sec, frequency)
+                )
+            }
+        }.show(childFragmentManager, MeasureFrequencyBottomSheetDialog.TAG)
+    }
+
+    private fun showPowerOptions() {
+        PowerOptionBottomSheetDialog.newInstance().apply {
+            setListeners(
+                onRestart = {
+                    ToastUtils.showShort(requireContext(), "Restarting device...")
+                },
+                onShutDown = {
+                    ToastUtils.showShort(requireContext(), "Shutting down device...")
+                }
+            )
+        }.show(childFragmentManager, PowerOptionBottomSheetDialog.TAG)
+    }
+
+    private fun initData() {
+        userDevice = args.wearable
+        userDevice?.let {
+            binding.tvDeviceName.text = it.deviceFacingName ?: "Unknown Device"
+            // Calling the API with the device id passed from wearable
+            it.id?.let { id ->
+                viewModel.getDeviceConfiguration(id)
+            }
+            if (!it.dataSync.isNullOrEmpty()) {
+                try {
+                    val timeInMillis = Instant.parse(it.dataSync).toEpochMilli()
+                    binding.tvSyncTime.text = getTimeAgo(timeInMillis)
+                } catch (e: Exception) {
+                    binding.tvSyncTime.text = "-"
+                }
+            } else {
+                binding.tvSyncTime.text = "-"
+            }
+        }
+        binding.header.title.text = getString(R.string.device_configurations)
+        binding.tvBatteryValue.text = "0%"
+        binding.tvLocalDataTime.text = "3 days ago"
+
+        binding.tvWarrantyStatus.text = getString(R.string.remaining_days_format, 184)
+
+
+        binding.mcvMeasureFreq.visibility = View.GONE
+        binding.mcvLowPowerMode.visibility = View.GONE
+        binding.mcvLocalData2.visibility = View.GONE
+        binding.clDeviceInsight.visibility = View.GONE
+        binding.clLocalData1.visibility = View.GONE
+
+        binding.cvIntervalSettings.visibility = View.GONE
+        binding.cvAlarmClock.visibility = View.GONE
+
+        val deviceType = DeviceType.from(userDevice?.deviceName)
+        setupDeviceActions(deviceType)
+        when (deviceType) {
+            DeviceType.BAND -> {
+                binding.llDeviceConfig.visibility = View.VISIBLE
+                binding.clLocalData1.visibility = View.VISIBLE
+                binding.clDeviceInsight.visibility = View.GONE
+
+                binding.cvIntervalSettings.visibility = View.VISIBLE
+                binding.cvAlarmClock.visibility = View.VISIBLE
+                binding.clLocalData1.visibility = View.VISIBLE
+                observeBand()
+            }
+
+            DeviceType.RING -> {
+                binding.llDeviceConfig.visibility = View.VISIBLE
+                binding.clDeviceInsight.visibility = View.VISIBLE
+                binding.clLocalData1.visibility = View.GONE
+
+                binding.mcvMeasureFreq.visibility = View.VISIBLE
+                binding.mcvLowPowerMode.visibility = View.VISIBLE
+                binding.mcvLocalData2.visibility = View.VISIBLE
+                binding.clDeviceInsight.visibility = View.VISIBLE
+                observeRing()
+            }
+
+            DeviceType.UNKNOWN -> {
+                binding.llDeviceConfig.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun initObservers() {
+        viewModel.getDeviceConfigLiveData().observe(viewLifecycleOwner) { resource ->
+            when (resource.status) {
+                Status.SUCCESS -> {
+                    hideProgress()
+                    resource.data?.let { response ->
+                        updateUI(response)
+                    }
+                }
+
+                Status.ERROR -> {
+                    hideProgress()
+                    ToastUtils.showShort(
+                        requireContext(),
+                        resource.error?.errorMessage ?: "Error fetching configuration"
+                    )
+                }
+
+                Status.LOADING -> {
+                    showProgress()
+                }
+
+                else -> {}
+            }
+        }
+
+        viewModel.getDeleteHardwareLiveData().observe(viewLifecycleOwner) { resource ->
+            when (resource.status) {
+                Status.SUCCESS -> {
+                    hideProgress()
+                    disconnectDeletedDevice()
+                    clearDeletedDevicePreferences()
+                    ToastUtils.showShort(
+                        requireContext(),
+                        resource.data?.message ?: "Device removed successfully"
+                    )
+                    findNavController().popBackStack(R.id.fragmentProfile, false)
+                }
+
+                Status.ERROR, Status.EXCEPTION -> {
+                    hideProgress()
+                    ToastUtils.showShort(
+                        requireContext(),
+                        resource.error?.errorMessage ?: "Error removing device"
+                    )
+                }
+
+                Status.LOADING -> {
+                    showProgress()
+                }
+
+                else -> {}
+            }
+        }
+    }
+
+    private fun setupDeviceActions(deviceType: DeviceType) {
+        val actions = when (deviceType) {
+            DeviceType.BAND -> listOf(
+                DeviceAction.RESTART,
+                DeviceAction.RESET_FACTORY,
+                DeviceAction.REMOVE_FROM_ACCOUNT,
+                DeviceAction.RE_SETUP
+            )
+
+            DeviceType.RING -> listOf(
+                DeviceAction.RESET_FACTORY,
+                DeviceAction.REMOVE_FROM_ACCOUNT,
+                DeviceAction.RE_SETUP
+            )
+
+            DeviceType.UNKNOWN -> listOf(
+                DeviceAction.REMOVE_FROM_ACCOUNT
+            )
+        }
+
+        binding.rvDeviceActions.apply {
+            adapter = DeviceActionAdapter(actions) { action ->
+                handleDeviceAction(action)
+            }
+            if (itemDecorationCount == 0) {
+                val spacing = resources.getDimensionPixelSize(R.dimen._12dp)
+                addItemDecoration(GridSpacingItemDecoration(2, spacing, false))
+            }
+        }
+    }
+
+    private fun handleDeviceAction(action: DeviceAction) {
+        val deviceType = DeviceType.from(userDevice?.deviceName)
+
+        val isDisconnected = when (deviceType) {
+            DeviceType.RING -> isRingDeviceDisconnected()
+            DeviceType.BAND -> isBandDeviceDisconnected()
+            else -> false
+        }
+
+        val shouldCheckConnection =
+            (deviceType == DeviceType.RING && action == DeviceAction.RESET_FACTORY) ||
+                    (deviceType == DeviceType.BAND &&
+                            (action == DeviceAction.RESTART || action == DeviceAction.RESET_FACTORY))
+
+        if (isDisconnected && shouldCheckConnection) {
+            when (deviceType) {
+                DeviceType.RING -> showRingNotConnectedDialog()
+                DeviceType.BAND -> showBandNotConnectedDialog()
+                else -> Unit
+            }
+            return
+        }
+
+        when (action) {
+
+            DeviceAction.RESTART -> {
+                when (deviceType) {
+                    DeviceType.RING -> {
+                    }
+
+                    DeviceType.BAND -> {
+                    }
+
+                    DeviceType.UNKNOWN -> {
+
+                    }
+                }
+            }
+
+            DeviceAction.RESET_FACTORY -> {
+                ToastUtils.showShort(requireContext(), "Resetting to factory settings...")
+            }
+
+            DeviceAction.REMOVE_FROM_ACCOUNT -> {
+                DialogUtils.showConfirmationDialog(
+                    context = requireContext(),
+                    title = "Remove from account",
+                    message = "This device will be removed from your account.",
+                    btnPositiveText = "Remove",
+                    onPositiveClick = {
+                        val hwId = prefUtils.getHardwareDetailsList()
+                            .find { it.hardwareType == deviceType.value }?.id
+
+                        hwId?.let { id ->
+                            viewModel.deleteUserHardwareById(id)
+                        }
+                    },
+                    btnNegativeText = "Cancel"
+                )
+            }
+
+            DeviceAction.RE_SETUP -> {
+                ToastUtils.showShort(requireContext(), "Re-setting up device...")
+            }
+        }
+    }
+
+    private fun updateUI(response: GetDeviceConfigResponse) {
+        val data = response.data ?: return
+        val deviceMeta = data.deviceMeta
+
+        binding.tvSerialNumber.text =
+            getString(R.string.serial_number_format, deviceMeta?.sn ?: "Unknown")
+        binding.tvMacAddress.text = getString(R.string.mac_format, deviceMeta?.mac ?: "Unknown")
+
+        deviceMeta?.fw?.let {
+            binding.tvFirmwareLabel.text = getString(R.string.firmware_version_format, it)
+        }
+
+        data.warrantyRemainingDays?.let {
+            binding.tvWarrantyStatus.text = getString(R.string.remaining_days_format, it)
+        }
+
+        data.insight?.let { insight ->
+            val deviceType = DeviceType.from(userDevice?.deviceName)
+            val deviceName = if (deviceType == DeviceType.RING) "Ring" else "Band"
+            binding.tvDeviceInsightDesc.text = getString(
+                R.string.device_insight_desc_format,
+                insight.usage ?: "Unknown",
+                deviceName,
+                insight.daysUsed ?: 0
+            )
+        }
+    }
+
+    private fun clearDeletedDevicePreferences() {
+        val deviceType = DeviceType.from(userDevice?.deviceName)
+        val deletedDeviceId = prefUtils.getHardwareDetailsList()
+            .find { it.hardwareType == deviceType.value }?.id
+
+        if (!deletedDeviceId.isNullOrEmpty()) {
+            val updatedHardwareList =
+                prefUtils.getHardwareDetailsList().filterNot { it.id == deletedDeviceId }
+            prefUtils.setHardwareDetailsList(updatedHardwareList)
+        }
+
+        when (DeviceType.from(userDevice?.deviceName)) {
+            DeviceType.BAND -> {
+                prefUtils.remove(Preference.WEARABLE_BAND)
+                prefUtils.remove(Preference.BAND_HARDWARE_DATA)
+            }
+
+            DeviceType.RING -> {
+                prefUtils.remove(Preference.WEARABLE_RING)
+                prefUtils.remove(Preference.HARDWARE_DATA)
+            }
+
+            DeviceType.UNKNOWN -> Unit
+        }
+    }
+
+    private fun disconnectDeletedDevice() {
+        when (DeviceType.from(userDevice?.deviceName)) {
+            DeviceType.BAND -> {
+                bandBleManager.disconnect()
+            }
+
+            DeviceType.RING -> {
+                app.ringBleManager.disconnect()
+                app.ringDeviceManager.unregisterCb()
+            }
+
+            DeviceType.UNKNOWN -> Unit
+        }
+    }
+
+    private fun observeRing() {
+        if (app.ringDeviceManager.connected.value == true) {
+            app.ringDeviceManager.registerCb()
+            updateConnectionUi(true)
+        }
+
+        app.ringDeviceManager.batteryLevel.observe(viewLifecycleOwner) {
+            when (it.first) {
+                STATE_DEVICE_CONNECTING -> {
+                    updateConnectionUiConnecting()
+                }
+
+                STATE_DEVICE_CONNECTED -> {
+                    updateConnectionUi(true)
+                }
+
+                STATE_DEVICE_DISCONNECTED -> {
+                    updateConnectionUi(false)
+                }
+
+                STATE_DEVICE_CHARGING -> {
+                    // Update charging UI if needed
+                }
+
+                STATE_DEVICE_DISCHARGING -> {
+                    // Update discharging UI if needed
+                }
+            }
+            binding.tvBatteryValue.text = "${it.second}%"
+        }
+
+        /*app.ringDeviceManager.connected.observe(viewLifecycleOwner) { isConnected ->
+            if (isConnected) {
+                updateConnectionUi(true)
+            } else {
+                updateConnectionUi(false)
+            }
+        }*/
+    }
+
+    private fun observeBand() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            bandBleManager.connectionState.collect { state ->
+                PlutoLog.e(TAG_BAND_DEBUG, "DeviceConfigFragment bandManager state: $state")
+                when (state) {
+                    STATE_BAND_CONNECTED -> {
+                        updateConnectionUi(true)
+                    }
+
+                    STATE_BAND_CONNECTING -> {
+                        updateConnectionUiConnecting()
+                    }
+
+                    else -> {
+                        updateConnectionUi(false)
+                    }
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            bandBleManager.batteryLevel.collect { level ->
+                if (level != null) {
+                    binding.tvBatteryValue.text = "$level%"
+                }
+            }
+        }
+    }
+
+    private fun updateConnectionUi(isConnected: Boolean) = with(binding) {
+        ivStatusDot.setImageResource(
+            if (isConnected) R.drawable.dot_connected
+            else R.drawable.dot_disconnected
+        )
+
+        tvStatus.text =
+            if (isConnected) getString(R.string.connected) else getString(R.string.disconnected)
+
+        tvStatus.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                if (isConnected) R.color.colorBgBtn else R.color.disconnected
+            )
+        )
+
+        btnPower.iconTint = ColorStateList.valueOf(
+            ContextCompat.getColor(
+                requireContext(),
+                if (isConnected) R.color.btn_icon_tint else R.color.gray_400
+            )
+        )
+    }
+
+    private fun updateConnectionUiConnecting() = with(binding) {
+        ivStatusDot.setImageResource(R.drawable.dot_connecting)
+        tvStatus.text = getString(R.string.connecting)
+        tvStatus.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.w200
+            )
+        )
+    }
+
+    private fun isRingDeviceDisconnected(): Boolean {
+        return DeviceType.from(userDevice?.deviceName) == DeviceType.RING &&
+                app.ringDeviceManager.connected.value != true
+    }
+
+    private fun isBandDeviceDisconnected(): Boolean {
+        return DeviceType.from(userDevice?.deviceName) == DeviceType.BAND &&
+                bandBleManager.connectionState.value != STATE_BAND_CONNECTED
+    }
+
+    private fun showRingNotConnectedDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Ring not connected")
+            .setMessage("Connect your ring to use this feature.")
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    private fun showBandNotConnectedDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Band not connected")
+            .setMessage("Connect your band to use this feature.")
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        app.ringDeviceManager.unregisterCb()
+    }
+}

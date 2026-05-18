@@ -10,6 +10,7 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("kotlin-parcelize")
     alias(libs.plugins.kotlin.compose)
+    id("androidx.navigation.safeargs.kotlin")
     //id("com.google.gms.google-services")
 }
 

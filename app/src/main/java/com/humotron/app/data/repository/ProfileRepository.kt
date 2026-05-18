@@ -40,6 +40,19 @@ class ProfileRepository @Inject constructor(
     }.catch {
         emit(responseHandler.handleException(ValidationException(it.message)))
     }
+
+    fun deleteUserHardwareById(id: String): Flow<Resource<com.humotron.app.domain.modal.response.CommonResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.deleteUserHardwareById(id), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
     fun updateUserById(userId: String, data: HashMap<String, Any>): Flow<Resource<com.humotron.app.domain.modal.response.CommonResponse>> = flow {
         emit(Resource.loading())
         try {
@@ -97,6 +110,19 @@ class ProfileRepository @Inject constructor(
                 }
                 emit(Resource.error(com.humotron.app.data.network.error.Error(errorMessage = errorMsg)))
             }
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun getDeviceConfiguration(id: String): Flow<Resource<com.humotron.app.domain.modal.response.GetDeviceConfigResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.getDeviceConfiguration(id), false)
+            emit(response)
         } catch (e: Exception) {
             emit(responseHandler.handleException(e))
             e.printStackTrace()
