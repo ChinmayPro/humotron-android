@@ -33,6 +33,9 @@ class CartViewModel @Inject constructor(
 
     private var selectedDeliveryMethod: GetCartResponse.DeliveryMethod? = null
     private var cartData: GetCartResponse.Data? = null
+    private var currentOrderId: String? = null
+
+    fun getCurrentOrderId() = currentOrderId
 
     fun setSelectedDeliveryMethod(method: GetCartResponse.DeliveryMethod?) {
         selectedDeliveryMethod = method
@@ -99,6 +102,7 @@ class CartViewModel @Inject constructor(
         repository.placeOrder(request).onEach { state ->
             placeOrderLiveData.value = state
             if (state.status == com.humotron.app.data.network.Status.SUCCESS) {
+                currentOrderId = state.data?.orderId
                 // Chain to createPaymentIntent
                 val paymentIntentRequest = HashMap<String, Any>()
                 paymentIntentRequest["amount"] = finalAmount

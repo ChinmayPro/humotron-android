@@ -685,4 +685,9 @@ To get started:\n
     <string name="payment_successful">Payment successful!</string>
     <string name="payment_canceled">Payment canceled</string>
     <string name="payment_failed">Payment failed: %s</string>
+    <string name="order_success_placed_desc">Your order has been placed and will be delivered to you soon.</string>
+    <string name="order_id_label">Order ID</string>
+    <string name="check_order_details">Check Order Details</string>
+    <string name="learn_more_metrics">Learn more about your metrics</string>
+    <string name="congratulations_text">Congratulations</string>
 </resources>

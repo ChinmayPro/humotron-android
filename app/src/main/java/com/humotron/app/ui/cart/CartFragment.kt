@@ -573,11 +573,12 @@ class CartFragment : BaseFragment(R.layout.fragment_cart) {
     private fun onPaymentSheetResult(paymentSheetResult: PaymentSheetResult) {
         hideCheckoutLoading()
         when (paymentSheetResult) {
-            is PaymentSheetResult.Completed -> {
-                android.widget.Toast.makeText(requireContext(), getString(R.string.payment_successful), android.widget.Toast.LENGTH_SHORT).show()
-                
-                // Navigate back to home or refresh cart
-                findNavController().popBackStack()
+            is PaymentSheetResult.Completed -> {                
+                val orderId = viewModel.getCurrentOrderId() ?: ""
+                val bundle = Bundle().apply {
+                    putString("orderId", orderId)
+                }
+                findNavController().navigate(R.id.action_fragmentCart_to_fragmentOrderSuccess, bundle)
             }
             is PaymentSheetResult.Canceled -> {
                 android.widget.Toast.makeText(requireContext(), getString(R.string.payment_canceled), android.widget.Toast.LENGTH_SHORT).show()
