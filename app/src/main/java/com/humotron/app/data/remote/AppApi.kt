@@ -482,4 +482,19 @@ interface AppApi {
         @Body request: HashMap<String, Any>
     ): Response<com.humotron.app.domain.modal.response.CreatePaymentIntentResponse>
 
+    @POST("booster/getAllBooster")
+    suspend fun getAllBooster(
+        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0))
+    ): Response<com.humotron.app.domain.modal.response.BoosterResponse>
+
+    @GET("booster/getBoosterById/{boosterId}")
+    suspend fun getBoosterById(
+        @Path("boosterId") boosterId: String
+    ): Response<com.humotron.app.domain.modal.response.BoosterDetailResponse>
+
+    @POST("digitalProductOrder/createDigitalProductOrder")
+    suspend fun createDigitalProductOrder(
+        @Body request: HashMap<String, Any>
+    ): Response<com.humotron.app.domain.modal.response.CommonResponse>
+
 }

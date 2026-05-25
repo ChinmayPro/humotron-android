@@ -74,6 +74,7 @@ espressoCore = "3.6.1"
 
 #Others
 lottie = "6.7.1"
+billing = "7.0.0"
 
 [libraries]
 
@@ -156,6 +157,7 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 
 #Others
 lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie" }
+play-billing-ktx = { module = "com.android.billingclient:billing-ktx", version.ref = "billing" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -304,4 +304,48 @@ class ShopRepository @Inject constructor(
     }.catch {
         emit(responseHandler.handleException(ValidationException(it.message)))
     }
+
+    fun getAllBooster(): Flow<Resource<com.humotron.app.domain.modal.response.BoosterResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.getAllBooster(), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun getBoosterById(id: String): Flow<Resource<com.humotron.app.domain.modal.response.BoosterDetailResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.getBoosterById(id), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun createDigitalProductOrder(boosterId: String): Flow<Resource<com.humotron.app.domain.modal.response.CommonResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val requestMap = hashMapOf<String, Any>(
+                "boosterId" to boosterId,
+                "planId" to "",
+                "productType" to "booster"
+            )
+            val response = responseHandler.handleResponse(api.createDigitalProductOrder(requestMap), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
 }

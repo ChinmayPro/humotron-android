@@ -690,4 +690,17 @@ To get started:\n
     <string name="check_order_details">Check Order Details</string>
     <string name="learn_more_metrics">Learn more about your metrics</string>
     <string name="congratulations_text">Congratulations</string>
+    <string name="introducing_digital_tools">Introducing\nDigital Tools.</string>
+    <string name="digital_tools_desc">Powerful tools built to help you go beyond tracking. Unlock deeper insights, smart guidance, and personalized support based on your health data.</string>
+    <string name="boosters_title">Boosters</string>
+    <string name="booster_label">Booster</string>
+    <string name="upgrade_label">Upgrade ➔</string>
+    <string name="period_monthly">/monthly</string>
+    <string name="unlocked_label">Already Active</string>
+    <string name="unlocked_success">Unlocked successfully!</string>
+    <string name="order_activation_failed">Error activating subscription on backend server</string>
+    <string name="purchase_failed_format">Purchase failed: %s</string>
+    <string name="transaction_canceled">Transaction canceled</string>
+    <string name="item_not_available_play_store">This item is currently not available for purchase on the Play Store.</string>
+    <string name="error_loading_tools">Error loading tools from backend</string>
 </resources>

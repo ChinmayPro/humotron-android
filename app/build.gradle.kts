@@ -48,7 +48,7 @@ android {
         applicationId = "com.humotron.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 1
+        versionCode = 2
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -210,6 +210,7 @@ dependencies {
 
     // -------------------- Others --------------------
     implementation(libs.lottie)
+    implementation(libs.play.billing.ktx)
 
     implementation("com.google.android.flexbox:flexbox:3.0.0")
     implementation("com.stripe:stripe-android:21.0.0")
