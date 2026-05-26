@@ -11,11 +11,14 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.humotron.app.R
 import com.humotron.app.databinding.FragmentConnectInfoBinding
+import com.humotron.app.domain.modal.DeviceType
 import com.humotron.app.ui.connect.adapter.DeviceInfo
+import com.humotron.app.ui.navigation.NavKeys
 
 
 class ConnectInfoFragment : Fragment(R.layout.fragment_connect_info) {
@@ -44,23 +47,40 @@ class ConnectInfoFragment : Fragment(R.layout.fragment_connect_info) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentConnectInfoBinding.bind(view)
 
-         mDeviceInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            arguments?.getParcelable("deviceInfo", DeviceInfo::class.java)
+        mDeviceInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            arguments?.getParcelable(NavKeys.DEVICE_INFO, DeviceInfo::class.java)
         } else {
             @Suppress("DEPRECATION")
-            arguments?.getParcelable("deviceInfo")
+            arguments?.getParcelable(NavKeys.DEVICE_INFO)
         }
 
-        mDeviceInfo?.let {
-            binding.tvDeviceName.text = it.title
-            val stepsText = """
+        when (mDeviceInfo?.deviceType) {
+            DeviceType.WEIGHT_MACHINE -> {
+                binding.tvDeviceName.text =
+                    getString(R.string.connect_your_humotron_smart_weight_machine)
+                binding.tvHeader.isVisible = false
+                binding.tvContinue.visibility = View.INVISIBLE
+
+                binding.tvDesc.text =
+                    getString(R.string.smart_scale_steps)
+            }
+
+            else -> {
+                binding.tvHeader.text =
+                    getString(R.string.smart_scale_steps)
+
+                mDeviceInfo?.let {
+                    binding.tvDeviceName.text = it.title
+                    val stepsText = """
         ${getString(R.string.step_switch_bluetooth)}
         ${getString(R.string.step_power_on_device, it.title)}
         ${getString(R.string.step_detect_device, it.title)}
         ${getString(R.string.step_connect)}
         ${getString(R.string.step_successful)}
     """.trimIndent()
-            binding.tvDesc.text = stepsText
+                    binding.tvDesc.text = stepsText
+                }
+            }
         }
 
         binding.btnSubmit.setOnClickListener {
@@ -94,10 +114,22 @@ class ConnectInfoFragment : Fragment(R.layout.fragment_connect_info) {
     }
 
     private fun navigateToConnection() {
-        if (mDeviceInfo?.title == "Humotron Smart Ring") {
-            findNavController().navigate(R.id.fragmentDeviceConnection)
-        } else {
-            findNavController().navigate(R.id.fragmentBandConnection)
+        when (mDeviceInfo?.deviceType) {
+            DeviceType.RING -> {
+                findNavController().navigate(R.id.fragmentRingConnection)
+            }
+
+            DeviceType.BAND -> {
+                findNavController().navigate(R.id.fragmentBandConnection)
+            }
+
+            DeviceType.WEIGHT_MACHINE -> {
+                findNavController().navigate(R.id.fragmentWeightMachineConnection)
+            }
+
+            else -> {
+
+            }
         }
     }
 
@@ -106,7 +138,8 @@ class ConnectInfoFragment : Fragment(R.layout.fragment_connect_info) {
             requestMultiplePermissions.launch(
                 arrayOf(
                     Manifest.permission.BLUETOOTH_CONNECT,
-                    Manifest.permission.BLUETOOTH_SCAN
+                    Manifest.permission.BLUETOOTH_SCAN,
+                    Manifest.permission.BLUETOOTH_ADVERTISE
                 )
             )
         } else {
@@ -118,6 +151,4 @@ class ConnectInfoFragment : Fragment(R.layout.fragment_connect_info) {
             )
         }
     }
-
-
 }

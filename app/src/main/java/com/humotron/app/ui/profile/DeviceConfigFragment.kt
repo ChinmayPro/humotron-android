@@ -4,6 +4,7 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -38,6 +39,8 @@ import com.humotron.app.util.getTimeAgo
 import com.pluto.plugins.logger.PlutoLog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import lib.linktop.nexring.api.DeviceInfo
+import lib.linktop.nexring.api.NexRingManager
 import java.time.Instant
 import javax.inject.Inject
 
@@ -82,9 +85,26 @@ class DeviceConfigFragment : BaseFragment(R.layout.fragment_device_config) {
             if (isRingDeviceDisconnected()) {
                 binding.switchLowPowerMode.isChecked = !binding.switchLowPowerMode.isChecked
                 showRingNotConnectedDialog()
+            } else {
+                val seconds = if (binding.switchLowPowerMode.isChecked) 60 else 30
+                NexRingManager.get().settingsApi()
+                    .setHealthMeasurementDuration(seconds) {
+                        viewModel.setMeasureFrequency(seconds)
+                        userDevice?.let {
+                            it.id?.let { deviceId ->
+                                val des = binding.tvDeviceDes.text.toString() ?: ""
+                                viewModel.addDeviceMetaData(
+                                    deviceId,
+                                    des,
+                                    seconds,
+                                    binding.switchLowPowerMode.isChecked
+                                )
+                            }
+                        }
+                    }
             }
         }
-        binding.btnClear2.setOnClickListener {
+        binding.btnClearRing.setOnClickListener {
             if (isRingDeviceDisconnected()) showRingNotConnectedDialog()
             else showClearDataConfirmation()
         }
@@ -110,43 +130,6 @@ class DeviceConfigFragment : BaseFragment(R.layout.fragment_device_config) {
             if (isRingDeviceDisconnected()) showRingNotConnectedDialog()
             else if (isBandDeviceDisconnected()) showBandNotConnectedDialog()
         }
-    }
-
-    private fun showClearDataConfirmation() {
-        DialogUtils.showConfirmationDialog(
-            context = requireContext(),
-            title = "Clear Local Data",
-            message = "Are you sure you want to clear all local data stored on this device?",
-            btnPositiveText = "Clear",
-            onPositiveClick = {
-                ToastUtils.showShort(requireContext(), "Data cleared successfully")
-            }
-        )
-    }
-
-    private fun showMeasureFrequency() {
-        MeasureFrequencyBottomSheetDialog.newInstance(60).apply {
-            setOnSaveListener { frequency ->
-                binding.tvivMeasureFreqIconDesc.text = getString(R.string.every_s_sec, frequency)
-                ToastUtils.showShort(
-                    requireContext(),
-                    getString(R.string.frequency_updated_to_s_sec, frequency)
-                )
-            }
-        }.show(childFragmentManager, MeasureFrequencyBottomSheetDialog.TAG)
-    }
-
-    private fun showPowerOptions() {
-        PowerOptionBottomSheetDialog.newInstance().apply {
-            setListeners(
-                onRestart = {
-                    ToastUtils.showShort(requireContext(), "Restarting device...")
-                },
-                onShutDown = {
-                    ToastUtils.showShort(requireContext(), "Shutting down device...")
-                }
-            )
-        }.show(childFragmentManager, PowerOptionBottomSheetDialog.TAG)
     }
 
     private fun initData() {
@@ -207,7 +190,15 @@ class DeviceConfigFragment : BaseFragment(R.layout.fragment_device_config) {
                 binding.mcvLowPowerMode.visibility = View.VISIBLE
                 binding.mcvLocalData2.visibility = View.VISIBLE
                 binding.clDeviceInsight.visibility = View.VISIBLE
+
+
                 observeRing()
+            }
+
+            DeviceType.BP_MACHINE -> {
+            }
+
+            DeviceType.WEIGHT_MACHINE -> {
             }
 
             DeviceType.UNKNOWN -> {
@@ -217,6 +208,14 @@ class DeviceConfigFragment : BaseFragment(R.layout.fragment_device_config) {
     }
 
     private fun initObservers() {
+        viewModel.getMeasureFrequency().observe(viewLifecycleOwner) { frequency ->
+            binding.tvivMeasureFreqIconDesc.text = getString(R.string.every_s_sec, frequency)
+        }
+
+        viewModel.getRingDeviceInfoLiveData().observe(viewLifecycleOwner) { deviceInfo ->
+            updateRingDeviceInfoUI(deviceInfo)
+        }
+
         viewModel.getDeviceConfigLiveData().observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
                 Status.SUCCESS -> {
@@ -272,6 +271,68 @@ class DeviceConfigFragment : BaseFragment(R.layout.fragment_device_config) {
         }
     }
 
+    private fun showClearDataConfirmation() {
+        DialogUtils.showConfirmationDialog(
+            context = requireContext(),
+            title = "Clear Local Data",
+            message = "Are you sure you want to clear all local data stored on this device?",
+            btnPositiveText = "Clear",
+            onPositiveClick = {
+                val currBtMac = app.ringBleManager.connectedDevice?.address
+                if (currBtMac != null) {
+                    NexRingManager.get().sleepApi().removeAllDbDataBy(currBtMac)
+                    ToastUtils.showShort(requireContext(), "Data cleared successfully")
+                }
+            }
+        )
+    }
+
+    private fun showMeasureFrequency() {
+        val currentFrequency = viewModel.getMeasureFrequency().value ?: 60
+        MeasureFrequencyBottomSheetDialog.newInstance(currentFrequency).apply {
+            setOnSaveListener { frequency ->
+                NexRingManager.get().settingsApi()
+                    .setHealthMeasurementDuration(frequency) {
+                        viewModel.setMeasureFrequency(frequency)
+                        userDevice?.let {
+                            it.id?.let { deviceId ->
+                                val des = binding.tvDeviceDes.text.toString() ?: ""
+                                viewModel.addDeviceMetaData(
+                                    deviceId,
+                                    des,
+                                    frequency,
+                                    binding.switchLowPowerMode.isChecked
+                                )
+                            }
+                        }
+                    }
+            }
+        }.show(childFragmentManager, MeasureFrequencyBottomSheetDialog.TAG)
+    }
+
+    private fun showPowerOptions() {
+        PowerOptionBottomSheetDialog.newInstance().apply {
+            setListeners(
+                onRestart = {
+                    val deviceType = DeviceType.from(userDevice?.deviceName)
+                    if (deviceType == DeviceType.RING) {
+                        NexRingManager.get().deviceApi().reboot()
+                        ToastUtils.showShort(requireContext(), "Restarting ring...")
+                    }
+                },
+                onShutDown = {
+                    val deviceType = DeviceType.from(userDevice?.deviceName)
+                    if (deviceType == DeviceType.RING) {
+                        NexRingManager.get().deviceApi().shutdown()
+                        ToastUtils.showShort(requireContext(), "Shutting down ring...")
+                    } else {
+                        ToastUtils.showShort(requireContext(), "Shutting down device...")
+                    }
+                }
+            )
+        }.show(childFragmentManager, PowerOptionBottomSheetDialog.TAG)
+    }
+
     private fun setupDeviceActions(deviceType: DeviceType) {
         val actions = when (deviceType) {
             DeviceType.BAND -> listOf(
@@ -286,6 +347,22 @@ class DeviceConfigFragment : BaseFragment(R.layout.fragment_device_config) {
                 DeviceAction.REMOVE_FROM_ACCOUNT,
                 DeviceAction.RE_SETUP
             )
+
+            DeviceType.BP_MACHINE -> {
+                listOf(
+                    DeviceAction.RESET_FACTORY,
+                    DeviceAction.REMOVE_FROM_ACCOUNT,
+                    DeviceAction.RE_SETUP
+                )
+            }
+
+            DeviceType.WEIGHT_MACHINE -> {
+                listOf(
+                    DeviceAction.RESET_FACTORY,
+                    DeviceAction.REMOVE_FROM_ACCOUNT,
+                    DeviceAction.RE_SETUP
+                )
+            }
 
             DeviceType.UNKNOWN -> listOf(
                 DeviceAction.REMOVE_FROM_ACCOUNT
@@ -331,9 +408,17 @@ class DeviceConfigFragment : BaseFragment(R.layout.fragment_device_config) {
             DeviceAction.RESTART -> {
                 when (deviceType) {
                     DeviceType.RING -> {
+                        NexRingManager.get().deviceApi().reboot()
+                        ToastUtils.showShort(requireContext(), "Restarting ring...")
                     }
 
                     DeviceType.BAND -> {
+                    }
+
+                    DeviceType.BP_MACHINE -> {
+                    }
+
+                    DeviceType.WEIGHT_MACHINE -> {
                     }
 
                     DeviceType.UNKNOWN -> {
@@ -343,7 +428,15 @@ class DeviceConfigFragment : BaseFragment(R.layout.fragment_device_config) {
             }
 
             DeviceAction.RESET_FACTORY -> {
-                ToastUtils.showShort(requireContext(), "Resetting to factory settings...")
+                if (deviceType == DeviceType.RING) {
+                    NexRingManager.get().deviceApi().factoryReset()
+                    ToastUtils.showShort(
+                        requireContext(),
+                        "To reconnect your ring after reset, place it on the charger."
+                    )
+                } else {
+                    ToastUtils.showShort(requireContext(), "Resetting to factory settings...")
+                }
             }
 
             DeviceAction.REMOVE_FROM_ACCOUNT -> {
@@ -353,11 +446,27 @@ class DeviceConfigFragment : BaseFragment(R.layout.fragment_device_config) {
                     message = "This device will be removed from your account.",
                     btnPositiveText = "Remove",
                     onPositiveClick = {
-                        val hwId = prefUtils.getHardwareDetailsList()
-                            .find { it.hardwareType == deviceType.value }?.id
+                        val hwId = when (deviceType) {
+                            DeviceType.BAND -> prefUtils.getBandHardware()?.id
+                            DeviceType.RING -> prefUtils.getRingHardwareData()?.id
+                            DeviceType.BP_MACHINE -> {
+                                ""
+                            }
 
-                        hwId?.let { id ->
-                            viewModel.deleteUserHardwareById(id)
+                            DeviceType.WEIGHT_MACHINE -> {
+                                ""
+                            }
+
+                            DeviceType.UNKNOWN -> null
+                        }
+
+                        if (hwId.isNullOrBlank()) {
+                            ToastUtils.showShort(
+                                requireContext(),
+                                "Unable to remove device. Hardware ID not found."
+                            )
+                        } else {
+                            viewModel.deleteUserHardwareById(hwId)
                         }
                     },
                     btnNegativeText = "Cancel"
@@ -377,9 +486,20 @@ class DeviceConfigFragment : BaseFragment(R.layout.fragment_device_config) {
         binding.tvSerialNumber.text =
             getString(R.string.serial_number_format, deviceMeta?.sn ?: "Unknown")
         binding.tvMacAddress.text = getString(R.string.mac_format, deviceMeta?.mac ?: "Unknown")
+        val deviceDes: String? = deviceMeta?.desc ?: ""
+        deviceMeta?.let {
+            binding.tvDeviceDes.isVisible = true
+            binding.tvDeviceDes.text = deviceDes
+        }
 
         deviceMeta?.fw?.let {
             binding.tvFirmwareLabel.text = getString(R.string.firmware_version_format, it)
+        }
+
+        deviceMeta?.measureFreq?.let {
+            val freq = it.toIntOrNull() ?: 60
+            viewModel.setMeasureFrequency(freq)
+            binding.switchLowPowerMode.isChecked = freq > 30
         }
 
         data.warrantyRemainingDays?.let {
@@ -420,6 +540,12 @@ class DeviceConfigFragment : BaseFragment(R.layout.fragment_device_config) {
                 prefUtils.remove(Preference.HARDWARE_DATA)
             }
 
+            DeviceType.BP_MACHINE -> {
+            }
+
+            DeviceType.WEIGHT_MACHINE -> {
+            }
+
             DeviceType.UNKNOWN -> Unit
         }
     }
@@ -435,6 +561,12 @@ class DeviceConfigFragment : BaseFragment(R.layout.fragment_device_config) {
                 app.ringDeviceManager.unregisterCb()
             }
 
+            DeviceType.BP_MACHINE -> {
+            }
+
+            DeviceType.WEIGHT_MACHINE -> {
+            }
+
             DeviceType.UNKNOWN -> Unit
         }
     }
@@ -443,6 +575,7 @@ class DeviceConfigFragment : BaseFragment(R.layout.fragment_device_config) {
         if (app.ringDeviceManager.connected.value == true) {
             app.ringDeviceManager.registerCb()
             updateConnectionUi(true)
+            viewModel.fetchRingDeviceInfo()
         }
 
         app.ringDeviceManager.batteryLevel.observe(viewLifecycleOwner) {
@@ -453,6 +586,7 @@ class DeviceConfigFragment : BaseFragment(R.layout.fragment_device_config) {
 
                 STATE_DEVICE_CONNECTED -> {
                     updateConnectionUi(true)
+                    viewModel.fetchRingDeviceInfo()
                 }
 
                 STATE_DEVICE_DISCONNECTED -> {
@@ -527,7 +661,7 @@ class DeviceConfigFragment : BaseFragment(R.layout.fragment_device_config) {
         btnPower.iconTint = ColorStateList.valueOf(
             ContextCompat.getColor(
                 requireContext(),
-                if (isConnected) R.color.btn_icon_tint else R.color.gray_400
+                if (isConnected) R.color.green_1 else R.color.gray_400
             )
         )
     }
@@ -541,6 +675,18 @@ class DeviceConfigFragment : BaseFragment(R.layout.fragment_device_config) {
                 R.color.w200
             )
         )
+    }
+
+    private fun updateRingDeviceInfoUI(deviceInfo: DeviceInfo) = with(binding) {
+        //tvSerialNumber.text = "Serial Number — ${deviceInfo.productModel ?: "-"}"
+        tvMacAddress.text = "MAC: ${deviceInfo.bluetoothAddress}"
+        binding.tvFirmwareLabel.text =
+            getString(R.string.firmware_version_format, deviceInfo.firmwareVersion)
+
+        /*val frequency = viewModel.getMeasureFrequency().value ?: 60
+        prefUtils.getRingHardwareData()?.let { userHardware ->
+            viewModel.addDeviceMetaData(userHardware, frequency)
+        }*/
     }
 
     private fun isRingDeviceDisconnected(): Boolean {

@@ -16,12 +16,12 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:background="@drawable/ic_bg_device_connected"
-        android:src="@drawable/ic_ring_horizontal_2x"
         app:layout_constraintBottom_toTopOf="@id/tvTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintVertical_chainStyle="packed"
+        app:srcCompat="@drawable/ic_ring_horizontal_2x" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvTitle"

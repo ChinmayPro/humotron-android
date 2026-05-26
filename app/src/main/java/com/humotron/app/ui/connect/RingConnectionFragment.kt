@@ -16,7 +16,9 @@ import com.humotron.app.core.App
 import com.humotron.app.core.Preference
 import com.humotron.app.data.network.Status
 import com.humotron.app.databinding.FragmentRingConnectionBinding
+import com.humotron.app.domain.modal.DeviceType
 import com.humotron.app.domain.modal.param.AddHardware
+import com.humotron.app.domain.modal.param.DeviceMetaDataParam
 import com.humotron.app.ui.connect.adapter.RingDeviceAdapter
 import com.humotron.app.ui.dialogs.LoadingDialog
 import com.humotron.app.util.PrefUtils
@@ -108,7 +110,23 @@ class RingConnectionFragment : Fragment(R.layout.fragment_ring_connection) {
                     )
                 } else {
                     hideProgress()
-                    findNavController().navigate(R.id.fragmentDeviceConnected)
+                    val userHardware = prefUtils.getRingHardwareData()
+                    val deviceId = prefUtils.getBandHardware()?.id
+
+                    val bundle = Bundle()
+                    if (userHardware != null && device != null) {
+                        bundle.putParcelable(
+                            "deviceMetaData",
+                            DeviceMetaDataParam.from(
+                                device!!,
+                                userHardware,
+                                deviceId,
+                                requireContext()
+                            )
+                        )
+                        bundle.putSerializable("deviceType", com.humotron.app.domain.modal.DeviceType.RING)
+                    }
+                    findNavController().navigate(R.id.fragmentDeviceConnected, bundle)
                 }
             }
         }
@@ -117,12 +135,29 @@ class RingConnectionFragment : Fragment(R.layout.fragment_ring_connection) {
             when (networkState.status) {
                 Status.SUCCESS -> {
                     hideProgress()
-                    networkState.data?.data?.userHardware?.let { prefUtils.setHardwareData(it) }
-                    findNavController().navigate(R.id.fragmentDeviceConnected)
+                    val userHardware = networkState.data?.data?.userHardware
+                    val deviceId = networkState.data?.data?.deviceDetails?.id
+                    val bundle = Bundle()
+                    if (userHardware != null && device != null) {
+                        prefUtils.setRingHardwareData(userHardware)
+                        bundle.putParcelable(
+                            "deviceMetaData",
+                            DeviceMetaDataParam.from(
+                                device!!,
+                                userHardware,
+                                deviceId,
+                                requireContext()
+                            )
+                        )
+                        bundle.putSerializable("deviceType", com.humotron.app.domain.modal.DeviceType.RING)
+                    }
+                    findNavController().navigate(R.id.fragmentDeviceConnected, bundle)
                 }
 
                 Status.ERROR, Status.EXCEPTION -> {
                     hideProgress()
+                    val bundle = Bundle()
+                    bundle.putSerializable("deviceType", DeviceType.RING)
                     findNavController().navigate(R.id.fragmentDeviceConnected)
                 }
 
@@ -131,10 +166,6 @@ class RingConnectionFragment : Fragment(R.layout.fragment_ring_connection) {
                 }
             }
         }
-
-//
-
-
     }
 
     fun showProgress() {

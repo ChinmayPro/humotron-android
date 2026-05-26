@@ -39,7 +39,11 @@ data class GetDeviceConfigResponse(
             @SerializedName("desc")
             val desc: String?,
             @SerializedName("fw")
-            val fw: String?
+            val fw: String?,
+            @SerializedName("mf")
+            val measureFreq: String?,
+            @SerializedName("lpm")
+            val lowPowerMode: Boolean?
         ) : Parcelable
 
         @Parcelize

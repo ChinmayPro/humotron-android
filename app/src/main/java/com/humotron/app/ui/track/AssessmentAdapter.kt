@@ -46,7 +46,6 @@ class AssessmentAdapter(
             binding.tvAssessmentName.text = item.assessmentName
             binding.tvQuestion.text = "${item.answeredCount}/${item.totalQuestions} questions"
             binding.tvStatus.text = item.status
-            Log.e("TAG", "bindwsddddsdddd:  ${item}", )
 
             when (item.status) {
                 "Completed" -> binding.tvStatus.setTextColor(

@@ -79,6 +79,9 @@ import com.humotron.app.domain.modal.response.FullAddressResponse
 import com.humotron.app.domain.modal.response.GetAllAddressResponse
 import com.humotron.app.domain.modal.response.GetAllLabResponse
 import com.humotron.app.domain.modal.param.DefaultConfigRequest
+import com.humotron.app.domain.modal.param.DeviceMetaDataParam
+import com.humotron.app.domain.modal.param.ScaleUploadData
+import com.humotron.app.domain.modal.response.AddScaleDataResponse
 import com.humotron.app.domain.modal.response.DeliveryOptionResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -86,6 +89,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Headers
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
@@ -150,6 +154,9 @@ interface AppApi {
     @POST("hardwareSpecificDetail/addHardwareSpecificDetail")
     suspend fun sendBandDataToServer(@Body data: BandUploadData): Response<AddDeviceDataResponse>
 
+    @POST("hardwareSpecificDetail/addHardwareSpecificDetail")
+    suspend fun sendScaleDataToServer(@Body data: ScaleUploadData): Response<AddScaleDataResponse>
+
     @POST("userHardware/addUserHardware")
     suspend fun addHardwareId(@Body data: AddHardware): Response<AddHardwareResponse>
 
@@ -171,6 +178,9 @@ interface AppApi {
     suspend fun getRingReadingData(
         @Path("deviceId") deviceId: String,
     ): Response<RingReadingData>
+
+    @POST("device/deviceMetaData")
+    suspend fun addDeviceMetaData(@Body data: DeviceMetaDataParam): Response<CommonResponse>
 
     @GET("device/getDeviceDetailsById/{deviceId}")
     suspend fun getDeviceDetailsById(
@@ -464,12 +474,12 @@ interface AppApi {
 
     @POST("order/getBloodTestOrders")
     suspend fun getBloodTestOrders(
-        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0))
+        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0)),
     ): Response<com.humotron.app.domain.modal.response.GetBloodTestOrderResponse>
 
     @POST("like/getAllLikes")
     suspend fun getAllLikes(
-        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0))
+        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0)),
     ): Response<GetAllLikesResponse>
 
 }

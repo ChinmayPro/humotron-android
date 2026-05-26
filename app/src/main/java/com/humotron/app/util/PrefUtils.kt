@@ -59,8 +59,14 @@ class PrefUtils(private val sharedPreferences: SharedPreferences) {
         return sharedPreferences.getLong(key, 0)
     }
 
-    fun setHardwareData(data: UserHardware) {
+    fun setRingHardwareData(data: UserHardware) {
         sharedPreferences.edit { putString(Preference.HARDWARE_DATA, Gson().toJson(data)) }
+    }
+
+    fun getRingHardwareData(): UserHardware? {
+        val hardwareString = sharedPreferences.getString(Preference.HARDWARE_DATA, "{}")
+        val data = Gson().fromJson(hardwareString, UserHardware::class.java)
+        return data
     }
 
     fun getHardwareId(): String? {
@@ -73,6 +79,12 @@ class PrefUtils(private val sharedPreferences: SharedPreferences) {
         sharedPreferences.edit { putString(Preference.BAND_HARDWARE_DATA, Gson().toJson(data)) }
     }
 
+    fun getBandHardware(): UserHardware? {
+        val hardwareString = sharedPreferences.getString(Preference.BAND_HARDWARE_DATA, "{}")
+        val data = Gson().fromJson(hardwareString, UserHardware::class.java)
+        return data
+    }
+
     fun getBandHardwareType(): String? {
         val hardwareString = sharedPreferences.getString(Preference.BAND_HARDWARE_DATA, "{}")
         val data = Gson().fromJson(hardwareString, UserHardware::class.java)
@@ -81,6 +93,22 @@ class PrefUtils(private val sharedPreferences: SharedPreferences) {
 
     fun getBandHardwareId(): String? {
         val hardwareString = sharedPreferences.getString(Preference.BAND_HARDWARE_DATA, "{}")
+        val data = Gson().fromJson(hardwareString, UserHardware::class.java)
+        return data?.id
+    }
+
+    fun setWeightHardwareData(data: UserHardware) {
+        sharedPreferences.edit { putString(Preference.WEIGHT_HARDWARE_DATA, Gson().toJson(data)) }
+    }
+
+    fun getWeightHardware(): UserHardware? {
+        val hardwareString = sharedPreferences.getString(Preference.WEIGHT_HARDWARE_DATA, "{}")
+        val data = Gson().fromJson(hardwareString, UserHardware::class.java)
+        return data
+    }
+
+    fun getWeightHardwareId(): String? {
+        val hardwareString = sharedPreferences.getString(Preference.WEIGHT_HARDWARE_DATA, "{}")
         val data = Gson().fromJson(hardwareString, UserHardware::class.java)
         return data?.id
     }

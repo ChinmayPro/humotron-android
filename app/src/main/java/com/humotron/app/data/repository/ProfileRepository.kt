@@ -130,4 +130,17 @@ class ProfileRepository @Inject constructor(
     }.catch {
         emit(responseHandler.handleException(ValidationException(it.message)))
     }
+
+    fun addDeviceMetaData(data: com.humotron.app.domain.modal.param.DeviceMetaDataParam): Flow<Resource<com.humotron.app.domain.modal.response.CommonResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.addDeviceMetaData(data), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
 }

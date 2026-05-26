@@ -24,6 +24,7 @@ import com.humotron.app.ui.assesment.AssessmentActivity
 import com.humotron.app.ui.bloodTest.BloodTestActivity
 import com.humotron.app.ui.bloodTest.BloodTestViewModel
 import com.humotron.app.ui.assesment.CardiovascularAssessmentBottomSheet
+import com.humotron.app.ui.connect.adapter.DeviceInfo
 import com.humotron.app.ui.connect.dialog.DeviceSelectionBottomSheet
 import com.humotron.app.ui.device.DeviceViewModel
 import com.humotron.app.ui.navigation.NavKeys
@@ -45,6 +46,8 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
     private val viewModel: DeviceViewModel by viewModels()
     private val bloodTestViewModel: BloodTestViewModel by activityViewModels()
     private var wearableAdapter: WearableAdapter? = null
+
+    private var healthAdapter: WearableAdapter? = null
     private var assessmentAdapter: AssessmentAdapter? = null
     private var healthReportAdapter: HealthReportAdapter? = null
 
@@ -60,11 +63,14 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
     private fun initViews() {
         if (prefUtils.getHardwareDetailsList().isEmpty()) {
             binding.dsvWearables.isVisible = false
+            binding.dsvHealthMonitoring.isVisible = false
             viewModel.getHardwareList()
         } else {
             viewModel.getDeviceData()
             binding.dsvWearables.isVisible = true
+            binding.dsvHealthMonitoring.isVisible = true
         }
+
         viewModel.getMergedAssessmentList()
         viewModel.getMedicalPdfList()
     }
@@ -78,7 +84,8 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
     }
 
     private fun initClicks() {
-        binding.ivAdd.setOnClickListener(this)
+        binding.btnAddWearables.setOnClickListener(this)
+        binding.btnAddHealthMonitoring.setOnClickListener(this)
         binding.tvUpload.setOnClickListener(this)
         binding.swipeRefreshLayout.setOnRefreshListener {
             binding.swipeRefreshLayout.isRefreshing = false
@@ -90,6 +97,7 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
 
     private fun initObservers() {
         viewModel.observeUserDeviceData()
+
         lifecycleScope.launch {
             viewModel.deviceData.collect {
                 /*it.hrvMapper.let {
@@ -113,11 +121,19 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
                     hideProgress()
                     val data = it.data?.data ?: return@observe
                     if (!data.wearables.isNullOrEmpty()) {
-                        setupDiscreteScrollView(data.wearables)
+                        setupWearablesDiscreteScrollView(data.wearables)
                         binding.dsvWearables.showWithFade { }
                     } else {
                         binding.dsvWearables.isVisible = false
                         binding.clNoDeviceFound.showWithFade { }
+                    }
+
+                    if (!data.health.isNullOrEmpty()) {
+                        setupHealthMonitoringDiscreteScrollView(data.health)
+                        binding.dsvHealthMonitoring.showWithFade { }
+                    } else {
+                        binding.dsvHealthMonitoring.isVisible = false
+                        binding.clNoHealthMonitoringFound.showWithFade { }
                     }
                 }
 
@@ -131,7 +147,9 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
 
                 Status.LOADING -> {
                     // Only show progress if we don't have any wearables yet
-                    if (wearableAdapter == null || wearableAdapter?.itemCount == 0) {
+                    if ((wearableAdapter == null || wearableAdapter?.itemCount == 0) &&
+                        (healthAdapter == null || healthAdapter?.itemCount == 0)
+                    ) {
                         showProgress()
                     }
                 }
@@ -147,7 +165,7 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
                     }
                     data.hardwareDetails?.firstOrNull { it.hardwareType == DeviceType.RING.value }
                         ?.let {
-                            prefUtils.setHardwareData(it)
+                            prefUtils.setRingHardwareData(it)
                             it.userHardwareUUID?.let { value ->
                                 prefUtils.setString(
                                     Preference.WEARABLE_RING,
@@ -180,7 +198,9 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
 
                 Status.LOADING -> {
                     // Only show progress if we don't have any wearables yet
-                    if (wearableAdapter == null || wearableAdapter?.itemCount == 0) {
+                    if ((wearableAdapter == null || wearableAdapter?.itemCount == 0) &&
+                        (healthAdapter == null || healthAdapter?.itemCount == 0)
+                    ) {
                         showProgress()
                     }
                 }
@@ -266,14 +286,31 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
         }
     }
 
-    private fun setupDiscreteScrollView(userDevices: List<UserDevice>) {
-        wearableAdapter = WearableAdapter(userDevices) { wearable ->
+    private fun setupWearablesDiscreteScrollView(userDevices: List<UserDevice>) {
+        wearableAdapter = WearableAdapter(userDevices) { userDevice ->
             findNavController().navigate(R.id.fragmentDeviceData, Bundle().apply {
-                putParcelable(NavKeys.WEARABLE, wearable)
+                putParcelable(NavKeys.WEARABLE, userDevice)
             })
         }
         binding.dsvWearables.adapter = wearableAdapter
         binding.dsvWearables.setItemTransformer(
+            ScaleTransformer.Builder()
+                .setMaxScale(1.05f)
+                .setMinScale(0.8f)
+                .setPivotX(Pivot.X.CENTER)
+                .setPivotY(Pivot.Y.CENTER)
+                .build()
+        )
+    }
+
+    private fun setupHealthMonitoringDiscreteScrollView(userDevices: List<UserDevice>) {
+        healthAdapter = WearableAdapter(userDevices) { userDevice ->
+            findNavController().navigate(R.id.fragmentDeviceData, Bundle().apply {
+                putParcelable(NavKeys.WEARABLE, userDevice)
+            })
+        }
+        binding.dsvHealthMonitoring.adapter = healthAdapter
+        binding.dsvHealthMonitoring.setItemTransformer(
             ScaleTransformer.Builder()
                 .setMaxScale(1.05f)
                 .setMinScale(0.8f)
@@ -397,15 +434,49 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
 
     override fun onClick(v: View?) {
         when (v) {
-            binding.ivAdd -> {
-                val bottomSheet = DeviceSelectionBottomSheet()
+            binding.btnAddWearables -> {
+                val wearableDevices = arrayListOf(
+                    DeviceInfo(
+                        R.drawable.ic_bg_ring,
+                        "Humotron Smart Ring",
+                        "Connect to sync sleep & recovery metrics",
+                        deviceType = DeviceType.RING
+                    ), DeviceInfo(
+                        R.drawable.ic_smart_band,
+                        "Humotron Wrist Band",
+                        "Health tracking smart band",
+                        deviceType = DeviceType.BAND
+                    )
+                )
+
+                val bottomSheet = DeviceSelectionBottomSheet.newInstance(wearableDevices)
+                bottomSheet.setDeviceSelectionListener { deviceInfo ->
+                    bottomSheet.dismiss()
+
+                    findNavController().navigate(R.id.fragmentConnectInfo, Bundle().apply {
+                        putParcelable(NavKeys.DEVICE_INFO, deviceInfo)
+                    })
+                }
+                bottomSheet.show(childFragmentManager, DeviceSelectionBottomSheet.TAG)
+            }
+
+            binding.btnAddHealthMonitoring -> {
+                val healthMonitoringDevices = arrayListOf(
+                    DeviceInfo(
+                        R.drawable.ic_weight_scale, // Replace with appropriate health monitoring icon if needed
+                        "Humotron Weight Scale",
+                        "Connect to track weight & body mass metrics",
+                        deviceType = DeviceType.WEIGHT_MACHINE // Adjust as per requirement
+                    )
+                )
+                val bottomSheet = DeviceSelectionBottomSheet.newInstance(healthMonitoringDevices)
                 bottomSheet.setDeviceSelectionListener { deviceInfo ->
                     bottomSheet.dismiss()
                     findNavController().navigate(R.id.fragmentConnectInfo, Bundle().apply {
-                        putParcelable("deviceInfo", deviceInfo)
+                        putParcelable(NavKeys.DEVICE_INFO, deviceInfo)
                     })
                 }
-                bottomSheet.show(childFragmentManager, "device_list")
+                bottomSheet.show(childFragmentManager, DeviceSelectionBottomSheet.TAG)
             }
 
             binding.tvUpload -> {

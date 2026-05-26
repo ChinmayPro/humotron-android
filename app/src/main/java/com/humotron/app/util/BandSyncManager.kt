@@ -109,7 +109,7 @@ class BandSyncManager @Inject constructor(
     }
 
     private fun handleParsedMap(map: Map<String, Any>) {
-        PlutoLog.e(TAG_BAND_DEBUG, "handleParsedMap: $stage")
+        //PlutoLog.e(TAG_BAND_DEBUG, "handleParsedMap: $stage")
         val hardwareId = prefUtils.getBandHardwareId().orEmpty()
         if (hardwareId.isBlank()) return
 

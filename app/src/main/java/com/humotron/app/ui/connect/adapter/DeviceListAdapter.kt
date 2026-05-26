@@ -6,6 +6,7 @@ import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.RecyclerView
 import com.humotron.app.databinding.ItemDeviceListBinding
 import android.os.Parcelable
+import com.humotron.app.domain.modal.DeviceType
 import kotlinx.parcelize.Parcelize
 
 class DeviceListAdapter(val items: ArrayList<DeviceInfo>, val onItemClicked: (DeviceInfo) -> Unit) :
@@ -54,4 +55,5 @@ data class DeviceInfo(
     val image: Int,
     val title: String,
     val desc: String,
+    val deviceType: DeviceType
 ) : Parcelable

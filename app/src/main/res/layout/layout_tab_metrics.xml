@@ -414,4 +414,12 @@
 
     </com.google.android.material.card.MaterialCardView>
 
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/groupViewsRingBand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="cardExerciseIntensity,cardSleepMetrics,cardPhysicalRecovery,cardStressScore"
+        tools:visibility="visible" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

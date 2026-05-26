@@ -1,6 +1,7 @@
 package com.humotron.app.core.di
 
 import com.humotron.app.data.local.dao.SleepDao
+import com.humotron.app.data.local.dao.WeightScaleDao
 import com.humotron.app.data.network.ResponseHandler
 import com.humotron.app.data.remote.AppApi
 import com.humotron.app.data.remote.AuthApi
@@ -36,10 +37,11 @@ class RepositoryModule {
     fun provideSleepRepository(
         api: AppApi,
         sleepDao: SleepDao,
+        weightScaleDao: WeightScaleDao,
         prefUtils: PrefUtils,
         responseHandler: ResponseHandler,
     ): SleepRepository {
-        return SleepRepository(api, sleepDao, prefUtils, responseHandler)
+        return SleepRepository(api, sleepDao, weightScaleDao, prefUtils, responseHandler)
     }
 
     @Singleton

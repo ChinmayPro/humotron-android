@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@color/black"
+    tools:context=".ui.connect.RingConnectionFragment">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header" />
+
+    <FrameLayout
+        android:id="@+id/ringContainer"
+        android:layout_width="@dimen/_80dp"
+        android:layout_height="@dimen/_80dp"
+        android:layout_marginStart="@dimen/_20dp"
+        android:layout_marginTop="@dimen/_30dp"
+        android:background="@drawable/ic_shadow"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <com.humotron.app.view.RadiatingRingsView
+            android:id="@+id/ringsView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/bluetoothIcon"
+            android:layout_width="@dimen/_40dp"
+            android:layout_height="@dimen/_40dp"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_round_white"
+            android:backgroundTint="#1e1e1e"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_power_settings_new_24px"
+            app:tint="@color/green_1" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_weight_scale"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_connect_weightscale_logo" />
+
+    </FrameLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvDeviceDiscoverStatus"
+        style="@style/Text.OnBoard.Title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15dp"
+        android:text="@string/humotron_weight_scale_basic"
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ringContainer"
+        app:layout_constraintTop_toTopOf="@id/ringContainer" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTitle"
+        style="@style/Text.OnBoard.Sub.Medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginTop="@dimen/_40dp"
+        android:text="@string/smart_scale_instruction_1"
+        android:textColor="@color/white70"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@id/ringContainer" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvDevices"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginTop="@dimen/_10dp"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/_10dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/btnSubmit"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        tools:itemCount="3"
+        tools:listitem="@layout/item_ring_device" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clNoDeviceFound"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginTop="@dimen/_10dp"
+        android:background="@drawable/bg_btn_round_rect_8"
+        android:backgroundTint="@color/black"
+        android:minHeight="@dimen/_80dp"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        tools:visibility="gone">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/Text.OnBoard.Title1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_32dp"
+            android:text="@string/no_devices_found_yet"
+            android:textColor="@color/textColorOrange"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_24dp"
+        android:layout_marginTop="@dimen/_50dp"
+        android:layout_marginBottom="@dimen/_20dp"
+        android:backgroundTint="@color/btn_continue"
+        android:enabled="false"
+        android:text="@string/connect"
+        android:textColor="@color/btn_text_color"
+        app:layout_constraintBottom_toTopOf="@id/tvWeightIns" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvWeightIns"
+        style="@style/Text.OnBoard.Sub"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginBottom="@dimen/_60dp"
+        android:gravity="center"
+        android:text="@string/smart_scale_connection_help"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
