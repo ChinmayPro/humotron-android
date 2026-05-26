@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivBg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_bg_main" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clHeaderCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_booster_header_card"
+        android:paddingBottom="24dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clTopBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="12dp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/btnBack"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:padding="6dp"
+                    android:src="@drawable/ic_back_arrow"
+                    app:tint="@color/white" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/ic_booster" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Text.18x.Manrope.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/booster_label"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/dividerLine"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black30"
+            app:layout_constraintTop_toBottomOf="@id/clTopBar" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvBoosterName"
+            style="@style/Text.22x.Manrope.SemiBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toStartOf="@id/layoutPriceArea"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dividerLine"
+            tools:text="AI Chat" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvBoosterTagline"
+            style="@style/Text.12x.Manrope.Medium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="16dp"
+            android:textColor="#4A3F3A"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvBoosterName"
+            tools:text="Make sense of your metrics. Just ask" />
+
+        <LinearLayout
+            android:id="@+id/layoutPriceArea"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@id/tvBoosterName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvBoosterName">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Text.16x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:text="&gt;&gt;"
+                android:textColor="#8A7E78" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvBoosterPrice"
+                    style="@style/Text.24x.Manrope.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    tools:text="£7.9" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvBoosterPeriod"
+                    style="@style/Text.12x.Manrope.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="monthly"
+                    android:textColor="@color/d600" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/groupHeaderContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="dividerLine,tvBoosterName,tvBoosterTagline,layoutPriceArea" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsvContent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/clHeaderCard">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDescription"
+                style="@style/Text.20x.Manrope.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="28dp"
+                android:lineSpacingExtra="6dp"
+                android:textColor="@color/white_50"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="You have weeks of health data — but what's it actually saying? Tron AI helps you ask — and understand — what's behind the numbers." />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvUnlockTitle"
+                style="@style/Text.16x.Manrope.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="36dp"
+                android:text="What You'll Unlock"
+                android:textColor="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/tvDescription" />
+
+            <LinearLayout
+                android:id="@+id/llUnlockBenefitsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/tvUnlockTitle" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivPreviewScreen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="32dp"
+                android:adjustViewBounds="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/llUnlockBenefitsContainer"
+                tools:src="@drawable/shop_deatils_preview_screen" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clBottomPreviewSection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:background="@drawable/bg_booster_bottom_card"
+                android:paddingHorizontal="24dp"
+                android:paddingBottom="24dp"
+                app:layout_constraintBottom_toTopOf="@id/clProPlanSection"
+                app:layout_constraintTop_toBottomOf="@id/ivPreviewScreen">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPreviewTitle"
+                    style="@style/Text.20x.Manrope.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="28dp"
+                    android:gravity="center"
+                    android:textColor="@color/white_50"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Let Tron explain your data" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPreviewDesc"
+                    style="@style/Text.14x.Manrope.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="12dp"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center"
+                    android:lineSpacingExtra="4dp"
+                    tools:text="You're already tracking HRV, BP, sleep. Now start asking why it's happening — and what you can do about it."
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvPreviewTitle" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnBuyNow"
+                    style="@style/Text.16x.Manrope.SemiBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginTop="28dp"
+                    android:layout_marginBottom="24dp"
+                    android:background="@drawable/bg_btn_round_corner"
+                    android:backgroundTint="@color/lime_green"
+                    android:text="@string/upgrade_label"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvPreviewDesc" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clProPlanSection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="40dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/clBottomPreviewSection"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:id="@+id/llBullets"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/_30dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Text.14x.Manrope.Medium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="✅" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Text.14x.Manrope.Medium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="Cancel anytime"
+                            android:textColor="@color/white70" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Text.14x.Manrope.Medium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="🔐" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Text.14x.Manrope.Medium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="Your data stays private"
+                            android:textColor="@color/white70" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Text.14x.Manrope.Medium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="📊" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Text.14x.Manrope.Medium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="Used by 3,000+ Humotron users"
+                            android:textColor="@color/white70" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivBigCheck"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="32dp"
+                    android:src="@drawable/ic_big_green_check"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/llBullets" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvIncludedInPro"
+                    style="@style/Text.24x.Manrope.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center"
+                    android:lineSpacingExtra="4dp"
+                    android:text="Included\nin Pro Plan"
+                    android:textColor="@color/white_50"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ivBigCheck" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/btnExploreProPlan"
+                    style="@style/Text.14x.Manrope.SemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="24dp"
+                    android:background="@drawable/bg_btn_border_rounded"
+                    android:gravity="center"
+                    android:paddingHorizontal="30dp"
+                    android:paddingVertical="8dp"
+                    android:text="Explore Pro Plan Instead ➔"
+                    android:textColor="@color/white_50"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvIncludedInPro" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -138,6 +138,24 @@
         <action
             android:id="@+id/action_fragmentCart_to_fragmentShopBuyNow"
             app:destination="@id/fragmentShopBuyNow" />
+        <action
+            android:id="@+id/action_fragmentCart_to_fragmentOrderSuccess"
+            app:destination="@id/fragmentOrderSuccess" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentOrderSuccess"
+        android:name="com.humotron.app.ui.cart.OrderSuccessFragment"
+        android:label="Order Success"
+        tools:layout="@layout/fragment_order_success">
+        <argument
+            android:name="orderId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_fragmentOrderSuccess_to_fragmentProfile"
+            app:destination="@id/fragmentProfile"
+            app:popUpTo="@id/app_main"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment

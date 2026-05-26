@@ -31,12 +31,32 @@ class CartViewModel @Inject constructor(
     private val updateUserLiveData: SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.CommonResponse>> = SingleLiveEvent()
     fun getUpdateUserLiveData(): SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.CommonResponse>> = updateUserLiveData
 
+    private var selectedDeliveryMethod: GetCartResponse.DeliveryMethod? = null
+    private var cartData: GetCartResponse.Data? = null
+    private var currentOrderId: String? = null
+
+    fun getCurrentOrderId() = currentOrderId
+
+    fun setSelectedDeliveryMethod(method: GetCartResponse.DeliveryMethod?) {
+        selectedDeliveryMethod = method
+    }
+
+    fun getSelectedDeliveryMethod() = selectedDeliveryMethod
+
+    fun setCartData(data: GetCartResponse.Data?) {
+        cartData = data
+    }
+
     fun fetchCart() {
         repository.getCartByUserId().onEach { state ->
             cartLiveData.value = state
+            if (state.status == com.humotron.app.data.network.Status.SUCCESS) {
+                cartData = state.data?.data
+            }
         }.launchIn(viewModelScope)
     }
 
+    // Existing functions...
     fun deleteCartItem(itemId: String) {
         repository.deleteCartItemById(itemId).onEach { state ->
             deleteCartItemLiveData.value = state
@@ -58,6 +78,41 @@ class CartViewModel @Inject constructor(
     fun updateUser(userId: String, data: HashMap<String, Any>) {
         repository.updateUserById(userId, data).onEach { state ->
             updateUserLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
+
+    private val placeOrderLiveData: SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.PlaceOrderResponse>> = SingleLiveEvent()
+    fun getPlaceOrderLiveData(): SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.PlaceOrderResponse>> = placeOrderLiveData
+
+    private val createPaymentIntentLiveData: SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.CreatePaymentIntentResponse>> = SingleLiveEvent()
+    fun getCreatePaymentIntentLiveData(): SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.CreatePaymentIntentResponse>> = createPaymentIntentLiveData
+
+    fun startCheckout(finalAmount: Double) {
+        val data = cartData ?: return
+        
+        val request = HashMap<String, Any>()
+        request["addressId"] = data.address?.id ?: ""
+        request["deliveryMethodId"] = selectedDeliveryMethod?.id ?: ""
+        request["couponCode"] = data.couponDetails?.promoCode ?: ""
+        request["paymentId"] = ""
+        request["payableAmount"] = finalAmount.toInt().toString()
+        request["offerDiscount"] = ""
+        request["couponAmount"] = data.couponDetails?.discountValue?.toInt()?.toString() ?: ""
+        
+        repository.placeOrder(request).onEach { state ->
+            placeOrderLiveData.value = state
+            if (state.status == com.humotron.app.data.network.Status.SUCCESS) {
+                currentOrderId = state.data?.orderId
+                // Chain to createPaymentIntent
+                val paymentIntentRequest = HashMap<String, Any>()
+                paymentIntentRequest["amount"] = finalAmount
+                paymentIntentRequest["orderId"] = state.data?.orderId ?: ""
+                paymentIntentRequest["currency"] = "gbp"
+                
+                repository.createPaymentIntent(paymentIntentRequest).onEach { paymentState ->
+                    createPaymentIntentLiveData.value = paymentState
+                }.launchIn(viewModelScope)
+            }
         }.launchIn(viewModelScope)
     }
 }

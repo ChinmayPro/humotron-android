@@ -30,6 +30,7 @@
     <color name="white50">#80FFFFFF</color>
     <color name="white70">#B3FFFFFF</color>
     <color name="white80">#CCFFFFFF</color>
+    <color name="unlocked_btn_bg">#262626</color>
 
     <color name="black30">#4D000000</color>
     <color name="black40">#66000000</color>

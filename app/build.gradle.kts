@@ -9,6 +9,7 @@ plugins {
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
     id("kotlin-parcelize")
+    alias(libs.plugins.kotlin.compose)
     id("androidx.navigation.safeargs.kotlin")
     //id("com.google.gms.google-services")
 }
@@ -47,7 +48,7 @@ android {
         applicationId = "com.humotron.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 1
+        versionCode = 2
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -80,6 +81,7 @@ android {
     buildFeatures {
         buildConfig = true
         viewBinding = true
+        compose = true
     }
 
     packaging {
@@ -211,6 +213,14 @@ dependencies {
 
     // -------------------- Others --------------------
     implementation(libs.lottie)
+    implementation(libs.play.billing.ktx)
 
     implementation("com.google.android.flexbox:flexbox:3.0.0")
+    implementation("com.stripe:stripe-android:21.0.0")
+    
+    // Minimal Compose dependencies required by Stripe SDK
+    implementation(platform("androidx.compose:compose-bom:2024.12.01"))
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.material:material")
+
 }

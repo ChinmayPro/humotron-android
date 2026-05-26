@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="10dp"
+    app:cardBackgroundColor="@color/black"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="0dp"
+    app:strokeWidth="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="20dp"
+        android:paddingBottom="24dp">
+
+        <LinearLayout
+            android:id="@+id/layoutBoosterBadge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_badge_booster"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/ic_booster" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Text.14x.Manrope.SemiBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/booster_label"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvToolName"
+            style="@style/Text.16x.Manrope.SemiBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20dp"
+            android:layout_marginEnd="16dp"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toStartOf="@id/layoutBoosterBadge"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="AI Chat" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvToolDescription"
+            style="@style/Text.12x.Manrope.Regular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textColor="@color/white50"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvToolName"
+            tools:text="Make sense of your metrics. Just ask" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvToolPrice"
+            style="@style/Text.18x.Manrope.SemiBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvToolDescription"
+            tools:text="₹ 799" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvToolPricePeriod"
+            style="@style/Text.14x.Manrope.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/period_monthly"
+            android:textColor="@color/white50"
+            app:layout_constraintBaseline_toBaselineOf="@id/tvToolPrice"
+            app:layout_constraintStart_toEndOf="@id/tvToolPrice" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnBuy"
+            style="@style/Text.12x.Manrope.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:background="@drawable/bg_btn_round_corner"
+            android:backgroundTint="@color/lime_green"
+            android:paddingHorizontal="30dp"
+            android:text="@string/upgrade_label"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@id/tvToolPrice"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvToolPrice" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
