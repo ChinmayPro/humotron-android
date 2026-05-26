@@ -30,7 +30,10 @@ import com.humotron.app.domain.modal.response.TemperatureResponse
 import com.humotron.app.domain.repository.SleepRepository
 import com.humotron.app.util.DefaultDayReadingTimeSlotNavigator
 import com.humotron.app.util.DefaultHourReadingTimeSlotNavigator
+import com.humotron.app.util.DefaultMonthReadingTimeSlotNavigator
+import com.humotron.app.util.DefaultQuarterReadingTimeSlotNavigator
 import com.humotron.app.util.DefaultWeekReadingTimeSlotNavigator
+import com.humotron.app.util.DefaultYearReadingTimeSlotNavigator
 import com.humotron.app.util.ReadingTimeSlotNavigator
 import com.humotron.app.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -169,6 +172,21 @@ class DeviceViewModel @Inject constructor(
         }
 
         sleepRepository.getWristBandGraphData(deviceId, param).onEach { state ->
+            if (state.status == Status.SUCCESS) {
+                temperatureCache[cacheKey] = state
+            }
+            deviceGraphLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
+
+    fun getBasicWeightScaleData(deviceId: String, param: com.humotron.app.domain.modal.param.ScaleReadingParam) {
+        val cacheKey = "weightScale_${deviceId}_${param.range}_${param.startDate}_${param.endDate}"
+        if (temperatureCache.containsKey(cacheKey)) {
+            deviceGraphLiveData.value = temperatureCache[cacheKey]
+            return
+        }
+
+        sleepRepository.getBasicWeightScaleData(deviceId, param).onEach { state ->
             if (state.status == Status.SUCCESS) {
                 temperatureCache[cacheKey] = state
             }
@@ -322,6 +340,9 @@ class DeviceViewModel @Inject constructor(
             "Hour" -> DefaultHourReadingTimeSlotNavigator(currentDate = parsedDate)
             "Day" -> DefaultDayReadingTimeSlotNavigator(currentDate = parsedDate.toLocalDate())
             "Week" -> DefaultWeekReadingTimeSlotNavigator(currentDate = parsedDate.toLocalDate())
+            "Month" -> DefaultMonthReadingTimeSlotNavigator(currentDate = parsedDate.toLocalDate())
+            "Quarter" -> DefaultQuarterReadingTimeSlotNavigator(currentDate = parsedDate.toLocalDate())
+            "Year" -> DefaultYearReadingTimeSlotNavigator(currentDate = parsedDate.toLocalDate())
             else -> DefaultDayReadingTimeSlotNavigator(currentDate = parsedDate.toLocalDate())
         }
         updateText()
@@ -368,6 +389,18 @@ class DeviceViewModel @Inject constructor(
 
             "Week" -> {
                 SimpleDateFormat("EEE", Locale.getDefault()).format(date) // Sun, Mon
+            }
+
+            "Month" -> {
+                SimpleDateFormat("dd", Locale.getDefault()).format(date)
+            }
+
+            "Quarter" -> {
+                SimpleDateFormat("dd MMM", Locale.getDefault()).format(date)
+            }
+
+            "Year" -> {
+                SimpleDateFormat("MMM", Locale.getDefault()).format(date)
             }
 
             else -> ""

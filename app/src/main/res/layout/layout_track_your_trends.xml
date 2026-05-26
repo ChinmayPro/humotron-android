@@ -241,13 +241,13 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingHorizontal="@dimen/_24dp"
-                android:text="@string/no_heart_rate_data_available"
                 android:textColor="@color/white_70"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/no_health_data_available" />
 
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/lineChart"

@@ -202,7 +202,7 @@
     <string name="view_insight">View Insight</string>
     <string name="start_chat">Start Chat</string>
     <string name="suggested_supplements">Suggested Supplements</string>
-    <string name="no_heart_rate_data_available">No heart rate data available for selected time period.</string>
+    <string name="no_health_data_available">No %1$s data available for selected time period.</string>
     <string name="explore_more">Explore More</string>
     <string name="time_spent_in_heart_rate_zones">Time Spent in Heart Rate Zones</string>
     <string name="sleep_quality">Sleep Quality</string>
@@ -711,4 +711,17 @@ To get started:\n
     <string name="measurement_saved_successfully">Measurement saved successfully</string>
     <string name="failed_to_save_measurement">Failed to save measurement</string>
     <string name="scanning">Scanning...</string>
+
+    <string-array name="tabs_hour_day_week">
+        <item>Hour</item>
+        <item>Day</item>
+        <item>Week</item>
+    </string-array>
+
+    <string-array name="tabs_month_quarter_year">
+        <item>Month</item>
+        <item>Quarter</item>
+        <item>Year</item>
+    </string-array>
+
 </resources>

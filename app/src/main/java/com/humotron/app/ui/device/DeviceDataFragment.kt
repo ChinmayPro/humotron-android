@@ -107,14 +107,16 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
         metricsAdapter = MetricsAdapter { item, dateTime ->
             val deviceId = userDevice?.id
             val deviceName = userDevice?.deviceName
+            val deviceType = userDevice?.deviceType ?: ""
             deviceId?.let {
                 findNavController().navigate(
                     R.id.fragmentMetric,
                     bundleOf(
-                        "id" to deviceId,
-                        "dateTime" to dateTime,
-                        "metric" to item,
-                        "deviceName" to deviceName
+                        NavKeys.KEY_ID to deviceId,
+                        NavKeys.KEY_DATE_TIME to dateTime,
+                        NavKeys.KEY_METRIC to item,
+                        NavKeys.KEY_DEVICE_NAME to deviceName,
+                        NavKeys.KEY_DEVICE_TYPE to deviceType
                     )
                 )
             }

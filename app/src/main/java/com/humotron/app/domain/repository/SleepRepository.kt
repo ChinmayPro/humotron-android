@@ -159,7 +159,7 @@ class SleepRepository(
         for (measurement in measurements) {
             val payload = ScaleUploadData(
                 hardwareId = measurement.hardwareId,
-                recordTimestamp = measurement.measuredAt.toString(),
+                recordTimestamp = (measurement.measuredAt / 1000).toString(),//Backend wants a 10-digit timestamp, which means it expects seconds, not milliseconds
                 data = ScaleUploadDeviceData(
                     weight = measurement.weight,
                     waterContent = measurement.waterContent,
@@ -506,6 +506,26 @@ class SleepRepository(
             val response =
                 responseHandler.handleResponse(
                     api.getRingReadingGraphData(ringId, param),
+                    false
+                )
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun getBasicWeightScaleData(
+        deviceId: String,
+        param: com.humotron.app.domain.modal.param.ScaleReadingParam,
+    ): Flow<Resource<TemperatureResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response =
+                responseHandler.handleResponse(
+                    api.getBasicWeightScaleData(deviceId, param),
                     false
                 )
             emit(response)

@@ -247,6 +247,12 @@ interface AppApi {
         @Body param: GetAllScanByTypeParam,
     ): Response<PastScanResponse>
 
+    @POST("device/getBasicWeightScaleData/{deviceId}")
+    suspend fun getBasicWeightScaleData(
+        @Path("deviceId") deviceId: String,
+        @Body param: com.humotron.app.domain.modal.param.ScaleReadingParam,
+    ): Response<TemperatureResponse>
+
     @GET("device/getWristBandSleepDurationData/{device_id}")
     suspend fun getWristBandSleepDurationData(
         @Path("device_id") deviceId: String,

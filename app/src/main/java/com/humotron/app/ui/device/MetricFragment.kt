@@ -32,7 +32,9 @@ import com.humotron.app.R
 import com.humotron.app.core.base.BaseFragment
 import com.humotron.app.data.network.Status
 import com.humotron.app.databinding.FragmentMetricBinding
+import com.humotron.app.domain.modal.DeviceType
 import com.humotron.app.domain.modal.param.RingReadingParam
+import com.humotron.app.domain.modal.param.ScaleReadingParam
 import com.humotron.app.domain.modal.param.WristBandApiParam
 import com.humotron.app.domain.modal.response.AllMetricsResponse
 import com.humotron.app.domain.modal.response.TemperatureResponse
@@ -43,6 +45,7 @@ import com.humotron.app.ui.device.adapter.RecipesAdapter
 import com.humotron.app.ui.device.adapter.RecommendationsAdapter
 import com.humotron.app.ui.device.adapter.SupplementsAdapter
 import com.humotron.app.ui.dialogs.InfoBottomSheetDialog
+import com.humotron.app.ui.navigation.NavKeys
 import com.humotron.app.util.utcOffsetToLocalTime
 import com.pluto.plugins.logger.PlutoLog
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer
@@ -69,6 +72,7 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
     private val supplementsAdapter = SupplementsAdapter()
 
     private var deviceName: String? = null
+    private var deviceType: String? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -173,7 +177,6 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
 
     private fun initData() {
         binding.header.title.text = "Device Details"
-        binding.trackTrends.tabLayout.getTabAt(1)?.select()
 
         binding.dsvInsight.adapter = insightAdapter
         binding.dsvInsight.setItemTransformer(
@@ -206,15 +209,45 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
         binding.rvChatPrompts.adapter = chatPromptAdapter
         binding.rvRecipesChatPrompts.adapter = recipesChatPromptAdapter
 
-        val ringId = arguments?.getString("id")
-        val dateTime = arguments?.getString("dateTime")
-        deviceName = arguments?.getString("deviceName")
-        PlutoLog.e("Device type", "$deviceName")
-        val metric = arguments?.getParcelable<AllMetricsResponse.Data.Metric>("metric")
+        val id = arguments?.getString(NavKeys.KEY_ID)
+        val dateTime = arguments?.getString(NavKeys.KEY_DATE_TIME)
+        deviceName = arguments?.getString(NavKeys.KEY_DEVICE_NAME)
+        deviceType = arguments?.getString(NavKeys.KEY_DEVICE_TYPE)
+        var tabNames = resources.getStringArray(R.array.tabs_hour_day_week)
+
+        val deviceType = DeviceType.from(deviceName)
+        when (deviceType) {
+            DeviceType.BAND -> {
+                tabNames = resources.getStringArray(R.array.tabs_hour_day_week)
+            }
+
+            DeviceType.RING -> {
+                tabNames = resources.getStringArray(R.array.tabs_hour_day_week)
+            }
+
+            DeviceType.BP_MACHINE -> {
+            }
+
+            DeviceType.WEIGHT_MACHINE -> {
+                tabNames = resources.getStringArray(R.array.tabs_month_quarter_year)
+            }
+
+            DeviceType.UNKNOWN -> {
+
+            }
+        }
+        tabNames.forEachIndexed { index, title ->
+            binding.trackTrends.tabLayout.getTabAt(index)?.text = title
+        }
+        binding.trackTrends.tabLayout.getTabAt(1)?.select()
+
+        val metric = arguments?.getParcelable<AllMetricsResponse.Data.Metric>(NavKeys.KEY_METRIC)
 
         if (metric != null) {
             binding.header.title.text = metric.metricName
             binding.tvTypeLabel.text = metric.metricName
+            binding.trackTrends.tvNoGraphData.text =
+                getString(R.string.no_health_data_available, metric.metricName)
             binding.tvTemperatureValue.text = metric.metricValue?.value.toString()
             binding.tvUnit.text = metric.metricUnit
             binding.ecvWhatIs.setTitle(getString(R.string.what_is, metric.metricName))
@@ -518,33 +551,58 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
                             val fieldLabel = metric?.metricValue?.fieldLabel ?: ""
                             metric?.deviceId?.let { deviceId ->
                                 //For WristBand call getWristBandGraphData for chart data, for Ring call getRingReadingGraphData
-                                if (deviceName == "WristBand") {
-                                    val param = WristBandApiParam(
-                                        range = selectedText,
-                                        startDate = start,
-                                        endDate = end,
-                                        offset = "+05:30",
-                                        metricId = metric.id,
-                                        metricName = fieldLabel
-                                    )
-                                    viewModel.getWristBandGraphData(
-                                        deviceId,
-                                        param
-                                    )
-                                } else {
+                                val deviceType = DeviceType.from(deviceName)
+                                when (deviceType) {
+                                    DeviceType.BAND -> {
+                                        val param = WristBandApiParam(
+                                            range = selectedText,
+                                            startDate = start,
+                                            endDate = end,
+                                            offset = "+05:30",
+                                            metricId = metric.id,
+                                            metricName = fieldLabel
+                                        )
+                                        viewModel.getWristBandGraphData(
+                                            deviceId,
+                                            param
+                                        )
+                                    }
 
-                                    val param = RingReadingParam(
-                                        startDate = start,
-                                        endDate = end,
-                                        offset = "+05:30",
-                                        range = selectedText,
-                                        metricID = metric.id,
-                                        metricName = fieldLabel
-                                    )
-                                    viewModel.getRingReadingGraphData(
-                                        deviceId,
-                                        param
-                                    )
+                                    DeviceType.RING -> {
+                                        val param = RingReadingParam(
+                                            startDate = start,
+                                            endDate = end,
+                                            offset = "+05:30",
+                                            range = selectedText,
+                                            metricID = metric.id,
+                                            metricName = fieldLabel
+                                        )
+                                        viewModel.getRingReadingGraphData(
+                                            deviceId,
+                                            param
+                                        )
+                                    }
+
+                                    DeviceType.BP_MACHINE -> {
+                                    }
+
+                                    DeviceType.WEIGHT_MACHINE -> {
+                                        val param = ScaleReadingParam(
+                                            startDate = start,
+                                            endDate = end,
+                                            offset = "+05:30",
+                                            range = selectedText,
+                                            metricID = metric.id,
+                                            metricName = fieldLabel
+                                        )
+                                        viewModel.getBasicWeightScaleData(
+                                            deviceId,
+                                            param
+                                        )
+                                    }
+
+                                    DeviceType.UNKNOWN -> {
+                                    }
                                 }
                             }
                         }
@@ -618,6 +676,60 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
                     )
                 }
             }
+
+            "Month" -> {
+                for (item in sortedList) {
+                    //val date = sdf.parse(item.time!!) ?: continue
+                    val date = sdf.parse(item.time!!.replace("Z", "+0000")) ?: continue
+                    calendar.time = date
+                    val day = calendar.get(Calendar.DAY_OF_MONTH)
+                    entries.add(
+                        Entry(
+                            day.toFloat(),
+                            item.value?.toFloatOrNull() ?: 0f
+                        )
+                    )
+                }
+            }
+
+            "Quarter" -> {
+                //val dates = sortedList.mapNotNull { sdf.parse(it.time!!) }
+
+                val dates = sortedList.mapNotNull {
+                    runCatching {
+                        sdf.parse(it.time?.replace("Z", "+0000"))
+                    }.getOrNull()
+                }
+
+                val minDate = dates.minOrNull() ?: return entries
+                for (item in sortedList) {
+                    //val date = sdf.parse(item.time!!) ?: continue
+                    val date = sdf.parse(item.time!!.replace("Z", "+0000")) ?: continue
+                    val daysDiff = (date.time - minDate.time) / (1000 * 60 * 60 * 24)
+                    val weekNumber = (daysDiff / 7) + 1
+                    entries.add(
+                        Entry(
+                            weekNumber.toFloat(),
+                            item.value?.toFloatOrNull() ?: 0f
+                        )
+                    )
+                }
+            }
+
+            "Year" -> {
+                for (item in sortedList) {
+                    //val date = sdf.parse(item.time!!) ?: continue
+                    val date = sdf.parse(item.time!!.replace("Z", "+0000")) ?: continue
+                    calendar.time = date
+                    val month = calendar.get(Calendar.MONTH) + 1
+                    entries.add(
+                        Entry(
+                            month.toFloat(),
+                            item.value?.toFloatOrNull() ?: 0f
+                        )
+                    )
+                }
+            }
         }
         return entries.sortedBy { it.x }
     }
@@ -685,7 +797,7 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
         entries: List<Entry>,
         tab: String?,
         averageReading: Double?,
-        typicalRange: List<Int>?
+        typicalRange: List<Int>?,
     ) {
         val dataSet = LineDataSet(entries, "").apply {
             color = ContextCompat.getColor(requireActivity(), R.color.green_1)
@@ -754,6 +866,21 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
                         axisMinimum = 0f
                         axisMaximum = 23f
                     }
+
+                    "Month" -> {
+                        axisMinimum = 1f
+                        axisMaximum = 31f
+                    }
+
+                    "Quarter" -> {
+                        axisMinimum = 1f
+                        axisMaximum = 13f
+                    }
+
+                    "Year" -> {
+                        axisMinimum = 1f
+                        axisMaximum = 12f
+                    }
                 }
             }
 
@@ -795,11 +922,17 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
         val startX = when (tab) {
             "Hour" -> 0f
             "Day" -> 0f
+            "Month" -> 1f
+            "Quarter" -> 1f
+            "Year" -> 1f
             else -> entries.firstOrNull()?.x ?: 0f
         }
         val endX = when (tab) {
             "Hour" -> 59f
             "Day" -> 23f
+            "Month" -> 31f
+            "Quarter" -> 13f
+            "Year" -> 12f
             else -> entries.lastOrNull()?.x ?: 0f
         }
         return listOf(Entry(startX, max), Entry(endX, max))
