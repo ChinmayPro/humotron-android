@@ -11,7 +11,7 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivDeviceImage"
-        android:layout_width="@dimen/_80dp"
+        android:layout_width="@dimen/_60dp"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -24,11 +24,12 @@
         style="@style/Text.OnBoard.Sub.Medium"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Humotron Smart Ring"
+        android:layout_marginStart="@dimen/_10dp"
         android:textColor="@color/textColorGray"
         android:textSize="13sp"
         app:layout_constraintStart_toEndOf="@id/ivDeviceImage"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Humotron Weight Scale" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvDeviceModel"

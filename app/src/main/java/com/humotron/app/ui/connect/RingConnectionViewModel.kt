@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.humotron.app.data.network.Resource
 import com.humotron.app.domain.modal.param.AddHardware
+import com.humotron.app.domain.modal.response.AddDeviceDataResponse
 import com.humotron.app.domain.modal.response.AddHardwareResponse
 import com.humotron.app.domain.repository.SleepRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,15 +19,20 @@ class RingConnectionViewModel @Inject constructor(val repository: SleepRepositor
 
     private val addHardwareLiveData: MutableLiveData<Resource<AddHardwareResponse>> =
         MutableLiveData()
+    private val addRingHardwareDetailLiveData: MutableLiveData<Resource<AddDeviceDataResponse>> =
+        MutableLiveData()
 
     fun addHardwareData(): LiveData<Resource<AddHardwareResponse>> {
         return addHardwareLiveData
+    }
+
+    fun addRingHardwareDetailData(): LiveData<Resource<AddDeviceDataResponse>> {
+        return addRingHardwareDetailLiveData
     }
 
     fun addHardwareInProfile(param: AddHardware) {
         repository.addHardwareInProfile(param).onEach { state ->
             addHardwareLiveData.value = state
         }.launchIn(viewModelScope)
-
     }
 }

@@ -12,7 +12,7 @@ import android.view.animation.LinearInterpolator
 
 class RadiatingRingsView @JvmOverloads constructor(
     context: Context,
-    attrs: AttributeSet? = null
+    attrs: AttributeSet? = null,
 ) : View(context, attrs) {
 
     private val ringPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {

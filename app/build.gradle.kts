@@ -192,6 +192,9 @@ dependencies {
     //Band
     implementation(project(":blesdk_2208"))
 
+    //Weight Scale
+    implementation(libs.qnscalesdkx)
+
     // -------------------- Debug Tools --------------------
     debugImplementation(libs.pluto)
     debugImplementation(libs.bundle.core)

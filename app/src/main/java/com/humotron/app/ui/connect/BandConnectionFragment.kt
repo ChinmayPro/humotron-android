@@ -16,6 +16,7 @@ import com.humotron.app.data.network.Status
 import com.humotron.app.databinding.FragmentBandConnectionBinding
 import com.humotron.app.domain.modal.DeviceType
 import com.humotron.app.domain.modal.param.AddHardware
+import com.humotron.app.domain.modal.param.DeviceMetaDataParam
 import com.humotron.app.ui.dialogs.LoadingDialog
 import com.humotron.app.util.PrefUtils
 import com.jstyle.blesdk2208a.callback.OnScanResults
@@ -88,7 +89,8 @@ class BandConnectionFragment : Fragment(R.layout.fragment_band_connection) {
 
         binding.btnSubmit.setOnClickListener {
             val device = discoveredDevice
-            val mac = device?.mac ?: prefUtils.getString(Preference.WEARABLE_BAND) ?: return@setOnClickListener
+            val mac = device?.mac ?: prefUtils.getString(Preference.WEARABLE_BAND)
+            ?: return@setOnClickListener
             showProgress()
             bandBleManager.connectDevice(mac)
         }
@@ -104,7 +106,8 @@ class BandConnectionFragment : Fragment(R.layout.fragment_band_connection) {
 
                 // Second time: `MainActivity` may already have connected using the saved MAC,
                 // so scan result may never arrive and `discoveredDevice` can stay null.
-                val mac = discoveredDevice?.mac ?: prefUtils.getString(Preference.WEARABLE_BAND) ?: return@collect
+                val mac = discoveredDevice?.mac ?: prefUtils.getString(Preference.WEARABLE_BAND)
+                ?: return@collect
                 prefUtils.setString(Preference.WEARABLE_BAND, mac)
 
                 val hardwareType = prefUtils.getBandHardwareType()
@@ -112,7 +115,18 @@ class BandConnectionFragment : Fragment(R.layout.fragment_band_connection) {
                     viewModel.addHardwareInProfile(AddHardware(DeviceType.BAND.value, mac))
                 } else {
                     hideProgress()
-                    findNavController().navigate(R.id.fragmentDeviceConnected)
+                    val userHardware = prefUtils.getBandHardware()
+                    val deviceId = prefUtils.getBandHardware()?.id
+
+                    val bundle = Bundle()
+                    if (userHardware != null && discoveredDevice != null) {
+                        bundle.putParcelable(
+                            "deviceMetaData",
+                            DeviceMetaDataParam.from(discoveredDevice!!, userHardware, deviceId)
+                        )
+                        bundle.putSerializable("deviceType", DeviceType.BAND)
+                    }
+                    findNavController().navigate(R.id.fragmentDeviceConnected, bundle)
                 }
             }
         }
@@ -121,12 +135,28 @@ class BandConnectionFragment : Fragment(R.layout.fragment_band_connection) {
             when (networkState.status) {
                 Status.SUCCESS -> {
                     hideProgress()
-                    networkState.data?.data?.userHardware?.let { prefUtils.setBandHardwareData(it) }
-                    findNavController().navigate(R.id.fragmentDeviceConnected)
+                    val userHardware = networkState.data?.data?.userHardware
+                    val deviceId = networkState.data?.data?.deviceDetails?.id
+                    val bundle = Bundle()
+                    if (userHardware != null && discoveredDevice != null && deviceId != null) {
+                        prefUtils.setBandHardwareData(userHardware)
+                        bundle.putParcelable(
+                            "deviceMetaData",
+                            DeviceMetaDataParam.from(
+                                discoveredDevice!!,
+                                userHardware,
+                                deviceId
+                            )
+                        )
+                        bundle.putSerializable("deviceType", DeviceType.BAND)
+                    }
+                    findNavController().navigate(R.id.fragmentDeviceConnected, bundle)
                 }
 
                 Status.ERROR, Status.EXCEPTION -> {
                     hideProgress()
+                    val bundle = Bundle()
+                    bundle.putSerializable("deviceType", DeviceType.BAND)
                     findNavController().navigate(R.id.fragmentDeviceConnected)
                 }
 

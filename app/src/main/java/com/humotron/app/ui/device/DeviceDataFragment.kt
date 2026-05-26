@@ -121,21 +121,38 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
         }
         binding.clTabMetrics.rvMetrics.adapter = metricsAdapter
 
-        setupHealthScanAdapter()
 
         val deviceId = userDevice?.id
         deviceId?.let { deviceId ->
             val deviceType = DeviceType.from(userDevice?.deviceName)
             when (deviceType) {
                 DeviceType.BAND -> {
+                    setupHealthScanAdapter()
+                    binding.clTabMetrics.groupViewsRingBand.isVisible = true
                     observeBand()
                     viewModel.getAllMetricsByDeviceId(deviceId)
                 }
 
                 DeviceType.RING -> {
+                    setupHealthScanAdapter()
+                    binding.clTabMetrics.groupViewsRingBand.isVisible = true
                     observeRing()
                     viewModel.getRingReadingData(deviceId)
                     viewModel.getAllMetricsByDeviceId(deviceId)
+                }
+
+                DeviceType.BP_MACHINE -> {
+                }
+
+                DeviceType.WEIGHT_MACHINE -> {
+                    viewModel.getAllMetricsByDeviceId(deviceId)
+                    binding.let {
+                        it.ivBtStatus.isVisible = false
+                        it.ivDeviceStatus.isVisible = false
+                        it.tvDeviceStatus.isVisible = false
+                        it.batteryView.isVisible = false
+                        it.tvBatteryLevel.isVisible = false
+                    }
                 }
 
                 DeviceType.UNKNOWN -> {
@@ -449,6 +466,12 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
                                 )
                             }
 
+                            DeviceType.BP_MACHINE -> {
+                            }
+
+                            DeviceType.WEIGHT_MACHINE -> {
+                            }
+
                             DeviceType.UNKNOWN -> {
 
                             }
@@ -533,6 +556,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
         binding.clTabMetrics.cardPhysicalRecovery.setOnClickListener(this)
         binding.clTabMetrics.cardStressScore.setOnClickListener(this)
         binding.clTabMetrics.cardSleepMetrics.setOnClickListener(this)
+        binding.btnTakeReading.setOnClickListener(this)
 
         binding.tabLayout.addOnTabSelectedListener(object :
             TabLayout.OnTabSelectedListener {
@@ -594,7 +618,15 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
             }
 
             binding.ivDevice -> {
-                startActivity(Intent(requireContext(), BandTestActivity::class.java))
+            }
+
+            binding.btnTakeReading -> {
+                if (DeviceType.from(userDevice?.deviceName) == DeviceType.WEIGHT_MACHINE) {
+                    findNavController().navigate(
+                        R.id.action_fragmentDeviceData_to_fragmentWeightScaleReading,
+                        bundleOf(NavKeys.WEARABLE to userDevice)
+                    )
+                }
             }
 
             binding.clTabMetrics.cardExerciseIntensity -> {
@@ -648,6 +680,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
                 )
             }
         )
+        binding.rvStaticContent.isVisible = true
         binding.rvStaticContent.adapter = healthScanAdapter
 
         val healthScans = listOf(

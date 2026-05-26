@@ -68,22 +68,21 @@
                     app:layout_constraintStart_toStartOf="@id/tvDeviceName"
                     app:layout_constraintTop_toBottomOf="@id/tvDeviceName" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnTakeReading"
                     style="@style/Text.12x.Manrope.Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_14dp"
-                    android:background="@drawable/bg_btn_round_rect_16"
-                    android:drawableEnd="@drawable/ic_take_reading"
-                    android:drawablePadding="@dimen/_10dp"
-                    android:paddingHorizontal="@dimen/_22dp"
-                    android:paddingVertical="@dimen/_5dp"
                     android:text="@string/take_readings"
-                    android:textAlignment="center"
                     android:textColor="@color/black"
+                    app:backgroundTint="@color/colorBgBtn"
+                    app:icon="@drawable/ic_take_reading"
+                    app:iconGravity="textEnd"
+                    app:iconTint="@color/black"
                     app:layout_constraintStart_toStartOf="@id/tvDeviceName"
-                    app:layout_constraintTop_toBottomOf="@id/tvLastSyncTime" />
+                    app:layout_constraintTop_toBottomOf="@id/tvLastSyncTime"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/deviceStatus"
@@ -167,12 +166,14 @@
                     android:orientation="horizontal"
                     android:paddingHorizontal="20dp"
                     android:paddingEnd="@dimen/_20dp"
+                    android:visibility="gone"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/bottomBarrier"
                     tools:itemCount="4"
-                    tools:listitem="@layout/item_health_scan" />
+                    tools:listitem="@layout/item_health_scan"
+                    tools:visibility="gone" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -703,4 +703,33 @@ To get started:\n
     <string name="transaction_canceled">Transaction canceled</string>
     <string name="item_not_available_play_store">This item is currently not available for purchase on the Play Store.</string>
     <string name="error_loading_tools">Error loading tools from backend</string>
+    <string name="health_monitoring">Health Monitoring</string>
+    <string name="connect_your_humotron_smart_weight_machine">Let’s get you started to connect your Smart Weight Scale.</string>
+    <string name="smart_scale_steps">
+    • Switch On Phone Bluetooth\n
+    • Power On The Scale\n
+    • Step On The Scale\n
+    • Scale Visible On the App\n
+    • Select the Device to Connect\n
+    • Device Connected Screen</string>
+    <string name="humotron_weight_scale_basic">Humotron Weight Scale Basic</string>
+    <string name="humotron_weight_scale">Humotron Weight Scale</string>
+    <string name="smart_scale_instruction_1">
+    The weight scale runs on 2 basic AA batteries. Put the batteries and step on the scale to switch it on. Stay on the scale till the device is connected.</string>
+    <string name="smart_scale_connection_help">
+    If you don’t see the device you wish to connect, make sure it is powered on, the device’s Bluetooth is turned on, and try bringing it closer to your phone.</string>
+    <string name="weight_scale_is_detected">Weight scale is detected, tap on connect button to connect with Humotron Weight Scale Basic.</string>
+    <string name="take_a_reading">Take a Reading</string>
+    <string name="active">Active</string>
+    <string name="inactive">Inactive</string>
+    <string name="weight_scale_instruction_default">Please stand on the scale to start the reading.</string>
+    <string name="weight_scale_instruction_stabilizing">Hold steady while the scale captures your reading.</string>
+    <string name="weight_scale_instruction_complete">Reading complete.</string>
+    <string name="lean_bw">Lean BW</string>
+    <string name="muscle_mass">Muscle Mass</string>
+    <string name="bone_mass">Bone Mass</string>
+    <string name="humotron_smart_weight_scale">Humotron Smart Weight Scale</string>
+    <string name="measurement_saved_successfully">Measurement saved successfully</string>
+    <string name="failed_to_save_measurement">Failed to save measurement</string>
+    <string name="scanning">Scanning...</string>
 </resources>

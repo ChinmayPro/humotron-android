@@ -13,6 +13,7 @@ import com.humotron.app.data.local.entity.HrvData
 import com.humotron.app.data.local.entity.StepData
 import com.humotron.app.data.local.entity.TempData
 import com.humotron.app.data.network.Status
+import com.humotron.app.domain.modal.param.DeviceMetaDataParam
 import com.humotron.app.domain.repository.SleepRepository
 import com.humotron.app.domain.repository.sf
 import com.humotron.app.domain.repository.toSleepEntity
@@ -132,6 +133,14 @@ class HomeViewModel @Inject constructor(
         repository.getUnSyncData().onEach {
             if (it.status == Status.SUCCESS) {
                 it.data?.data?.let { data -> repository.updateData(data) }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    fun addDeviceMetaData(metaData: DeviceMetaDataParam) {
+        repository.addDeviceMetaData(metaData).onEach {
+            if (it.status == Status.SUCCESS) {
+                PlutoLog.e(TAG_RING_DEBUG, "Device Meta Data Uploaded Successfully")
             }
         }.launchIn(viewModelScope)
     }

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.humotron.app.R
 import com.humotron.app.databinding.LayoutBottomsheetDeviceSelectionBinding
+import com.humotron.app.domain.modal.DeviceType
 import com.humotron.app.ui.connect.adapter.DeviceInfo
 import com.humotron.app.ui.connect.adapter.DeviceListAdapter
 
@@ -18,6 +19,18 @@ class DeviceSelectionBottomSheet :
     private lateinit var myAdapter: DeviceListAdapter // Your adapter instance
     private var onItemClick: ((DeviceInfo) -> Unit)? = null
 
+    companion object {
+        const val TAG = "DeviceSelectionBottomSheet"
+        private const val ARG_DEVICE_LIST = "arg_device_list"
+
+        fun newInstance(deviceList: ArrayList<DeviceInfo>): DeviceSelectionBottomSheet {
+            val fragment = DeviceSelectionBottomSheet()
+            val args = Bundle()
+            args.putParcelableArrayList(ARG_DEVICE_LIST, deviceList)
+            fragment.arguments = args
+            return fragment
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -27,19 +40,11 @@ class DeviceSelectionBottomSheet :
             dismiss() // Close the bottom sheet
         }
 
+        val deviceList = arguments?.getParcelableArrayList<DeviceInfo>(ARG_DEVICE_LIST) ?: arrayListOf()
+
         // Setup RecyclerView
         myAdapter = DeviceListAdapter(
-            arrayListOf(
-                DeviceInfo(
-                    R.drawable.ic_bg_ring,
-                    "Humotron Smart Ring",
-                    "Connect to sync sleep & recovery metrics"
-                ), DeviceInfo(
-                    R.drawable.ic_bg_ring,
-                    "Humotron Wrist Band",
-                    "Health tracking smart band"
-                )
-            ), onItemClicked = {
+            deviceList, onItemClicked = {
                 onItemClick?.invoke(it)
             })
         binding.recyclerViewItems.apply {

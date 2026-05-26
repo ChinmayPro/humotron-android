@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.os.StrictMode
 import android.util.Log
+import com.humotron.app.BuildConfig
 import com.humotron.app.bt.ring.RingBleManager
 import com.humotron.app.util.ActivityLifecycleCb
 import com.humotron.app.util.BandSyncManager
@@ -17,7 +18,7 @@ import com.pluto.plugins.exceptions.PlutoExceptionsPlugin
 import com.pluto.plugins.logger.PlutoLoggerPlugin
 import com.pluto.plugins.logger.PlutoTimberTree
 import com.pluto.plugins.network.PlutoNetworkPlugin
-import com.humotron.app.BuildConfig
+import com.humotron.app.bt.weight.WeightScaleSdkManager
 import dagger.hilt.android.HiltAndroidApp
 import lib.linktop.nexring.api.NexRingManager
 import timber.log.Timber
@@ -41,6 +42,9 @@ class App : Application() {
     @Inject
     lateinit var bandSyncManager: BandSyncManager
 
+    @Inject
+    lateinit var weightScaleSdkManager: WeightScaleSdkManager
+
     val accountSp by lazy { createDefaultSharedPreferences() }
     val ringBleManager by lazy {
         NexRingManager.init(this)
@@ -60,6 +64,8 @@ class App : Application() {
         if (BuildConfig.DEBUG) {
             initPluto()
         }
+
+        weightScaleSdkManager.initializeSdk()
     }
 
     private fun initPluto() {

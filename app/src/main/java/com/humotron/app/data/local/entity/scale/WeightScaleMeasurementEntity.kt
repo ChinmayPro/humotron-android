@@ -1,0 +1,75 @@
+package com.humotron.app.data.local.entity.scale
+
+import androidx.room.Entity
+import androidx.room.Index
+import androidx.room.PrimaryKey
+
+@Entity(
+    tableName = "weight_scale_measurement",
+    indices = [Index(value = ["hardwareId", "measuredAt"], unique = true)],
+)
+data class WeightScaleMeasurementEntity(
+
+    @PrimaryKey(autoGenerate = true)
+    val id: Long = 0,
+
+    val hardwareId: String,
+    val measuredAt: Long,
+    val sync: Boolean = false,
+
+    val weight: Double = 0.0,
+    val waterContent: Double = 0.0,
+    val bodyWaterRate: Double = 0.0,
+    val proteinMass: Double = 0.0,
+    val protein: Double = 0.0,
+    val boneMass: Double = 0.0,
+    val mineralSaltRate: Double = 0.0,
+    val skeletalMuscleMass: Double = 0.0,
+    val muscleRate: Double = 0.0,
+    val bmi: Double = 0.0,
+    val visceralFat: Double = 0.0,
+    val obesityDegree: Double = 0.0,
+    val obesityLevel: Double = 0.0,
+    val muscleMass: Double = 0.0,
+    val muscleMassRate: Double = 0.0,
+    val leftUpperLimbMuscleWeight: Double = 0.0,
+    val rightUpperLimbMuscleWeight: Double = 0.0,
+    val lowerLeftMuscleWeight: Double = 0.0,
+    val lowerRightMuscleWeight: Double = 0.0,
+    val trunkMuscleWeight: Double = 0.0,
+    val leftArmMuscleRatio: Double = 0.0,
+    val rightArmMuscleRate: Double = 0.0,
+    val leftLegMuscleRatio: Double = 0.0,
+    val rightLowerLimbMuscleRatio: Double = 0.0,
+    val sinewTrunkRatio: Double = 0.0,
+    val bodyFatRate: Double = 0.0,
+    val leftUpperLimbFatMass: Double = 0.0,
+    val rightUpperLimbFatMass: Double = 0.0,
+    val leftLegFatMass: Double = 0.0,
+    val rightLegFatMass: Double = 0.0,
+    val trunkFatMass: Double = 0.0,
+    val leftUpperLimbFat: Double = 0.0,
+    val rightUpperLimbFat: Double = 0.0,
+    val leftLegFat: Double = 0.0,
+    val rightLegFat: Double = 0.0,
+    val trunkFat: Double = 0.0,
+    val fatMass: Double = 0.0,
+    val subcutaneousFat: Double = 0.0,
+    val subcutaneousFatMass: Double = 0.0,
+    val bmr: Double = 0.0,
+    val leanBodyWeight: Double = 0.0,
+    val metabolicAge: Double = 0.0,
+    val bodyType: Double = 0.0,
+    val weightControl: Double = 0.0,
+    val muscleControl: Double = 0.0,
+    val fatControl: Double = 0.0,
+    val standWeight: Double = 0.0,
+    val smi: Double = 0.0,
+    val waistHipRatio: Double = 0.0,
+    val healthScore: Double = 0.0,
+    val heartRate: Double = 0.0,
+    val heartIndex: Double = 0.0,
+    val fattyLiverRisk: Double = 0.0,
+    val bestVisualWeight: Double = 0.0,
+    val mineralSalt: Double = 0.0,
+)

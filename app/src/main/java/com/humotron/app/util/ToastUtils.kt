@@ -21,3 +21,7 @@ object ToastUtils {
         currentToast?.show()
     }
 }
+
+fun Context.showToast(message: String) {
+    ToastUtils.showShort(this, message)
+}

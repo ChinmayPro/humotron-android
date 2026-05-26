@@ -3,6 +3,7 @@ package com.humotron.app.domain.repository
 import com.google.gson.Gson
 import com.humotron.app.core.Preference
 import com.humotron.app.data.local.dao.SleepDao
+import com.humotron.app.data.local.dao.WeightScaleDao
 import com.humotron.app.data.local.entity.DoubleUploadMapper
 import com.humotron.app.data.local.entity.HrData
 import com.humotron.app.data.local.entity.HrvData
@@ -19,6 +20,7 @@ import com.humotron.app.data.local.entity.band.BandHrvData
 import com.humotron.app.data.local.entity.band.BandSleepData
 import com.humotron.app.data.local.entity.band.BandSpO2Data
 import com.humotron.app.data.local.entity.band.BandTotalActivityData
+import com.humotron.app.data.local.entity.scale.WeightScaleMeasurementEntity
 import com.humotron.app.data.network.Resource
 import com.humotron.app.data.network.ResponseHandler
 import com.humotron.app.data.network.Status
@@ -31,17 +33,22 @@ import com.humotron.app.domain.modal.param.BandUploadData
 import com.humotron.app.domain.modal.param.BandUploadDeviceData
 import com.humotron.app.domain.modal.param.BaselineScanDataParam
 import com.humotron.app.domain.modal.param.DailyCalculatedMetricsParam
+import com.humotron.app.domain.modal.param.DeviceMetaDataParam
 import com.humotron.app.domain.modal.param.DetailActivityData
 import com.humotron.app.domain.modal.param.GetAllScanByTypeParam
 import com.humotron.app.domain.modal.param.HeartRateData
 import com.humotron.app.domain.modal.param.RingReadingParam
 import com.humotron.app.domain.modal.param.SaveScanDataParam
+import com.humotron.app.domain.modal.param.ScaleUploadData
+import com.humotron.app.domain.modal.param.ScaleUploadDeviceData
 import com.humotron.app.domain.modal.param.Spo2Data
 import com.humotron.app.domain.modal.param.TotalActivityData
 import com.humotron.app.domain.modal.param.WristBandApiParam
 import com.humotron.app.domain.modal.response.AddDeviceDataResponse
 import com.humotron.app.domain.modal.response.AddHardwareResponse
+import com.humotron.app.domain.modal.response.AddScaleDataResponse
 import com.humotron.app.domain.modal.response.AllMetricsResponse
+import com.humotron.app.domain.modal.response.CommonResponse
 import com.humotron.app.domain.modal.response.DailyCalculatedMetricsResponse
 import com.humotron.app.domain.modal.response.GetAllDeviceResponse
 import com.humotron.app.domain.modal.response.HardwareListData
@@ -80,6 +87,7 @@ val sf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.getDefault()).apply {
 class SleepRepository(
     private val api: AppApi,
     private val sleepDao: SleepDao,
+    private val weightScaleDao: WeightScaleDao,
     private val prefUtils: PrefUtils,
     private val responseHandler: ResponseHandler,
 ) {
@@ -133,6 +141,98 @@ class SleepRepository(
         sleepDao.insertBandSleepList(data)
     }
 
+    suspend fun insertWeightScaleMeasurement(measurement: WeightScaleMeasurementEntity) {
+        weightScaleDao.insert(measurement)
+    }
+
+    suspend fun syncWeightScaleDataOnce(): Resource<AddScaleDataResponse> {
+        val measurements = weightScaleFlow.first()
+        if (measurements.isEmpty()) {
+            return Resource.success(AddScaleDataResponse(null, null, null))
+        }
+
+        // For now, we sync the latest one or all one by one if the API supports it.
+        // The ScaleUploadData seems to take a single measurement's data.
+        var lastResponse: Resource<AddScaleDataResponse> =
+            Resource.success(AddScaleDataResponse(null, null, null))
+
+        for (measurement in measurements) {
+            val payload = ScaleUploadData(
+                hardwareId = measurement.hardwareId,
+                recordTimestamp = measurement.measuredAt.toString(),
+                data = ScaleUploadDeviceData(
+                    weight = measurement.weight,
+                    waterContent = measurement.waterContent,
+                    bodyWaterRate = measurement.bodyWaterRate,
+                    proteinMass = measurement.proteinMass,
+                    protein = measurement.protein,
+                    boneMass = measurement.boneMass,
+                    mineralSaltRate = measurement.mineralSaltRate,
+                    skeletalMuscleMass = measurement.skeletalMuscleMass,
+                    muscleRate = measurement.muscleRate,
+                    bmi = measurement.bmi,
+                    visceralFat = measurement.visceralFat,
+                    obesityDegree = measurement.obesityDegree,
+                    obesityLevel = measurement.obesityLevel,
+                    muscleMass = measurement.muscleMass,
+                    muscleMassRate = measurement.muscleMassRate,
+                    leftUpperLimbMuscleWeight = measurement.leftUpperLimbMuscleWeight,
+                    rightUpperLimbMuscleWeight = measurement.rightUpperLimbMuscleWeight,
+                    lowerLeftMuscleWeight = measurement.lowerLeftMuscleWeight,
+                    lowerRightMuscleWeight = measurement.lowerRightMuscleWeight,
+                    trunkMuscleWeight = measurement.trunkMuscleWeight,
+                    leftArmMuscleRatio = measurement.leftArmMuscleRatio,
+                    rightArmMuscleRate = measurement.rightArmMuscleRate,
+                    leftLegMuscleRatio = measurement.leftLegMuscleRatio,
+                    rightLowerLimbMuscleRatio = measurement.rightLowerLimbMuscleRatio,
+                    sinewTrunkRatio = measurement.sinewTrunkRatio,
+                    bodyFatRate = measurement.bodyFatRate,
+                    leftUpperLimbFatMass = measurement.leftUpperLimbFatMass,
+                    rightUpperLimbFatMass = measurement.rightUpperLimbFatMass,
+                    leftLegFatMass = measurement.leftLegFatMass,
+                    rightLegFatMass = measurement.rightLegFatMass,
+                    trunkFatMass = measurement.trunkFatMass,
+                    leftUpperLimbFat = measurement.leftUpperLimbFat,
+                    rightUpperLimbFat = measurement.rightUpperLimbFat,
+                    leftLegFat = measurement.leftLegFat,
+                    rightLegFat = measurement.rightLegFat,
+                    trunkFat = measurement.trunkFat,
+                    fatMass = measurement.fatMass,
+                    subcutaneousFat = measurement.subcutaneousFat,
+                    subcutaneousFatMass = measurement.subcutaneousFatMass,
+                    bmr = measurement.bmr,
+                    leanBodyWeight = measurement.leanBodyWeight,
+                    metabolicAge = measurement.metabolicAge,
+                    bodyType = measurement.bodyType,
+                    weightControl = measurement.weightControl,
+                    muscleControl = measurement.muscleControl,
+                    fatControl = measurement.fatControl,
+                    standWeight = measurement.standWeight,
+                    smi = measurement.smi,
+                    waistHipRatio = measurement.waistHipRatio,
+                    healthScore = measurement.healthScore,
+                    heartRate = measurement.heartRate,
+                    heartIndex = measurement.heartIndex,
+                    fattyLiverRisk = measurement.fattyLiverRisk,
+                    bestVisualWeight = measurement.bestVisualWeight,
+                    mineralSalt = measurement.mineralSalt
+                )
+            )
+
+            try {
+                val response =
+                    responseHandler.handleResponse(api.sendScaleDataToServer(payload), false)
+                if (response.status == Status.SUCCESS) {
+                    weightScaleDao.markAsSynced(listOf(measurement.id))
+                }
+                lastResponse = response
+            } catch (e: Exception) {
+                lastResponse = responseHandler.handleException(e)
+            }
+        }
+        return lastResponse
+    }
+
 
     val hrFlow = sleepDao.getUnSyncHr()
     val hrvFlow = sleepDao.getUnSyncHrv()
@@ -145,6 +245,7 @@ class SleepRepository(
     val bandDetailActivityFlow = sleepDao.getUnSyncBandDetailActivity()
     val bandTotalActivityFlow = sleepDao.getUnSyncBandTotalActivity()
     val bandSleepFlow = sleepDao.getUnSyncBandSleep()
+    val weightScaleFlow = weightScaleDao.getUnSyncMeasurements()
 
     fun getUnSyncData(): Flow<Resource<AddDeviceDataResponse>> = flow {
         val hrList = hrFlow.first()
@@ -374,6 +475,19 @@ class SleepRepository(
         try {
             val response =
                 responseHandler.handleResponse(api.getRingReadingData(deviceId), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun addDeviceMetaData(metaData: DeviceMetaDataParam): Flow<Resource<CommonResponse>> = flow {
+        try {
+            val response =
+                responseHandler.handleResponse(api.addDeviceMetaData(metaData), false)
             emit(response)
         } catch (e: Exception) {
             emit(responseHandler.handleException(e))
