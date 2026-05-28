@@ -2,6 +2,7 @@ package com.humotron.app.ui.decode
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import com.humotron.app.R
 import com.humotron.app.core.base.BaseFragment
 import com.humotron.app.databinding.FragmentTronChatBinding
@@ -16,6 +17,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.humotron.app.ui.decode.viewmodel.DecodeViewModel
 import com.humotron.app.data.network.Status
 import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.humotron.app.ui.decode.adapter.DecodeChatAdapter
 import com.humotron.app.domain.modal.response.ConversationData
@@ -25,9 +27,11 @@ import com.humotron.app.domain.modal.response.BotResponse
 class TronChatFragment : BaseFragment(R.layout.fragment_tron_chat) {
 
     private lateinit var binding: FragmentTronChatBinding
-    private val viewModel: DecodeViewModel by viewModels()
+    private val viewModel: DecodeViewModel by activityViewModels()
+    private val shopViewModel: com.humotron.app.ui.shop.ShopToolsViewModel by activityViewModels()
     private var autoScrollEnabled = true
     private var isHistoryLoading = false
+    private var isMessageSentInSession = false
     
     private val headerAdapter = HeaderAdapter()
     
@@ -70,6 +74,29 @@ class TronChatFragment : BaseFragment(R.layout.fragment_tron_chat) {
             },
             onUserMsgClick = { item ->
                 DecodeChatMessageDetailsFragment.newInstance(item).show(childFragmentManager, "message_details")
+            },
+            onUnlockBoosterClick = { booster ->
+                val productDetails = shopViewModel.getProductDetailsForId(booster.playStoreProductId)
+                if (productDetails != null) {
+                    shopViewModel.launchBillingFlow(
+                        activity = requireActivity(),
+                        booster = booster,
+                        productDetails = productDetails
+                    )
+                } else {
+                    android.widget.Toast.makeText(
+                        requireContext(),
+                        getString(R.string.item_not_available_play_store),
+                        android.widget.Toast.LENGTH_SHORT
+                    ).show()
+                }
+            },
+            onHowItWorksClick = { booster ->
+                val bundle = Bundle().apply {
+                    putParcelable("booster", booster)
+                }
+                viewModel.navigatedToBoosterDetails = true
+                findNavController().navigate(R.id.fragmentShopBoosterDetail, bundle)
             }
         )
     }
@@ -94,6 +121,36 @@ class TronChatFragment : BaseFragment(R.layout.fragment_tron_chat) {
             sendMessage(promptTitle, promptId)
             arguments?.remove("chat_prompt_id")
             arguments?.remove("chat_prompt_title")
+        } else {
+            val threadId = viewModel.getThreadId()
+            if (threadId != null && viewModel.navigatedToBoosterDetails) {
+                viewModel.navigatedToBoosterDetails = false
+                binding.rvChat.isVisible = true
+                val boosterProductIds = chatAdapter.currentList()
+                    .mapNotNull { it.boosterAiChat?.androidProductId?.ifEmpty { null } }
+                if (boosterProductIds.isNotEmpty()) {
+                    shopViewModel.queryProductsIfNeeded(boosterProductIds)
+                }
+                if (chatAdapter.itemCount > 0) {
+                    binding.rvChat.post {
+                        binding.rvChat.scrollToPosition(chatAdapter.itemCount - 1)
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (shopViewModel.isBillingFlowActive) {
+            shopViewModel.clearBillingFlowActive()
+        } else {
+            shopViewModel.refreshPurchases()
+            val boosterProductIds = chatAdapter.currentList()
+                .mapNotNull { it.boosterAiChat?.androidProductId?.ifEmpty { null } }
+            if (boosterProductIds.isNotEmpty()) {
+                shopViewModel.queryProductsIfNeeded(boosterProductIds)
+            }
         }
     }
 
@@ -216,6 +273,7 @@ class TronChatFragment : BaseFragment(R.layout.fragment_tron_chat) {
     }
 
     private fun sendMessage(message: String, promptId: String? = null) {
+        isMessageSentInSession = true
         val newItem = ConversationData(
             id = null,
             userMessage = message,
@@ -245,11 +303,19 @@ class TronChatFragment : BaseFragment(R.layout.fragment_tron_chat) {
     private fun initObservers() {
         viewModel.conversationsData().observe(viewLifecycleOwner) { resource ->
             if (resource.status == Status.SUCCESS) {
-                val apiList = (resource.data?.data ?: emptyList()).reversed()
+                val rawList = (resource.data?.data ?: emptyList()).reversed()
+                val wasMessageSent = isMessageSentInSession
+                isMessageSentInSession = false
+                val apiList = rawList.mapIndexed { index, item ->
+                    val isLast = index == rawList.size - 1
+                    item.copy(isNewMessage = isLast && wasMessageSent)
+                }
+                val boosterProductIds = apiList.mapNotNull { it.boosterAiChat?.toBooster()?.playStoreProductId }
+                shopViewModel.queryProductsIfNeeded(boosterProductIds)
                 if (apiList.isNotEmpty()) {
-                    // Logic: If more than 1 item, treat as history (direct show).
-                    // If only 1 item, show animation (initial prompt).
-                    val shouldShowDirect = apiList.size > 1 || isHistoryLoading
+                    // Logic: If more than 1 item, treat as history (direct show), UNLESS we just sent a message.
+                    // If we just sent a message, animate it (isHistory = false).
+                    val shouldShowDirect = (!wasMessageSent && apiList.size > 1) || isHistoryLoading
                     chatAdapter.submitList(apiList, isHistory = shouldShowDirect)
                     
                     // Reset history flag after successful load
@@ -265,6 +331,9 @@ class TronChatFragment : BaseFragment(R.layout.fragment_tron_chat) {
         viewModel.followUpData().observe(viewLifecycleOwner) { resource ->
             if (resource.status == Status.SUCCESS) {
                 val latestApiItem = resource.data?.data
+                latestApiItem?.boosterAiChat?.toBooster()?.playStoreProductId?.let { id ->
+                    shopViewModel.queryProductsIfNeeded(listOf(id))
+                }
                 if (latestApiItem != null) {
                     val currentList = chatAdapter.currentList().toMutableList()
                     val loadingIndex = currentList.indexOfLast { it.id == null }
@@ -272,8 +341,11 @@ class TronChatFragment : BaseFragment(R.layout.fragment_tron_chat) {
                         val updatedItem = currentList[loadingIndex].copy(
                             id = latestApiItem.id,
                             botResponse = latestApiItem.botResponse,
-                            createdAt = latestApiItem.createdAt ?: currentList[loadingIndex].createdAt
+                            createdAt = latestApiItem.createdAt ?: currentList[loadingIndex].createdAt,
+                            boosterAiChat = latestApiItem.boosterAiChat,
+                            isNewMessage = isMessageSentInSession
                         )
+                        isMessageSentInSession = false
                         currentList[loadingIndex] = updatedItem
                         // This is a new follow-up, so isHistory should be false (default)
                         chatAdapter.submitList(currentList)
@@ -283,6 +355,70 @@ class TronChatFragment : BaseFragment(R.layout.fragment_tron_chat) {
                     }
                 }
             }
+        }
+
+        shopViewModel.playStoreProductsLiveData.observe(viewLifecycleOwner) { products ->
+            chatAdapter.setPlayStoreProducts(products)
+        }
+
+        shopViewModel.activePurchasesLiveData.observe(viewLifecycleOwner) { purchases ->
+            val hasPurchasedLockedBooster = chatAdapter.currentList().any { item ->
+                item.boosterAiChat != null &&
+                item.boosterAiChat.isActive == false &&
+                purchases.any { purchase ->
+                    purchase.products.contains(item.boosterAiChat.androidProductId)
+                }
+            }
+            if (hasPurchasedLockedBooster) {
+                val currentThreadId = viewModel.getThreadId()
+                if (currentThreadId != null) {
+                    viewModel.getConversationsByUserId(conversationThreadId = currentThreadId)
+                }
+            }
+        }
+
+        shopViewModel.orderResultLiveData.observe(viewLifecycleOwner) { resource ->
+            when (resource.status) {
+                Status.SUCCESS -> {
+                    hideProgress()
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.unlocked_success),
+                        Toast.LENGTH_LONG
+                    ).show()
+                    val threadId = viewModel.getThreadId()
+                    if (threadId != null) {
+                        viewModel.getConversationsByUserId(conversationThreadId = threadId)
+                    }
+                }
+                Status.ERROR, Status.EXCEPTION -> {
+                    hideProgress()
+                    Toast.makeText(
+                        requireContext(),
+                        resource.error?.errorMessage ?: getString(R.string.order_activation_failed),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+                Status.LOADING -> {
+                    showProgress()
+                }
+            }
+        }
+
+        shopViewModel.purchaseErrorEvent.observe(viewLifecycleOwner) { errorMsg ->
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.purchase_failed_format, errorMsg),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
+        shopViewModel.purchaseCancelEvent.observe(viewLifecycleOwner) {
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.transaction_canceled),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 }

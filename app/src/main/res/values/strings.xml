@@ -281,6 +281,9 @@ To get started:\n
     <string name="chat_error_fetch_insights">Failed to fetch insights. Please try again.</string>
     <string name="chat_error_fetch_response">Failed to fetch response. Please try again.</string>
     <string name="chat_history_title">Conversation History</string>
+    <string name="chat_analyze_metric_prompt">Analyze my %1$s over the last 30 days.</string>
+    <string name="chat_help_understand_metric_prompt">Help me understand my %1$s over the last 30 days and what I can do to improve it.</string>
+    <string name="chat_booster_continue_price">Continue - %1$s/m →</string>
     <string name="anonymised_metric_data">Anonymised Metric Data</string>
     <string name="metric_name">Metric Name</string>
     <string name="date_range">Date Range</string>

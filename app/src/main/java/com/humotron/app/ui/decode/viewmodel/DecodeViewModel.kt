@@ -32,6 +32,7 @@ class DecodeViewModel @Inject constructor(
     private var currentConversationThreadId: String? = null
     private var currentPage: Int = 1
     private var isLastPage: Boolean = false
+    var navigatedToBoosterDetails: Boolean = false
 
     fun getThreadId(): String? = currentConversationThreadId
 

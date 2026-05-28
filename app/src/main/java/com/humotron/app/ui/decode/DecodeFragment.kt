@@ -94,6 +94,11 @@ class DecodeFragment : BaseFragment(R.layout.fragment_decode) {
     }
 
     private fun loadFragment(fragment: androidx.fragment.app.Fragment) {
+        val existing = childFragmentManager.findFragmentById(R.id.contentContainer)
+        if (existing != null && existing::class == fragment::class) {
+            // Same fragment type already shown — don't replace, let it restore naturally
+            return
+        }
         childFragmentManager.beginTransaction()
             .replace(R.id.contentContainer, fragment)
             .commit()

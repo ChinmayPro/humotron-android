@@ -136,10 +136,12 @@ class ShopToolsViewModel @Inject constructor(
 
                     // Extract product IDs dynamically from API and query Play Store
                     val ids = boosters.mapNotNull { it.playStoreProductId.ifEmpty { null } }
-                    if (ids.isNotEmpty() && ids != cachedBoosterProductIds) {
+                    if (ids.isNotEmpty()) {
                         cachedBoosterProductIds = ids
                         if (billingManager.isReady.value) {
                             fetchProductList()
+                        } else if (playStoreProducts.isNotEmpty()) {
+                            _playStoreProductsLiveData.value = playStoreProducts
                         }
                     }
                 } else if (resource.status == com.humotron.app.data.network.Status.ERROR || resource.status == com.humotron.app.data.network.Status.EXCEPTION) {
@@ -153,6 +155,18 @@ class ShopToolsViewModel @Inject constructor(
                     _boostersLiveData.value = Resource.loading()
                 }
             }
+        }
+    }
+
+    fun queryProductsIfNeeded(productIds: List<String>) {
+        val ids = productIds.filter { it.isNotEmpty() }
+        if (ids.isEmpty()) return
+        val combinedIds = (cachedBoosterProductIds + ids).distinct()
+        cachedBoosterProductIds = combinedIds
+        if (billingManager.isReady.value) {
+            fetchProductList()
+        } else if (playStoreProducts.isNotEmpty()) {
+            _playStoreProductsLiveData.value = playStoreProducts
         }
     }
 

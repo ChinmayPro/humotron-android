@@ -259,6 +259,14 @@
             android:name="wearable"
             app:argType="com.humotron.app.domain.modal.response.GetAllDeviceResponse$Data$UserDevice"
             app:nullable="true" />
+    </fragment>    <fragment
+        android:id="@+id/fragmentShopBoosterDetail"
+        android:name="com.humotron.app.ui.shop.ShopBoosterDetailFragment"
+        android:label="Booster Details"
+        tools:layout="@layout/fragment_shop_booster_detail">
+        <argument
+            android:name="booster"
+            app:argType="com.humotron.app.domain.modal.response.BoosterResponse$Booster" />
     </fragment>
 
 </navigation>
