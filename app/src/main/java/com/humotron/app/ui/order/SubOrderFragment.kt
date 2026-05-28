@@ -76,28 +76,67 @@ class SubOrderFragment : BaseFragment(R.layout.fragment_sub_order) {
                 }
                 Status.SUCCESS -> {
                     binding.progressBar.visibility = View.GONE
-                    val orders = resource.data?.orderList ?: emptyList()
-                    if (isFirstPage) {
-                        if (orders.isEmpty()) {
-                            binding.tvMainLabel.visibility = View.VISIBLE
+                    val response = resource.data
+                    if (response?.status == "fail") {
+                        if (isFirstPage) {
+                            binding.tvMainLabel.visibility = View.GONE
                             binding.tvSubLabel.visibility = View.VISIBLE
                             binding.rvOrders.visibility = View.GONE
-                        } else {
-                            binding.tvMainLabel.visibility = View.GONE
-                            binding.tvSubLabel.visibility = View.GONE
-                            binding.rvOrders.visibility = View.VISIBLE
-                            orderAdapter.setOrders(orders, true)
                         }
-                        isFirstPage = false
+                        val errorMsg = if (!response.message.isNullOrEmpty()) response.message else getString(R.string.something_went_wrong)
+                        android.widget.Toast.makeText(requireContext(), errorMsg, android.widget.Toast.LENGTH_SHORT).show()
                     } else {
-                        orderAdapter.setOrders(orders, false)
+                        val orders = response?.orderList ?: emptyList()
+                        if (isFirstPage) {
+                            if (orders.isEmpty()) {
+                                binding.tvMainLabel.visibility = View.GONE
+                                binding.tvSubLabel.visibility = View.VISIBLE
+                                binding.rvOrders.visibility = View.GONE
+                            } else {
+                                binding.tvMainLabel.visibility = View.GONE
+                                binding.tvSubLabel.visibility = View.GONE
+                                binding.rvOrders.visibility = View.VISIBLE
+                                orderAdapter.setOrders(orders, true)
+                            }
+                            isFirstPage = false
+                        } else {
+                            orderAdapter.setOrders(orders, false)
+                        }
                     }
                 }
                 Status.ERROR, Status.EXCEPTION -> {
                     binding.progressBar.visibility = View.GONE
-                    // Optionally show error message
+                    if (orderAdapter.itemCount == 0) {
+                        binding.tvMainLabel.visibility = View.GONE
+                        binding.tvSubLabel.visibility = View.VISIBLE
+                        binding.rvOrders.visibility = View.GONE
+                    }
+                    val errorMsg = getErrorMessage(resource.error)
+                    android.widget.Toast.makeText(requireContext(), errorMsg, android.widget.Toast.LENGTH_SHORT).show()
                 }
             }
         }
+    }
+
+    private fun getErrorMessage(error: com.humotron.app.data.network.error.Error?): String {
+        if (error == null) return getString(R.string.something_went_wrong)
+
+        if (!error.errorMessage.isNullOrEmpty()) return error.errorMessage
+
+        val rawError = error.error
+        if (!rawError.isNullOrEmpty()) {
+            return try {
+                val json = org.json.JSONObject(rawError)
+                when {
+                    json.has("message") -> json.getString("message")
+                    json.has("error") -> json.getString("error")
+                    else -> rawError
+                }
+            } catch (e: Exception) {
+                rawError
+            }
+        }
+
+        return getString(R.string.something_went_wrong)
     }
 }

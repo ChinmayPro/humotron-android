@@ -70,51 +70,65 @@ class SubFavouriteFragment : BaseFragment(R.layout.fragment_sub_favourite), Shop
                 Status.LOADING -> {
                     if (parentAdapter.itemCount == 0) {
                         binding.progressBar.visibility = View.VISIBLE
+                        binding.tvNoData.visibility = View.GONE
                     }
                 }
                 Status.SUCCESS -> {
                     binding.progressBar.visibility = View.GONE
-                    val data = resource.data?.data
-                    currentUIItems.clear()
+                    val response = resource.data
+                    if (response?.status == "fail") {
+                        currentUIItems.clear()
+                        parentAdapter.setItems(ArrayList(currentUIItems))
+                        binding.tvNoData.visibility = View.VISIBLE
+                        val errorMsg = if (!response.message.isNullOrEmpty()) response.message else getString(R.string.something_went_wrong)
+                        android.widget.Toast.makeText(requireContext(), errorMsg, android.widget.Toast.LENGTH_SHORT).show()
+                    } else {
+                        val data = response?.data
+                        currentUIItems.clear()
 
-                    // 1. Books Section
-                    data?.books?.let { books ->
-                        if (books.isNotEmpty()) {
-                            currentUIItems.add(FavouriteUIItem.Header("Books"))
-                            currentUIItems.add(FavouriteUIItem.BookCarousel(
-                                BookPreferenceResponse.BookData.Book(
-                                    bookRecommendation = books,
-                                    category = null,
-                                    primaryTag = null
-                                )
-                            ))
-                        }
-                    }
-
-                    // 2. Devices Section
-                    data?.devices?.let { devices ->
-                        if (devices.isNotEmpty()) {
-                            currentUIItems.add(FavouriteUIItem.Header("Device"))
-                            devices.forEach { device ->
-                                currentUIItems.add(FavouriteUIItem.Device(device))
+                        // 1. Books Section
+                        data?.books?.let { books ->
+                            if (books.isNotEmpty()) {
+                                currentUIItems.add(FavouriteUIItem.Header("Books"))
+                                currentUIItems.add(FavouriteUIItem.BookCarousel(
+                                    BookPreferenceResponse.BookData.Book(
+                                        bookRecommendation = books,
+                                        category = null,
+                                        primaryTag = null
+                                    )
+                                ))
                             }
                         }
-                    }
 
-                    // 3. Products/Supplements Section
-                    data?.products?.let { products ->
-                        if (products.isNotEmpty()) {
-                            currentUIItems.add(FavouriteUIItem.Header("Suppliments"))
-                            products.forEach { product ->
-                                currentUIItems.add(FavouriteUIItem.Product(product))
+                        // 2. Devices Section
+                        data?.devices?.let { devices ->
+                            if (devices.isNotEmpty()) {
+                                currentUIItems.add(FavouriteUIItem.Header("Device"))
+                                devices.forEach { device ->
+                                    currentUIItems.add(FavouriteUIItem.Device(device))
+                                }
                             }
                         }
-                    }
 
-                    parentAdapter.setItems(ArrayList(currentUIItems))
+                        // 3. Products/Supplements Section
+                        data?.products?.let { products ->
+                            if (products.isNotEmpty()) {
+                                currentUIItems.add(FavouriteUIItem.Header("Suppliments"))
+                                products.forEach { product ->
+                                    currentUIItems.add(FavouriteUIItem.Product(product))
+                                }
+                            }
+                        }
+
+                        parentAdapter.setItems(ArrayList(currentUIItems))
+                        binding.tvNoData.visibility = if (currentUIItems.isEmpty()) View.VISIBLE else View.GONE
+                    }
                 }
                 Status.ERROR, Status.EXCEPTION -> {
                     binding.progressBar.visibility = View.GONE
+                    binding.tvNoData.visibility = if (currentUIItems.isEmpty()) View.VISIBLE else View.GONE
+                    val errorMsg = getErrorMessage(resource.error)
+                    android.widget.Toast.makeText(requireContext(), errorMsg, android.widget.Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -226,6 +240,7 @@ class SubFavouriteFragment : BaseFragment(R.layout.fragment_sub_favourite), Shop
         
         currentUIItems = updatedList
         parentAdapter.setItems(ArrayList(currentUIItems))
+        binding.tvNoData.visibility = if (currentUIItems.isEmpty()) View.VISIBLE else View.GONE
         
         // Then call API
         shopViewModel.likeBook(bookId)
@@ -265,5 +280,27 @@ class SubFavouriteFragment : BaseFragment(R.layout.fragment_sub_favourite), Shop
 
     fun fetchData() {
         viewModel.fetchAllLikes()
+    }
+
+    private fun getErrorMessage(error: com.humotron.app.data.network.error.Error?): String {
+        if (error == null) return getString(R.string.something_went_wrong)
+
+        if (!error.errorMessage.isNullOrEmpty()) return error.errorMessage
+
+        val rawError = error.error
+        if (!rawError.isNullOrEmpty()) {
+            return try {
+                val json = org.json.JSONObject(rawError)
+                when {
+                    json.has("message") -> json.getString("message")
+                    json.has("error") -> json.getString("error")
+                    else -> rawError
+                }
+            } catch (e: Exception) {
+                rawError
+            }
+        }
+
+        return getString(R.string.something_went_wrong)
     }
 }

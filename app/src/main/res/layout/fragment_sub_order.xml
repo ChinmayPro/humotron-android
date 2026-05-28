@@ -21,16 +21,6 @@
             android:visibility="gone"
             android:text="@string/order_track_desc" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvSubLabel"
-            style="@style/Text.14x.Manrope.Medium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:visibility="gone"
-            android:text="@string/no_orders_yet"
-            android:textColor="@color/white30" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvOrders"
             android:layout_width="match_parent"
@@ -41,6 +31,16 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_order" />
     </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvSubLabel"
+        style="@style/Text.16x.Manrope.SemiBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:text="@string/no_orders_yet"
+        android:textColor="@color/white50" />
 
     <ProgressBar
         android:id="@+id/progressBar"
