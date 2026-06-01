@@ -108,4 +108,7 @@
     <color name="pluto___transparent">#00000000</color>
     <color name="pluto___red">#FF3B30</color>
 
+    <color name="support_search_border">#33979797</color>
+    <color name="popular_search_chip_bg">#16222A</color>
+    <color name="support_help_icon_bg">#101A21</color>
 </resources>

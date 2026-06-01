@@ -216,6 +216,7 @@ dependencies {
     implementation(libs.play.billing.ktx)
 
     implementation("com.google.android.flexbox:flexbox:3.0.0")
+    implementation("com.caverock:androidsvg-aar:1.4")
     implementation("com.stripe:stripe-android:21.0.0")
     
     // Minimal Compose dependencies required by Stripe SDK

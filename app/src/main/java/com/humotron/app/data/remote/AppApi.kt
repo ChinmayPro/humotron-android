@@ -64,6 +64,8 @@ import com.humotron.app.domain.modal.response.SubmitAnswerResponse
 import com.humotron.app.domain.modal.response.TemperatureResponse
 import com.humotron.app.domain.modal.response.UseCaseResponse
 import com.humotron.app.domain.modal.response.VerifyOtpResponse
+import com.humotron.app.domain.modal.response.SupportHomeResponse
+import com.humotron.app.domain.modal.response.MyTicketsResponse
 import com.humotron.app.domain.modal.response.WristBandSleepDurationResponse
 import com.humotron.app.domain.modal.response.YetToTrackMetricResponse
 import com.humotron.app.domain.modal.response.ProductDetailResponse
@@ -512,5 +514,11 @@ interface AppApi {
     suspend fun createDigitalProductOrder(
         @Body request: HashMap<String, Any>
     ): Response<com.humotron.app.domain.modal.response.CommonResponse>
+    
+    @GET("supportTopic/getSupportHome")
+    suspend fun getSupportHome(): Response<SupportHomeResponse>
+
+    @GET("supportTicket/myTickets")
+    suspend fun getMyTickets(): Response<MyTicketsResponse>
 
 }

@@ -82,7 +82,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         }
 
         binding.clSupport.setOnClickListener {
-            // TODO: Navigate to Support screen
+            findNavController().navigate(R.id.action_fragmentProfile_to_fragmentSupport)
         }
 
         binding.clFaq.setOnClickListener {

@@ -748,4 +748,21 @@ To get started:\n
         <item>Year</item>
     </string-array>
 
+    <string name="support_how_can_we_help">How can we help?</string>
+    <string name="support_subtitle_desc">Find answers, troubleshoot, or contact our support team.</string>
+    <string name="support_search_hint">Search for help (e.g. sync issue, blood pressure)</string>
+    <string name="support_my_requests">My Requests</string>
+    <string name="support_my_requests_subtitle">Track your support conversations and replies</string>
+    <string name="support_failed_get_details">Failed to get support details</string>
+    <string name="support_failed_get_tickets">Failed to get tickets</string>
+    <string name="support_exception_occurred">An exception occurred</string>
+    <string name="support_popular_searches">Popular searches</string>
+    <string name="support_browse_by_category">Browse by category</string>
+    <string name="support_your_devices">Your devices</string>
+    <string name="support_view_all_devices">View all devices ></string>
+    <string name="support_popular_articles">Popular articles</string>
+    <string name="support_view_all_articles">View all articles ></string>
+    <string name="support_still_need_help">Still need help?</string>
+    <string name="support_contact_support_desc">Contact our support team and we\'ll get back to you.</string>
+    <string name="support_contact_support">Contact Support</string>
 </resources>
