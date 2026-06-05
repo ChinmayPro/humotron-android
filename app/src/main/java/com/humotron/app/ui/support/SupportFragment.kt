@@ -5,71 +5,102 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+
 import com.google.android.flexbox.AlignItems
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
+
 import com.humotron.app.R
 import com.humotron.app.core.base.BaseFragment
 import com.humotron.app.data.network.Status
 import com.humotron.app.databinding.FragmentSupportBinding
 import com.humotron.app.domain.modal.response.GetAllDeviceResponse
 import com.humotron.app.domain.modal.response.SupportConnectedDevice
+
+import com.humotron.app.ui.support.adapter.SupportArticleAdapter
+import com.humotron.app.ui.support.adapter.SupportCategoryAdapter
+import com.humotron.app.ui.support.adapter.SupportDeviceAdapter
+import com.humotron.app.ui.support.adapter.PopularSearchAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SupportFragment : BaseFragment(R.layout.fragment_support) {
 
     private lateinit var binding: FragmentSupportBinding
-    private val viewModel: SupportViewModel by viewModels()
+    private val viewModel: SupportViewModel by activityViewModels()
 
     private val popularSearchAdapter by lazy {
         PopularSearchAdapter { keyword ->
-            binding.etSearchHelp.setText(keyword)
+            val bundle = Bundle().apply {
+                putString("searchQuery", keyword)
+            }
+            findNavController().navigate(R.id.action_fragmentSupport_to_fragmentSupportSearch, bundle)
         }
     }
 
     private val supportCategoryAdapter by lazy {
-        SupportCategoryAdapter { _ ->
+        SupportCategoryAdapter { category ->
+            val bundle = Bundle().apply {
+                putString("categoryKey", category.key)
+                putString("categoryLabel", category.label)
+            }
+            findNavController().navigate(
+                R.id.action_fragmentSupport_to_fragmentSupportViewAllArticles,
+                bundle
+            )
         }
     }
 
     private val supportDeviceAdapter by lazy {
         SupportDeviceAdapter { device ->
-            // Map SupportConnectedDevice to UserDevice for the config screen
-            val userDevice = GetAllDeviceResponse.Data.UserDevice(
-                id = device.deviceId,
-                deviceName = device.hardwareType,
-                deviceFacingName = device.deviceLabel,
-                dataSync = device.connectedAt,
-                deviceCategoryName = null,
-                deviceImage = if (device.deviceUrl != null) listOf(device.deviceUrl) else null,
-                deviceModelId = null,
-                deviceModelName = null,
-                deviceSubCategoryId = null,
-                deviceSubCategoryName = null,
-                deviceTextMessage = null,
-                deviceType = device.hardwareType,
-                deviceUrl = if (device.deviceUrl != null) listOf(device.deviceUrl) else null,
-                metrics = null,
-                orderStatus = device.status
-            )
             val bundle = Bundle().apply {
-                putParcelable("wearable", userDevice)
+                putString("categoryKey", "devices")
+                putString("categoryLabel", device.deviceLabel ?: "Devices")
+                putParcelable("device", device)
             }
-            findNavController().navigate(R.id.fragmentDeviceConfig, bundle)
+            findNavController().navigate(
+                R.id.action_fragmentSupport_to_fragmentSupportViewAllArticles,
+                bundle
+            )
         }
     }
 
     private val popularArticleAdapter by lazy {
-        SupportArticleAdapter { _ ->
-            // Do not navigate/open anything for now
+        SupportArticleAdapter { article ->
+            val mappedArticle = com.humotron.app.domain.modal.response.SearchTopicItem(
+                id = article.topicId ?: article.id,
+                subcategoryLabel = article.subcategoryLabel,
+                subtitle = article.subtitle,
+                categoryKey = article.categoryKey,
+                topicId = article.topicId,
+                articleType = article.articleType,
+                contactReasonCode = article.contactReasonCode,
+                deviceScope = article.deviceScope,
+                priority = article.priority,
+                subcategoryKey = article.subcategoryKey,
+                tags = null,
+                slug = article.slug,
+                title = article.title,
+                timeToRead = article.timeToRead,
+                viewCount = article.viewCount,
+                categoryLabel = article.categoryLabel,
+                shortAnswer = null
+            )
+            val bundle = Bundle().apply {
+                putParcelable("article", mappedArticle)
+            }
+            findNavController().navigate(
+                R.id.action_fragmentSupport_to_fragmentSupportArticleDetail,
+                bundle
+            )
         }
     }
 
@@ -120,6 +151,19 @@ class SupportFragment : BaseFragment(R.layout.fragment_support) {
 
         binding.btnContactSupport.setOnClickListener {
         }
+
+        binding.clSearchBar.setOnClickListener {
+            findNavController().navigate(R.id.action_fragmentSupport_to_fragmentSupportSearch)
+        }
+        binding.etSearchHelp.setOnClickListener {
+            findNavController().navigate(R.id.action_fragmentSupport_to_fragmentSupportSearch)
+        }
+        binding.ivSearchLeft.setOnClickListener {
+            findNavController().navigate(R.id.action_fragmentSupport_to_fragmentSupportSearch)
+        }
+        binding.ivSearchRight.setOnClickListener {
+            findNavController().navigate(R.id.action_fragmentSupport_to_fragmentSupportSearch)
+        }
     }
 
     private fun initObservers() {
@@ -135,8 +179,14 @@ class SupportFragment : BaseFragment(R.layout.fragment_support) {
                     val response = resource.data
                     if (response?.status == "success" && response.data != null) {
                         
-                        response.data.popularSearchKeywords?.let { keywords ->
+                        val keywords = response.data.popularSearchKeywords
+                        if (!keywords.isNullOrEmpty()) {
                             popularSearchAdapter.setData(keywords)
+                            binding.tvPopularSearches.visibility = View.VISIBLE
+                            binding.rvPopularSearches.visibility = View.VISIBLE
+                        } else {
+                            binding.tvPopularSearches.visibility = View.GONE
+                            binding.rvPopularSearches.visibility = View.GONE
                         }
 
                         response.data.categories?.let { categories ->

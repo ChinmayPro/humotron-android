@@ -31,17 +31,16 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvHowHelp"
-                style="@style/Text.24x.Manrope.Bold"
+                style="@style/Text.20x.Manrope.SemiBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/support_how_can_we_help"
-                android:textColor="@color/white"
                 android:textSize="28sp"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvSupportSubtitle"
-                style="@style/Text.16x.Manrope.Regular"
+                style="@style/Text.14x.Manrope.Regular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -52,7 +51,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clSearchBar"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="48dp"
                 android:layout_marginTop="24dp"
                 android:background="@drawable/bg_support_search"
                 android:paddingHorizontal="15dp"
@@ -70,7 +69,7 @@
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/etSearchHelp"
-                    style="@style/Text.16x.Manrope.Regular"
+                    style="@style/Text.14x.Manrope.Regular"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="12dp"
@@ -145,11 +144,10 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/Text.18x.Manrope.SemiBold"
+                        style="@style/Text.16x.Manrope.SemiBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/support_my_requests"
-                        android:textColor="@color/white" />
+                        android:text="@string/support_my_requests" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/Text.12x.Manrope.Regular"
@@ -163,14 +161,13 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvBadge"
+                    style="@style/Text.12x.Manrope.Bold"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginEnd="8dp"
                     android:background="@drawable/bg_add_button"
                     android:gravity="center"
                     android:textColor="@color/black"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
                     android:visibility="gone"
                     tools:visibility="visible"
                     tools:text="3"
@@ -192,10 +189,10 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvPopularSearches"
-                style="@style/Text.18x.Manrope.SemiBold"
+                style="@style/Text.16x.Manrope.SemiBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="28dp"
                 android:text="@string/support_popular_searches"
                 android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
@@ -213,7 +210,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvBrowseCategory"
-                style="@style/Text.18x.Manrope.SemiBold"
+                style="@style/Text.16x.Manrope.SemiBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="28dp"
@@ -241,7 +238,7 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvYourDevicesHeader"
-                    style="@style/Text.18x.Manrope.SemiBold"
+                    style="@style/Text.16x.Manrope.SemiBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/support_your_devices"
@@ -299,7 +296,7 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvPopularArticlesHeader"
-                    style="@style/Text.18x.Manrope.SemiBold"
+                    style="@style/Text.16x.Manrope.SemiBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/support_popular_articles"
@@ -317,6 +314,7 @@
                     android:textColor="@color/colorBgBtn1"
                     android:clickable="true"
                     android:focusable="true"
+                    android:textSize="13sp"
                     android:background="?attr/selectableItemBackground"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -377,7 +375,7 @@
                     app:layout_constraintTop_toTopOf="@id/flHelpIconBg">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/Text.18x.Manrope.SemiBold"
+                        style="@style/Text.16x.Manrope.SemiBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/support_still_need_help"
@@ -388,13 +386,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
+                        android:textSize="13sp"
                         android:text="@string/support_contact_support_desc"
                         android:textColor="@color/white50" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/btnContactSupport"
-                    style="@style/Text.16x.Manrope.Bold"
+                    style="@style/Text.14x.Manrope.SemiBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"

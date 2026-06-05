@@ -89,6 +89,103 @@
         android:id="@+id/fragmentSupport"
         android:name="com.humotron.app.ui.support.SupportFragment"
         android:label="Support"
-        tools:layout="@layout/fragment_support" />
+        tools:layout="@layout/fragment_support">
+        <action
+            android:id="@+id/action_fragmentSupport_to_fragmentSupportSearch"
+            app:destination="@id/fragmentSupportSearch"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentSupport_to_fragmentSupportViewAllArticles"
+            app:destination="@id/fragmentSupportViewAllArticles"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentSupport_to_fragmentSupportArticleDetail"
+            app:destination="@id/fragmentSupportArticleDetail"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentSupportSearch"
+        android:name="com.humotron.app.ui.support.SupportSearchFragment"
+        android:label="Support Search"
+        tools:layout="@layout/fragment_support_search">
+        <argument
+            android:name="searchQuery"
+            app:argType="string"
+            android:defaultValue="" />
+        <action
+            android:id="@+id/action_fragmentSupportSearch_to_fragmentSupportArticleDetail"
+            app:destination="@id/fragmentSupportArticleDetail"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentSupportArticleDetail"
+        android:name="com.humotron.app.ui.support.SupportArticleDetailFragment"
+        android:label="Article Detail"
+        tools:layout="@layout/fragment_support_article_detail">
+        <argument
+            android:name="article"
+            app:argType="com.humotron.app.domain.modal.response.SearchTopicItem" />
+        <action
+            android:id="@+id/action_fragmentSupportArticleDetail_to_fragmentSupportViewAllArticles"
+            app:destination="@id/fragmentSupportViewAllArticles"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentSupportViewAllArticles"
+        android:name="com.humotron.app.ui.support.SupportViewAllArticlesFragment"
+        android:label="View All Articles"
+        tools:layout="@layout/fragment_support_view_all_articles">
+        <argument
+            android:name="categoryKey"
+            app:argType="string" />
+        <argument
+            android:name="categoryLabel"
+            app:argType="string"
+            android:defaultValue="" />
+        <argument
+            android:name="device"
+            app:argType="com.humotron.app.domain.modal.response.SupportConnectedDevice"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_fragmentSupportViewAllArticles_to_fragmentSupportSearch"
+            app:destination="@id/fragmentSupportSearch"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentSupportViewAllArticles_to_fragmentSupportArticleDetail"
+            app:destination="@id/fragmentSupportArticleDetail"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentSupportViewAllArticles_to_fragmentDeviceConfig"
+            app:destination="@id/fragmentDeviceConfig"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
 
 </navigation>

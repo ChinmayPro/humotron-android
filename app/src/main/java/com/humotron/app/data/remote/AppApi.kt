@@ -66,6 +66,9 @@ import com.humotron.app.domain.modal.response.UseCaseResponse
 import com.humotron.app.domain.modal.response.VerifyOtpResponse
 import com.humotron.app.domain.modal.response.SupportHomeResponse
 import com.humotron.app.domain.modal.response.MyTicketsResponse
+import com.humotron.app.domain.modal.response.SearchTopicsResponse
+import com.humotron.app.domain.modal.response.SupportTopicDetailResponse
+import com.humotron.app.domain.modal.response.TopicsByCategoryResponse
 import com.humotron.app.domain.modal.response.WristBandSleepDurationResponse
 import com.humotron.app.domain.modal.response.YetToTrackMetricResponse
 import com.humotron.app.domain.modal.response.ProductDetailResponse
@@ -520,5 +523,22 @@ interface AppApi {
 
     @GET("supportTicket/myTickets")
     suspend fun getMyTickets(): Response<MyTicketsResponse>
+
+    @GET("supportTopic/searchTopics")
+    suspend fun searchTopics(
+        @Query("page") page: Int,
+        @Query("q") query: String,
+        @Query("limit") limit: Int
+    ): Response<SearchTopicsResponse>
+
+    @GET("supportTopic/topicDetail/{topicId}")
+    suspend fun getTopicDetail(
+        @Path("topicId") topicId: String
+    ): Response<SupportTopicDetailResponse>
+
+    @GET("supportTopic/topicsByCategory/{categoryKey}")
+    suspend fun getTopicsByCategory(
+        @Path("categoryKey") categoryKey: String
+    ): Response<TopicsByCategoryResponse>
 
 }

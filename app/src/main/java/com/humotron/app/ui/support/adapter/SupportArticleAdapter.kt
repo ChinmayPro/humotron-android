@@ -1,4 +1,4 @@
-package com.humotron.app.ui.support
+package com.humotron.app.ui.support.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

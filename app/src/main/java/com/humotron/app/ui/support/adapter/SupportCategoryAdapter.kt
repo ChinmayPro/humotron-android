@@ -1,9 +1,8 @@
-package com.humotron.app.ui.support
+package com.humotron.app.ui.support.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.humotron.app.R
 import com.humotron.app.databinding.ItemSupportCategoryBinding
 import com.humotron.app.domain.modal.response.SupportCategory
 import com.humotron.app.util.loadImage
@@ -51,4 +50,3 @@ class SupportCategoryAdapter(
         }
     }
 }
-

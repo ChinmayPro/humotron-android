@@ -6,6 +6,5 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bg_popular_search_chip"
     android:paddingHorizontal="12dp"
-    android:textSize="15sp"
     android:paddingVertical="8dp"
     android:layout_margin="5dp" />

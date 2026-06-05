@@ -111,4 +111,6 @@
     <color name="support_search_border">#33979797</color>
     <color name="popular_search_chip_bg">#16222A</color>
     <color name="support_help_icon_bg">#101A21</color>
+    <color name="support_card_bg_detail">#1D2730</color>
+    <color name="support_link_blue">#5EC4FF</color>
 </resources>

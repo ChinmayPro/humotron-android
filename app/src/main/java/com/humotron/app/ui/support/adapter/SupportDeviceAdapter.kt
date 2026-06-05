@@ -1,4 +1,4 @@
-package com.humotron.app.ui.support
+package com.humotron.app.ui.support.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -64,6 +64,10 @@ class SupportDeviceAdapter(
 
             // Hide divider for the last item in the list
             binding.divider.isVisible = position < itemCount - 1
+
+            binding.root.setOnClickListener {
+                onDeviceClick(item)
+            }
         }
     }
 }
