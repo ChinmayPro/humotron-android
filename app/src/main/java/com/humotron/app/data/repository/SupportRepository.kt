@@ -82,4 +82,34 @@ class SupportRepository @Inject constructor(
     }.catch {
         emit(responseHandler.handleException(ValidationException(it.message)))
     }
+
+    fun getSupportCategoryByKey(categoryKey: String): Flow<Resource<TopicsByCategoryResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.getSupportCategoryByKey(categoryKey), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun getAllTopics(limit: Int, page: Int): Flow<Resource<com.humotron.app.domain.modal.response.AllTopicsResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val param = HashMap<String, Any>().apply {
+                put("limit", limit)
+                put("pageCount", page)
+            }
+            val response = responseHandler.handleResponse(api.getAllTopics(param), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
 }

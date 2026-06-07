@@ -5,18 +5,26 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.humotron.app.R
 import com.humotron.app.databinding.ItemSupportArticleBinding
-import com.humotron.app.domain.modal.response.PopularArticle
+import com.humotron.app.domain.modal.response.SearchTopicItem
 
-class SupportArticleAdapter(
-    private val onArticleClick: (PopularArticle) -> Unit
-) : RecyclerView.Adapter<SupportArticleAdapter.ViewHolder>() {
+class SupportAllArticlesAdapter(
+    private val onArticleClick: (SearchTopicItem) -> Unit
+) : RecyclerView.Adapter<SupportAllArticlesAdapter.ViewHolder>() {
 
-    private val items = mutableListOf<PopularArticle>()
+    private val items = mutableListOf<SearchTopicItem>()
 
-    fun setData(newItems: List<PopularArticle>) {
+    fun setData(newItems: List<SearchTopicItem>) {
+        val oldSize = items.size
         items.clear()
         items.addAll(newItems)
-        notifyDataSetChanged()
+        val newSize = items.size
+        if (oldSize == 0) {
+            notifyDataSetChanged()
+        } else if (newSize > oldSize) {
+            notifyItemRangeInserted(oldSize, newSize - oldSize)
+        } else {
+            notifyDataSetChanged()
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -38,7 +46,7 @@ class SupportArticleAdapter(
         private val binding: ItemSupportArticleBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: PopularArticle) {
+        fun bind(item: SearchTopicItem) {
             binding.tvArticleTitle.text = item.title ?: ""
             
             val subcategory = item.subcategoryLabel ?: ""

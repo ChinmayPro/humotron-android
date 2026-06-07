@@ -22,8 +22,8 @@
             android:layout_gravity="center"
             android:indeterminate="true"
             android:visibility="visible"
-            app:indicatorColor="@color/white50"
-            app:trackColor="@color/white50" />
+            app:indicatorColor="@color/colorBgBtn"
+            app:trackColor="@color/white10" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/loading_message"

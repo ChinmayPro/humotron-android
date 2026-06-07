@@ -40,6 +40,12 @@ class SupportViewModel @Inject constructor(
     private val _topicsByCategoryData = MutableLiveData<Resource<TopicsByCategoryResponse>>()
     val topicsByCategoryData: LiveData<Resource<TopicsByCategoryResponse>> get() = _topicsByCategoryData
 
+    private val _supportCategoryData = MutableLiveData<Resource<TopicsByCategoryResponse>>()
+    val supportCategoryData: LiveData<Resource<TopicsByCategoryResponse>> get() = _supportCategoryData
+
+    private val _allTopicsData = MutableLiveData<Resource<com.humotron.app.domain.modal.response.AllTopicsResponse>>()
+    val allTopicsData: LiveData<Resource<com.humotron.app.domain.modal.response.AllTopicsResponse>> get() = _allTopicsData
+
     private var searchJob: kotlinx.coroutines.Job? = null
 
     private var currentPage = 1
@@ -48,6 +54,12 @@ class SupportViewModel @Inject constructor(
     private val accumulatedTopics = mutableListOf<SearchTopicItem>()
     private var isPageLoading = false
     private var totalTopicsCount = 0
+
+    private var allTopicsCurrentPage = 1
+    private var allTopicsTotalRecords = 0
+    private var allTopicsLimit = 20
+    private val accumulatedAllTopics = mutableListOf<SearchTopicItem>()
+    private var isAllTopicsLoading = false
 
     fun fetchSupportHomeData() {
         supportRepository.getSupportHome().onEach { resource ->
@@ -177,4 +189,82 @@ class SupportViewModel @Inject constructor(
             _topicsByCategoryData.value = resource
         }.launchIn(viewModelScope)
     }
+
+    fun fetchSupportCategoryByKey(categoryKey: String) {
+        supportRepository.getSupportCategoryByKey(categoryKey).onEach { resource ->
+            _supportCategoryData.value = resource
+        }.launchIn(viewModelScope)
+    }
+
+    fun clearAllTopicsData() {
+        allTopicsCurrentPage = 1
+        allTopicsTotalRecords = 0
+        accumulatedAllTopics.clear()
+        isAllTopicsLoading = false
+        _allTopicsData.value = null
+    }
+
+    fun fetchAllTopics(isInitialLoad: Boolean = true) {
+        android.util.Log.d("PaginationTest", "fetchAllTopics called: isInitialLoad: $isInitialLoad, allTopicsCurrentPage: $allTopicsCurrentPage, allTopicsTotalRecords: $allTopicsTotalRecords, accumulatedSize: ${accumulatedAllTopics.size}, isAllTopicsLoading: $isAllTopicsLoading")
+        if (isInitialLoad) {
+            allTopicsCurrentPage = 1
+            allTopicsTotalRecords = 0
+            accumulatedAllTopics.clear()
+            _allTopicsData.value = Resource.loading()
+        } else {
+            if (isAllTopicsLoading || (allTopicsTotalRecords > 0 && accumulatedAllTopics.size >= allTopicsTotalRecords)) {
+                android.util.Log.d("PaginationTest", "Blocked fetch: isAllTopicsLoading: $isAllTopicsLoading, hasReachedEnd: ${allTopicsTotalRecords > 0 && accumulatedAllTopics.size >= allTopicsTotalRecords}")
+                return
+            }
+        }
+
+        isAllTopicsLoading = true
+        viewModelScope.launch {
+            supportRepository.getAllTopics(limit = allTopicsLimit, page = allTopicsCurrentPage)
+                .collect { resource ->
+                    android.util.Log.d("PaginationTest", "Collected resource: status: ${resource.status}, data: ${resource.data != null}")
+                    when (resource.status) {
+                        Status.LOADING -> {
+                            if (isInitialLoad) {
+                                _allTopicsData.value = resource
+                            }
+                        }
+                        Status.SUCCESS -> {
+                            isAllTopicsLoading = false
+                            val response = resource.data
+                            android.util.Log.d("PaginationTest", "API Success! status: ${response?.status}, topicsCount: ${response?.data?.topics?.size}")
+                            if (response?.status == "success" && response.data != null) {
+                                allTopicsTotalRecords = response.data.totalRecords ?: 0
+                                val newTopics = response.data.topics ?: emptyList()
+                                if (isInitialLoad) {
+                                    accumulatedAllTopics.clear()
+                                }
+                                accumulatedAllTopics.addAll(newTopics)
+                                allTopicsCurrentPage++
+
+                                val combinedResponse = response.copy(
+                                    data = response.data.copy(
+                                        topics = ArrayList(accumulatedAllTopics)
+                                    )
+                                )
+                                _allTopicsData.value = Resource.success(combinedResponse)
+                            } else {
+                                _allTopicsData.value = resource
+                            }
+                        }
+                        Status.ERROR, Status.EXCEPTION -> {
+                            isAllTopicsLoading = false
+                            android.util.Log.d("PaginationTest", "API Error/Exception: message: ${resource.error?.errorMessage}")
+                            _allTopicsData.value = resource
+                        }
+                    }
+                }
+        }
+    }
+
+    fun hasMoreAllTopics(): Boolean {
+        return allTopicsTotalRecords > 0 && accumulatedAllTopics.size < allTopicsTotalRecords
+    }
+
+    fun isAllTopicsLoadingPage(): Boolean = isAllTopicsLoading
 }

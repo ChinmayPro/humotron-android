@@ -150,6 +150,15 @@ class SupportFragment : BaseFragment(R.layout.fragment_support) {
         binding.clYourDevices.visibility = View.GONE
 
         binding.btnContactSupport.setOnClickListener {
+            findNavController().navigate(R.id.action_fragmentSupport_to_fragmentContactSupport)
+        }
+
+        binding.btnViewAllDevices.setOnClickListener {
+            findNavController().navigate(R.id.action_fragmentSupport_to_fragmentSupportDevices)
+        }
+
+        binding.btnViewAllArticles.setOnClickListener {
+            findNavController().navigate(R.id.action_fragmentSupport_to_fragmentSupportArticles)
         }
 
         binding.clSearchBar.setOnClickListener {

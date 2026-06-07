@@ -764,6 +764,7 @@ To get started:\n
     <string name="support_popular_articles">Popular articles</string>
     <string name="support_popular_topics">Popular topics</string>
     <string name="support_view_all_articles">View all articles ></string>
+    <string name="support_all_articles">All Articles</string>
     <string name="support_still_need_help">Still need help?</string>
     <string name="support_contact_support_desc">Contact our support team and we\'ll get back to you.</string>
     <string name="support_contact_support">Contact Support</string>
@@ -787,4 +788,6 @@ To get started:\n
     <string name="support_expert_support">Expert\nsupport</string>
     <string name="support_secure_private">Secure\n&amp; private</string>
     <string name="support_view_device_details">View device details &gt;</string>
+    <string name="support_devices_fallback_desc">Get help with setup, syncing, and troubleshooting for any Humotron device.</string>
+    <string name="support_articles_desc">Browse all our help articles, guides, and FAQs.</string>
 </resources>

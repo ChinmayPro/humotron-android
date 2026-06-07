@@ -81,10 +81,6 @@ class SupportArticleDetailFragment : BaseFragment(R.layout.fragment_support_arti
 
             binding.tvShortAnswerContent.text = item.shortAnswer ?: item.subtitle ?: ""
             
-            binding.ivCategoryIcon.setImageResource(R.drawable.ic_sheet_document)
-            binding.ivCategoryIcon.imageTintList = android.content.res.ColorStateList.valueOf(
-                androidx.core.content.ContextCompat.getColor(requireContext(), R.color.white30)
-            )
             binding.tvArticleUpdated.text = getString(R.string.support_updated_just_now)
         }
 
@@ -132,15 +128,13 @@ class SupportArticleDetailFragment : BaseFragment(R.layout.fragment_support_arti
                             }
                             binding.tvArticleMeta.text = metaText
 
-                            val categoryIconUrl = detailData.subcategory?.icon ?: detailData.category?.icon
-                            if (categoryIconUrl.isNullOrEmpty()) {
-                                binding.ivCategoryIcon.setImageResource(R.drawable.ic_sheet_document)
-                                binding.ivCategoryIcon.imageTintList = android.content.res.ColorStateList.valueOf(
-                                    androidx.core.content.ContextCompat.getColor(requireContext(), R.color.white30)
-                                )
-                            } else {
+                            val categoryIconUrl = detailData.category?.icon
+                            if (!categoryIconUrl.isNullOrEmpty()) {
+                                binding.ivCategoryIcon.visibility = View.VISIBLE
                                 binding.ivCategoryIcon.imageTintList = null
-                                binding.ivCategoryIcon.loadImage(categoryIconUrl, R.drawable.ic_sheet_document)
+                                binding.ivCategoryIcon.loadImage(categoryIconUrl)
+                            } else {
+                                binding.ivCategoryIcon.visibility = View.GONE
                             }
 
                             // Relative updatedAt time

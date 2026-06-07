@@ -541,4 +541,14 @@ interface AppApi {
         @Path("categoryKey") categoryKey: String
     ): Response<TopicsByCategoryResponse>
 
+    @GET("supportCategory/getSupportCategoryByKey/{categoryKey}")
+    suspend fun getSupportCategoryByKey(
+        @Path("categoryKey") categoryKey: String
+    ): Response<TopicsByCategoryResponse>
+
+    @POST("supportTopic/getAllTopics")
+    suspend fun getAllTopics(
+        @Body request: HashMap<String, Any>
+    ): Response<com.humotron.app.domain.modal.response.AllTopicsResponse>
+
 }
