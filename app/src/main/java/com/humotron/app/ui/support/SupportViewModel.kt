@@ -13,11 +13,13 @@ import com.humotron.app.domain.modal.response.SearchTopicsResponse
 import com.humotron.app.domain.modal.response.SearchTopicItem
 import com.humotron.app.domain.modal.response.SupportTopicDetailResponse
 import com.humotron.app.domain.modal.response.TopicsByCategoryResponse
+import com.humotron.app.domain.modal.response.CommonResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
 import javax.inject.Inject
 
 @HiltViewModel
@@ -42,6 +44,9 @@ class SupportViewModel @Inject constructor(
 
     private val _supportCategoryData = MutableLiveData<Resource<TopicsByCategoryResponse>>()
     val supportCategoryData: LiveData<Resource<TopicsByCategoryResponse>> get() = _supportCategoryData
+    
+    private val _saveTicketData = MutableLiveData<Resource<CommonResponse>>()
+    val saveTicketData: LiveData<Resource<CommonResponse>> get() = _saveTicketData
 
     private val _allTopicsData = MutableLiveData<Resource<com.humotron.app.domain.modal.response.AllTopicsResponse>>()
     val allTopicsData: LiveData<Resource<com.humotron.app.domain.modal.response.AllTopicsResponse>> get() = _allTopicsData
@@ -267,4 +272,24 @@ class SupportViewModel @Inject constructor(
     }
 
     fun isAllTopicsLoadingPage(): Boolean = isAllTopicsLoading
+
+    fun saveTicket(
+        category: String,
+        contactReasonCode: String,
+        subject: String,
+        description: String,
+        currentScreen: String,
+        source: String,
+        osPlatform: String,
+        appVersion: String,
+        deviceMetaSnapshot: String,
+        attachments: List<MultipartBody.Part> = emptyList()
+    ) {
+        supportRepository.saveTicket(
+            category, contactReasonCode, subject, description, currentScreen,
+            source, osPlatform, appVersion, deviceMetaSnapshot, attachments
+        ).onEach { resource ->
+            _saveTicketData.value = resource
+        }.launchIn(viewModelScope)
+    }
 }

@@ -790,4 +790,46 @@ To get started:\n
     <string name="support_view_device_details">View device details &gt;</string>
     <string name="support_devices_fallback_desc">Get help with setup, syncing, and troubleshooting for any Humotron device.</string>
     <string name="support_articles_desc">Browse all our help articles, guides, and FAQs.</string>
+
+    <!-- Contact Support Screen Step 1 -->
+    <string name="contact_support_title">We\'re here to help</string>
+    <string name="contact_support_subtitle">Tell us more about your issue and our support team will get back to you.</string>
+    <string name="contact_step_issue_details">Issue details</string>
+    <string name="contact_step_more_info">More information</string>
+    <string name="contact_step_attachments">Add attachments</string>
+    <string name="contact_step_review">Review &amp; send</string>
+    <string name="contact_what_help">1. What can we help you with?</string>
+    <string name="contact_select_option">Select the option that best describes your issue.</string>
+    <string name="contact_describe_issue">2. Describe your issue</string>
+    <string name="contact_describe_hint">Type your message here...</string>
+    <string name="contact_describe_subtitle">Please share as much detail as possible.</string>
+    <!-- Contact Support Screen Step 2 -->
+    <string name="contact_step2_title">2. Tell us more</string>
+    <string name="contact_step2_subtitle">This helps us understand your issue better.</string>
+    <string name="contact_select_device_title">Select your device (optional)</string>
+    <string name="contact_select_device_desc">Choose the device related to your issue.</string>
+    <string name="contact_problem_title">What seems to be the problem?</string>
+    <string name="contact_problem_desc">Choose the option that best matches your issue.</string>
+    <string name="contact_start_title">When did this start?</string>
+    <string name="contact_start_desc">Select the best option.</string>
+    <string name="contact_app_version_title">App version (optional)</string>
+    <string name="contact_app_version_desc">You can find this in Profile &gt; Settings.</string>
+    <string name="contact_back">Back</string>
+    <string name="contact_continue">Continue</string>
+
+    <string name="contact_category_devices_title">Devices</string>
+    <string name="contact_category_devices_desc">Setup, troubleshooting, measurements, and usage help for your Humotron devices.</string>
+    <string name="contact_category_sync_title">Sync &amp; Connectivity</string>
+    <string name="contact_category_sync_desc">Bluetooth, pairing, syncing, permissions, and connection help.</string>
+    <string name="contact_category_orders_title">Orders &amp; Delivery</string>
+    <string name="contact_category_orders_desc">Order tracking, shipping, replacements, returns, and warranty support.</string>
+    <string name="contact_category_billing_title">Billing &amp; Subscription</string>
+    <string name="contact_category_billing_desc">Payments, subscriptions, invoices, refunds, and account billing support.</string>
+    <string name="contact_category_privacy_title">Privacy &amp; Security</string>
+    <string name="contact_category_privacy_desc">Manage your data, permissions, privacy, and account security settings.</string>
+    <string name="contact_category_usage_title">App Usage</string>
+    <string name="contact_category_usage_desc">Features, dashboard usage, notifications, metrics, and personalization help.</string>
+    <string name="contact_category_ai_title">AI Insights</string>
+    <string name="contact_category_ai_desc">AI-powered insights, subscriptions, and health interpretation support.</string>
 </resources>
+

@@ -518,6 +518,21 @@ interface AppApi {
         @Body request: HashMap<String, Any>
     ): Response<com.humotron.app.domain.modal.response.CommonResponse>
     
+    @Multipart
+    @POST("supportTicket/saveTicket")
+    suspend fun saveTicket(
+        @Part("category") category: RequestBody,
+        @Part("contact_reason_code") contactReasonCode: RequestBody,
+        @Part("subject") subject: RequestBody,
+        @Part("description") description: RequestBody,
+        @Part("current_screen") currentScreen: RequestBody,
+        @Part("source") source: RequestBody,
+        @Part("os_platform") osPlatform: RequestBody,
+        @Part("app_version") appVersion: RequestBody,
+        @Part("device_meta_snapshot") deviceMetaSnapshot: RequestBody,
+        @Part attachments: List<MultipartBody.Part>
+    ): Response<CommonResponse>
+
     @GET("supportTopic/getSupportHome")
     suspend fun getSupportHome(): Response<SupportHomeResponse>
 

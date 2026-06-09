@@ -9,9 +9,14 @@ import com.humotron.app.domain.modal.response.MyTicketsResponse
 import com.humotron.app.domain.modal.response.SearchTopicsResponse
 import com.humotron.app.domain.modal.response.SupportTopicDetailResponse
 import com.humotron.app.domain.modal.response.TopicsByCategoryResponse
+import com.humotron.app.domain.modal.response.CommonResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import javax.inject.Inject
 
 class SupportRepository @Inject constructor(
@@ -105,6 +110,51 @@ class SupportRepository @Inject constructor(
             }
             val response = responseHandler.handleResponse(api.getAllTopics(param), false)
             emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun saveTicket(
+        category: String,
+        contactReasonCode: String,
+        subject: String,
+        description: String,
+        currentScreen: String,
+        source: String,
+        osPlatform: String,
+        appVersion: String,
+        deviceMetaSnapshot: String,
+        attachments: List<MultipartBody.Part>
+    ): Flow<Resource<CommonResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val categoryBody = category.toRequestBody("text/plain".toMediaTypeOrNull())
+            val contactReasonCodeBody = contactReasonCode.toRequestBody("text/plain".toMediaTypeOrNull())
+            val subjectBody = subject.toRequestBody("text/plain".toMediaTypeOrNull())
+            val descriptionBody = description.toRequestBody("text/plain".toMediaTypeOrNull())
+            val currentScreenBody = currentScreen.toRequestBody("text/plain".toMediaTypeOrNull())
+            val sourceBody = source.toRequestBody("text/plain".toMediaTypeOrNull())
+            val osPlatformBody = osPlatform.toRequestBody("text/plain".toMediaTypeOrNull())
+            val appVersionBody = appVersion.toRequestBody("text/plain".toMediaTypeOrNull())
+            val deviceMetaSnapshotBody = deviceMetaSnapshot.toRequestBody("text/plain".toMediaTypeOrNull())
+
+            val response = api.saveTicket(
+                categoryBody,
+                contactReasonCodeBody,
+                subjectBody,
+                descriptionBody,
+                currentScreenBody,
+                sourceBody,
+                osPlatformBody,
+                appVersionBody,
+                deviceMetaSnapshotBody,
+                attachments
+            )
+            emit(responseHandler.handleResponse(response, false))
         } catch (e: Exception) {
             emit(responseHandler.handleException(e))
             e.printStackTrace()
