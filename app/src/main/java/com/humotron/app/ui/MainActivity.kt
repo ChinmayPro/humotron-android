@@ -23,6 +23,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
@@ -33,6 +34,11 @@ import com.humotron.app.bt.band.BandBleManager
 import com.humotron.app.bt.ring.OnBleScanCallback
 import com.humotron.app.bt.ring.RingBleDevice
 import com.humotron.app.core.App
+import com.humotron.app.bt.bp.BpConnectionState
+import com.humotron.app.bt.bp.BpDiscoveredDevice
+import com.humotron.app.bt.bp.BpMachineViewModel
+import com.humotron.app.bt.bp.BpSdkState
+import com.humotron.app.core.AppConstant
 import com.humotron.app.core.Preference
 import com.humotron.app.data.local.AppDatabase
 import com.humotron.app.databinding.ActivityMainBinding
@@ -55,6 +61,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private val homeViewModel by viewModels<HomeViewModel>()
+    private val bpViewModel by viewModels<BpMachineViewModel>()
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
@@ -87,8 +94,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         initClicks()
-        initViews()
         initObservers()
+        initViews()
     }
 
     private fun initClicks() {
@@ -139,12 +146,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
         highlightView(0)
-        // Start background connection service
-        /*ContextCompat.startForegroundService(
-            this,
-            Intent(this, RingConnectionService::class.java)
-        )*/
-
         //Force initialize HomeViewModel here so its init{} runs before any Fragment uses it, otherwise homeViewModel?.loadDateData() not work in RingDeviceManager
         homeViewModel
         checkBlePermissionsAndStart()
@@ -292,6 +293,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     } else {
                         connectToRing()
                         connectToBand()
+                        connectToBPMachine()
                     }
                 } else {
                     if (deniedList.isNotEmpty()) {
@@ -324,6 +326,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             if (isBluetoothEnabled()) {
                 connectToRing()
                 connectToBand()
+                connectToBPMachine()
             } else {
                 Toast.makeText(this, "Bluetooth not enabled", Toast.LENGTH_SHORT).show()
             }
@@ -364,6 +367,64 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         if (address.isNotEmpty() && bandBleManager.isBluetoothEnabled()) {
             bandBleManager.connectDevice(address)
         }
+    }
+
+    private fun connectToBPMachine() {
+        val address = prefUtils.getString(Preference.BP_MACHINE) ?: ""
+        if (address.isNotEmpty()) {
+            startBpMachineConnection(address)
+        }
+    }
+
+    private fun startBpMachineConnection(address: String) {
+        val sdkState = bpViewModel.sdkState.value
+        if (sdkState is BpSdkState.Ready) {
+            startBpMachineScanAndConnect(address)
+            return
+        }
+
+        val sdkObserver = object : Observer<BpSdkState> {
+            override fun onChanged(state: BpSdkState) {
+                when (state) {
+                    is BpSdkState.Ready -> {
+                        bpViewModel.sdkState.removeObserver(this)
+                        startBpMachineScanAndConnect(address)
+                    }
+
+                    is BpSdkState.Failed -> {
+                        bpViewModel.sdkState.removeObserver(this)
+                    }
+
+                    else -> Unit
+                }
+            }
+        }
+
+        bpViewModel.sdkState.observe(this, sdkObserver)
+        bpViewModel.initialize()
+    }
+
+    private fun startBpMachineScanAndConnect(address: String) {
+        val deviceObserver = object : Observer<List<BpDiscoveredDevice>> {
+            override fun onChanged(devices: List<BpDiscoveredDevice>) {
+                val matched =
+                    devices.firstOrNull { it.macAddress.equals(address, ignoreCase = true) }
+                        ?: return
+
+                val currentState = bpViewModel.connectionState.value
+                if (currentState is BpConnectionState.Idle ||
+                    currentState is BpConnectionState.Disconnected ||
+                    currentState is BpConnectionState.Failed
+                ) {
+                    bpViewModel.devices.removeObserver(this)
+                    bpViewModel.stopScan()
+                    bpViewModel.connect(matched)
+                }
+            }
+        }
+
+        bpViewModel.devices.observe(this, deviceObserver)
+        bpViewModel.startScan()
     }
 
     override fun attachBaseContext(newBase: Context?) {

@@ -1,8 +1,6 @@
 package com.humotron.app.ui.device
 
 import android.annotation.SuppressLint
-import android.bluetooth.BluetoothAdapter
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -21,11 +19,15 @@ import com.humotron.app.R
 import com.humotron.app.bt.band.BandBleManager
 import com.humotron.app.bt.band.STATE_BAND_CONNECTED
 import com.humotron.app.bt.band.STATE_BAND_CONNECTING
+import com.humotron.app.bt.bp.BpConnectionState
+import com.humotron.app.bt.bp.BpMachineEvent
+import com.humotron.app.bt.bp.BpMachineViewModel
 import com.humotron.app.bt.ring.RingBleDevice
 import com.humotron.app.core.App
 import com.humotron.app.core.base.BaseFragment
 import com.humotron.app.data.network.Status
 import com.humotron.app.databinding.FragmentDeviceDataBinding
+import com.humotron.app.domain.modal.BPMachineReadingType
 import com.humotron.app.domain.modal.DeviceType
 import com.humotron.app.domain.modal.response.ExerciseIntensityMetric
 import com.humotron.app.domain.modal.response.GetAllDeviceResponse.Data.UserDevice
@@ -38,7 +40,9 @@ import com.humotron.app.ui.connect.HomeViewModel
 import com.humotron.app.ui.device.adapter.HealthScanAdapter
 import com.humotron.app.ui.device.adapter.HealthScanItem
 import com.humotron.app.ui.device.adapter.HealthScanType
+import com.humotron.app.ui.device.adapter.MeasurementInfo
 import com.humotron.app.ui.device.adapter.MetricsAdapter
+import com.humotron.app.ui.device.dialog.MeasurementTypeBottomSheet
 import com.humotron.app.ui.navigation.NavKeys
 import com.humotron.app.util.STATE_DEVICE_CHARGING
 import com.humotron.app.util.STATE_DEVICE_CONNECTED
@@ -54,6 +58,7 @@ import com.jstyle.blesdk2208a.Util.BleSDK
 import com.jstyle.blesdk2208a.callback.DataListener2025
 import com.jstyle.blesdk2208a.constant.BleConst
 import com.jstyle.blesdk2208a.constant.DeviceKey
+import com.lepu.blepro.objs.Bluetooth
 import com.pluto.plugins.logger.PlutoLog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.combine
@@ -67,19 +72,18 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
 
     private lateinit var binding: FragmentDeviceDataBinding
     private val viewModel: DeviceViewModel by viewModels()
+    private val bpViewModel: BpMachineViewModel by viewModels()
     private val app by lazy { requireActivity().application as App }
 
     @Inject
     lateinit var bandBleManager: BandBleManager
 
-    private var mBluetoothAdapter: BluetoothAdapter? = null
     private var device: RingBleDevice? = null
 
     private lateinit var metricsAdapter: MetricsAdapter
     private lateinit var healthScanAdapter: HealthScanAdapter
     private val homeViewModel by activityViewModels<HomeViewModel>()
     private var userDevice: UserDevice? = null
-
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -144,6 +148,11 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
                 }
 
                 DeviceType.BP_MACHINE -> {
+                    viewModel.getAllMetricsByDeviceId(deviceId)
+                    binding.let {
+                        it.ivBtStatus.isVisible = false
+                    }
+                    observeBPMachine()
                 }
 
                 DeviceType.WEIGHT_MACHINE -> {
@@ -261,6 +270,68 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
 
         app.ringDeviceManager.bleAdapterEnabled.observe(viewLifecycleOwner) { isEnabled ->
             updateBtStatusIcon(isEnabled)
+        }
+    }
+
+    private fun observeBPMachine() {
+        bpViewModel.connectionState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is BpConnectionState.Connected -> {
+                    updateConnectionUi(true)
+                    when (state.device.model) {
+                        Bluetooth.MODEL_BP2, Bluetooth.MODEL_BP2A, Bluetooth.MODEL_BP2T ->
+                            bpViewModel.startBp2Realtime(state.device.model)
+
+                        Bluetooth.MODEL_BP2W -> bpViewModel.getBp2wInfo(state.device.model)
+                        Bluetooth.MODEL_BP3 -> bpViewModel.getBp3Info(state.device.model)
+                        Bluetooth.MODEL_AIRBP -> bpViewModel.getAirBpInfo(state.device.model)
+                    }
+                }
+
+                is BpConnectionState.Connecting,
+                is BpConnectionState.Reconnecting,
+                    -> {
+                    updateConnectionUiConnecting()
+                }
+
+                is BpConnectionState.Disconnected,
+                is BpConnectionState.Failed,
+                is BpConnectionState.Idle,
+                    -> {
+                    updateConnectionUi(false)
+                }
+
+                else -> {}
+            }
+        }
+
+        bpViewModel.events.observe(viewLifecycleOwner) { event ->
+            when (event) {
+                is BpMachineEvent.AirBp.BatteryInfo -> {
+                    binding.batteryView.batteryLevel = event.data.percent
+                    binding.tvBatteryLevel.text = "${event.data.percent}%"
+                }
+
+                is BpMachineEvent.Bp2.RtData -> {
+                    binding.batteryView.batteryLevel = event.data.status.percent
+                    binding.tvBatteryLevel.text = "${event.data.status.percent}%"
+                    binding.batteryView.isCharging = event.data.status.batteryStatus == 1
+                }
+
+                is BpMachineEvent.Bp2W.RtData -> {
+                    binding.batteryView.batteryLevel = event.data.status.percent
+                    binding.tvBatteryLevel.text = "${event.data.status.percent}%"
+                    binding.batteryView.isCharging = event.data.status.batteryStatus == 1
+                }
+
+                is BpMachineEvent.Bp3.RtData -> {
+                    binding.batteryView.batteryLevel = event.data.status.percent
+                    binding.tvBatteryLevel.text = "${event.data.status.percent}%"
+                    binding.batteryView.isCharging = event.data.status.batteryStatus == 1
+                }
+
+                else -> {}
+            }
         }
     }
 
@@ -628,6 +699,29 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
                         R.id.action_fragmentDeviceData_to_fragmentWeightScaleReading,
                         bundleOf(NavKeys.WEARABLE to userDevice)
                     )
+                } else if (DeviceType.from(userDevice?.deviceName) == DeviceType.BP_MACHINE) {
+                    val bpReadingOptions = arrayListOf(
+                        MeasurementInfo(
+                            "Measure Blood Pressure",
+                            BPMachineReadingType.BLOOD_PRESSURE
+                        ),
+                        MeasurementInfo(
+                            "Record an ECG",
+                            BPMachineReadingType.ECG
+                        )
+                    )
+                    val bottomSheet = MeasurementTypeBottomSheet.newInstance(bpReadingOptions)
+                    bottomSheet.setMeasurementSelectionListener { info ->
+                        bottomSheet.dismiss()
+                        findNavController().navigate(
+                            R.id.fragmentBPMachineReading,
+                            bundleOf(
+                                NavKeys.WEARABLE to userDevice,
+                                NavKeys.READING_TYPE to info.readingType
+                            )
+                        )
+                    }
+                    bottomSheet.show(childFragmentManager, MeasurementTypeBottomSheet.TAG)
                 }
             }
 
@@ -740,5 +834,19 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
     override fun onDestroyView() {
         super.onDestroyView()
         app.ringDeviceManager.unregisterCb()
+        //stopBp2wRealtime()
+    }
+
+    fun stopBp2wRealtime() {
+        (bpViewModel.connectionState.value as? BpConnectionState.Connected)?.let {
+            when (val model = it.device.model) {
+                Bluetooth.MODEL_BP2, Bluetooth.MODEL_BP2A, Bluetooth.MODEL_BP2T -> bpViewModel.stopBp2Realtime(
+                    model
+                )
+
+                Bluetooth.MODEL_BP2W -> bpViewModel.stopBp2wRealtime(model)
+                Bluetooth.MODEL_BP3 -> bpViewModel.stopBp3Realtime(model)
+            }
+        }
     }
 }

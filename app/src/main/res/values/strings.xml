@@ -113,6 +113,7 @@
     <string name="the_humotron_biometrics">The Humotron Biometrics</string>
     <string name="no_device_linked">No Device Linked</string>
     <string name="hrv">HRV</string>
+    <string name="hr">HR</string>
     <string name="temperature">Temperature</string>
     <string name="steps">Steps</string>
     <string name="recovery_rate">Recovery Rate</string>
@@ -705,6 +706,7 @@ To get started:\n
     <string name="error_loading_tools">Error loading tools from backend</string>
     <string name="health_monitoring">Health Monitoring</string>
     <string name="connect_your_humotron_smart_weight_machine">Let’s get you started to connect your Smart Weight Scale.</string>
+    <string name="connect_your_bp_machine">Let’s get you started to connect your Smart Blood Pressure Monitor.</string>
     <string name="smart_scale_steps">
     • Switch On Phone Bluetooth\n
     • Power On The Scale\n
@@ -712,8 +714,15 @@ To get started:\n
     • Scale Visible On the App\n
     • Select the Device to Connect\n
     • Device Connected Screen</string>
+    <string name="smart_bp_machine_steps">
+    • Switch On Phone Bluetooth\n
+    • Power On The Bp Machine\n
+    • Bp Machine Visible On the App\n
+    • Select the Device to Connect\n
+    • Device Connected Screen</string>
     <string name="humotron_weight_scale_basic">Humotron Weight Scale Basic</string>
     <string name="humotron_weight_scale">Humotron Weight Scale</string>
+    <string name="humotron_bp_machine">Humotron BP Machine</string>
     <string name="smart_scale_instruction_1">
     The weight scale runs on 2 basic AA batteries. Put the batteries and step on the scale to switch it on. Stay on the scale till the device is connected.</string>
     <string name="smart_scale_connection_help">
@@ -732,6 +741,33 @@ To get started:\n
     <string name="measurement_saved_successfully">Measurement saved successfully</string>
     <string name="failed_to_save_measurement">Failed to save measurement</string>
     <string name="scanning">Scanning...</string>
+    <string name="choose_your_reading">Choose Your Reading</string>
+    <string name="make_sure_that_bt_is_on">Make sure that the bluetooth for your phone is turned on and able to discover other devices.</string>
+    <string name="wear_the_device">1. Wear the device</string>
+    <string name="attach_the_bp_cuff">Attach the BP cuff to your left arm, ensuring direct skin contact about 2 cm above your elbow.</string>
+    <string name="switch_on_device">2. Switch On Device</string>
+    <string name="switch_on_the_bp_machine">Switch on the BP machine. Sit upright in a comfortable position and try to remain still.</string>
+    <string name="if_your_device_fails_to_connect_"><![CDATA[If your device fails to connect, ensure it’s powered on and within range, and try restarting the device & app.]]></string>
+    <string name="prepare_your_phone">1. Prepare your phone</string>
+    <string name="place_your_phone_where">Place your phone where you can easily view the measurement progress on the screen.</string>
+    <string name="click_start_on_device">2. Click START on device</string>
+    <string name="stay_on_this_screen">Stay on this screen in app and click the start/stop button on the device to start the measurement.</string>
+    <string name="switch_on_the_machine_ecg">Switch on the machine. Sit upright in a comfortable position so that you can remain still while taking the reading.</string>
+    <string name="hold_the_electrodes">2. Hold the electrodes</string>
+    <string name="please_touch_the_metal_electrodes">Please touch the metal electrodes on the right and left side of the device with the palms of your hand.</string>
+    <string name="sit_upright_and_don_t_move">Sit upright and don’t move during the reading.</string>
+    <string name="stay_on_this_screen_">Stay on this screen in app and click the round button on the device to start the ECG measurement.</string>
+    <string name="click">3. Click</string>
+    <string name="please_remain_calm_and_still">Please remain calm and still.</string>
+    <string name="your_blood_pressure_measurement_is_in_progress">Your blood pressure measurement is in progress.</string>
+    <string name="calculating">Calculating..</string>
+    <string name="for_more_accurate_insights">For more accurate insights, it\'s advisable to take multiple readings at different times.</string>
+    <string name="retake_reading">Retake Reading</string>
+    <string name="oops_something_went_wrong">Oops!\nSomething\nWent Wrong</string>
+    <string name="don_t_worry_it_happens">Don\'t worry, it happens. Let\'s give it another shot to get your reading.</string>
+    <string name="please_ensure_your_arm_is_positioned">Please ensure your arm is positioned correctly, adjust your cuff, relax for a few moments, and try again.</string>
+    <string name="retry_measurement">Retry Measurement</string>
+    <string name="see_all_reading">See All Reading</string>
 
     <string-array name="tabs_hour_day_week">
         <item>Hour</item>

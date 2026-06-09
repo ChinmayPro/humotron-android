@@ -32,9 +32,11 @@ class Preference {
         /** Saved MAC for J-style smart band (BLE). */
         const val WEARABLE_BAND = "wearable_band"
         const val WEIGHT_SCALE = "wearable_weight"
+        const val BP_MACHINE = "wearable_bp"
         const val HARDWARE_DATA = "hardware_data"
         const val BAND_HARDWARE_DATA = "band_hardware_data"
         const val WEIGHT_HARDWARE_DATA = "weight_hardware_data"
+        const val BP_HARDWARE_DATA = "bp_hardware_data"
         const val HARDWARE_DETAILS_LIST = "hardware_details_list"
         const val RECORD_DATE = "recorded_time"
         const val PREF_ASSESSMENT_ANSWERS = "assessment_answers"

@@ -113,6 +113,22 @@ class PrefUtils(private val sharedPreferences: SharedPreferences) {
         return data?.id
     }
 
+    fun setBpHardwareData(data: UserHardware) {
+        sharedPreferences.edit { putString(Preference.BP_HARDWARE_DATA, Gson().toJson(data)) }
+    }
+
+    fun getBpHardware(): UserHardware? {
+        val hardwareString = sharedPreferences.getString(Preference.BP_HARDWARE_DATA, "{}")
+        val data = Gson().fromJson(hardwareString, UserHardware::class.java)
+        return data
+    }
+
+    fun getBpHardwareId(): String? {
+        val hardwareString = sharedPreferences.getString(Preference.BP_HARDWARE_DATA, "{}")
+        val data = Gson().fromJson(hardwareString, UserHardware::class.java)
+        return data?.id
+    }
+
     fun setHardwareDetailsList(list: List<UserHardware>) {
         sharedPreferences.edit { putString(Preference.HARDWARE_DETAILS_LIST, Gson().toJson(list)) }
     }

@@ -463,10 +463,15 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
             binding.btnAddHealthMonitoring -> {
                 val healthMonitoringDevices = arrayListOf(
                     DeviceInfo(
-                        R.drawable.ic_weight_scale, // Replace with appropriate health monitoring icon if needed
+                        R.drawable.ic_bp_machine_setup,
+                        "BP Monitor",
+                        "One-click arm BP measurement",
+                        deviceType = DeviceType.BP_MACHINE
+                    ), DeviceInfo(
+                        R.drawable.ic_weight_scale,
                         "Humotron Weight Scale",
                         "Connect to track weight & body mass metrics",
-                        deviceType = DeviceType.WEIGHT_MACHINE // Adjust as per requirement
+                        deviceType = DeviceType.WEIGHT_MACHINE
                     )
                 )
                 val bottomSheet = DeviceSelectionBottomSheet.newInstance(healthMonitoringDevices)

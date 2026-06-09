@@ -55,6 +55,16 @@ class ConnectInfoFragment : Fragment(R.layout.fragment_connect_info) {
         }
 
         when (mDeviceInfo?.deviceType) {
+            DeviceType.BP_MACHINE -> {
+                binding.tvDeviceName.text =
+                    getString(R.string.connect_your_bp_machine)
+                binding.tvHeader.isVisible = false
+                binding.tvContinue.visibility = View.INVISIBLE
+
+                binding.tvDesc.text =
+                    getString(R.string.smart_bp_machine_steps)
+            }
+
             DeviceType.WEIGHT_MACHINE -> {
                 binding.tvDeviceName.text =
                     getString(R.string.connect_your_humotron_smart_weight_machine)
@@ -121,6 +131,10 @@ class ConnectInfoFragment : Fragment(R.layout.fragment_connect_info) {
 
             DeviceType.BAND -> {
                 findNavController().navigate(R.id.fragmentBandConnection)
+            }
+
+            DeviceType.BP_MACHINE -> {
+                findNavController().navigate(R.id.fragmentBPMachineConnection)
             }
 
             DeviceType.WEIGHT_MACHINE -> {

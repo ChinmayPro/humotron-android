@@ -42,4 +42,25 @@
         <attr name="plusFontFamily" format="reference|string" />
 
     </declare-styleable>
+
+    <declare-styleable name="VerticalGaugeView">
+
+        <attr name="minValue" format="float" />
+        <attr name="maxValue" format="float" />
+        <attr name="step" format="float" />
+
+        <attr name="primaryValue" format="float" />
+        <attr name="secondaryValue" format="float" />
+        <attr name="highlightTextValue" format="float" />
+
+        <attr name="trackColor" format="color" />
+        <attr name="fillColor" format="color" />
+        <attr name="textColor" format="color" />
+        <attr name="highlightTextColor" format="color" />
+        <attr name="secondaryMarkerColor" format="color" />
+
+        <attr name="maxTextSize" format="dimension" />
+        <attr name="minTextSize" format="dimension" />
+
+    </declare-styleable>
 </resources>

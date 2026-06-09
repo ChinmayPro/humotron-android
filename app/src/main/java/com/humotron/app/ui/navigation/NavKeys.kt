@@ -9,4 +9,5 @@ object NavKeys {
     const val KEY_METRIC = "metric"
     const val KEY_DEVICE_NAME = "deviceName"
     const val KEY_DEVICE_TYPE = "deviceType"
+    const val READING_TYPE = "readingType"
 }

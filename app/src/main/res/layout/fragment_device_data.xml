@@ -103,7 +103,7 @@
                         android:layout_marginStart="@dimen/_5dp"
                         android:adjustViewBounds="true"
                         app:srcCompat="@drawable/ic_bluetooth_off"
-                        tools:visibility="gone" />
+                        tools:visibility="visible" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivDeviceStatus"
