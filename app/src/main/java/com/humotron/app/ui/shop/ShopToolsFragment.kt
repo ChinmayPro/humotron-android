@@ -30,10 +30,10 @@ class ShopToolsFragment : BaseFragment(R.layout.fragment_shop_tools) {
 
     override fun onResume() {
         super.onResume()
-        viewModel.refreshPurchases()
         if (viewModel.isBillingFlowActive) {
             viewModel.clearBillingFlowActive()
         } else {
+            viewModel.refreshPurchases()
             viewModel.fetchBoosters()
         }
     }

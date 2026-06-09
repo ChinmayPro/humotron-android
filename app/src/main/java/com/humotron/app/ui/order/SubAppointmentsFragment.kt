@@ -50,21 +50,30 @@ class SubAppointmentsFragment : BaseFragment(R.layout.fragment_sub_appointments)
                 }
                 Status.SUCCESS -> {
                     binding.progressBar.visibility = View.GONE
-                    val orderList = resource.data?.orderList
-                    if (orderList.isNullOrEmpty()) {
+                    val response = resource.data
+                    if (response?.status == "fail") {
                         binding.tvMainLabel.visibility = View.VISIBLE
                         binding.tvSubLabel.visibility = View.VISIBLE
                         binding.rvAppointments.visibility = View.GONE
+                        val errorMsg = if (!response.message.isNullOrEmpty()) response.message else getString(R.string.something_went_wrong)
+                        Toast.makeText(requireContext(), errorMsg, Toast.LENGTH_SHORT).show()
                     } else {
-                        binding.tvMainLabel.visibility = View.GONE
-                        binding.tvSubLabel.visibility = View.GONE
-                        binding.rvAppointments.visibility = View.VISIBLE
-                        appointmentAdapter.updateData(orderList)
+                        val orderList = response?.orderList
+                        if (orderList.isNullOrEmpty()) {
+                            binding.tvMainLabel.visibility = View.VISIBLE
+                            binding.tvSubLabel.visibility = View.VISIBLE
+                            binding.rvAppointments.visibility = View.GONE
+                        } else {
+                            binding.tvMainLabel.visibility = View.GONE
+                            binding.tvSubLabel.visibility = View.GONE
+                            binding.rvAppointments.visibility = View.VISIBLE
+                            appointmentAdapter.updateData(orderList)
+                        }
                     }
                 }
                 Status.ERROR, Status.EXCEPTION -> {
                     binding.progressBar.visibility = View.GONE
-                    val errorMsg = resource.error?.errorMessage ?: getString(R.string.something_went_wrong)
+                    val errorMsg = getErrorMessage(resource.error)
                     Toast.makeText(requireContext(), errorMsg, Toast.LENGTH_SHORT).show()
                     
                     binding.tvMainLabel.visibility = View.VISIBLE
@@ -73,5 +82,27 @@ class SubAppointmentsFragment : BaseFragment(R.layout.fragment_sub_appointments)
                 }
             }
         }
+    }
+
+    private fun getErrorMessage(error: com.humotron.app.data.network.error.Error?): String {
+        if (error == null) return getString(R.string.something_went_wrong)
+
+        if (!error.errorMessage.isNullOrEmpty()) return error.errorMessage
+
+        val rawError = error.error
+        if (!rawError.isNullOrEmpty()) {
+            return try {
+                val json = org.json.JSONObject(rawError)
+                when {
+                    json.has("message") -> json.getString("message")
+                    json.has("error") -> json.getString("error")
+                    else -> rawError
+                }
+            } catch (e: Exception) {
+                rawError
+            }
+        }
+
+        return getString(R.string.something_went_wrong)
     }
 }

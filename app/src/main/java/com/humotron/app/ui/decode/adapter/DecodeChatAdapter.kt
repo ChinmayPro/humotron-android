@@ -3,6 +3,7 @@ package com.humotron.app.ui.decode.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.humotron.app.databinding.ItemDecodeChatBoosterBinding
 import com.humotron.app.databinding.ItemDecodeChatMsgBinding
 import com.humotron.app.domain.modal.response.ConversationData
 import kotlinx.coroutines.*
@@ -13,10 +14,23 @@ import androidx.core.view.isVisible
 class DecodeChatAdapter(
     private var items: List<ConversationData> = emptyList(),
     private val onAnimateTyping: (Int) -> Unit = {},
-    private val onUserMsgClick: (ConversationData) -> Unit = {}
-) : RecyclerView.Adapter<DecodeChatAdapter.ViewHolder>() {
+    private val onUserMsgClick: (ConversationData) -> Unit = {},
+    private val onUnlockBoosterClick: (com.humotron.app.domain.modal.response.BoosterResponse.Booster) -> Unit = {},
+    private val onHowItWorksClick: (com.humotron.app.domain.modal.response.BoosterResponse.Booster) -> Unit = {}
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    companion object {
+        private const val VIEW_TYPE_MESSAGE = 1
+        private const val VIEW_TYPE_BOOSTER = 2
+    }
 
     private var animatedKeys = mutableSetOf<String>()
+    private var playStoreProducts = emptyList<com.android.billingclient.api.ProductDetails>()
+
+    fun setPlayStoreProducts(products: List<com.android.billingclient.api.ProductDetails>) {
+        this.playStoreProducts = products
+        notifyDataSetChanged()
+    }
 
     fun clearAnimationState() {
         animatedKeys.clear()
@@ -31,7 +45,88 @@ class DecodeChatAdapter(
         }
     }
 
-    inner class ViewHolder(val binding: ItemDecodeChatMsgBinding) : RecyclerView.ViewHolder(binding.root) {
+    override fun getItemViewType(position: Int): Int {
+        val item = items[position]
+        val isPremiumLocked = item.isNewMessage && item.boosterAiChat != null && item.boosterAiChat.isActive == false
+        return if (isPremiumLocked) VIEW_TYPE_BOOSTER else VIEW_TYPE_MESSAGE
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        return if (viewType == VIEW_TYPE_BOOSTER) {
+            BoosterViewHolder(ItemDecodeChatBoosterBinding.inflate(inflater, parent, false))
+        } else {
+            MessageViewHolder(ItemDecodeChatMsgBinding.inflate(inflater, parent, false))
+        }
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val item = items[position]
+        if (holder is BoosterViewHolder) {
+            holder.bind(item)
+        } else if (holder is MessageViewHolder) {
+            holder.bind(item, position)
+        }
+    }
+
+    override fun getItemCount() = items.size
+
+    fun submitList(newList: List<ConversationData>, isHistory: Boolean = false) {
+        if (items == newList) return
+        if (isHistory) {
+            markAllAsAnimated(newList)
+        }
+        items = newList
+        notifyDataSetChanged()
+    }
+
+    fun currentList() = items
+
+    private fun formatChatDate(dateStr: String?): String {
+        if (dateStr.isNullOrEmpty()) return ""
+        return try {
+            val inputFormat = java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", java.util.Locale.getDefault())
+            inputFormat.timeZone = java.util.TimeZone.getTimeZone("UTC")
+            val outputFormat = java.text.SimpleDateFormat("MMM dd, yyyy h:mm a", java.util.Locale.getDefault())
+            val date = inputFormat.parse(dateStr)
+            outputFormat.format(date ?: java.util.Date()).replace("AM", "am").replace("PM", "pm")
+        } catch (e: Exception) {
+            dateStr ?: ""
+        }
+    }
+
+    inner class BoosterViewHolder(private val binding: ItemDecodeChatBoosterBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: ConversationData) {
+            val hasUserMsg = !item.userMessage.isNullOrEmpty()
+            binding.layoutUserMsg.isVisible = hasUserMsg
+            if (hasUserMsg) {
+                binding.tvUserMsg.text = item.userMessage
+                binding.tvUserMsgDate.text = formatChatDate(item.createdAt)
+            }
+
+            binding.ivLink.setOnClickListener {
+                onUserMsgClick(item)
+            }
+
+            val boosterChat = item.boosterAiChat!!
+            
+            val booster = boosterChat.toBooster()
+            val matchedProduct = playStoreProducts.find { it.productId == booster.playStoreProductId }
+            val subscriptionOffer = matchedProduct?.subscriptionOfferDetails?.firstOrNull()
+            val subscriptionPrice = subscriptionOffer?.pricingPhases?.pricingPhaseList?.firstOrNull()?.formattedPrice
+            val priceText = subscriptionPrice ?: matchedProduct?.oneTimePurchaseOfferDetails?.formattedPrice ?: booster.displayPriceFallback
+            binding.btnContinue.text = binding.root.context.getString(com.humotron.app.R.string.chat_booster_continue_price, priceText)
+
+            binding.btnContinue.setOnClickListener {
+                onUnlockBoosterClick(booster)
+            }
+            binding.tvHowItWorks.setOnClickListener {
+                onHowItWorksClick(booster)
+            }
+        }
+    }
+
+    inner class MessageViewHolder(val binding: ItemDecodeChatMsgBinding) : RecyclerView.ViewHolder(binding.root) {
         private var typingJob: Job? = null
         private var currentAnimatingKey: String? = null
 
@@ -95,9 +190,6 @@ class DecodeChatAdapter(
                     val words = text.split(" ")
                     val totalWords = words.size
                     
-                    // Dynamic typing speed: faster for longer messages to keep user engaged without extreme waiting
-                    // Shorter messages: ~60ms per word
-                    // Longer messages: Reduces down to ~15ms per word for 500+ words
                     val typingDelay = when {
                         totalWords > 400 -> 15L
                         totalWords > 200 -> 30L
@@ -113,17 +205,13 @@ class DecodeChatAdapter(
                         val currentHtml = convertMarkdownToHtml(builder.toString())
                         view.text = androidx.core.text.HtmlCompat.fromHtml(currentHtml, androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT)
                         
-                        // Scroll request
                         onAnimateTyping(bindingAdapterPosition)
                         
-                        // Small optimization: for very long responses, we can type multiple words per frame
-                        // to make it look smooth but faster.
                         val wordsToWait = if (totalWords > 300) 2 else 1
                         if (i % wordsToWait == 0) {
                             delay(typingDelay)
                         }
                     }
-                    // Ensure full text is set at the end just in case
                     view.text = androidx.core.text.HtmlCompat.fromHtml(convertMarkdownToHtml(text), androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT)
                 }
             }
@@ -137,39 +225,5 @@ class DecodeChatAdapter(
                 .replace(Regex("_(.*?)_"), "<i>$1</i>")
                 .replace("\n", "<br>")
         }
-
-        private fun formatChatDate(dateStr: String?): String {
-            if (dateStr.isNullOrEmpty()) return ""
-            return try {
-                val inputFormat = java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", java.util.Locale.getDefault())
-                inputFormat.timeZone = java.util.TimeZone.getTimeZone("UTC")
-                val outputFormat = java.text.SimpleDateFormat("MMM dd, yyyy h:mm a", java.util.Locale.getDefault())
-                val date = inputFormat.parse(dateStr)
-                outputFormat.format(date ?: java.util.Date()).replace("AM", "am").replace("PM", "pm")
-            } catch (e: Exception) {
-                dateStr ?: ""
-            }
-        }
     }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(ItemDecodeChatMsgBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(items[position], position)
-    }
-
-    override fun getItemCount() = items.size
-
-    fun submitList(newList: List<ConversationData>, isHistory: Boolean = false) {
-        if (items == newList) return
-        if (isHistory) {
-            markAllAsAnimated(newList)
-        }
-        items = newList
-        notifyDataSetChanged()
-    }
-
-    fun currentList() = items
 }

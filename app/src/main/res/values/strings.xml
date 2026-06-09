@@ -282,6 +282,9 @@ To get started:\n
     <string name="chat_error_fetch_insights">Failed to fetch insights. Please try again.</string>
     <string name="chat_error_fetch_response">Failed to fetch response. Please try again.</string>
     <string name="chat_history_title">Conversation History</string>
+    <string name="chat_analyze_metric_prompt">Analyze my %1$s over the last 30 days.</string>
+    <string name="chat_help_understand_metric_prompt">Help me understand my %1$s over the last 30 days and what I can do to improve it.</string>
+    <string name="chat_booster_continue_price">Continue - %1$s/m →</string>
     <string name="anonymised_metric_data">Anonymised Metric Data</string>
     <string name="metric_name">Metric Name</string>
     <string name="date_range">Date Range</string>
@@ -781,4 +784,43 @@ To get started:\n
         <item>Year</item>
     </string-array>
 
+    <string name="support_how_can_we_help">How can we help?</string>
+    <string name="support_subtitle_desc">Find answers, troubleshoot, or contact our support team.</string>
+    <string name="support_search_hint">Search for help (e.g. sync issue, blood pressure)</string>
+    <string name="support_search_in_support">Search in Support</string>
+    <string name="support_my_requests">My Requests</string>
+    <string name="support_my_requests_subtitle">Track your support conversations and replies</string>
+    <string name="support_failed_get_details">Failed to get support details</string>
+    <string name="support_failed_get_tickets">Failed to get tickets</string>
+    <string name="support_exception_occurred">An exception occurred</string>
+    <string name="support_popular_searches">Popular searches</string>
+    <string name="support_browse_by_category">Browse by category</string>
+    <string name="support_your_devices">Your devices</string>
+    <string name="support_view_all_devices">View all devices ></string>
+    <string name="support_popular_articles">Popular articles</string>
+    <string name="support_popular_topics">Popular topics</string>
+    <string name="support_view_all_articles">View all articles ></string>
+    <string name="support_still_need_help">Still need help?</string>
+    <string name="support_contact_support_desc">Contact our support team and we\'ll get back to you.</string>
+    <string name="support_contact_support">Contact Support</string>
+    <string name="support_search_subtitle">Search for help articles, troubleshooting guides, and FAQs.</string>
+    <string name="support_search_still_need_help">Didn\'t find what you were looking for?</string>
+    <string name="support_search_contact_support_desc">Our support team is here to help.</string>
+    <string name="support_top_articles">Top articles</string>
+    <string name="support_search_view_all">View all %d articles</string>
+    <string name="support_search_load_more">Load more (%d of %d)</string>
+    <string name="support_search_loading_more">Loading more articles…</string>
+    <string name="support_article_detail_title">Article</string>
+    <string name="support_short_answer">Short answer</string>
+    <string name="support_what_you_can_do">What you can do</string>
+    <string name="support_related_articles">Related articles</string>
+    <string name="support_quick_read">Quick read</string>
+    <string name="support_updated_format">Updated %1$s</string>
+    <string name="support_updated_just_now">Updated just now</string>
+    <string name="support_view_more_articles">View more articles</string>
+    <string name="support_security_disclaimer">Secure &amp; private. We respect your data.</string>
+    <string name="support_step_by_step_guides">Step-by-\nstep guides</string>
+    <string name="support_expert_support">Expert\nsupport</string>
+    <string name="support_secure_private">Secure\n&amp; private</string>
+    <string name="support_view_device_details">View device details &gt;</string>
 </resources>

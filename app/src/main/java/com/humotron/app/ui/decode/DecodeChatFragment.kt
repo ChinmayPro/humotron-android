@@ -2,6 +2,7 @@ package com.humotron.app.ui.decode
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import com.humotron.app.R
 import com.humotron.app.core.base.BaseFragment
 import com.humotron.app.databinding.FragmentDecodeChatBinding
@@ -17,6 +18,7 @@ import com.humotron.app.domain.modal.ui.ActiveMetric
 import com.humotron.app.ui.decode.viewmodel.DecodeViewModel
 import com.humotron.app.data.network.Status
 import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.humotron.app.ui.decode.adapter.DecodeChatAdapter
 import com.humotron.app.domain.modal.response.ConversationData
@@ -28,7 +30,8 @@ import androidx.activity.OnBackPressedCallback
 class DecodeChatFragment : BaseFragment(R.layout.fragment_decode_chat) {
 
     private lateinit var binding: FragmentDecodeChatBinding
-    private val viewModel: DecodeViewModel by viewModels()
+    private val viewModel: DecodeViewModel by activityViewModels()
+    private val shopViewModel: com.humotron.app.ui.shop.ShopToolsViewModel by activityViewModels()
     private var autoScrollEnabled = true
     private var isHistoryLoading = false
     private val chatAdapter: DecodeChatAdapter by lazy { 
@@ -42,10 +45,34 @@ class DecodeChatFragment : BaseFragment(R.layout.fragment_decode_chat) {
             },
             onUserMsgClick = { item ->
                 DecodeChatMessageDetailsFragment.newInstance(item).show(childFragmentManager, "message_details")
+            },
+            onUnlockBoosterClick = { booster ->
+                val productDetails = shopViewModel.getProductDetailsForId(booster.playStoreProductId)
+                if (productDetails != null) {
+                    shopViewModel.launchBillingFlow(
+                        activity = requireActivity(),
+                        booster = booster,
+                        productDetails = productDetails
+                    )
+                } else {
+                    android.widget.Toast.makeText(
+                        requireContext(),
+                        getString(R.string.item_not_available_play_store),
+                        android.widget.Toast.LENGTH_SHORT
+                    ).show()
+                }
+            },
+            onHowItWorksClick = { booster ->
+                val bundle = Bundle().apply {
+                    putParcelable("booster", booster)
+                }
+                viewModel.navigatedToBoosterDetails = true
+                findNavController().navigate(R.id.fragmentShopBoosterDetail, bundle)
             }
         )
     }
     private var selectedMetricLabel: String = ""
+    private var isMessageSentInSession = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -56,6 +83,43 @@ class DecodeChatFragment : BaseFragment(R.layout.fragment_decode_chat) {
         initObservers()
         initResultListeners()
         handleBackPress()
+
+        val threadId = viewModel.getThreadId()
+        if (threadId != null && viewModel.navigatedToBoosterDetails) {
+            viewModel.navigatedToBoosterDetails = false
+            // Fragment instance survived — adapter already holds the chat data (booster card etc.)
+            // Just restore the view visibility without any API call
+            binding.nsvContent.isVisible = false
+            binding.rvChat.isVisible = true
+            // Refresh Play Store product details (prices) for any booster in current items
+            val boosterProductIds = chatAdapter.currentList()
+                .mapNotNull { it.boosterAiChat?.androidProductId?.ifEmpty { null } }
+            if (boosterProductIds.isNotEmpty()) {
+                shopViewModel.queryProductsIfNeeded(boosterProductIds)
+            }
+            if (chatAdapter.itemCount > 0) {
+                binding.rvChat.post {
+                    binding.rvChat.scrollToPosition(chatAdapter.itemCount - 1)
+                }
+            }
+        } else {
+            binding.nsvContent.isVisible = true
+            binding.rvChat.isVisible = false
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (shopViewModel.isBillingFlowActive) {
+            shopViewModel.clearBillingFlowActive()
+        } else {
+            shopViewModel.refreshPurchases()
+            val boosterProductIds = chatAdapter.currentList()
+                .mapNotNull { it.boosterAiChat?.androidProductId?.ifEmpty { null } }
+            if (boosterProductIds.isNotEmpty()) {
+                shopViewModel.queryProductsIfNeeded(boosterProductIds)
+            }
+        }
     }
 
     private fun handleBackPress() {
@@ -198,6 +262,7 @@ class DecodeChatFragment : BaseFragment(R.layout.fragment_decode_chat) {
     }
 
     private fun sendMessage(message: String) {
+        isMessageSentInSession = true
         val newItem = ConversationData(
             id = null,
             userMessage = message,
@@ -235,10 +300,20 @@ class DecodeChatFragment : BaseFragment(R.layout.fragment_decode_chat) {
         viewModel.conversationsData().observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
                 Status.SUCCESS -> {
-                    val apiList = (resource.data?.data ?: emptyList()).reversed()
+                    val rawList = (resource.data?.data ?: emptyList()).reversed()
+                    val wasMessageSent = isMessageSentInSession
+                    isMessageSentInSession = false
+                    val apiList = rawList.mapIndexed { index, item ->
+                        val isLast = index == rawList.size - 1
+                        item.copy(isNewMessage = isLast && wasMessageSent)
+                    }
+                    val boosterProductIds = apiList.mapNotNull { it.boosterAiChat?.toBooster()?.playStoreProductId }
+                    shopViewModel.queryProductsIfNeeded(boosterProductIds)
                     val currentList = chatAdapter.currentList().toMutableList()
 
                     if (apiList.isNotEmpty()) {
+                        val shouldShowDirect = (!wasMessageSent && apiList.size > 1) || isHistoryLoading
+                        
                         // Check if these are new items to prepend (pagination)
                         val firstApiId = apiList.first().id
                         val alreadyHasFirst = currentList.any { it.id == firstApiId }
@@ -256,9 +331,9 @@ class DecodeChatFragment : BaseFragment(R.layout.fragment_decode_chat) {
                                 val mergedList = apiList.toMutableList()
                                 val firstItem = mergedList[0].copy(userMessage = currentList[0].userMessage)
                                 mergedList[0] = firstItem
-                                chatAdapter.submitList(mergedList, isHistory = isHistoryLoading)
+                                chatAdapter.submitList(mergedList, isHistory = shouldShowDirect)
                             } else {
-                                chatAdapter.submitList(apiList, isHistory = isHistoryLoading)
+                                chatAdapter.submitList(apiList, isHistory = shouldShowDirect)
                             }
                         }
                         
@@ -284,7 +359,7 @@ class DecodeChatFragment : BaseFragment(R.layout.fragment_decode_chat) {
                 Status.ERROR, Status.EXCEPTION -> {
                     val errorItem = ConversationData(
                         id = null,
-                        userMessage = "Help me understand my $selectedMetricLabel over the last 30 days and what I can do to improve it.",
+                        userMessage = getString(R.string.chat_help_understand_metric_prompt, selectedMetricLabel),
                         botResponse = BotResponse(success = false, message = getString(R.string.chat_error_fetch_insights)),
                         createdAt = ""
                     )
@@ -298,8 +373,9 @@ class DecodeChatFragment : BaseFragment(R.layout.fragment_decode_chat) {
             when (resource.status) {
                 Status.SUCCESS -> {
                     val latestApiItem = resource.data?.data
-
-
+                    latestApiItem?.boosterAiChat?.toBooster()?.playStoreProductId?.let { id ->
+                        shopViewModel.queryProductsIfNeeded(listOf(id))
+                    }
                     if (latestApiItem != null) {
                         val currentList = chatAdapter.currentList().toMutableList()
                         val loadingIndex = currentList.indexOfLast { it.id == null }
@@ -307,12 +383,16 @@ class DecodeChatFragment : BaseFragment(R.layout.fragment_decode_chat) {
                             val updatedItem = currentList[loadingIndex].copy(
                                 id = latestApiItem.id,
                                 botResponse = latestApiItem.botResponse,
-                                createdAt = latestApiItem.createdAt ?: currentList[loadingIndex].createdAt
+                                createdAt = latestApiItem.createdAt ?: currentList[loadingIndex].createdAt,
+                                boosterAiChat = latestApiItem.boosterAiChat,
+                                isNewMessage = isMessageSentInSession
                             )
+                            isMessageSentInSession = false
                             currentList[loadingIndex] = updatedItem
                             chatAdapter.submitList(currentList)
                         } else {
-                            currentList.add(latestApiItem)
+                            currentList.add(latestApiItem.copy(isNewMessage = isMessageSentInSession))
+                            isMessageSentInSession = false
                             chatAdapter.submitList(currentList)
                         }
                     }
@@ -324,6 +404,7 @@ class DecodeChatFragment : BaseFragment(R.layout.fragment_decode_chat) {
                     }, 100)
                 }
                 Status.ERROR, Status.EXCEPTION -> {
+                    isMessageSentInSession = false
                     val currentList = chatAdapter.currentList().toMutableList()
                     val loadingIndex = currentList.indexOfLast { it.id == null }
                     if (loadingIndex != -1) {
@@ -337,11 +418,76 @@ class DecodeChatFragment : BaseFragment(R.layout.fragment_decode_chat) {
                 else -> {}
             }
         }
+
+        shopViewModel.playStoreProductsLiveData.observe(viewLifecycleOwner) { products ->
+            chatAdapter.setPlayStoreProducts(products)
+        }
+
+        shopViewModel.activePurchasesLiveData.observe(viewLifecycleOwner) { purchases ->
+            val hasPurchasedLockedBooster = chatAdapter.currentList().any { item ->
+                item.boosterAiChat != null &&
+                item.boosterAiChat.isActive == false &&
+                purchases.any { purchase ->
+                    purchase.products.contains(item.boosterAiChat.androidProductId)
+                }
+            }
+            if (hasPurchasedLockedBooster) {
+                val currentThreadId = viewModel.getThreadId()
+                if (currentThreadId != null) {
+                    viewModel.getConversationsByUserId(conversationThreadId = currentThreadId)
+                }
+            }
+        }
+
+        shopViewModel.orderResultLiveData.observe(viewLifecycleOwner) { resource ->
+            when (resource.status) {
+                Status.SUCCESS -> {
+                    hideProgress()
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.unlocked_success),
+                        Toast.LENGTH_LONG
+                    ).show()
+                    val threadId = viewModel.getThreadId()
+                    if (threadId != null) {
+                        viewModel.getConversationsByUserId(conversationThreadId = threadId)
+                    }
+                }
+                Status.ERROR, Status.EXCEPTION -> {
+                    hideProgress()
+                    Toast.makeText(
+                        requireContext(),
+                        resource.error?.errorMessage ?: getString(R.string.order_activation_failed),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+                Status.LOADING -> {
+                    showProgress()
+                }
+            }
+        }
+
+        shopViewModel.purchaseErrorEvent.observe(viewLifecycleOwner) { errorMsg ->
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.purchase_failed_format, errorMsg),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
+        shopViewModel.purchaseCancelEvent.observe(viewLifecycleOwner) {
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.transaction_canceled),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
 
     private fun showMetricChat(metric: ActiveMetric) {
         isHistoryLoading = false
+        isMessageSentInSession = true
         selectedMetricLabel = metric.label ?: ""
         binding.nsvContent.isVisible = false
         binding.rvChat.isVisible = true
@@ -350,7 +496,7 @@ class DecodeChatFragment : BaseFragment(R.layout.fragment_decode_chat) {
         // Show immediate user message with a loading indicator in the bot response
         val loadingItem = ConversationData(
             id = null,
-            userMessage = "Analyze my $selectedMetricLabel over the last 30 days.",
+            userMessage = getString(R.string.chat_analyze_metric_prompt, selectedMetricLabel),
             botResponse = BotResponse(success = true, message = getString(R.string.chat_bot_loading_metrics)),
             createdAt = java.text.SimpleDateFormat("MMM dd, yyyy h:mm a", java.util.Locale.getDefault()).format(java.util.Date())
         )
@@ -361,6 +507,7 @@ class DecodeChatFragment : BaseFragment(R.layout.fragment_decode_chat) {
 
     private fun showQuestionChat(question: FeltOffQuestionData) {
         isHistoryLoading = false
+        isMessageSentInSession = true
         selectedMetricLabel = ""
         binding.nsvContent.isVisible = false
         binding.rvChat.isVisible = true
