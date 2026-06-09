@@ -6,6 +6,7 @@ import android.os.StrictMode
 import android.util.Log
 import com.humotron.app.BuildConfig
 import com.humotron.app.bt.ring.RingBleManager
+import com.humotron.app.bt.bp.BpMachineSdkManager
 import com.humotron.app.util.ActivityLifecycleCb
 import com.humotron.app.util.BandSyncManager
 import com.humotron.app.util.FontScaleContextWrapper
@@ -45,6 +46,9 @@ class App : Application() {
     @Inject
     lateinit var weightScaleSdkManager: WeightScaleSdkManager
 
+    @Inject
+    lateinit var bpMachineSdkManager: BpMachineSdkManager
+
     val accountSp by lazy { createDefaultSharedPreferences() }
     val ringBleManager by lazy {
         NexRingManager.init(this)
@@ -66,6 +70,7 @@ class App : Application() {
         }
 
         weightScaleSdkManager.initializeSdk()
+        bpMachineSdkManager.initializeSdk()
     }
 
     private fun initPluto() {

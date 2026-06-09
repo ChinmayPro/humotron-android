@@ -182,6 +182,7 @@ dependencies {
 
     // -------------------- Lifecycle --------------------
     implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation("androidx.lifecycle:lifecycle-process:2.8.4")
 
     // -------------------- Internal Modules ---------------
     implementation(project(":ecgAlgo"))
@@ -191,6 +192,13 @@ dependencies {
     implementation(project(":libraryDiscreteScrollView"))
     //Band
     implementation(project(":blesdk_2208"))
+
+    // -------------------- Lepu BP SDK -------------------
+    implementation(files("libs/lepu-blepro-1.3.1.aar"))
+    implementation("no.nordicsemi.android:ble:2.10.0")
+    implementation("com.github.michaellee123:LiveEventBus:1.8.14")
+    api("io.getstream:stream-log-android:1.1.4")
+    api("io.getstream:stream-log-android-file:1.1.4")
 
     //Weight Scale
     implementation(libs.qnscalesdkx)

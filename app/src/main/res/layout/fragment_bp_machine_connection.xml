@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:background="@color/black"
-    tools:context=".ui.connect.WeightMachineConnectionFragment">
+    tools:context=".ui.connect.BPMachineConnectionFragment">
 
     <include
         android:id="@+id/header"
@@ -68,7 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_20dp"
         android:layout_marginTop="@dimen/_40dp"
-        android:text="@string/smart_scale_instruction_1"
+        android:text="@string/connect_your_bp_machine"
         android:textColor="@color/white70"
         android:textSize="12sp"
         app:layout_constraintTop_toBottomOf="@id/ringContainer" />

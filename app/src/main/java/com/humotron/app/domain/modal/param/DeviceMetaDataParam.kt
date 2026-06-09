@@ -2,6 +2,7 @@ package com.humotron.app.domain.modal.param
 
 import android.content.Context
 import com.google.gson.annotations.SerializedName
+import com.humotron.app.bt.bp.BpDiscoveredDevice
 import com.humotron.app.bt.ring.RingBleDevice
 import com.humotron.app.bt.weight.WeightScaleDeviceSummary
 import com.humotron.app.domain.modal.response.UserHardware
@@ -70,6 +71,24 @@ data class DeviceMetaDataParam(
                     sn = userHardware.hardwareSerialNumber ?: "",
                     mac = device.mac,
                     desc = device.name ?: "WeightMachine",
+                    fw = "",
+                    measureFreq = "0",
+                    lowPowerMode = false
+                )
+            )
+        }
+
+        fun from(
+            device: BpDiscoveredDevice,
+            userHardware: UserHardware,
+            deviceId: String?,
+        ): DeviceMetaDataParam {
+            return DeviceMetaDataParam(
+                deviceId = deviceId ?: "",
+                data = DeviceMetaData(
+                    sn = userHardware.hardwareSerialNumber ?: "",
+                    mac = device.macAddress,
+                    desc = device.name ?: "BPMachine",
                     fw = "",
                     measureFreq = "0",
                     lowPowerMode = false
