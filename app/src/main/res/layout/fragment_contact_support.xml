@@ -4,18 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    android:fitsSystemWindows="true"
     tools:background="@drawable/ic_bg_main_dark"
     tools:context=".ui.support.ContactSupportFragment">
 
     <include
         android:id="@+id/header"
         layout="@layout/layout_header_2"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Fixed Top Header & Step Indicator -->
     <LinearLayout
@@ -25,9 +25,9 @@
         android:orientation="vertical"
         android:paddingHorizontal="20dp"
         android:paddingTop="12dp"
-        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/header">
 
         <!-- Title & Subtitle -->
         <TextView
@@ -116,9 +116,9 @@
                 android:gravity="center"
                 android:text="1"
                 android:textColor="@color/colorBgBtn1"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guide1"
                 app:layout_constraintStart_toStartOf="@id/guide1"
-                app:layout_constraintEnd_toEndOf="@id/guide1" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <!-- Circle 2 -->
             <TextView
@@ -130,9 +130,9 @@
                 android:gravity="center"
                 android:text="2"
                 android:textColor="@color/white30"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guide2"
                 app:layout_constraintStart_toStartOf="@id/guide2"
-                app:layout_constraintEnd_toEndOf="@id/guide2" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <!-- Circle 3 -->
             <TextView
@@ -144,9 +144,9 @@
                 android:gravity="center"
                 android:text="3"
                 android:textColor="@color/white30"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guide3"
                 app:layout_constraintStart_toStartOf="@id/guide3"
-                app:layout_constraintEnd_toEndOf="@id/guide3" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <!-- Circle 4 -->
             <TextView
@@ -158,9 +158,9 @@
                 android:gravity="center"
                 android:text="4"
                 android:textColor="@color/white30"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guide4"
                 app:layout_constraintStart_toStartOf="@id/guide4"
-                app:layout_constraintEnd_toEndOf="@id/guide4" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <!-- Line 1: Circle 1 to Circle 2 -->
             <View
@@ -168,10 +168,10 @@
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:background="@color/white10"
-                app:layout_constraintTop_toTopOf="@id/circle1"
                 app:layout_constraintBottom_toBottomOf="@id/circle1"
+                app:layout_constraintEnd_toStartOf="@id/circle2"
                 app:layout_constraintStart_toEndOf="@id/circle1"
-                app:layout_constraintEnd_toStartOf="@id/circle2" />
+                app:layout_constraintTop_toTopOf="@id/circle1" />
 
             <!-- Line 2: Circle 2 to Circle 3 -->
             <View
@@ -179,10 +179,10 @@
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:background="@color/white10"
-                app:layout_constraintTop_toTopOf="@id/circle1"
                 app:layout_constraintBottom_toBottomOf="@id/circle1"
+                app:layout_constraintEnd_toStartOf="@id/circle3"
                 app:layout_constraintStart_toEndOf="@id/circle2"
-                app:layout_constraintEnd_toStartOf="@id/circle3" />
+                app:layout_constraintTop_toTopOf="@id/circle1" />
 
             <!-- Line 3: Circle 3 to Circle 4 -->
             <View
@@ -190,10 +190,10 @@
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:background="@color/white10"
-                app:layout_constraintTop_toTopOf="@id/circle1"
                 app:layout_constraintBottom_toBottomOf="@id/circle1"
+                app:layout_constraintEnd_toStartOf="@id/circle4"
                 app:layout_constraintStart_toEndOf="@id/circle3"
-                app:layout_constraintEnd_toStartOf="@id/circle4" />
+                app:layout_constraintTop_toTopOf="@id/circle1" />
 
             <!-- Label 1 -->
             <TextView
@@ -205,9 +205,9 @@
                 android:text="@string/contact_step_issue_details"
                 android:textAppearance="@style/Text.12x.Manrope.Regular"
                 android:textColor="@color/colorBgBtn1"
-                app:layout_constraintTop_toBottomOf="@id/circle1"
+                app:layout_constraintEnd_toStartOf="@id/guide_col1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/guide_col1" />
+                app:layout_constraintTop_toBottomOf="@id/circle1" />
 
             <!-- Label 2 -->
             <TextView
@@ -219,9 +219,9 @@
                 android:text="@string/contact_step_more_info"
                 android:textAppearance="@style/Text.12x.Manrope.Regular"
                 android:textColor="@color/white30"
-                app:layout_constraintTop_toBottomOf="@id/circle2"
+                app:layout_constraintEnd_toStartOf="@id/guide_col2"
                 app:layout_constraintStart_toStartOf="@id/guide_col1"
-                app:layout_constraintEnd_toStartOf="@id/guide_col2" />
+                app:layout_constraintTop_toBottomOf="@id/circle2" />
 
             <!-- Label 3 -->
             <TextView
@@ -233,9 +233,9 @@
                 android:text="@string/contact_step_attachments"
                 android:textAppearance="@style/Text.12x.Manrope.Regular"
                 android:textColor="@color/white30"
-                app:layout_constraintTop_toBottomOf="@id/circle3"
+                app:layout_constraintEnd_toStartOf="@id/guide_col3"
                 app:layout_constraintStart_toStartOf="@id/guide_col2"
-                app:layout_constraintEnd_toStartOf="@id/guide_col3" />
+                app:layout_constraintTop_toBottomOf="@id/circle3" />
 
             <!-- Label 4 -->
             <TextView
@@ -247,9 +247,9 @@
                 android:text="@string/contact_step_review"
                 android:textAppearance="@style/Text.12x.Manrope.Regular"
                 android:textColor="@color/white30"
-                app:layout_constraintTop_toBottomOf="@id/circle4"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/guide_col3"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/circle4" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
@@ -259,10 +259,10 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintTop_toBottomOf="@id/llTopContainer"
         app:layout_constraintBottom_toTopOf="@id/bottomBar"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/llTopContainer">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -336,13 +336,13 @@
                     android:background="@null"
                     android:gravity="top|start"
                     android:hint="@string/contact_describe_hint"
+                    android:importantForAutofill="no"
+                    android:inputType="textMultiLine"
                     android:maxLength="1000"
                     android:minLines="5"
                     android:textAppearance="@style/Text.14x.Manrope.Regular"
                     android:textColor="@color/white"
-                    android:textColorHint="@color/white30"
-                    android:importantForAutofill="no"
-                    android:inputType="textMultiLine" />
+                    android:textColorHint="@color/white30" />
 
                 <TextView
                     android:id="@+id/tvCharCounter"
@@ -365,10 +365,10 @@
         android:layout_height="0dp"
         android:fillViewport="true"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/llTopContainer"
         app:layout_constraintBottom_toTopOf="@id/bottomBar"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/llTopContainer">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -437,7 +437,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@id/ivSelectedDeviceIcon"
-                    android:text="Select a device"
+                    android:text="@string/contact_select_device"
                     android:textAppearance="@style/Text.14x.Manrope.Regular"
                     android:textColor="@color/white50" />
 
@@ -482,7 +482,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="Select an issue"
+                    android:text="@string/contact_select_issue"
                     android:textAppearance="@style/Text.14x.Manrope.Regular"
                     android:textColor="@color/white50" />
 
@@ -529,11 +529,11 @@
                     android:button="@null"
                     android:checked="true"
                     android:drawableEnd="@drawable/selector_contact_radio"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="16dp"
                     android:text="Today"
                     android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:paddingHorizontal="16dp"
-                    android:gravity="center_vertical" />
+                    android:textSize="14sp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -546,11 +546,11 @@
                     android:layout_height="56dp"
                     android:button="@null"
                     android:drawableEnd="@drawable/selector_contact_radio"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="16dp"
                     android:text="In the last 7 days"
                     android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:paddingHorizontal="16dp"
-                    android:gravity="center_vertical" />
+                    android:textSize="14sp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -563,11 +563,11 @@
                     android:layout_height="56dp"
                     android:button="@null"
                     android:drawableEnd="@drawable/selector_contact_radio"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="16dp"
                     android:text="In the last 30 days"
                     android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:paddingHorizontal="16dp"
-                    android:gravity="center_vertical" />
+                    android:textSize="14sp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -580,11 +580,11 @@
                     android:layout_height="56dp"
                     android:button="@null"
                     android:drawableEnd="@drawable/selector_contact_radio"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="16dp"
                     android:text="More than 30 days ago"
                     android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:paddingHorizontal="16dp"
-                    android:gravity="center_vertical" />
+                    android:textSize="14sp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -597,11 +597,11 @@
                     android:layout_height="56dp"
                     android:button="@null"
                     android:drawableEnd="@drawable/selector_contact_radio"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="16dp"
                     android:text="Not sure"
                     android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:paddingHorizontal="16dp"
-                    android:gravity="center_vertical" />
+                    android:textSize="14sp" />
             </RadioGroup>
 
             <!-- App Version selection -->
@@ -652,6 +652,926 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
+    <!-- Step 3 (Attachments) -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollViewStep3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/bottomBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llTopContainer">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            android:paddingBottom="24dp">
+
+            <!-- Title & Subtitle -->
+            <TextView
+                android:id="@+id/tvStep3Title"
+                style="@style/Text.16x.Manrope.SemiBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/contact_step3_title"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/tvStep3Subtitle"
+                style="@style/Text.14x.Manrope.Regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/contact_step3_subtitle"
+                android:textColor="@color/white50" />
+
+            <!-- Dashed upload container -->
+            <LinearLayout
+                android:id="@+id/llUploadContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/bg_contact_dashed_rect"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingVertical="32dp">
+
+                <ImageView
+                    android:id="@+id/ivUploadIcon"
+                    android:layout_width="38dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_contact_upload_gallery" />
+
+                <TextView
+                    android:id="@+id/tvAddPhotos"
+                    style="@style/Text.16x.Manrope.SemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/contact_add_photos_desc"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/tvFileTypes"
+                    style="@style/Text.14x.Manrope.Regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/contact_file_types_desc"
+                    android:textColor="@color/white30" />
+            </LinearLayout>
+
+            <!-- Selected Attachments List -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvAttachments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_contact_attachment"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tvMaxFiles"
+                style="@style/Text.12x.Manrope.Regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/contact_max_files_desc"
+                android:textColor="@color/white50" />
+
+            <!-- Additional Notes -->
+            <TextView
+                android:id="@+id/tvAdditionalNotesTitle"
+                style="@style/Text.16x.Manrope.SemiBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/contact_additional_notes_title"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/tvAdditionalNotesDesc"
+                style="@style/Text.14x.Manrope.Regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/contact_additional_notes_desc"
+                android:textColor="@color/white50" />
+
+            <LinearLayout
+                android:id="@+id/llAdditionalNotesContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_contact_description_input"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <EditText
+                    android:id="@+id/etAdditionalNotes"
+                    style="@style/Text.14x.Manrope.Regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:gravity="top|start"
+                    android:hint="@string/contact_additional_notes_hint"
+                    android:importantForAutofill="no"
+                    android:inputType="textMultiLine"
+                    android:maxLength="1000"
+                    android:minLines="5"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white30" />
+
+                <TextView
+                    android:id="@+id/tvAdditionalNotesCharCounter"
+                    style="@style/Text.12x.Manrope.Regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="8dp"
+                    android:text="0/1000"
+                    android:textColor="@color/white30" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Step 4 (Review & send) -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollViewStep4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/bottomBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llTopContainer">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            android:paddingBottom="24dp">
+
+            <!-- Title & Subtitle -->
+            <TextView
+                android:id="@+id/tvStep4Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="4. Review &amp; send"
+                android:textAppearance="@style/Text.18x.Manrope.SemiBold"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/tvStep4Subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Please review your details before submitting your request."
+                android:textAppearance="@style/Text.14x.Manrope.Regular"
+                android:textColor="@color/white50" />
+
+            <!-- Card 1: Issue Summary -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/bg_contact_description_input"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <FrameLayout
+                        android:id="@+id/flSummaryIconContainer"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:background="@drawable/bg_contact_step_active">
+
+                        <ImageView
+                            android:id="@+id/ivSummaryIcon"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_sheet_document"
+                            app:tint="@color/colorBgBtn1" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/flSummaryIconContainer"
+                        android:layout_marginStart="12dp"
+                        android:layout_centerVertical="true"
+                        android:text="Issue\nsummary"
+                        android:textAppearance="@style/Text.16x.Manrope.SemiBold"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tvEditSummary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:text="Edit"
+                        android:textAppearance="@style/Text.14x.Manrope.SemiBold"
+                        android:textColor="@color/colorBgBtn1"
+                        android:clickable="true"
+                        android:focusable="true" />
+                </RelativeLayout>
+
+                <!-- Details Rows -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="vertical">
+
+                    <!-- Category -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp">
+                        <TextView
+                            android:id="@+id/tvCategoryLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:text="Category"
+                            android:textAppearance="@style/Text.14x.Manrope.Regular"
+                            android:textColor="@color/white50" />
+                        <TextView
+                            android:id="@+id/tvReviewCategory"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_toEndOf="@id/tvCategoryLabel"
+                            android:layout_marginStart="16dp"
+                            android:gravity="end"
+                            android:text="Devices"
+                            android:textAppearance="@style/Text.14x.Manrope.SemiBold"
+                            android:textColor="@color/white" />
+                    </RelativeLayout>
+
+                    <!-- Problem -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp">
+                        <TextView
+                            android:id="@+id/tvProblemLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:text="Problem"
+                            android:textAppearance="@style/Text.14x.Manrope.Regular"
+                            android:textColor="@color/white50" />
+                        <TextView
+                            android:id="@+id/tvReviewProblem"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_toEndOf="@id/tvProblemLabel"
+                            android:layout_marginStart="16dp"
+                            android:gravity="end"
+                            android:text="Blood pressure, ECG..."
+                            android:textAppearance="@style/Text.14x.Manrope.SemiBold"
+                            android:textColor="@color/white" />
+                    </RelativeLayout>
+
+                    <!-- When did this start -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp">
+                        <TextView
+                            android:id="@+id/tvStartLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="When did this start?"
+                            android:textAppearance="@style/Text.14x.Manrope.Regular"
+                            android:textColor="@color/white50" />
+                        <TextView
+                            android:id="@+id/tvReviewStartDuration"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_toEndOf="@id/tvStartLabel"
+                            android:layout_marginStart="16dp"
+                            android:gravity="end"
+                            android:text="Today"
+                            android:textAppearance="@style/Text.14x.Manrope.SemiBold"
+                            android:textColor="@color/white" />
+                    </RelativeLayout>
+
+                    <!-- App Version -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/tvAppVersionLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="App version"
+                            android:textAppearance="@style/Text.14x.Manrope.Regular"
+                            android:textColor="@color/white50" />
+                        <TextView
+                            android:id="@+id/tvReviewAppVersion"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_toEndOf="@id/tvAppVersionLabel"
+                            android:layout_marginStart="16dp"
+                            android:gravity="end"
+                            android:text="1.0.1 (55)"
+                            android:textAppearance="@style/Text.14x.Manrope.SemiBold"
+                            android:textColor="@color/white" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Card 2: Additional Details -->
+            <LinearLayout
+                android:id="@+id/llReviewAdditionalDetailsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_contact_description_input"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <FrameLayout
+                        android:id="@+id/flAdditionalDetailsIconContainer"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:background="@drawable/bg_contact_step_active">
+
+                        <ImageView
+                            android:id="@+id/ivAdditionalDetailsIcon"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_details_message"
+                            app:tint="@color/colorBgBtn1" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/flAdditionalDetailsIconContainer"
+                        android:layout_marginStart="12dp"
+                        android:layout_centerVertical="true"
+                        android:text="Additional\ndetails"
+                        android:textAppearance="@style/Text.16x.Manrope.SemiBold"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tvEditAdditionalDetails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:text="Edit"
+                        android:textAppearance="@style/Text.14x.Manrope.SemiBold"
+                        android:textColor="@color/colorBgBtn1"
+                        android:clickable="true"
+                        android:focusable="true" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tvReviewAdditionalDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:textAppearance="@style/Text.14x.Manrope.Regular"
+                    android:textColor="@color/white"
+                    tools:text="Some description here..." />
+            </LinearLayout>
+
+            <!-- Card 3: Attachments -->
+            <LinearLayout
+                android:id="@+id/llReviewAttachmentsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_contact_description_input"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <FrameLayout
+                        android:id="@+id/flAttachmentsIconContainer"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:background="@drawable/bg_contact_step_active">
+
+                        <ImageView
+                            android:id="@+id/ivAttachmentsIcon"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_paperclip"
+                            app:tint="@color/colorBgBtn1" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/tvReviewAttachmentsTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/flAttachmentsIconContainer"
+                        android:layout_marginStart="12dp"
+                        android:layout_centerVertical="true"
+                        android:text="Attachments\n(0)"
+                        android:textAppearance="@style/Text.16x.Manrope.SemiBold"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tvEditAttachments"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:text="Edit"
+                        android:textAppearance="@style/Text.14x.Manrope.SemiBold"
+                        android:textColor="@color/colorBgBtn1"
+                        android:clickable="true"
+                        android:focusable="true" />
+                </RelativeLayout>
+
+                <!-- Horizontal RecyclerView for reviewing attachments -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvReviewAttachments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_contact_attachment" />
+            </LinearLayout>
+
+            <!-- Card 3: Additional Notes -->
+            <LinearLayout
+                android:id="@+id/llReviewAdditionalNotesContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_contact_description_input"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <FrameLayout
+                        android:id="@+id/flAdditionalNotesIconContainer"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:background="@drawable/bg_contact_step_active">
+
+                        <ImageView
+                            android:id="@+id/ivAdditionalNotesIcon"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_details_note"
+                            app:tint="@color/colorBgBtn1" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/flAdditionalNotesIconContainer"
+                        android:layout_marginStart="12dp"
+                        android:layout_centerVertical="true"
+                        android:text="Additional\nnotes"
+                        android:textAppearance="@style/Text.16x.Manrope.SemiBold"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tvEditAdditionalNotes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:text="Edit"
+                        android:textAppearance="@style/Text.14x.Manrope.SemiBold"
+                        android:textColor="@color/colorBgBtn1"
+                        android:clickable="true"
+                        android:focusable="true" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tvReviewAdditionalNotes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:textAppearance="@style/Text.14x.Manrope.Regular"
+                    android:textColor="@color/white"
+                    tools:text="Some additional notes here..." />
+            </LinearLayout>
+
+            <!-- Card 4: Your data is secure -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_contact_description_input"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <FrameLayout
+                        android:id="@+id/flSecurityIconContainer"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:background="@drawable/bg_contact_step_active">
+
+                        <ImageView
+                            android:id="@+id/ivSecurityIcon"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_verified_user_24px"
+                            app:tint="@color/colorBgBtn1" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/flSecurityIconContainer"
+                        android:layout_marginStart="12dp"
+                        android:layout_centerVertical="true"
+                        android:text="Your data is secure"
+                        android:textAppearance="@style/Text.16x.Manrope.SemiBold"
+                        android:textColor="@color/white" />
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Your information helps us assist you better. We'll only use it to resolve your issue and will never share it without your consent."
+                    android:textAppearance="@style/Text.12x.Manrope.Regular"
+                    android:textColor="@color/white50" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Step 5 (Request submitted / Success) -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollViewStep5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/bottomBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llTopContainer">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:paddingHorizontal="20dp"
+            android:paddingBottom="24dp">
+
+            <!-- Check Circle with Sparkles -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp">
+
+                <!-- Circle Check Center -->
+                <FrameLayout
+                    android:id="@+id/flSuccessCircle"
+                    android:layout_width="86dp"
+                    android:layout_height="86dp"
+                    android:background="@drawable/bg_success_circle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_hollow_check" />
+                </FrameLayout>
+
+                <!-- Sparkle Left -->
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="23dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_sparkle"
+                    app:layout_constraintEnd_toStartOf="@id/flSuccessCircle"
+                    app:layout_constraintTop_toTopOf="@id/flSuccessCircle"
+                    app:layout_constraintBottom_toBottomOf="@id/flSuccessCircle"
+                    app:layout_constraintVertical_bias="0.35" />
+
+                <!-- Sparkle Right -->
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="23dp"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/ic_sparkle"
+                    app:layout_constraintStart_toEndOf="@id/flSuccessCircle"
+                    app:layout_constraintTop_toTopOf="@id/flSuccessCircle"
+                    app:layout_constraintBottom_toBottomOf="@id/flSuccessCircle"
+                    app:layout_constraintVertical_bias="0.65" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Request submitted! Title & Subtitle -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:text="Request submitted!"
+                android:textAppearance="@style/Text.24x.Manrope.Bold"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:text="Thanks for reaching out. Our support team has received your request and will get back to you soon."
+                android:textAppearance="@style/Text.14x.Manrope.Regular"
+                android:textColor="@color/white50" />
+
+            <!-- Card: What happens next? -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/bg_contact_description_input"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="What happens next?"
+                    android:textAppearance="@style/Text.16x.Manrope.Bold"
+                    android:textColor="@color/white" />
+
+                <!-- Row 1: We'll review your request -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="@drawable/bg_active_metric_card"
+                        android:backgroundTint="@color/white05">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_mail_envelope"
+                            app:tint="@color/white" />
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="We'll review your request"
+                            android:textAppearance="@style/Text.14x.Manrope.SemiBold"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="You'll receive an email confirmation shortly."
+                            android:textAppearance="@style/Text.12x.Manrope.Regular"
+                            android:textColor="@color/white50" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Row 2: We typically respond within 24 hours -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="@drawable/bg_active_metric_card"
+                        android:backgroundTint="@color/white05">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_alarm_24px"
+                            app:tint="@color/white" />
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="We typically respond within 24 hours"
+                            android:textAppearance="@style/Text.14x.Manrope.SemiBold"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Most replies come much sooner."
+                            android:textAppearance="@style/Text.12x.Manrope.Regular"
+                            android:textColor="@color/white50" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Row 3: We'll follow up via email -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="@drawable/bg_active_metric_card"
+                        android:backgroundTint="@color/white05">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_chat"
+                            app:tint="@color/white" />
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="We'll follow up via email"
+                            android:textAppearance="@style/Text.14x.Manrope.SemiBold"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Check your inbox (and spam folder just in case)."
+                            android:textAppearance="@style/Text.12x.Manrope.Regular"
+                            android:textColor="@color/white50" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Card: Your request ID -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_contact_description_input"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="16dp">
+
+                <FrameLayout
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/bg_active_metric_card"
+                    android:backgroundTint="@color/white05">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_sheet_document"
+                        app:tint="@color/colorBgBtn1" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="12dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Your request ID"
+                        android:textAppearance="@style/Text.12x.Manrope.Regular"
+                        android:textColor="@color/white50" />
+
+                    <TextView
+                        android:id="@+id/tvTicketIdValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="TKT-2026-00008"
+                        android:textAppearance="@style/Text.16x.Manrope.Bold"
+                        android:textColor="@color/colorBgBtn1" />
+                </LinearLayout>
+
+                <!-- Copy button -->
+                <LinearLayout
+                    android:id="@+id/llCopyTicketId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:background="@drawable/bg_copy_btn_border"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:paddingHorizontal="12dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:src="@drawable/ic_copy"
+                        app:tint="@color/colorBgBtn1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="Copy"
+                        android:textAppearance="@style/Text.12x.Manrope.SemiBold"
+                        android:textColor="@color/colorBgBtn1" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Status View instructions -->
+            <TextView
+                android:id="@+id/tvStatusInstructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:text="You can view the status of your request in\nProfile > Support > My requests"
+                android:textAppearance="@style/Text.12x.Manrope.Regular"
+                android:textColor="@color/white50" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
     <LinearLayout
         android:id="@+id/bottomBar"
         android:layout_width="0dp"
@@ -674,7 +1594,7 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnContinue"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
+                android:layout_height="54dp"
                 android:background="@drawable/bg_btn_round_rect_16"
                 android:fontFamily="@font/manrope_bold"
                 android:text="@string/contact_continue"
@@ -687,8 +1607,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:visibility="gone"
-                android:indeterminateTint="@color/colorBgBtn1" />
+                android:indeterminateTint="@color/colorBgBtn1"
+                android:visibility="gone" />
         </FrameLayout>
 
         <!-- Step 2 Button Container -->
@@ -703,27 +1623,188 @@
                 android:id="@+id/btnBackStep2"
                 android:layout_width="0dp"
                 android:layout_height="56dp"
-                android:layout_weight="1"
                 android:layout_marginEnd="12dp"
+                android:layout_weight="1"
                 android:background="@drawable/bg_btn_back_step2"
                 android:fontFamily="@font/manrope_bold"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:minHeight="0dp"
                 android:text="@string/contact_back"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnContinueStep2"
+            <FrameLayout
+                android:id="@+id/flContinueStep2Container"
                 android:layout_width="0dp"
                 android:layout_height="56dp"
-                android:layout_weight="1.2"
+                android:layout_weight="1">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnContinueStep2"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:background="@drawable/bg_btn_round_rect_16"
+                    android:fontFamily="@font/manrope_bold"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:minHeight="0dp"
+                    android:text="@string/contact_continue"
+                    android:textAllCaps="false"
+                    android:textColor="@color/d900"
+                    android:textSize="16sp" />
+
+                <ProgressBar
+                    android:id="@+id/progressBarStep2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:indeterminateTint="@color/colorBgBtn1"
+                    android:visibility="gone" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <!-- Step 3 Button Container -->
+        <LinearLayout
+            android:id="@+id/llStep3Buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnBackStep3"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_marginEnd="12dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_btn_back_step2"
+                android:fontFamily="@font/manrope_bold"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:minHeight="0dp"
+                android:text="@string/contact_back"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <FrameLayout
+                android:id="@+id/flContinueStep3Container"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnContinueStep3"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:background="@drawable/bg_btn_round_rect_16"
+                    android:fontFamily="@font/manrope_bold"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:minHeight="0dp"
+                    android:text="@string/contact_continue"
+                    android:textAllCaps="false"
+                    android:textColor="@color/d900"
+                    android:textSize="16sp" />
+
+                <ProgressBar
+                    android:id="@+id/progressBarStep3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:indeterminateTint="@color/colorBgBtn1"
+                    android:visibility="gone" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <!-- Step 4 Button Container -->
+        <LinearLayout
+            android:id="@+id/llStep4Buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <FrameLayout
+                android:id="@+id/flSubmitRequestContainer"
+                android:layout_width="match_parent"
+                android:layout_height="56dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSubmitRequest"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:background="@drawable/bg_btn_round_rect_16"
+                    app:backgroundTint="@null"
+                    android:fontFamily="@font/manrope_bold"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:minHeight="0dp"
+                    android:text="Submit request"
+                    android:textAllCaps="false"
+                    android:textColor="@color/d900"
+                    android:textSize="16sp"
+                    app:icon="@drawable/ic_send"
+                    app:iconTint="@color/d900"
+                    app:iconSize="20dp"
+                    app:iconGravity="textStart"
+                    app:iconPadding="8dp"
+                    android:paddingStart="24dp"
+                    android:paddingEnd="24dp" />
+
+                <ProgressBar
+                    android:id="@+id/progressBarStep4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:indeterminateTint="@color/colorBgBtn1"
+                    android:visibility="gone" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:src="@drawable/ic_lock_simple"
+                    app:tint="@color/white30" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="We typically respond within 24 hours"
+                    android:textAppearance="@style/Text.12x.Manrope.Regular"
+                    android:textColor="@color/white30" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Step 5 Button Container -->
+        <FrameLayout
+            android:id="@+id/flStep5Buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnBackToSupportHome"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
                 android:background="@drawable/bg_btn_round_rect_16"
                 android:fontFamily="@font/manrope_bold"
-                android:text="@string/contact_continue"
+                android:text="Back to Support Home"
                 android:textAllCaps="false"
                 android:textColor="@color/d900"
                 android:textSize="16sp" />
-        </LinearLayout>
+        </FrameLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+

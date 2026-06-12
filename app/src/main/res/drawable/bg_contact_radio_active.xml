@@ -3,6 +3,7 @@
     <!-- Outer Ring -->
     <item>
         <shape android:shape="oval">
+            <size android:width="20dp" android:height="20dp" />
             <stroke
                 android:width="2dp"
                 android:color="@color/colorBgBtn1" />
@@ -16,6 +17,7 @@
         android:right="5dp"
         android:top="5dp">
         <shape android:shape="oval">
+            <size android:width="10dp" android:height="10dp" />
             <solid android:color="@color/colorBgBtn1" />
         </shape>
     </item>

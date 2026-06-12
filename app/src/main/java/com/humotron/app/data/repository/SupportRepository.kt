@@ -10,6 +10,7 @@ import com.humotron.app.domain.modal.response.SearchTopicsResponse
 import com.humotron.app.domain.modal.response.SupportTopicDetailResponse
 import com.humotron.app.domain.modal.response.TopicsByCategoryResponse
 import com.humotron.app.domain.modal.response.CommonResponse
+import com.humotron.app.domain.modal.response.SaveTicketResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
@@ -120,6 +121,7 @@ class SupportRepository @Inject constructor(
 
     fun saveTicket(
         category: String,
+        subcategory: String,
         contactReasonCode: String,
         subject: String,
         description: String,
@@ -127,23 +129,29 @@ class SupportRepository @Inject constructor(
         source: String,
         osPlatform: String,
         appVersion: String,
-        deviceMetaSnapshot: String,
+        deviceType: String,
+        region: String,
+        ticketId: String,
         attachments: List<MultipartBody.Part>
-    ): Flow<Resource<CommonResponse>> = flow {
+    ): Flow<Resource<SaveTicketResponse>> = flow {
         emit(Resource.loading())
         try {
             val categoryBody = category.toRequestBody("text/plain".toMediaTypeOrNull())
+            val subcategoryBody = subcategory.toRequestBody("text/plain".toMediaTypeOrNull())
             val contactReasonCodeBody = contactReasonCode.toRequestBody("text/plain".toMediaTypeOrNull())
             val subjectBody = subject.toRequestBody("text/plain".toMediaTypeOrNull())
             val descriptionBody = description.toRequestBody("text/plain".toMediaTypeOrNull())
             val currentScreenBody = currentScreen.toRequestBody("text/plain".toMediaTypeOrNull())
             val sourceBody = source.toRequestBody("text/plain".toMediaTypeOrNull())
             val osPlatformBody = osPlatform.toRequestBody("text/plain".toMediaTypeOrNull())
-            val appVersionBody = appVersion.toRequestBody("text/plain".toMediaTypeOrNull())
-            val deviceMetaSnapshotBody = deviceMetaSnapshot.toRequestBody("text/plain".toMediaTypeOrNull())
+            val appVersionBody = if (appVersion.isNotBlank()) appVersion.toRequestBody("text/plain".toMediaTypeOrNull()) else null
+            val deviceTypeBody = if (deviceType.isNotBlank()) deviceType.toRequestBody("text/plain".toMediaTypeOrNull()) else null
+            val regionBody = if (region.isNotBlank()) region.toRequestBody("text/plain".toMediaTypeOrNull()) else null
+            val ticketIdBody = if (ticketId.isNotBlank()) ticketId.toRequestBody("text/plain".toMediaTypeOrNull()) else null
 
             val response = api.saveTicket(
                 categoryBody,
+                subcategoryBody,
                 contactReasonCodeBody,
                 subjectBody,
                 descriptionBody,
@@ -151,7 +159,9 @@ class SupportRepository @Inject constructor(
                 sourceBody,
                 osPlatformBody,
                 appVersionBody,
-                deviceMetaSnapshotBody,
+                deviceTypeBody,
+                regionBody,
+                ticketIdBody,
                 attachments
             )
             emit(responseHandler.handleResponse(response, false))

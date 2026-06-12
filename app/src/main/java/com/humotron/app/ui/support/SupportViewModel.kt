@@ -14,6 +14,7 @@ import com.humotron.app.domain.modal.response.SearchTopicItem
 import com.humotron.app.domain.modal.response.SupportTopicDetailResponse
 import com.humotron.app.domain.modal.response.TopicsByCategoryResponse
 import com.humotron.app.domain.modal.response.CommonResponse
+import com.humotron.app.domain.modal.response.SaveTicketResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
@@ -45,8 +46,12 @@ class SupportViewModel @Inject constructor(
     private val _supportCategoryData = MutableLiveData<Resource<TopicsByCategoryResponse>>()
     val supportCategoryData: LiveData<Resource<TopicsByCategoryResponse>> get() = _supportCategoryData
     
-    private val _saveTicketData = MutableLiveData<Resource<CommonResponse>>()
-    val saveTicketData: LiveData<Resource<CommonResponse>> get() = _saveTicketData
+    private val _saveTicketData = MutableLiveData<Resource<SaveTicketResponse>>()
+    val saveTicketData: LiveData<Resource<SaveTicketResponse>> get() = _saveTicketData
+
+    fun clearSaveTicketData() {
+        _saveTicketData.value = null
+    }
 
     private val _allTopicsData = MutableLiveData<Resource<com.humotron.app.domain.modal.response.AllTopicsResponse>>()
     val allTopicsData: LiveData<Resource<com.humotron.app.domain.modal.response.AllTopicsResponse>> get() = _allTopicsData
@@ -275,6 +280,7 @@ class SupportViewModel @Inject constructor(
 
     fun saveTicket(
         category: String,
+        subcategory: String,
         contactReasonCode: String,
         subject: String,
         description: String,
@@ -282,12 +288,14 @@ class SupportViewModel @Inject constructor(
         source: String,
         osPlatform: String,
         appVersion: String,
-        deviceMetaSnapshot: String,
+        deviceType: String,
+        region: String,
+        ticketId: String,
         attachments: List<MultipartBody.Part> = emptyList()
     ) {
         supportRepository.saveTicket(
-            category, contactReasonCode, subject, description, currentScreen,
-            source, osPlatform, appVersion, deviceMetaSnapshot, attachments
+            category, subcategory, contactReasonCode, subject, description, currentScreen,
+            source, osPlatform, appVersion, deviceType, region, ticketId, attachments
         ).onEach { resource ->
             _saveTicketData.value = resource
         }.launchIn(viewModelScope)
