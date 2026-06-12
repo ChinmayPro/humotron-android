@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.humotron.app.R
 import com.humotron.app.bt.bp.BpConnectionState
@@ -38,7 +38,7 @@ class BPMachineConnectionFragment : Fragment(R.layout.fragment_bp_machine_connec
     BleChangeObserver {
 
     private lateinit var binding: FragmentBpMachineConnectionBinding
-    private val viewModel: BpMachineViewModel by viewModels()
+    private val viewModel: BpMachineViewModel by activityViewModels()
 
     @Inject
     lateinit var prefUtils: PrefUtils

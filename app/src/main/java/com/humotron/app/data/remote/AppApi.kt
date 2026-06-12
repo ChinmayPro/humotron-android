@@ -6,6 +6,7 @@ import com.humotron.app.domain.modal.param.AddToCartParam
 import com.humotron.app.domain.modal.param.CompleteOnboardingParam
 import com.humotron.app.domain.modal.param.CreateNuggetPrefParam
 import com.humotron.app.domain.modal.param.DailyCalculatedMetricsParam
+import com.humotron.app.domain.modal.param.BPMachineUploadRequest
 import com.humotron.app.domain.modal.param.GetConversationThreadsParam
 import com.humotron.app.domain.modal.param.GetConversationsParam
 import com.humotron.app.domain.modal.param.NuggetsInteraction
@@ -161,6 +162,11 @@ interface AppApi {
 
     @POST("hardwareSpecificDetail/addHardwareSpecificDetail")
     suspend fun sendScaleDataToServer(@Body data: ScaleUploadData): Response<AddScaleDataResponse>
+
+    @POST("hardwareSpecificDetail/addHardwareSpecificDetail")
+    suspend fun sendBPMachineDataToServer(
+        @Body data: BPMachineUploadRequest,
+    ): Response<AddDeviceDataResponse>
 
     @POST("userHardware/addUserHardware")
     suspend fun addHardwareId(@Body data: AddHardware): Response<AddHardwareResponse>

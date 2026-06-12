@@ -1,14 +1,15 @@
-﻿package com.humotron.app.ui.device
+package com.humotron.app.ui.device
 
 import android.os.Build
 import android.os.Bundle
+import android.graphics.Color
 import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -18,6 +19,7 @@ import com.humotron.app.bt.bp.BpConnectionState
 import com.humotron.app.bt.bp.BpError
 import com.humotron.app.bt.bp.BpMachineEvent
 import com.humotron.app.bt.bp.BpMachineViewModel
+import com.humotron.app.bt.bp.BpSyncStatus
 import com.humotron.app.bt.common.BluetoothManager
 import com.humotron.app.bt.common.BluetoothState
 import com.humotron.app.core.base.BaseFragment
@@ -52,7 +54,7 @@ class BPMachineReadingFragment :
     View.OnClickListener {
 
     private lateinit var binding: FragmentBpMachineReadingBinding
-    private val bpViewModel: BpMachineViewModel by viewModels()
+    private val bpViewModel: BpMachineViewModel by activityViewModels()
 
     @Inject
     lateinit var bluetoothManager: BluetoothManager
@@ -112,10 +114,29 @@ class BPMachineReadingFragment :
         binding.btnSeeAllReadings.setOnClickListener(this@BPMachineReadingFragment)
         binding.btnRetakeReadings.setOnClickListener(this@BPMachineReadingFragment)
         binding.btnRetryMeasurement.setOnClickListener(this@BPMachineReadingFragment)
+        binding.btnRetakeReadingsECG.setOnClickListener(this@BPMachineReadingFragment)
+        binding.btnSeeAllReadingsECG.setOnClickListener(this@BPMachineReadingFragment)
     }
 
     private fun observeData() {
         observeBPMachine()
+        observeSyncStatus()
+    }
+
+    private fun observeSyncStatus() {
+        bpViewModel.syncStatus.observe(viewLifecycleOwner) { status ->
+            when (status) {
+                BpSyncStatus.FETCHING_FILE_LIST,
+                BpSyncStatus.SYNCING_FILES,
+                    -> {
+                    binding.header.progressIndicator.visibility = View.VISIBLE
+                }
+
+                else -> {
+                    binding.header.progressIndicator.visibility = View.INVISIBLE
+                }
+            }
+        }
     }
 
     private fun observeBPMachine() {
@@ -125,6 +146,8 @@ class BPMachineReadingFragment :
                     updateConnectionUi(true)
                     when (state.device.model) {
                         Bluetooth.MODEL_BP2, Bluetooth.MODEL_BP2A, Bluetooth.MODEL_BP2T -> {
+                            Log.e("BP Machine", "Connected")
+                            //bpViewModel.startSync()
                             bpViewModel.startBp2Realtime(state.device.model)
                         }
 
@@ -153,6 +176,7 @@ class BPMachineReadingFragment :
         bpViewModel.events.observe(viewLifecycleOwner) { event ->
             when (event) {
                 is BpMachineEvent.AirBp.BatteryInfo -> {
+                    Log.e("BP Machine", "BatteryInfo")
                     updateBattery(event.data.percent, false)
                 }
 
@@ -169,11 +193,13 @@ class BPMachineReadingFragment :
                 }
 
                 is BpMachineEvent.Bp2.RtData -> {
+                    //Log.e("BP Machine", "RtData")
                     val (_, rtData) = event
                     renderBpRtData(
                         status = rtData.status,
                         paramDataType = rtData.param.paramDataType,
                         payload = rtData.param.paramData,
+                        waveformData = rtData.param.ecgFloatsFilter,
                         source = "BP2"
                     )
                 }
@@ -184,6 +210,7 @@ class BPMachineReadingFragment :
                         status = rtData.status,
                         paramDataType = rtData.param.paramDataType,
                         payload = rtData.param.paramData,
+                        waveformData = rtData.param.ecgFloatsFilter,
                         source = "BP2W"
                     )
                 }
@@ -194,6 +221,7 @@ class BPMachineReadingFragment :
                         status = rtData.status,
                         paramDataType = rtData.param.paramDataType,
                         payload = rtData.param.paramData,
+                        waveformData = rtData.param.ecgFloatsFilter,
                         source = "BP3"
                     )
                 }
@@ -207,7 +235,13 @@ class BPMachineReadingFragment :
         }
     }
 
-    private fun renderBpRtData(status: Any, paramDataType: Int, payload: Any?, source: String) {
+    private fun renderBpRtData(
+        status: Any,
+        paramDataType: Int,
+        payload: Any?,
+        waveformData: FloatArray?,
+        source: String,
+    ) {
         val percent = when (status) {
             is com.lepu.blepro.ext.bp2.RtStatus -> status.percent
             is com.lepu.blepro.ext.bp2w.RtStatus -> status.percent
@@ -233,7 +267,7 @@ class BPMachineReadingFragment :
             else -> ""
         }*/
         val deviceStatusMsg = BPMachineDeviceStatus.fromValue(deviceStatus).label
-        Log.e("BP Machine", "deviceStatusMsg: $deviceStatusMsg")
+        //Log.e("BP Machine", "deviceStatusMsg: $deviceStatusMsg")
 
         val batteryStatusMsg = when (status) {
             is com.lepu.blepro.ext.bp2.RtStatus -> status.batteryStatusMsg
@@ -270,7 +304,7 @@ class BPMachineReadingFragment :
                 append(avgWaitTick)
             }
         }
-        Log.e("BP Machine", "paramDataType: $paramDataType")
+        //Log.e("BP Machine", "paramDataType: $paramDataType")
 
         if (deviceStatusEnum == BPMachineDeviceStatus.STATUS_READY && isResultSuccessOrFail == false) {
             updateInstructionLayouts() //return to default ui if user stop measurement
@@ -294,15 +328,13 @@ class BPMachineReadingFragment :
             2 -> {
                 if (deviceStatusEnum == BPMachineDeviceStatus.STATUS_ECG_MEASURING) {
                     isResultSuccessOrFail = false
-                    showEcgMeasureUi()
-                    renderEcgProgress(payload, statusText, detailText)
+                    renderEcgProgress(payload, waveformData, statusText, detailText)
                 }
             }
 
             3 -> {
                 if (deviceStatusEnum == BPMachineDeviceStatus.STATUS_ECG_MEASURE_END) {
                     isResultSuccessOrFail = true
-                    showEcgMeasureUi()
                     renderEcgResult(payload, statusText, detailText)
                 }
             }
@@ -326,7 +358,7 @@ class BPMachineReadingFragment :
 
             else -> null
         }
-        Log.e("BP Machine", "renderBpPressure parsed: $parsed")
+        //Log.e("BP Machine", "renderBpPressure parsed: $parsed")
 
         val pressure = when (parsed) {
             is Bp2RtBpIng -> parsed.pressure
@@ -393,7 +425,7 @@ class BPMachineReadingFragment :
 
             else -> null
         }
-        Log.e("BP Machine", "renderBpResult parsed: $parsed")
+        //Log.e("BP Machine", "renderBpResult parsed: $parsed")
 
         val sys = when (parsed) {
             is Bp2RtBpResult -> parsed.sys
@@ -441,6 +473,8 @@ class BPMachineReadingFragment :
 
                 gaugeBPView.primaryValue = sys.toFloat()
                 gaugeBPView.secondaryValue = pulse.toFloat()
+
+                bpViewModel.startSync()
             } else {
                 clBPCalc.isVisible = false
                 tvMeasureTitle.isVisible = false
@@ -451,7 +485,12 @@ class BPMachineReadingFragment :
         }
     }
 
-    private fun renderEcgProgress(payload: Any?, statusText: String, detailText: String) {
+    private fun renderEcgProgress(
+        payload: Any?,
+        waveformData: FloatArray?,
+        statusText: String,
+        detailText: String,
+    ) {
         val parsed = when (payload) {
             is Bp2RtEcgIng -> payload
             is Bp2wRtEcgIng -> payload
@@ -464,7 +503,7 @@ class BPMachineReadingFragment :
 
             else -> null
         }
-        Log.e("BP Machine", "renderEcgProgress parsed: $parsed")
+        //Log.e("BP Machine", "renderEcgProgress parsed: $parsed")
 
         val hr = when (parsed) {
             is Bp2RtEcgIng -> parsed.hr
@@ -494,6 +533,29 @@ class BPMachineReadingFragment :
             is Bp3RtBpEcgIng -> parsed.curDuration
             else -> null
         }
+        with(binding) {
+            mcvDeviceDetails.isVisible = false
+            nsvInstructions.isVisible = false
+            cvBpMeasure.isVisible = false
+            llEcgMeasure.isVisible = true
+            llEcgBtns.isVisible = false
+
+            tvEcgMeasureTitle.setTextColor(Color.parseColor("#ADADAD"))
+            tvEcgMeasureTitle.text = getString(R.string.ecg_reading_in_progress)
+            tvEcgMeasureSubtitle.text = getString(R.string.please_remain_calm_and_still)
+            tvEcgWaveformValue.text = if (leadOff || poorSignal) {
+                "-1"
+            } else {
+                duration?.toString() ?: "-1"
+            }
+            tvPulseRateValue.text = hr?.toString() ?: "--"
+
+            if (leadOff || poorSignal) {
+                ecgWaveformView.clearWave()
+            } else {
+                ecgWaveformView.appendWaveData(waveformData)
+            }
+        }
     }
 
     private fun renderEcgResult(payload: Any?, statusText: String, detailText: String) {
@@ -513,20 +575,42 @@ class BPMachineReadingFragment :
             is Bp2RtEcgResult -> parsed.hr
             is Bp2wRtEcgResult -> parsed.hr
             is Bp3RtEcgResult -> parsed.hr
-            else -> null
+            else -> 0
         }
-        val resultText = when (parsed) {
+        val result = when (parsed) {
             is Bp2RtEcgResult -> parsed.result
             is Bp2wRtEcgResult -> parsed.result
             is Bp3RtEcgResult -> parsed.result
             else -> null
-        }?.toString().orEmpty()
+        } ?: 0
+
         val diagnosisText = when (parsed) {
             is Bp2RtEcgResult -> parsed.diagnosis?.resultMess
             is Bp2wRtEcgResult -> parsed.diagnosis?.resultMess
             is Bp3RtEcgResult -> parsed.diagnosis?.resultMess
             else -> null
         }?.toString().orEmpty()
+
+        with(binding) {
+            mcvDeviceDetails.isVisible = false
+            nsvInstructions.isVisible = false
+            cvBpMeasure.isVisible = false
+            llEcgMeasure.isVisible = true
+            //llEcgBtns.isVisible = true
+
+            tvEcgMeasureTitle.text = diagnosisText.ifBlank {
+                getString(R.string.ecg_reading_in_progress)
+            }
+            if (result != 4) {
+                tvEcgMeasureTitle.setTextColor(Color.parseColor("#F44545"))
+            }
+            if (hr != 0) {
+                bpViewModel.startSync()
+            }
+            tvEcgMeasureSubtitle.text = getString(R.string.analysis_complete_results_are_ready)
+            tvPulseRateValue.text = hr?.toString() ?: "--"
+            ecgWaveformView.clearWave()
+        }
     }
 
     private fun renderAirBpPressure(pressure: Int) {
@@ -623,13 +707,6 @@ class BPMachineReadingFragment :
         llEcgMeasure.isVisible = false
     }
 
-    private fun showEcgMeasureUi() = with(binding) {
-        mcvDeviceDetails.isVisible = false
-        nsvInstructions.isVisible = false
-        cvBpMeasure.isVisible = false
-        llEcgMeasure.isVisible = true
-    }
-
     private fun readingModeLabel(): String {
         return when (readingType) {
             BPMachineReadingType.BLOOD_PRESSURE -> "Blood Pressure"
@@ -690,6 +767,13 @@ class BPMachineReadingFragment :
             updateInstructionLayouts()
         }
         if (view === binding.btnRetryMeasurement) {
+            isResultSuccessOrFail = false
+            updateInstructionLayouts()
+        }
+        if (view === binding.btnSeeAllReadingsECG) {
+            findNavController().popBackStack()
+        }
+        if (view === binding.btnRetakeReadingsECG) {
             isResultSuccessOrFail = false
             updateInstructionLayouts()
         }

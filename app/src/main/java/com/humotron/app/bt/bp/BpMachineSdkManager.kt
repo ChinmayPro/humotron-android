@@ -296,64 +296,78 @@ class BpMachineSdkManager @Inject constructor(
         }
     }
 
-    fun getAirBpInfo(model: Int) = callCommand(model) { bleService.airBpGetInfo(model) }
-    fun getAirBpBattery(model: Int) = callCommand(model) { bleService.airBpGetBattery(model) }
-    fun getAirBpConfig(model: Int) = callCommand(model) { bleService.airBpGetConfig(model) }
-    fun setAirBpConfig(model: Int, beepSwitchOn: Boolean) =
-        callCommand(model) { bleService.airBpSetConfig(model, beepSwitchOn) }
+    fun getAirBpInfo(model: Int) = callCommand(model = model) { bleService.airBpGetInfo(model) }
+    fun getAirBpBattery(model: Int) =
+        callCommand(model = model) { bleService.airBpGetBattery(model) }
 
-    fun getBp2Info(model: Int) = callCommand(model) { bleService.bp2GetInfo(model) }
-    fun getBp2FileList(model: Int) = callCommand(model) { bleService.bp2GetFileList(model) }
-    fun readBp2File(model: Int, filename: String) = callCommand(model) {
+    fun getAirBpConfig(model: Int) = callCommand(model = model) { bleService.airBpGetConfig(model) }
+    fun setAirBpConfig(model: Int, beepSwitchOn: Boolean) =
+        callCommand(model = model) { bleService.airBpSetConfig(model, beepSwitchOn) }
+
+    //BP2 Machine [Start]
+    fun getBp2Info(model: Int) = callCommand(model = model) { bleService.bp2GetInfo(model) }
+    fun getBp2FileList(model: Int) =
+        callCommand(model = model) { bleService.bp2GetFileList(model) }
+
+    fun readBp2File(model: Int, filename: String) = callCommand(model = model) {
         currentFileName = filename
         bleService.bp2ReadFile(model, filename)
     }
 
-    fun getBp2Config(model: Int) = callCommand(model) { bleService.bp2GetConfig(model) }
+    fun getBp2Config(model: Int) = callCommand(model = model) { bleService.bp2GetConfig(model) }
     fun setBp2Config(model: Int, config: Bp2Config) =
-        callCommand(model) { bleService.bp2SetConfig(model, config) }
+        callCommand(model = model) { bleService.bp2SetConfig(model, config) }
 
-    fun factoryResetBp2(model: Int) = callCommand(model) { bleService.bp2FactoryReset(model) }
-    fun startBp2Realtime(model: Int) = callCommand(model) { bleService.startRtTask(model) }
-    fun stopBp2Realtime(model: Int) = callCommand(model) { bleService.stopRtTask(model) }
+    fun factoryResetBp2(model: Int) =
+        callCommand(model = model) { bleService.bp2FactoryReset(model) }
 
-    fun getBp2wInfo(model: Int) = callCommand(model) { bleService.bp2wGetInfo(model) }
-    fun getBp2wFileList(model: Int) = callCommand(model) { bleService.bp2wGetFileList(model) }
-    fun readBp2wFile(model: Int, filename: String) = callCommand(model) {
+    fun startBp2Realtime(model: Int) = callCommand(model = model) { bleService.startRtTask(model) }
+    fun stopBp2Realtime(model: Int) = callCommand(model = model) { bleService.stopRtTask(model) }
+    //BP2 Machine [End]
+
+    fun getBp2wInfo(model: Int) = callCommand(model = model) { bleService.bp2wGetInfo(model) }
+    fun getBp2wFileList(model: Int) =
+        callCommand(model = model) { bleService.bp2wGetFileList(model) }
+
+    fun readBp2wFile(model: Int, filename: String) = callCommand(model = model) {
         currentFileName = filename
         bleService.bp2wReadFile(model, filename)
     }
 
-    fun getBp2wConfig(model: Int) = callCommand(model) { bleService.bp2wGetConfig(model) }
+    fun getBp2wConfig(model: Int) = callCommand(model = model) { bleService.bp2wGetConfig(model) }
     fun setBp2wConfig(model: Int, config: Bp2wConfig) =
-        callCommand(model) { bleService.bp2wSetConfig(model, config) }
+        callCommand(model = model) { bleService.bp2wSetConfig(model, config) }
 
-    fun factoryResetBp2w(model: Int) = callCommand(model) { bleService.bp2wFactoryReset(model) }
-    fun startBp2wRealtime(model: Int) = callCommand(model) { bleService.startRtTask(model) }
-    fun stopBp2wRealtime(model: Int) = callCommand(model) { bleService.stopRtTask(model) }
+    fun factoryResetBp2w(model: Int) =
+        callCommand(model = model) { bleService.bp2wFactoryReset(model) }
 
-    fun getBp3Info(model: Int) = callCommand(model) { bleService.bp3GetInfo(model) }
+    fun startBp2wRealtime(model: Int) = callCommand(model = model) { bleService.startRtTask(model) }
+    fun stopBp2wRealtime(model: Int) = callCommand(model = model) { bleService.stopRtTask(model) }
+
+    fun getBp3Info(model: Int) = callCommand(model = model) { bleService.bp3GetInfo(model) }
     fun getBp3FileList(model: Int, fileType: Int = Constant.Bp3FileType.BP_TYPE) =
-        callCommand(model) { bleService.bp3GetFileList(model, fileType) }
+        callCommand(model = model) { bleService.bp3GetFileList(model, fileType) }
 
     fun getBp3FileListCrc(model: Int, fileType: Int = Constant.Bp3FileType.BP_TYPE) =
-        callCommand(model) { bleService.bp3GetFileListCrc(model, fileType) }
+        callCommand(model = model) { bleService.bp3GetFileListCrc(model, fileType) }
 
-    fun readBp3File(model: Int, filename: String) = callCommand(model) {
+    fun readBp3File(model: Int, filename: String) = callCommand(model = model) {
         currentFileName = filename
         bleService.bp3ReadFile(model, filename)
     }
 
-    fun getBp3Config(model: Int) = callCommand(model) { bleService.bp3GetConfig(model) }
+    fun getBp3Config(model: Int) = callCommand(model = model) { bleService.bp3GetConfig(model) }
     fun setBp3Config(model: Int, config: Bp3Config) =
-        callCommand(model) { bleService.bp3SetConfig(model, config) }
+        callCommand(model = model) { bleService.bp3SetConfig(model, config) }
 
-    fun factoryResetBp3(model: Int) = callCommand(model) { bleService.bp3FactoryReset(model) }
+    fun factoryResetBp3(model: Int) =
+        callCommand(model = model) { bleService.bp3FactoryReset(model) }
+
     fun writeBp3UserList(model: Int, userList: UserList) =
-        callCommand(model) { bleService.bp3WriteUserList(model, userList) }
+        callCommand(model = model) { bleService.bp3WriteUserList(model, userList) }
 
-    fun startBp3Realtime(model: Int) = callCommand(model) { bleService.startRtTask(model) }
-    fun stopBp3Realtime(model: Int) = callCommand(model) { bleService.stopRtTask(model) }
+    fun startBp3Realtime(model: Int) = callCommand(model = model) { bleService.startRtTask(model) }
+    fun stopBp3Realtime(model: Int) = callCommand(model = model) { bleService.stopRtTask(model) }
 
     fun clearDevices() {
         deviceCache.clear()
@@ -465,6 +479,7 @@ class BpMachineSdkManager @Inject constructor(
     }
 
     private fun registerBp2Observers() {
+        Log.e("BP Machine", "registerBp2Observers")
         LiveEventBus.get<InterfaceEvent>(InterfaceEvent.BP2.EventBp2SyncTime)
             .observeForever { event ->
                 val data = event ?: return@observeForever
@@ -487,6 +502,7 @@ class BpMachineSdkManager @Inject constructor(
             }
         LiveEventBus.get<InterfaceEvent>(InterfaceEvent.BP2.EventBp2FileList)
             .observeForever { event ->
+                Log.e("BP Machine", "registerBp2Observers EventBp2FileList")
                 val data = event ?: return@observeForever
                 val payload = data.data as? ArrayList<String> ?: return@observeForever
                 _events.postValue(BpMachineEvent.Bp2.FileList(data.model, payload))
@@ -506,6 +522,7 @@ class BpMachineSdkManager @Inject constructor(
             }
         LiveEventBus.get<InterfaceEvent>(InterfaceEvent.BP2.EventBp2ReadFileError)
             .observeForever { event ->
+                Log.e("BP Machine", "registerBp2Observers EventBp2ReadFileError")
                 val data = event ?: return@observeForever
                 val payload = data.data as? String ?: return@observeForever
                 val filename = currentFileName.orEmpty()
@@ -752,7 +769,7 @@ class BpMachineSdkManager @Inject constructor(
         }
     }
 
-    private fun callCommand(model: Int, action: () -> Unit) {
+    private fun callCommand(msg: String? = null, model: Int, action: () -> Unit) {
         ensureReady()
         try {
             action()
@@ -789,7 +806,7 @@ class BpMachineSdkManager @Inject constructor(
 
     private fun markConnectionReady(model: Int) {
         val session = currentSession ?: deviceCache.values.firstOrNull { it.model == model }
-            ?: return
+        ?: return
         reconnectAttempts = 0
         _connectionState.postValue(BpConnectionState.Connected(session))
         _events.postValue(BpMachineEvent.ConnectionReady(session))

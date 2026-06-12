@@ -72,7 +72,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
 
     private lateinit var binding: FragmentDeviceDataBinding
     private val viewModel: DeviceViewModel by viewModels()
-    private val bpViewModel: BpMachineViewModel by viewModels()
+    private val bpViewModel: BpMachineViewModel by activityViewModels()
     private val app by lazy { requireActivity().application as App }
 
     @Inject
