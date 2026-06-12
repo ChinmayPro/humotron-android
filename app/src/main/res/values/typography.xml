@@ -122,6 +122,12 @@
         <item name="android:fontFamily">@font/manrope_semibold</item>
     </style>
 
+    <style name="Text.12x.Manrope.SemiBold" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/textColorWhite</item>
+        <item name="android:fontFamily">@font/manrope_semibold</item>
+    </style>
+
     <style name="Text.14x.Manrope.SemiBold" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/textColorWhite</item>

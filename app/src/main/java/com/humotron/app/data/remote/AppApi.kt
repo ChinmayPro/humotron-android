@@ -522,16 +522,19 @@ interface AppApi {
     @POST("supportTicket/saveTicket")
     suspend fun saveTicket(
         @Part("category") category: RequestBody,
+        @Part("subcategory") subcategory: RequestBody,
         @Part("contact_reason_code") contactReasonCode: RequestBody,
         @Part("subject") subject: RequestBody,
         @Part("description") description: RequestBody,
         @Part("current_screen") currentScreen: RequestBody,
         @Part("source") source: RequestBody,
         @Part("os_platform") osPlatform: RequestBody,
-        @Part("app_version") appVersion: RequestBody,
-        @Part("device_meta_snapshot") deviceMetaSnapshot: RequestBody,
+        @Part("app_version") appVersion: RequestBody?,
+        @Part("device_type") deviceType: RequestBody?,
+        @Part("region") region: RequestBody?,
+        @Part("ticket_id") ticketId: RequestBody?,
         @Part attachments: List<MultipartBody.Part>
-    ): Response<CommonResponse>
+    ): Response<com.humotron.app.domain.modal.response.SaveTicketResponse>
 
     @GET("supportTopic/getSupportHome")
     suspend fun getSupportHome(): Response<SupportHomeResponse>

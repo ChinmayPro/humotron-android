@@ -867,5 +867,23 @@ To get started:\n
     <string name="contact_category_usage_desc">Features, dashboard usage, notifications, metrics, and personalization help.</string>
     <string name="contact_category_ai_title">AI Insights</string>
     <string name="contact_category_ai_desc">AI-powered insights, subscriptions, and health interpretation support.</string>
+    <string name="contact_please_select_category">Please select a category.</string>
+    <string name="contact_please_describe_issue">Please describe your issue.</string>
+    <string name="contact_ticket_submitted_success">Support ticket successfully submitted!</string>
+    <string name="contact_select_app_version">Select app version</string>
+    <string name="contact_clear">Clear</string>
+    <string name="contact_ticket_default_subject">Support Ticket</string>
+    <string name="contact_select_device">Select a device</string>
+    <string name="contact_select_issue">Select an issue</string>
+
+    <!-- Contact Support Screen Step 3 -->
+    <string name="contact_step3_title">3. Add attachments (optional)</string>
+    <string name="contact_step3_subtitle">Attachments help our team understand the issue faster.</string>
+    <string name="contact_add_photos_desc">Add photos or screenshots</string>
+    <string name="contact_file_types_desc">PNG, JPG up to 10MB each</string>
+    <string name="contact_max_files_desc">You can add up to 5 files.</string>
+    <string name="contact_additional_notes_title">Additional notes (optional)</string>
+    <string name="contact_additional_notes_desc">Anything else we should know?</string>
+    <string name="contact_additional_notes_hint">Type your message here...</string>
 </resources>
 
