@@ -94,6 +94,109 @@ class ContactSupportFragment : BaseFragment(R.layout.fragment_contact_support) {
         } else {
             viewModel.fetchSupportHomeData()
         }
+
+        // Check for draft ticket to resume flow
+        val draftTicket = arguments?.getParcelable<com.humotron.app.domain.modal.response.TicketDetail>("draftTicket")
+        if (draftTicket != null) {
+            savedTicketId = draftTicket.id ?: ""
+            savedTicketNumber = draftTicket.ticketNumber ?: ""
+
+            // Parse description, start duration, device name, and additional notes
+            val fullDesc = draftTicket.description.orEmpty()
+            var messageText = fullDesc
+            var whenStarted = "Today"
+            var deviceName = ""
+            var additionalNotes = ""
+
+            if (fullDesc.contains("\n\nWhen did this start:")) {
+                val parts = fullDesc.split("\n\nWhen did this start:")
+                messageText = parts[0].trim()
+                if (parts.size > 1) {
+                    var remaining = parts[1].trim()
+                    
+                    if (remaining.contains("\n\nAdditional Notes:")) {
+                        val noteParts = remaining.split("\n\nAdditional Notes:")
+                        additionalNotes = noteParts[1].trim()
+                        remaining = noteParts[0].trim()
+                    }
+                    
+                    if (remaining.contains("\n\nDevice:")) {
+                        val deviceParts = remaining.split("\n\nDevice:")
+                        deviceName = deviceParts[1].trim()
+                        whenStarted = deviceParts[0].trim()
+                    } else {
+                        whenStarted = remaining.trim()
+                    }
+                }
+            }
+
+            // Populate Step 1 Description
+            binding.etDescription.setText(messageText)
+
+            // Populate Step 2 selectors
+            if (!draftTicket.subcategory.isNullOrEmpty()) {
+                binding.tvSelectedProblem.text = draftTicket.subcategory
+                binding.tvSelectedProblem.setTextColor(androidx.core.content.ContextCompat.getColor(requireContext(), R.color.white))
+            }
+
+            if (deviceName.isNotEmpty()) {
+                binding.tvSelectedDevice.text = deviceName
+                binding.tvSelectedDevice.setTextColor(androidx.core.content.ContextCompat.getColor(requireContext(), R.color.white))
+                val deviceIcons = mapOf(
+                    "Smart Ring" to R.drawable.ic_smart_ring,
+                    "Wrist Band" to R.drawable.ic_wrist_band,
+                    "Weight Scale" to R.drawable.ic_weight_scale,
+                    "Smart Cuff" to R.drawable.ic_smart_cuff
+                )
+                val iconRes = deviceIcons[deviceName]
+                if (iconRes != null && iconRes != 0) {
+                    binding.ivSelectedDeviceIcon.setImageResource(iconRes)
+                    binding.ivSelectedDeviceIcon.visibility = View.VISIBLE
+                } else {
+                    binding.ivSelectedDeviceIcon.visibility = View.GONE
+                }
+            }
+
+            val radioButtonId = when (whenStarted) {
+                "Today" -> R.id.rbToday
+                "In the last 7 days" -> R.id.rbLast7Days
+                "In the last 30 days" -> R.id.rbLast30Days
+                "More than 30 days ago" -> R.id.rbMoreThan30Days
+                "Not sure" -> R.id.rbNotSure
+                else -> R.id.rbToday
+            }
+            binding.rgStartDuration.check(radioButtonId)
+
+            if (!draftTicket.appVersion.isNullOrEmpty()) {
+                binding.tvSelectedAppVersion.text = draftTicket.appVersion
+                binding.tvSelectedAppVersion.setTextColor(androidx.core.content.ContextCompat.getColor(requireContext(), R.color.white))
+            }
+
+            // Populate Step 3 Additional Notes
+            if (additionalNotes.isNotEmpty()) {
+                binding.etAdditionalNotes.setText(additionalNotes)
+            }
+
+            // Populate Attachments
+            draftTicket.attachments?.forEach { attachment ->
+                attachment.url?.let { urlString ->
+                    selectedImages.add(android.net.Uri.parse(urlString))
+                }
+            }
+            updateSelectedAttachmentsUI()
+            validateStep2Fields()
+
+            // Determine which step to navigate to based on currentScreen
+            val resumeStep = when (draftTicket.currentScreen) {
+                1 -> 2
+                2 -> 3
+                3 -> 4
+                else -> 1
+            }
+            if (resumeStep > 1) {
+                navigateToStep(resumeStep)
+            }
+        }
     }
 
     private fun setupHeader() {
@@ -219,7 +322,7 @@ class ContactSupportFragment : BaseFragment(R.layout.fragment_contact_support) {
 
             val selectedCategory = categoryAdapter.currentList.find { it.key == selectedKey }
             val categoryId = selectedCategory?.id ?: ""
-            val subject = selectedCategory?.label ?: getString(R.string.contact_ticket_default_subject)
+            val subject = selectedCategory?.label ?: getString(R.string.contact_request_default_subject)
 
             val selectedAppVersion = binding.tvSelectedAppVersion.text?.toString() ?: ""
             val appVersion = if (selectedAppVersion == getString(R.string.contact_select_app_version)) "" else selectedAppVersion
@@ -280,7 +383,7 @@ class ContactSupportFragment : BaseFragment(R.layout.fragment_contact_support) {
             val selectedKey = categoryAdapter.getSelectedCategoryKey() ?: ""
             val selectedCategory = categoryAdapter.currentList.find { it.key == selectedKey }
             val categoryId = selectedCategory?.id ?: ""
-            val subject = selectedCategory?.label ?: getString(R.string.contact_ticket_default_subject)
+            val subject = selectedCategory?.label ?: getString(R.string.contact_request_default_subject)
 
             val selectedAppVersion = binding.tvSelectedAppVersion.text?.toString() ?: ""
             val appVersion = if (selectedAppVersion == getString(R.string.contact_select_app_version)) "" else selectedAppVersion
@@ -348,7 +451,7 @@ class ContactSupportFragment : BaseFragment(R.layout.fragment_contact_support) {
             val selectedKey = categoryAdapter.getSelectedCategoryKey() ?: ""
             val selectedCategory = categoryAdapter.currentList.find { it.key == selectedKey }
             val categoryId = selectedCategory?.id ?: ""
-            val subject = selectedCategory?.label ?: getString(R.string.contact_ticket_default_subject)
+            val subject = selectedCategory?.label ?: getString(R.string.contact_request_default_subject)
 
             val selectedAppVersion = binding.tvSelectedAppVersion.text?.toString() ?: ""
             val appVersion = if (selectedAppVersion == getString(R.string.contact_select_app_version)) "" else selectedAppVersion
@@ -624,7 +727,7 @@ class ContactSupportFragment : BaseFragment(R.layout.fragment_contact_support) {
                             navigateToStep(2)
                         }
                     } else {
-                        val msg = response?.message ?: "Failed to save support ticket"
+                        val msg = response?.message ?: getString(R.string.support_save_failed)
                         requireContext().showToast(msg)
                     }
                 }
@@ -659,7 +762,10 @@ class ContactSupportFragment : BaseFragment(R.layout.fragment_contact_support) {
 
     private fun displayCategories(categories: List<SupportCategory>) {
         categoryAdapter.submitList(categories)
-        if (categories.isNotEmpty() && categoryAdapter.getSelectedCategoryKey() == null) {
+        val draftTicket = arguments?.getParcelable<com.humotron.app.domain.modal.response.TicketDetail>("draftTicket")
+        if (draftTicket != null && !draftTicket.contactReasonCode.isNullOrEmpty()) {
+            categoryAdapter.setSelectedCategoryKey(draftTicket.contactReasonCode)
+        } else if (categories.isNotEmpty() && categoryAdapter.getSelectedCategoryKey() == null) {
             categoryAdapter.setSelectedCategoryKey(categories[0].key)
         }
     }
@@ -697,7 +803,7 @@ class ContactSupportFragment : BaseFragment(R.layout.fragment_contact_support) {
 
             val selectedCategory = categoryAdapter.currentList.find { it.key == selectedKey }
             val categoryId = selectedCategory?.id ?: ""
-            val subject = selectedCategory?.label ?: getString(R.string.contact_ticket_default_subject)
+            val subject = selectedCategory?.label ?: getString(R.string.contact_request_default_subject)
 
             var appVersion = "1.0.1"
             try {
@@ -723,12 +829,15 @@ class ContactSupportFragment : BaseFragment(R.layout.fragment_contact_support) {
                 appVersion = appVersion,
                 deviceType = "",
                 region = "",
-                ticketId = ""
+                ticketId = savedTicketId
             )
         }
     }
 
     private fun uriToMultipartBodyPart(uri: android.net.Uri): MultipartBody.Part? {
+        if (uri.scheme == "http" || uri.scheme == "https") {
+            return null
+        }
         val contentResolver = requireContext().contentResolver
         var fileName = "attachment_${System.currentTimeMillis()}"
         val mimeType = contentResolver.getType(uri) ?: "image/*"

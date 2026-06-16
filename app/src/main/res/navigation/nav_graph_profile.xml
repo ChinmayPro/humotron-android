@@ -132,6 +132,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentSupport_to_fragmentMyRequests"
+            app:destination="@id/fragmentMyRequests"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -149,6 +156,13 @@
         <action
             android:id="@+id/action_fragmentSupportDevices_to_fragmentSupportArticleDetail"
             app:destination="@id/fragmentSupportArticleDetail"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentSupportDevices_to_fragmentContactSupport"
+            app:destination="@id/fragmentContactSupport"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
@@ -171,6 +185,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentSupportSearch_to_fragmentContactSupport"
+            app:destination="@id/fragmentContactSupport"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -184,6 +205,13 @@
         <action
             android:id="@+id/action_fragmentSupportArticleDetail_to_fragmentSupportViewAllArticles"
             app:destination="@id/fragmentSupportViewAllArticles"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentSupportArticleDetail_to_fragmentContactSupport"
+            app:destination="@id/fragmentContactSupport"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
@@ -228,6 +256,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentSupportViewAllArticles_to_fragmentContactSupport"
+            app:destination="@id/fragmentContactSupport"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -253,5 +288,32 @@
         android:name="com.humotron.app.ui.support.ContactSupportFragment"
         android:label="Contact Support"
         tools:layout="@layout/fragment_contact_support" />
+
+    <fragment
+        android:id="@+id/fragmentMyRequests"
+        android:name="com.humotron.app.ui.support.MyRequestsFragment"
+        android:label="My Requests"
+        tools:layout="@layout/fragment_my_requests">
+        <action
+            android:id="@+id/action_fragmentMyRequests_to_fragmentContactSupport"
+            app:destination="@id/fragmentContactSupport"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentMyRequests_to_fragmentSupportRequestDetails"
+            app:destination="@id/fragmentSupportRequestDetails"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentSupportRequestDetails"
+        android:name="com.humotron.app.ui.support.SupportRequestDetailsFragment"
+        android:label="Request details"
+        tools:layout="@layout/fragment_support_request_details" />
 
 </navigation>

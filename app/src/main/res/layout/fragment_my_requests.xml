@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@drawable/ic_bg_main_dark"
+    tools:context=".ui.support.MyRequestsFragment">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header_2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:tabGravity="center"
+        app:tabIndicatorColor="@color/colorBgBtn"
+        app:tabIndicatorHeight="2dp"
+        app:tabMode="auto"
+        app:tabPaddingEnd="10dp"
+        app:tabPaddingStart="10dp"
+        app:tabRippleColor="@android:color/transparent"
+        app:tabSelectedTextColor="@color/colorBgBtn"
+        app:tabTextAppearance="@style/Text.14x.Manrope.SemiBold"
+        app:tabTextColor="@color/white70">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/support_my_requests_tab_open" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/support_my_requests_tab_waiting" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/support_my_requests_tab_resolved" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/support_my_requests_tab_drafts" />
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollRoot"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@id/bottomBar"
+        app:layout_constraintTop_toBottomOf="@id/tabLayout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="16dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvTickets"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                tools:listitem="@layout/item_support_ticket" />
+
+            <LinearLayout
+                android:id="@+id/llResponseNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bg_support_detail_card"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="2dp"
+                    android:src="@drawable/ic_mail_envelope"
+                    app:tint="@color/support_link_blue" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Text.14x.Manrope.Regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:text="@string/support_my_requests_response_note"
+                    android:textColor="@color/white70" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llWaitingNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bg_support_detail_card"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="2dp"
+                    android:src="@drawable/ic_lock"
+                    app:tint="@color/white70" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Text.14x.Manrope.Regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:text="@string/support_my_requests_waiting_reply_note"
+                    android:textColor="@color/white70" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llResolvedNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bg_support_detail_card"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="2dp"
+                    android:src="@drawable/ic_help_outline_24px"
+                    app:tint="@color/white70" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Text.14x.Manrope.Regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:text="@string/support_my_requests_resolved_note"
+                    android:textColor="@color/white70" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llDraftNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bg_support_detail_card"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="2dp"
+                    android:src="@drawable/ic_sheet_document"
+                    app:tint="@color/colorBgBtn1" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Text.14x.Manrope.Regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:text="@string/support_my_requests_draft_note"
+                    android:textColor="@color/white70" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/llEmptyState"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingHorizontal="24dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/bottomBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tabLayout"
+        tools:visibility="visible">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/ic_empty_requests" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvEmptyTitle"
+            style="@style/Text.20x.Manrope.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-20dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            tools:text="Nothing waiting for you" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvEmptyDesc"
+            style="@style/Text.14x.Manrope.Regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginHorizontal="@dimen/_20dp"
+            android:gravity="center"
+            android:textColor="@color/white50"
+            tools:text="When we need your reply, your request will show up here." />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btnEmptyContactSupport"
+            style="@style/Text.16x.Manrope.SemiBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_copy_btn_border"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="12dp"
+            android:text="@string/support_contact_support"
+            android:textColor="@color/colorBgBtn1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottomBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvNeedMoreHelp"
+            style="@style/Text.14x.Manrope.Regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp"
+            android:text="@string/support_need_more_help"
+            android:textColor="@color/white50" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnContactSupport"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:background="@drawable/bg_btn_round_rect_16"
+            android:fontFamily="@font/manrope_bold"
+            android:text="@string/support_contact_support"
+            android:textAllCaps="false"
+            android:textColor="@color/d900"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

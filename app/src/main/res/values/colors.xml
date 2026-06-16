@@ -111,6 +111,12 @@
     <color name="support_search_border">#33979797</color>
     <color name="popular_search_chip_bg">#16222A</color>
     <color name="support_help_icon_bg">#101A21</color>
+    <color name="support_open_badge_bg">#2A3640</color>
     <color name="support_card_bg_detail">#1D2730</color>
     <color name="support_link_blue">#5EC4FF</color>
+    <color name="support_chat_user_bubble_bg">#203628</color>
+    <color name="support_chat_user_time">#8A9B8F</color>
+    <color name="support_status_awaiting_reply_bg">#FFCA28</color>
+    <color name="support_status_awaiting_reply_text">#121212</color>
+    <color name="support_status_resolved_bg">#B2F042</color>
 </resources>

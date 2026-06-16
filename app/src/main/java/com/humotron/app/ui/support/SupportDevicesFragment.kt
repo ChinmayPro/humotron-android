@@ -85,6 +85,10 @@ class SupportDevicesFragment : BaseFragment(R.layout.fragment_support_devices) {
 
         binding.rvDevices.layoutManager = LinearLayoutManager(requireContext())
         binding.rvDevices.adapter = devicesAdapter
+
+        binding.btnContactSupport.setOnClickListener {
+            findNavController().navigate(R.id.action_fragmentSupportDevices_to_fragmentContactSupport)
+        }
     }
 
     private fun initObservers() {

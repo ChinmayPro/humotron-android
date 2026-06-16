@@ -72,6 +72,10 @@ class OrderDetailFragment : BaseFragment(R.layout.fragment_order_detail) {
         binding.btnCancelOrder.setOnClickListener {
             showCancelOrderDialog()
         }
+
+        binding.btnContactSupport.setOnClickListener {
+            findNavController().navigate(R.id.action_fragmentOrderDetail_to_fragmentContactSupport)
+        }
     }
 
     private fun setupObservers() {

@@ -172,4 +172,35 @@ class SupportRepository @Inject constructor(
     }.catch {
         emit(responseHandler.handleException(ValidationException(it.message)))
     }
+
+    fun getTicketDetail(ticketId: String): Flow<Resource<com.humotron.app.domain.modal.response.TicketDetailResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.getTicketDetail(ticketId), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun replyTicket(
+        ticketId: String,
+        body: String,
+        attachments: List<MultipartBody.Part>
+    ): Flow<Resource<CommonResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val messageBody = body.toRequestBody("text/plain".toMediaTypeOrNull())
+            val response = api.replyTicket(ticketId, messageBody, attachments)
+            emit(responseHandler.handleResponse(response, false))
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
 }

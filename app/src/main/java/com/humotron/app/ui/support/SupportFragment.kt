@@ -153,6 +153,10 @@ class SupportFragment : BaseFragment(R.layout.fragment_support) {
             findNavController().navigate(R.id.action_fragmentSupport_to_fragmentContactSupport)
         }
 
+        binding.clMyRequests.setOnClickListener {
+            findNavController().navigate(R.id.action_fragmentSupport_to_fragmentMyRequests)
+        }
+
         binding.btnViewAllDevices.setOnClickListener {
             findNavController().navigate(R.id.action_fragmentSupport_to_fragmentSupportDevices)
         }
@@ -275,7 +279,7 @@ class SupportFragment : BaseFragment(R.layout.fragment_support) {
                             binding.tvBadge.visibility = View.GONE
                         }
                     } else {
-                        val msg = response?.message ?: getString(R.string.support_failed_get_tickets)
+                        val msg = response?.message ?: getString(R.string.support_failed_get_requests)
                         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
                         binding.tvBadge.visibility = View.GONE
                     }

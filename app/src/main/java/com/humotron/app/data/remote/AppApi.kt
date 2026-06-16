@@ -569,4 +569,17 @@ interface AppApi {
         @Body request: HashMap<String, Any>
     ): Response<com.humotron.app.domain.modal.response.AllTopicsResponse>
 
+    @GET("supportTicket/ticketDetail/{ticketId}")
+    suspend fun getTicketDetail(
+        @Path("ticketId") ticketId: String
+    ): Response<com.humotron.app.domain.modal.response.TicketDetailResponse>
+
+    @Multipart
+    @POST("supportTicket/replyToTicket/{ticketId}")
+    suspend fun replyTicket(
+        @Path("ticketId") ticketId: String,
+        @Part("message") message: okhttp3.RequestBody,
+        @Part attachments: List<okhttp3.MultipartBody.Part>
+    ): Response<com.humotron.app.domain.modal.response.CommonResponse>
+
 }

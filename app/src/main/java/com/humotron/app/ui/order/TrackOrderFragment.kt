@@ -60,7 +60,7 @@ class TrackOrderFragment : BaseFragment(R.layout.fragment_track_order) {
         binding.header.divider.visibility = View.GONE
 
         binding.btnContactSupport.setOnClickListener {
-            // Handle contact support
+            findNavController().navigate(R.id.action_fragmentTrackOrder_to_fragmentContactSupport)
         }
 
         binding.tvCancelOrder.setOnClickListener {

@@ -790,8 +790,13 @@ To get started:\n
     <string name="support_search_in_support">Search in Support</string>
     <string name="support_my_requests">My Requests</string>
     <string name="support_my_requests_subtitle">Track your support conversations and replies</string>
+    <string name="support_my_requests_tab_open">Open</string>
+    <string name="support_my_requests_tab_waiting">Waiting for you</string>
+    <string name="support_my_requests_tab_resolved">Resolved</string>
+    <string name="support_my_requests_tab_drafts">Drafts</string>
+    <string name="support_need_more_help">Need more help?</string>
     <string name="support_failed_get_details">Failed to get support details</string>
-    <string name="support_failed_get_tickets">Failed to get tickets</string>
+    <string name="support_failed_get_requests">Failed to get requests</string>
     <string name="support_exception_occurred">An exception occurred</string>
     <string name="support_popular_searches">Popular searches</string>
     <string name="support_browse_by_category">Browse by category</string>
@@ -826,6 +831,18 @@ To get started:\n
     <string name="support_view_device_details">View device details &gt;</string>
     <string name="support_devices_fallback_desc">Get help with setup, syncing, and troubleshooting for any Humotron device.</string>
     <string name="support_articles_desc">Browse all our help articles, guides, and FAQs.</string>
+    <string name="support_my_requests_response_note">We typically respond within 24 hours. You\'ll get an email when we reply.</string>
+    <string name="support_my_requests_draft_note">Tap a draft to continue where you left off and submit your request.</string>
+    <string name="support_empty_waiting_title">Nothing waiting for you</string>
+    <string name="support_empty_waiting_desc">When we need your reply, your request will show up here.</string>
+    <string name="support_empty_resolved_title">No resolved requests</string>
+    <string name="support_empty_resolved_desc">Resolved requests will appear here once your issue is closed.</string>
+    <string name="support_empty_open_title">No open requests</string>
+    <string name="support_empty_open_desc">You don\'t have any open requests right now.</string>
+    <string name="support_empty_drafts_title">No draft requests</string>
+    <string name="support_empty_drafts_desc">When you save a request as a draft, it will show up here.</string>
+    <string name="support_my_requests_waiting_reply_note">We\'re waiting for your reply. Once we receive your response, we\'ll continue assisting you.</string>
+    <string name="support_my_requests_resolved_note">Can\'t find your request? Check other tabs or contact us.</string>
 
     <!-- Contact Support Screen Step 1 -->
     <string name="contact_support_title">We\'re here to help</string>
@@ -869,10 +886,10 @@ To get started:\n
     <string name="contact_category_ai_desc">AI-powered insights, subscriptions, and health interpretation support.</string>
     <string name="contact_please_select_category">Please select a category.</string>
     <string name="contact_please_describe_issue">Please describe your issue.</string>
-    <string name="contact_ticket_submitted_success">Support ticket successfully submitted!</string>
+    <string name="contact_request_submitted_success">Support request successfully submitted!</string>
     <string name="contact_select_app_version">Select app version</string>
     <string name="contact_clear">Clear</string>
-    <string name="contact_ticket_default_subject">Support Ticket</string>
+    <string name="contact_request_default_subject">Support Request</string>
     <string name="contact_select_device">Select a device</string>
     <string name="contact_select_issue">Select an issue</string>
 
@@ -885,5 +902,24 @@ To get started:\n
     <string name="contact_additional_notes_title">Additional notes (optional)</string>
     <string name="contact_additional_notes_desc">Anything else we should know?</string>
     <string name="contact_additional_notes_hint">Type your message here...</string>
+    <string name="support_request_details">Request details</string>
+    <string name="support_chat_sender_you">You</string>
+    <string name="support_chat_sender_agent">Support Agent</string>
+    <string name="support_chat_just_now">just now</string>
+    <string name="support_chat_minutes_ago">%dm ago</string>
+    <string name="support_chat_hours_ago">%dh ago</string>
+    <string name="support_chat_days_hours">%1$dd %2$dh</string>
+    <string name="support_chat_reply_hint">Write a reply…</string>
+    <string name="support_chat_max_files">You can only add up to 5 files.</string>
+    <string name="support_chat_cannot_open_attachment">Cannot open attachment link</string>
+    <string name="support_detail_footer_format">Created %1$s • Updated %2$s</string>
+    <string name="support_detail_updated_format">Updated %1$s</string>
+    <string name="support_detail_updated_footer_format">Updated %1$s • %2$s</string>
+    <string name="support_status_draft">Draft</string>
+    <string name="support_attachment_label">Attachment</string>
+    <string name="support_attachment_size_kb">%.0f KB</string>
+    <string name="support_attachment_size_mb">%.1f MB</string>
+    <string name="support_attachment_size_zero">0 KB</string>
+    <string name="support_save_failed">Failed to save support ticket</string>
 </resources>
 
