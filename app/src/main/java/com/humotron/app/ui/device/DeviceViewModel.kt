@@ -231,8 +231,6 @@ class DeviceViewModel @Inject constructor(
 
         sleepRepository.getMergedAssessmentList().onEach { state ->
             _mergedAssessmentListLiveData.value = state
-            Log.e("TAG", "initObsdwdddfervers: $state ")
-
         }.launchIn(viewModelScope)
     }
 

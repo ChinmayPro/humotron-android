@@ -67,7 +67,6 @@ class BpMachineViewModel @Inject constructor(
     private var totalFileCount = 1
 
     init {
-        Log.e("BP Machine", "call init")
         sdkManager.events.asFlow()
             .onEach { event ->
                 when (event) {

@@ -29,6 +29,7 @@ import com.humotron.app.domain.modal.BPMachineDeviceStatus
 import com.humotron.app.domain.modal.BPMachineReadingType
 import com.humotron.app.domain.modal.response.GetAllDeviceResponse.Data.UserDevice
 import com.humotron.app.ui.navigation.NavKeys
+import com.humotron.app.util.loge
 import com.lepu.blepro.objs.Bluetooth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -64,6 +65,7 @@ class BPMachineReadingFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.e(TAG, "onViewCreated: ")
         binding = FragmentBpMachineReadingBinding.bind(view)
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
@@ -176,7 +178,7 @@ class BPMachineReadingFragment :
         bpViewModel.events.observe(viewLifecycleOwner) { event ->
             when (event) {
                 is BpMachineEvent.AirBp.BatteryInfo -> {
-                    Log.e("BP Machine", "BatteryInfo")
+                    //Log.e("BP Machine", "BatteryInfo")
                     updateBattery(event.data.percent, false)
                 }
 
@@ -569,7 +571,7 @@ class BPMachineReadingFragment :
 
             else -> null
         }
-        Log.e("BP Machine", "renderEcgResult parsed: $parsed")
+        //Log.e("BP Machine", "renderEcgResult parsed: $parsed")
 
         val hr = when (parsed) {
             is Bp2RtEcgResult -> parsed.hr
