@@ -762,6 +762,11 @@ To get started:\n
     <string name="stay_on_this_screen_">Stay on this screen in app and click the round button on the device to start the ECG measurement.</string>
     <string name="click">3. Click</string>
     <string name="please_remain_calm_and_still">Please remain calm and still.</string>
+    <string name="ecg_reading_in_progress">ECG Reading In\nprogress..</string>
+    <string name="ecg_waveform">ECG Waveform</string>
+    <string name="pulse_rate">Pulse Rate</string>
+    <string name="millivolts_mv">millivolts (mV)</string>
+    <string name="beats_per_minute">beats per minute</string>
     <string name="your_blood_pressure_measurement_is_in_progress">Your blood pressure measurement is in progress.</string>
     <string name="calculating">Calculating..</string>
     <string name="for_more_accurate_insights">For more accurate insights, it\'s advisable to take multiple readings at different times.</string>

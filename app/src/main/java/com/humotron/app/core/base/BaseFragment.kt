@@ -11,6 +11,9 @@ import javax.inject.Inject
 @AndroidEntryPoint
 open class BaseFragment : Fragment {
 
+    protected open val TAG: String
+        get() = javaClass.simpleName
+
     @Inject
     lateinit var prefUtils: PrefUtils
 

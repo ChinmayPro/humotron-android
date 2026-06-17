@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.humotron.app.data.local.AppDatabase
 import com.humotron.app.data.local.dao.SleepDao
 import com.humotron.app.data.local.dao.WeightScaleDao
+import com.humotron.app.data.local.dao.bpmachine.BpMachineDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -36,5 +37,11 @@ class DatabaseModule {
     @Provides
     fun provideWeightScaleDao(database: AppDatabase): WeightScaleDao {
         return database.weightScaleDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideBpMachineDao(database: AppDatabase): BpMachineDao {
+        return database.bpMachineDao()
     }
 }

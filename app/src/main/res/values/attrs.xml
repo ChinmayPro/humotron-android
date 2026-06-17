@@ -63,4 +63,22 @@
         <attr name="minTextSize" format="dimension" />
 
     </declare-styleable>
+
+    <declare-styleable name="EcgWaveFormView">
+        <attr name="ecgCornerRadius" format="dimension" />
+        <attr name="strokeColor" format="color" />
+        <attr name="strokeWidth" format="dimension" />
+        <attr name="gridColor" format="color" />
+        <attr name="gridStrokeWidth" format="dimension" />
+        <attr name="gridGap" format="dimension" />
+        <attr name="backgroundColor" format="color" />
+        <attr name="waveLineColor" format="color" />
+        <attr name="waveStrokeWidth" format="dimension" />
+        <attr name="waveScale" format="float" />
+        <attr name="baselineOffset" format="dimension" />
+        <attr name="showGrid" format="boolean" />
+        <attr name="showBorder" format="boolean" />
+        <attr name="autoScale" format="boolean" />
+        <attr name="maxVisibleSamples" format="integer" />
+    </declare-styleable>
 </resources>

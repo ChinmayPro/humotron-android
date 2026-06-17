@@ -3,6 +3,7 @@ package com.humotron.app.ui.device
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -72,7 +73,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
 
     private lateinit var binding: FragmentDeviceDataBinding
     private val viewModel: DeviceViewModel by viewModels()
-    private val bpViewModel: BpMachineViewModel by viewModels()
+    private val bpViewModel: BpMachineViewModel by activityViewModels()
     private val app by lazy { requireActivity().application as App }
 
     @Inject
@@ -88,6 +89,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.e(TAG, "onViewCreated: ")
         binding = FragmentDeviceDataBinding.bind(view)
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -834,7 +836,18 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
     override fun onDestroyView() {
         super.onDestroyView()
         app.ringDeviceManager.unregisterCb()
-        //stopBp2wRealtime()
+        Log.e(TAG, "onDestroyView: ")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.e(TAG, "onDestroy: ")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        stopBp2wRealtime()
+        Log.e(TAG, "onStop: ")
     }
 
     fun stopBp2wRealtime() {
