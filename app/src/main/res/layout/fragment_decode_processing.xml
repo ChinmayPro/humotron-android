@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    tools:background="@color/black">
+
+    <!-- Header -->
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_decode_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Content -->
+    <LinearLayout
+        android:id="@+id/layoutProcessing"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_marginBottom="@dimen/_50dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <!-- Custom radar core layout -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="230dp"
+            android:layout_height="230dp">
+
+            <!-- Center space anchor for circular constraint positioning -->
+            <Space
+                android:id="@+id/centerSpace"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <!-- Radar animation custom view -->
+            <com.humotron.app.ui.decode.view.RadarAnimationView
+                android:id="@+id/radarView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <!-- 6 Label Pills around the radar -->
+            <TextView
+                android:id="@+id/tvHrv"
+                style="@style/Text.10x.Manrope.SemiBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/insights_processing_hrv"
+                android:textColor="@color/insights_tag_grey"
+                android:background="@drawable/bg_decode_processing_tag"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                app:layout_constraintCircle="@id/centerSpace"
+                app:layout_constraintCircleAngle="0"
+                app:layout_constraintCircleRadius="81dp" />
+
+            <TextView
+                android:id="@+id/tvSleep"
+                style="@style/Text.10x.Manrope.SemiBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/insights_processing_sleep"
+                android:textColor="@color/insights_tag_grey"
+                android:background="@drawable/bg_decode_processing_tag"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                app:layout_constraintCircle="@id/centerSpace"
+                app:layout_constraintCircleAngle="60"
+                app:layout_constraintCircleRadius="81dp" />
+
+            <TextView
+                android:id="@+id/tvTemp"
+                style="@style/Text.10x.Manrope.SemiBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/insights_processing_temp"
+                android:textColor="@color/insights_tag_grey"
+                android:background="@drawable/bg_decode_processing_tag"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                app:layout_constraintCircle="@id/centerSpace"
+                app:layout_constraintCircleAngle="120"
+                app:layout_constraintCircleRadius="81dp" />
+
+            <TextView
+                android:id="@+id/tvGlucose"
+                style="@style/Text.10x.Manrope.SemiBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/insights_processing_glucose"
+                android:textColor="@color/insights_tag_grey"
+                android:background="@drawable/bg_decode_processing_tag"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                app:layout_constraintCircle="@id/centerSpace"
+                app:layout_constraintCircleAngle="180"
+                app:layout_constraintCircleRadius="81dp" />
+
+            <TextView
+                android:id="@+id/tvSteps"
+                style="@style/Text.10x.Manrope.SemiBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/insights_processing_steps"
+                android:textColor="@color/insights_tag_grey"
+                android:background="@drawable/bg_decode_processing_tag"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                app:layout_constraintCircle="@id/centerSpace"
+                app:layout_constraintCircleAngle="240"
+                app:layout_constraintCircleRadius="81dp" />
+
+            <TextView
+                android:id="@+id/tvStress"
+                style="@style/Text.10x.Manrope.SemiBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/insights_processing_stress"
+                android:textColor="@color/insights_tag_grey"
+                android:background="@drawable/bg_decode_processing_tag"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                app:layout_constraintCircle="@id/centerSpace"
+                app:layout_constraintCircleAngle="300"
+                app:layout_constraintCircleRadius="81dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tvProcessingStatus"
+            style="@style/Text.18x.Manrope.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/insights_processing_reading"
+            android:textColor="@color/white" />
+
+        <TextView
+            style="@style/Text.14x.Manrope.Regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/insights_processing_triangulating"
+            android:textColor="@color/insights_subtitle_grey" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

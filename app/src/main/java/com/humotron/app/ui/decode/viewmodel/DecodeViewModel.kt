@@ -17,6 +17,10 @@ import com.humotron.app.domain.modal.response.GetConversationsResponse
 import com.humotron.app.domain.modal.param.PostFollowUpConversationParam
 import com.humotron.app.domain.modal.response.PostFollowUpConversationResponse
 import com.humotron.app.domain.modal.response.PromptContextResponse
+import com.humotron.app.domain.modal.response.InsightMetricsOverviewResponse
+import com.humotron.app.domain.modal.response.InsightTimelineResponse
+import com.humotron.app.domain.modal.response.InsightSummaryResponse
+import com.humotron.app.domain.modal.response.InsightDetailResponse
 import com.humotron.app.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -271,6 +275,66 @@ class DecodeViewModel @Inject constructor(
         viewModelScope.launch {
             repository.getPromptContextByConversationId(conversationId).onEach { state ->
                 promptContextLiveData.value = state
+            }.launchIn(viewModelScope)
+        }
+    }
+
+    private val insightMetricsOverviewLiveData: SingleLiveEvent<Resource<InsightMetricsOverviewResponse>> =
+        SingleLiveEvent()
+
+    fun insightMetricsOverviewData(): SingleLiveEvent<Resource<InsightMetricsOverviewResponse>> {
+        return insightMetricsOverviewLiveData
+    }
+
+    fun getInsightMetricsOverview() {
+        viewModelScope.launch {
+            repository.getInsightMetricsOverview().onEach { state ->
+                insightMetricsOverviewLiveData.value = state
+            }.launchIn(viewModelScope)
+        }
+    }
+
+    private val insightTimelineLiveData: SingleLiveEvent<Resource<InsightTimelineResponse>> =
+        SingleLiveEvent()
+
+    fun insightTimelineData(): SingleLiveEvent<Resource<InsightTimelineResponse>> {
+        return insightTimelineLiveData
+    }
+
+    fun getInsightTimeline(metricId: String) {
+        viewModelScope.launch {
+            repository.getInsightTimeline(metricId).onEach { state ->
+                insightTimelineLiveData.value = state
+            }.launchIn(viewModelScope)
+        }
+    }
+
+    private val insightSummaryLiveData: SingleLiveEvent<Resource<InsightSummaryResponse>> =
+        SingleLiveEvent()
+
+    fun insightSummaryData(): SingleLiveEvent<Resource<InsightSummaryResponse>> {
+        return insightSummaryLiveData
+    }
+
+    fun getInsightSummaryByMetricId(metricId: String) {
+        viewModelScope.launch {
+            repository.getInsightSummaryByMetricId(metricId).onEach { state ->
+                insightSummaryLiveData.value = state
+            }.launchIn(viewModelScope)
+        }
+    }
+
+    private val insightDetailLiveData: SingleLiveEvent<Resource<InsightDetailResponse>> =
+        SingleLiveEvent()
+
+    fun insightDetailData(): SingleLiveEvent<Resource<InsightDetailResponse>> {
+        return insightDetailLiveData
+    }
+
+    fun getInsightById(insightId: String) {
+        viewModelScope.launch {
+            repository.getInsightById(insightId).onEach { state ->
+                insightDetailLiveData.value = state
             }.launchIn(viewModelScope)
         }
     }

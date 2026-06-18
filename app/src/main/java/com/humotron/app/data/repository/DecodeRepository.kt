@@ -16,6 +16,10 @@ import com.humotron.app.domain.modal.param.PostFollowUpConversationParam
 import com.humotron.app.domain.modal.param.StartNewChatParam
 import com.humotron.app.domain.modal.response.PostFollowUpConversationResponse
 import com.humotron.app.domain.modal.response.PromptContextResponse
+import com.humotron.app.domain.modal.response.InsightMetricsOverviewResponse
+import com.humotron.app.domain.modal.response.InsightTimelineResponse
+import com.humotron.app.domain.modal.response.InsightSummaryResponse
+import com.humotron.app.domain.modal.response.InsightDetailResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
@@ -190,6 +194,66 @@ constructor(
         }
     }.catch {
         emit(responseHandler.handleException<PromptContextResponse>(ValidationException(it.message)))
+    }
+
+    fun getInsightMetricsOverview(): Flow<Resource<InsightMetricsOverviewResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response =
+                responseHandler.handleResponse(api.getInsightMetricsOverview())
+
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun getInsightTimeline(metricId: String): Flow<Resource<InsightTimelineResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response =
+                responseHandler.handleResponse(api.getInsightTimeline(metricId))
+
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun getInsightSummaryByMetricId(metricId: String): Flow<Resource<InsightSummaryResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response =
+                responseHandler.handleResponse(api.getInsightSummaryByMetricId(metricId))
+
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun getInsightById(insightId: String): Flow<Resource<InsightDetailResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response =
+                responseHandler.handleResponse(api.getInsightById(insightId))
+
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
     }
 }
 

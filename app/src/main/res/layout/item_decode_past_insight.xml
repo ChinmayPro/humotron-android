@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cardPastInsight"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/bg_decode_card"
+    android:padding="14dp"
+    android:gravity="center_vertical"
+    android:layout_marginBottom="9dp"
+    android:clickable="true"
+    android:focusable="true">
+
+    <TextView
+        android:id="@+id/tvStatusIcon"
+        style="@style/Text.12x.Manrope.Regular"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:gravity="center" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="12dp">
+        <TextView
+            android:id="@+id/tvDateRange"
+            style="@style/Text.14x.Manrope.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white" />
+        <TextView
+            android:id="@+id/tvDays"
+            style="@style/Text.10x.Manrope.Regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/insights_slate_grey" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvActionBadge"
+        style="@style/Text.10x.Manrope.SemiBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="3dp" />
+</LinearLayout>

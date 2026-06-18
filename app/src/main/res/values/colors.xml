@@ -119,4 +119,25 @@
     <color name="support_status_awaiting_reply_bg">#FFCA28</color>
     <color name="support_status_awaiting_reply_text">#121212</color>
     <color name="support_status_resolved_bg">#B2F042</color>
+
+    <!-- Insights Refactoring Colors -->
+    <color name="insights_header_grey">#73827F</color>
+    <color name="insights_section_header_grey">#7C8B89</color>
+    <color name="insights_slate_grey">#859390</color>
+    <color name="insights_green">#B2F042</color>
+    <color name="insights_amber">#FFCA28</color>
+    <color name="insights_light_grey">#9DACA9</color>
+    <color name="insights_watch_amber">#E7A93C</color>
+    <color name="insights_dark_grey_text">#8a9794</color>
+    <color name="insights_orange">#F0795E</color>
+    <color name="insights_light_green">#C4F23E</color>
+    <color name="insights_tag_grey">#A9C2BE</color>
+    <color name="insights_subtitle_grey">#8FA7A3</color>
+    <color name="insights_btn_text_dark">#0D1618</color>
+    <color name="insights_chip_inactive_text">#8C9A9E</color>
+    <color name="insights_privacy_green">#BCD98A</color>
+    <color name="insights_muted_grey">#6F7E7D</color>
+    <color name="insights_green_10">#1aB2F042</color>
+    <color name="insights_zone_balanced">#5FB7C4</color>
+    <color name="insights_zone_challenged">#E08A4A</color>
 </resources>

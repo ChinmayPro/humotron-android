@@ -1,6 +1,6 @@
 package com.humotron.app.ui.decode
 
-import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import com.humotron.app.R
@@ -42,47 +42,41 @@ class DecodeFragment : BaseFragment(R.layout.fragment_decode) {
     }
 
     fun selectTab(position: Int) {
-        // Reset all tabs
-        val inactiveColor =
-            androidx.core.content.ContextCompat.getColor(requireContext(), R.color.white30)
-        val activeColor =
-            androidx.core.content.ContextCompat.getColor(requireContext(), R.color.colorBgBtn)
+        val inactiveColor = Color.parseColor("#8a9794")
+        val activeColor = Color.WHITE
 
-        binding.ivInsights.imageTintList = ColorStateList.valueOf(inactiveColor)
+        // Reset all tabs: text color inactive, hide indicators
         binding.tvInsights.setTextColor(inactiveColor)
-        binding.ivDeepDives.imageTintList = ColorStateList.valueOf(inactiveColor)
+        binding.indicatorInsights.visibility = View.INVISIBLE
         binding.tvDeepDives.setTextColor(inactiveColor)
-        binding.ivOptimize.imageTintList = ColorStateList.valueOf(inactiveColor)
+        binding.indicatorDeepDives.visibility = View.INVISIBLE
         binding.tvOptimize.setTextColor(inactiveColor)
-        binding.ivChat.imageTintList = ColorStateList.valueOf(inactiveColor)
+        binding.indicatorOptimize.visibility = View.INVISIBLE
         binding.tvChat.setTextColor(inactiveColor)
+        binding.indicatorChat.visibility = View.INVISIBLE
 
         val fragment = when (position) {
             0 -> {
-                binding.tvInsightsTitle.text = getString(R.string.insights)
-                binding.ivInsights.imageTintList = ColorStateList.valueOf(activeColor)
                 binding.tvInsights.setTextColor(activeColor)
+                binding.indicatorInsights.visibility = View.VISIBLE
                 DecodeInsightsFragment()
             }
 
             1 -> {
-                binding.tvInsightsTitle.text = getString(R.string.deep_dives)
-                binding.ivDeepDives.imageTintList = ColorStateList.valueOf(activeColor)
                 binding.tvDeepDives.setTextColor(activeColor)
+                binding.indicatorDeepDives.visibility = View.VISIBLE
                 DecodeDeepDivesFragment()
             }
 
             2 -> {
-                binding.tvInsightsTitle.text = getString(R.string.optimize)
-                binding.ivOptimize.imageTintList = ColorStateList.valueOf(activeColor)
                 binding.tvOptimize.setTextColor(activeColor)
+                binding.indicatorOptimize.visibility = View.VISIBLE
                 DecodeOptimizeFragment()
             }
 
             3 -> {
-                binding.tvInsightsTitle.text = getString(R.string.chat)
-                binding.ivChat.imageTintList = ColorStateList.valueOf(activeColor)
                 binding.tvChat.setTextColor(activeColor)
+                binding.indicatorChat.visibility = View.VISIBLE
                 DecodeChatFragment()
             }
 

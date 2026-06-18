@@ -926,5 +926,153 @@ To get started:\n
     <string name="support_attachment_size_mb">%.1f MB</string>
     <string name="support_attachment_size_zero">0 KB</string>
     <string name="support_save_failed">Failed to save support ticket</string>
+
+    <!-- Insights Refactoring Strings -->
+    <string name="insights_decode">Decode</string>
+    <string name="insights_home_title">Insights from Metric Observations</string>
+    <string name="insights_subtitle">Decode tracks patterns, trends and outliers in your biometrics — saving you hours of analysis.</string>
+    <string name="insights_your_metrics">Your metrics</string>
+
+    <string name="insights_badge_ready">Insight ready</string>
+    <string name="insights_badge_collecting">Collecting</string>
+    <string name="insights_badge_not_tracked">Not tracked</string>
+    <string name="insights_ready_title">Ready to generate insight</string>
+    <string name="insights_ready_subtitle">We’ve collected enough data for this window.</string>
+    <string name="insights_unlock_first_title">Unlock your first Insight</string>
+    <string name="insights_unlock_latest_title">Unlock latest insight</string>
+    <string name="insights_unlock_subtitle">Keep collecting more data.</string>
+    <string name="insights_progress_required_format">You have %1$s of data required</string>
+    <string name="insights_collecting_title">Keep tracking — almost there</string>
+    <string name="insights_collecting_subtitle">We are still collecting data for this metric.</string>
+    <string name="insights_btn_generate_insight">Generate Insight →</string>
+    <string name="insights_past_insights">Past insights</string>
+    <string name="insights_locked">Not enough data</string>
+    <string name="insights_view">View</string>
+    <string name="insights_suggested_actions">Suggested actions</string>
+    <string name="insights_detail_bp_load_title">Work-Hours BP Load</string>
+    <string name="insights_detail_bp_load_desc">Systolic BP is higher during work hours compared to recovery times.</string>
+    <string name="insights_detail_summary_title">Observation Summary</string>
+    <string name="insights_detail_summary_desc">During work hours Mon–Fri, your systolic BP tends to be higher than recovery hours. On 19 May it averaged 120 mmHg during work but dropped to 118 during recovery.</string>
+    <string name="insights_detail_hypothesis_title">Hypothesis</string>
+    <string name="insights_detail_hypothesis_desc">• Cortisol levels increase during work hours.\n• Work-related stress may contribute to higher BP.\n• Physical and mental engagement can influence BP.</string>
+    <string name="insights_action_midday_title">Incorporate Midday Relaxation</string>
+    <string name="insights_action_midday_desc">Try short breaks to relax and breathe deeply during work hours.</string>
+    <string name="insights_action_hydration_title">Stay Hydrated</string>
+    <string name="insights_action_hydration_desc">Drink enough water through the day to support healthy levels.</string>
+    <string name="insights_processing_reading">Reading your signals</string>
+    <string name="insights_processing_patterns">Finding patterns</string>
+    <string name="insights_processing_dots">Connecting the dots</string>
+    <string name="insights_processing_insight">Composing your insight</string>
+    <string name="insights_processing_triangulating">Triangulating your biometrics</string>
+    <string name="insights_action_ready">See what changed →</string>
+    <string name="insights_not_tracked">Not tracked yet · tap to set up</string>
+    <string name="insights_detail_title_format">%1$s, your %2$s is showing an interesting trend!</string>
+    <string name="insights_progress_days_format">%1$d of %2$d days</string>
+    <string name="insights_days_format">%1$d days</string>
+    <string name="insights_processing_hrv">HRV</string>
+    <string name="insights_processing_sleep">Sleep</string>
+    <string name="insights_processing_temp">Temp</string>
+    <string name="insights_generate_badge">GENERATE</string>
+
+
+    <!-- Optimize Screen Strings -->
+    <string name="insights_your_read">Your read</string>
+    <string name="insights_optimize_lagging_title">Recovery is lagging your training load.</string>
+    <string name="insights_optimize_lagging_desc">Three signals point the same way this week.</string>
+    <string name="insights_chip_all">Everything</string>
+    <string name="insights_chip_supplements">Supplements</string>
+    <string name="insights_chip_sleeptech">Sleep Tech</string>
+    <string name="insights_confidence_high">High confidence</string>
+    <string name="insights_confidence_medium">Worth exploring</string>
+    <string name="insights_magnesium_glycinate">Magnesium Glycinate</string>
+    <string name="insights_magnesium_desc">Calms the nervous system and eases your overnight heart rate.</string>
+    <string name="insights_magnesium_why_this">Why this: Glycinate is the best-supported form for sleep quality and recovery.</string>
+    <string name="insights_magnesium_why_you">Why you: Your low HRV and shorter deep sleep point to a system not downshifting at night.</string>
+    <string name="insights_magnesium_why_now">Why now: Three nights of reduced deep sleep — the window where this helps most.</string>
+    <string name="insights_explore_retailers">Explore retailers →</string>
+    <string name="insights_mattress_title">Climate-controlled mattress pad</string>
+    <string name="insights_mattress_desc">A cooler sleep surface to protect your deep-sleep stages.</string>
+    <string name="insights_mattress_why_this">Why this: A cooler core temperature overnight reliably extends deep sleep.</string>
+    <string name="insights_mattress_why_you">Why you: Your deep sleep dips on warmer nights — the Weather Resilience pattern.</string>
+    <string name="insights_mattress_why_now">Why now: Warmer nights ahead make the effect easy to feel this week.</string>
+    <string name="insights_matched_to_biology">Matched to your biology</string>
+    <string name="insights_optimize_match_desc">We matched this to your low HRV and reduced deep sleep — not to a catalogue.</string>
+    <string name="insights_privacy_desc">Your data stays with Humotron. We pass the match to the retailer — never your health signals.</string>
+    <string name="insights_available_from">Available from</string>
+    <string name="insights_thorne">Thorne</string>
+
+    <string name="insights_holland_barrett">Holland &amp; Barrett</string>
+
+    <string name="insights_prices_indicative">Prices indicative · partners may vary by region.</string>
+
+    <!-- Deep Dives Screen Strings -->
+    <string name="insights_deep_dives_title">Deep Dives for the Bigger Picture</string>
+    <string name="insights_deep_dives_subtitle">Connects multiple metrics to uncover the patterns behind your energy, stress and recovery.</string>
+    <string name="insights_your_reports">Your reports</string>
+    <string name="insights_updated">Updated</string>
+    <string name="insights_next_due">Next due</string>
+    <string name="insights_workday_stress_score">Workday Stress Score</string>
+    <string name="insights_see_full_report">See full report →</string>
+    <string name="insights_weather_resilience_score">Weather Resilience Score</string>
+
+    <string name="insights_workday_regulated_desc">Your body stayed well regulated through most of the workday — usually a sign of good recovery and steady energy.</string>
+    <string name="insights_stress_on_calendar">Stress on your calendar</string>
+    <string name="insights_stress_calendar_desc">Each day is shaded by its workday stress score — your weekends are running hotter than your weekdays this month.</string>
+    <string name="insights_time_in_zone">Time spent in each zone</string>
+    <string name="insights_zone_thriving">Thriving</string>
+    <string name="insights_zone_balanced">Balanced</string>
+    <string name="insights_zone_alert">Alert</string>
+    <string name="insights_zone_challenged">Challenged</string>
+    <string name="insights_zone_stressed">Stressed</string>
+    <string name="insights_btn_generate_next_report">Generate Next Report →</string>
+
+    <string name="insights_avg_workday_stress">Avg Workday Stress</string>
+    <string name="insights_highest_week">Highest Week</string>
+    <string name="insights_lowest_week">Lowest Week</string>
+    <string name="insights_best_week">Best Week</string>
+    <string name="insights_weekly_stress_trend">Weekly Stress Trend</string>
+
+    <string name="insights_meeting_load_stress">Meeting Load &amp; Stress</string>
+    <string name="insights_meeting_load_stress_desc">Higher meeting loads correlate with higher stress.</string>
+    <string name="insights_low_meeting_days">Low-meeting days</string>
+    <string name="insights_high_meeting_days">High-meeting days</string>
+    <string name="insights_state_collecting">State 1 · Collecting</string>
+    <string name="insights_state_ready">State 2 · Ready</string>
+    <string name="insights_latest_report">Latest report</string>
+
+    <string name="insights_next_report_collecting">Next report · collecting data</string>
+    <string name="insights_refresh_cycle_desc">We refresh every %1$d paired days — your next is due around %2$s.</string>
+    <string name="insights_btn_view_latest_report">View latest report →</string>
+    <string name="insights_btn_remind_me">Remind me</string>
+    <string name="insights_new_report">New report</string>
+    <string name="insights_ready_to_process">Ready to process</string>
+    <string name="insights_enough_data_collected">Enough data collected</string>
+    <string name="insights_weather_ready_desc">Your next Weather Resilience report is ready. This takes a few seconds to compose.</string>
+    <string name="insights_correlations">Correlations</string>
+    <string name="insights_cooler_days_boost_recovery">Cooler Days Boost Your Recovery</string>
+
+    <string name="insights_btn_view_report">View report →</string>
+
+    <string name="insights_weather_impact_summary">Weather Impact Summary</string>
+    <string name="insights_weather_impact_desc">Your HRV thrives on cooler days. As temperatures rise, recovery isn’t as strong — your body prefers a chillier environment for optimal recovery.</string>
+    <string name="insights_trend_visualization">Trend Visualization</string>
+
+    <string name="insights_badge_pattern">Pattern</string>
+    <string name="insights_view_insight_arrow">View insight →</string>
+    <string name="insights_pattern_status_format">%1$d patterns · %2$d still collecting</string>
+    <string name="insights_diastolic_bp">diastolic BP</string>
+    <string name="insights_systolic_bp">systolic BP</string>
+    <string name="insights_fallback_work_hours_desc">Your %1$s is higher during work hours compared to recovery times.</string>
+    <string name="insights_fallback_morning_title">Morning Surge Pattern</string>
+    <string name="insights_fallback_morning_desc">There’s a rise in %1$s in the morning hours.</string>
+    <string name="insights_fallback_night_title">Night-Time Recovery Dip</string>
+    <string name="insights_fallback_night_desc">Your %1$s settles into a healthy dip through the night.</string>
+    <string name="insights_fallback_exercise_title">Post-Exercise Response</string>
+    <string name="insights_fallback_exercise_desc">Not enough readings around your workouts yet to surface this lens.</string>
+    <string name="insights_fallback_exercise_action">%1$d of %2$d sessions</string>
+    <string name="insights_insufficient_data">Insufficient data for this pattern.</string>
+    <string name="insights_processing_glucose">Glucose</string>
+    <string name="insights_processing_steps">Steps</string>
+    <string name="insights_processing_stress">Stress</string>
 </resources>
 

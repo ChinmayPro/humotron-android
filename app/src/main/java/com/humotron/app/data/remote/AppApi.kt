@@ -73,6 +73,10 @@ import com.humotron.app.domain.modal.response.TopicsByCategoryResponse
 import com.humotron.app.domain.modal.response.WristBandSleepDurationResponse
 import com.humotron.app.domain.modal.response.YetToTrackMetricResponse
 import com.humotron.app.domain.modal.response.ProductDetailResponse
+import com.humotron.app.domain.modal.response.InsightMetricsOverviewResponse
+import com.humotron.app.domain.modal.response.InsightTimelineResponse
+import com.humotron.app.domain.modal.response.InsightSummaryResponse
+import com.humotron.app.domain.modal.response.InsightDetailResponse
 import com.humotron.app.domain.modal.response.ProductVariantResponse
 import com.humotron.app.domain.modal.response.GetAllLikesResponse
 import com.humotron.app.domain.modal.response.BookingTypeResponse
@@ -518,6 +522,24 @@ interface AppApi {
     suspend fun getBoosterById(
         @Path("boosterId") boosterId: String
     ): Response<com.humotron.app.domain.modal.response.BoosterDetailResponse>
+
+    @GET("metricInsight/getInsightMetricsOverview")
+    suspend fun getInsightMetricsOverview(): Response<InsightMetricsOverviewResponse>
+
+    @GET("metricInsight/getInsightTimeline/{metricId}")
+    suspend fun getInsightTimeline(
+        @Path("metricId") metricId: String
+    ): Response<InsightTimelineResponse>
+
+    @GET("metricInsight/getInsightSummaryByMetricId/{metricId}")
+    suspend fun getInsightSummaryByMetricId(
+        @Path("metricId") metricId: String
+    ): Response<InsightSummaryResponse>
+
+    @GET("metricInsight/getInsightById/{insightId}")
+    suspend fun getInsightById(
+        @Path("insightId") insightId: String
+    ): Response<InsightDetailResponse>
 
     @POST("digitalProductOrder/createDigitalProductOrder")
     suspend fun createDigitalProductOrder(

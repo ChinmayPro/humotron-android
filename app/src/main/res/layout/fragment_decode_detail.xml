@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    tools:background="@color/black">
+
+    <!-- Header -->
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_decode_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Scrollable content -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/layoutDetail"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="24dp">
+
+            <!-- Title content -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="20dp"
+                android:paddingTop="20dp">
+                <TextView
+                    android:id="@+id/tvDetailMetricLabel"
+                    style="@style/Text.10x.Manrope.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/insights_green"
+                    android:textAllCaps="true"
+                    tools:text="SYSTOLIC BP" />
+                <TextView
+                    android:id="@+id/tvDetailTitle"
+                    style="@style/Text.21x.Manrope.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/white"
+                    tools:text="@string/insights_detail_title_format" />
+                <TextView
+                    android:id="@+id/tvDetailDateRange"
+                    style="@style/Text.13x.Manrope.Regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/insights_slate_grey"
+                    tools:text="@string/insights_detail_date_range" />
+            </LinearLayout>
+
+            <!-- Line chart layout -->
+            <com.humotron.app.ui.decode.view.LineChartView
+                android:id="@+id/chartMetricDetail"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_decode_card" />
+
+            <!-- Summary observation -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+                <TextView
+                    android:id="@+id/tvBpLoadTitle"
+                    style="@style/Text.16x.Manrope.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/insights_detail_bp_load_title"
+                    android:textColor="@color/white" />
+                <TextView
+                    android:id="@+id/tvBpLoadDesc"
+                    style="@style/Text.13x.Manrope.Regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="@string/insights_detail_bp_load_desc"
+                    android:textColor="@color/insights_light_grey" />
+
+                <TextView
+                    android:id="@+id/tvSummaryTitle"
+                    style="@style/Text.16x.Manrope.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/insights_detail_summary_title"
+                    android:textColor="@color/white" />
+                <TextView
+                    android:id="@+id/tvSummaryDesc"
+                    style="@style/Text.13x.Manrope.Regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="@string/insights_detail_summary_desc"
+                    android:textColor="@color/insights_light_grey" />
+
+                <TextView
+                    android:id="@+id/tvHypothesisTitle"
+                    style="@style/Text.16x.Manrope.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/insights_detail_hypothesis_title"
+                    android:textColor="@color/white" />
+                <TextView
+                    android:id="@+id/tvHypothesisDesc"
+                    style="@style/Text.13x.Manrope.Regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/insights_detail_hypothesis_desc"
+                    android:textColor="@color/insights_light_grey" />
+            </LinearLayout>
+
+            <!-- Actions grid -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="20dp">
+                <TextView
+                    android:id="@+id/tvSuggestedActionsLabel"
+                    style="@style/Text.11x.Manrope.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/insights_suggested_actions"
+                    android:textColor="@color/insights_section_header_grey"
+                    android:textAllCaps="true"
+                    android:letterSpacing="0.12"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/white10"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="140dp"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+
+            <!-- Suggested Actions RecyclerView -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvSuggestedActions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="20dp"
+                android:clipToPadding="false"
+                android:scrollbars="none"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_suggested_action" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
