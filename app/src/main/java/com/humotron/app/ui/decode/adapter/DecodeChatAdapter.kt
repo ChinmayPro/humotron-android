@@ -186,33 +186,48 @@ class DecodeChatAdapter(
                     view.text = androidx.core.text.HtmlCompat.fromHtml(convertMarkdownToHtml(text), androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT)
                     return@post
                 }
-                typingJob = lifecycleOwner.lifecycleScope.launch {
-                    val words = text.split(" ")
-                    val totalWords = words.size
-                    
-                    val typingDelay = when {
-                        totalWords > 400 -> 15L
-                        totalWords > 200 -> 30L
-                        totalWords > 100 -> 45L
-                        else -> 60L
-                    }
 
-                    val builder = StringBuilder()
-                    for (i in words.indices) {
-                        builder.append(words[i])
-                        if (i < words.size - 1) builder.append(" ")
-                        
-                        val currentHtml = convertMarkdownToHtml(builder.toString())
-                        view.text = androidx.core.text.HtmlCompat.fromHtml(currentHtml, androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT)
-                        
+                // Scroll only when the TextView height actually changes (i.e. text wraps to a new line)
+                val layoutListener = android.view.View.OnLayoutChangeListener { _, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+                    val newHeight = bottom - top
+                    val oldHeight = oldBottom - oldTop
+                    if (newHeight != oldHeight) {
                         onAnimateTyping(bindingAdapterPosition)
-                        
-                        val wordsToWait = if (totalWords > 300) 2 else 1
-                        if (i % wordsToWait == 0) {
-                            delay(typingDelay)
-                        }
                     }
-                    view.text = androidx.core.text.HtmlCompat.fromHtml(convertMarkdownToHtml(text), androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT)
+                }
+                view.addOnLayoutChangeListener(layoutListener)
+
+                typingJob = lifecycleOwner.lifecycleScope.launch {
+                    try {
+                        val words = text.split(" ")
+                        val totalWords = words.size
+                        
+                        val typingDelay = when {
+                            totalWords > 400 -> 15L
+                            totalWords > 200 -> 30L
+                            totalWords > 100 -> 45L
+                            else -> 60L
+                        }
+
+                        val builder = StringBuilder()
+                        
+                        for (i in words.indices) {
+                            builder.append(words[i])
+                            if (i < words.size - 1) builder.append(" ")
+                            
+                            // Parse HTML/Markdown to render formatting (bold, italic, underline, breaks) dynamically
+                            view.text = androidx.core.text.HtmlCompat.fromHtml(convertMarkdownToHtml(builder.toString()), androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT)
+                            
+                            val wordsToWait = if (totalWords > 300) 2 else 1
+                            if (i % wordsToWait == 0) {
+                                delay(typingDelay)
+                            }
+                        }
+                        // Final: set proper formatted HTML text
+                        view.text = androidx.core.text.HtmlCompat.fromHtml(convertMarkdownToHtml(text), androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT)
+                    } finally {
+                        view.removeOnLayoutChangeListener(layoutListener)
+                    }
                 }
             }
         }

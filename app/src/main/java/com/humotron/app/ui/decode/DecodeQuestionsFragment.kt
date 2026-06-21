@@ -14,6 +14,7 @@ import com.humotron.app.domain.modal.response.FeltOffQuestionData
 import com.humotron.app.ui.decode.adapter.DecodeQuestionAdapter
 import com.humotron.app.ui.decode.viewmodel.DecodeViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import android.util.Log
 
 @AndroidEntryPoint
 class DecodeQuestionsFragment : BaseFragment(R.layout.fragment_decode_questions) {
@@ -43,11 +44,15 @@ class DecodeQuestionsFragment : BaseFragment(R.layout.fragment_decode_questions)
 
     private fun initViews() {
         binding.tvTitle.text = arguments?.getString("title")
+        val type = arguments?.getString("type")
+        binding.header.title.text = if (type == "FELT_OFF") "Felt Off" else "Nutrition Ideas"
         binding.rvQuestions.layoutManager = LinearLayoutManager(requireContext())
     }
 
     private fun initClicks() {
-
+        binding.header.ivBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     private fun initObservers() {
@@ -77,8 +82,14 @@ class DecodeQuestionsFragment : BaseFragment(R.layout.fragment_decode_questions)
 
     private fun setupRecyclerView(items: List<FeltOffQuestionData>) {
         binding.rvQuestions.adapter = DecodeQuestionAdapter(items) { question ->
-            findNavController().previousBackStackEntry?.savedStateHandle?.set("selected_question", question)
-            findNavController().popBackStack()
+            // Navigate directly to TronChat instead of popping back
+            // This preserves backstack: Decode → Questions → TronChat
+            val bundle = Bundle().apply {
+                putString("chat_prompt_id", question.id ?: "")
+                putString("chat_prompt_title", question.question ?: "")
+            }
+            findNavController().navigate(R.id.fragmentTronChat, bundle)
         }
+        DecodeAnimationUtils.animateCardsIn(binding.rvQuestions)
     }
 }

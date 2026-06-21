@@ -243,7 +243,7 @@ To get started:\n
     <string name="what_is_temperature">What is Temperature?</string>
     <string name="why_it_matters_question">Why it matters?</string>
     <string name="stress_score">Stress Score</string>
-    <string name="chat_headline">What would you like to chat with the Tron\nabout?</string>
+    <string name="chat_headline">What would you like to chat with the Tron about?</string>
     <string name="tron_chat_headline">You are chatting\nwith Tron!</string>
     <string name="chat_option_metrics">Metrics you are tracking</string>
     <string name="chat_option_felt_off">Something that\'s felt off lately</string>
@@ -271,11 +271,13 @@ To get started:\n
     <string name="why_product">Why Product?</string>
     <string name="buy_now_with_arrow">Buy Now →</string>
     <string name="chat_manage_settings_info">Manage AI Chat Settings\nin the Control Panel</string>
-    <string name="chat_choose_metric_headline">Choose the metric\nyou want to talk to\nTron about?</string>
+    <string name="chat_choose_metric_headline">Choose a metric to talk to Tron about</string>
+    <string name="chat_choose_metrics_header">Choose Metrics</string>
     <string name="chat_active_metrics_header">Active Metrics</string>
     <string name="chat_pending_metrics_header">Yet To Be Tracked Metrics</string>
-    <string name="chat_option_felt_off_desc">Something that’s\nfelt off lately</string>
-    <string name="chat_option_nutrition_desc">A nutrition idea you’re\ncurious about</string>
+    <string name="chat_group_metrics_header">Group Metrics</string>
+    <string name="chat_option_felt_off_desc">Something that’s felt off lately</string>
+    <string name="chat_option_nutrition_desc">A nutrition idea you’re curious about</string>
     <string name="chat_bot_loading_metrics">Checking your metrics..</string>
     <string name="chat_bot_loading_general">Checking into this for you..</string>
     <string name="chat_bot_no_insights">I couldn\'t find any specific insights for this metric right now.</string>
