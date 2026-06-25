@@ -83,8 +83,12 @@ class VerifyOtpFragment : BaseFragment(R.layout.fragment_verify_otp) {
                         )
                         data.data.user?.let { prefUtils.setLoginResponse(it) }
                         if (data.data.user?.isOnBoarding == true) {
-                            startActivity(Intent(requireContext(), MainActivity::class.java))
-                            requireActivity().finish()
+                            if (prefUtils.getBoolean(Preference.ONBOARD_PRIVACY)) {
+                                startActivity(Intent(requireContext(), MainActivity::class.java))
+                                requireActivity().finish()
+                            } else {
+                                findNavController().navigate(R.id.onBoardPrivacyFragment)
+                            }
                         } else {
                             val user = data.data.user
                             if (user?.name.isNullOrEmpty()) {

@@ -13,19 +13,28 @@
     </string>
     <string name="dialog_title_oem_auth_failed">OEM Authentication Failed</string>
     <string name="btn_label_disconnected">Disconnect</string>
-    <string name="onboard_title_1">Say goodbye\nto scattered\nhealth data.</string>
-    <string name="onboard_desc_1">Humotron Health Profile, your body\'s ongoing report card. Integrate data from your health gadgets, medical history, blood tests, and health records in one dynamic snapshot, making every doctor\'s visit more effective and your preventive healthcare effortless.</string>
-    <string name="onboard_title_2">Data-driven\nhealth\nmanagement.</string>
-    <string name="onboard_desc_2">At Humotron, we break down your health goals into quantifiable metrics. Track progress, understand impact, and navigate your health journey with \ndata at your fingertips.</string>
-    <string name="onboard_title_3">Cut through the recommendations\nclutter.</string>
-    <string name="onboard_desc_3">Integrate Humotron effortlessly into your daily routine. Accessible on all devices, our AI chatbot community seamlessly fits into your lifestyle, ensuring you stay connected to your wellness goals.</string>
+    <string name="onboard_eyebrow_1">01 · ONE PICTURE</string>
+    <string name="onboard_title_1">All your signals, finally\nin one place.</string>
+    <string name="onboard_desc_1">Humotron pulls your wearables, labs and daily habits into a single, plain-language read — no more scattered numbers across ten apps.</string>
+    
+    <string name="onboard_eyebrow_2">02 · THE WHY</string>
+    <string name="onboard_title_2">Insight you can actually\nact on.</string>
+    <string name="onboard_desc_2">Every signal comes with the reason behind it — what it means for your body, and the one thing worth doing next.</string>
+    
+    <string name="onboard_eyebrow_3">03 · YOURS TO KEEP</string>
+    <string name="onboard_title_3">Your data never leaves\nyour control.</string>
+    <string name="onboard_desc_3">Raw health data stays with you. We turn it into guidance — we never sell it, and commerce partners never see it.</string>
     <string name="skip">Skip</string>
     <string name="next">Next</string>
-    <string name="first_things_first">First Things First</string>
-    <string name="onboard_privacy_desc">Your privacy matters. Before we begin, review and approve the essentials.</string>
-    <string name="onboard_privacy_title1">Consent to Use Personal\n&amp; Health Data</string>
-    <string name="onboard_privacy_desc1">Allows us to use your data to offer key features &amp; improvements.</string>
-    <string name="onboard_data_policy_title">Agree to Data Processing &amp; Security</string>
+    <string name="health_data_permissions">HEALTH-DATA PERMISSIONS</string>
+    <string name="first_things_first">Two consents, in plain terms.</string>
+    <string name="onboard_privacy_desc">You’ve accepted our terms — these two are different: explicit, revocable permissions for your &lt;font color="#cfe69a"&gt;health data&lt;/font&gt; specifically, required before we read a single signal.</string>
+    <string name="onboard_privacy_title1">Use my health data to personalise</string>
+    <string name="onboard_privacy_desc1">Lets Humotron read your connected signals to build your private profile. Never shared with third parties. Privacy Policy</string>
+    <string name="onboard_data_policy_title">Process &amp; secure my data</string>
+    <string name="onboard_data_policy_desc">Allows the encryption and safeguards that protect your information end to end. Data Security Policy</string>
+    <string name="withdraw_consent_info">You can withdraw either consent anytime in Settings.</string>
+    <string name="agree_and_continue">Agree &amp; continue</string>
     <string name="privacy_policy">[Privacy Policy]</string>
     <string name="_continue">Continue</string>
     <string name="how_would_you_like_to_continue">How would you like to continue?</string>
@@ -44,6 +53,12 @@
     <string name="welcome_back">Welcome back</string>
     <string name="sign_in">Sign In</string>
     <string name="forgot_password">Forgot Password</string>
+    <string name="start_your_read">Start your read</string>
+    <string name="two_minutes_to_set_up">Two minutes to set up. Connect a device whenever you\'re ready.</string>
+    <string name="pick_up_exactly">Pick up exactly where you left off.</string>
+    <string name="continue_with_email">Continue with email</string>
+    <string name="auth_terms_privacy">By continuing you agree to our Terms and Privacy Policy.</string>
+    <string name="or_uppercase">OR</string>
     <string name="verify_your_email">Verify Your Email</string>
     <string name="we_ve_sent_a_6_digit_code_to_s">We’ve sent a 6-digit code to\n%s</string>
     <string name="didn_t_get_it">Didn’t get it?</string>
@@ -60,13 +75,18 @@
     <string name="use_cases">Use-Cases</string>
     <string name="dashboard">Dashboard</string>
     <string name="lets_begin">Let\'s Begin</string>
-    <string name="lets_get_started">Let\'s get started</string>
-    <string name="personalize_desc">Join us on a personalized journey towards a healthier lifestyle.</string>
-    <string name="name">Name</string>
+    <string name="lets_get_started">Let’s get the basics.</string>
+    <string name="personalize_desc">A few details so your read is tuned to you — not an average.</string>
+    <string name="first_name_hint">First Name</string>
+    <string name="last_name_hint">Last Name</string>
+    <string name="date_of_birth">Date of birth</string>
+    <string name="age_restriction_info">You must be at least 18.</string>
+    <string name="biomarker_interpretation_info">Used only to interpret your biomarkers accurately.</string>
+    <string name="country">Country</string>
     <string name="birthday">Birthday</string>
     <string name="biological_sex">Biological Sex</string>
-    <string name="nice_to_meet_you">Nice to meet you,\n%s!</string>
-    <string name="desc_width_height">Craft your personalised feed and enjoy a healthier yourself.</string>
+    <string name="nice_to_meet_you">A little about your body.</string>
+    <string name="desc_width_height">Height and weight calibrate everything from heart-rate zones to dosing.</string>
     <string name="height">Height</string>
     <string name="cm">cm</string>
     <string name="kg">kg</string>
@@ -1076,5 +1096,69 @@ To get started:\n
     <string name="insights_processing_glucose">Glucose</string>
     <string name="insights_processing_steps">Steps</string>
     <string name="insights_processing_stress">Stress</string>
+    <!-- Goal Selection Strings -->
+    <string name="goal_selection_title">What brings you to Humotron?</string>
+    <string name="goal_selection_subtitle">Pick the one that fits best. We\'ll shape your whole experience around it — and you can change it anytime.</string>
+    <string name="goal_option_1_title">Make sense of my data</string>
+    <string name="goal_option_1_desc">Bring every signal into one clear picture — and tell me what it actually means.</string>
+    <string name="goal_option_1_tag">CLARITY</string>
+    <string name="goal_option_2_title">Optimise performance &amp; recovery</string>
+    <string name="goal_option_2_desc">Go deeper on HRV, sleep and training load. Run experiments, chase the gains.</string>
+    <string name="goal_option_3_title">Find what works for me</string>
+    <string name="goal_option_3_desc">Personalised product and habit recommendations I can trust, with the reasoning shown.</string>
+    <string name="goal_option_4_title">Improve one thing</string>
+    <string name="goal_option_4_desc">Fix sleep, stress or energy with focused, practical daily nudges.</string>
+    <string name="goal_footer_clarity">Your home will open on the &lt;b&gt;&lt;font color="#C4F23E"&gt;Clarity&lt;/font&gt;&lt;/b&gt; layout, tuned to this goal.</string>
+    <string name="goal_footer_default">Your home will open tuned to this goal.</string>
+    <string name="start_areas_title">Where should we start?</string>
+    <string name="start_areas_subtitle">Choose the areas you most want to understand first.</string>
+    <string name="start_areas_note">Press and hold any tile to see what it tracks.</string>
+    <string name="create_account_tab">Create account</string>
+    <string name="sign_in_tab">Sign in</string>
+    <string name="app_name_lowercase">humotron</string>
+    <string name="ft">ft</string>
+    <string name="lb">lb</string>
+    <string name="email_hint">you@example.com</string>
+
+    <!-- Onboarding graphic strings -->
+    <string name="ob_graphic_2_eyebrow">THE READ</string>
+    <string name="ob_graphic_2_hrv_down">HRV ↓28%</string>
+    <string name="ob_graphic_2_deep_down">Deep ↓</string>
+    <string name="ob_graphic_2_try_one_thing">Try one thing →</string>
+    <string name="ob_graphic_3_you">You</string>
+    <string name="ob_graphic_3_arrow">→</string>
+    <string name="ob_graphic_3_humotron">Humotron</string>
+    <string name="ob_graphic_3_partner">Partner</string>
+
+    <!-- Weather and Report strings -->
+    <string name="action_view_report">View report →</string>
+    <string name="action_generate_next">Generate next →</string>
+    <string name="action_generate_report">Generate report →</string>
+    <string name="action_see_full_report">See full report →</string>
+    <string name="status_report_ready">REPORT READY</string>
+    <string name="status_data_ready">DATA READY</string>
+    <string name="status_collecting">COLLECTING</string>
+    <string name="label_collecting_progress">Collecting…</string>
+    <string name="label_climate_intelligence">CLIMATE INTELLIGENCE</string>
+    <string name="label_weather_resilience_reports">Your Weather Resilience reports</string>
+    <string name="desc_weather_resilience_reports">We pair months of local weather with your biometrics to show how climate shifts move your recovery, sleep and BP. Each pairing gets its own report.</string>
+    <string name="label_your_four_pairings">YOUR FOUR PAIRINGS</string>
+    <string name="label_summary">SUMMARY</string>
+    <string name="label_weather_impact_summary">Weather impact summary</string>
+    <string name="label_impact">impact</string>
+    <string name="label_impact_level">IMPACT LEVEL</string>
+    <string name="label_trend">TREND</string>
+    <string name="label_key_insights">KEY INSIGHTS</string>
+    <string name="label_recommended_plan">RECOMMENDED PLAN</string>
+    <string name="label_decode">DECODE</string>
+    <string name="label_deep_dives_title">Deep Dives for the Bigger Picture</string>
+    <string name="label_deep_dives_subtitle">Connects multiple metrics to uncover the patterns behind your energy, stress and recovery.</string>
+    <string name="label_your_reports">YOUR REPORTS</string>
+    <string name="label_workday_stress_score">Workday Stress Score</string>
+    <string name="status_updated">UPDATED</string>
+    <string name="label_weather_resilience_score">Weather Resilience Score</string>
+    <string name="status_next_due">NEXT DUE</string>
+    <string name="label_splash_subtitle">One read on your whole body</string>
+    <string name="weather_resilience_report_title">Weather Resilience Report</string>
 </resources>
 

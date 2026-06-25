@@ -2,6 +2,7 @@ package com.humotron.app.ui.decode
 
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import com.humotron.app.R
 import com.humotron.app.core.base.BaseFragment
 import com.humotron.app.databinding.FragmentDecodeDeepDivesBinding
@@ -25,6 +26,13 @@ class DecodeDeepDivesFragment : BaseFragment(R.layout.fragment_decode_deep_dives
     }
 
     private fun initClicks() {
+        binding.cardWorkdayStress.setOnClickListener {
+            findNavController().navigate(R.id.action_fragmentDecode_to_fragmentWorkdayReport)
+        }
+
+        binding.cardWeatherResilience.setOnClickListener {
+            findNavController().navigate(R.id.action_fragmentDecode_to_fragmentWeatherOverview)
+        }
     }
 
     private fun initObservers() {

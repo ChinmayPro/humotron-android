@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Header -->
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_decode_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivInfo"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="16dp"
+        android:scaleType="center"
+        android:src="@drawable/ic_info_24px"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        app:tint="@color/deep_dives_ink2"
+        app:layout_constraintBottom_toBottomOf="@id/header"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/header" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="24dp">
+
+            <!-- Toggle (By day / By month) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_seg_container"
+                android:orientation="horizontal"
+                android:padding="4dp">
+
+                <TextView
+                    style="@style/Text.11x.Manrope.Bold"
+                    android:id="@+id/tvTabDay"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_seg_selected"
+                    android:gravity="center"
+                    android:paddingVertical="8dp"
+                    android:text="By day"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    style="@style/Text.11x.Manrope.Bold"
+                    android:id="@+id/tvTabMonth"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:paddingVertical="8dp"
+                    android:text="By month"
+                    android:textColor="#90A0A0" />
+            </LinearLayout>
+
+            <!-- Day View Container -->
+            <LinearLayout
+                android:id="@+id/containerDayView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <!-- Horizontal scroll for days -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvDays"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="20dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+                <TextView
+                    style="@style/Text.12x.Manrope.Regular"
+                    android:id="@+id/tvDayDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="14dp"
+                    android:text="Thursday 8 Apr · Workday 9am – 5pm"
+                    android:textColor="@color/deep_dives_ink3" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_decode_card"
+                    android:padding="18dp">
+
+                    <TextView
+                        android:fontFamily="@font/manrope_bold"
+                        android:id="@+id/tvDayScore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="51"
+                        android:textColor="@color/deep_dives_watch"
+                        android:textSize="54sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tvDayScore">
+
+                        <TextView
+                            style="@style/Text.11x.Manrope.Bold"
+                            android:id="@+id/tvDayZone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_zone_chip"
+                            android:backgroundTint="@color/deep_dives_watch"
+                            android:paddingHorizontal="11dp"
+                            android:paddingVertical="3dp"
+                            android:text="Alert"
+                            android:textColor="#0d1618" />
+
+                        <TextView
+                            style="@style/Text.11x.Manrope.SemiBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Workday stress score"
+                            android:textColor="@color/deep_dives_ink3" />
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    style="@style/Text.16x.Manrope.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="18dp"
+                    android:text="Time spent in each zone"
+                    android:textColor="@color/white" />
+
+                <!-- Container for Zone Distribution Bars -->
+                <LinearLayout
+                    android:id="@+id/llZoneDist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical" />
+
+                <TextView
+                    style="@style/Text.16x.Manrope.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Stress across your workday"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    style="@style/Text.13x.Manrope.Regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="4dp"
+                    android:text="Each hour is shaded by how your body tracked through the working day."
+                    android:textColor="@color/deep_dives_ink3" />
+
+                <!-- Hour Strip Bar Chart Custom layout -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_chart_wrap"
+                    android:padding="14dp">
+
+                    <LinearLayout
+                        android:id="@+id/llHourStrip"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <!-- Legend Items -->
+                    <include layout="@layout/item_legend" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Month View Container -->
+            <LinearLayout
+                android:id="@+id/containerMonthView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/Text.16x.Manrope.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="14dp"
+                    android:text="Stress across the month"
+                    android:textColor="@color/white" />
+
+                <!-- Calendar Heatmap Custom View -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_chart_wrap"
+                    android:orientation="vertical"
+                    android:padding="14dp">
+
+                    <com.humotron.app.ui.decode.custom.CalendarHeatmapView
+                        android:id="@+id/calendarHeatmap"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <include
+                        layout="@layout/item_legend"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp" />
+                </LinearLayout>
+
+                <TextView
+                    style="@style/Text.13x.Manrope.Regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Each day is shaded by its workday stress score — your weekends are running hotter than weekdays this month."
+                    android:textColor="@color/deep_dives_ink3" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="22dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp">
+
+                    <TextView
+                        style="@style/Text.11x.Manrope.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:letterSpacing="0.12"
+                        android:text="MONTHLY REPORTS"
+                        android:textColor="#7C8B89" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:background="@color/deep_dives_hair" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llMonthlyReports"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="24dp"
+                    android:clipToPadding="false"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="20dp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

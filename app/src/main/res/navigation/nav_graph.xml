@@ -29,6 +29,62 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentDecode_to_fragmentWorkdayReport"
+            app:destination="@id/fragmentWorkdayReport"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentDecode_to_fragmentWeatherOverview"
+            app:destination="@id/fragmentWeatherOverview"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <!-- Deep Dives Flow -->
+    <fragment
+        android:id="@+id/fragmentWorkdayReport"
+        android:name="com.humotron.app.ui.decode.DecodeWorkdayReportFragment"
+        tools:layout="@layout/fragment_workday_report">
+        <action
+            android:id="@+id/action_fragmentWorkdayReport_to_fragmentWorkdayDetails"
+            app:destination="@id/fragmentWorkdayDetails"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentWorkdayDetails"
+        android:name="com.humotron.app.ui.decode.DecodeWorkdayDetailsFragment"
+        tools:layout="@layout/fragment_workday_details" />
+
+    <fragment
+        android:id="@+id/fragmentWeatherOverview"
+        android:name="com.humotron.app.ui.decode.DecodeWeatherOverviewFragment"
+        tools:layout="@layout/fragment_weather_overview">
+        <action
+            android:id="@+id/action_fragmentWeatherOverview_to_fragmentWeatherDetail"
+            app:destination="@id/fragmentWeatherDetail"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentWeatherDetail"
+        android:name="com.humotron.app.ui.decode.DecodeWeatherDetailFragment"
+        tools:layout="@layout/fragment_weather_detail">
+        <argument
+            android:name="weatherId"
+            app:argType="string"
+            android:defaultValue="a" />
     </fragment>
 
     <fragment

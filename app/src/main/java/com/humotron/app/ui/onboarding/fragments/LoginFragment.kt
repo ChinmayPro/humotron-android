@@ -3,8 +3,7 @@ package com.humotron.app.ui.onboarding.fragments
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.core.text.HtmlCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.humotron.app.R
@@ -23,6 +22,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
     private val viewModel: LoginViewModel by viewModels()
     private lateinit var binding: FragmentLoginBinding
 
+    private var isLoginMode = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -30,22 +30,35 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
 
         binding.etEmail.setText(prefUtils.getString(Preference.LOGIN_USER_EMAIL) ?: "")
 
-        binding.btnSubmit.setOnClickListener {
-            viewModel.loginUser(
-                LoginParam(
-                    userType = "USER",
-                    mode = "NORMAL",
-                    loginType = "Mobile",
-                    email = binding.etEmail.text.toString(),
-                )
-            )
+        val termsHtml = "By continuing you agree to our <font color='#C4F23E'>Terms</font> and <font color='#C4F23E'>Privacy Policy</font>."
+        binding.tvTerms.text = HtmlCompat.fromHtml(termsHtml, HtmlCompat.FROM_HTML_MODE_LEGACY)
+
+        binding.rgAuthType.setOnCheckedChangeListener { _, checkedId ->
+            if (checkedId == R.id.rbLogin) {
+                isLoginMode = true
+                binding.tvTitle.text = getString(R.string.welcome_back)
+                binding.tvSubTitle.text = getString(R.string.pick_up_exactly)
+            } else {
+                isLoginMode = false
+                binding.tvTitle.text = getString(R.string.start_your_read)
+                binding.tvSubTitle.text = getString(R.string.two_minutes_to_set_up)
+            }
         }
 
-        binding.btnRegister.setOnClickListener {
-            findNavController().popBackStack(R.id.registerFragment, false)
-        }
-        binding.btnLoginOption.setOnClickListener {
-            findNavController().popBackStack(R.id.loginMethodFragment, false)
+        binding.btnSubmit.setOnClickListener {
+            val email = binding.etEmail.text.toString()
+            if (isLoginMode) {
+                viewModel.loginUser(
+                    LoginParam(
+                        userType = "USER",
+                        mode = "NORMAL",
+                        loginType = "Mobile",
+                        email = email
+                    )
+                )
+            } else {
+                viewModel.sendOtp(SendOtpParam(email))
+            }
         }
 
         subscribeToObserver()
@@ -60,17 +73,13 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
             when (networkStatus.status) {
                 Status.SUCCESS -> {
                     viewModel.sendOtp(SendOtpParam(binding.etEmail.text.toString()))
-
                 }
-
                 Status.ERROR -> {
                     hideProgress()
                 }
-
                 Status.EXCEPTION -> {
                     hideProgress()
                 }
-
                 Status.LOADING -> {
                     showProgress()
                 }
@@ -86,21 +95,16 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
                     }
                     findNavController().navigate(R.id.verifyOtpFragment, bundle)
                 }
-
                 Status.ERROR -> {
                     hideProgress()
                 }
-
                 Status.EXCEPTION -> {
                     hideProgress()
                 }
-
                 Status.LOADING -> {
                     showProgress()
                 }
             }
         }
     }
-
-
 }

@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent"
-    tools:background="@color/black"
+
     tools:context=".ui.decode.DecodeFragment">
 
     <!-- Wordmark "Decode" -->

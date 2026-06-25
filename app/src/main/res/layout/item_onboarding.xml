@@ -1,30 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvTitle"
-        style="@style/Text.OnBoard.Title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_50dp"
-        android:paddingStart="@dimen/_24dp"
-        android:text="@string/onboard_title_1"
+    <FrameLayout
+        android:id="@+id/graphicContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/tvEyebrow"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvDescription"
-        style="@style/Text.OnBoard.Desc"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tvEyebrow"
+        style="@style/Text.11x.Manrope.Bold"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_20dp"
-        android:paddingStart="@dimen/_24dp"
-        android:paddingEnd="@dimen/_36dp"
-        android:text="@string/onboard_desc_1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+        android:layout_marginStart="28dp"
+        android:layout_marginBottom="12dp"
+        android:letterSpacing="0.1"
+        tools:text="01 · ONE PICTURE"
+        android:textAllCaps="true"
+        android:textColor="@color/textColorHint"
+        app:layout_constraintBottom_toTopOf="@id/tvTitle"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        style="@style/Text.26x.Manrope.SemiBold"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="14dp"
+        android:fontFamily="@font/manrope_bold"
+        android:lineSpacingExtra="2dp"
+        app:layout_constraintBottom_toTopOf="@id/tvDescription"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tvDescription"
+        style="@style/Text.14x.Manrope.Regular"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="24dp"
+        android:lineSpacingExtra="6dp"
+        android:textColor="@color/colorTextDescGrey"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

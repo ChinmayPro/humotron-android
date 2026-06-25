@@ -44,6 +44,11 @@ class RadarAnimationView @JvmOverloads constructor(
         style = Paint.Style.STROKE
     }
 
+    private val outerDotPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = ContextCompat.getColor(context, R.color.insights_tag_grey)
+        style = Paint.Style.FILL
+    }
+
     // Animation values
     private var dashOffset = 0f
     private var coreScale = 1.0f
@@ -115,12 +120,6 @@ class RadarAnimationView @JvmOverloads constructor(
         }
         canvas.restore()
 
-        // Draw expanding ring 1
-        drawExpandingRing(canvas, cx, cy, ring1Progress)
-
-        // Draw expanding ring 2
-        drawExpandingRing(canvas, cx, cy, ring2Progress)
-
         // Draw pulsing core circle
         canvas.save()
         canvas.scale(coreScale, coreScale, cx, cy)
@@ -129,6 +128,21 @@ class RadarAnimationView @JvmOverloads constructor(
 
         // Draw static center dot
         canvas.drawCircle(cx, cy, dpToPx(8f), centerDotPaint)
+
+        // Draw 6 outer dots at the end of the lines
+        canvas.save()
+        for (i in 0 until 6) {
+            val dotProgress = (ring1Progress + (i * 350f / 2400f)) % 1.0f
+            val pulse = if (dotProgress < 0.5f) {
+                0.4f + (dotProgress / 0.5f) * 0.6f
+            } else {
+                1.0f - ((dotProgress - 0.5f) / 0.5f) * 0.6f
+            }
+            outerDotPaint.alpha = (pulse * 255).toInt().coerceIn(0, 255)
+            canvas.drawCircle(cx, cy - dpToPx(49f), dpToPx(4f), outerDotPaint)
+            canvas.rotate(60f, cx, cy)
+        }
+        canvas.restore()
     }
 
     private fun drawExpandingRing(canvas: Canvas, cx: Float, cy: Float, progress: Float) {

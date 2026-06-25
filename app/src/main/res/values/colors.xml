@@ -16,7 +16,13 @@
     <color name="lime_green">#B8FF4F</color>
     <color name="surface_dark">#1E1E1E</color>
     <color name="text_secondary">#888888</color>
-    <color name="colorBgBtn">#B2F042</color>
+    <color name="textColorMuted">#9DACA9</color>
+    <color name="colorTextGrey">#859390</color>
+    <color name="colorTextGreyDark">#6F7E7D</color>
+    <color name="colorTextEyebrow">#73827F</color>
+    <color name="textColorHint">#5F6F6E</color>
+    <color name="colorTextDescGrey">#A9C2BE</color>
+    <color name="colorBgBtn">#C4F23E</color>
     <color name="colorBgBtn1">#BEF362</color>
     <color name="dividerColor">#D9D9D9</color>
     <color name="assessmentBnt">#B1F042</color>
@@ -140,4 +146,24 @@
     <color name="insights_green_10">#1aB2F042</color>
     <color name="insights_zone_balanced">#5FB7C4</color>
     <color name="insights_zone_challenged">#E08A4A</color>
+
+    <!-- Deep Dives Colors -->
+    <color name="deep_dives_ink2">#9DACA9</color>
+    <color name="deep_dives_ink3">#859390</color>
+    <color name="deep_dives_ink4">#6F7E7D</color>
+    <color name="deep_dives_eyebrow">#73827F</color>
+    <color name="deep_dives_lime">#C4F23E</color>
+    <color name="deep_dives_attention">#EE4D3D</color>
+    <color name="deep_dives_watch">#E7A93C</color>
+    <color name="deep_dives_series">#F0795E</color>
+    <color name="deep_dives_cool">#5FB7C4</color>
+    <color name="deep_dives_card">#8C080F10</color> <!-- rgba(8,15,16,.55) -> hex 8C080F10 -->
+    <color name="deep_dives_hair">#12FFFFFF</color> <!-- rgba(255,255,255,.07) -> 12FFFFFF -->
+    <color name="deep_dives_hair_light">#1AFFFFFF</color> <!-- rgba(255,255,255,.10) -->
+    <color name="deep_dives_bg">#0b1315</color>
+    <color name="deep_dives_card_bg_solid">#0C1618</color> <!-- Solid version for fallback -->
+    <color name="deep_dives_day_chip_bg">#0AFFFFFF</color> <!-- rgba(255,255,255,.04) -->
+    <color name="deep_dives_day_chip_selected_bg">#1FC4F23E</color> <!-- rgba(196,242,62,.12) -->
+    <color name="deep_dives_day_chip_selected_stroke">#61C4F23E</color> <!-- rgba(196,242,62,.38) -->
+    <color name="deep_dives_zone_track_bg">#0FFFFFFF</color> <!-- rgba(255,255,255,.06) -->
 </resources>

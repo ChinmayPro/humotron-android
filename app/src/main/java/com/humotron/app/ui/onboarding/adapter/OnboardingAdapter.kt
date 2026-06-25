@@ -14,10 +14,13 @@ class OnboardingAdapter(val context: Context, private val items: List<Onboarding
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: OnboardingItem) {
             binding.apply {
+                tvEyebrow.text = context.getString(item.eyebrow)
                 tvTitle.text = context.getString(item.title)
                 tvDescription.text = context.getString(item.description)
+                
+                graphicContainer.removeAllViews()
+                LayoutInflater.from(context).inflate(item.layoutResId, graphicContainer, true)
             }
-
         }
     }
 

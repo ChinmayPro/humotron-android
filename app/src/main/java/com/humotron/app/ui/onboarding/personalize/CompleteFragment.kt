@@ -9,6 +9,7 @@ import com.humotron.app.core.base.BaseFragment
 import com.humotron.app.data.network.Status
 import com.humotron.app.databinding.FragmentCompleteBinding
 import com.humotron.app.domain.modal.param.CompleteOnboardingParam
+import androidx.navigation.fragment.findNavController
 import com.humotron.app.ui.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -37,10 +38,7 @@ class CompleteFragment : BaseFragment(R.layout.fragment_complete) {
                     hideProgress()
                     val data = networkStatus.data ?: return@observe
                     data.data?.user?.let { prefUtils.setLoginResponse(it) }
-                    startActivity(Intent(requireContext(), MainActivity::class.java))
-                    requireActivity().finishAffinity()
-
-
+                    findNavController().navigate(R.id.onBoardPrivacyFragment)
                 }
 
                 Status.ERROR -> {

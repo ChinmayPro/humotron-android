@@ -17,14 +17,18 @@ import com.humotron.app.databinding.FragmentOnBoardBinding
 import com.humotron.app.ui.onboarding.adapter.OnboardingAdapter
 
 
-class OnBoardFragment : Fragment(R.layout.fragment_on_board) {
+import com.humotron.app.core.base.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
+
+@AndroidEntryPoint
+class OnBoardFragment : BaseFragment(R.layout.fragment_on_board) {
 
     private lateinit var binding: FragmentOnBoardBinding
 
     val onBoardingItemList = listOf(
-        OnboardingItem(R.string.onboard_title_1, R.string.onboard_desc_1),
-        OnboardingItem(R.string.onboard_title_2, R.string.onboard_desc_2),
-        OnboardingItem(R.string.onboard_title_3, R.string.onboard_desc_3)
+        OnboardingItem(R.string.onboard_eyebrow_1, R.string.onboard_title_1, R.string.onboard_desc_1, R.layout.layout_ob_graphic_1),
+        OnboardingItem(R.string.onboard_eyebrow_2, R.string.onboard_title_2, R.string.onboard_desc_2, R.layout.layout_ob_graphic_2),
+        OnboardingItem(R.string.onboard_eyebrow_3, R.string.onboard_title_3, R.string.onboard_desc_3, R.layout.layout_ob_graphic_3)
     )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -50,12 +54,14 @@ class OnBoardFragment : Fragment(R.layout.fragment_on_board) {
             if (binding.onBoardViewPager.currentItem < 2) {
                 binding.onBoardViewPager.currentItem += 1
             } else {
-                findNavController().navigate(R.id.onBoardPrivacyFragment)
+                prefUtils.setBoolean("onboard_seen", true)
+                findNavController().navigate(R.id.loginFragment)
             }
         }
 
         binding.tvSkip.setOnClickListener {
-            findNavController().navigate(R.id.onBoardPrivacyFragment)
+            prefUtils.setBoolean("onboard_seen", true)
+            findNavController().navigate(R.id.loginFragment)
         }
     }
 

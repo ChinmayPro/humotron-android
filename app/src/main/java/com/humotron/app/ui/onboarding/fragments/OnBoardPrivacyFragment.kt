@@ -15,9 +15,12 @@ import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.fragment.findNavController
+import android.content.Intent
+import com.humotron.app.ui.MainActivity
 import com.humotron.app.R
 import com.humotron.app.core.Preference.Companion.ONBOARD_PRIVACY
 import com.humotron.app.core.base.BaseFragment
+import androidx.core.text.HtmlCompat
 import com.humotron.app.databinding.FragmentOnBoardPrivacyBinding
 
 
@@ -30,102 +33,114 @@ class OnBoardPrivacyFragment : BaseFragment(R.layout.fragment_on_board_privacy) 
         binding = FragmentOnBoardPrivacyBinding.bind(view)
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(0, 0, 0, systemBars.bottom)
+            v.setPadding(0, systemBars.top, 0, systemBars.bottom)
             insets
         }
+
+        binding.tvSubtitle.text = HtmlCompat.fromHtml(
+            getString(R.string.onboard_privacy_desc),
+            HtmlCompat.FROM_HTML_MODE_LEGACY
+        )
 
         setPrivacyViews()
         binding.btnSubmit.setOnClickListener {
             prefUtils.setBoolean(ONBOARD_PRIVACY, true)
-            findNavController().navigate(R.id.loginMethodFragment)
+            startActivity(Intent(requireContext(), MainActivity::class.java))
+            requireActivity().finish()
         }
 
         binding.cbPrivacy.setOnCheckedChangeListener { compoundButton, b ->
             binding.btnSubmit.isEnabled = b && binding.cbDataProcessing.isChecked
+            binding.containerPrivacy.setBackgroundResource(
+                if (b) R.drawable.bg_consent_container_selected else R.drawable.bg_consent_container
+            )
         }
 
         binding.cbDataProcessing.setOnCheckedChangeListener { compoundButton, b ->
             binding.btnSubmit.isEnabled = b && binding.cbPrivacy.isChecked
+            binding.containerDataProcessing.setBackgroundResource(
+                if (b) R.drawable.bg_consent_container_selected else R.drawable.bg_consent_container
+            )
         }
     }
 
     private fun setPrivacyViews() {
-        val fullText =
-            "Allows us to use your data to offer key features & improvements.[Privacy Policy]"
+        val fullText = getString(R.string.onboard_privacy_desc1)
         val spannable = SpannableString(fullText)
 
-        val start = fullText.indexOf("[Privacy Policy]")
-        val end = start + "[Privacy Policy]".length
-        val clickableSpan = object : ClickableSpan() {
-            override fun onClick(widget: View) {
-                val url = "https://www.google.com" // replace with your actual URL
-                val customTabsIntent = CustomTabsIntent.Builder().build()
-                customTabsIntent.launchUrl(widget.context, url.toUri())
+        val targetText = "Privacy Policy"
+        val start = fullText.indexOf(targetText)
+        if (start != -1) {
+            val end = start + targetText.length
+            val clickableSpan = object : ClickableSpan() {
+                override fun onClick(widget: View) {
+                    val url = "https://www.google.com" // replace with your actual URL
+                    val customTabsIntent = CustomTabsIntent.Builder().build()
+                    customTabsIntent.launchUrl(widget.context, url.toUri())
+                }
+
+                override fun updateDrawState(ds: TextPaint) {
+                    super.updateDrawState(ds)
+                    ds.color = ContextCompat.getColor(requireContext(), R.color.insights_green)
+                    ds.isUnderlineText = false
+                }
             }
 
-            override fun updateDrawState(ds: TextPaint) {
-                super.updateDrawState(ds)
-                ds.color =
-                    ContextCompat.getColor(requireContext(), R.color.colorBgBtn) // custom color
-                ds.isUnderlineText = false // optional: remove underline
-            }
+            spannable.setSpan(
+                ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.insights_green)),
+                start,
+                end,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            spannable.setSpan(
+                clickableSpan,
+                start,
+                end,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
         }
 
-        spannable.setSpan(
-            ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.colorBgBtn)),
-            start,
-            end,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-        spannable.setSpan(
-            clickableSpan,
-            start,
-            end,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-
         binding.tvPrivacyDesc.text = spannable
-
         binding.tvPrivacyDesc.movementMethod = LinkMovementMethod.getInstance()
         binding.tvPrivacyDesc.highlightColor = Color.TRANSPARENT
 
 
-        val fullText1 =
-            "Enables secure data storage & protection measures. [Data Security Policy]"
+        val fullText1 = getString(R.string.onboard_data_policy_desc)
         val spannable1 = SpannableString(fullText1)
 
-        val start1 = fullText1.indexOf("[Data Security Policy]")
-        val end1 = start1 + "[Data Security Policy]".length
-        val clickableSpan1 = object : ClickableSpan() {
-            override fun onClick(widget: View) {
-                val url = "https://www.google.com" // replace with your actual URL
-                val customTabsIntent = CustomTabsIntent.Builder().build()
-                customTabsIntent.launchUrl(widget.context, url.toUri())
+        val targetText1 = "Data Security Policy"
+        val start1 = fullText1.indexOf(targetText1)
+        if (start1 != -1) {
+            val end1 = start1 + targetText1.length
+            val clickableSpan1 = object : ClickableSpan() {
+                override fun onClick(widget: View) {
+                    val url = "https://www.google.com" // replace with your actual URL
+                    val customTabsIntent = CustomTabsIntent.Builder().build()
+                    customTabsIntent.launchUrl(widget.context, url.toUri())
+                }
+
+                override fun updateDrawState(ds: TextPaint) {
+                    super.updateDrawState(ds)
+                    ds.color = ContextCompat.getColor(requireContext(), R.color.insights_green)
+                    ds.isUnderlineText = false
+                }
             }
 
-            override fun updateDrawState(ds: TextPaint) {
-                super.updateDrawState(ds)
-                ds.color =
-                    ContextCompat.getColor(requireContext(), R.color.colorBgBtn) // custom color
-                ds.isUnderlineText = false // optional: remove underline
-            }
+            spannable1.setSpan(
+                ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.insights_green)),
+                start1,
+                end1,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            spannable1.setSpan(
+                clickableSpan1,
+                start1,
+                end1,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
         }
 
-        spannable1.setSpan(
-            ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.colorBgBtn)),
-            start1,
-            end1,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-        spannable1.setSpan(
-            clickableSpan1,
-            start1,
-            end1,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-
         binding.tvDataProcessingDesc.text = spannable1
-
         binding.tvDataProcessingDesc.movementMethod = LinkMovementMethod.getInstance()
         binding.tvDataProcessingDesc.highlightColor = Color.TRANSPARENT
     }

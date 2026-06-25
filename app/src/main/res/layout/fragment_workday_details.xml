@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+>
+
+    <!-- Header -->
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_decode_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivInfo"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="16dp"
+        android:scaleType="center"
+        android:src="@drawable/ic_info_24px"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        app:tint="@color/deep_dives_ink2"
+        app:layout_constraintBottom_toBottomOf="@id/header"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/header" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="24dp">
+
+            <TextView
+                style="@style/Text.11x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="16dp"
+                android:letterSpacing="0.14"
+                android:text="STRESS INTELLIGENCE"
+                android:textColor="#8A9997" />
+
+            <TextView
+                style="@style/Text.12x.Manrope.Regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="8dp"
+                android:text="Mar 24 – Apr 08 · Workday 9am – 5pm · 13 days of data"
+                android:textColor="@color/deep_dives_ink3" />
+
+            <!-- Stress details top level -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+
+                <TextView
+        android:fontFamily="@font/manrope_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="51"
+                    android:textColor="@color/deep_dives_watch"
+                    android:textSize="54sp"
+            android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="6dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/Text.11x.Manrope.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_zone_chip"
+                        android:paddingHorizontal="11dp"
+                        android:paddingVertical="3dp"
+                        android:text="Alert"
+                        android:textColor="#0d1618" />
+
+                    <TextView
+                        style="@style/Text.11x.Manrope.SemiBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Avg workday stress"
+                        android:textColor="@color/deep_dives_ink3" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Stat grid -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="18dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_chart_wrap"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+                    <TextView
+                        style="@style/Text.20x.Manrope.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="56"
+                        android:textColor="@color/white" />
+                    <TextView
+                        style="@style/Text.10x.Manrope.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Highest week"
+                        android:textColor="@color/deep_dives_ink4" />
+                </LinearLayout>
+                
+                <View android:layout_width="8dp" android:layout_height="match_parent" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_chart_wrap"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+                    <TextView
+                        style="@style/Text.20x.Manrope.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="46"
+                        android:textColor="@color/white" />
+                    <TextView
+                        style="@style/Text.10x.Manrope.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lowest week"
+                        android:textColor="@color/deep_dives_ink4" />
+                </LinearLayout>
+                
+                <View android:layout_width="8dp" android:layout_height="match_parent" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_chart_wrap"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+                    <TextView
+                        style="@style/Text.20x.Manrope.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="46"
+                        android:textColor="@color/white" />
+                    <TextView
+                        style="@style/Text.10x.Manrope.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Best week"
+                        android:textColor="@color/deep_dives_ink4" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Chart 1: Weekly Stress Trend (Vertical Bar Chart) -->
+            <TextView
+                style="@style/Text.11x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="22dp"
+                android:letterSpacing="0.12"
+                android:text="WEEKLY STRESS TREND"
+                android:textColor="#7C8B89" />
+
+            <TextView
+                style="@style/Text.16x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="12dp"
+                android:text="Stress increased in the recent week"
+                android:textColor="@color/white" />
+            <TextView
+                style="@style/Text.13x.Manrope.Regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="4dp"
+                android:text="Average weekday stress rose from 48.9 in the week of Mar 24 to 54.3 in the week of Apr 1."
+                android:textColor="@color/deep_dives_ink3" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_chart_wrap"
+                android:padding="14dp">
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/chartWeeklyStress"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <!-- Chart 2: Start of Day Ramp (Line Chart) -->
+            <TextView
+                style="@style/Text.11x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="22dp"
+                android:letterSpacing="0.12"
+                android:text="START-OF-DAY RAMP"
+                android:textColor="#7C8B89" />
+
+            <TextView
+                style="@style/Text.16x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="12dp"
+                android:text="Stress eases through the morning"
+                android:textColor="@color/white" />
+            
+            <TextView
+                style="@style/Text.13x.Manrope.Regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="4dp"
+                android:text="Across days with data, stress generally fell from 09:00 to 11:00."
+                android:textColor="@color/deep_dives_ink3" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_chart_wrap"
+                android:padding="14dp">
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/chartStartOfDay"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -55,9 +55,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/insights_processing_hrv"
                 android:textColor="@color/insights_tag_grey"
-                android:background="@drawable/bg_decode_processing_tag"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="4dp"
                 app:layout_constraintCircle="@id/centerSpace"
                 app:layout_constraintCircleAngle="0"
                 app:layout_constraintCircleRadius="81dp" />
@@ -69,9 +66,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/insights_processing_sleep"
                 android:textColor="@color/insights_tag_grey"
-                android:background="@drawable/bg_decode_processing_tag"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="4dp"
                 app:layout_constraintCircle="@id/centerSpace"
                 app:layout_constraintCircleAngle="60"
                 app:layout_constraintCircleRadius="81dp" />
@@ -83,9 +77,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/insights_processing_temp"
                 android:textColor="@color/insights_tag_grey"
-                android:background="@drawable/bg_decode_processing_tag"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="4dp"
                 app:layout_constraintCircle="@id/centerSpace"
                 app:layout_constraintCircleAngle="120"
                 app:layout_constraintCircleRadius="81dp" />
@@ -97,9 +88,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/insights_processing_glucose"
                 android:textColor="@color/insights_tag_grey"
-                android:background="@drawable/bg_decode_processing_tag"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="4dp"
                 app:layout_constraintCircle="@id/centerSpace"
                 app:layout_constraintCircleAngle="180"
                 app:layout_constraintCircleRadius="81dp" />
@@ -111,9 +99,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/insights_processing_steps"
                 android:textColor="@color/insights_tag_grey"
-                android:background="@drawable/bg_decode_processing_tag"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="4dp"
                 app:layout_constraintCircle="@id/centerSpace"
                 app:layout_constraintCircleAngle="240"
                 app:layout_constraintCircleRadius="81dp" />
@@ -125,9 +110,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/insights_processing_stress"
                 android:textColor="@color/insights_tag_grey"
-                android:background="@drawable/bg_decode_processing_tag"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="4dp"
                 app:layout_constraintCircle="@id/centerSpace"
                 app:layout_constraintCircleAngle="300"
                 app:layout_constraintCircleRadius="81dp" />

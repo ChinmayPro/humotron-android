@@ -261,4 +261,21 @@
         <item name="android:fontFamily">@font/manrope_bold</item>
     </style>
 
+    <style name="Text.13x.Manrope.Bold" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/textColorWhite</item>
+        <item name="android:fontFamily">@font/manrope_bold</item>
+    </style>
+
+    <style name="Text.9x.Manrope.Regular" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">9sp</item>
+        <item name="android:textColor">@color/textColorWhite</item>
+        <item name="android:fontFamily">@font/manrope_regular</item>
+    </style>
+
+    <style name="Text.26x.Manrope.Bold" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">26sp</item>
+        <item name="android:textColor">@color/textColorWhite</item>
+        <item name="android:fontFamily">@font/manrope_bold</item>
+    </style>
 </resources>

@@ -4,34 +4,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:background="@color/black50">
+    android:layout_marginHorizontal="@dimen/_24dp"
+    android:layout_marginTop="11dp"
+    android:padding="16dp"
+    android:background="@drawable/bg_checkcard">
 
     <androidx.appcompat.widget.AppCompatCheckBox
         android:id="@+id/cb"
-        android:layout_width="@dimen/_16dp"
-        android:layout_height="@dimen/_16dp"
-        android:layout_marginStart="@dimen/_24dp"
-        android:background="@drawable/chekbox"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/bg_radio_selector"
         android:button="@null"
         android:clickable="false"
-        app:layout_constraintBottom_toBottomOf="@id/tvTitle"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tvTitle" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvTitle"
-        style="@style/Text.OnBoard.Desc"
+        style="@style/Text.18x.Manrope.Bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_28dp"
         android:includeFontPadding="false"
-        android:paddingStart="@dimen/_10dp"
-        android:paddingEnd="@dimen/_48dp"
-        android:text="@string/learn_biohacking"
-        android:textColor="@color/white80"
-        android:textSize="18sp"
+        android:layout_marginStart="16dp"
         app:layout_constraintStart_toEndOf="@id/cb"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Performance" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTag"
+        style="@style/Text.10x.Manrope.Bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/bg_badge_clarity"
+        android:paddingHorizontal="6dp"
+        android:paddingVertical="2dp"
+        android:textColor="@color/insights_light_green"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/tvTitle"
+        app:layout_constraintStart_toEndOf="@id/tvTitle"
+        app:layout_constraintTop_toTopOf="@id/tvTitle"
+        tools:text="CLARITY"
+        tools:visibility="visible" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvDesc"
@@ -39,12 +54,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:includeFontPadding="false"
-        android:paddingStart="@dimen/_10dp"
-        android:paddingEnd="@dimen/_48dp"
-        android:text="@string/bio_hacking_desc"
+        android:layout_marginTop="4dp"
         android:textColor="@color/white80"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/cb"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+        app:layout_constraintStart_toStartOf="@id/tvTitle"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        tools:text="Peak output, endurance, and cardiovascular health." />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

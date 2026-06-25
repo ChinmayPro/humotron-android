@@ -8,125 +8,225 @@
 
     <include layout="@layout/bg_main" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvTitle"
-            style="@style/Text.OnBoard.Title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_24dp"
-            android:layout_marginTop="@dimen/_50dp"
-            android:text="@string/welcome_back"
-            android:textSize="27sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etEmail"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_20dp"
-            android:layout_marginTop="@dimen/_44dp"
-            android:background="@drawable/bg_et_login"
-            android:fontFamily="@font/manrope_semibold"
-            android:hint="@string/email"
-
-            android:includeFontPadding="false"
-            android:inputType="textEmailAddress"
-            android:minHeight="52dp"
-            android:paddingHorizontal="@dimen/_24dp"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white70"
-            android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_20dp"
-            android:layout_marginTop="@dimen/_20dp"
-            android:background="@drawable/bg_et_login"
-            android:fontFamily="@font/manrope_semibold"
-            android:hint="@string/password"
-            android:includeFontPadding="false"
-            android:inputType="textPassword"
-            android:minHeight="52dp"
-            android:paddingHorizontal="@dimen/_24dp"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white70"
-            android:textSize="16sp"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/etEmail" />
-
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnSubmit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_24dp"
-            android:layout_marginTop="@dimen/_50dp"
-            android:backgroundTint="@color/btn_continue"
-            android:text="@string/sign_in"
-            android:textColor="@color/btn_text_color"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.75" />
-
-        <LinearLayout
-            android:id="@+id/llLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20dp"
-            android:gravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnSubmit">
+            android:paddingHorizontal="@dimen/_22dp"
+            android:paddingTop="64dp"
+            android:paddingBottom="@dimen/_20dp">
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvAppTitle"
+                style="@style/Text.24x.Manrope.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/manrope_light"
-                android:text="@string/didnt_have_an_account"
-                android:textColor="@color/textColorWhite"
-                android:textSize="13sp" />
+                android:fontFamily="@font/manrope_extra_bold"
+                android:letterSpacing="-0.03"
+                android:text="@string/app_name_lowercase"
+                android:textAllCaps="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <RadioGroup
+                android:id="@+id/rgAuthType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_26dp"
+                android:background="@drawable/bg_segment_container"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/tvAppTitle">
+
+                <RadioButton
+                    android:id="@+id/rbCreate"
+                    style="@style/Text.12x.Manrope.Bold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/selector_segment_bg"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:paddingVertical="9dp"
+                    android:text="@string/create_account_tab"
+                    android:textColor="@color/selector_segment_text"
+                    android:textSize="12.5sp" />
+
+                <RadioButton
+                    android:id="@+id/rbLogin"
+                    style="@style/Text.12x.Manrope.Bold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/selector_segment_bg"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:paddingVertical="9dp"
+                    android:text="@string/sign_in_tab"
+                    android:textColor="@color/selector_segment_text"
+                    android:textSize="12.5sp" />
+            </RadioGroup>
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/btnRegister"
+                android:id="@+id/tvTitle"
+                style="@style/Text.OnBoard.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_26dp"
+                android:fontFamily="@font/manrope_extra_bold"
+                android:letterSpacing="-0.025"
+                android:text="@string/start_your_read"
+                android:textSize="23sp"
+                app:layout_constraintTop_toBottomOf="@id/rgAuthType" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvSubTitle"
+                style="@style/Text.OnBoard.Sub"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:lineSpacingMultiplier="1.2"
+                android:text="@string/two_minutes_to_set_up"
+                android:textColor="@color/textColorMuted"
+                android:textSize="14.5sp"
+                app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvEmailLabel"
+                style="@style/Text.12x.Manrope.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_8dp"
-                android:paddingVertical="@dimen/_4dp"
-                android:paddingEnd="@dimen/_8dp"
+                android:layout_marginTop="@dimen/_22dp"
+                android:letterSpacing="0.02"
+                android:text="@string/email"
+                android:textColor="@color/textColorMuted"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvSubTitle" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/bg_et_login"
                 android:fontFamily="@font/manrope_semibold"
-                android:text="@string/create_account"
-                android:textColor="@color/textColorWhite"
-                android:textSize="13sp" />
+                android:hint="@string/email_hint"
+                android:includeFontPadding="false"
+                android:inputType="textEmailAddress"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="15dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/textColorHint"
+                android:textSize="15sp"
+                app:layout_constraintTop_toBottomOf="@id/tvEmailLabel" />
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSubmit"
+                style="@style/Text.16x.Manrope.SemiBold"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/bg_btn_round_corner"
+                android:backgroundTint="@color/btn_continue"
+                android:text="@string/continue_with_email"
+                android:textAllCaps="false"
+                android:textColor="@color/btn_text_color"
+                app:layout_constraintTop_toBottomOf="@id/etEmail" />
 
-        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/llOr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/btnSubmit">
 
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="@color/white10" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/btnLoginOption"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_12dp"
-            android:fontFamily="@font/manrope_light"
-            android:paddingVertical="@dimen/_8dp"
-            android:paddingHorizontal="@dimen/_4dp"
-            android:text="@string/other_ways_to_continue"
-            android:textColor="@color/textColorWhite"
-            android:textSize="13sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/llLogin" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Text.11x.Manrope.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="12dp"
+                    android:text="@string/or_uppercase"
+                    android:textColor="@color/colorTextGreyDark" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="@color/white10" />
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnGoogle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_btn_dark"
+                app:backgroundTint="@null"
+                app:icon="@drawable/ic_google"
+                app:iconGravity="textStart"
+                app:iconPadding="10dp"
+                app:iconTint="@null"
+                android:fontFamily="@font/manrope_bold"
+                android:letterSpacing="-0.01"
+                android:paddingVertical="16dp"
+                android:text="@string/continue_with_google"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintTop_toBottomOf="@id/llOr" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnApple"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:background="@drawable/bg_btn_dark"
+                app:backgroundTint="@null"
+                app:icon="@drawable/ic_apple"
+                app:iconGravity="textStart"
+                app:iconPadding="10dp"
+                app:iconTint="@null"
+                android:fontFamily="@font/manrope_bold"
+                android:letterSpacing="-0.01"
+                android:paddingVertical="16dp"
+                android:text="@string/continue_with_apple"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintTop_toBottomOf="@id/btnGoogle" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTerms"
+                style="@style/Text.12x.Manrope.Regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:gravity="center"
+                android:lineSpacingMultiplier="1.5"
+                android:text="@string/auth_terms_privacy"
+                android:textColor="@color/colorTextGreyDark"
+                android:textSize="11.5sp"
+                app:layout_constraintTop_toBottomOf="@id/btnApple" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
