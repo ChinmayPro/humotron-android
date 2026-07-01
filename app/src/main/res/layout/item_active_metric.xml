@@ -2,57 +2,80 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="230dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginEnd="12dp"
+    android:layout_marginBottom="9dp"
     android:background="@drawable/bg_active_metric_card"
-    android:minHeight="132dp"
-    android:paddingHorizontal="15dp"
-    android:paddingVertical="20dp">
+    android:padding="14dp">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/llLeft"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tvStatus"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvLabel"
+            style="@style/Text.14x.Manrope.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            tools:text="Systolic BP" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvValue"
+                style="@style/Text.12x.Manrope.Regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/insights_light_grey"
+                tools:text="120 mmHg" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvBullet"
+                style="@style/Text.12x.Manrope.Regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/insights_slate_grey"
+                android:text=" · " />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDeviceName"
+                style="@style/Text.10x.Manrope.SemiBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_chat_device_tag"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="3dp"
+                android:textAllCaps="true"
+                android:textColor="@color/insights_dark_grey_text"
+                tools:text="WristBand" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvValue"
-        style="@style/Text.14x.Manrope.Bold"
+        android:id="@+id/tvStatus"
+        style="@style/Text.11x.Manrope.SemiBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:textColor="@color/white80"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/bg_metric_status_badge"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="6dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="98 bpm" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvLabel"
-        style="@style/Text.14x.Manrope.SemiBold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:textColor="@color/white80"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvValue"
-        tools:text="Heart Rate" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvDateRange"
-        style="@style/Text.12x.Manrope.Regular"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:textColor="@color/white50"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvLabel"
-        tools:text="07 Jan - 06 Feb'25" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvDeviceName"
-        style="@style/Text.12x.Manrope.Regular"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:textColor="@color/white50"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvDateRange"
-        tools:text="HumotronRing" />
+        tools:text="Available to chat" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

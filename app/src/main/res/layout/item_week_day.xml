@@ -1,38 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:id="@+id/chipRoot"
+    android:layout_width="46dp"
     android:layout_height="wrap_content"
-    android:layout_weight="1"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:background="@drawable/bg_day_chip_default"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingTop="9dp"
+    android:paddingBottom="8dp"
+    android:layout_marginEnd="8dp">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnDate"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="38dp"
-        android:layout_height="38dp"
-        android:insetLeft="0dp"
-        android:insetTop="0dp"
-        android:insetRight="0dp"
-        android:insetBottom="0dp"
-        android:padding="0dp"
-        android:text="25"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:backgroundTint="@color/green_1"
-        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle"
-        app:strokeColor="@color/white"
-        app:strokeWidth="0dp" />
-
+    <!-- Day abbreviation (THU, FRI, etc.) -->
     <TextView
-        android:id="@+id/tvDay"
+        android:id="@+id/tvDayOfWeek"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="MON"
-        android:textColor="@color/white"
-        android:textSize="11sp"
+        android:fontFamily="@font/manrope_bold"
+        android:letterSpacing="0.05"
+        android:text="THU"
+        android:textAllCaps="true"
+        android:textColor="@color/deep_dives_ink4"
+        android:textSize="9sp"
         android:textStyle="bold" />
+
+    <!-- Date number -->
+    <TextView
+        android:id="@+id/tvDateNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:fontFamily="@font/manrope_bold"
+        android:text="8"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <!-- Zone color dot -->
+    <View
+        android:id="@+id/dotZone"
+        android:layout_width="7dp"
+        android:layout_height="7dp"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/bg_dot_circle" />
 
 </LinearLayout>

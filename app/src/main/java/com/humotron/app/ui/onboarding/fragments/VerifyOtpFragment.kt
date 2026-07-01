@@ -82,23 +82,27 @@ class VerifyOtpFragment : BaseFragment(R.layout.fragment_verify_otp) {
                             data.data.user?.email ?: ""
                         )
                         data.data.user?.let { prefUtils.setLoginResponse(it) }
-                        if (data.data.user?.isOnBoarding == true) {
-                            startActivity(Intent(requireContext(), MainActivity::class.java))
-                            requireActivity().finish()
+                        if (!prefUtils.getBoolean(Preference.ONBOARD_PRIVACY)) {
+                            findNavController().navigate(R.id.onBoardPrivacyFragment)
                         } else {
-                            val user = data.data.user
-                            if (user?.name.isNullOrEmpty()) {
-                                findNavController().navigate(R.id.accountCreateFragment)
-                            } else if (user.height.isNullOrEmpty()) {
-                                val bundle = Bundle().apply {
-                                    putInt("position", 1)
+                            if (data.data.user?.isOnBoarding == true) {
+                                startActivity(Intent(requireContext(), MainActivity::class.java))
+                                requireActivity().finish()
+                            } else {
+                                val user = data.data.user
+                                if (user?.name.isNullOrEmpty()) {
+                                    findNavController().navigate(R.id.personalizeFragment)
+                                } else if (user.height.isNullOrEmpty()) {
+                                    val bundle = Bundle().apply {
+                                        putInt("position", 1)
+                                    }
+                                    findNavController().navigate(R.id.personalizeFragment, bundle)
+                                } else if (user.isOnBoarding == false) {
+                                    val bundle = Bundle().apply {
+                                        putInt("position", 3)
+                                    }
+                                    findNavController().navigate(R.id.personalizeFragment, bundle)
                                 }
-                                findNavController().navigate(R.id.personalizeFragment, bundle)
-                            } else if (user.isOnBoarding == false) {
-                                val bundle = Bundle().apply {
-                                    putInt("position", 3)
-                                }
-                                findNavController().navigate(R.id.personalizeFragment, bundle)
                             }
                         }
 

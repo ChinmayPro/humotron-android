@@ -18,20 +18,24 @@
         android:id="@+id/clHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="20dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="8dp"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/btnBack"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="@dimen/_5dp"
+            android:scaleType="center"
             android:src="@drawable/ic_back_arrow"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:tint="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/white" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/llTitle"
@@ -39,35 +43,37 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_marginStart="4dp"
+            android:layout_marginBottom="@dimen/_3dp"
+            app:layout_constraintBottom_toBottomOf="@id/btnBack"
+            app:layout_constraintStart_toEndOf="@id/btnBack"
+            app:layout_constraintTop_toTopOf="@id/btnBack">
 
             <androidx.appcompat.widget.AppCompatTextView
-                style="@style/Text.22x.Manrope.SemiBold"
+                style="@style/Text.18x.Manrope.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tron_chat_name"
                 android:textColor="@color/white" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                style="@style/Text.10x.Manrope.Medium"
+                style="@style/Text.10x.Manrope.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:background="@drawable/bg_faq_card"
+                android:background="@drawable/bg_beta_pill"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="2dp"
                 android:text="@string/tron_chat_beta"
                 android:textAllCaps="true"
-                android:textColor="@color/textColorGray" />
+                android:textColor="#CDD6D5" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:layout_marginStart="6dp"
                 android:src="@drawable/ic_chevron_right_24px"
+                android:visibility="gone"
                 app:tint="@color/textColorGray" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -77,6 +83,7 @@
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:src="@drawable/ic_chat_with_plus"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -89,6 +96,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/white10"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/clHeader" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -115,8 +123,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginBottom="10dp"
-            app:layout_constraintBottom_toTopOf="@id/tvDisclaimer">
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <View
                 android:id="@+id/cardBack"
@@ -135,7 +142,7 @@
                 app:layout_constraintEnd_toEndOf="@id/cardBack"
                 app:layout_constraintStart_toStartOf="@id/cardBack"
                 app:layout_constraintTop_toTopOf="@id/cardBack"
-                app:tint="@color/textColorGray" />
+                app:tint="@color/insights_light_grey" />
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etInput"
@@ -147,10 +154,11 @@
                 android:background="@drawable/bg_chat_input"
                 android:hint="@string/chat_hint"
                 android:imeOptions="actionSend"
-                android:inputType="textCapSentences"
+                android:inputType="textMultiLine|textCapSentences"
                 android:maxLines="4"
                 android:minHeight="45dp"
                 android:paddingHorizontal="16dp"
+                android:paddingVertical="10dp"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white30"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -169,22 +177,10 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/white"
+                app:tint="@color/insights_light_green"
                 tools:visibility="visible" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvDisclaimer"
-            style="@style/Text.10x.Manrope.Regular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="@string/chat_disclaimer"
-            android:textColor="@color/white30"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

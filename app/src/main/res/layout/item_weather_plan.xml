@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:background="@drawable/bg_weather_plan_card"
+    android:padding="12dp">
+
+    <!-- The color square (lime, cool, watch, attention, etc.) -->
+    <TextView
+        android:id="@+id/tvLetter"
+        style="@style/Text.13x.Manrope.Bold"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:background="@drawable/bg_plan_letter"
+        android:gravity="center"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="A" />
+
+    <TextView
+        android:id="@+id/tvPlanTitle"
+        style="@style/Text.13x.Manrope.Bold"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvLetter"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Schedule recovery on cooler days" />
+
+    <TextView
+        android:id="@+id/tvPlanDesc"
+        style="@style/Text.12x.Manrope.Regular"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:lineSpacingMultiplier="1.45"
+        android:textColor="@color/deep_dives_ink3"
+        android:textSize="11.5sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tvPlanTitle"
+        app:layout_constraintTop_toBottomOf="@id/tvPlanTitle"
+        tools:text="Plan deload sessions when it feels below 3°C." />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

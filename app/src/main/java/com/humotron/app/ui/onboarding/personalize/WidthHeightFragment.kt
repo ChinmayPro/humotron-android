@@ -29,16 +29,19 @@ class WidthHeightFragment : BaseFragment(R.layout.fragment_width_height) {
         binding = FragmentWidthHeightBinding.bind(view)
 
         binding.apply {
-            tvTitle.text = getString(R.string.nice_to_meet_you, prefUtils.getLoginResponse().let {
-                it.firstName.takeIf { name -> !name.isNullOrEmpty() } ?: it.name?.split(" ")
-                    ?.firstOrNull() ?: ""
-            })
-            etHeight.setOnClickListener {
-                showUnitPickerBottomSheet()
-            }
+            tvTitle.text = getString(R.string.nice_to_meet_you)
 
-            etWeight.setOnClickListener {
-                showWeightPickerBottomSheet()
+            tvHeightCm.setOnClickListener {
+                updateHeightToggle(true)
+            }
+            tvHeightFt.setOnClickListener {
+                updateHeightToggle(false)
+            }
+            tvWeightKg.setOnClickListener {
+                updateWeightToggle(true)
+            }
+            tvWeightLb.setOnClickListener {
+                updateWeightToggle(false)
             }
 
             btnSubmit.setOnClickListener {
@@ -49,19 +52,67 @@ class WidthHeightFragment : BaseFragment(R.layout.fragment_width_height) {
                             binding.etHeightSelect.text.toString().trim(),
                             binding.etWeight.text.toString().trim(),
                             binding.etWeightSelect.text.toString().trim(),
-
-                            )
+                        )
                     )
                 }
             }
-
         }
 
-        binding.tvHeightInfo.text = "50 cm - 272 cm"
-        binding.tvWeightInfo.text = "2 kg - 365 kg"
-        binding.etHeight.setText("cm")
-        binding.etWeight.setText("kg")
+        // Prefill logic
+        val user = prefUtils.getLoginResponse()
+        if (!user.height.isNullOrEmpty()) {
+            val hUnit = user.heightUnit ?: "cm"
+            val hVal = user.height
+            val isCm = !(hUnit.contains("ft", ignoreCase = true) || hUnit == "ft in")
+            updateHeightToggle(isCm, clearValue = false)
+            binding.etHeightSelect.setText(hVal)
+        } else {
+            updateHeightToggle(true, clearValue = false)
+        }
+
+        if (!user.weight.isNullOrEmpty()) {
+            val wUnit = user.weightUnit ?: "kg"
+            val wVal = user.weight
+            val isKg = !(wUnit.contains("lb", ignoreCase = true) || wUnit == "lbs")
+            updateWeightToggle(isKg, clearValue = false)
+            binding.etWeightSelect.setText(wVal)
+        } else {
+            updateWeightToggle(true, clearValue = false)
+        }
+
         subscriberToObserver()
+    }
+
+    private fun updateHeightToggle(isCm: Boolean, clearValue: Boolean = true) {
+        if (isCm) {
+            binding.tvHeightCm.setBackgroundResource(R.drawable.bg_toggle_active)
+            binding.tvHeightCm.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorBgBtn))
+            binding.tvHeightFt.background = null
+            binding.tvHeightFt.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+            setInfoText("cm", clearValue)
+        } else {
+            binding.tvHeightFt.setBackgroundResource(R.drawable.bg_toggle_active)
+            binding.tvHeightFt.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorBgBtn))
+            binding.tvHeightCm.background = null
+            binding.tvHeightCm.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+            setInfoText("ft in", clearValue)
+        }
+    }
+
+    private fun updateWeightToggle(isKg: Boolean, clearValue: Boolean = true) {
+        if (isKg) {
+            binding.tvWeightKg.setBackgroundResource(R.drawable.bg_toggle_active)
+            binding.tvWeightKg.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorBgBtn))
+            binding.tvWeightLb.background = null
+            binding.tvWeightLb.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+            setWeightInfoText("kg", clearValue)
+        } else {
+            binding.tvWeightLb.setBackgroundResource(R.drawable.bg_toggle_active)
+            binding.tvWeightLb.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorBgBtn))
+            binding.tvWeightKg.background = null
+            binding.tvWeightKg.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+            setWeightInfoText("lbs", clearValue)
+        }
     }
 
     private fun subscriberToObserver() {
@@ -118,8 +169,10 @@ class WidthHeightFragment : BaseFragment(R.layout.fragment_width_height) {
         bottomSheetDialog.show()
     }
 
-    private fun setInfoText(selectedUnit: String) {
-        binding.etHeightSelect.setText("")
+    private fun setInfoText(selectedUnit: String, clearValue: Boolean = true) {
+        if (clearValue) {
+            binding.etHeightSelect.setText("")
+        }
         binding.etHeight.setText(selectedUnit)
         binding.tvHeightInfo.text = when (selectedUnit) {
             "cm" -> "50 cm - 272 cm"
@@ -175,8 +228,10 @@ class WidthHeightFragment : BaseFragment(R.layout.fragment_width_height) {
         bottomSheetDialog.show()
     }
 
-    private fun setWeightInfoText(selectedUnit: String) {
-        binding.etWeightSelect.setText("")
+    private fun setWeightInfoText(selectedUnit: String, clearValue: Boolean = true) {
+        if (clearValue) {
+            binding.etWeightSelect.setText("")
+        }
         binding.etWeight.setText(selectedUnit)
         binding.tvWeightInfo.text = when (selectedUnit) {
             "kg" -> "2 kg - 365 kg"

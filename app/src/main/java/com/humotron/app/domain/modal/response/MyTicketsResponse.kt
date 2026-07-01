@@ -49,7 +49,7 @@ data class TicketDetail(
     @SerializedName("app_version")
     val appVersion: String?,
     @SerializedName("messages")
-    val messages: List<String>?, // Assuming list of strings or generic objects
+    val messages: List<TicketMessage>?,
     @SerializedName("region")
     val region: String?,
     @SerializedName("subject")
@@ -122,4 +122,26 @@ data class TicketAttachment(
     val mimeType: String?,
     @SerializedName("size_bytes")
     val sizeBytes: Long?
+) : Parcelable
+
+@Parcelize
+data class TicketMessage(
+    @SerializedName("_id")
+    val id: String?,
+    @SerializedName("sender_type")
+    val senderType: String?,
+    @SerializedName("sender_id")
+    val senderId: String?,
+    @SerializedName("sender_name")
+    val senderName: String?,
+    @SerializedName("body")
+    val body: String?,
+    @SerializedName("is_read")
+    val isRead: Boolean?,
+    @SerializedName("createdAt")
+    val createdAt: String?,
+    @SerializedName("updatedAt")
+    val updatedAt: String?,
+    @SerializedName("attachments")
+    val attachments: List<TicketAttachment>?
 ) : Parcelable

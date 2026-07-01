@@ -13,8 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:background="@drawable/bg_chat_user_msg_bubble"
-        android:paddingTop="15dp"
-        android:paddingBottom="25dp"
+        android:paddingTop="14dp"
+        android:paddingBottom="14dp"
         android:paddingStart="18dp"
         android:paddingEnd="18dp"
         android:minWidth="180dp"
@@ -22,7 +22,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvUserMsg"
-            style="@style/Text.14x.Manrope.Regular"
+            style="@style/Text.14x.Manrope.SemiBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
@@ -34,11 +34,11 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvUserMsgDate"
-            style="@style/Text.10x.Manrope.Regular"
+            style="@style/Text.10x.Manrope.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:textColor="@color/white30"
+            android:textColor="@color/insights_dark_grey_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvUserMsg"
@@ -51,6 +51,7 @@
             android:layout_marginStart="20dp"
             android:src="@drawable/ic_pin"
             android:padding="5dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/tvUserMsgDate"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tvUserMsgDate"
@@ -74,7 +75,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:textColor="@color/white"
+        android:lineSpacingMultiplier="1.3"
+        android:textColor="#EEF3F2"
         tools:text="A noticeable pattern in your Recovery Rate is the consistent spike during the early evening hours..." />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

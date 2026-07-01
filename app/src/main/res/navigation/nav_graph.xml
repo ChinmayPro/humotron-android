@@ -31,7 +31,76 @@
     <fragment
         android:id="@+id/fragmentDecode"
         android:name="com.humotron.app.ui.decode.DecodeFragment"
-        tools:layout="@layout/fragment_decode" />
+        tools:layout="@layout/fragment_decode">
+        <action
+            android:id="@+id/action_fragmentDecode_to_fragmentDecodePatternWindow"
+            app:destination="@id/fragmentDecodePatternWindow"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentDecode_to_fragmentWorkdayReport"
+            app:destination="@id/fragmentWorkdayReport"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentDecode_to_fragmentWeatherOverview"
+            app:destination="@id/fragmentWeatherOverview"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <!-- Deep Dives Flow -->
+    <fragment
+        android:id="@+id/fragmentWorkdayReport"
+        android:name="com.humotron.app.ui.decode.DecodeWorkdayReportFragment"
+        tools:layout="@layout/fragment_workday_report">
+        <action
+            android:id="@+id/action_fragmentWorkdayReport_to_fragmentWorkdayDetails"
+            app:destination="@id/fragmentWorkdayDetails"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentWorkdayDetails"
+        android:name="com.humotron.app.ui.decode.DecodeWorkdayDetailsFragment"
+        tools:layout="@layout/fragment_workday_details">
+        <argument
+            android:name="reportId"
+            app:argType="string"
+            android:defaultValue="" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentWeatherOverview"
+        android:name="com.humotron.app.ui.decode.DecodeWeatherOverviewFragment"
+        tools:layout="@layout/fragment_weather_overview">
+        <action
+            android:id="@+id/action_fragmentWeatherOverview_to_fragmentWeatherDetail"
+            app:destination="@id/fragmentWeatherDetail"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentWeatherDetail"
+        android:name="com.humotron.app.ui.decode.DecodeWeatherDetailFragment"
+        tools:layout="@layout/fragment_weather_detail">
+        <argument
+            android:name="weatherId"
+            app:argType="string"
+            android:defaultValue="a" />
+    </fragment>
 
     <fragment
         android:id="@+id/fragmentBioHack"
@@ -294,6 +363,125 @@
         <argument
             android:name="booster"
             app:argType="com.humotron.app.domain.modal.response.BoosterResponse$Booster" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentDecodePatternWindow"
+        android:name="com.humotron.app.ui.decode.DecodePatternWindowFragment"
+        android:label="Pattern Window"
+        tools:layout="@layout/fragment_decode_pattern_window">
+        <argument
+            android:name="metricName"
+            app:argType="string" />
+        <argument
+            android:name="metricId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_fragmentDecodePatternWindow_to_fragmentDecodeProcessing"
+            app:destination="@id/fragmentDecodeProcessing"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentDecodePatternWindow_to_fragmentDecodeDetail"
+            app:destination="@id/fragmentDecodeDetail"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentDecodePatternWindow_to_fragmentDecodePatterns"
+            app:destination="@id/fragmentDecodePatterns"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentDecodeProcessing"
+        android:name="com.humotron.app.ui.decode.DecodeProcessingFragment"
+        android:label="Processing"
+        tools:layout="@layout/fragment_decode_processing">
+        <argument
+            android:name="metricName"
+            app:argType="string" />
+        <argument
+            android:name="metricId"
+            app:argType="string" />
+        <argument
+            android:name="selectedRange"
+            app:argType="string" />
+        <argument
+            android:name="pastWindows"
+            app:argType="com.humotron.app.domain.modal.response.TimelineWindow[]" />
+        <action
+            android:id="@+id/action_fragmentDecodeProcessing_to_fragmentDecodePatterns"
+            app:destination="@id/fragmentDecodePatterns"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/fragmentDecodePatternWindow" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentDecodeDetail"
+        android:name="com.humotron.app.ui.decode.DecodeDetailFragment"
+        android:label="Detail"
+        tools:layout="@layout/fragment_decode_detail">
+        <argument
+            android:name="metricName"
+            app:argType="string" />
+        <argument
+            android:name="insightId"
+            app:argType="string"
+            android:defaultValue="" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentDecodePatterns"
+        android:name="com.humotron.app.ui.decode.DecodePatternsFragment"
+        android:label="Patterns"
+        tools:layout="@layout/fragment_decode_patterns">
+        <argument
+            android:name="metricName"
+            app:argType="string" />
+        <argument
+            android:name="metricId"
+            app:argType="string" />
+        <argument
+            android:name="selectedRange"
+            app:argType="string" />
+        <argument
+            android:name="pastWindows"
+            app:argType="com.humotron.app.domain.modal.response.TimelineWindow[]" />
+        <action
+            android:id="@+id/action_fragmentDecodePatterns_to_fragmentDecodeDetail"
+            app:destination="@id/fragmentDecodeDetail"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentTronChat"
+        android:name="com.humotron.app.ui.decode.TronChatFragment"
+        tools:layout="@layout/fragment_tron_chat">
+        <argument
+            android:name="chat_prompt_id"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="chat_prompt_title"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="chat_conversation_id"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 
 </navigation>

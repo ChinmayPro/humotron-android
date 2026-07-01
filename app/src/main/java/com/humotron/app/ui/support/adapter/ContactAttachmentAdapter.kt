@@ -79,6 +79,10 @@ class ContactAttachmentAdapter(
                 val sizeMb = sizeBytes.toDouble() / (1024 * 1024)
                 sizeStr = String.format("%.1f MB", sizeMb)
             }
+        } else if (uri.scheme == "http" || uri.scheme == "https") {
+            val path = uri.path.orEmpty()
+            name = path.substringAfterLast("/")
+            sizeStr = "Cloud File"
         }
         
         // Truncate name if it's too long

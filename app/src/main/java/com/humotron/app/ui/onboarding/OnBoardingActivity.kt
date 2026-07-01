@@ -27,16 +27,21 @@ class OnBoardingActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main) as NavHostFragment
 
         val isPrivacy = prefUtils.getBoolean(Preference.ONBOARD_PRIVACY)
+        val isLogin = prefUtils.isLogin()
+        val onboardSeen = prefUtils.getBoolean("onboard_seen")
+
+        val startDestination = if (isLogin && !isPrivacy) {
+            R.id.onBoardPrivacyFragment
+        } else if (onboardSeen || isPrivacy) {
+            R.id.loginFragment
+        } else {
+            R.id.onBoardFragment
+        }
+
         val navController = navHostFragment.navController
         val navInflater = navController.navInflater
         val navGraph = navInflater.inflate(R.navigation.nav_onboarding)
-        navGraph.setStartDestination(
-            if (isPrivacy) {
-                R.id.loginMethodFragment
-            } else {
-                R.id.onBoardFragment
-            }
-        )
+        navGraph.setStartDestination(startDestination)
         navController.graph = navGraph
 
     }

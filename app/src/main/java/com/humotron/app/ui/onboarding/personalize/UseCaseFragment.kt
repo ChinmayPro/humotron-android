@@ -25,44 +25,64 @@ class UseCaseFragment : BaseFragment(R.layout.fragment_use_case) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentUseCaseBinding.bind(view)
 
-        binding.tvTitle.text = getString(R.string.thanks_s, prefUtils.getLoginResponse().let {
-            it.firstName ?: it.name?.split(" ")?.firstOrNull() ?: ""
-        })
-
         binding.btnSubmit.setOnClickListener {
             pagerViewModel.moveToPage(3)
         }
 
+        val interests = listOf(
+            com.humotron.app.domain.modal.response.UseCaseInterest(
+                id = "1",
+                interestCount = 0,
+                interestQuestionId = emptyList(),
+                title = getString(R.string.goal_option_1_title),
+                subtitle = getString(R.string.goal_option_1_desc),
+                isChecked = true
+            ),
+            com.humotron.app.domain.modal.response.UseCaseInterest(
+                id = "2",
+                interestCount = 0,
+                interestQuestionId = emptyList(),
+                title = getString(R.string.goal_option_2_title),
+                subtitle = getString(R.string.goal_option_2_desc),
+                isChecked = false
+            ),
+            com.humotron.app.domain.modal.response.UseCaseInterest(
+                id = "3",
+                interestCount = 0,
+                interestQuestionId = emptyList(),
+                title = getString(R.string.goal_option_3_title),
+                subtitle = getString(R.string.goal_option_3_desc),
+                isChecked = false
+            ),
+            com.humotron.app.domain.modal.response.UseCaseInterest(
+                id = "4",
+                interestCount = 0,
+                interestQuestionId = emptyList(),
+                title = getString(R.string.goal_option_4_title),
+                subtitle = getString(R.string.goal_option_4_desc),
+                isChecked = false
+            )
+        )
 
-        viewModel.getInterests()
-        subscribeToObserver()
+        val adapter = UseCaseAdapter { selectedOption ->
+            updateFooterText(selectedOption.title)
+        }
+        binding.rvUseCase.adapter = adapter
+        binding.rvUseCase.layoutManager = LinearLayoutManager(requireContext())
+        adapter.setList(interests)
+
+        // Initialize footer state for the default selection
+        updateFooterText(interests[0].title)
     }
 
-    private fun subscribeToObserver() {
-        viewModel.useCaseData().observe(viewLifecycleOwner) { networkStatus ->
-            when (networkStatus.status) {
-                Status.SUCCESS -> {
-                    hideProgress()
-                    val data = networkStatus.data ?: return@observe
-                    val adapter = UseCaseAdapter()
-                    binding.rvUseCase.adapter = adapter
-                    binding.rvUseCase.layoutManager = LinearLayoutManager(requireContext())
-                    data.data?.interests?.let { adapter.setList(it) }
-                }
-
-                Status.ERROR -> {
-                    hideProgress()
-                }
-
-                Status.EXCEPTION -> {
-                    hideProgress()
-                }
-
-                Status.LOADING -> {
-                    showProgress()
-                }
-            }
+    private fun updateFooterText(title: String?) {
+        if (title?.contains("sense of my data", ignoreCase = true) == true) {
+            binding.tvFooter.text = androidx.core.text.HtmlCompat.fromHtml(
+                getString(R.string.goal_footer_clarity),
+                androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY
+            )
+        } else {
+            binding.tvFooter.text = getString(R.string.goal_footer_default)
         }
     }
-
 }

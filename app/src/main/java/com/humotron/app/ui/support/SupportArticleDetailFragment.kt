@@ -96,7 +96,7 @@ class SupportArticleDetailFragment : BaseFragment(R.layout.fragment_support_arti
         }
 
         binding.btnContactSupport.setOnClickListener {
-            // Handle contact support
+            findNavController().navigate(R.id.action_fragmentSupportArticleDetail_to_fragmentContactSupport)
         }
     }
 

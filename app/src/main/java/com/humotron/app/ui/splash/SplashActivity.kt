@@ -31,6 +31,8 @@ class SplashActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        
+        binding.vSplashGraphic.radiusDp = 60f
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {

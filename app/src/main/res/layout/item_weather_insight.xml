@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:background="@drawable/bg_weather_insight_base">
+
+    <View
+        android:id="@+id/vBorder"
+        android:layout_width="3dp"
+        android:layout_height="0dp"
+        android:background="@color/deep_dives_lime"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvDate"
+        style="@style/Text.10x.Manrope.Bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="12dp"
+        android:letterSpacing="0.12"
+        android:textAllCaps="true"
+        android:textColor="@color/deep_dives_eyebrow"
+        app:layout_constraintStart_toEndOf="@id/vBorder"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="21 MAR 2026" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        style="@style/Text.14x.Manrope.Bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/white"
+        android:textSize="13.5sp"
+        app:layout_constraintStart_toStartOf="@id/tvDate"
+        app:layout_constraintTop_toBottomOf="@id/tvDate"
+        tools:text="HRV peaks on cooler days" />
+
+    <TextView
+        android:id="@+id/tvDesc"
+        style="@style/Text.12x.Manrope.Regular"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="12dp"
+        android:textColor="@color/deep_dives_ink3"
+        android:lineSpacingMultiplier="1.5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tvDate"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        tools:text="Your highest HRV of 150.3 landed on a day that felt like 2.6°C." />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

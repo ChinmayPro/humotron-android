@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    android:background="@drawable/bg_decode_card"
+    android:clipToOutline="true"
+    android:clickable="true"
+    android:focusable="true">
+
+    <!-- Left Indicator Stripe -->
+    <View
+        android:id="@+id/viewStripe"
+        android:layout_width="3dp"
+        android:layout_height="0dp"
+        android:background="@color/insights_green"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Content Layout -->
+    <LinearLayout
+        android:id="@+id/layoutContent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/viewStripe"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/tvPatternTitle"
+            style="@style/Text.16x.Manrope.Bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            tools:text="Work-Hours BP Load" />
+
+        <!-- Description -->
+        <TextView
+            android:id="@+id/tvPatternDesc"
+            style="@style/Text.13x.Manrope.Regular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:textColor="@color/insights_light_grey"
+            tools:text="Systolic BP is higher during work hours compared to recovery times." />
+
+        <!-- Divider Line -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="12dp"
+            android:background="@color/white10" />
+
+        <!-- Bottom Info -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Badge -->
+            <TextView
+                android:id="@+id/tvPatternBadge"
+                style="@style/Text.10x.Manrope.SemiBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/bg_badge_ready"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="3dp"
+                android:textColor="@color/insights_green"
+                android:textAllCaps="true"
+                tools:text="Pattern" />
+
+            <!-- Action Text -->
+            <TextView
+                android:id="@+id/tvPatternAction"
+                style="@style/Text.12x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:textColor="@color/insights_green"
+                tools:text="View insight →" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

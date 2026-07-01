@@ -32,24 +32,6 @@ class PersonalizeFragment : Fragment(R.layout.fragment_personalize) {
         val adapter = PersonalizePagerAdapter(requireActivity())
         binding.personalizeViewPager.adapter = adapter
         binding.personalizeViewPager.isUserInputEnabled = false
-        binding.indicator.setPageCount(adapter.itemCount)
-        binding.personalizeViewPager.registerOnPageChangeCallback(object :
-            ViewPager2.OnPageChangeCallback() {
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-                binding.indicator.setProgress(position + positionOffset)
-            }
-
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                binding.indicator.setCurrentPage(position)
-            }
-        })
-
         binding.personalizeViewPager.setCurrentItem(position, false)
 
         viewModel.navigateToPage.observe(viewLifecycleOwner) { index ->

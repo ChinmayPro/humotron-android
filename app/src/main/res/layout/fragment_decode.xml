@@ -4,150 +4,150 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent"
-    tools:background="@color/black"
+
     tools:context=".ui.decode.DecodeFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/header"
-        android:layout_width="match_parent"
+    <!-- Wordmark "Decode" -->
+    <TextView
+        android:id="@+id/tvDecodeWordmark"
+        style="@style/Text.20x.Manrope.Bold"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingHorizontal="20dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="8dp"
-        app:layout_constraintTop_toTopOf="parent">
+        android:paddingTop="12dp"
+        android:text="Decode"
+        android:textColor="@color/white"
+        android:letterSpacing="-0.02"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvInsightsTitle"
-            style="@style/Text.20x.Manrope.Bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/insights"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <!-- Tab Row -->
+    <LinearLayout
+        android:id="@+id/tabRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="20dp"
+        android:layout_marginTop="14dp"
+        app:layout_constraintTop_toBottomOf="@id/tvDecodeWordmark">
 
+        <!-- Insights Tab -->
         <LinearLayout
-            android:id="@+id/llTabIcons"
+            android:id="@+id/tabInsights"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:orientation="vertical"
+            android:layout_marginEnd="22dp"
+            android:clickable="true"
+            android:focusable="true">
 
-            <LinearLayout
-                android:id="@+id/tabInsights"
+            <TextView
+                android:id="@+id/tvInsights"
+                style="@style/Text.14x.Manrope.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:paddingHorizontal="8dp">
+                android:text="@string/insights"
+                android:textColor="@color/white"
+                android:paddingBottom="11dp" />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivInsights"
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:src="@drawable/ic_decode"
-                    app:tint="@color/colorBgBtn" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvInsights"
-                    style="@style/Text.10x.Manrope.Medium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_3dp"
-                    android:text="@string/insights"
-                    android:textColor="@color/colorBgBtn" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/tabDeepDives"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:paddingHorizontal="8dp">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivDeepDives"
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:src="@drawable/ic_deep_dives"
-                    app:tint="@color/white30" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvDeepDives"
-                    style="@style/Text.10x.Manrope.Medium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_3dp"
-                    android:text="@string/deep_dives"
-                    android:textColor="@color/white30" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/tabOptimize"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:paddingHorizontal="8dp">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivOptimize"
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:src="@drawable/ic_optimize"
-                    app:tint="@color/white30" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvOptimize"
-                    style="@style/Text.10x.Manrope.Medium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_3dp"
-                    android:text="@string/optimize"
-                    android:textColor="@color/white30" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/tabChat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:paddingHorizontal="8dp">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivChat"
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:src="@drawable/ic_chat"
-                    app:tint="@color/white30" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvChat"
-                    style="@style/Text.10x.Manrope.Medium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_3dp"
-                    android:text="@string/chat"
-                    android:textColor="@color/white30" />
-            </LinearLayout>
-
+            <View
+                android:id="@+id/indicatorInsights"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/insights_green" />
         </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Deep Dives Tab -->
+        <LinearLayout
+            android:id="@+id/tabDeepDives"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginEnd="22dp"
+            android:clickable="true"
+            android:focusable="true">
 
+            <TextView
+                android:id="@+id/tvDeepDives"
+                style="@style/Text.14x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/deep_dives"
+                android:textColor="#8a9794"
+                android:paddingBottom="11dp" />
+
+            <View
+                android:id="@+id/indicatorDeepDives"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/insights_green"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+        <!-- Optimize Tab -->
+        <LinearLayout
+            android:id="@+id/tabOptimize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginEnd="22dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                android:id="@+id/tvOptimize"
+                style="@style/Text.14x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/optimize"
+                android:textColor="#8a9794"
+                android:paddingBottom="11dp" />
+
+            <View
+                android:id="@+id/indicatorOptimize"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/insights_green"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+        <!-- Chat Tab -->
+        <LinearLayout
+            android:id="@+id/tabChat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                android:id="@+id/tvChat"
+                style="@style/Text.14x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/chat"
+                android:textColor="#8a9794"
+                android:paddingBottom="11dp" />
+
+            <View
+                android:id="@+id/indicatorChat"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/insights_green"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Tab bottom border (full-width hair line) -->
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="@dimen/_5dp"
         android:background="@color/white10"
-        app:layout_constraintTop_toBottomOf="@id/header" />
+        app:layout_constraintTop_toBottomOf="@id/tabRow" />
 
+    <!-- Content container for child fragments -->
     <FrameLayout
         android:id="@+id/contentContainer"
         android:layout_width="match_parent"

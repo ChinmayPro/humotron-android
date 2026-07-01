@@ -15,9 +15,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_24dp"
         android:layout_marginTop="@dimen/_50dp"
-        android:text="@string/thanks_s"
-        android:textColor="@color/colorBgBtn"
-        android:textSize="27sp"
+        android:text="@string/goal_selection_title"
+        android:textColor="@color/white"
+        android:textSize="23sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,46 +28,47 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_6dp"
         android:paddingStart="@dimen/_24dp"
-        android:paddingEnd="@dimen/_48dp"
-        android:text="@string/desc_use_case"
-        android:textSize="24sp"
+        android:paddingEnd="@dimen/_24dp"
+        android:text="@string/goal_selection_subtitle"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTitle" />
-
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvDesc"
-        style="@style/Text.OnBoard.Desc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_40dp"
-        android:paddingStart="@dimen/_24dp"
-        android:paddingEnd="@dimen/_48dp"
-        android:text="@string/title_usecase_1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvSubtitle" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvUseCase"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/btnSubmit"
-        app:layout_constraintTop_toBottomOf="@id/tvDesc" />
+        android:layout_marginTop="14dp"
+        app:layout_constraintBottom_toTopOf="@id/tvFooter"
+        app:layout_constraintTop_toBottomOf="@id/tvSubtitle" />
 
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnSubmit"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvFooter"
+        style="@style/Text.OnBoard.Sub"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:paddingHorizontal="24dp"
+        android:gravity="center"
+        android:text="@string/goal_footer_default"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@id/btnSubmit" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSubmit"
+        style="@style/Text.16x.Manrope.SemiBold"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
         android:layout_marginHorizontal="@dimen/_24dp"
-        android:layout_marginTop="@dimen/_50dp"
-        android:layout_marginBottom="@dimen/_32dp"
+        android:layout_marginBottom="26dp"
+        android:background="@drawable/bg_btn_round_corner"
         android:backgroundTint="@color/btn_continue"
-        android:text="@string/next"
+        android:text="@string/_continue"
+        android:textAllCaps="false"
         android:textColor="@color/btn_text_color"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

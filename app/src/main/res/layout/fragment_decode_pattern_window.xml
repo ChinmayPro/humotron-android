@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    tools:background="@color/black">
+
+    <!-- Header -->
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_decode_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Progress Loader -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/insights_green"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:visibility="visible" />
+
+    <!-- Content inside NestedScrollView -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/contentScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="15dp"
+            android:paddingBottom="24dp">
+
+            <TextView
+                android:id="@+id/tvPatternWindowSubtitle"
+                style="@style/Text.12x.Manrope.SemiBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/insights_slate_grey"
+                tools:text="08 Jun – 14 Jun · 7 days" />
+
+            <!-- Ready Box / Collecting Box -->
+            <LinearLayout
+                android:id="@+id/cardTopWindow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_decode_card"
+                android:padding="18dp"
+                android:layout_marginTop="14dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:id="@+id/tvBadgeIcon"
+                        style="@style/Text.18x.Manrope.Bold"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/bg_decode_icon_ready"
+                        android:textColor="@color/insights_green"
+                        android:text="✦"
+                        android:gravity="center" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="14dp">
+                        <TextView
+                            android:id="@+id/tvReadyTitle"
+                            style="@style/Text.16x.Manrope.SemiBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/insights_ready_title"
+                            android:textColor="@color/white" />
+                        <TextView
+                            android:id="@+id/tvReadySubtitle"
+                            style="@style/Text.12x.Manrope.Regular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:text="@string/insights_ready_subtitle"
+                            android:textColor="@color/insights_slate_grey" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnGenerateInsight"
+                    style="@style/Text.14x.Manrope.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_btn_round_corner"
+                    android:textColor="@color/insights_btn_text_dark"
+                    android:text="@string/insights_btn_generate_insight"
+                    android:textAllCaps="false"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="13dp" />
+
+                <LinearLayout
+                    android:id="@+id/layoutProgress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_decode_progress_box"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="12dp"
+                    android:gravity="center_vertical"
+                    android:visibility="gone">
+                    <TextView
+                        android:id="@+id/tvProgressText"
+                        style="@style/Text.12x.Manrope.Regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/insights_slate_grey"
+                        tools:text="You have 2 / 3 days of data required" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Past Insights Section -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp">
+                <TextView
+                    style="@style/Text.12x.Manrope.SemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/insights_past_insights"
+                    android:textColor="@color/insights_section_header_grey"
+                    android:textAllCaps="true"
+                    android:letterSpacing="0.12"/>
+                <View
+                    android:id="@+id/dividerLine"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/white10"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="110dp"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+
+            <!-- Past items list Recycler -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvPastInsights"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:nestedScrollingEnabled="false"
+                tools:listitem="@layout/item_decode_past_insight" />
+
+            <!-- More history button -->
+            <TextView
+                android:id="@+id/btnMoreHistory"
+                style="@style/Text.12x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="16dp"
+                android:text="More history ⌄"
+                android:textColor="@color/insights_green"
+                android:clickable="true"
+                android:focusable="true"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

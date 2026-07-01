@@ -147,7 +147,7 @@ class SupportViewAllArticlesFragment : BaseFragment(R.layout.fragment_support_vi
         }
 
         binding.btnContactSupport.setOnClickListener {
-            // Handle contact support
+            findNavController().navigate(R.id.action_fragmentSupportViewAllArticles_to_fragmentContactSupport)
         }
 
         binding.rvPopularTopics.layoutManager = LinearLayoutManager(requireContext())

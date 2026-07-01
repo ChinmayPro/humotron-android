@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardMetric"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_decode_card"
+    android:padding="16dp"
+    android:layout_marginBottom="12dp"
+    android:clickable="true"
+    android:focusable="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tvMetricName"
+            style="@style/Text.16x.Manrope.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            tools:text="Systolic BP" />
+        <TextView
+            android:id="@+id/tvMetricStatusBadge"
+            style="@style/Text.10x.Manrope.SemiBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/insights_green"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="5dp"
+            android:textAllCaps="true"
+            tools:text="Insight ready"
+            tools:background="@drawable/bg_badge_ready" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tvDeviceName"
+        style="@style/Text.10x.Manrope.SemiBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_pending_metric_tag"
+        android:padding="8dp"
+        android:textColor="@color/insights_dark_grey_text"
+        android:textAllCaps="true"
+        android:letterSpacing="0.08"
+        android:includeFontPadding="false"
+        tools:text="⌚ WritsBand" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/white10"
+        android:layout_marginVertical="13dp" />
+
+    <!-- Ready Action -->
+    <TextView
+        android:id="@+id/tvActionReady"
+        style="@style/Text.12x.Manrope.Bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/insights_action_ready"
+        android:textColor="@color/insights_green"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <!-- Progress/Collecting Layout -->
+    <LinearLayout
+        android:id="@+id/layoutProgress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+        <TextView
+            android:id="@+id/tvProgressLabel"
+            style="@style/Text.12x.Manrope.Bold"
+            android:layout_width="0dp"
+            android:layout_weight="1.4"
+            android:layout_height="wrap_content"
+            android:text="@string/insights_collecting_title"
+            android:textColor="@color/insights_dark_grey_text"
+            android:maxLines="1"
+            android:ellipsize="end" />
+        <ProgressBar
+            android:id="@+id/pbMetricProgress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_weight="1.0"
+            android:layout_height="6dp"
+            android:minHeight="6dp"
+            android:maxHeight="6dp"
+            android:layout_marginHorizontal="10dp"
+            android:progressDrawable="@drawable/bg_metric_progress"
+            tools:progress="60" />
+        <TextView
+            android:id="@+id/tvProgressDays"
+            style="@style/Text.12x.Manrope.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/insights_slate_grey"
+            tools:text="3 of 5 days" />
+    </LinearLayout>
+
+    <!-- Not Tracked Action -->
+    <TextView
+        android:id="@+id/tvActionNotTracked"
+        style="@style/Text.12x.Manrope.Bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/insights_not_tracked"
+        android:textColor="@color/insights_dark_grey_text"
+        android:visibility="gone" />
+
+</LinearLayout>

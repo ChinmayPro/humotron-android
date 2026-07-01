@@ -14,6 +14,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.humotron.app.ui.MainActivity
 import com.humotron.app.ui.decode.viewmodel.DecodeViewModel
 import com.humotron.app.data.network.Status
 import androidx.fragment.app.viewModels
@@ -33,37 +34,7 @@ class TronChatFragment : BaseFragment(R.layout.fragment_tron_chat) {
     private var isHistoryLoading = false
     private var isMessageSentInSession = false
     
-    private val headerAdapter = HeaderAdapter()
-    
-    inner class HeaderAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
-        var isVisible: Boolean = true
-            set(value) {
-                if (field != value) {
-                    field = value
-                    notifyDataSetChanged()
-                }
-            }
 
-        override fun onCreateViewHolder(parent: android.view.ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
-            val tv = androidx.appcompat.widget.AppCompatTextView(parent.context).apply {
-                layoutParams = androidx.recyclerview.widget.RecyclerView.LayoutParams(
-                    android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-                    android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-                ).apply {
-                    setMargins(0, 0, 0, (30 * resources.displayMetrics.density).toInt())
-                }
-                alpha = 0.3f
-                gravity = android.view.Gravity.CENTER_VERTICAL
-                text = getString(R.string.tron_chat_headline)
-                setTextColor(androidx.core.content.ContextCompat.getColor(context, R.color.white))
-                textSize = 26f
-                androidx.core.widget.TextViewCompat.setTextAppearance(this, R.style.Text_26x_Manrope_SemiBold)
-            }
-            return object : androidx.recyclerview.widget.RecyclerView.ViewHolder(tv) {}
-        }
-        override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {}
-        override fun getItemCount() = if (isVisible) 1 else 0
-    }
 
     private val chatAdapter: DecodeChatAdapter by lazy { 
         DecodeChatAdapter(
@@ -116,7 +87,6 @@ class TronChatFragment : BaseFragment(R.layout.fragment_tron_chat) {
         
         if (!promptId.isNullOrEmpty() && !promptTitle.isNullOrEmpty()) {
             isHistoryLoading = false
-            headerAdapter.isVisible = true
             chatAdapter.clearAnimationState()
             sendMessage(promptTitle, promptId)
             arguments?.remove("chat_prompt_id")
@@ -175,7 +145,6 @@ class TronChatFragment : BaseFragment(R.layout.fragment_tron_chat) {
 
     private fun startNewChat() {
         isHistoryLoading = false
-        headerAdapter.isVisible = false
         viewModel.resetThreadId()
         
         // Redirect specifically to the Decode selection screen (Chat Tab)
@@ -185,7 +154,6 @@ class TronChatFragment : BaseFragment(R.layout.fragment_tron_chat) {
 
     private fun loadConversation(conversationId: String, title: String? = null) {
         isHistoryLoading = true
-        headerAdapter.isVisible = false
         chatAdapter.clearAnimationState()
         
         // Show a loading item for history mode
@@ -201,18 +169,16 @@ class TronChatFragment : BaseFragment(R.layout.fragment_tron_chat) {
     }
 
     private fun initViews() {
-        val concatAdapter = androidx.recyclerview.widget.ConcatAdapter(headerAdapter, chatAdapter)
-        binding.rvChat.adapter = concatAdapter
+        binding.rvChat.adapter = chatAdapter
         binding.rvChat.layoutManager = LinearLayoutManager(requireContext())
 
         binding.rvChat.addOnScrollListener(object : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: androidx.recyclerview.widget.RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                if (recyclerView.canScrollVertically(1)) {
-                    if (recyclerView.scrollState == androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_DRAGGING) {
-                        autoScrollEnabled = false
-                    }
-                } else {
+                if (dy < 0 && recyclerView.scrollState == androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_DRAGGING) {
+                    autoScrollEnabled = false
+                }
+                if (!recyclerView.canScrollVertically(1)) {
                     autoScrollEnabled = true
                 }
             }
@@ -224,13 +190,29 @@ class TronChatFragment : BaseFragment(R.layout.fragment_tron_chat) {
 
         binding.etInput.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == android.view.inputmethod.EditorInfo.IME_ACTION_DONE) {
-                val imm = requireContext().getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as android.view.inputmethod.InputMethodManager
-                imm.hideSoftInputFromWindow(binding.etInput.windowToken, 0)
-                binding.etInput.clearFocus()
+                hideKeyboard()
                 true
             } else {
                 false
             }
+        }
+
+        binding.rvChat.setOnTouchListener { v, event ->
+            if (event.action == android.view.MotionEvent.ACTION_DOWN) {
+                if (binding.etInput.isFocused) {
+                    hideKeyboard()
+                }
+            }
+            v.performClick()
+            false
+        }
+
+        binding.contentRoot.setOnClickListener {
+            hideKeyboard()
+        }
+
+        binding.ivBg.setOnClickListener {
+            hideKeyboard()
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.contentRoot) { v, insets ->
@@ -238,13 +220,23 @@ class TronChatFragment : BaseFragment(R.layout.fragment_tron_chat) {
             val systemInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             val isKeyboardVisible = insets.isVisible(WindowInsetsCompat.Type.ime())
             
-            // Apply padding to container to move everything up
-            v.updatePadding(bottom = if (isKeyboardVisible) imeInsets.bottom else systemInsets.bottom)
+            // Adjust bottom navigation visibility when keyboard toggles so container expands properly
+            (activity as? MainActivity)?.showOrHideBottomNav(!isKeyboardVisible)
             
-            binding.tvDisclaimer.isVisible = !isKeyboardVisible
+            // Apply padding to container to move everything up
+            v.updatePadding(bottom = if (isKeyboardVisible) imeInsets.bottom else 0)
+            
             if (!isKeyboardVisible && binding.etInput.isFocused) {
                 binding.etInput.clearFocus()
             }
+            
+            val params = binding.layoutBottom.layoutParams as ConstraintLayout.LayoutParams
+            if (isKeyboardVisible) {
+                params.bottomMargin = (10 * resources.displayMetrics.density).toInt()
+            } else {
+                params.bottomMargin = (40 * resources.displayMetrics.density).toInt()
+            }
+            binding.layoutBottom.layoutParams = params
             
             insets
         }
@@ -274,6 +266,7 @@ class TronChatFragment : BaseFragment(R.layout.fragment_tron_chat) {
 
     private fun sendMessage(message: String, promptId: String? = null) {
         isMessageSentInSession = true
+        autoScrollEnabled = true
         val newItem = ConversationData(
             id = null,
             userMessage = message,
@@ -294,10 +287,29 @@ class TronChatFragment : BaseFragment(R.layout.fragment_tron_chat) {
 
     private fun scrollToBottom() {
         binding.rvChat.post {
-            if (chatAdapter.itemCount > 0) {
-                binding.rvChat.smoothScrollToPosition(chatAdapter.itemCount)
+            val layoutManager = binding.rvChat.layoutManager as? LinearLayoutManager ?: return@post
+            val count = binding.rvChat.adapter?.itemCount ?: 0
+            if (count > 0) {
+                val lastIndex = count - 1
+                val ctx = context ?: return@post
+                val smoothScroller = object : androidx.recyclerview.widget.LinearSmoothScroller(ctx) {
+                    override fun getVerticalSnapPreference(): Int {
+                        return SNAP_TO_END
+                    }
+                    override fun calculateSpeedPerPixel(displayMetrics: android.util.DisplayMetrics): Float {
+                        return 80f / displayMetrics.densityDpi
+                    }
+                }
+                smoothScroller.targetPosition = lastIndex
+                layoutManager.startSmoothScroll(smoothScroller)
             }
         }
+    }
+
+    private fun hideKeyboard() {
+        val imm = requireContext().getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as android.view.inputmethod.InputMethodManager
+        imm.hideSoftInputFromWindow(binding.etInput.windowToken, 0)
+        binding.etInput.clearFocus()
     }
 
     private fun initObservers() {

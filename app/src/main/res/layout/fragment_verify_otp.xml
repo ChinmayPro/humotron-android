@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.onboarding.fragments.VerifyOtpFragment">
 
-    <include layout="@layout/bg_otp" />
+    <include layout="@layout/bg_main" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -87,7 +87,7 @@
                 android:layout_marginStart="@dimen/_12dp"
                 android:layout_marginTop="@dimen/_18dp"
                 android:text="@string/send_again_s"
-                android:textColor="@color/white70"
+                android:textColor="@color/colorBgBtn"
                 android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@id/tvDesc1"
                 app:layout_constraintTop_toBottomOf="@id/otpView" />
@@ -111,7 +111,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_12dp"
                 android:text="@string/edit"
-                android:textColor="@color/white70"
+                android:textColor="@color/colorBgBtn"
                 android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@id/tvDesc1"
                 app:layout_constraintTop_toTopOf="@id/tvDesc2" />

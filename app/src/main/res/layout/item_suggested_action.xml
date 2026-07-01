@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="230dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_decode_card"
+    android:padding="14dp"
+    android:layout_marginEnd="10dp">
+
+    <TextView
+        android:id="@+id/tvActionTitle"
+        style="@style/Text.14x.Manrope.Bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/tvActionDesc"
+        style="@style/Text.12x.Manrope.Regular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textColor="@color/insights_light_grey" />
+</LinearLayout>

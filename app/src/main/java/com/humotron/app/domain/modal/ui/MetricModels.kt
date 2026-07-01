@@ -9,7 +9,8 @@ data class ActiveMetric(
     val value: String,
     val label: String,
     val dateRange: String,
-    val deviceName: String
+    val deviceName: String,
+    val status: String? = null
 ) : Parcelable
 
 @Parcelize

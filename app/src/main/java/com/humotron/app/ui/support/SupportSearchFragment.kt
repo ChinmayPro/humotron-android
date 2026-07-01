@@ -140,6 +140,10 @@ class SupportSearchFragment : BaseFragment(R.layout.fragment_support_search) {
             }
             override fun afterTextChanged(s: Editable?) {}
         })
+
+        binding.btnContactSupport.setOnClickListener {
+            findNavController().navigate(R.id.action_fragmentSupportSearch_to_fragmentContactSupport)
+        }
     }
 
     private fun initObservers() {

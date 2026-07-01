@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.humotron.app.databinding.ItemOnboardingUsecaseBinding
 import com.humotron.app.domain.modal.response.UseCaseInterest
 
-class UseCaseAdapter : RecyclerView.Adapter<UseCaseAdapter.ViewHolder>() {
+class UseCaseAdapter(
+    private val onItemSelected: (UseCaseInterest) -> Unit
+) : RecyclerView.Adapter<UseCaseAdapter.ViewHolder>() {
 
     private var list = listOf<UseCaseInterest>()
 
@@ -33,10 +35,22 @@ class UseCaseAdapter : RecyclerView.Adapter<UseCaseAdapter.ViewHolder>() {
             tvTitle.text = data.title
             tvDesc.text = data.subtitle
             cb.isChecked = data.isChecked
+            root.isActivated = data.isChecked
+
+            if (data.title?.contains("sense of my data", ignoreCase = true) == true) {
+                tvTag.visibility = android.view.View.VISIBLE
+                tvTag.text = "CLARITY"
+            } else {
+                tvTag.visibility = android.view.View.GONE
+            }
 
             root.setOnClickListener {
-                data.isChecked = !data.isChecked
-                cb.isChecked = data.isChecked
+                if (!data.isChecked) {
+                    list.forEach { it.isChecked = false }
+                    data.isChecked = true
+                    notifyDataSetChanged()
+                    onItemSelected(data)
+                }
             }
         }
 
@@ -53,6 +67,13 @@ class UseCaseAdapter : RecyclerView.Adapter<UseCaseAdapter.ViewHolder>() {
 
     fun setList(list: List<UseCaseInterest>) {
         this.list = list
+        // Prefill default checked item if none is checked
+        if (list.isNotEmpty() && list.none { it.isChecked }) {
+            // Find option 1 or default to index 0
+            val defaultOption = list.find { it.title?.contains("sense of my data", ignoreCase = true) == true } ?: list[0]
+            defaultOption.isChecked = true
+            onItemSelected(defaultOption)
+        }
         notifyDataSetChanged()
     }
 }

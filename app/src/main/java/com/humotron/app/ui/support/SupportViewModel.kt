@@ -49,8 +49,18 @@ class SupportViewModel @Inject constructor(
     private val _saveTicketData = MutableLiveData<Resource<SaveTicketResponse>>()
     val saveTicketData: LiveData<Resource<SaveTicketResponse>> get() = _saveTicketData
 
+    private val _ticketDetailData = MutableLiveData<Resource<com.humotron.app.domain.modal.response.TicketDetailResponse>>()
+    val ticketDetailData: LiveData<Resource<com.humotron.app.domain.modal.response.TicketDetailResponse>> get() = _ticketDetailData
+
+    private val _replyTicketData = MutableLiveData<Resource<CommonResponse>>()
+    val replyTicketData: LiveData<Resource<CommonResponse>> get() = _replyTicketData
+
     fun clearSaveTicketData() {
         _saveTicketData.value = null
+    }
+
+    fun clearReplyTicketData() {
+        _replyTicketData.value = null
     }
 
     private val _allTopicsData = MutableLiveData<Resource<com.humotron.app.domain.modal.response.AllTopicsResponse>>()
@@ -298,6 +308,18 @@ class SupportViewModel @Inject constructor(
             source, osPlatform, appVersion, deviceType, region, ticketId, attachments
         ).onEach { resource ->
             _saveTicketData.value = resource
+        }.launchIn(viewModelScope)
+    }
+
+    fun fetchTicketDetail(ticketId: String) {
+        supportRepository.getTicketDetail(ticketId).onEach { resource ->
+            _ticketDetailData.value = resource
+        }.launchIn(viewModelScope)
+    }
+
+    fun replyTicket(ticketId: String, body: String, attachments: List<MultipartBody.Part> = emptyList()) {
+        supportRepository.replyTicket(ticketId, body, attachments).onEach { resource ->
+            _replyTicketData.value = resource
         }.launchIn(viewModelScope)
     }
 }

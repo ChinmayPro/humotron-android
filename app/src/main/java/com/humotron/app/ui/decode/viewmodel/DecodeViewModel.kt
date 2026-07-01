@@ -17,6 +17,10 @@ import com.humotron.app.domain.modal.response.GetConversationsResponse
 import com.humotron.app.domain.modal.param.PostFollowUpConversationParam
 import com.humotron.app.domain.modal.response.PostFollowUpConversationResponse
 import com.humotron.app.domain.modal.response.PromptContextResponse
+import com.humotron.app.domain.modal.response.InsightMetricsOverviewResponse
+import com.humotron.app.domain.modal.response.InsightTimelineResponse
+import com.humotron.app.domain.modal.response.InsightSummaryResponse
+import com.humotron.app.domain.modal.response.InsightDetailResponse
 import com.humotron.app.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -271,6 +275,198 @@ class DecodeViewModel @Inject constructor(
         viewModelScope.launch {
             repository.getPromptContextByConversationId(conversationId).onEach { state ->
                 promptContextLiveData.value = state
+            }.launchIn(viewModelScope)
+        }
+    }
+
+    private val insightMetricsOverviewLiveData: SingleLiveEvent<Resource<InsightMetricsOverviewResponse>> =
+        SingleLiveEvent()
+
+    fun insightMetricsOverviewData(): SingleLiveEvent<Resource<InsightMetricsOverviewResponse>> {
+        return insightMetricsOverviewLiveData
+    }
+
+    fun getInsightMetricsOverview() {
+        viewModelScope.launch {
+            repository.getInsightMetricsOverview().onEach { state ->
+                insightMetricsOverviewLiveData.value = state
+            }.launchIn(viewModelScope)
+        }
+    }
+
+    private val insightTimelineLiveData: SingleLiveEvent<Resource<InsightTimelineResponse>> =
+        SingleLiveEvent()
+
+    fun insightTimelineData(): SingleLiveEvent<Resource<InsightTimelineResponse>> {
+        return insightTimelineLiveData
+    }
+
+    fun getInsightTimeline(metricId: String) {
+        viewModelScope.launch {
+            repository.getInsightTimeline(metricId).onEach { state ->
+                insightTimelineLiveData.value = state
+            }.launchIn(viewModelScope)
+        }
+    }
+
+    private val insightSummaryLiveData: SingleLiveEvent<Resource<InsightSummaryResponse>> =
+        SingleLiveEvent()
+
+    fun insightSummaryData(): SingleLiveEvent<Resource<InsightSummaryResponse>> {
+        return insightSummaryLiveData
+    }
+
+    fun getInsightSummaryByMetricId(metricId: String) {
+        viewModelScope.launch {
+            repository.getInsightSummaryByMetricId(metricId).onEach { state ->
+                insightSummaryLiveData.value = state
+            }.launchIn(viewModelScope)
+        }
+    }
+
+    private val insightDetailLiveData: SingleLiveEvent<Resource<InsightDetailResponse>> =
+        SingleLiveEvent()
+
+    fun insightDetailData(): SingleLiveEvent<Resource<InsightDetailResponse>> {
+        return insightDetailLiveData
+    }
+
+    fun getInsightById(insightId: String) {
+        viewModelScope.launch {
+            repository.getInsightById(insightId).onEach { state ->
+                insightDetailLiveData.value = state
+            }.launchIn(viewModelScope)
+        }
+    }
+
+    private val workDayStressLiveData: SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.WorkDayStressResponse>> =
+        SingleLiveEvent()
+
+    fun workDayStressData(): SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.WorkDayStressResponse>> {
+        return workDayStressLiveData
+    }
+
+    fun getWorkDayStress() {
+        viewModelScope.launch {
+            repository.getWorkDayStress().onEach { state ->
+                workDayStressLiveData.value = state
+            }.launchIn(viewModelScope)
+        }
+    }
+
+    private val weatherResilienceLiveData: SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.WeatherResilienceResponse>> =
+        SingleLiveEvent()
+
+    fun weatherResilienceData(): SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.WeatherResilienceResponse>> {
+        return weatherResilienceLiveData
+    }
+
+    fun getWeatherResilienceOverview() {
+        viewModelScope.launch {
+            repository.getWeatherResilienceOverview().onEach { state ->
+                weatherResilienceLiveData.value = state
+            }.launchIn(viewModelScope)
+        }
+    }
+
+    private val weatherOverviewLiveData: SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.WeatherOverviewResponse>> =
+        SingleLiveEvent()
+
+    fun weatherOverviewData(): SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.WeatherOverviewResponse>> {
+        return weatherOverviewLiveData
+    }
+
+    fun getWeatherOverview() {
+        viewModelScope.launch {
+            repository.getWeatherOverview().onEach { state ->
+                weatherOverviewLiveData.value = state
+            }.launchIn(viewModelScope)
+        }
+    }
+
+    private val weatherDetailLiveData: SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.WeatherDetailResponse>> =
+        SingleLiveEvent()
+
+    fun weatherDetailData(): SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.WeatherDetailResponse>> {
+        return weatherDetailLiveData
+    }
+
+    fun getWeatherResilienceReportDetail(reportId: String) {
+        viewModelScope.launch {
+            repository.getWeatherResilienceReportDetail(reportId).onEach { state ->
+                weatherDetailLiveData.value = state
+            }.launchIn(viewModelScope)
+        }
+    }
+
+    private val workDayStressReportDayLiveData: SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.WorkDayStressReportResponse>> =
+        SingleLiveEvent()
+
+    fun workDayStressReportDayData(): SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.WorkDayStressReportResponse>> {
+        return workDayStressReportDayLiveData
+    }
+
+    fun getWorkDayStressReportDay(startDate: String, endDate: String) {
+        viewModelScope.launch {
+            repository.getWorkDayStressReport(
+                com.humotron.app.domain.modal.response.WorkDayStressReportRequest(startDate, endDate, "DAY")
+            ).onEach { state ->
+                workDayStressReportDayLiveData.value = state
+            }.launchIn(viewModelScope)
+        }
+    }
+
+    private val workDayStressReportMonthLiveData: SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.WorkDayStressReportResponse>> =
+        SingleLiveEvent()
+
+    fun workDayStressReportMonthData(): SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.WorkDayStressReportResponse>> {
+        return workDayStressReportMonthLiveData
+    }
+
+    fun getWorkDayStressReportMonth(startDate: String, endDate: String) {
+        viewModelScope.launch {
+            repository.getWorkDayStressReport(
+                com.humotron.app.domain.modal.response.WorkDayStressReportRequest(startDate, endDate, "MONTH")
+            ).onEach { state ->
+                workDayStressReportMonthLiveData.value = state
+            }.launchIn(viewModelScope)
+        }
+    }
+
+    private val workdayStressOverviewLiveData: SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.WorkDayStressOverviewResponse>> =
+        SingleLiveEvent()
+
+    fun workdayStressOverviewData(): SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.WorkDayStressOverviewResponse>> {
+        return workdayStressOverviewLiveData
+    }
+
+    fun getWorkdayStressOverview() {
+        viewModelScope.launch {
+            repository.getWorkdayStressOverview().onEach { state ->
+                workdayStressOverviewLiveData.value = state
+            }.launchIn(viewModelScope)
+        }
+    }
+
+    private val workdayStressReportDetailLiveData: SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.WorkdayStressReportDetailResponse>> =
+        SingleLiveEvent()
+
+    fun workdayStressReportDetailData(): SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.WorkdayStressReportDetailResponse>> {
+        return workdayStressReportDetailLiveData
+    }
+
+    fun getWorkdayStressReportById(reportId: String) {
+        viewModelScope.launch {
+            repository.getWorkdayStressReportById(reportId).onEach { state ->
+                workdayStressReportDetailLiveData.value = state
+            }.launchIn(viewModelScope)
+        }
+    }
+
+    fun generateWorkdayStressReport() {
+        viewModelScope.launch {
+            repository.generateWorkdayStressReport().onEach { state ->
+                workdayStressReportDetailLiveData.value = state
             }.launchIn(viewModelScope)
         }
     }

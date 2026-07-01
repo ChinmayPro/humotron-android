@@ -75,8 +75,9 @@ class WeekCalendarView @JvmOverloads constructor(
             val view = LayoutInflater.from(context)
                 .inflate(R.layout.item_week_day, container, false)
 
-            val btn = view.findViewById<MaterialButton>(R.id.btnDate)
-            val tv = view.findViewById<android.widget.TextView>(R.id.tvDay)
+            val chipRoot = view.findViewById<android.view.View>(R.id.chipRoot)
+            val btn = view.findViewById<android.widget.TextView>(R.id.tvDateNumber)
+            val tv = view.findViewById<android.widget.TextView>(R.id.tvDayOfWeek)
 
             btn.text = date.dayOfMonth.toString()
 
@@ -88,10 +89,10 @@ class WeekCalendarView @JvmOverloads constructor(
             val isDisabled = disabledDates.contains(date)
             val disabled = isFuture || isDisabled
 
-            btn.isEnabled = !disabled
+            chipRoot.isEnabled = !disabled
 
             if (disabled) {
-                btn.backgroundTintList =
+                chipRoot.backgroundTintList =
                     ContextCompat.getColorStateList(context, R.color.week_day_back_disabled)
 
                 btn.setTextColor(
@@ -101,17 +102,14 @@ class WeekCalendarView @JvmOverloads constructor(
                     ContextCompat.getColor(context, R.color.d100)
                 )
             } else if (date == selectedDate) {
-                btn.backgroundTintList =
+                chipRoot.backgroundTintList =
                     ContextCompat.getColorStateList(context, R.color.green_2)
-                val strokeWidth = (2 * resources.displayMetrics.density).toInt()
-                btn.strokeWidth = strokeWidth
             } else {
-                btn.backgroundTintList =
+                chipRoot.backgroundTintList =
                     ContextCompat.getColorStateList(context, R.color.week_day_back)
-                btn.strokeWidth = 0
             }
 
-            btn.setOnClickListener {
+            chipRoot.setOnClickListener {
                 selectedDate = date
                 dateListener?.invoke(date)
                 renderWeek()

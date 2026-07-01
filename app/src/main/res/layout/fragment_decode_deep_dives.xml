@@ -1,21 +1,269 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
+    android:fillViewport="true"
     tools:context=".ui.decode.DecodeDeepDivesFragment">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvViewMetricsTitle"
-        style="@style/Text.20x.Manrope.Bold"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_20dp"
-        android:layout_marginTop="@dimen/_20dp"
-        android:text="Deep Dives"
-        android:textAlignment="textStart"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:paddingBottom="24dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Header -->
+        <TextView
+            style="@style/Text.11x.Manrope.SemiBold"
+            android:id="@+id/tvEyebrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/label_decode"
+            android:textColor="#8A9997"
+            android:letterSpacing="0.14"
+            android:textAllCaps="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            style="@style/Text.26x.Manrope.Bold"
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:text="@string/label_deep_dives_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvEyebrow" />
+
+        <TextView
+            style="@style/Text.14x.Manrope.Medium"
+            android:id="@+id/tvSubtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:lineSpacingExtra="4dp"
+            android:text="@string/label_deep_dives_subtitle"
+            android:textColor="@color/deep_dives_ink2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+        <!-- Group Label -->
+        <LinearLayout
+            android:id="@+id/llGroupLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="22dp"
+            android:paddingBottom="12dp"
+            app:layout_constraintTop_toBottomOf="@id/tvSubtitle">
+
+            <TextView
+                style="@style/Text.10x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_your_reports"
+                android:textColor="#73827F"
+                android:textAllCaps="true"
+                android:letterSpacing="0.12" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:background="@color/deep_dives_hair" />
+        </LinearLayout>
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerDeepDives"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:shimmer_auto_start="true"
+            app:shimmer_base_alpha="0.8"
+            app:shimmer_base_color="#ffffff"
+            app:shimmer_duration="1000"
+            app:layout_constraintTop_toBottomOf="@id/llGroupLabel">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="20dp"
+                android:paddingTop="12dp">
+                
+                <include layout="@layout/item_decode_metric_shimmer" />
+                <include layout="@layout/item_decode_metric_shimmer" />
+                
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <LinearLayout
+            android:id="@+id/llContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/shimmerDeepDives">
+
+        <!-- Workday Stress Card -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cardWorkdayStress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_decode_card"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="16dp">
+
+            <TextView
+                style="@style/Text.15x.Manrope.Bold"
+                android:id="@+id/tvWorkdayLevel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Low"
+                android:textColor="@color/deep_dives_lime"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                style="@style/Text.16x.Manrope.Bold"
+                android:id="@+id/tvWorkdayTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="@string/label_workday_stress_score"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvWorkdayLevel" />
+
+            <TextView
+                style="@style/Text.10x.Manrope.Bold"
+                android:id="@+id/badgeWorkday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_deep_dives_badge_ready"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                android:text="@string/status_updated"
+                android:textAllCaps="true"
+                android:letterSpacing="0.05"
+                android:textColor="@color/deep_dives_lime"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                style="@style/Text.13x.Manrope.Regular"
+                android:id="@+id/tvWorkdayDesc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="⏱ Peak stress 9:01 AM · 📅 Daily Engineering Standup"
+                android:textColor="@color/deep_dives_ink3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvWorkdayTitle" />
+
+            <TextView
+                style="@style/Text.13x.Manrope.Bold"
+                android:id="@+id/tvWorkdayAction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/action_see_full_report"
+                android:textColor="@color/deep_dives_lime"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvWorkdayDesc" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Weather Resilience Card -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cardWeatherResilience"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_decode_card"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="16dp">
+
+            <TextView
+                style="@style/Text.28x.Manrope.Bold"
+                android:id="@+id/tvWeatherScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/deep_dives_lime"
+                android:text="47.3%"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                style="@style/Text.16x.Manrope.Bold"
+                android:id="@+id/tvWeatherTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="@string/label_weather_resilience_score"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvWeatherScore" />
+
+            <TextView
+                style="@style/Text.10x.Manrope.Bold"
+                android:id="@+id/badgeWeather"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_deep_dives_badge_gen"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                android:text="@string/status_next_due"
+                android:textAllCaps="true"
+                android:letterSpacing="0.05"
+                android:textColor="@color/deep_dives_watch"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                style="@style/Text.13x.Manrope.Regular"
+                android:id="@+id/tvWeatherDesc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Generated 09 Apr · next report collecting data"
+                android:textColor="@color/deep_dives_ink3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvWeatherTitle" />
+
+            <TextView
+                style="@style/Text.13x.Manrope.Bold"
+                android:id="@+id/tvWeatherAction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/action_see_full_report"
+                android:textColor="@color/deep_dives_lime"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvWeatherDesc" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

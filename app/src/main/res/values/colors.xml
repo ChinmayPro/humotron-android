@@ -16,7 +16,13 @@
     <color name="lime_green">#B8FF4F</color>
     <color name="surface_dark">#1E1E1E</color>
     <color name="text_secondary">#888888</color>
-    <color name="colorBgBtn">#B2F042</color>
+    <color name="textColorMuted">#9DACA9</color>
+    <color name="colorTextGrey">#859390</color>
+    <color name="colorTextGreyDark">#6F7E7D</color>
+    <color name="colorTextEyebrow">#73827F</color>
+    <color name="textColorHint">#5F6F6E</color>
+    <color name="colorTextDescGrey">#A9C2BE</color>
+    <color name="colorBgBtn">#C4F23E</color>
     <color name="colorBgBtn1">#BEF362</color>
     <color name="dividerColor">#D9D9D9</color>
     <color name="assessmentBnt">#B1F042</color>
@@ -111,6 +117,7 @@
     <color name="support_search_border">#33979797</color>
     <color name="popular_search_chip_bg">#16222A</color>
     <color name="support_help_icon_bg">#101A21</color>
+    <color name="support_open_badge_bg">#2A3640</color>
     <color name="support_card_bg_detail">#1D2730</color>
     <color name="support_link_blue">#5EC4FF</color>
 
@@ -144,4 +151,52 @@
 
     <color name="text_title_primary">#CDD6D5</color>
     <color name="card_bg_2">#80080F10</color>
+    <color name="support_chat_user_bubble_bg">#203628</color>
+    <color name="support_chat_user_time">#8A9B8F</color>
+    <color name="support_status_awaiting_reply_bg">#FFCA28</color>
+    <color name="support_status_awaiting_reply_text">#121212</color>
+    <color name="support_status_resolved_bg">#B2F042</color>
+
+    <!-- Insights Refactoring Colors -->
+    <color name="insights_header_grey">#73827F</color>
+    <color name="insights_section_header_grey">#7C8B89</color>
+    <color name="insights_slate_grey">#859390</color>
+    <color name="insights_green">#B2F042</color>
+    <color name="insights_amber">#FFCA28</color>
+    <color name="insights_light_grey">#9DACA9</color>
+    <color name="insights_watch_amber">#E7A93C</color>
+    <color name="insights_dark_grey_text">#8a9794</color>
+    <color name="insights_orange">#F0795E</color>
+    <color name="insights_light_green">#C4F23E</color>
+    <color name="insights_tag_grey">#A9C2BE</color>
+    <color name="insights_subtitle_grey">#8FA7A3</color>
+    <color name="insights_btn_text_dark">#0D1618</color>
+    <color name="insights_chip_inactive_text">#8C9A9E</color>
+    <color name="insights_privacy_green">#BCD98A</color>
+    <color name="insights_muted_grey">#6F7E7D</color>
+    <color name="insights_green_10">#1aB2F042</color>
+    <color name="insights_zone_balanced">#5FB7C4</color>
+    <color name="insights_zone_challenged">#E08A4A</color>
+
+    <!-- Deep Dives Colors -->
+    <color name="deep_dives_ink2">#9DACA9</color>
+    <color name="deep_dives_ink3">#859390</color>
+    <color name="deep_dives_ink4">#6F7E7D</color>
+    <color name="deep_dives_eyebrow">#73827F</color>
+    <color name="deep_dives_lime">#C4F23E</color>
+    <color name="deep_dives_attention">#EE4D3D</color>
+    <color name="deep_dives_watch">#E7A93C</color>
+    <color name="deep_dives_series">#F0795E</color>
+    <color name="deep_dives_cool">#5FB7C4</color>
+    <color name="deep_dives_card">#8C080F10</color> <!-- rgba(8,15,16,.55) -> hex 8C080F10 -->
+    <color name="deep_dives_hair">#12FFFFFF</color> <!-- rgba(255,255,255,.07) -> 12FFFFFF -->
+    <color name="deep_dives_hair_light">#1AFFFFFF</color> <!-- rgba(255,255,255,.10) -->
+    <color name="deep_dives_bg">#0b1315</color>
+    <color name="deep_dives_card_bg_solid">#0C1618</color> <!-- Solid version for fallback -->
+    <color name="deep_dives_day_chip_bg">#0AFFFFFF</color> <!-- rgba(255,255,255,.04) -->
+    <color name="deep_dives_day_chip_selected_bg">#1FC4F23E</color> <!-- rgba(196,242,62,.12) -->
+    <color name="deep_dives_day_chip_selected_stroke">#61C4F23E</color> <!-- rgba(196,242,62,.38) -->
+    <color name="deep_dives_zone_track_bg">#0FFFFFFF</color> <!-- rgba(255,255,255,.06) -->
+    <color name="heatmap_empty_cell">#1B2321</color>
+    <color name="tab_unselected_text_color">#90A0A0</color>
 </resources>

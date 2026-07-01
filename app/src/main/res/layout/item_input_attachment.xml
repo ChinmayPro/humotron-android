@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="68dp"
+    android:layout_height="68dp"
+    android:layout_marginEnd="8dp">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivThumbnail"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:scaleType="centerCrop"
+        android:background="@drawable/bg_btn_round_rect_8"
+        android:backgroundTint="@color/white10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/btnDelete"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/bg_close_white_circle"
+        android:backgroundTint="@color/colorBgBtn1"
+        android:padding="4dp"
+        android:src="@drawable/ic_close"
+        android:tint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

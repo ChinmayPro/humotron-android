@@ -149,4 +149,18 @@ class CustomPagerIndicator @JvmOverloads constructor(
         progress = value
         invalidate()
     }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        val desiredHeight = (56 * resources.displayMetrics.density).toInt()
+        val width = MeasureSpec.getSize(widthMeasureSpec)
+        val heightMode = MeasureSpec.getMode(heightMeasureSpec)
+        val heightSize = MeasureSpec.getSize(heightMeasureSpec)
+
+        val height = when (heightMode) {
+            MeasureSpec.EXACTLY -> heightSize
+            MeasureSpec.AT_MOST -> Math.min(desiredHeight, heightSize)
+            else -> desiredHeight
+        }
+        setMeasuredDimension(width, height)
+    }
 }

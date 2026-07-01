@@ -74,6 +74,10 @@ import com.humotron.app.domain.modal.response.TopicsByCategoryResponse
 import com.humotron.app.domain.modal.response.WristBandSleepDurationResponse
 import com.humotron.app.domain.modal.response.YetToTrackMetricResponse
 import com.humotron.app.domain.modal.response.ProductDetailResponse
+import com.humotron.app.domain.modal.response.InsightMetricsOverviewResponse
+import com.humotron.app.domain.modal.response.InsightTimelineResponse
+import com.humotron.app.domain.modal.response.InsightSummaryResponse
+import com.humotron.app.domain.modal.response.InsightDetailResponse
 import com.humotron.app.domain.modal.response.ProductVariantResponse
 import com.humotron.app.domain.modal.response.GetAllLikesResponse
 import com.humotron.app.domain.modal.response.BookingTypeResponse
@@ -523,6 +527,24 @@ interface AppApi {
         @Path("boosterId") boosterId: String
     ): Response<com.humotron.app.domain.modal.response.BoosterDetailResponse>
 
+    @GET("metricInsight/getInsightMetricsOverview")
+    suspend fun getInsightMetricsOverview(): Response<InsightMetricsOverviewResponse>
+
+    @GET("metricInsight/getInsightTimeline/{metricId}")
+    suspend fun getInsightTimeline(
+        @Path("metricId") metricId: String
+    ): Response<InsightTimelineResponse>
+
+    @GET("metricInsight/getInsightSummaryByMetricId/{metricId}")
+    suspend fun getInsightSummaryByMetricId(
+        @Path("metricId") metricId: String
+    ): Response<InsightSummaryResponse>
+
+    @GET("metricInsight/getInsightById/{insightId}")
+    suspend fun getInsightById(
+        @Path("insightId") insightId: String
+    ): Response<InsightDetailResponse>
+
     @POST("digitalProductOrder/createDigitalProductOrder")
     suspend fun createDigitalProductOrder(
         @Body request: HashMap<String, Any>
@@ -579,4 +601,46 @@ interface AppApi {
         @Body request: HashMap<String, Any>
     ): Response<com.humotron.app.domain.modal.response.AllTopicsResponse>
 
+    @GET("supportTicket/ticketDetail/{ticketId}")
+    suspend fun getTicketDetail(
+        @Path("ticketId") ticketId: String
+    ): Response<com.humotron.app.domain.modal.response.TicketDetailResponse>
+
+    @Multipart
+    @POST("supportTicket/replyToTicket/{ticketId}")
+    suspend fun replyTicket(
+        @Path("ticketId") ticketId: String,
+        @Part("message") message: okhttp3.RequestBody,
+        @Part attachments: List<okhttp3.MultipartBody.Part>
+    ): Response<com.humotron.app.domain.modal.response.CommonResponse>
+
+    @GET("weatherResilienceReport/impact-overview")
+    suspend fun getWeatherResilienceOverview(): Response<com.humotron.app.domain.modal.response.WeatherResilienceResponse>
+
+    @POST("device/getWorkDayStress")
+    suspend fun getWorkDayStress(
+        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0))
+    ): Response<com.humotron.app.domain.modal.response.WorkDayStressResponse>
+
+    @GET("weatherResilienceReport/overview")
+    suspend fun getWeatherOverview(): Response<com.humotron.app.domain.modal.response.WeatherOverviewResponse>
+
+    @GET("weatherResilienceReport/report/{id}")
+    suspend fun getWeatherResilienceReportDetail(@Path("id") reportId: String): Response<com.humotron.app.domain.modal.response.WeatherDetailResponse>
+
+    @POST("device/getWorkDayStressReport")
+    suspend fun getWorkDayStressReport(@Body request: com.humotron.app.domain.modal.response.WorkDayStressReportRequest): Response<com.humotron.app.domain.modal.response.WorkDayStressReportResponse>
+
+    @GET("workdayStressReport/overview")
+    suspend fun getWorkdayStressOverview(): Response<com.humotron.app.domain.modal.response.WorkDayStressOverviewResponse>
+
+    @GET("workdayStressReport/report/{id}")
+    suspend fun getWorkdayStressReportById(
+        @Path("id") reportId: String
+    ): Response<com.humotron.app.domain.modal.response.WorkdayStressReportDetailResponse>
+
+    @POST("workdayStressReport/generate")
+    suspend fun generateWorkdayStressReport(
+        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0))
+    ): Response<com.humotron.app.domain.modal.response.WorkdayStressReportDetailResponse>
 }

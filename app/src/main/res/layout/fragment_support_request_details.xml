@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.support.SupportRequestDetailsFragment">
+
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header_2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Scrollable container for Summary Card and Messages -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintBottom_toTopOf="@id/rvSelectedAttachments">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Top Card for Ticket Summary Details -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cardSummary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_support_ticket_card"
+                android:padding="16dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvStatus"
+                    style="@style/Text.12x.Manrope.SemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_support_ticket_status"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="4dp"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Open" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvTicketNumber"
+                    style="@style/Text.14x.Manrope.SemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white50"
+                    app:layout_constraintBottom_toBottomOf="@id/tvStatus"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tvStatus"
+                    tools:text="#TKT-2026-00006" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvSubject"
+                    style="@style/Text.18x.Manrope.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:textColor="@color/white"
+                    app:layout_constraintTop_toBottomOf="@id/tvStatus"
+                    tools:text="Heart rate, blood pressure, tracking, and connectivity help." />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvSubcategory"
+                    style="@style/Text.14x.Manrope.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@color/white50"
+                    app:layout_constraintTop_toBottomOf="@id/tvSubject"
+                    tools:text="Wrist Band" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvFooter"
+                    style="@style/Text.12x.Manrope.Regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:textColor="@color/white50"
+                    app:layout_constraintTop_toBottomOf="@id/tvSubcategory"
+                    tools:text="Created Jun 12, 2026 • Updated 1h 34m ago" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Message list feed -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMessages"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:clipToPadding="false"
+                android:paddingBottom="8dp"
+                android:nestedScrollingEnabled="false" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Preview of picked attachments above the reply box -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSelectedAttachments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/layoutInput"
+        tools:layout_height="68dp"
+        tools:visibility="visible" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_chat_input"
+        android:backgroundTint="@color/support_help_icon_bg"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnAttach"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:padding="8dp"
+            android:src="@drawable/ic_paperclip"
+            app:tint="@color/white50"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etReply"
+            style="@style/Text.14x.Manrope.Regular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:background="@null"
+            android:hint="@string/support_chat_reply_hint"
+            android:maxLines="4"
+            android:minHeight="36dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white30"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnSend"
+            app:layout_constraintStart_toEndOf="@id/btnAttach"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnSend"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/bg_support_send_button"
+            android:padding="8dp"
+            android:src="@drawable/ic_send"
+            app:tint="@color/colorBgBtn1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
