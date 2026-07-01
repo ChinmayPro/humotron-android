@@ -1000,7 +1000,7 @@ To get started:\n
     <!-- Pair Humotron Device -->
     <string name="pair_humotron_devices_title">Your Humotron devices</string>
     <string name="pair_humotron_devices_subtitle">Pair the hardware you own. Each one brings its own signals into Track - pick a device to connect.</string>
-    <string name="pair_humotron_devices_footer">Don't have one yet? Humotron devices pair over Bluetooth and start feeding Track the moment they connect.</string>
+    <string name="pair_humotron_devices_footer">Don\'t have one yet? Humotron devices pair over Bluetooth and start feeding Track the moment they connect.</string>
     <string name="pair_humotron_ring_title">Ring</string>
     <string name="pair_humotron_ring_kind">Wearable</string>
     <string name="pair_humotron_ring_desc">Recovery, sleep, HRV and temperature - 24/7, from your finger.</string>
