@@ -104,6 +104,31 @@
                     android:background="@color/deep_dives_hair" />
             </LinearLayout>
 
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerWeatherOverview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginTop="12dp"
+                app:shimmer_auto_start="true"
+                app:shimmer_base_alpha="0.8"
+                app:shimmer_base_color="#ffffff"
+                app:shimmer_duration="1000">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="20dp">
+                    
+                    <include layout="@layout/item_decode_metric_shimmer" />
+                    <include layout="@layout/item_decode_metric_shimmer" />
+                    <include layout="@layout/item_decode_metric_shimmer" />
+                    
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
             <LinearLayout
                 android:id="@+id/llPairings"
                 android:layout_width="match_parent"

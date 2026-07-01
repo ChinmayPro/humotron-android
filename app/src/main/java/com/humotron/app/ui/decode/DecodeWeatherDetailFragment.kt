@@ -1,36 +1,41 @@
 package com.humotron.app.ui.decode
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.humotron.app.R
 import com.humotron.app.core.base.BaseFragment
+import com.humotron.app.data.network.Resource
+import com.humotron.app.data.network.Status
 import com.humotron.app.databinding.FragmentWeatherDetailBinding
+import com.humotron.app.domain.modal.response.WeatherAction
+import com.humotron.app.domain.modal.response.WeatherDetailData
+import com.humotron.app.domain.modal.response.WeatherObservation
+import com.humotron.app.domain.modal.response.WeatherSection
 import com.humotron.app.ui.decode.custom.ChartHelper
+import com.humotron.app.ui.decode.viewmodel.DecodeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DecodeWeatherDetailFragment : BaseFragment(R.layout.fragment_weather_detail) {
 
     private lateinit var binding: FragmentWeatherDetailBinding
+    private val viewModel: DecodeViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentWeatherDetailBinding.bind(view)
 
-        val weatherId = arguments?.getString("weatherId") ?: "a"
-        val detail = com.humotron.app.ui.decode.data.DeepDivesMockData.WEATHER_DETAILS[weatherId]
+        val weatherId = arguments?.getString("weatherId") ?: "69d76eb2656631a675f00569"
 
         initClicks()
-        
-        if (detail != null) {
-            populateUI(detail)
-            setupCharts(detail)
-            populateImpactLevels(detail)
-            populateInsights(detail.ins)
-            populatePlan(detail.plan)
-        }
+        observeData()
+
+        viewModel.getWeatherResilienceReportDetail(weatherId)
     }
 
     private fun initClicks() {
@@ -39,70 +44,121 @@ class DecodeWeatherDetailFragment : BaseFragment(R.layout.fragment_weather_detai
         }
     }
 
-    private fun populateUI(detail: com.humotron.app.ui.decode.data.WeatherDetail) {
-        binding.tvWeatherTitle.text = detail.title
-        binding.tvWeatherRange.text = detail.range
-        binding.tvWeatherSummary.text = detail.summary
-        binding.tvImpactValue.text = "${detail.impact}%"
-        binding.tvImpactNote.text = detail.impactNote
-        binding.tvTrendTitle.text = "${detail.a} vs ${detail.b}"
+    private fun observeData() {
+        viewModel.weatherDetailData().observe(viewLifecycleOwner) { resource ->
+            when (resource.status) {
+                Status.LOADING -> {
+                    binding.shimmerWeatherDetail.visibility = View.VISIBLE
+                    binding.shimmerWeatherDetail.startShimmer()
+                    binding.llContent.visibility = View.GONE
+                }
+                Status.SUCCESS -> {
+                    binding.shimmerWeatherDetail.visibility = View.GONE
+                    binding.shimmerWeatherDetail.stopShimmer()
+                    binding.llContent.visibility = View.VISIBLE
+                    resource.data?.data?.let { data ->
+                        populateUI(data)
+                    }
+                }
+                Status.ERROR, Status.EXCEPTION -> {
+                    binding.shimmerWeatherDetail.visibility = View.GONE
+                    binding.shimmerWeatherDetail.stopShimmer()
+                    Toast.makeText(requireContext(), resource.error?.errorMessage ?: "An error occurred", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
-    private fun setupCharts(detail: com.humotron.app.ui.decode.data.WeatherDetail) {
-        // Set Donut Progress
-        binding.donutProgress.setProgress(detail.impact.toFloat())
-        
-        // Color changes depending on level, we map loosely based on HTML: 
-        // HTML has levels like 40-59 with class `b-watch`. We'll just use deep_dives_watch generally
-        // or conditionally. For simplicity, just use watch for now or check level.
-        val progressColor = if (detail.impact >= 50) {
-            ContextCompat.getColor(requireContext(), R.color.deep_dives_attention)
-        } else {
-            ContextCompat.getColor(requireContext(), R.color.deep_dives_watch)
-        }
-        binding.donutProgress.setProgressColor(progressColor)
+    private fun populateUI(data: WeatherDetailData) {
+        binding.tvWeatherTitle.text = data.title
+        val rangeStr = getString(
+            R.string.paired_days_range_format,
+            data.meta?.analysisWindow?.start ?: "",
+            data.meta?.analysisWindow?.end ?: "",
+            data.meta?.validDayCount ?: 0
+        )
+        binding.tvWeatherRange.text = rangeStr
 
-        // Set Trend Line Chart
+        data.sections?.forEach { section ->
+            when (section.section) {
+                "weather_impact_summary" -> {
+                    binding.tvWeatherSummary.text = section.narration
+                    binding.tvImpactValue.text = getString(
+                        R.string.percentage_format,
+                        section.impact_score ?: 0
+                    )
+                    binding.tvImpactNote.text = section.key_finding
+
+                    // Set Donut Progress
+                    binding.donutProgress.setProgress(section.impact_score?.toFloat() ?: 0f)
+                    try {
+                        val color = Color.parseColor(section.score_color)
+                        binding.donutProgress.setProgressColor(color)
+                    } catch (e: Exception) {
+                        binding.donutProgress.setProgressColor(ContextCompat.getColor(requireContext(), R.color.deep_dives_watch))
+                    }
+
+                    populateImpactLevels(section)
+                }
+                "trend_visualization" -> {
+                    binding.tvTrendTitle.text = section.title
+                    setupCharts(section)
+                    section.observations?.let { populateInsights(it) }
+                }
+                "personalized_action_plan" -> {
+                    section.actions?.let { populatePlan(it) }
+                }
+            }
+        }
+    }
+
+    private fun setupCharts(section: WeatherSection) {
+        val seriesData = section.series ?: return
+        if (seriesData.size < 2) return
+        
         val color1 = ContextCompat.getColor(requireContext(), R.color.deep_dives_series)
         val color2 = ContextCompat.getColor(requireContext(), R.color.deep_dives_cool)
         
-        val aVals = detail.aPts.map { it.toFloat() }
-        val bVals = detail.bPts.map { it.toFloat() }
+        val aVals = seriesData[0].data?.map { it.value ?: 0f } ?: emptyList()
+        val bVals = seriesData[1].data?.map { it.value ?: 0f } ?: emptyList()
+
+        val xLabels = seriesData[0].data?.map { it.date ?: "" } ?: emptyList()
 
         ChartHelper.setupLineChart(
             binding.chartTrend,
             listOf(
-                ChartHelper.LineDatasetInfo(detail.a, aVals, color1),
-                ChartHelper.LineDatasetInfo(detail.b, bVals, color2)
+                ChartHelper.LineDatasetInfo(seriesData[0].label ?: "", aVals, color1),
+                ChartHelper.LineDatasetInfo(seriesData[1].label ?: "", bVals, color2)
             ),
-            (1..aVals.size).map { it.toString() } // Fake x-axis
+            xLabels
         )
     }
 
-    private fun populateImpactLevels(detail: com.humotron.app.ui.decode.data.WeatherDetail) {
+    private fun populateImpactLevels(section: WeatherSection) {
         val container = binding.llImpactLevel
         container.removeAllViews()
 
-        val levels = listOf(
-            "0–19" to "Minimal",
-            "20–39" to "Mild",
-            "40–59" to "Moderate",
-            "60–79" to "Strong",
-            "80–100" to "Very strong"
-        )
+        val impactScale = section.impact_scale ?: return
 
-        for ((range, name) in levels) {
+        for (scale in impactScale) {
             val view = layoutInflater.inflate(R.layout.item_impact_level, container, false)
             val tvRange = view.findViewById<android.widget.TextView>(R.id.tvImpactLevelRange)
             val tvName = view.findViewById<android.widget.TextView>(R.id.tvImpactLevelName)
             
-            tvRange.text = range
-            tvName.text = name
+            tvRange.text = scale.range
+            tvName.text = scale.label
 
-            if (range == detail.level) {
+            if (scale.is_active == true) {
                 view.setBackgroundResource(R.drawable.bg_impact_level_selected)
-                tvRange.setTextColor(ContextCompat.getColor(requireContext(), R.color.deep_dives_watch))
-                tvName.setTextColor(ContextCompat.getColor(requireContext(), R.color.deep_dives_watch))
+                
+                try {
+                    val activeColor = Color.parseColor(section.score_color)
+                    tvRange.setTextColor(activeColor)
+                    tvName.setTextColor(activeColor)
+                } catch (e: Exception) {
+                    tvRange.setTextColor(ContextCompat.getColor(requireContext(), R.color.deep_dives_watch))
+                    tvName.setTextColor(ContextCompat.getColor(requireContext(), R.color.deep_dives_watch))
+                }
             } else {
                 view.background = null
                 tvRange.setTextColor(ContextCompat.getColor(requireContext(), R.color.deep_dives_ink2))
@@ -113,20 +169,20 @@ class DecodeWeatherDetailFragment : BaseFragment(R.layout.fragment_weather_detai
         }
     }
 
-    private fun populateInsights(insights: List<com.humotron.app.ui.decode.data.WeatherInsight>) {
+    private fun populateInsights(insights: List<WeatherObservation>) {
         val container = binding.llInsights
         container.removeAllViews()
         
         for (insight in insights) {
             val view = layoutInflater.inflate(R.layout.item_weather_insight, container, false)
-            view.findViewById<android.widget.TextView>(R.id.tvDate).text = insight.date
+            view.findViewById<android.widget.TextView>(R.id.tvDate).text = insight.dates?.firstOrNull() ?: ""
             view.findViewById<android.widget.TextView>(R.id.tvTitle).text = insight.title
             view.findViewById<android.widget.TextView>(R.id.tvDesc).text = insight.description
             container.addView(view)
         }
     }
 
-    private fun populatePlan(planList: List<com.humotron.app.ui.decode.data.WeatherPlan>) {
+    private fun populatePlan(planList: List<WeatherAction>) {
         val container = binding.llPlan
         container.removeAllViews()
         
@@ -136,18 +192,16 @@ class DecodeWeatherDetailFragment : BaseFragment(R.layout.fragment_weather_detai
             
             tvLetter.text = plan.letter
             
-            // Map the colorCode string to an actual resource
-            val bgColorRes = when (plan.colorCode) {
-                "lime" -> R.color.deep_dives_lime
-                "cool" -> R.color.deep_dives_cool
-                "watch" -> R.color.deep_dives_watch
-                "attention" -> R.color.deep_dives_attention
-                else -> R.color.deep_dives_lime
+            try {
+                val letterBgColor = Color.parseColor(plan.letter_bg_color)
+                val textColor = Color.parseColor(plan.text_color)
+                tvLetter.backgroundTintList = android.content.res.ColorStateList.valueOf(letterBgColor)
+                tvLetter.setTextColor(textColor)
+            } catch (e: Exception) {
+                tvLetter.backgroundTintList = android.content.res.ColorStateList.valueOf(
+                    ContextCompat.getColor(requireContext(), R.color.deep_dives_lime)
+                )
             }
-            
-            tvLetter.backgroundTintList = android.content.res.ColorStateList.valueOf(
-                ContextCompat.getColor(requireContext(), bgColorRes)
-            )
             
             view.findViewById<android.widget.TextView>(R.id.tvPlanTitle).text = plan.title
             view.findViewById<android.widget.TextView>(R.id.tvPlanDesc).text = plan.description

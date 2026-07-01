@@ -171,11 +171,12 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnSubmit"
-                style="@style/Text.16x.Manrope.SemiBold"
+                style="@style/Text.16x.Manrope.Bold"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="40dp"
+                android:layout_marginBottom="26dp"
                 android:background="@drawable/bg_btn_round_corner"
                 android:backgroundTint="@color/btn_continue"
                 android:enabled="false"

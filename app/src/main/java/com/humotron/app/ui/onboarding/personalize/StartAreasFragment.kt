@@ -3,6 +3,7 @@ package com.humotron.app.ui.onboarding.personalize
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.humotron.app.R
 import com.humotron.app.core.base.BaseFragment
@@ -17,6 +18,7 @@ class StartAreasFragment : BaseFragment(R.layout.fragment_start_areas) {
     private lateinit var binding: FragmentStartAreasBinding
     private val pagerViewModel: PagerViewModel by activityViewModels()
     private lateinit var adapter: StartAreasAdapter
+    private val viewModel: OnboardingViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -24,6 +26,7 @@ class StartAreasFragment : BaseFragment(R.layout.fragment_start_areas) {
 
         setupRecyclerView()
         setupListeners()
+        subscriberToObserver()
     }
 
     private fun setupRecyclerView() {
@@ -80,7 +83,33 @@ class StartAreasFragment : BaseFragment(R.layout.fragment_start_areas) {
 
     private fun setupListeners() {
         binding.btnSubmit.setOnClickListener {
-            pagerViewModel.moveToPage(4)
+            viewModel.completeOnboarding(com.humotron.app.domain.modal.param.CompleteOnboardingParam(true))
+        }
+    }
+
+    private fun subscriberToObserver() {
+        viewModel.onBoardingData().observe(viewLifecycleOwner) { networkStatus ->
+            when (networkStatus.status) {
+                com.humotron.app.data.network.Status.SUCCESS -> {
+                    hideProgress()
+                    val data = networkStatus.data ?: return@observe
+                    data.data?.user?.let { prefUtils.setLoginResponse(it) }
+                    startActivity(android.content.Intent(requireContext(), com.humotron.app.ui.MainActivity::class.java))
+                    requireActivity().finish()
+                }
+
+                com.humotron.app.data.network.Status.ERROR -> {
+                    hideProgress()
+                }
+
+                com.humotron.app.data.network.Status.EXCEPTION -> {
+                    hideProgress()
+                }
+
+                com.humotron.app.data.network.Status.LOADING -> {
+                    showProgress()
+                }
+            }
         }
     }
 }

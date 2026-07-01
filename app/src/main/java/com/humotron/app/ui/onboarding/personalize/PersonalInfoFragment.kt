@@ -112,6 +112,17 @@ class PersonalInfoFragment : BaseFragment(R.layout.fragment_personal_info) {
                 android.widget.Toast.makeText(requireContext(), "Please select birth date", android.widget.Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+
+            val today = java.util.Calendar.getInstance()
+            var age = today.get(java.util.Calendar.YEAR) - selectedDate.get(java.util.Calendar.YEAR)
+            if (today.get(java.util.Calendar.DAY_OF_YEAR) < selectedDate.get(java.util.Calendar.DAY_OF_YEAR)) {
+                age--
+            }
+            if (age < 18) {
+                android.widget.Toast.makeText(requireContext(), "You must be at least 18", android.widget.Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             if (binding.etGender.text.toString().trim().isEmpty()) {
                 android.widget.Toast.makeText(requireContext(), "Please select gender", android.widget.Toast.LENGTH_SHORT).show()
                 return@setOnClickListener

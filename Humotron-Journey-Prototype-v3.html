@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Humotron — Onboarding, Track & Metric journey (v3)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+  :root{
+    --ink:#fff;--ink2:#9DACA9;--ink3:#859390;--ink4:#6F7E7D;--eyebrow:#73827F;
+    --lime:#C4F23E;--attention:#EE4D3D;--watch:#E7A93C;--series:#F0795E;--cool:#5FB7C4;--good:#7BD88F;
+    --card:rgba(8,15,16,.55);--cardOpen:rgba(7,12,13,.82);--hair:rgba(255,255,255,.07);--r:20px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Manrope',system-ui,sans-serif;-webkit-tap-highlight-color:transparent;}
+  body{background:#0b1315;display:flex;justify-content:center;align-items:flex-start;gap:26px;padding:22px;min-height:100vh;flex-wrap:wrap;}
+  .phone{width:400px;height:860px;border-radius:36px;overflow:hidden;position:relative;display:flex;flex-direction:column;box-shadow:0 30px 90px -35px rgba(0,0,0,.8);border:1px solid rgba(255,255,255,.04);}
+  .bg{position:absolute;inset:0;z-index:0;}
+  .statusbar{position:relative;z-index:3;display:flex;justify-content:space-between;align-items:center;padding:14px 24px 4px;color:#fff;font-size:14px;font-weight:700;}
+  .statusbar .ic2{font-size:11px;opacity:.85;letter-spacing:.06em;}
+  .screen{position:relative;z-index:1;flex:1;overflow-y:auto;}
+  .screen::-webkit-scrollbar{width:0;}
+  .pad{padding:0 22px;}
+  .ic{display:inline-flex;align-items:center;justify-content:center;}
+  .ic svg{display:block;}
+
+  .eyebrow{color:var(--eyebrow);font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;}
+  .h1{color:#fff;font-size:28px;font-weight:800;line-height:1.13;letter-spacing:-.025em;}
+  .h1.sm{font-size:23px;}
+  .h2{color:#fff;font-size:18px;font-weight:700;letter-spacing:-.01em;}
+  .h3{color:#fff;font-size:15px;font-weight:700;}
+  .sub{color:var(--ink2);font-size:14.5px;line-height:1.5;font-weight:500;}
+  .body{color:var(--ink3);font-size:13px;line-height:1.55;}
+  .foot{color:var(--ink4);font-size:11.5px;line-height:1.5;}
+  .lime{color:var(--lime);}
+  .card{background:var(--card);border:1px solid var(--hair);border-radius:var(--r);backdrop-filter:blur(12px);}
+
+  .cta{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-size:15px;font-weight:700;background:var(--lime);color:#0d1618;border:none;padding:16px 22px;border-radius:26px;cursor:pointer;width:100%;transition:opacity .2s,transform .1s;letter-spacing:-.01em;}
+  .cta:active{transform:scale(.985);}
+  .cta.disabled{background:rgba(255,255,255,.1);color:#7d8a89;pointer-events:none;}
+  .cta.dark{background:rgba(0,0,0,.42);color:#fff;border:1px solid rgba(255,255,255,.12);}
+  .skip{color:var(--ink3);font-size:14px;font-weight:600;cursor:pointer;}
+
+  .lbl{color:var(--ink2);font-size:12px;font-weight:700;letter-spacing:.02em;margin-bottom:7px;}
+  .field{width:100%;background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.1);border-radius:15px;padding:15px 16px;color:#fff;font-size:15px;font-weight:600;outline:none;}
+  .field::placeholder{color:#5f6f6e;}
+  .field.sel{display:flex;align-items:center;justify-content:space-between;cursor:pointer;}
+  .field.sel .ph{color:#fff;font-weight:600;}
+
+  .seg{display:flex;background:rgba(0,0,0,.32);border:1px solid rgba(255,255,255,.08);border-radius:13px;padding:4px;}
+  .seg .s{flex:1;text-align:center;font-size:12.5px;font-weight:700;color:#8ea09e;padding:9px 2px;border-radius:9px;cursor:pointer;transition:.15s;}
+  .seg .s.on{background:rgba(196,242,62,.16);color:var(--lime);}
+
+  .stepper{display:flex;align-items:center;gap:0;padding:8px 22px 0;}
+  .stepper .node{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.18);flex-shrink:0;transition:.3s;}
+  .stepper .node.done{background:var(--lime);}
+  .stepper .node.cur{background:#fff;box-shadow:0 0 0 4px rgba(255,255,255,.12);}
+  .stepper .seg2{flex:1;height:2px;background:rgba(255,255,255,.12);margin:0 5px;border-radius:2px;}
+  .stepper .seg2.done{background:var(--lime);}
+  .stepper .end{margin-left:8px;font-size:9.5px;font-weight:700;color:#7d8a89;letter-spacing:.06em;background:rgba(255,255,255,.07);padding:5px 9px;border-radius:11px;text-transform:uppercase;}
+
+  .slidewrap{display:flex;flex-direction:column;height:100%;}
+  .slidevisual{flex:1;display:flex;align-items:center;justify-content:center;padding:30px;min-height:0;}
+  .slidecopy{padding:0 26px 26px;}
+  .dots{display:flex;gap:7px;justify-content:center;margin:18px 0;}
+  .dots i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.22);}
+  .dots i.on{background:var(--lime);width:20px;border-radius:4px;}
+
+  .checkcard{display:flex;gap:13px;align-items:flex-start;background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:15px;cursor:pointer;transition:.15s;}
+  .checkcard.on{border-color:rgba(196,242,62,.45);background:rgba(196,242,62,.07);}
+  .checkbox{width:22px;height:22px;border-radius:7px;border:2px solid rgba(255,255,255,.25);flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:1px;transition:.15s;color:#0d1618;}
+  .checkcard.on .checkbox{background:var(--lime);border-color:var(--lime);}
+  .radio{width:22px;height:22px;border-radius:50%;border:2px solid rgba(255,255,255,.25);flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:1px;transition:.15s;}
+  .checkcard.on .radio{border-color:var(--lime);}
+  .checkcard.on .radio::after{content:"";width:11px;height:11px;border-radius:50%;background:var(--lime);}
+  .togglebox{width:46px;height:28px;border-radius:16px;background:rgba(255,255,255,.14);flex-shrink:0;position:relative;cursor:pointer;transition:.2s;}
+  .togglebox::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:.2s;}
+  .togglebox.on{background:var(--lime);}
+  .togglebox.on::after{left:21px;}
+  .tmpl{font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--lime);background:rgba(196,242,62,.14);padding:3px 8px;border-radius:7px;margin-left:8px;}
+
+  .grid6{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;}
+  .gtile{aspect-ratio:1;border-radius:16px;border:1px solid rgba(255,255,255,.1);background:rgba(0,0,0,.26);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;cursor:pointer;transition:.15s;color:#cfdad8;font-size:13px;font-weight:700;user-select:none;}
+  .gtile.on{border-color:rgba(196,242,62,.5);background:rgba(196,242,62,.09);color:#fff;}
+  .gtile .ic{color:#cfdad8;} .gtile.on .ic{color:var(--lime);}
+
+  .nudge{display:flex;gap:12px;align-items:center;background:rgba(8,15,16,.5);border:1px solid var(--hair);border-radius:15px;padding:13px 14px;}
+  .nudge .ni{width:34px;height:34px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .nudge .nt{color:#fff;font-size:13.5px;font-weight:700;}
+  .nudge .nx{color:var(--ink3);font-size:11.5px;margin-top:1px;}
+
+  .secthead{display:flex;align-items:center;justify-content:space-between;padding:24px 22px 12px;}
+  .secthead .lt{display:flex;flex-direction:column;gap:3px;}
+  .secthead .h2{display:flex;align-items:center;gap:9px;}
+  .catdot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+  .secthead .plus{width:30px;height:30px;border-radius:50%;background:var(--lime);color:#0d1618;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;}
+  .srccard{margin:0 22px 10px;}
+  .srcrow{display:flex;align-items:center;gap:13px;padding:15px 16px;}
+  .srcrow .ico{width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;font-size:15px;}
+  .srcrow .nm{color:#fff;font-size:14.5px;font-weight:700;}
+  .srcrow .mt{color:var(--ink4);font-size:11.5px;margin-top:2px;line-height:1.4;}
+  .badge{font-size:9.5px;font-weight:700;letter-spacing:.04em;padding:4px 9px;border-radius:9px;text-transform:uppercase;white-space:nowrap;}
+  .b-live{background:rgba(196,242,62,.16);color:var(--lime);}
+  .b-soon{background:rgba(255,255,255,.07);color:#8c9a9e;}
+  .b-add{background:rgba(196,242,62,.14);color:var(--lime);cursor:pointer;}
+  .empty{margin:0 22px;border:1px dashed rgba(255,255,255,.14);border-radius:16px;padding:18px;display:flex;align-items:center;gap:13px;}
+  .empty .ed{width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--ink3);}
+
+  .greet{padding:12px 22px 0;}
+  .statusline{display:flex;align-items:center;gap:8px;margin:12px 22px 0;color:var(--ink3);font-size:12px;font-weight:600;}
+  .statusline .live{width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 3px rgba(196,242,62,.18);}
+  .chips{display:flex;gap:8px;padding:14px 22px 4px;overflow-x:auto;}
+  .chips::-webkit-scrollbar{height:0;}
+  .chip{white-space:nowrap;font-size:12.5px;font-weight:700;color:#9DACA9;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);padding:8px 14px;border-radius:18px;cursor:pointer;transition:.15s;}
+  .chip.on{color:#0d1618;background:var(--lime);border-color:var(--lime);}
+  .catlabel{display:flex;align-items:center;gap:9px;padding:20px 22px 10px;}
+  .catlabel .t{color:#cdd6d5;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;}
+  .catlabel .l{flex:1;height:1px;background:rgba(255,255,255,.06);}
+
+  .devcard{margin:0 22px 12px;padding:16px;position:relative;overflow:hidden;cursor:pointer;}
+  .devcard::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--ac);opacity:.85;}
+  .dc-top{display:flex;align-items:flex-start;justify-content:space-between;}
+  .dc-name{color:#fff;font-size:16px;font-weight:800;letter-spacing:-.01em;line-height:1.2;}
+  .dc-src{color:var(--ink4);font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-top:3px;}
+  .dc-fresh{display:flex;align-items:center;gap:5px;color:var(--ink3);font-size:11.5px;font-weight:600;white-space:nowrap;}
+  .dc-fresh .ic{color:var(--ac);} .dc-fresh.stale,.dc-fresh.stale .ic{color:var(--watch);}
+  .dc-body{display:flex;align-items:flex-end;justify-content:space-between;margin-top:14px;gap:14px;}
+  .dc-metrics{display:flex;gap:22px;}
+  .dm-k{color:var(--ink4);font-size:11px;font-weight:700;}
+  .dm-v{color:#fff;font-size:27px;font-weight:800;letter-spacing:-.02em;margin-top:4px;line-height:1;}
+  .dm-v small{font-size:12px;font-weight:700;color:var(--ink3);margin-left:2px;}
+  .dc-glyph{width:58px;height:58px;border-radius:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;font-size:20px;}
+  .dc-foot{display:flex;align-items:center;gap:6px;margin-top:15px;color:var(--ac);font-size:12.5px;font-weight:700;}
+
+  .dhero{margin:8px 22px 0;border-radius:22px;padding:18px;background:rgba(7,12,13,.5);border:1px solid var(--hair);position:relative;overflow:hidden;}
+  .dhero::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--ac);}
+  .dhero-row{display:flex;align-items:center;justify-content:space-between;}
+  .takebtn{display:inline-flex;align-items:center;gap:8px;background:var(--lime);color:#0d1618;font-size:13.5px;font-weight:800;padding:11px 18px;border-radius:22px;border:none;cursor:pointer;}
+  .bell{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;color:#cfdad8;cursor:pointer;}
+  .battery{display:flex;align-items:center;gap:9px;margin-top:15px;}
+  .battery .dotg{width:7px;height:7px;border-radius:50%;background:var(--lime);}
+  .battery .track{flex:1;height:6px;border-radius:4px;background:rgba(255,255,255,.08);overflow:hidden;}
+  .battery .fill{height:100%;background:var(--lime);border-radius:4px;}
+  .mtabs{display:flex;gap:24px;padding:20px 22px 0;border-bottom:1px solid rgba(255,255,255,.07);}
+  .mtab{position:relative;color:#8a9794;font-size:14px;font-weight:700;padding-bottom:11px;cursor:pointer;}
+  .mtab.on{color:#fff;}
+  .mtab.on::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--lime);border-radius:2px;}
+  .reading{margin:0 22px 10px;background:rgba(4,8,9,.6);border:1px solid var(--hair);border-radius:16px;padding:15px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;}
+  .reading .v{color:#fff;font-size:22px;font-weight:800;letter-spacing:-.02em;}
+  .reading .v small{font-size:12px;color:var(--ink3);font-weight:700;margin-left:3px;}
+  .reading .nm{color:#cfdad8;font-size:14px;font-weight:700;margin-top:3px;}
+  .reading .ts{color:var(--ink4);font-size:10.5px;margin-top:4px;}
+  .reading .chev{color:#6E837F;}
+  .insightbig{margin:0 22px;background:rgba(4,8,9,.7);border:1px solid var(--hair);border-radius:20px;padding:20px;}
+  .insightbig .ttl{color:#fff;font-size:19px;font-weight:800;line-height:1.25;}
+  .gen{display:inline-flex;align-items:center;gap:8px;background:var(--lime);color:#0d1618;font-size:13.5px;font-weight:800;padding:11px 18px;border-radius:22px;border:none;cursor:pointer;margin:14px 22px 0;}
+
+  /* metric page */
+  .mp-section{text-align:center;color:#cdd6d5;font-size:22px;font-weight:800;letter-spacing:-.01em;padding:30px 22px 4px;}
+  .mp-sub{text-align:center;color:var(--ink3);font-size:13px;font-weight:700;padding-bottom:8px;}
+  .mp-latest{margin:14px 22px 0;background:rgba(8,15,16,.5);border:1px solid var(--hair);border-radius:20px;padding:24px;text-align:center;}
+  .mp-latest .big{color:#fff;font-size:46px;font-weight:800;letter-spacing:-.03em;line-height:1;}
+  .mp-latest .big small{font-size:16px;font-weight:700;color:var(--ink3);margin-left:4px;}
+  .mp-latest .nm{color:#cfdad8;font-size:15px;font-weight:700;margin-top:8px;}
+  .mp-latest .ts{color:var(--ink4);font-size:11px;margin-top:6px;}
+  .mp-latest .src{color:var(--ink4);font-size:11px;margin-top:3px;}
+  .mp-range{text-align:center;color:#fff;font-size:30px;font-weight:800;letter-spacing:-.02em;padding:6px 0 14px;}
+  .mp-range small{font-size:14px;color:var(--ink3);font-weight:700;}
+  .chartbox{margin:6px 22px 0;background:rgba(255,255,255,.03);border:1px solid var(--hair);border-radius:18px;padding:16px 14px 10px;}
+  .chartlegend{display:flex;gap:16px;justify-content:center;margin-top:10px;font-size:10.5px;color:var(--ink3);}
+  .chartlegend span{display:inline-flex;align-items:center;gap:6px;}
+  .accordion{margin:10px 22px 0;background:rgba(8,15,16,.55);border:1px solid var(--hair);border-radius:16px;overflow:hidden;}
+  .acc-head{display:flex;align-items:center;justify-content:space-between;padding:16px;cursor:pointer;}
+  .acc-head .t{color:#fff;font-size:14.5px;font-weight:700;}
+  .acc-body{padding:0 16px 16px;color:var(--ink3);font-size:13px;line-height:1.55;}
+  .chev2{transition:transform .2s;color:var(--ink3);}
+  .accordion.open .chev2{transform:rotate(180deg);}
+  .status-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:5px 11px;border-radius:9px;}
+  .avg-card{margin:14px 22px 0;text-align:center;padding:8px 22px 0;}
+  .avg-card .big{font-size:40px;font-weight:800;letter-spacing:-.02em;}
+  .supportive{margin:16px 22px 0;border-radius:14px;padding:13px 15px;font-size:12.5px;font-weight:600;line-height:1.5;}
+  .paywall{margin:14px 22px 0;background:rgba(4,8,9,.82);border:1px solid rgba(196,242,62,.25);border-radius:20px;padding:20px;position:relative;}
+  .paywall .tag{position:absolute;top:14px;right:14px;display:inline-flex;align-items:center;gap:5px;font-size:9.5px;font-weight:800;letter-spacing:.04em;color:var(--lime);text-transform:uppercase;}
+  .pw-cta{display:flex;align-items:center;gap:14px;margin-top:16px;}
+  .pw-buy{display:inline-flex;align-items:center;gap:8px;background:var(--lime);color:#0d1618;font-size:13.5px;font-weight:800;padding:12px 18px;border-radius:22px;cursor:pointer;}
+  .pw-meta{display:flex;gap:16px;margin-top:14px;color:var(--ink4);font-size:11px;font-weight:600;}
+  .pw-meta span{display:inline-flex;align-items:center;gap:5px;}
+  .commercecard{margin:14px 22px 0;background:rgba(4,8,9,.7);border:1px solid var(--hair);border-radius:20px;overflow:hidden;}
+  .cc-img{height:120px;background-size:cover;background-position:center;position:relative;}
+  .cc-tag{position:absolute;top:12px;left:12px;background:var(--good);color:#0a1f12;font-size:10px;font-weight:800;padding:4px 10px;border-radius:8px;}
+  .cc-body{padding:18px;}
+  .followup{display:flex;align-items:center;gap:8px;margin:10px 22px 0;background:rgba(255,255,255,.04);border:1px solid var(--hair);border-radius:14px;padding:12px 14px;color:#cfdad8;font-size:13px;font-weight:600;cursor:pointer;}
+  .followup .ic{color:var(--lime);}
+
+  .bottombar{position:relative;z-index:3;display:flex;justify-content:space-around;align-items:center;padding:11px 8px 16px;background:rgba(4,8,9,.86);border-top:1px solid rgba(255,255,255,.06);backdrop-filter:blur(12px);}
+  .bb{display:flex;flex-direction:column;align-items:center;gap:4px;color:#6C7A7F;font-size:10.5px;font-weight:600;cursor:pointer;}
+  .bb.on{color:var(--lime);}
+  .bb .av{width:26px;height:26px;border-radius:50%;background:#2a3b3a;display:flex;align-items:center;justify-content:center;font-size:13px;}
+
+  .backhead{position:relative;z-index:3;display:flex;align-items:center;gap:13px;padding:8px 22px 4px;}
+  .backhead .b{color:#fff;cursor:pointer;display:flex;}
+  .backhead .ti{color:#fff;font-size:17px;font-weight:800;letter-spacing:-.01em;}
+
+  .scrim{position:absolute;inset:0;z-index:8;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:.25s;}
+  .scrim.on{opacity:1;pointer-events:auto;}
+  .tray{position:absolute;left:0;right:0;bottom:0;z-index:9;background:#0c1416;border-radius:26px 26px 0 0;border-top:1px solid rgba(255,255,255,.08);transform:translateY(100%);transition:transform .3s cubic-bezier(.22,.61,.36,1);max-height:80%;display:flex;flex-direction:column;}
+  .tray.on{transform:translateY(0);}
+  .trayhead{display:flex;align-items:center;justify-content:space-between;padding:20px 22px 6px;}
+  .trayhead .x{color:#9DACA9;cursor:pointer;display:flex;}
+  .traybody{overflow-y:auto;padding:8px 16px 16px;}
+  .traybody::-webkit-scrollbar{width:0;}
+  .devrow{display:flex;align-items:center;gap:13px;padding:14px;border-radius:15px;cursor:pointer;transition:.12s;}
+  .devrow:active{background:rgba(255,255,255,.04);}
+  .devrow .logo{width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;font-size:15px;}
+  .devrow .nm{color:#fff;font-size:14.5px;font-weight:700;}
+  .devrow .mt{color:var(--ink4);font-size:11.5px;margin-top:2px;line-height:1.4;}
+  .devrow .chev{color:#7E8E8C;}
+  .alertrow{display:flex;align-items:center;justify-content:space-between;padding:15px 8px;border-bottom:1px solid rgba(255,255,255,.05);}
+  .alertrow .nm{color:#fff;font-size:14px;font-weight:600;}
+
+  .iosback{position:absolute;inset:0;z-index:10;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;}
+  .iosalert{width:270px;background:rgba(245,245,247,.97);backdrop-filter:blur(10px);border-radius:16px;overflow:hidden;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.5);}
+  .iosalert .b2{padding:19px 18px 14px;}
+  .iosalert h4{color:#000;font-size:16px;font-weight:700;line-height:1.25;}
+  .iosalert p{color:#3a3a3a;font-size:13px;line-height:1.35;margin-top:7px;}
+  .iosalert .btns{display:flex;border-top:1px solid rgba(0,0,0,.14);}
+  .iosalert .btns div{flex:1;padding:12px;font-size:16px;color:#0a84ff;cursor:pointer;}
+  .iosalert .btns div+div{border-left:1px solid rgba(0,0,0,.14);}
+  .iosalert .btns div.bold{font-weight:700;}
+  .iossingle .btns div{border-left:none;}
+
+  .placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:14px;text-align:center;padding:40px;}
+  .placeholder .pic{width:64px;height:64px;border-radius:20px;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;color:var(--lime);}
+
+  .popover{position:absolute;z-index:14;left:50%;transform:translateX(-50%);bottom:120px;width:300px;background:#0c1416;border:1px solid rgba(196,242,62,.3);border-radius:16px;padding:15px 16px;box-shadow:0 20px 50px rgba(0,0,0,.6);opacity:0;pointer-events:none;transition:.18s;}
+  .popover.on{opacity:1;}
+  .popover .pt{color:var(--lime);font-size:13px;font-weight:800;margin-bottom:5px;}
+  .popover .px{color:#cfdad8;font-size:12.5px;line-height:1.5;}
+
+  .dock{width:240px;color:#8493a0;align-self:center;}
+  .dock h5{color:#fff;font-size:13px;font-weight:800;letter-spacing:.02em;margin-bottom:4px;}
+  .dock p{font-size:11.5px;line-height:1.6;margin-bottom:14px;}
+  .dock b{color:var(--lime);}
+  .dock button{display:block;width:100%;text-align:left;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:#cfdad8;font-size:12px;font-weight:600;padding:10px 13px;border-radius:11px;margin-bottom:8px;cursor:pointer;transition:.12s;}
+  .dock button:hover{background:rgba(196,242,62,.08);border-color:rgba(196,242,62,.3);color:#fff;}
+  .dock .ghostnote{font-size:10.5px;color:#5f6f6e;margin-top:6px;}
+
+  @keyframes cardIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+  .anim>*{animation:cardIn .42s cubic-bezier(.22,.61,.36,1) backwards;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes splashIn{0%{opacity:0;transform:scale(.8);}60%{opacity:1;}100%{opacity:1;transform:scale(1);}}
+  @keyframes wordIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  @media (prefers-reduced-motion: reduce){*{animation:none !important;}}
+</style>
+</head>
+<body>
+<div class="phone" id="phone">
+  <div class="bg" id="bg"></div>
+  <div class="statusbar"><span>9:41</span><span class="ic2">&#9646;&#9646;&#9646; &#8963; &#9645;</span></div>
+  <div id="chrome"></div>
+  <div class="screen" id="screen"></div>
+  <div id="nav"></div>
+  <div class="scrim" id="scrim"></div>
+  <div class="tray" id="tray"></div>
+  <div id="ioslayer"></div>
+  <div class="popover" id="popover"></div>
+</div>
+
+<div class="dock">
+  <h5>Humotron &middot; journey prototype v3</h5>
+  <p>Clickable handoff. <b>No APIs touched</b> &mdash; copy, labels, layout only. Track &rarr; device &rarr; <b>metric page</b> &rarr; unlock digital tools is now fully wired.</p>
+  <button data-go="splash">&#9654; Start from the top (animated splash)</button>
+  <button data-go="auth">&#8627; Auth &mdash; create / sign in</button>
+  <button data-go="basics">&#8627; Onboarding &mdash; profile</button>
+  <button data-go="focus">&#8627; "Where should we start" (long-press tiles)</button>
+  <button data-jump="track_daily">&#8962; Track &mdash; device dashboard</button>
+  <button data-jump="metric_demo">&#8505; Metric page (Systolic BP)</button>
+  <button data-go="sources">&#9881; Manage sources + connect trays</button>
+  <p class="ghostnote">On a metric page, the "decode your readings" paywall runs a simulated in-app purchase, then unlocks the AI nudges & weekly insights.</p>
+</div>
+
+<script>
+
+/* ===================== STATE ===================== */
+const state={consent:[false,false],intent:'g1',focus:new Set(['heart','sleep']),homeView:'day0',tab:'track',
+  connected:new Set(),units:{h:'cm',w:'kg'},trackFilter:'all',deviceId:'hband',deviceTab:'metrics',
+  metricCtx:null,mexpand:new Set(),proUnlocked:false,weeklyGen:new Set(),
+  alerts:new Set(['sbp','sleep','hrv','dbp']),stub:null};
+const E=s=>(s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+
+/* ===================== ICONS (one consistent stroke set) ===================== */
+const IP={
+  heart:'<path d="M12 20.3C12 20.3 3.6 15.3 3.6 9.4C3.6 6.7 5.8 4.8 8.2 4.8C9.8 4.8 11.2 5.7 12 7C12.8 5.7 14.2 4.8 15.8 4.8C18.2 4.8 20.4 6.7 20.4 9.4C20.4 15.3 12 20.3 12 20.3Z"/>',
+  moon:'<path d="M20 14.4A7.5 7.5 0 0 1 9.6 4 7.5 7.5 0 1 0 20 14.4Z"/>',
+  pulse:'<path d="M3 12h3.4l2-6 3 12 2.5-9 1.4 3H21"/>',
+  recovery:'<path d="M20 11.5A8 8 0 1 0 18.5 16.5"/><path d="M20 6.5v5h-5"/>',
+  energy:'<path d="M13 2.5 5 13.5h5l-1 8 8-11h-5l1-8Z"/>',
+  focus:'<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/>',
+  ring:'<circle cx="12" cy="12" r="7.5"/><circle cx="12" cy="12" r="4"/>',
+  band:'<rect x="7" y="7" width="10" height="10" rx="3"/><path d="M9 7l.6-3h4.8l.6 3M9 17l.6 3h4.8l.6-3"/>',
+  gauge:'<path d="M4 15a8 8 0 0 1 16 0"/><path d="M12 15l3.5-3.5"/><circle cx="12" cy="15" r="1.1"/>',
+  scale:'<rect x="3.5" y="4.5" width="17" height="15" rx="3.5"/><path d="M8.5 8.5h7"/><circle cx="12" cy="13.5" r="2.6"/>',
+  droplet:'<path d="M12 3.5s6 6.1 6 10A6 6 0 0 1 6 13.5c0-3.9 6-10 6-10Z"/>',
+  thermo:'<path d="M14 14.6V5a2 2 0 0 0-4 0v9.6a4 4 0 1 0 4 0Z"/><path d="M12 9.5v5"/>',
+  calendar:'<rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/>',
+  weather:'<circle cx="8" cy="7.5" r="2.6"/><path d="M8 2.4v1.3M3.5 7.5H2.2M12 4l-.9.9M4 4l.9.9"/><path d="M8.5 18.5h8a3.2 3.2 0 0 0 .2-6.4A4.3 4.3 0 0 0 9 11a3.6 3.6 0 0 0-.5 7.5Z"/>',
+  air:'<path d="M3 9h10.5a2.4 2.4 0 1 0-2.4-2.4"/><path d="M3 13.5h14a2.4 2.4 0 1 1-2.4 2.4"/><path d="M3 18h8"/>',
+  airindoor:'<path d="M4 11l8-6 8 6"/><path d="M6.5 10v8.5h11V10"/><path d="M9.5 15h3M9.5 15a2 2 0 1 1 2 2"/>',
+  flask:'<path d="M9 3h6M10 3v5.5l-5 8.2A2 2 0 0 0 6.8 20h10.4a2 2 0 0 0 1.8-3.3L14 8.5V3"/><path d="M7.6 14h8.8"/>',
+  document:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5M8.5 13h7M8.5 17h5"/>',
+  store:'<path d="M4 9.5 5 5h14l1 4.5a2.2 2.2 0 1 1-4.4 0 2.2 2.2 0 1 1-4.4 0 2.2 2.2 0 1 1-4.4 0A2.2 2.2 0 1 1 4 9.5Z"/><path d="M5 11.5V19h14v-7.5M10 19v-5h4v5"/>',
+  bell:'<path d="M6 9.5a6 6 0 0 1 12 0c0 4.5 1.8 5.5 1.8 5.5H4.2S6 14 6 9.5Z"/><path d="M10 19a2 2 0 0 0 4 0"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>',
+  chevron:'<path d="M9 5.5l6.5 6.5L9 18.5"/>',
+  chevdown:'<path d="M5.5 9l6.5 6.5L18.5 9"/>',
+  sync:'<path d="M20 11.5A8 8 0 1 0 18.6 16.4"/><path d="M20 6v5h-5"/>',
+  shield:'<path d="M12 3l7 3v5c0 5-3.6 8-7 9-3.4-1-7-4-7-9V6Z"/><path d="M9 12l2 2 4-4"/>',
+  clock:'<circle cx="12" cy="12" r="8.4"/><path d="M12 7.5V12l3 2"/>',
+  search:'<circle cx="11" cy="11" r="6.4"/><path d="M20 20l-4.2-4.2"/>',
+  check:'<path d="M5 12.5l4.5 4.5L19 7"/>',
+  robot:'<rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 8V4.5M9 4.5h6"/><circle cx="9.6" cy="13" r="1.1"/><circle cx="14.4" cy="13" r="1.1"/><path d="M2.5 12v3M21.5 12v3"/>',
+  bottle:'<path d="M9 3.5h6v2.5l1 2V19a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V8l1-2V3.5Z"/><path d="M8 12.5h8"/>',
+  bowl:'<path d="M3 11.5h18a9 9 0 0 1-18 0Z"/><path d="M7 11.5a5 5 0 0 1 10 0"/><path d="M12 3.5v3"/>',
+  expert:'<rect x="3" y="5" width="12.5" height="11" rx="2.5"/><path d="M15.5 9l5-3v9l-5-3"/><circle cx="8.7" cy="9" r="2"/><path d="M5.4 14a3.3 3.3 0 0 1 6.6 0"/>',
+  lock:'<rect x="5" y="10.5" width="14" height="9.5" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/>',
+  info:'<circle cx="12" cy="12" r="8.4"/><path d="M12 11v5M12 7.6v.4"/>',
+  node:'<circle cx="12" cy="12" r="2.4"/><circle cx="12" cy="4.6" r="1.5"/><circle cx="18.8" cy="9" r="1.5"/><circle cx="18.8" cy="15" r="1.5"/><circle cx="12" cy="19.4" r="1.5"/><circle cx="5.2" cy="15" r="1.5"/><circle cx="5.2" cy="9" r="1.5"/><path d="M12 9.6V6M14 11l3.4-1.4M14 13l3.4 1.4M12 14.4V18M10 13l-3.4 1.4M10 11 6.6 9.6"/>',
+  spark:'<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8Z"/>',
+  list:'<path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/>',
+  cuff:'<rect x="4" y="8" width="11" height="8" rx="2.5"/><path d="M15 10h2.5a2.5 2.5 0 0 1 0 5H15"/><path d="M7.5 12h3"/>',
+};
+function ic(name,size,color){size=size||20;return '<span class="ic" style="'+(color?'color:'+color:'')+'"><svg width="'+size+'" height="'+size+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">'+(IP[name]||'')+'</svg></span>';}
+const APPLE_MARK='<svg width="17" height="18" viewBox="0 0 17 20" fill="#fff"><path d="M14.05 15.5c-.27.62-.59 1.2-.96 1.72-.5.72-.92 1.22-1.24 1.5-.5.46-1.04.7-1.62.71-.42 0-.92-.12-1.5-.36-.59-.24-1.13-.36-1.62-.36-.52 0-1.07.12-1.66.36-.59.24-1.07.37-1.43.38-.56.02-1.1-.22-1.64-.73-.35-.3-.79-.82-1.31-1.56-.56-.79-1.02-1.7-1.38-2.74C.73 13.01.5 11.9.5 10.82c0-1.23.27-2.3.8-3.18a4.7 4.7 0 0 1 1.67-1.7 4.5 4.5 0 0 1 2.26-.64c.45 0 1.03.14 1.76.41.73.27 1.2.41 1.4.41.16 0 .68-.16 1.57-.48.84-.3 1.55-.42 2.13-.37 1.57.13 2.75.75 3.53 1.86-1.4.85-2.1 2.04-2.08 3.56.01 1.19.44 2.18 1.29 2.96.38.37.81.65 1.29.85-.1.3-.21.6-.34.88zM11.6.4c0 .92-.34 1.78-1.01 2.57-.81.94-1.79 1.49-2.85 1.4a2.87 2.87 0 0 1-.02-.35c0-.88.38-1.83 1.07-2.6.34-.39.78-.71 1.31-.97.53-.25 1.03-.39 1.5-.41.01.12.01.24.01.36z"/></svg>';
+const GOOGLE_MARK='<svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.7-1.57 2.68-3.88 2.68-6.62z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.8.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.03-3.7H.96v2.33A9 9 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.97 10.72a5.4 5.4 0 0 1 0-3.44V4.95H.96a9 9 0 0 0 0 8.1l3.01-2.33z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.46.9 11.43 0 9 0A9 9 0 0 0 .96 4.95l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58z"/></svg>';
+
+/* ===================== SOURCE DATA ===================== */
+const WEARABLES=[
+  {id:'apple',mono:'A',nm:'Apple Health',mt:'Steps, heart rate, sleep & workouts from iPhone + Apple Watch',badge:'live'},
+  {id:'garmin',mono:'G',nm:'Garmin',mt:'Continuous HR, HRV, stress, Body Battery, sleep & activity'},
+  {id:'oura',mono:'O',nm:'Oura',mt:'Sleep stages, readiness, HRV & skin temperature'},
+  {id:'whoop',mono:'W',nm:'Whoop',mt:'Strain, recovery, HRV, resting HR & sleep performance'},
+  {id:'polar',mono:'P',nm:'Polar',mt:'Heart rate, training load, sleep & recovery'},
+  {id:'suunto',mono:'S',nm:'Suunto',mt:'Workouts, HR, recovery & training stress'},
+  {id:'samsung',mono:'Sa',nm:'Samsung Health',mt:'Steps, HR, sleep & activity via Health Connect (Android)'},
+  {id:'ghc',mono:'Gh',nm:'Google Health Connect',mt:'Unified Android health hub — pulls every connected app'},
+  {id:'fitbit',mono:'F',nm:'Fitbit',mt:'Steps, sleep, heart rate & active zone minutes',badge:'soon'},
+  {id:'withings',mono:'Wi',nm:'Withings',mt:'Weight, sleep, heart rate & body composition',badge:'soon'},
+];
+const HUMOTRON_DEV=[
+  {id:'hband',icon:'band',nm:'Humotron Band',mt:'All-day heart rate, blood pressure, stress & activity'},
+  {id:'hring',icon:'ring',nm:'Humotron Ring',mt:'Sleep, HRV, recovery & skin temperature'},
+];
+const MONITORS=[
+  {id:'bp',icon:'gauge',nm:'Blood pressure monitor',mt:'One-tap arm cuff — systolic, diastolic & resting HR'},
+  {id:'scale',icon:'scale',nm:'Smart scale',mt:'Weight, body fat & composition trends'},
+  {id:'cgm',icon:'droplet',nm:'Continuous glucose monitor',mt:'Real-time glucose response to food, sleep & stress'},
+  {id:'temp',icon:'thermo',nm:'Smart thermometer',mt:'Skin & core body temperature'},
+];
+const ENVIRONMENT=[
+  {id:'cal',icon:'calendar',nm:'Calendar',mt:'See how your schedule shapes stress, sleep & recovery'},
+  {id:'weather',icon:'weather',nm:'Outdoor air & weather',mt:'Heat, pressure, pollen & AQI for your location — via a third-party API'},
+  {id:'indoor',icon:'airindoor',nm:'Indoor air monitor',mt:'Home air quality — CO₂, VOCs, particulates & humidity',badge:'soon'},
+];
+const CAT={hmt:{label:'Humotron devices',accent:'var(--lime)',filter:'wearables'},
+  wear:{label:'Wearables & apps',accent:'var(--cool)',filter:'wearables'},
+  mon:{label:'Health monitors',accent:'var(--series)',filter:'monitors'},
+  env:{label:'Environment',accent:'var(--watch)',filter:'environment'}};
+
+const DEV={
+  hband:{cat:'hmt',name:'Humotron Band',icon:'band',fresh:'Today',batt:33,active:true,
+    metrics:[{k:'HR',v:'53',u:'bpm',c:'var(--series)'},{k:'HRV',v:'125',u:'ms',c:'var(--lime)'}],
+    readings:[{key:'bp',nm:'Blood Pressure',v:'122/70',u:'mmHg',ts:'16 Jun · 19:31'},{key:'sbp',nm:'Systolic BP',v:'126',u:'mmHg',ts:'16 Jun · 19:31'},{key:'dbp',nm:'Diastolic BP',v:'76',u:'mmHg',ts:'16 Jun · 19:31'},{key:'hr',nm:'Heart Rate',v:'51',u:'bpm',ts:'16 Jun · 20:00'},{key:'rhr',nm:'Resting HR',v:'51',u:'bpm',ts:'13 Jun · 01:00'},{key:'hrv',nm:'Heart Rate Variability',v:'120',u:'ms',ts:'16 Jun · 19:31'},{key:'spo2',nm:'Blood Oxygen',v:'86',u:'%',ts:'16 Jun · 20:00'},{key:'steps',nm:'Steps',v:'599',u:'',ts:'16 Jun · 20:00'}]},
+  hring:{cat:'hmt',name:'Humotron Ring',icon:'ring',fresh:'Today',batt:71,active:true,
+    metrics:[{k:'Sleep',v:'82',u:'',c:'var(--cool)'},{k:'HRV',v:'64',u:'ms',c:'var(--lime)'}],
+    readings:[{key:'sleep',nm:'Sleep score',v:'82',u:'',ts:'Today · 07:10'},{key:'deep',nm:'Deep sleep',v:'1:08',u:'',ts:'Today · 07:10'},{key:'hrv',nm:'Heart Rate Variability',v:'64',u:'ms',ts:'Today · 07:10'},{key:'temp',nm:'Skin temperature',v:'+0.2',u:'°C',ts:'Today · 07:10'}]},
+  apple:{cat:'wear',name:'Apple Watch',src:'Apple Health',icon:'band',fresh:'Today',active:false,
+    metrics:[{k:'Resting HR',v:'44',u:'bpm',c:'var(--series)'},{k:'HRV',v:'30',u:'ms',c:'var(--watch)'}],
+    readings:[{key:'rhr',nm:'Resting HR',v:'44',u:'bpm',ts:'Today · 06:40'},{key:'hr',nm:'Walking HR',v:'88',u:'bpm',ts:'Today · 14:10'},{key:'hrv',nm:'Heart Rate Variability',v:'30',u:'ms',ts:'Today · 06:40'},{key:'steps',nm:'Steps',v:'3,240',u:'',ts:'Today'}]},
+  oura:{cat:'wear',name:'Oura Ring',src:'Oura',icon:'ring',fresh:'Today',active:false,
+    metrics:[{k:'Readiness',v:'78',u:'',c:'var(--lime)'},{k:'Sleep',v:'7:42',u:'',c:'var(--cool)'}],
+    readings:[{key:'readiness',nm:'Readiness',v:'78',u:'',ts:'Today · 07:00'},{key:'sleep',nm:'Sleep score',v:'80',u:'',ts:'Today · 07:00'},{key:'hrv',nm:'Heart Rate Variability',v:'58',u:'ms',ts:'Today · 07:00'}]},
+  garmin:{cat:'wear',name:'Garmin',src:'Garmin',icon:'band',fresh:'Today',active:false,
+    metrics:[{k:'Body Battery',v:'56',u:'',c:'var(--watch)'},{k:'Stress',v:'34',u:'',c:'var(--cool)'}],
+    readings:[{key:'bodybat',nm:'Body Battery',v:'56',u:'',ts:'Today'},{key:'stress',nm:'Stress',v:'34',u:'',ts:'Today'},{key:'rhr',nm:'Resting HR',v:'52',u:'bpm',ts:'Today'}]},
+  whoop:{cat:'wear',name:'Whoop',src:'Whoop',icon:'band',fresh:'Today',active:false,
+    metrics:[{k:'Recovery',v:'61',u:'%',c:'var(--lime)'},{k:'Strain',v:'12.4',u:'',c:'var(--series)'}],
+    readings:[{key:'recovery',nm:'Recovery',v:'61',u:'%',ts:'Today'},{key:'strain',nm:'Day strain',v:'12.4',u:'',ts:'Today'},{key:'hrv',nm:'Heart Rate Variability',v:'66',u:'ms',ts:'Today'}]},
+  bp:{cat:'mon',name:'Humotron Smart Cuff',icon:'gauge',fresh:'8 days ago',stale:true,active:true,
+    metrics:[{k:'SBP',v:'116',u:'mmHg',c:'var(--lime)'},{k:'DBP',v:'67',u:'mmHg',c:'var(--lime)'}],
+    readings:[{key:'bp',nm:'Blood Pressure',v:'116/67',u:'mmHg',ts:'08 Jun · 09:12'},{key:'sbp',nm:'Systolic BP',v:'116',u:'mmHg',ts:'08 Jun · 09:12'},{key:'dbp',nm:'Diastolic BP',v:'67',u:'mmHg',ts:'08 Jun · 09:12'},{key:'hr',nm:'Pulse',v:'62',u:'bpm',ts:'08 Jun · 09:12'}]},
+  scale:{cat:'mon',name:'Smart Scale',icon:'scale',fresh:'2 days ago',active:true,
+    metrics:[{k:'Weight',v:'74.0',u:'kg',c:'var(--lime)'},{k:'Body fat',v:'18',u:'%',c:'var(--cool)'}],
+    readings:[{key:'weight',nm:'Weight',v:'74.0',u:'kg',ts:'14 Jun · 07:30'},{key:'bodyfat',nm:'Body fat',v:'18',u:'%',ts:'14 Jun · 07:30'}]},
+  cgm:{cat:'mon',name:'Glucose Monitor',icon:'droplet',fresh:'Live',active:false,
+    metrics:[{k:'Glucose',v:'96',u:'mg/dL',c:'var(--lime)'},{k:'In range',v:'84',u:'%',c:'var(--lime)'}],
+    readings:[{key:'glucose',nm:'Current glucose',v:'96',u:'mg/dL',ts:'Now'},{key:'tir',nm:'Time in range',v:'84',u:'%',ts:'Today'}]},
+  temp:{cat:'mon',name:'Thermometer',icon:'thermo',fresh:'Today',active:true,
+    metrics:[{k:'Skin temp',v:'33.4',u:'°C',c:'var(--cool)'}],
+    readings:[{key:'temp',nm:'Skin temperature',v:'33.4',u:'°C',ts:'Today · 22:00'}]},
+  cal:{cat:'env',name:'Calendar',icon:'calendar',fresh:'Today',active:false,
+    metrics:[{k:'Meetings',v:'6',u:'',c:'var(--watch)'},{k:'Focus time',v:'2.5',u:'h',c:'var(--cool)'}],
+    readings:[{key:'meet',nm:'Meetings today',v:'6',u:'',ts:'Today'},{key:'focus',nm:'Focus time',v:'2.5',u:'h',ts:'Today'}]},
+  weather:{cat:'env',name:'Outdoor air & weather',icon:'weather',fresh:'Today',active:false,
+    metrics:[{k:'Humidity',v:'83',u:'%',c:'var(--cool)'},{k:'Air quality',v:'42',u:'AQI',c:'var(--lime)'}],
+    readings:[{key:'temp',nm:'Temperature',v:'14',u:'°C',ts:'Now'},{key:'humid',nm:'Humidity',v:'83',u:'%',ts:'Now'},{key:'aqi',nm:'Air quality',v:'42',u:'AQI',ts:'Now'},{key:'wind',nm:'Wind speed',v:'8',u:'km/h',ts:'Now'}]},
+};
+const ALL_SOURCES=[...WEARABLES,...HUMOTRON_DEV,...MONITORS,...ENVIRONMENT];
+
+const FOCUS=[
+  {id:'heart',icon:'heart',t:'Heart',lp:'Resting heart rate, HRV and rhythm — how hard your heart works at rest.'},
+  {id:'sleep',icon:'moon',t:'Sleep',lp:'Duration, stages and consistency — the foundation of recovery.'},
+  {id:'stress',icon:'pulse',t:'Stress',lp:'How your body responds to pressure and bounces back, read through HRV.'},
+  {id:'recovery',icon:'recovery',t:'Recovery',lp:'Whether you’re ready to push today or better off easing back.'},
+  {id:'energy',icon:'energy',t:'Energy',lp:'Daily energy and activity — output versus what’s in the tank.'},
+  {id:'focus',icon:'focus',t:'Focus',lp:'Cognitive sharpness and how the day’s load shapes your attention.'},
+];
+const INTENTS=[
+  {id:'g1',tmpl:'Clarity',t:'Make sense of my data',x:'Bring every signal into one clear picture — and tell me what it actually means.'},
+  {id:'g2',tmpl:'Performance',t:'Optimise performance & recovery',x:'Go deeper on HRV, sleep and training load. Run experiments, chase the gains.'},
+  {id:'g3',tmpl:'Guidance',t:'Find what works for me',x:'Personalised product and habit recommendations I can trust, with the reasoning shown.'},
+  {id:'g4',tmpl:'Focus',t:'Improve one thing',x:'Fix sleep, stress or energy with focused, practical daily nudges.'},
+];
+
+/* authored metric content (others fall back to template) */
+const AUTHOR={
+  'Systolic BP':{status:'Normal',sc:'var(--good)',range:'117 – 126',avg:'111.0',avgs:'Normal',
+    def:'Systolic BP is the pressure in your arteries when your heart beats, measured in mmHg via wrist-cuff inflation.',
+    why:'It’s the top number in a blood-pressure reading and one of the clearest markers of cardiovascular strain over time.',
+    insight:{ttl:'Systolic BP dips during sleep, as expected.',tag:'Night-time recovery dip',date:'08 Jun – 14 Jun',hyp:'The night-time dip is a sign of good cardiovascular recovery.'},
+    support:'Your systolic BP is in an optimal range. Maintain healthy habits to keep it steady.',
+    nudge:{ttl:'Leafy greens',body:'Eat more potassium-rich greens to support healthy vascular function.'},
+    supp:{nm:'Omega-3 Fish Oil',desc:'Supports heart health and helps maintain optimal blood pressure.'},
+    recipe:{nm:'Balanced Heart Plan',desc:'A well-rounded meal plan to sustain optimal cardiovascular function.',count:'25'}},
+  'Diastolic BP':{status:'Normal',sc:'var(--good)',range:'67 – 76',avg:'72.0',avgs:'Normal',
+    def:'Diastolic BP is the pressure in your arteries between beats, while the heart rests and refills.',
+    why:'A raised diastolic reading can signal stiffer arteries — it’s the lower number, but no less important.',
+    insight:{ttl:'Diastolic stays steady through the day.',tag:'Stable rhythm',date:'08 Jun – 14 Jun',hyp:'Low day-to-day variation points to good vascular tone.'},
+    support:'Your diastolic BP sits comfortably in range. Keep doing what you’re doing.',
+    nudge:{ttl:'Wind-down routine',body:'A calmer evening lowers overnight diastolic pressure.'},
+    supp:{nm:'Magnesium Glycinate',desc:'Supports vascular relaxation and healthy blood pressure.'},
+    recipe:{nm:'Balanced Heart Plan',desc:'A well-rounded meal plan to sustain optimal cardiovascular function.',count:'25'}},
+  'Heart Rate':{status:'Watch',sc:'var(--watch)',range:'51 – 88',avg:'62',avgs:'Slightly high',
+    def:'Heart rate is the number of times your heart beats per minute.',
+    why:'Trends in resting and active heart rate reflect fitness, stress and recovery.',
+    insight:{ttl:'Heart rate tends to stay elevated during work hours.',tag:'Work-hours pattern',date:'06 Apr – 12 Apr',hyp:'Elevated heart rate during work hours may point to work-related stress.'},
+    support:'Your heart rate runs a touch high on busy days. Short breathing breaks help bring it down.',
+    nudge:{ttl:'Breathing breaks',body:'Two minutes of slow breathing mid-afternoon can lower a stress-driven heart rate.'},
+    supp:{nm:'Magnesium Glycinate',desc:'Supports a calm nervous system and steadier resting heart rate.'},
+    recipe:{nm:'Calm & Steady Plan',desc:'Meals that support a balanced nervous system and lower resting heart rate.',count:'18'}},
+  'Heart Rate Variability':{status:'Optimal',sc:'var(--lime)',range:'58 – 125',avg:'88',avgs:'Good',
+    def:'HRV measures the variation between heartbeats — higher generally means better recovery and resilience.',
+    why:'It’s one of the most sensitive early signals of stress, fatigue and readiness to train.',
+    insight:{ttl:'HRV recovers well after rest days.',tag:'Responsive recovery',date:'08 Jun – 14 Jun',hyp:'Strong rebound after rest suggests good autonomic balance.'},
+    support:'Your HRV is healthy and responsive. Protect your sleep to keep it that way.',
+    nudge:{ttl:'Protect deep sleep',body:'Consistent sleep and onset timing are the biggest levers for HRV.'},
+    supp:{nm:'Magnesium Glycinate',desc:'Supports parasympathetic recovery and overnight HRV.'},
+    recipe:{nm:'Recovery Reset Plan',desc:'Nutrient-dense meals that support overnight recovery and HRV.',count:'21'}},
+  'Resting HR':{status:'Optimal',sc:'var(--lime)',range:'44 – 52',avg:'49',avgs:'Excellent',
+    def:'Resting heart rate is your heart rate while fully at rest — a core fitness marker.',
+    why:'A lower resting heart rate usually reflects better cardiovascular fitness and recovery.',
+    insight:{ttl:'Resting HR trending down with training.',tag:'Improving fitness',date:'08 Jun – 14 Jun',hyp:'A falling resting heart rate is a sign your training is paying off.'},
+    support:'Your resting heart rate is excellent. A clear sign of good cardiovascular fitness.',
+    nudge:{ttl:'Keep moving',body:'Regular zone-2 cardio keeps resting heart rate low over time.'},
+    supp:{nm:'Omega-3 Fish Oil',desc:'Supports cardiovascular health and a healthy resting heart rate.'},
+    recipe:{nm:'Balanced Heart Plan',desc:'A well-rounded meal plan to sustain cardiovascular health.',count:'25'}},
+  'Sleep score':{status:'Good',sc:'var(--cool)',range:'74 – 86',avg:'80',avgs:'Good',
+    def:'Your sleep score blends duration, depth, timing and disturbances into a single nightly number.',
+    why:'Sleep is the foundation for recovery, mood, focus and nearly every other metric here.',
+    insight:{ttl:'Deep sleep dips on late nights.',tag:'Timing matters',date:'08 Jun – 14 Jun',hyp:'A consistent bedtime is the strongest driver of your deep sleep.'},
+    support:'Your sleep is solid. Tightening up your bedtime would lift it further.',
+    nudge:{ttl:'Anchor your bedtime',body:'Going to bed within the same 30-minute window lifts deep sleep most.'},
+    supp:{nm:'Magnesium Glycinate',desc:'Supports relaxation and deeper, more restorative sleep.'},
+    recipe:{nm:'Recovery Reset Plan',desc:'Evening meals that support deeper, more restorative sleep.',count:'21'}},
+};
+function metricData(ctx){
+  const a=AUTHOR[ctx.nm]||{};
+  return {
+    nm:ctx.nm,v:ctx.v,u:ctx.u,ts:ctx.ts,src:ctx.src||'WristBand',
+    status:a.status||'Normal',sc:a.sc||'var(--good)',range:a.range||(ctx.v+(ctx.u?'':'')),avg:a.avg||ctx.v,avgs:a.avgs||a.status||'Normal',
+    def:a.def||(ctx.nm+' is one of the signals Humotron tracks for you, read directly from your connected source.'),
+    why:a.why||('Tracking '+ctx.nm.toLowerCase()+' over time helps Humotron spot patterns and tell you what’s changing.'),
+    insight:a.insight||{ttl:ctx.nm+' is holding steady.',tag:'Stable trend',date:'08 Jun – 14 Jun',hyp:'Low variation suggests this metric is in a healthy, stable range for you.'},
+    support:a.support||('Your '+ctx.nm.toLowerCase()+' looks healthy. Keep up your current habits.'),
+    nudge:a.nudge||{ttl:'Small daily habit',body:'A consistent routine is the simplest way to keep this metric in range.'},
+    supp:a.supp||{nm:'Daily Multivitamin',desc:'Supports overall health and fills common nutritional gaps.'},
+    recipe:a.recipe||{nm:'Balanced Daily Plan',desc:'A simple, well-rounded meal plan for everyday wellbeing.',count:'20'},
+  };
+}
+
+/* ===================== SCREENS ===================== */
+const S={};
+
+S.splash=()=>({chrome:'none',nav:false,autonext:'carousel1',html:`
+  <div style="height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;cursor:pointer" data-go="carousel1">
+    <div style="position:relative;width:170px;height:170px;animation:splashIn 1s cubic-bezier(.22,.61,.36,1)">
+      <svg viewBox="0 0 170 170" width="170" height="170">
+        <g stroke="#C4F23E" stroke-width="1" opacity=".4" fill="none">
+          <line x1="85" y1="85" x2="85" y2="25" class="ln"/><line x1="85" y1="85" x2="137" y2="55" class="ln"/>
+          <line x1="85" y1="85" x2="137" y2="115" class="ln"/><line x1="85" y1="85" x2="85" y2="145" class="ln"/>
+          <line x1="85" y1="85" x2="33" y2="115" class="ln"/><line x1="85" y1="85" x2="33" y2="55" class="ln"/></g>
+        ${[[85,25],[137,55],[137,115],[85,145],[33,115],[33,55]].map((n,i)=>`<circle cx="${n[0]}" cy="${n[1]}" r="3.6" fill="#A9C2BE" opacity=".85" style="animation:np 2.4s ease-in-out infinite;animation-delay:${i*.2}s"/>`).join('')}
+        <circle cx="85" cy="85" r="32" fill="rgba(196,242,62,.13)" class="pcore"/>
+        <circle cx="85" cy="85" r="7.5" fill="#C4F23E"/>
+      </svg>
+    </div>
+    <img src="data:image/png;base64,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" alt="humotron" style="width:230px;max-width:62%;animation:wordIn .7s ease .5s backwards"/>
+    <div class="foot" style="letter-spacing:.05em;margin-top:-4px;animation:wordIn .7s ease .75s backwards">One read on your whole body</div>
+  </div>
+  ${pulseStyle()}<style>@keyframes np{0%,100%{opacity:.4}50%{opacity:1}}</style>`});
+
+function slide(idx,eyebrow,title,sub,visual,cta,next){return {chrome:'none',nav:false,html:`
+  <div class="slidewrap" style="animation:fadeUp .5s ease">
+    <div class="slidevisual">${visual}</div>
+    <div class="slidecopy">
+      <div class="eyebrow" style="margin-bottom:12px">${eyebrow}</div>
+      <div class="h1">${title}</div><p class="sub" style="margin-top:13px">${sub}</p>
+      <div class="dots">${[0,1,2].map(i=>`<i class="${i===idx?'on':''}"></i>`).join('')}</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:14px">
+        <span class="skip" data-go="auth">Skip</span>
+        <button class="cta" style="width:auto;padding:15px 30px" data-go="${next}">${cta}</button>
+      </div></div></div>`};}
+S.carousel1=()=>slide(0,'01 · One picture','All your signals, finally in one place.','Humotron pulls your wearables, labs and daily habits into a single, plain-language read — no more scattered numbers across ten apps.',visTriangulate(),'Next','carousel2');
+S.carousel2=()=>slide(1,'02 · The why','Insight you can actually act on.','Every signal comes with the reason behind it — what it means for <em>your</em> body, and the one thing worth doing next.',visInsight(),'Next','carousel3');
+S.carousel3=()=>slide(2,'03 · Yours to keep','Your data never leaves your control.','Raw health data stays with you. We turn it into guidance — we never sell it, and commerce partners never see it.',visPrivacy(),'Get started','auth');
+
+let authTab='create';
+S.auth=()=>({chrome:'none',nav:false,html:`
+  <div class="pad" style="padding-top:40px">
+    <div style="color:#fff;font-size:24px;font-weight:800;letter-spacing:-.03em;margin-bottom:26px">humotron</div>
+    <div class="seg" style="margin-bottom:26px">
+      <div class="s ${authTab==='create'?'on':''}" data-auth="create">Create account</div>
+      <div class="s ${authTab==='login'?'on':''}" data-auth="login">Sign in</div></div>
+    <h1 class="h1 sm" style="margin-bottom:6px">${authTab==='create'?'Start your read':'Welcome back'}</h1>
+    <p class="sub" style="margin-bottom:22px">${authTab==='create'?'Two minutes to set up. Connect a device whenever you’re ready.':'Pick up exactly where you left off.'}</p>
+    <div class="lbl">Email</div>
+    <input class="field" placeholder="you@example.com" style="margin-bottom:14px"/>
+    <button class="cta" data-go="consent">Continue with email</button>
+    <div style="display:flex;align-items:center;gap:12px;margin:20px 0;color:var(--ink4);font-size:11px;font-weight:700"><div style="flex:1;height:1px;background:rgba(255,255,255,.1)"></div>OR<div style="flex:1;height:1px;background:rgba(255,255,255,.1)"></div></div>
+    <button class="cta dark" style="margin-bottom:11px" data-go="consent">${GOOGLE_MARK}&nbsp; Continue with Google</button>
+    <button class="cta dark" data-go="consent">${APPLE_MARK}&nbsp; Continue with Apple</button>
+    <p class="foot" style="text-align:center;margin-top:24px;padding-bottom:20px">By continuing you agree to our <span class="lime">Terms</span> and <span class="lime">Privacy Policy</span>.</p>
+  </div>`});
+
+S.consent=()=>({chrome:'none',nav:false,html:`
+  <div class="pad" style="padding-top:34px">
+    <div class="eyebrow" style="margin-bottom:12px">Health-data permissions</div>
+    <h1 class="h1 sm">Two consents, in plain terms.</h1>
+    <p class="sub" style="margin:11px 0 24px">You’ve accepted our terms — these two are different: explicit, revocable permissions for your <b style="color:#cfe69a">health data</b> specifically, required before we read a single signal.</p>
+    <div class="checkcard ${state.consent[0]?'on':''}" data-consent="0" style="margin-bottom:13px">
+      <div class="togglebox ${state.consent[0]?'on':''}"></div>
+      <div><div class="h3">Use my health data to personalise</div><p class="body" style="margin-top:5px">Lets Humotron read your connected signals to build your private profile. Never shared with third parties. <span class="lime">Privacy Policy</span></p></div></div>
+    <div class="checkcard ${state.consent[1]?'on':''}" data-consent="1">
+      <div class="togglebox ${state.consent[1]?'on':''}"></div>
+      <div><div class="h3">Process & secure my data</div><p class="body" style="margin-top:5px">Allows the encryption and safeguards that protect your information end to end. <span class="lime">Data Security Policy</span></p></div></div>
+    <p class="foot" style="margin-top:16px">You can withdraw either consent anytime in Settings.</p>
+  </div>
+  <div class="pad" style="position:absolute;left:0;right:0;bottom:26px"><button class="cta ${state.consent[0]&&state.consent[1]?'':'disabled'}" data-go="basics">Agree & continue</button></div>`});
+
+S.basics=()=>({chrome:'stepper:0',nav:false,html:`
+  <div class="pad" style="padding-top:18px">
+    <h1 class="h1 sm">Let’s get the basics.</h1><p class="sub" style="margin:10px 0 22px">A few details so your read is tuned to you — not an average.</p>
+    <div style="display:flex;gap:11px;margin-bottom:13px"><input class="field" value="Chinmay" style="flex:1"/><input class="field" value="Bhatt" style="flex:1"/></div>
+    <div class="lbl">Date of birth</div><input class="field" value="24 Aug 1984" style="margin-bottom:6px"/><p class="foot" style="margin-bottom:14px">You must be at least 18.</p>
+    <div class="lbl">Biological sex</div><div class="field sel" style="margin-bottom:13px"><span class="ph">Male</span>${ic('chevdown',16,'var(--ink3)')}</div><p class="foot" style="margin:-6px 0 14px">Used only to interpret your biomarkers accurately.</p>
+    <div class="lbl">Country</div><div class="field sel"><span class="ph">United Kingdom</span>${ic('chevdown',16,'var(--ink3)')}</div>
+  </div>
+  <div class="pad" style="position:absolute;left:0;right:0;bottom:26px"><button class="cta" data-go="body">Continue</button></div>`});
+
+S.body=()=>({chrome:'stepper:1',nav:false,html:`
+  <div class="pad" style="padding-top:18px">
+    <h1 class="h1 sm">A little about your body.</h1><p class="sub" style="margin:10px 0 24px">Height and weight calibrate everything from heart-rate zones to dosing.</p>
+    <div class="lbl">Height</div><div style="display:flex;gap:11px;margin-bottom:18px"><div class="seg" style="width:128px"><div class="s ${state.units.h==='cm'?'on':''}" data-unit="h:cm">cm</div><div class="s ${state.units.h==='ft'?'on':''}" data-unit="h:ft">ft</div></div><input class="field" value="${state.units.h==='cm'?'178':'5′10″'}" style="flex:1"/></div>
+    <div class="lbl">Weight</div><div style="display:flex;gap:11px"><div class="seg" style="width:128px"><div class="s ${state.units.w==='kg'?'on':''}" data-unit="w:kg">kg</div><div class="s ${state.units.w==='lb'?'on':''}" data-unit="w:lb">lb</div></div><input class="field" value="${state.units.w==='kg'?'74':'163'}" style="flex:1"/></div>
+  </div>
+  <div class="pad" style="position:absolute;left:0;right:0;bottom:26px"><button class="cta" data-go="intent">Continue</button></div>`});
+
+S.intent=()=>({chrome:'stepper:2',nav:false,html:`
+  <div class="pad" style="padding-top:18px"><h1 class="h1 sm">What brings you to Humotron?</h1><p class="sub" style="margin:10px 0 6px">Pick the one that fits best. We’ll shape your whole experience around it — and you can change it anytime.</p></div>
+  <div class="pad" style="display:flex;flex-direction:column;gap:11px;margin-top:14px">
+    ${INTENTS.map(g=>`<div class="checkcard ${state.intent===g.id?'on':''}" data-intent="${g.id}"><div class="radio"></div><div style="flex:1"><div style="display:flex;align-items:center"><span class="h3">${g.t}</span>${state.intent===g.id?`<span class="tmpl">${g.tmpl}</span>`:''}</div><p class="body" style="margin-top:4px">${g.x}</p></div></div>`).join('')}
+  </div>
+  <div class="pad" style="padding-top:16px"><p class="foot" style="text-align:center">Your home will open on the <span class="lime" style="font-weight:700">${INTENTS.find(i=>i.id===state.intent).tmpl}</span> layout, tuned to this goal.</p></div>
+  <div class="pad" style="margin-top:8px;padding-bottom:26px"><button class="cta" data-go="focus">Continue</button></div>`});
+
+S.focus=()=>({chrome:'stepper:3',nav:false,html:`
+  <div class="pad" style="padding-top:18px">
+    <h1 class="h1 sm">Where should we start?</h1>
+    <p class="sub" style="margin:10px 0 8px">Choose the areas you most want to understand first.</p>
+    <p class="foot" style="margin-bottom:16px;display:flex;align-items:center;gap:6px">${ic('info',13,'var(--ink4)')} Press and hold any tile to see what it tracks.</p>
+    <div class="grid6">${FOCUS.map(f=>`<div class="gtile ${state.focus.has(f.id)?'on':''}" data-focus="${f.id}" data-lp="${f.id}"><span class="ic">${ic(f.icon,26)}</span><span>${f.t}</span></div>`).join('')}</div>
+  </div>
+  <div class="pad" style="position:absolute;left:0;right:0;bottom:26px"><button class="cta ${state.focus.size?'':'disabled'}" data-go="notifications">Continue</button></div>`});
+
+S.notifications=()=>({chrome:'none',nav:false,ios:'notif',html:`
+  <div class="pad" style="padding-top:32px">
+    <div style="width:58px;height:58px;border-radius:18px;background:rgba(196,242,62,.12);border:1px solid rgba(196,242,62,.28);display:flex;align-items:center;justify-content:center;margin-bottom:18px;color:var(--lime)">${ic('clock',28)}</div>
+    <h1 class="h1 sm">A nudge only when it counts.</h1>
+    <p class="sub" style="margin:11px 0 22px">No streaks, no noise. We’ll reach out when a signal shifts, a reading is due, or there’s one small thing worth doing today.</p>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="nudge"><div class="ni" style="background:rgba(238,77,61,.14);color:var(--attention)">${ic('heart',18)}</div><div><div class="nt">HRV dipped overnight</div><div class="nx">Ease up today — here’s why.</div></div></div>
+      <div class="nudge"><div class="ni" style="background:rgba(240,121,94,.14);color:var(--series)">${ic('gauge',18)}</div><div><div class="nt">Cuff reading due</div><div class="nx">Your weekly BP check keeps the picture sharp.</div></div></div>
+      <div class="nudge"><div class="ni" style="background:rgba(95,183,196,.14);color:var(--cool)">${ic('moon',18)}</div><div><div class="nt">Great sleep last night</div><div class="nx">See what you did differently.</div></div></div>
+    </div>
+  </div>
+  <div class="pad" style="position:absolute;left:0;right:0;bottom:22px"><button class="cta" data-notif="on">Turn on nudges</button><div style="text-align:center;margin-top:14px"><span class="skip" data-go="processing">Maybe later</span></div></div>`});
+
+S.processing=()=>({chrome:'none',nav:false,processing:'track_day0',html:`
+  <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:0">
+    <div style="position:relative;width:230px;height:230px"><svg viewBox="0 0 230 230" width="230" height="230">
+      <g stroke="#C4F23E" stroke-width="1" opacity=".5" fill="none"><line x1="115" y1="115" x2="115" y2="66" class="ln"/><line x1="115" y1="115" x2="158" y2="91" class="ln"/><line x1="115" y1="115" x2="158" y2="139" class="ln"/><line x1="115" y1="115" x2="115" y2="164" class="ln"/><line x1="115" y1="115" x2="72" y2="139" class="ln"/><line x1="115" y1="115" x2="72" y2="91" class="ln"/></g>
+      <circle cx="115" cy="115" r="46" fill="none" stroke="#C4F23E" stroke-width="1.5" class="pr1"/><circle cx="115" cy="115" r="46" fill="none" stroke="#C4F23E" stroke-width="1.5" class="pr2"/>
+      <circle cx="115" cy="115" r="42" fill="rgba(196,242,62,.12)" class="pcore"/><circle cx="115" cy="115" r="8" fill="#C4F23E"/></svg>
+      ${[['HRV',115,34],['Sleep',186,75],['Temp',186,155],['Glucose',115,196],['Steps',44,155],['Stress',44,75]].map((l,i)=>`<div class="plab" style="left:${l[1]}px;top:${l[2]}px;animation-delay:${i*.35}s">${l[0]}</div>`).join('')}</div>
+    <div id="pstatus" style="margin-top:26px;color:#fff;font-size:17px;font-weight:700">Setting up your dashboard</div>
+    <div style="margin-top:7px;color:#8FA7A3;font-size:12.5px">Getting your ${INTENTS.find(i=>i.id===state.intent).tmpl} home ready</div></div>
+  ${pulseStyle()}<style>.plab{position:absolute;transform:translate(-50%,-50%);font-size:9.5px;font-weight:700;color:#A9C2BE;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);padding:4px 8px;border-radius:11px;animation:np 2.4s ease-in-out infinite}@keyframes np{0%,100%{opacity:.4}50%{opacity:1}}.pr1,.pr2{transform-box:fill-box;transform-origin:center;opacity:0}.pr1{animation:pe 2.4s ease-out infinite}.pr2{animation:pe 2.4s ease-out infinite 1.2s}@keyframes pe{0%{transform:scale(.6);opacity:.7}100%{transform:scale(2.4);opacity:0}}</style>`});
+
+/* ===================== VISUAL HELPERS ===================== */
+function pulseStyle(){return `<style>.pcore{transform-box:fill-box;transform-origin:center;animation:pb 2.4s ease-in-out infinite}@keyframes pb{0%,100%{transform:scale(.92);opacity:.85}50%{transform:scale(1.1);opacity:1}}.ln{stroke-dasharray:4 6;animation:pf 1.7s linear infinite}@keyframes pf{to{stroke-dashoffset:-20}}@keyframes wordIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}</style>`;}
+function visTriangulate(){return `<svg viewBox="0 0 240 200" width="100%" style="max-width:260px">
+  <g stroke="#C4F23E" stroke-width="1.2" opacity=".5" fill="none">
+   <line x1="120" y1="100" x2="120" y2="42" class="ln"/><line x1="120" y1="100" x2="178" y2="74" class="ln"/>
+   <line x1="120" y1="100" x2="178" y2="126" class="ln"/><line x1="120" y1="100" x2="120" y2="158" class="ln"/>
+   <line x1="120" y1="100" x2="62" y2="126" class="ln"/><line x1="120" y1="100" x2="62" y2="74" class="ln"/></g>
+  ${[[120,42,'HRV'],[178,74,'Sleep'],[178,126,'Temp'],[120,158,'Glucose'],[62,126,'Steps'],[62,74,'Stress']].map(n=>
+    `<circle cx="${n[0]}" cy="${n[1]}" r="4" fill="#A9C2BE"/><text x="${n[0]}" y="${n[1]-9}" fill="#8FA7A3" font-size="9" font-weight="700" text-anchor="middle">${n[2]}</text>`).join('')}
+  <circle cx="120" cy="100" r="34" fill="rgba(196,242,62,.12)" class="pcore"/><circle cx="120" cy="100" r="8" fill="#C4F23E"/>
+  </svg>${pulseStyle()}`;}
+function visInsight(){return `<div style="width:100%;max-width:260px">
+  <div class="card" style="padding:16px;border-color:rgba(196,242,62,.2)">
+    <div class="eyebrow" style="color:var(--lime);margin-bottom:8px">The read</div>
+    <div class="h3" style="line-height:1.3">Recovery is lagging your training load.</div>
+    <div style="display:flex;gap:7px;margin-top:12px;flex-wrap:wrap">
+      <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:#fff;background:rgba(240,121,94,.16);padding:6px 10px;border-radius:14px">${ic('heart',13)} HRV &darr;28%</span>
+      <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:#fff;background:rgba(95,183,196,.16);padding:6px 10px;border-radius:14px">${ic('moon',13)} Deep &darr;</span></div>
+    <div style="margin-top:14px;display:inline-flex;align-items:center;gap:7px;color:#0d1618;background:var(--lime);padding:9px 14px;border-radius:18px;font-size:12px;font-weight:700">Try one thing &rarr;</div>
+  </div></div>`;}
+function visPrivacy(){return `<div style="width:100%;max-width:250px;text-align:center">
+  <div style="width:96px;height:96px;border-radius:28px;margin:0 auto;background:rgba(196,242,62,.1);border:1px solid rgba(196,242,62,.25);display:flex;align-items:center;justify-content:center;color:var(--lime)">${ic('shield',44)}</div>
+  <div style="margin-top:18px;display:flex;align-items:center;justify-content:center;gap:7px;color:var(--ink2);font-size:11.5px;font-weight:600">
+    <span style="background:rgba(255,255,255,.06);padding:7px 11px;border-radius:14px">You</span><span style="color:var(--lime)">&rarr;</span>
+    <span style="background:rgba(196,242,62,.12);color:var(--lime);padding:7px 11px;border-radius:14px">Humotron</span><span style="color:var(--ink4)">&#10552;</span>
+    <span style="background:rgba(255,255,255,.04);padding:7px 11px;border-radius:14px;text-decoration:line-through;opacity:.6">Partner</span>
+  </div></div>`;}
+
+/* ===================== TRACK — DAY 0 ===================== */
+S.track_day0=()=>({chrome:'home:track',nav:'track',html:`
+  <div class="pad" style="padding-top:8px">
+    <div class="eyebrow" style="margin-bottom:10px">Your ${INTENTS.find(i=>i.id===state.intent).tmpl} dashboard is ready</div>
+    <h1 class="h1">Bring your body<br/>into focus.</h1>
+    <p class="sub" style="margin-top:12px">Connect one source and Track starts showing its readings — device by device. Start with whatever you already wear; add more anytime.</p>
+  </div>
+  <div style="margin:22px 22px 0" class="card">
+    <div style="padding:16px 16px 4px;display:flex;align-items:center;gap:10px"><div style="width:8px;height:8px;border-radius:50%;background:var(--lime)"></div><div class="h3">Quickest start</div></div>
+    <div class="srcrow" data-tray="wearables" style="cursor:pointer">
+      <div class="ico" style="color:var(--cool)">${ic('pulse',22)}</div>
+      <div style="flex:1"><div class="nm">Connect Apple Health or a wearable</div><div class="mt">Apple Watch, Garmin, Oura, Whoop &amp; 200+ more</div></div>
+      ${ic('chevron',18,'#7E8E8C')}
+    </div>
+  </div>
+  <div class="secthead" style="padding-bottom:8px"><div class="lt"><div class="h2">Or build it your way</div></div></div>
+  ${day0Row('hmtdev','ring','Humotron devices','Ring &amp; Band — your own hardware','var(--lime)')}
+  ${day0Row('monitors','gauge','Health monitors','Blood pressure, scale, glucose, temperature','var(--series)')}
+  ${day0Row('environment','weather','Environment','Calendar &amp; outdoor air — the context around your data','var(--watch)')}
+  ${day0Row('labs','flask','Labs &amp; records','Deep Scan bloods + upload past health reports','var(--cool)')}
+  <div style="margin:20px 22px 0;background:rgba(255,255,255,.03);border:1px solid var(--hair);border-radius:18px;padding:16px;display:flex;gap:13px;align-items:center;cursor:pointer" data-go="sources">
+    <div style="width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;color:var(--ink2)">${ic('list',20)}</div>
+    <div style="flex:1"><div class="h3" style="font-size:14px">Browse the source library</div><div class="mt" style="color:var(--ink4);font-size:11.5px;margin-top:2px">Plug-and-play devices, apps &amp; curated kit</div></div>
+    ${ic('chevron',16,'#7E8E8C')}</div>
+  <div style="height:30px"></div>`});
+function day0Row(tray,icon,nm,mt,ac){
+  return `<div class="srccard card" data-tray="${tray}" style="cursor:pointer;position:relative;overflow:hidden">
+    <div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:${ac};opacity:.8"></div>
+    <div class="srcrow"><div class="ico" style="color:${ac}">${ic(icon,22)}</div>
+      <div style="flex:1"><div class="nm">${nm}</div><div class="mt">${mt}</div></div>
+      <span style="color:${ac};display:flex">${ic('plus',18)}</span></div></div>`;
+}
+
+/* ===================== TRACK — DEVICE DASHBOARD ===================== */
+S.track_daily=()=>{
+  const ids=[...state.connected];const filt=state.trackFilter;
+  const groups=[['hmt',CAT.hmt],['wear',CAT.wear],['mon',CAT.mon],['env',CAT.env]];
+  const synced=ids.length;let cardsHTML='';
+  groups.forEach(([key,meta])=>{
+    if(filt!=='all'&&meta.filter!==filt)return;
+    const inGroup=ids.filter(id=>DEV[id]&&DEV[id].cat===key);
+    if(!inGroup.length)return;
+    cardsHTML+=`<div class="catlabel"><span class="catdot" style="background:${meta.accent}"></span><span class="t">${meta.label}</span><span class="l"></span></div>`;
+    cardsHTML+=inGroup.map(id=>devCard(id)).join('');
+  });
+  if(!cardsHTML)cardsHTML=`<div style="text-align:center;padding:40px 30px;color:var(--ink4)">No sources in this view yet.</div>`;
+  return {chrome:'home:track',nav:'track',html:`
+  <div class="greet"><div class="eyebrow">Tuesday · 16 June</div><h1 class="h1 sm" style="margin-top:6px">Morning, Chinmay.</h1></div>
+  <div class="statusline"><span class="live"></span>${synced} source${synced!==1?'s':''} connected · synced just now <span style="flex:1"></span><span class="lime" style="font-weight:700;cursor:pointer" data-go="sources">Manage ›</span></div>
+  <div class="chips">
+    ${[['all','All'],['wearables','Wearables'],['monitors','Monitors'],['environment','Environment']].map(c=>`<div class="chip ${filt===c[0]?'on':''}" data-filter="${c[0]}">${c[1]}</div>`).join('')}
+  </div>
+  ${cardsHTML}
+  <div style="margin:18px 22px 0;display:flex;align-items:center;gap:10px;color:var(--ink4);font-size:12px;font-weight:600;cursor:pointer" data-go="sources">${ic('plus',15)} Add another source</div>
+  <div style="margin:16px 22px 0;background:rgba(196,242,62,.06);border:1px solid rgba(196,242,62,.2);border-radius:18px;padding:16px;display:flex;gap:13px;align-items:center;cursor:pointer" data-tab="decode">
+    <div style="width:38px;height:38px;border-radius:12px;background:rgba(196,242,62,.12);display:flex;align-items:center;justify-content:center;color:var(--lime)">${ic('spark',18)}</div>
+    <div style="flex:1"><div class="h3" style="font-size:14px">Want the full read?</div><div class="mt" style="color:#bcd98a;font-size:11.5px;margin-top:2px">Decode triangulates every source into one daily insight.</div></div>
+    ${ic('chevron',18,'var(--lime)')}</div>
+  <div style="height:28px"></div>`};
+};
+function devCard(id){
+  const d=DEV[id];if(!d)return '';const meta=CAT[d.cat];
+  return `<div class="card devcard" data-device="${id}" style="--ac:${meta.accent}">
+    <div class="dc-top">
+      <div><div class="dc-name">${d.name}</div><div class="dc-src">${d.src?'via '+d.src:'Humotron'}</div></div>
+      <div class="dc-fresh ${d.stale?'stale':''}"><span class="sync ${d.stale?'stale':''}" style="display:inline-flex">${ic('sync',12)}</span>${d.fresh}</div>
+    </div>
+    <div class="dc-body">
+      <div class="dc-metrics">${d.metrics.map(m=>`<div><div class="dm-k">${m.k}</div><div class="dm-v" style="color:${m.c}">${m.v}${m.u?`<small>${m.u}</small>`:''}</div></div>`).join('')}</div>
+      <div class="dc-glyph" style="background:color-mix(in srgb, ${meta.accent} 14%, transparent);color:${meta.accent}">${ic(d.icon,22)}</div>
+    </div>
+    <div class="dc-foot">Explore more &rarr;</div>
+  </div>`;
+}
+
+/* ===================== DEVICE DETAIL ===================== */
+S.device=()=>{
+  const id=state.deviceId,d=DEV[id];const meta=CAT[d.cat];const tab=state.deviceTab;
+  let inner;
+  if(tab==='metrics'){
+    inner=`<div style="padding:18px 0 0">
+      <p class="foot" style="padding:0 22px 6px">Tap any reading to open its full metric page.</p>
+      ${d.readings.map(r=>`<div class="reading" data-metric="${r.key}"><div><div class="v">${r.v}${r.u?`<small>${r.u}</small>`:''}</div><div class="nm">${r.nm}</div><div class="ts">${r.ts}</div></div><span class="chev" style="display:flex">${ic('chevron',18)}</span></div>`).join('')}
+      <div style="height:20px"></div></div>`;
+  } else {
+    inner=d.readings.find(r=>AUTHOR[r.nm]&&AUTHOR[r.nm].insight)
+      ? (()=>{const r=d.readings.find(r=>AUTHOR[r.nm]&&AUTHOR[r.nm].insight);const ins=AUTHOR[r.nm].insight;return `<div style="padding:18px 0 0">
+          <div class="catlabel" style="padding-left:22px"><span class="t" style="letter-spacing:.1em">${r.nm}</span></div>
+          <div class="insightbig">
+            <div class="ttl">${ins.ttl}</div>
+            <p class="foot" style="margin-top:10px">${ins.date}</p>
+            <p class="eyebrow" style="margin-top:16px;color:var(--watch)">Hypothesis</p>
+            <p class="body" style="margin-top:6px">${ins.hyp}</p>
+            <div style="margin-top:16px;display:inline-flex;align-items:center;gap:7px;color:var(--lime);font-weight:800;font-size:13px" data-tab="decode">View in Decode &rarr;</div>
+          </div>
+          <button class="gen" data-tab="decode">${ic('plus',16)} Generate insight</button>
+          <div style="height:24px"></div></div>`;})()
+      : `<div style="padding:40px 30px;text-align:center"><div style="color:var(--lime);display:flex;justify-content:center;margin-bottom:12px">${ic('spark',30)}</div>
+          <div class="h3">No insights yet</div>
+          <p class="body" style="margin:8px auto 0;max-width:240px">Once this source has a few days of data, Humotron can spot patterns worth your attention.</p>
+          <button class="gen" style="margin-top:18px" data-tab="decode">${ic('plus',16)} Generate insight</button></div>`;
+  }
+  return {chrome:'deviceback',nav:'track',html:`
+    <div class="dhero" style="--ac:${meta.accent}">
+      <div class="dhero-row">
+        <div><div class="h2">${d.name}</div><div class="foot" style="margin-top:3px">${d.src?'via '+d.src+' · ':''}Sync ${d.fresh.toLowerCase()}</div></div>
+        <div class="dc-glyph" style="background:color-mix(in srgb, ${meta.accent} 14%, transparent);color:${meta.accent}">${ic(d.icon,22)}</div>
+      </div>
+      <div class="dhero-row" style="margin-top:16px;align-items:center">
+        ${d.active?`<button class="takebtn">${ic('plus',16)} Take reading</button><div class="bell" data-go="alerts">${ic('bell',19)}</div>`:`<div class="foot" style="color:var(--ink2)">Syncs automatically in the background</div>`}
+      </div>
+      ${d.batt!=null?`<div class="battery"><span class="dotg"></span><span class="foot" style="color:var(--lime);font-weight:700">Connected</span><div class="track"><div class="fill" style="width:${d.batt}%"></div></div><span class="foot">${d.batt}%</span></div>`:''}
+    </div>
+    <div class="mtabs">
+      <div class="mtab ${tab==='metrics'?'on':''}" data-devtab="metrics">Metrics</div>
+      <div class="mtab ${tab==='insights'?'on':''}" data-devtab="insights">Insights</div>
+    </div>
+    ${inner}`};
+};
+
+/* ===================== METRIC PAGE ===================== */
+function sparkline(sc,status){
+  // illustrative series shaped by status; range band + dashed baseline
+  const series=[58,60,57,62,59,63,61,64,60,62,59,61];
+  const w=300,h=92,n=series.length,mn=Math.min(...series)-4,mx=Math.max(...series)+4;
+  const X=i=>14+i*(w-28)/(n-1), Y=v=>h-8-((v-mn)/(mx-mn))*(h-20);
+  const pts=series.map((v,i)=>`${X(i).toFixed(1)},${Y(v).toFixed(1)}`).join(' ');
+  const bandTop=Y(mx-6),bandBot=Y(mn+6),base=Y((mn+mx)/2);
+  return `<svg viewBox="0 0 ${w} ${h}" width="100%" style="display:block">
+    <rect x="14" y="${bandTop.toFixed(1)}" width="${w-28}" height="${(bandBot-bandTop).toFixed(1)}" fill="rgba(196,242,62,.07)" rx="4"/>
+    <line x1="14" x2="${w-14}" y1="${base.toFixed(1)}" y2="${base.toFixed(1)}" stroke="rgba(255,255,255,.18)" stroke-width="1" stroke-dasharray="4 5"/>
+    <polyline points="${pts}" fill="none" stroke="${sc}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    ${series.map((v,i)=>i===n-1?`<circle cx="${X(i).toFixed(1)}" cy="${Y(v).toFixed(1)}" r="4" fill="${sc}"/>`:'').join('')}
+  </svg>`;
+}
+S.metric=()=>{
+  const ctx=state.metricCtx||{nm:'Systolic BP',v:'126',u:'mmHg',ts:'16 Jun · 19:31',src:'WristBand'};
+  const m=metricData(ctx);const pro=state.proUnlocked;
+  const view=state.trendView||'daily';
+  const accOpen=k=>state.mexpand.has(k)?'open':'';
+  const accBody=k=>state.mexpand.has(k)?'':'style="display:none"';
+  const weekly=state.weeklyGen.has(m.nm);
+  return {chrome:'metricback',nav:false,html:`
+  <div class="mp-section">Latest reading</div>
+  <div class="mp-latest">
+    <div class="big">${m.v}<small>${m.u}</small></div>
+    <div class="nm">${m.nm}</div>
+    <div class="ts">${m.ts}</div>
+    <div class="src">from ${m.src}</div>
+    <div style="margin-top:14px"><span class="status-badge" style="background:color-mix(in srgb, ${m.sc} 18%, transparent);color:${m.sc}">${m.status}</span></div>
+  </div>
+
+  <div class="mp-section">Track your trends</div>
+  <div class="mp-sub">Typical range <b style="color:#fff">${m.range}</b> ${m.u}</div>
+  <div class="chips" style="justify-content:center">
+    ${[['hourly','Hourly'],['daily','Daily'],['monthly','Monthly']].map(t=>`<div class="chip ${view===t[0]?'on':''}" data-trend="${t[0]}">${t[1]}</div>`).join('')}
+  </div>
+  <div class="chartbox">
+    ${sparkline(m.sc,m.status)}
+    <div class="chartlegend">
+      <span><i style="width:14px;height:2.4px;background:${m.sc};display:inline-block;border-radius:2px"></i> Your reading</span>
+      <span><i style="width:14px;height:0;border-top:1.5px dashed rgba(255,255,255,.4);display:inline-block"></i> Baseline</span>
+      <span><i style="width:12px;height:9px;background:rgba(196,242,62,.18);display:inline-block;border-radius:2px"></i> Typical range</span>
+    </div>
+  </div>
+
+  <div class="accordion ${accOpen('def')}" >
+    <div class="acc-head" data-acc="def"><span class="t">What is ${m.nm}?</span><span class="chev2" style="display:flex">${ic('chevdown',18)}</span></div>
+    <div class="acc-body" ${accBody('def')}>${m.def}</div>
+  </div>
+  <div class="accordion ${accOpen('why')}">
+    <div class="acc-head" data-acc="why"><span class="t">Why it matters</span><span class="chev2" style="display:flex">${ic('chevdown',18)}</span></div>
+    <div class="acc-body" ${accBody('why')}>${m.why}</div>
+  </div>
+
+  <div class="mp-section">Decode your reading</div>
+  ${pro?`
+    <div class="card" style="margin:10px 22px 0;padding:18px;border-color:rgba(196,242,62,.22)">
+      <div class="eyebrow" style="color:var(--lime);margin-bottom:8px">${ic('spark',13)}&nbsp; AI insight · ${m.insight.tag}</div>
+      <div class="h3" style="line-height:1.3">${m.insight.ttl}</div>
+      <p class="foot" style="margin-top:8px">${m.insight.date}</p>
+      <p class="body" style="margin-top:10px">${m.insight.hyp}</p>
+    </div>
+    ${weekly?`
+    <div class="card" style="margin:10px 22px 0;padding:18px">
+      <div class="eyebrow" style="margin-bottom:8px">Weekly insight</div>
+      <p class="body">${m.support} Over the last 7 days the pattern held steady — no action needed beyond your current routine.</p>
+    </div>`:`
+    <button class="gen" data-weekly="1">${ic('plus',16)} Generate this week's insight</button>`}
+  `:`
+    <div class="paywall">
+      <span class="tag">${ic('lock',12)} Digital tools</span>
+      <div class="h3" style="max-width:230px;line-height:1.3">Unlock AI insights &amp; weekly trends for every metric.</div>
+      <p class="body" style="margin-top:10px">Plain-language reasoning on each reading, weekly pattern detection, and "what to change" guidance — across your whole body.</p>
+      <div class="pw-cta"><div class="pw-buy" data-iap="1">Unlock · £2.90/mo</div><span class="foot">7-day free trial</span></div>
+      <div class="pw-meta"><span>${ic('check',12)} Cancel anytime</span><span>${ic('shield',12)} Private by default</span></div>
+    </div>
+  `}
+
+  <div class="mp-section">How you're doing</div>
+  <div class="avg-card"><div class="foot" style="text-transform:uppercase;letter-spacing:.1em">30-day average</div>
+    <div class="big" style="color:${m.sc}">${m.avg}<small style="font-size:15px;color:var(--ink3);font-weight:700"> ${m.u}</small></div>
+    <div><span class="status-badge" style="background:color-mix(in srgb, ${m.sc} 18%, transparent);color:${m.sc}">${m.avgs}</span></div>
+  </div>
+  <div class="supportive" style="background:color-mix(in srgb, ${m.sc} 12%, transparent);color:#dfe9e3">${m.support}</div>
+
+  <div class="mp-section">One thing worth doing</div>
+  <div class="card" style="margin:10px 22px 0;padding:16px;display:flex;gap:13px;align-items:flex-start">
+    <div style="width:38px;height:38px;border-radius:12px;background:rgba(196,242,62,.12);color:var(--lime);display:flex;align-items:center;justify-content:center;flex-shrink:0">${ic('spark',18)}</div>
+    <div><div class="h3" style="font-size:14.5px">${m.nudge.ttl}</div><p class="body" style="margin-top:5px">${m.nudge.body}</p></div>
+  </div>
+
+  <div class="mp-section">Recommended for you</div>
+  <div class="mp-sub" style="font-weight:600;color:var(--ink4)">From Humotron's commerce partners · chosen for this reading</div>
+  <div class="commercecard">
+    <div class="cc-img" style="background:linear-gradient(135deg,#1c3a30,#0f2620)"><span class="cc-tag">Commerce partner</span></div>
+    <div class="cc-body"><div class="eyebrow" style="margin-bottom:6px">Supplement</div><div class="h3">${m.supp.nm}</div><p class="body" style="margin-top:6px">${m.supp.desc}</p>
+      <div style="margin-top:13px;display:inline-flex;align-items:center;gap:7px;color:#0d1618;background:var(--lime);padding:10px 16px;border-radius:20px;font-size:12.5px;font-weight:800;cursor:pointer" data-toast="Opens the partner store — checkout never exposes your health data.">Shop ${ic('chevron',14)}</div></div>
+  </div>
+  <div class="commercecard">
+    <div class="cc-img" style="background:linear-gradient(135deg,#2a2417,#1a160d)"><span class="cc-tag">Commerce partner</span></div>
+    <div class="cc-body"><div class="eyebrow" style="margin-bottom:6px">Recipe bundle · ${m.recipe.count} recipes</div><div class="h3">${m.recipe.nm}</div><p class="body" style="margin-top:6px">${m.recipe.desc}</p>
+      <div style="margin-top:13px;display:inline-flex;align-items:center;gap:7px;color:#0d1618;background:var(--lime);padding:10px 16px;border-radius:20px;font-size:12.5px;font-weight:800;cursor:pointer" data-toast="Opens the recipe bundle from our partner.">View bundle ${ic('chevron',14)}</div></div>
+  </div>
+
+  <div class="mp-section">Go deeper</div>
+  <div class="followup" data-toast="Ask the Tron — your AI health companion (Decode tab).">${ic('robot',18)} <span style="flex:1">Ask the Tron about this reading</span>${ic('chevron',16)}</div>
+  <div class="followup" data-toast="Books a 1:1 with a vetted specialist · £69.">${ic('expert',18)} <span style="flex:1">Expert review &middot; £69</span>${ic('chevron',16)}</div>
+  <p class="foot" style="padding:14px 22px 6px">Follow-up questions</p>
+  ${["Why did this change overnight?","Show me my 90-day trend","What should I change first?"].map(q=>`<div class="followup" data-toast="The Tron answers follow-ups in plain language.">${ic('spark',16)} <span style="flex:1">${q}</span></div>`).join('')}
+  <div style="height:34px"></div>`};
+};
+
+/* ===================== METRIC ALERTS (bell) ===================== */
+S.alerts=()=>{
+  const id=state.deviceId,d=DEV[id];
+  return {chrome:'alertsback',nav:false,html:`
+  <div class="pad" style="padding-top:10px">
+    <h1 class="h1 sm">Alerts for ${d.name}</h1>
+    <p class="sub" style="margin:10px 0 8px">Choose which readings can nudge you. We only reach out when a value moves outside your typical range — never for streaks.</p>
+  </div>
+  <div class="pad" style="margin-top:8px">
+    ${d.readings.map(r=>`<div class="alertrow"><div><div class="nm">${r.nm}</div><div class="foot" style="margin-top:2px">Latest ${r.v}${r.u?' '+r.u:''}</div></div>
+      <div class="togglebox ${state.alerts.has(r.key)?'on':''}" data-alert="${r.key}" style="cursor:pointer"></div></div>`).join('')}
+  </div>
+  <div class="pad" style="margin-top:18px"><p class="foot">${ic('bell',12)}&nbsp; Alerts respect your quiet hours and the "nudge only when it counts" rule.</p></div>
+  <div class="pad" style="position:absolute;left:0;right:0;bottom:24px"><button class="cta" data-savealerts="1">Save changes</button></div>`};
+};
+
+/* ===================== TAB STUBS ===================== */
+S.tab_decode=()=>({chrome:'home:decode',nav:'decode',html:placeholder('spark','Decode','Plain-language insight and Tron chat live here — and this is where your sources get triangulated into one read.')});
+S.tab_biohack=()=>({chrome:'home:biohack',nav:'biohack',html:placeholder('focus','Biohack','Protocols, experiments and the Humotron Deep Scan.')});
+S.tab_profile=()=>({chrome:'home:profile',nav:'profile',html:`
+  <div class="pad" style="padding-top:12px">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:22px">
+      <div style="width:60px;height:60px;border-radius:50%;background:#2a3b3a;display:flex;align-items:center;justify-content:center;font-size:24px">🧔🏽</div>
+      <div><div class="h2">Chinmay Bhatt</div><div class="foot" style="margin-top:3px">${INTENTS.find(i=>i.id===state.intent).tmpl} plan · ${state.connected.size} sources</div></div>
+    </div>
+    ${[['shield','Privacy &amp; consents','Manage health-data permissions'],['bell','Notifications','Nudges, quiet hours &amp; alerts'],['gauge','Units &amp; preferences','cm/kg, timezone, language'],['lock','Digital tools',state.proUnlocked?'Active · £2.90/mo':'Locked — unlock AI insights'],['expert','Expert Connect','Book a specialist review'],['document','Export my data','Download everything we hold']].map(r=>`
+      <div class="srccard card" style="cursor:pointer" data-toast="Profile sub-page — outside this prototype's brief."><div class="srcrow"><div class="ico" style="color:var(--ink2)">${ic(r[0],20)}</div><div style="flex:1"><div class="nm">${r[1]}</div><div class="mt">${r[2]}</div></div>${ic('chevron',16,'#7E8E8C')}</div></div>`).join('')}
+    <div style="height:30px"></div>
+  </div>`});
+function placeholder(icon,t,x){return `<div class="placeholder"><div class="pic">${ic(icon,30)}</div><h2 class="h2">${t}</h2><p class="sub" style="max-width:250px">${x}</p><p class="foot">Stubbed so the nav works — its own journey lives in a separate file.</p></div>`;}
+
+/* ===================== SOURCES MANAGER ===================== */
+S.sources=()=>({chrome:'back:Sources',nav:'track',html:`
+  <div class="pad" style="padding-top:8px"><p class="sub">Each source feeds Track as its own card. The more you connect, the richer your dashboard — and the sharper Decode's read.</p></div>
+  ${srcSection('Wearables &amp; apps','Continuous trackers, unified through one secure link','wearables',WEARABLES,CAT.wear.accent)}
+  ${srcSection('Humotron devices','Your own Ring &amp; Band','hmtdev',HUMOTRON_DEV,CAT.hmt.accent)}
+  ${srcSection('Health monitors','Spot checks — pressure, weight, glucose, temperature','monitors',MONITORS,CAT.mon.accent)}
+  ${srcSection('Environment','The context around your body','environment',ENVIRONMENT,CAT.env.accent)}
+  <div class="secthead"><div class="lt"><div class="h2"><span class="catdot" style="background:var(--cool)"></span>Labs &amp; records</div><div class="foot" style="color:var(--ink4)">Deepen the picture with clinical data</div></div></div>
+  <div class="srccard card"><div class="srcrow"><div class="ico" style="color:var(--cool)">${ic('flask',20)}</div><div style="flex:1"><div class="nm">Humotron Deep Scan</div><div class="mt">Blood + saliva · 60+ biomarkers, mailed to your door</div></div><span class="badge b-add" data-tray="labs">Book</span></div></div>
+  <div class="srccard card"><div class="srcrow"><div class="ico" style="color:var(--cool)">${ic('document',20)}</div><div style="flex:1"><div class="nm">Upload health reports</div><div class="mt">We extract the data points from any PDF and sync them in</div></div><span class="badge b-add" data-tray="labs">Add</span></div></div>
+  <div class="srccard card"><div class="srcrow"><div class="ico" style="color:var(--cool)">${ic('list',20)}</div><div style="flex:1"><div class="nm">Health assessments</div><div class="mt">Quick questionnaires that fill the gaps devices miss</div></div><span class="badge b-add" data-tray="labs">Start</span></div></div>
+  <div style="height:30px"></div>`});
+function srcSection(title,sub,tray,items,accent){
+  const live=items.filter(d=>state.connected.has(d.id));
+  return `<div class="secthead"><div class="lt"><div class="h2"><span class="catdot" style="background:${accent}"></span>${title}</div><div class="foot" style="color:var(--ink4)">${sub}</div></div>
+    <div class="plus" data-tray="${tray}">${ic('plus',18)}</div></div>
+    ${live.length
+      ? live.map(d=>`<div class="srccard card" data-device="${d.id}" style="cursor:pointer"><div class="srcrow"><div class="ico" style="color:${accent}">${d.icon?ic(d.icon,20):`<span style="font-weight:800;font-size:14px">${d.mono||'•'}</span>`}</div><div style="flex:1"><div class="nm">${d.nm}</div><div class="mt">Syncing now · tap to view</div></div><span class="badge b-live">Connected</span></div></div>`).join('')
+      : `<div class="empty"><div class="ed">${ic('plus',16)}</div><div><div class="h3" style="font-size:13.5px">Nothing connected yet</div><div class="foot" style="color:var(--ink4);margin-top:2px">Tap + to add your first</div></div></div>`}`;
+}
+
+/* ===================== TRAYS ===================== */
+const TRAYS={
+  wearables:{t:'Connect a wearable or app',s:'One secure link — powered by Open Wearables. Your accounts, never your passwords.',items:WEARABLES},
+  hmtdev:{t:'Connect a Humotron device',s:'Pair the hardware you own.',items:HUMOTRON_DEV},
+  monitors:{t:'Add a health monitor',s:'Spot-check devices for the readings wearables miss.',items:MONITORS},
+  environment:{t:'Add context',s:'Line up your environment against your biology.',items:ENVIRONMENT},
+  labs:{t:'Labs &amp; records',s:'Bring clinical-grade data into your profile.',items:[
+    {id:'scan',icon:'flask',nm:'Book a Deep Scan',mt:'Blood + saliva · 60+ biomarkers',noconnect:true},
+    {id:'pdf',icon:'document',nm:'Upload a report (PDF)',mt:'We extract & sync the data points',noconnect:true},
+    {id:'quiz',icon:'list',nm:'Take an assessment',mt:'Cardiovascular · Sleep · Stress',noconnect:true},
+  ]},
+};
+function trayGlyph(d){return d.icon?ic(d.icon,22):`<span style="font-weight:800;font-size:15px">${d.mono||'•'}</span>`;}
+function openTray(key){
+  const cfg=TRAYS[key];if(!cfg)return;
+  document.getElementById('tray').innerHTML=`
+    <div class="trayhead"><div><div class="h2">${cfg.t}</div><p class="foot" style="color:var(--ink3);margin-top:4px;max-width:300px">${cfg.s}</p></div><span class="x" data-trayclose>${ic('plus',18)}</span></div>
+    <div class="traybody">
+      ${cfg.items.map(d=>{
+        const soon=d.badge==='soon',on=state.connected.has(d.id);
+        const tap=soon?'':d.noconnect?'data-trayclose':`data-connect="${d.id}"`;
+        return `<div class="devrow" ${tap} style="${soon?'opacity:.5':''}">
+          <div class="logo">${trayGlyph(d)}</div>
+          <div style="flex:1"><div class="nm">${d.nm}</div><div class="mt">${d.mt}</div></div>
+          ${soon?'<span class="badge b-soon">Coming soon</span>':on?'<span class="badge b-live">Connected</span>':`<span class="chev" style="display:flex">${ic('chevron',18)}</span>`}
+        </div>`;}).join('')}
+      <p class="foot" style="text-align:center;color:var(--ink4);padding:14px 20px 4px">Raw data is normalised and encrypted on connect. Commerce partners never see your signals.</p>
+    </div>`;
+  document.getElementById('tray').classList.add('on');
+  document.getElementById('scrim').classList.add('on');
+  document.querySelector('.x[data-trayclose]').style.transform='rotate(45deg)';
+}
+function closeTray(){document.getElementById('tray').classList.remove('on');document.getElementById('scrim').classList.remove('on');}
+
+/* ===================== ENGINE ===================== */
+let cur='splash';
+const TAB_SCREEN={track:()=>state.homeView==='daily'?'track_daily':'track_day0',decode:'tab_decode',biohack:'tab_biohack',profile:'tab_profile'};
+function go(id){cur=id;render();}
+function enterDaily(){if(state.connected.size===0){['hband','apple','bp','weather'].forEach(x=>state.connected.add(x));}state.homeView='daily';state.tab='track';go('track_daily');}
+function jump(id){
+  if(id==='track_day0'){state.homeView='day0';state.tab='track';go('track_day0');}
+  else if(id==='track_daily'){enterDaily();}
+  else if(id==='metric_demo'){enterDaily();state.deviceId='hband';state.metricCtx={nm:'Systolic BP',v:'126',u:'mmHg',ts:'16 Jun · 19:31',src:'Humotron Band'};go('metric');}
+  else go(id);
+}
+let autoTimer,pTimer;
+function render(){
+  clearTimeout(autoTimer);
+  hidePopover();
+  const tt=document.getElementById('toast');if(tt)tt.style.opacity='0';
+  const def=S[cur]();
+  const chrome=document.getElementById('chrome'),nav=document.getElementById('nav'),screen=document.getElementById('screen'),ios=document.getElementById('ioslayer');
+  chrome.innerHTML='';
+  if(def.chrome&&def.chrome.startsWith('stepper')){chrome.innerHTML=stepperHTML(+def.chrome.split(':')[1]);}
+  else if(def.chrome&&def.chrome.startsWith('back:')){const title=def.chrome.split(':')[1];chrome.innerHTML=`<div class="backhead"><span class="b" data-go="${state.homeView==='daily'?'track_daily':'track_day0'}">${ic('chevron',22)}</span><span class="ti">${title}</span></div>`;}
+  else if(def.chrome==='deviceback'){const d=DEV[state.deviceId];chrome.innerHTML=`<div class="backhead"><span class="b" data-go="track_daily">${ic('chevron',22)}</span><span class="ti">${d.name}</span></div>`;}
+  else if(def.chrome==='metricback'){chrome.innerHTML=`<div class="backhead"><span class="b" data-go="device">${ic('chevron',22)}</span><span class="ti">${(state.metricCtx&&state.metricCtx.nm)||'Metric'}</span></div>`;}
+  else if(def.chrome==='alertsback'){chrome.innerHTML=`<div class="backhead"><span class="b" data-go="device">${ic('chevron',22)}</span><span class="ti">Alerts</span></div>`;}
+  else if(def.chrome&&def.chrome.startsWith('home')){const t=def.chrome.split(':')[1];chrome.innerHTML=`<div style="position:relative;z-index:3;display:flex;align-items:center;justify-content:space-between;padding:6px 22px 6px"><span style="color:#fff;font-size:21px;font-weight:800;letter-spacing:-.02em">${t.charAt(0).toUpperCase()+t.slice(1)}</span></div>`;}
+
+  // back-chevron points left
+  chrome.querySelectorAll('.backhead .b svg').forEach(s=>s.style.transform='scaleX(-1)');
+
+  screen.innerHTML=def.html;
+  screen.classList.toggle('anim',cur!=='track_daily'&&cur!=='device'&&cur!=='metric');
+  screen.scrollTop=0;
+
+  if(def.nav){const active=typeof def.nav==='string'?def.nav:state.tab;nav.innerHTML=navHTML(active);}else nav.innerHTML='';
+
+  ios.innerHTML='';
+  if(def.ios==='notif'){ios.innerHTML=`<div class="iosback"><div class="iosalert"><div class="b2"><h4>&ldquo;Humotron&rdquo; Would Like to Send You Notifications</h4><p>Notifications may include alerts, sounds and icon badges. You can change this in Settings.</p></div><div class="btns"><div data-go="processing">Don't Allow</div><div class="bold" data-go="processing">Allow</div></div></div></div>`;}
+
+  if(def.autonext){autoTimer=setTimeout(()=>{if(cur==='splash')go(def.autonext);},2600);}
+  if(def.processing){cyclePStatus();setTimeout(()=>{if(cur==='processing'){clearInterval(pTimer);go(def.processing);}},2800);}
+  paint();
+}
+function stepperHTML(idx){let s='<div class="stepper">';for(let i=0;i<4;i++){s+=`<div class="node ${i<idx?'done':i===idx?'cur':''}"></div>`;if(i<3)s+=`<div class="seg2 ${i<idx?'done':''}"></div>`;}return s+`<div class="end">Dashboard</div></div>`;}
+function navHTML(active){const items=[['track','list','Track'],['decode','spark','Decode'],['biohack','focus','Biohack']];
+  return `<div class="bottombar">${items.map(i=>`<div class="bb ${active===i[0]?'on':''}" data-tab="${i[0]}"><span class="g">${ic(i[1],20)}</span><span>${i[2]}</span></div>`).join('')}<div class="bb ${active==='profile'?'on':''}" data-tab="profile"><span class="av">🧔🏽</span></div></div>`;}
+function cyclePStatus(){const steps=['Reading your signals','Finding patterns','Connecting the dots','Composing your read'];let i=0;clearInterval(pTimer);pTimer=setInterval(()=>{const el=document.getElementById('pstatus');if(!el){clearInterval(pTimer);return;}i=(i+1)%steps.length;el.textContent=steps[i];},700);}
+
+/* ===================== TOAST ===================== */
+let toastT;
+function toast(msg){let t=document.getElementById('toast');if(!t){t=document.createElement('div');t.id='toast';t.style.cssText='position:absolute;left:50%;transform:translateX(-50%);bottom:96px;z-index:30;background:#0c1416;border:1px solid rgba(196,242,62,.3);color:#dfe9e3;font-size:12.5px;font-weight:600;padding:11px 16px;border-radius:14px;max-width:300px;text-align:center;box-shadow:0 16px 40px rgba(0,0,0,.6);opacity:0;transition:.2s';document.querySelector('.phone').appendChild(t);}t.textContent=msg;requestAnimationFrame(()=>t.style.opacity='1');clearTimeout(toastT);toastT=setTimeout(()=>t.style.opacity='0',2200);}
+
+/* ===================== IAP SHEET ===================== */
+function openIAP(){const ios=document.getElementById('ioslayer');ios.innerHTML=`
+  <div class="iosback"><div class="iosalert" style="width:300px;text-align:left">
+    <div class="b2" style="text-align:center;padding-bottom:8px">
+      <div style="width:54px;height:54px;border-radius:14px;background:#0c1416;display:flex;align-items:center;justify-content:center;margin:2px auto 12px;color:var(--lime)">${ic('lock',24)}</div>
+      <h4>Humotron Digital Tools</h4>
+      <p style="margin-top:6px">AI insights, weekly trends &amp; guidance across every metric.</p>
+      <div style="margin:14px 0 4px;color:#000;font-size:15px;font-weight:800">£2.90 / month</div>
+      <p style="color:#6a6a6a;font-size:11px">7-day free trial, then £2.90/mo. Cancel anytime.</p>
+    </div>
+    <div class="btns"><div data-iapcancel>Cancel</div><div class="bold" data-iapbuy>Subscribe</div></div>
+  </div></div>`;}
+
+/* ===================== LONG-PRESS (focus tiles) ===================== */
+let lpTimer,lpFired=false;
+function showPopover(id){const f=FOCUS.find(x=>x.id===id);if(!f)return;let p=document.getElementById('popover');if(!p){p=document.createElement('div');p.id='popover';p.className='popover';document.querySelector('.phone').appendChild(p);}p.innerHTML=`<div class="eyebrow" style="margin-bottom:6px;color:var(--lime)">${f.t}</div><p class="body" style="color:#cfdad8">${f.lp}</p>`;requestAnimationFrame(()=>p.classList.add('on'));}
+function hidePopover(){const p=document.getElementById('popover');if(p)p.classList.remove('on');}
+document.addEventListener('pointerdown',e=>{const el=e.target.closest('[data-lp]');if(!el)return;lpFired=false;lpTimer=setTimeout(()=>{lpFired=true;showPopover(el.dataset.lp);},380);});
+document.addEventListener('pointerup',()=>{clearTimeout(lpTimer);setTimeout(hidePopover,1400);});
+document.addEventListener('pointerleave',()=>{clearTimeout(lpTimer);},true);
+document.addEventListener('pointercancel',()=>{clearTimeout(lpTimer);hidePopover();});
+
+/* ===================== CLICK DELEGATION ===================== */
+document.addEventListener('click',e=>{
+  let el;
+  if(e.target.closest('#toast')){return;}
+  if(e.target.closest('.iosback')&&!e.target.closest('.iosalert')){document.getElementById('ioslayer').innerHTML='';return;}
+  if(e.target.closest('[data-iapcancel]')){document.getElementById('ioslayer').innerHTML='';return;}
+  if(e.target.closest('[data-iapbuy]')){state.proUnlocked=true;document.getElementById('ioslayer').innerHTML='';render();toast('Digital tools unlocked — AI insights are live.');return;}
+  if(el=e.target.closest('[data-iap]')){openIAP();return;}
+  if(el=e.target.closest('[data-weekly]')){state.weeklyGen.add((state.metricCtx&&state.metricCtx.nm)||'');render();return;}
+  if(el=e.target.closest('[data-acc]')){const k=el.dataset.acc;state.mexpand.has(k)?state.mexpand.delete(k):state.mexpand.add(k);render();return;}
+  if(el=e.target.closest('[data-trend]')){state.trendView=el.dataset.trend;render();return;}
+  if(el=e.target.closest('[data-metric]')){const d=DEV[state.deviceId];const r=d.readings.find(x=>x.key===el.dataset.metric);if(r){state.metricCtx={nm:r.nm,v:r.v,u:r.u,ts:r.ts,src:d.src||d.name};go('metric');}return;}
+  if(el=e.target.closest('[data-alert]')){const k=el.dataset.alert;state.alerts.has(k)?state.alerts.delete(k):state.alerts.add(k);render();return;}
+  if(el=e.target.closest('[data-savealerts]')){go('device');toast('Alert preferences saved.');return;}
+  if(el=e.target.closest('[data-toast]')){toast(el.dataset.toast);return;}
+  if(e.target.id==='scrim'){closeTray();return;}
+  if(e.target.closest('[data-trayclose]')){closeTray();return;}
+  if(el=e.target.closest('[data-connect]')){state.connected.add(el.dataset.connect);state.homeView='daily';closeTray();setTimeout(()=>{state.tab='track';state.trackFilter='all';go('track_daily');},260);return;}
+  if(el=e.target.closest('[data-device]')){state.deviceId=el.dataset.device;state.deviceTab='metrics';go('device');return;}
+  if(el=e.target.closest('[data-devtab]')){state.deviceTab=el.dataset.devtab;render();return;}
+  if(el=e.target.closest('[data-filter]')){state.trackFilter=el.dataset.filter;render();return;}
+  if(el=e.target.closest('[data-tray]')){openTray(el.dataset.tray);return;}
+  if(el=e.target.closest('[data-go]')){go(el.dataset.go);return;}
+  if(el=e.target.closest('[data-jump]')){jump(el.dataset.jump);return;}
+  if(el=e.target.closest('[data-tab]')){const tb=el.dataset.tab;state.tab=tb;const scr=typeof TAB_SCREEN[tb]==='function'?TAB_SCREEN[tb]():TAB_SCREEN[tb];go(scr);return;}
+  if(el=e.target.closest('[data-notif]')){go('processing');return;}
+  if(el=e.target.closest('[data-auth]')){authTab=el.dataset.auth;render();return;}
+  if(el=e.target.closest('[data-consent]')){const i=+el.dataset.consent;state.consent[i]=!state.consent[i];render();return;}
+  if(el=e.target.closest('[data-intent]')){state.intent=el.dataset.intent;render();return;}
+  if(el=e.target.closest('[data-focus]')){if(lpFired){lpFired=false;return;}const f=el.dataset.focus;state.focus.has(f)?state.focus.delete(f):state.focus.add(f);render();return;}
+  if(el=e.target.closest('[data-unit]')){const[k,v]=el.dataset.unit.split(':');state.units[k]=v;render();return;}
+});
+
+/* ===================== GRADIENT ===================== */
+const topPole=[[0x13,0x23,0x2A],[0x16,0x3A,0x3E],[0x1C,0x4E,0x52]],botPole=[[0x0F,0x1E,0x24],[0x15,0x49,0x51],[0x20,0x5C,0x60]];
+const bg=document.getElementById('bg'),scr=document.getElementById('screen');
+const lp2=(a,b,t)=>Math.round(a+(b-a)*t),mix=(i,t)=>`rgb(${lp2(topPole[i][0],botPole[i][0],t)},${lp2(topPole[i][1],botPole[i][1],t)},${lp2(topPole[i][2],botPole[i][2],t)})`;
+function paint(){const max=Math.max(1,scr.scrollHeight-scr.clientHeight);const p=Math.max(0,Math.min(1,scr.scrollTop/max));const mid=(0.55-0.12*p)*100;bg.style.background=`linear-gradient(${160+10*p}deg, ${mix(0,p)} 0%, ${mix(1,p)} ${mid}%, ${mix(2,p)} 100%)`;}
+scr.addEventListener('scroll',paint,{passive:true});
+render();
+
+</script>
+</body>
+</html>

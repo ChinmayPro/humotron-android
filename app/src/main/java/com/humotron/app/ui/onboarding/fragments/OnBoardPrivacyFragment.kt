@@ -45,8 +45,21 @@ class OnBoardPrivacyFragment : BaseFragment(R.layout.fragment_on_board_privacy) 
         setPrivacyViews()
         binding.btnSubmit.setOnClickListener {
             prefUtils.setBoolean(ONBOARD_PRIVACY, true)
-            startActivity(Intent(requireContext(), MainActivity::class.java))
-            requireActivity().finish()
+            val user = prefUtils.getLoginResponse()
+            if (user?.isOnBoarding == true) {
+                startActivity(Intent(requireContext(), MainActivity::class.java))
+                requireActivity().finish()
+            } else {
+                if (user?.name.isNullOrEmpty()) {
+                    findNavController().navigate(R.id.personalizeFragment)
+                } else if (user?.height.isNullOrEmpty()) {
+                    val bundle = Bundle().apply { putInt("position", 1) }
+                    findNavController().navigate(R.id.personalizeFragment, bundle)
+                } else {
+                    val bundle = Bundle().apply { putInt("position", 3) }
+                    findNavController().navigate(R.id.personalizeFragment, bundle)
+                }
+            }
         }
 
         binding.cbPrivacy.setOnCheckedChangeListener { compoundButton, b ->

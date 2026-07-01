@@ -62,7 +62,12 @@
     <fragment
         android:id="@+id/fragmentWorkdayDetails"
         android:name="com.humotron.app.ui.decode.DecodeWorkdayDetailsFragment"
-        tools:layout="@layout/fragment_workday_details" />
+        tools:layout="@layout/fragment_workday_details">
+        <argument
+            android:name="reportId"
+            app:argType="string"
+            android:defaultValue="" />
+    </fragment>
 
     <fragment
         android:id="@+id/fragmentWeatherOverview"

@@ -9,6 +9,10 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.humotron.app.R
+import com.humotron.app.domain.modal.response.WorkDayStressReportDay
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class CalendarHeatmapView @JvmOverloads constructor(
     context: Context,
@@ -38,9 +42,42 @@ class CalendarHeatmapView @JvmOverloads constructor(
     
     private val daysOfWeek = listOf("S", "M", "T", "W", "T", "F", "S")
 
-    // Mock data for 30 days starting from Wednesday (offset 3)
-    private val offset = 3
-    private val totalDays = 30
+    private var offset = 0
+    private var totalDays = 30
+    private var dailyScores = mapOf<Int, Int?>()
+    
+    fun setData(days: List<WorkDayStressReportDay>) {
+        if (days.isEmpty()) return
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+        
+        val scores = mutableMapOf<Int, Int?>()
+        var firstDayCal: Calendar? = null
+        
+        for (day in days) {
+            try {
+                val date = day.date?.let { sdf.parse(it) } ?: continue
+                val cal = Calendar.getInstance().apply { time = date }
+                
+                if (firstDayCal == null || cal.timeInMillis < firstDayCal.timeInMillis) {
+                    firstDayCal = cal
+                }
+                
+                val dayOfMonth = cal.get(Calendar.DAY_OF_MONTH)
+                scores[dayOfMonth] = day.workdayStressScore
+            } catch (e: Exception) { }
+        }
+        
+        dailyScores = scores
+        
+        firstDayCal?.let {
+            // Set to 1st of month
+            it.set(Calendar.DAY_OF_MONTH, 1)
+            offset = it.get(Calendar.DAY_OF_WEEK) - 1 // Sunday=1 -> 0 offset
+            totalDays = it.getActualMaximum(Calendar.DAY_OF_MONTH)
+        }
+        
+        invalidate()
+    }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -68,15 +105,15 @@ class CalendarHeatmapView @JvmOverloads constructor(
                     
                     rect.set(x, y, x + cellWidth, y + cellHeight)
                     
-                    // Mock logic to perfectly match the prototype screenshot for April
-                    val isWeekend = col == 0 || col == 6
-                    val score = when (currentDay) {
-                        1 -> 45
-                        2, 3 -> 50
-                        else -> if (isWeekend) 60 else 30
-                    }
+                    val score = dailyScores[currentDay]
                     
-                    cellPaint.color = getZoneColor(score)
+                    if (score != null) {
+                        cellPaint.color = getZoneColor(score)
+                        cellPaint.style = Paint.Style.FILL
+                    } else {
+                        cellPaint.color = ContextCompat.getColor(context, R.color.heatmap_empty_cell)
+                        cellPaint.style = Paint.Style.FILL
+                    }
                     canvas.drawRoundRect(rect, cornerRadius, cornerRadius, cellPaint)
                     
                     val textY = y + cellHeight / 2f - (textPaint.descent() + textPaint.ascent()) / 2f

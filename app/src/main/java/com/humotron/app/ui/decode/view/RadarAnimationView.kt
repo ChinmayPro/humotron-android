@@ -50,14 +50,16 @@ class RadarAnimationView @JvmOverloads constructor(
     }
 
     // Animation values
+    var radiusDp: Float = 68f
+        set(value) {
+            field = value
+            invalidate()
+        }
     private var dashOffset = 0f
     private var coreScale = 1.0f
-    private var ring1Progress = 0.0f // 0 to 1
-    private var ring2Progress = 0.5f // 0 to 1 (offset by 0.5)
 
     private var dashAnimator: ValueAnimator? = null
     private var coreAnimator: ValueAnimator? = null
-    private var ringAnimator: ValueAnimator? = null
 
     private val decelerateInterpolator = DecelerateInterpolator()
 
@@ -66,9 +68,9 @@ class RadarAnimationView @JvmOverloads constructor(
     }
 
     private fun startAnimations() {
-        // 1. Dash path effect offset animation for crawling dots (matches HTML speed: shifts 20px over 1.6s)
+        // 1. Dash path effect offset animation for crawling dots (matches HTML speed: shifts 20px over 1.7s)
         dashAnimator = ValueAnimator.ofFloat(0f, 20f).apply {
-            duration = 1600
+            duration = 1700
             repeatCount = ValueAnimator.INFINITE
             interpolator = LinearInterpolator()
             addUpdateListener { animator ->
@@ -78,27 +80,13 @@ class RadarAnimationView @JvmOverloads constructor(
             start()
         }
 
-        // 2. Core pulse scaling animation
-        coreAnimator = ValueAnimator.ofFloat(0.9f, 1.12f).apply {
-            duration = 1100
+        // 2. Core pulse scaling animation (matches HTML: 0.92 to 1.1 over 2.4s total)
+        coreAnimator = ValueAnimator.ofFloat(0.92f, 1.10f).apply {
+            duration = 1200
             repeatCount = ValueAnimator.INFINITE
             repeatMode = ValueAnimator.REVERSE
             addUpdateListener { animator ->
                 coreScale = animator.animatedValue as Float
-                invalidate()
-            }
-            start()
-        }
-
-        // 3. Expanding rings animation
-        ringAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
-            duration = 2400
-            repeatCount = ValueAnimator.INFINITE
-            interpolator = LinearInterpolator()
-            addUpdateListener { animator ->
-                val fraction = animator.animatedFraction
-                ring1Progress = fraction
-                ring2Progress = (fraction + 0.5f) % 1.0f
                 invalidate()
             }
             start()
@@ -111,11 +99,11 @@ class RadarAnimationView @JvmOverloads constructor(
         val cx = width / 2f
         val cy = height / 2f
 
-        // Draw 6 dotted axis lines (length matches HTML: 49dp)
+        // Draw 6 dotted axis lines (length matches HTML spacing visually: 68dp)
         linePaint.pathEffect = DashPathEffect(floatArrayOf(dpToPx(4f), dpToPx(6f)), -dashOffset * dpToPx(1f))
         canvas.save()
         for (i in 0 until 6) {
-            canvas.drawLine(cx, cy, cx, cy - dpToPx(49f), linePaint)
+            canvas.drawLine(cx, cy, cx, cy - dpToPx(radiusDp), linePaint)
             canvas.rotate(60f, cx, cy)
         }
         canvas.restore()
@@ -123,7 +111,7 @@ class RadarAnimationView @JvmOverloads constructor(
         // Draw pulsing core circle
         canvas.save()
         canvas.scale(coreScale, coreScale, cx, cy)
-        canvas.drawCircle(cx, cy, dpToPx(42f), corePaint)
+        canvas.drawCircle(cx, cy, dpToPx(34f), corePaint)
         canvas.restore()
 
         // Draw static center dot
@@ -131,36 +119,12 @@ class RadarAnimationView @JvmOverloads constructor(
 
         // Draw 6 outer dots at the end of the lines
         canvas.save()
+        outerDotPaint.alpha = 255
         for (i in 0 until 6) {
-            val dotProgress = (ring1Progress + (i * 350f / 2400f)) % 1.0f
-            val pulse = if (dotProgress < 0.5f) {
-                0.4f + (dotProgress / 0.5f) * 0.6f
-            } else {
-                1.0f - ((dotProgress - 0.5f) / 0.5f) * 0.6f
-            }
-            outerDotPaint.alpha = (pulse * 255).toInt().coerceIn(0, 255)
-            canvas.drawCircle(cx, cy - dpToPx(49f), dpToPx(4f), outerDotPaint)
+            canvas.drawCircle(cx, cy - dpToPx(radiusDp), dpToPx(4f), outerDotPaint)
             canvas.rotate(60f, cx, cy)
         }
         canvas.restore()
-    }
-
-    private fun drawExpandingRing(canvas: Canvas, cx: Float, cy: Float, progress: Float) {
-        // Ring starts at scale 0.6 (radius 27.6dp) and expands to scale 2.4 (radius 110.4dp)
-        // Alpha goes from 0.7 to 0, using decelerate interpolator (ease-out in CSS)
-        val interpolatedProgress = decelerateInterpolator.getInterpolation(progress)
-        val baseRadius = dpToPx(46f)
-        val scale = 0.6f + interpolatedProgress * 1.8f
-        val radius = baseRadius * scale
-
-        val alpha = if (interpolatedProgress < 1.0f) {
-            (0.7f * (1f - interpolatedProgress) * 255).toInt().coerceIn(0, 255)
-        } else {
-            0
-        }
-
-        ringPaint.alpha = alpha
-        canvas.drawCircle(cx, cy, radius, ringPaint)
     }
 
     private fun dpToPx(dp: Float): Float {
@@ -171,6 +135,5 @@ class RadarAnimationView @JvmOverloads constructor(
         super.onDetachedFromWindow()
         dashAnimator?.cancel()
         coreAnimator?.cancel()
-        ringAnimator?.cancel()
     }
 }

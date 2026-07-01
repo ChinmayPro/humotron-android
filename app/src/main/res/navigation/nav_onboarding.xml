@@ -32,12 +32,6 @@
         tools:layout="@layout/fragment_verify_otp" />
 
     <fragment
-        android:id="@+id/accountCreateFragment"
-        android:name="com.humotron.app.ui.onboarding.fragments.AccountCreateFragment"
-        android:label="AccountCreateFragment"
-        tools:layout="@layout/fragment_account_create" />
-
-    <fragment
         android:id="@+id/personalizeFragment"
         android:name="com.humotron.app.ui.onboarding.personalize.PersonalizeFragment"
         android:label="PersonalizeFragment"

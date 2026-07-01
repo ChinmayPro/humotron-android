@@ -240,6 +240,15 @@ To get started:\n
     <string name="complete_your_picture">Complete Your Picture</string>
     <string name="your_responses_help">Your responses help make insights more accurate, actionable, and personal.</string>
     <string name="no_data_found">No data found</string>
+    <string name="no_data_available">No data available</string>
+    <string name="failed_to_load_report">Failed to load report</string>
+    <string name="workday_stress">Workday Stress</string>
+    <string name="ready_to_compose">Enough data collected — ready to compose.</string>
+    <string name="avg_stress_level_format">avg · %1$s</string>
+    <string name="workday_days_count">%1$d / 20 workday days</string>
+    <string name="workday_range_format">%1$s - %2$s · %3$d workday days</string>
+    <string name="paired_days_range_format">%1$s – %2$s · %3$d paired days</string>
+    <string name="percentage_format">%1$d%%</string>
     <string name="assessment_trigger">Assessment Trigger</string>
     <string name="understanding">Understanding</string>
     <string name="why_this_matters">Why this matters</string>

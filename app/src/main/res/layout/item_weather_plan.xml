@@ -15,7 +15,6 @@
         android:layout_width="26dp"
         android:layout_height="26dp"
         android:background="@drawable/bg_plan_letter"
-        android:backgroundTint="@color/deep_dives_lime"
         android:gravity="center"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"

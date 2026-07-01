@@ -255,6 +255,124 @@ constructor(
     }.catch {
         emit(responseHandler.handleException(ValidationException(it.message)))
     }
-}
 
+    fun getWorkDayStress(): Flow<Resource<com.humotron.app.domain.modal.response.WorkDayStressResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response =
+                responseHandler.handleResponse(api.getWorkDayStress())
+
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun getWeatherResilienceOverview(): Flow<Resource<com.humotron.app.domain.modal.response.WeatherResilienceResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response =
+                responseHandler.handleResponse(api.getWeatherResilienceOverview())
+
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun getWeatherOverview(): Flow<Resource<com.humotron.app.domain.modal.response.WeatherOverviewResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response =
+                responseHandler.handleResponse(api.getWeatherOverview())
+
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun getWeatherResilienceReportDetail(reportId: String): Flow<Resource<com.humotron.app.domain.modal.response.WeatherDetailResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response =
+                responseHandler.handleResponse(api.getWeatherResilienceReportDetail(reportId))
+
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+    fun getWorkDayStressReport(request: com.humotron.app.domain.modal.response.WorkDayStressReportRequest): Flow<Resource<com.humotron.app.domain.modal.response.WorkDayStressReportResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response =
+                responseHandler.handleResponse(api.getWorkDayStressReport(request))
+
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun getWorkdayStressOverview(): Flow<Resource<com.humotron.app.domain.modal.response.WorkDayStressOverviewResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response =
+                responseHandler.handleResponse(api.getWorkdayStressOverview())
+
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun getWorkdayStressReportById(reportId: String): Flow<Resource<com.humotron.app.domain.modal.response.WorkdayStressReportDetailResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response =
+                responseHandler.handleResponse(api.getWorkdayStressReportById(reportId))
+
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun generateWorkdayStressReport(): Flow<Resource<com.humotron.app.domain.modal.response.WorkdayStressReportDetailResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response =
+                responseHandler.handleResponse(api.generateWorkdayStressReport())
+
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+}
 

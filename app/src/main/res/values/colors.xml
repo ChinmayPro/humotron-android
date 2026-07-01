@@ -166,4 +166,6 @@
     <color name="deep_dives_day_chip_selected_bg">#1FC4F23E</color> <!-- rgba(196,242,62,.12) -->
     <color name="deep_dives_day_chip_selected_stroke">#61C4F23E</color> <!-- rgba(196,242,62,.38) -->
     <color name="deep_dives_zone_track_bg">#0FFFFFFF</color> <!-- rgba(255,255,255,.06) -->
+    <color name="heatmap_empty_cell">#1B2321</color>
+    <color name="tab_unselected_text_color">#90A0A0</color>
 </resources>

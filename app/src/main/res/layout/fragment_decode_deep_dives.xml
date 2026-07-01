@@ -15,15 +15,16 @@
 
         <!-- Header -->
         <TextView
-            style="@style/Text.11x.Manrope.Bold"
+            style="@style/Text.11x.Manrope.SemiBold"
             android:id="@+id/tvEyebrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="16dp"
             android:text="@string/label_decode"
-            android:textColor="@color/deep_dives_ink2"
+            android:textColor="#8A9997"
             android:letterSpacing="0.14"
+            android:textAllCaps="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,7 +42,7 @@
             app:layout_constraintTop_toBottomOf="@id/tvEyebrow" />
 
         <TextView
-            style="@style/Text.14x.Manrope.Regular"
+            style="@style/Text.14x.Manrope.Medium"
             android:id="@+id/tvSubtitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -60,19 +61,21 @@
             android:id="@+id/llGroupLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
+            android:paddingTop="22dp"
+            android:paddingBottom="12dp"
             app:layout_constraintTop_toBottomOf="@id/tvSubtitle">
 
             <TextView
-                style="@style/Text.11x.Manrope.Bold"
+                style="@style/Text.10x.Manrope.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/label_your_reports"
-                android:textColor="@color/insights_section_header_grey"
+                android:textColor="#73827F"
+                android:textAllCaps="true"
                 android:letterSpacing="0.12" />
 
             <View
@@ -82,6 +85,39 @@
                 android:layout_weight="1"
                 android:background="@color/deep_dives_hair" />
         </LinearLayout>
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerDeepDives"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:shimmer_auto_start="true"
+            app:shimmer_base_alpha="0.8"
+            app:shimmer_base_color="#ffffff"
+            app:shimmer_duration="1000"
+            app:layout_constraintTop_toBottomOf="@id/llGroupLabel">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="20dp"
+                android:paddingTop="12dp">
+                
+                <include layout="@layout/item_decode_metric_shimmer" />
+                <include layout="@layout/item_decode_metric_shimmer" />
+                
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <LinearLayout
+            android:id="@+id/llContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/shimmerDeepDives">
 
         <!-- Workday Stress Card -->
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -93,16 +129,14 @@
             android:background="@drawable/bg_decode_card"
             android:clickable="true"
             android:focusable="true"
-            android:padding="16dp"
-            app:layout_constraintTop_toBottomOf="@id/llGroupLabel">
+            android:padding="16dp">
 
             <TextView
-                style="@style/Text.15x.Manrope.SemiBold"
+                style="@style/Text.15x.Manrope.Bold"
                 android:id="@+id/tvWorkdayLevel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Low"
-                android:fontFamily="@font/manrope_bold"
                 android:textColor="@color/deep_dives_lime"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -124,10 +158,11 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_deep_dives_badge_ready"
                 android:paddingHorizontal="8dp"
-                android:paddingVertical="3dp"
+                android:paddingVertical="4dp"
                 android:text="@string/status_updated"
+                android:textAllCaps="true"
+                android:letterSpacing="0.05"
                 android:textColor="@color/deep_dives_lime"
-                android:textSize="9.5sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -137,7 +172,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                tools:text="⏱ Peak stress 9:01 AM · 📅 Daily Engineering Standup"
+                android:text="⏱ Peak stress 9:01 AM · 📅 Daily Engineering Standup"
                 android:textColor="@color/deep_dives_ink3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -166,8 +201,7 @@
             android:background="@drawable/bg_decode_card"
             android:clickable="true"
             android:focusable="true"
-            android:padding="16dp"
-            app:layout_constraintTop_toBottomOf="@id/cardWorkdayStress">
+            android:padding="16dp">
 
             <TextView
                 style="@style/Text.28x.Manrope.Bold"
@@ -175,7 +209,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/deep_dives_lime"
-                tools:text="47.3%"
+                android:text="47.3%"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -196,10 +230,11 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_deep_dives_badge_gen"
                 android:paddingHorizontal="8dp"
-                android:paddingVertical="3dp"
+                android:paddingVertical="4dp"
                 android:text="@string/status_next_due"
+                android:textAllCaps="true"
+                android:letterSpacing="0.05"
                 android:textColor="@color/deep_dives_watch"
-                android:textSize="9.5sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -209,7 +244,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                tools:text="Generated 09 Apr · next report collecting data"
+                android:text="Generated 09 Apr · next report collecting data"
                 android:textColor="@color/deep_dives_ink3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -227,6 +262,8 @@
                 app:layout_constraintTop_toBottomOf="@id/tvWeatherDesc" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

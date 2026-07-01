@@ -610,4 +610,33 @@ interface AppApi {
         @Part attachments: List<okhttp3.MultipartBody.Part>
     ): Response<com.humotron.app.domain.modal.response.CommonResponse>
 
+    @GET("weatherResilienceReport/impact-overview")
+    suspend fun getWeatherResilienceOverview(): Response<com.humotron.app.domain.modal.response.WeatherResilienceResponse>
+
+    @POST("device/getWorkDayStress")
+    suspend fun getWorkDayStress(
+        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0))
+    ): Response<com.humotron.app.domain.modal.response.WorkDayStressResponse>
+
+    @GET("weatherResilienceReport/overview")
+    suspend fun getWeatherOverview(): Response<com.humotron.app.domain.modal.response.WeatherOverviewResponse>
+
+    @GET("weatherResilienceReport/report/{id}")
+    suspend fun getWeatherResilienceReportDetail(@Path("id") reportId: String): Response<com.humotron.app.domain.modal.response.WeatherDetailResponse>
+
+    @POST("device/getWorkDayStressReport")
+    suspend fun getWorkDayStressReport(@Body request: com.humotron.app.domain.modal.response.WorkDayStressReportRequest): Response<com.humotron.app.domain.modal.response.WorkDayStressReportResponse>
+
+    @GET("workdayStressReport/overview")
+    suspend fun getWorkdayStressOverview(): Response<com.humotron.app.domain.modal.response.WorkDayStressOverviewResponse>
+
+    @GET("workdayStressReport/report/{id}")
+    suspend fun getWorkdayStressReportById(
+        @Path("id") reportId: String
+    ): Response<com.humotron.app.domain.modal.response.WorkdayStressReportDetailResponse>
+
+    @POST("workdayStressReport/generate")
+    suspend fun generateWorkdayStressReport(
+        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0))
+    ): Response<com.humotron.app.domain.modal.response.WorkdayStressReportDetailResponse>
 }
