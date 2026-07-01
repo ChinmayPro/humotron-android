@@ -16,6 +16,10 @@ import com.humotron.app.data.local.entity.band.BandHrvData
 import com.humotron.app.data.local.entity.band.BandSleepData
 import com.humotron.app.data.local.entity.band.BandSpO2Data
 import com.humotron.app.data.local.entity.band.BandTotalActivityData
+import com.humotron.app.data.local.entity.ring.RingActivityIntensityEntity
+import com.humotron.app.data.local.entity.ring.RingHistoricalDataEntity
+import com.humotron.app.data.local.entity.ring.RingSleepEventEntity
+import com.humotron.app.data.local.entity.ring.RingSleepSessionEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -138,5 +142,41 @@ interface SleepDao {
 
     @Query("UPDATE band_sleep SET sync = 1 WHERE id IN (:ids)")
     suspend fun syncBandSleepData(ids: List<Long>)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertRingHistoricalData(data: List<RingHistoricalDataEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertRingSleepEventData(data: List<RingSleepEventEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertRingActivityIntensityData(data: List<RingActivityIntensityEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertRingSleepSessionData(data: List<RingSleepSessionEntity>)
+
+    @Query("select * from ring_historical_data where sync = 0 order by ts asc")
+    fun getUnSyncRingHistoricalData(): Flow<List<RingHistoricalDataEntity>>
+
+    @Query("select * from ring_sleep_event where sync = 0 order by sleepTs asc")
+    fun getUnSyncRingSleepEventData(): Flow<List<RingSleepEventEntity>>
+
+    @Query("select * from ring_activity_intensity where sync = 0 order by ts asc")
+    fun getUnSyncRingActivityIntensityData(): Flow<List<RingActivityIntensityEntity>>
+
+    @Query("select * from ring_sleep_session where sync = 0 order by startTs asc")
+    fun getUnSyncRingSleepSessionData(): Flow<List<RingSleepSessionEntity>>
+
+    @Query("UPDATE ring_historical_data SET sync = 1 WHERE id IN (:ids)")
+    suspend fun syncRingHistoricalData(ids: List<Long>)
+
+    @Query("UPDATE ring_sleep_event SET sync = 1 WHERE id IN (:ids)")
+    suspend fun syncRingSleepEventData(ids: List<Long>)
+
+    @Query("UPDATE ring_activity_intensity SET sync = 1 WHERE id IN (:ids)")
+    suspend fun syncRingActivityIntensityData(ids: List<Long>)
+
+    @Query("UPDATE ring_sleep_session SET sync = 1 WHERE id IN (:ids)")
+    suspend fun syncRingSleepSessionData(ids: List<Long>)
 
 }

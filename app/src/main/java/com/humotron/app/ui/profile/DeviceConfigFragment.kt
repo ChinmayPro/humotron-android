@@ -39,8 +39,8 @@ import com.humotron.app.util.getTimeAgo
 import com.pluto.plugins.logger.PlutoLog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import lib.linktop.nexring.api.DeviceInfo
-import lib.linktop.nexring.api.NexRingManager
+import lib.smart.carering.api.CareRingManager
+import lib.smart.carering.api.DeviceInfo
 import java.time.Instant
 import javax.inject.Inject
 
@@ -87,7 +87,7 @@ class DeviceConfigFragment : BaseFragment(R.layout.fragment_device_config) {
                 showRingNotConnectedDialog()
             } else {
                 val seconds = if (binding.switchLowPowerMode.isChecked) 60 else 30
-                NexRingManager.get().settingsApi()
+                /*CareRingManager.get().settingsApi()
                     .setHealthMeasurementDuration(seconds) {
                         viewModel.setMeasureFrequency(seconds)
                         userDevice?.let {
@@ -101,7 +101,7 @@ class DeviceConfigFragment : BaseFragment(R.layout.fragment_device_config) {
                                 )
                             }
                         }
-                    }
+                    }*/
             }
         }
         binding.btnClearRing.setOnClickListener {
@@ -280,8 +280,11 @@ class DeviceConfigFragment : BaseFragment(R.layout.fragment_device_config) {
             onPositiveClick = {
                 val currBtMac = app.ringBleManager.connectedDevice?.address
                 if (currBtMac != null) {
-                    NexRingManager.get().sleepApi().removeAllDbDataBy(currBtMac)
-                    ToastUtils.showShort(requireContext(), "Data cleared successfully")
+                    CareRingManager.get().healthApi().clearHistoricalData {
+                        ToastUtils.showShort(requireContext(), "Data cleared successfully")
+                    }
+                    /*CareRingManager.get().activityApi().clearHistory {
+                    }*/
                 }
             }
         )
@@ -291,7 +294,7 @@ class DeviceConfigFragment : BaseFragment(R.layout.fragment_device_config) {
         val currentFrequency = viewModel.getMeasureFrequency().value ?: 60
         MeasureFrequencyBottomSheetDialog.newInstance(currentFrequency).apply {
             setOnSaveListener { frequency ->
-                NexRingManager.get().settingsApi()
+                /*CareRingManager.get().settingsApi()
                     .setHealthMeasurementDuration(frequency) {
                         viewModel.setMeasureFrequency(frequency)
                         userDevice?.let {
@@ -305,7 +308,7 @@ class DeviceConfigFragment : BaseFragment(R.layout.fragment_device_config) {
                                 )
                             }
                         }
-                    }
+                    }*/
             }
         }.show(childFragmentManager, MeasureFrequencyBottomSheetDialog.TAG)
     }
@@ -316,14 +319,14 @@ class DeviceConfigFragment : BaseFragment(R.layout.fragment_device_config) {
                 onRestart = {
                     val deviceType = DeviceType.from(userDevice?.deviceName)
                     if (deviceType == DeviceType.RING) {
-                        NexRingManager.get().deviceApi().reboot()
+                        CareRingManager.get().deviceApi().reboot()
                         ToastUtils.showShort(requireContext(), "Restarting ring...")
                     }
                 },
                 onShutDown = {
                     val deviceType = DeviceType.from(userDevice?.deviceName)
                     if (deviceType == DeviceType.RING) {
-                        NexRingManager.get().deviceApi().shutdown()
+                        CareRingManager.get().deviceApi().shutdown()
                         ToastUtils.showShort(requireContext(), "Shutting down ring...")
                     } else {
                         ToastUtils.showShort(requireContext(), "Shutting down device...")
@@ -408,7 +411,7 @@ class DeviceConfigFragment : BaseFragment(R.layout.fragment_device_config) {
             DeviceAction.RESTART -> {
                 when (deviceType) {
                     DeviceType.RING -> {
-                        NexRingManager.get().deviceApi().reboot()
+                        CareRingManager.get().deviceApi().reboot()
                         ToastUtils.showShort(requireContext(), "Restarting ring...")
                     }
 
@@ -429,11 +432,12 @@ class DeviceConfigFragment : BaseFragment(R.layout.fragment_device_config) {
 
             DeviceAction.RESET_FACTORY -> {
                 if (deviceType == DeviceType.RING) {
-                    NexRingManager.get().deviceApi().factoryReset()
-                    ToastUtils.showShort(
-                        requireContext(),
-                        "To reconnect your ring after reset, place it on the charger."
-                    )
+                    CareRingManager.get().deviceApi().factoryReset {
+                        ToastUtils.showShort(
+                            requireContext(),
+                            "To reconnect your ring after reset, place it on the charger."
+                        )
+                    }
                 } else {
                     ToastUtils.showShort(requireContext(), "Resetting to factory settings...")
                 }

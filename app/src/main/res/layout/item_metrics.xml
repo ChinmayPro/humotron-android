@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/_14dp"
     app:cardBackgroundColor="@color/black"
-    app:cardCornerRadius="@dimen/_8dp"
+    app:cardCornerRadius="16dp"
     app:strokeWidth="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,20 +29,20 @@
             style="@style/Text.12x.Manrope.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_2dp"
+            android:layout_marginStart="@dimen/_5dp"
             android:layout_marginBottom="@dimen/_3dp"
             android:text="C"
-            android:textColor="@color/d500"
+            android:textColor="@color/ink3"
             app:layout_constraintBottom_toBottomOf="@+id/tvValue"
             app:layout_constraintStart_toEndOf="@+id/tvValue" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvType"
-            style="@style/Text.14x.Manrope.Bold"
+            style="@style/Text.18x.Manrope.Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/heart_rate"
-            android:textColor="@color/white"
+            android:textColor="#cfdad8"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvValue" />
 
@@ -60,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/heart_rate"
-                android:textColor="@color/d500" />
+                android:textColor="@color/ink4" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

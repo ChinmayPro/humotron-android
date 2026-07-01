@@ -101,7 +101,7 @@ class RingConnectionFragment : Fragment(R.layout.fragment_ring_connection) {
                 device?.device?.address?.let {
                     prefUtils.setString(Preference.WEARABLE_RING, it)
                 }
-                if (prefUtils.getHardwareId().isNullOrEmpty()) {
+                if (prefUtils.getRingHardwareId().isNullOrEmpty()) {
                     viewModel.addHardwareInProfile(
                         AddHardware(
                             "HumotronRing",

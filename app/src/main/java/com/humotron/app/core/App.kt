@@ -5,8 +5,9 @@ import android.content.Context
 import android.os.StrictMode
 import android.util.Log
 import com.humotron.app.BuildConfig
-import com.humotron.app.bt.ring.RingBleManager
 import com.humotron.app.bt.bp.BpMachineSdkManager
+import com.humotron.app.bt.ring.RingBleManager
+import com.humotron.app.bt.weight.WeightScaleSdkManager
 import com.humotron.app.util.ActivityLifecycleCb
 import com.humotron.app.util.BandSyncManager
 import com.humotron.app.util.FontScaleContextWrapper
@@ -19,9 +20,8 @@ import com.pluto.plugins.exceptions.PlutoExceptionsPlugin
 import com.pluto.plugins.logger.PlutoLoggerPlugin
 import com.pluto.plugins.logger.PlutoTimberTree
 import com.pluto.plugins.network.PlutoNetworkPlugin
-import com.humotron.app.bt.weight.WeightScaleSdkManager
 import dagger.hilt.android.HiltAndroidApp
-import lib.linktop.nexring.api.NexRingManager
+import lib.smart.carering.api.CareRingManager
 import timber.log.Timber
 import javax.inject.Inject
 import kotlin.system.exitProcess
@@ -51,7 +51,7 @@ class App : Application() {
 
     val accountSp by lazy { createDefaultSharedPreferences() }
     val ringBleManager by lazy {
-        NexRingManager.init(this)
+        CareRingManager.init(this)
         RingBleManager(this)
     }
     val ringDeviceManager by lazy { RingDeviceManager(this) }
@@ -69,7 +69,7 @@ class App : Application() {
             initPluto()
         }
 
-        weightScaleSdkManager.initializeSdk()
+        //weightScaleSdkManager.initializeSdk()
         bpMachineSdkManager.initializeSdk()
     }
 

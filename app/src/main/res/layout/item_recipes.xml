@@ -10,7 +10,7 @@
         android:id="@+id/mainCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="#000000"
+        app:cardBackgroundColor="#081011"
         app:cardCornerRadius="28dp"
         app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,136 +20,130 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="28dp">
+            android:layout_height="wrap_content">
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/mcv_img"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_30dp"
-                app:cardCornerRadius="14dp"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_recipes"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintDimensionRatio="H,16:10"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:strokeWidth="0dp">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/iv_recipes"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:scaleType="centerCrop"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintDimensionRatio="H,16:9"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_sample_doctor" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </com.google.android.material.card.MaterialCardView>
+                app:srcCompat="@drawable/ic_sample_doctor" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/tagBundle"
                 android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:layout_marginStart="@dimen/_20dp"
-                android:layout_marginTop="@dimen/_20dp"
-                app:cardBackgroundColor="#059669"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="#FBBF24"
+                app:cardCornerRadius="12dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:shapeAppearanceOverlay="@style/BottomRoundedCard"
                 app:strokeWidth="0dp">
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:paddingStart="20dp"
-                    android:paddingEnd="20dp"
-                    android:text="Recipe Bundle"
-                    android:textColor="#FFFFFF"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_bold"
+                    android:paddingStart="12dp"
+                    android:paddingTop="6dp"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="6dp"
+                    android:text="Recipe bundle"
+                    android:textColor="#000000"
+                    android:textSize="12sp" />
 
             </com.google.android.material.card.MaterialCardView>
 
-            <TextView
-                android:id="@+id/tvRecipeBundleName"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:text="Balanced Heart Plan"
-                android:textColor="#FFFFFF"
-                android:textSize="24sp"
-                android:textStyle="bold"
+                android:padding="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/mcv_img" />
+                app:layout_constraintTop_toBottomOf="@id/iv_recipes">
 
-            <TextView
-                android:id="@+id/tvRecipeBundleDesc"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:lineSpacingExtra="4dp"
-                android:text="A well-rounded meal plan to sustain optimal cardiovascular function."
-                android:textColor="#B3B3B3"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvRecipeBundleName" />
-
-            <LinearLayout
-                android:id="@+id/layoutRecipes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvRecipeBundleDesc">
-
-                <TextView
-                    android:id="@+id/tvRecipeCount"
+                <LinearLayout
+                    android:id="@+id/layoutRecipes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="00"
-                    android:textColor="#FFFFFF"
-                    android:textSize="40sp"
-                    android:textStyle="bold" />
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/tvRecipeCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/manrope_bold"
+                        android:text="25"
+                        android:textColor="#9CA3AF"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:letterSpacing="0.1"
+                        android:text="RECIPES"
+                        android:textColor="#9CA3AF"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
 
                 <TextView
+                    android:id="@+id/tvRecipeBundleName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/manrope_bold"
+                    android:text="Balanced Heart Plan"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/layoutRecipes" />
+
+                <TextView
+                    android:id="@+id/tvRecipeBundleDesc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/manrope_medium"
+                    android:lineSpacingExtra="2dp"
+                    android:text="A well-rounded meal plan to sustain healthy cardiovascular function."
+                    android:textColor="#9CA3AF"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvRecipeBundleName" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnExplore"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_marginStart="12dp"
-                    android:text="Recipes"
-                    android:textColor="#FFFFFF"
-                    android:textSize="18sp" />
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/manrope_bold"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:text="View bundle"
+                    android:textAllCaps="false"
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    app:backgroundTint="#BEF264"
+                    app:cornerRadius="24dp"
+                    app:icon="@drawable/ic_chevron_right_24px"
+                    app:iconGravity="textEnd"
+                    app:iconTint="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvRecipeBundleDesc" />
 
-            </LinearLayout>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnExplore"
-                android:layout_width="0dp"
-                android:layout_height="64dp"
-                android:layout_marginTop="40dp"
-                android:text="Explore &amp; Book"
-                android:textAllCaps="false"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                app:backgroundTint="#A3E635"
-                app:cornerRadius="32dp"
-                app:icon="@drawable/ic_arrow_right_alt_24px"
-                app:iconGravity="textEnd"
-                app:iconTint="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layoutRecipes" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

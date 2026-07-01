@@ -2,14 +2,16 @@
 
 #Build Tools
 agp = "8.7.2"
-kotlin = "2.1.20"
+#kotlin = "2.1.20"
+kotlin = "2.3.0"
 
 #Android Core
 coreKtx = "1.15.0"
 appcompat = "1.7.0"
 activity = "1.10.0"
 constraintlayout = "2.2.0"
-material = "1.12.0"
+kotlinMetadataJvm = "2.3.0"
+material = "1.14.0"
 annotation = "1.9.1"
 
 #Lifecycle
@@ -26,7 +28,7 @@ numberPicker = "2.4.13"
 swiperefreshlayout = "1.2.0"
 wheelviewXd = "1.4.1"
 cardstackview = "2.3.4"
-otpviewVersion = "0.2.5"
+#otpviewVersion = "0.2.5"
 shimmer = "0.5.0"
 libraryVersion = "2.1.0"
 ccp = "2.7.3"
@@ -49,7 +51,7 @@ googleHttpClient = "1.42.3"
 googleApiServicesGmail = "v1-rev20220404-2.0.0"
 
 #Dependency Injection
-hiltAndroid = "2.56.1"
+hiltAndroid = "2.57.2"
 
 #Networking
 retrofitVersion = "2.9.0"
@@ -87,6 +89,7 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swiperefreshlayout" }
+kotlin-metadata-jvm = { module = "org.jetbrains.kotlin:kotlin-metadata-jvm", version.ref = "kotlinMetadataJvm" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
 
@@ -104,7 +107,7 @@ switchbutton-library = { module = "com.kyleduo.switchbutton:library", version.re
 number-picker = { module = "io.github.ShawnLin013:number-picker", version.ref = "numberPicker" }
 wheelview-xd = { module = "com.github.youxiaochen:WheelView-3d", version.ref = "wheelviewXd" }
 cardstackview = { module = "com.github.yuyakaido:cardstackview", version.ref = "cardstackview" }
-kevinschildhorn-otpview = { module = "com.github.KevinSchildhorn:OTPView", version.ref = "otpviewVersion" }
+#kevinschildhorn-otpview = { module = "com.github.KevinSchildhorn:OTPView", version.ref = "otpviewVersion" }
 shimmer = { module = "com.facebook.shimmer:shimmer", version.ref = "shimmer" }
 ccp = { module = "com.hbb20:ccp", version.ref = "ccp" }
 

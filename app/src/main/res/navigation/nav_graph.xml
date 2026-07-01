@@ -19,6 +19,16 @@
     </fragment>
 
     <fragment
+        android:id="@+id/fragmentAddSource"
+        android:name="com.humotron.app.ui.track.FragmentAddSource"
+        tools:layout="@layout/fragment_add_source" />
+
+    <fragment
+        android:id="@+id/fragmentPairHumotronDevice"
+        android:name="com.humotron.app.ui.track.PairHumotronDeviceFragment"
+        tools:layout="@layout/fragment_pair_humotron_device" />
+
+    <fragment
         android:id="@+id/fragmentDecode"
         android:name="com.humotron.app.ui.decode.DecodeFragment"
         tools:layout="@layout/fragment_decode" />

@@ -21,13 +21,17 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.humotron.app.BuildConfig
 import com.humotron.app.R
-import lib.linktop.nexring.api.PRODUCT_COLOR_DEEP_BLACK
-import lib.linktop.nexring.api.PRODUCT_COLOR_GOLDEN
-import lib.linktop.nexring.api.PRODUCT_COLOR_GOLD_SILVER_MIXED
-import lib.linktop.nexring.api.PRODUCT_COLOR_PURPLE_SILVER_MIXED
-import lib.linktop.nexring.api.PRODUCT_COLOR_ROSE_GOLD
-import lib.linktop.nexring.api.PRODUCT_COLOR_ROSE_GOLD_SILVER_MIXED
-import lib.linktop.nexring.api.PRODUCT_COLOR_SILVER
+import lib.smart.carering.api.PRODUCT_COLOR_BLACK
+import lib.smart.carering.api.PRODUCT_COLOR_BRUSHED_SILVER
+import lib.smart.carering.api.PRODUCT_COLOR_CHAMPAGNE_GOLD_SILVER_MIXED
+import lib.smart.carering.api.PRODUCT_COLOR_DARK_GRAY
+import lib.smart.carering.api.PRODUCT_COLOR_GOLD
+import lib.smart.carering.api.PRODUCT_COLOR_GOLD_SILVER_MIXED
+import lib.smart.carering.api.PRODUCT_COLOR_ROSE_GOLD
+import lib.smart.carering.api.PRODUCT_COLOR_ROSE_GOLD_SILVER_MIXED
+import lib.smart.carering.api.PRODUCT_COLOR_SILVER
+import lib.smart.carering.api.PRODUCT_COLOR_SILVER_GOLD_MIXED
+import lib.smart.carering.api.PRODUCT_COLOR_STEALTH
 import java.io.File
 import java.io.IOException
 import java.security.GeneralSecurityException
@@ -41,8 +45,8 @@ import kotlin.math.roundToInt
 import kotlin.system.exitProcess
 
 val DEBUG_ON: Boolean = BuildConfig.DEBUG
-const val TAG = "NexRingSdkApp"
-const val TAG_RING_DEBUG = "Ring Debug"
+const val TAG = "RingApp"
+const val TAG_RING_DEBUG = "RingApp"
 const val TAG_BAND_DEBUG = "Band Debug"
 
 const val ONE_DAY_TS = 86400000L
@@ -331,13 +335,17 @@ infix fun <T : Number> T.moreThan(value: T): Boolean = this.toFloat() > value.to
 
 fun Context.toRingColor(colorInt: Int): String {
     return when (colorInt) {
-        PRODUCT_COLOR_DEEP_BLACK -> getString(R.string.ring_color_deep_black)
+        PRODUCT_COLOR_BLACK -> getString(R.string.ring_color_black)
         PRODUCT_COLOR_SILVER -> getString(R.string.ring_color_sliver)
-        PRODUCT_COLOR_GOLDEN -> getString(R.string.ring_color_golden)
+        PRODUCT_COLOR_GOLD -> getString(R.string.ring_color_gold)
         PRODUCT_COLOR_ROSE_GOLD -> getString(R.string.ring_color_rose_gold)
+        PRODUCT_COLOR_SILVER_GOLD_MIXED -> getString(R.string.ring_color_silver_gold_mixed)
         PRODUCT_COLOR_GOLD_SILVER_MIXED -> getString(R.string.ring_color_gold_silver_mixed)
-        PRODUCT_COLOR_PURPLE_SILVER_MIXED -> getString(R.string.ring_color_purple_silver_mixed)
+        PRODUCT_COLOR_CHAMPAGNE_GOLD_SILVER_MIXED -> getString(R.string.ring_color_champagne_gold_silver_mixed)
         PRODUCT_COLOR_ROSE_GOLD_SILVER_MIXED -> getString(R.string.ring_color_rose_gold_silver_mixed)
+        PRODUCT_COLOR_BRUSHED_SILVER -> getString(R.string.ring_color_brushed_silver)
+        PRODUCT_COLOR_STEALTH -> getString(R.string.ring_color_stealth)
+        PRODUCT_COLOR_DARK_GRAY -> getString(R.string.ring_color_dark_gray)
         else -> "-"
     }
 }

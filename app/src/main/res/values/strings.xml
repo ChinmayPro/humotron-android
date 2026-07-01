@@ -107,7 +107,7 @@
     <string name="humotron_smart_ring">Humotron Smart Ring</string>
     <string name="take_readings">Take Readings</string>
     <string name="connected">Connected</string>
-    <string name="view_all_metrics_and_ntake_the_next_step">View all metrics and take the\nnext step</string>
+    <string name="view_all_metrics_and_ntake_the_next_step">View all metrics and take the next step</string>
     <string name="key_readings">Key Readings</string>
     <string name="heart_rate">Heart Rate</string>
     <string name="the_humotron_biometrics">The Humotron Biometrics</string>
@@ -196,8 +196,8 @@
     <string name="device_not_visible_message">
         If you don’t see the device you wish to connect, make sure it is powered on, the device’s Bluetooth is turned on, and try bringing it closer to your phone.
     </string>
-    <string name="your_latest_reading">Your latest\nreading</string>
-    <string name="track_your_trends">Track your\ntrends</string>
+    <string name="your_latest_reading">Latest reading</string>
+    <string name="track_your_trends">Track your trends</string>
     <string name="typical_range">Typical Range</string>
     <string name="source">Source:</string>
     <string name="view_insight">View Insight</string>
@@ -209,11 +209,6 @@
     <string name="sleep_quality">Sleep Quality</string>
     <string name="respiratory">Respiratory</string>
     <string name="cardiovascular">Cardiovascular</string>
-    <string name="insight_content">Insights build over time as we learn your rhythms.\n\n
-To get started:\n
-• Keep wearing your device throughout the day and night\n
-• We’ll unlock insights after around 30 days of data
-</string>
     <string name="view_all_your_insights_here">View all your insights here.</string>
     <string name="connecting_to_device">Connecting to device</string>
     <string name="no_device_found">No device found</string>
@@ -890,5 +885,164 @@ To get started:\n
     <string name="contact_additional_notes_title">Additional notes (optional)</string>
     <string name="contact_additional_notes_desc">Anything else we should know?</string>
     <string name="contact_additional_notes_hint">Type your message here...</string>
+
+    <string name="date_eyebrow">TUESDAY · 16 JUNE</string>
+    <string name="greeting_title">Morning, Chinmay.</string>
+    <string name="status_line">5 sources feeding Track · synced just now</string>
+
+    <string name="tab_live">Live &amp; streaming</string>
+    <string name="tab_clinical">Tests &amp; check-ins</string>
+
+    <string name="device_band">Humotron Band</string>
+    <string name="device_ring">Humotron Ring</string>
+    <string name="src_humotron">via Humotron</string>
+    <string name="sync_today">Today</string>
+    <string name="action_explore">Explore readings →</string>
+
+    <string name="nav_track">Track</string>
+    <string name="nav_decode">Decode</string>
+    <string name="nav_biohack">Biohack</string>
+    <string name="nav_profile">Profile</string>
+
+    <!-- Track screen -->
+    <string name="track_sources">Sources</string>
+    <string name="track_live_streaming">Live &amp; streaming</string>
+    <string name="track_tests_check_ins">Tests &amp; check-ins</string>
+    <string name="track_your_picture">Your picture</string>
+    <string name="track_areas_covered_format">%1$d of %2$d areas covered</string>
+    <string name="track_areas_covered_text">5 of 6 areas covered</string>
+    <string name="track_coverage_note">The more areas you cover, the sharper every reading and recommendation. 1 area still dark.</string>
+    <string name="track_add_source">Add a source</string>
+    <string name="track_add_source_subtitle">Every source you bring in makes your picture more complete - and every reading and recommendation sharper. With Humotron, more is genuinely better.</string>
+    <string name="track_more_sources_sharper_reads">Decode triangulates every source into one daily insight.</string>
+    <string name="track_want_full_read">Want the full read?</string>
+    <string name="track_decode_copy">Decode triangulates every source into one daily insight.</string>
+    <string name="track_explore_readings">Explore readings →</string>
+    <string name="track_take_fresh_one">Reading is 8 days old · take a fresh one →</string>
+    <string name="track_add_source_note">Track is empty for now. Add your first source and your readings start flowing in - device by device. Start with whatever you already wear; add more anytime. The more you bring in, the sharper the picture.</string>
+    <string name="track_already_wearing_something">Already wearing something?</string>
+    <string name="track_your_humotron_devices">Your Humotron devices</string>
+    <string name="track_go_deeper">Go deeper</string>
+    <string name="track_easiest_start">Easiest start</string>
+    <string name="track_connect_wearable_desc">Whoop, Oura, Apple Watch, Garmin and 200+ more. We read your existing history straight in.</string>
+    <string name="track_adds_sleep_recovery_hrv">Adds sleep • recovery • heart rate • HRV</string>
+    <string name="track_pair_device_desc">Ring, Wrist Band, Smart Scale or Smart Cuff - your own hardware, paired over Bluetooth with instant on-device scans.</string>
+    <string name="track_adds_live_readings">Adds live readings • on-demand scans</string>
+    <string name="track_deep_scan_desc">Blood and saliva collected at home and posted back. 60+ biomarkers decoded into your metrics.</string>
+    <string name="track_adds_60_plus_biomarkers">Adds 60+ biomarkers</string>
+    <string name="track_assessment_desc">Short questionnaires matched to your profile - they capture the context devices can’t see.</string>
+    <string name="track_adds_context_devices_miss">Adds context devices miss</string>
+    <string name="track_upload_report_desc">Drop in any lab PDF and we extract every data point straight into Track.</string>
+    <string name="track_adds_data_from_any_pdf">Adds data from any PDF</string>
+    <string name="track_data_privacy_note">Your data stays in Humotron. It’s used only to power your own readings and guidance - never sold, and never shared with anyone else.</string>
+    <string name="track_weather_source">Outdoor air &amp; weather</string>
+    <string name="track_smart_suggestions">Smart suggestions</string>
+    <string name="track_expand_guidance">Expand each metric with guidance &amp; next steps</string>
+    <string name="track_surface_best_metrics">Surface the metrics most worth tracking for you</string>
+    <string name="track_no_live_sources_title">No live sources streaming</string>
+    <string name="track_no_live_sources_body">Add a wearable or pair a Humotron device to start the flow.</string>
+    <string name="track_no_reports_title">No reports yet</string>
+    <string name="track_no_reports_body">Upload a blood test and we\u2019ll map it to your metrics.</string>
+
+    <!-- Pair Humotron Device -->
+    <string name="pair_humotron_devices_title">Your Humotron devices</string>
+    <string name="pair_humotron_devices_subtitle">Pair the hardware you own. Each one brings its own signals into Track - pick a device to connect.</string>
+    <string name="pair_humotron_devices_footer">Don't have one yet? Humotron devices pair over Bluetooth and start feeding Track the moment they connect.</string>
+    <string name="pair_humotron_ring_title">Ring</string>
+    <string name="pair_humotron_ring_kind">Wearable</string>
+    <string name="pair_humotron_ring_desc">Recovery, sleep, HRV and temperature - 24/7, from your finger.</string>
+    <string name="pair_humotron_band_title">Wrist Band</string>
+    <string name="pair_humotron_band_kind">Wearable</string>
+    <string name="pair_humotron_band_desc">Continuous heart rate, strain and movement on your wrist.</string>
+    <string name="pair_humotron_scale_title">Smart Scale</string>
+    <string name="pair_humotron_scale_kind">Body composition</string>
+    <string name="pair_humotron_scale_desc">Weight and full body composition in a single step.</string>
+    <string name="pair_humotron_cuff_title">Smart Cuff</string>
+    <string name="pair_humotron_cuff_kind">Blood pressure &amp; ECG</string>
+    <string name="pair_humotron_cuff_desc">Clinical-grade blood pressure and single-lead ECG.</string>
+
+    <!-- Metrics screen -->
+    <string name="metrics_screen_title">Metrics</string>
+    <string name="metrics_screen_subtitle">Tracking and future metrics, one place.</string>
+    <string name="metrics_all_one_place">All your metrics, one place.</string>
+    <string name="metrics_tracking_tab">Tracking</string>
+    <string name="metrics_yet_to_track_tab">Yet to track</string>
+    <string name="metrics_smart_suggestions">Smart suggestions</string>
+    <string name="metrics_tracking_label">Tracking</string>
+    <string name="metrics_yet_to_track_label">Yet to track</string>
+    <string name="metrics_blood_pressure">Blood Pressure</string>
+    <string name="metrics_humotron_band">Humotron Band</string>
+    <string name="metrics_timed_range">20 May - 17 Jun 26</string>
+    <string name="metrics_sbp">SBP</string>
+    <string name="metrics_hrv">HRV</string>
+    <string name="metrics_explore_readings">Explore readings</string>
+    <string name="metrics_normal_status">Normal</string>
+    <string name="metrics_bp_guidance">Your blood pressure is sitting in a healthy range. Keep your current movement and salt habits.</string>
+    <string name="metrics_bp_reco_1">Keep up regular movement to support circulation.</string>
+    <string name="metrics_bp_reco_2">Hold steady on sodium to keep readings stable.</string>
+    <string name="metrics_supplements_cta">Supplements</string>
+    <string name="metrics_recipes_cta">Recipes</string>
+    <string name="metrics_sleep_score">Sleep score</string>
+    <string name="metrics_humotron_ring">Humotron Ring</string>
+    <string name="metrics_sleep_label">Sleep</string>
+    <string name="metrics_weight">Weight</string>
+    <string name="metrics_smart_scale">Smart Scale</string>
+    <string name="metrics_total_sleep_duration">Total Sleep Duration</string>
+    <string name="metrics_total_sleep_desc">Total sleep duration tracks how many hours you sleep each night, detected from motion and heart-rate patterns.</string>
+    <string name="metrics_track_with_ring">Track with Humotron Ring</string>
+    <string name="metrics_deep_sleep_duration">Deep Sleep Duration</string>
+    <string name="metrics_deep_sleep_desc">Deep sleep measures the share of the night spent in the most restorative phase.</string>
+    <string name="metrics_glucose_response">Glucose Response</string>
+    <string name="metrics_glucose_desc">How your blood sugar moves in real time after food, sleep and stress.</string>
+    <string name="metrics_track_with_cgm">Track with a device</string>
+    <string name="metrics_track_with_glucose_monitor">Track with Glucose Monitor</string>
+    <string name="metrics_skin_temperature">Skin Temperature</string>
+    <string name="metrics_skin_temp_desc">Skin temperature trend, read overnight as a deviation from your personal baseline.</string>
+    <string name="metrics_smart_suggestions_hint">Expand each metric with guidance &amp; next steps</string>
+    <string name="metrics_bp_value">122/70</string>
+    <string name="metrics_bp_unit">mmHg</string>
+    <string name="metrics_bp_meta">20 May - 17 Jun 26 • Humotron Band</string>
+    <string name="metrics_hrv_value">88</string>
+    <string name="metrics_hrv_unit">ms</string>
+    <string name="metrics_humotron_band_meta">20 May - 17 Jun 26 • Humotron Band</string>
+    <string name="metrics_resting_hr_value">51</string>
+    <string name="metrics_resting_hr_unit">bpm</string>
+    <string name="metrics_resting_hr_label">Resting HR</string>
+    <string name="metrics_sleep_score_value">82</string>
+    <string name="metrics_humotron_ring_meta">20 May - 17 Jun 26 • Humotron Ring</string>
+    <string name="metrics_weight_value">74.0</string>
+    <string name="metrics_weight_unit">kg</string>
+    <string name="metrics_smart_scale_meta">20 May - 17 Jun 26 • Smart Scale</string>
+    <string name="turn_on_smart_suggestions">Turn on Smart Suggestions to see what each reading means for you</string>
+    <string name="no_insight_content_des">Once this source has a few days of data,\nHumotron can spot patterns worth your\nattention.</string>
+    <string name="generate_insight">Generate insight</string>
+    <string name="decode_your_reading">Decode your Reading</string>
+    <string name="how_you_are_doing">How you are doing</string>
+    <string name="surface_the_metrics">Surface the metrics most worth tracking for you</string>
+    <string name="training_strain">Training Strain</string>
+    <string name="how_much_cardiovascular_load">How much cardiovascular load you have taken on across the day.</string>
+    <string name="clinical_lab_title">Clinical &amp; lab</string>
+    <string name="clinical_lab_desc">Spot-checks that deepen the picture</string>
+    <string name="deep_scan_card_desc">Blood + saliva · 60+ biomarkers, mailed to your door</string>
+    <string name="book">Book</string>
+    <string name="assessments_title">Assessments</string>
+    <string name="assessments_desc">Matched to your profile — fill the gaps devices miss</string>
+    <string name="cardio_health_title">Cardiovascular Health</string>
+    <string name="male_40_years">Male · 40+ years old</string>
+    <string name="resume">Resume</string>
+    <string name="questions_answered_format">%1$d/%2$d questions answered</string>
+    <string name="sleep_quality_title">Sleep Quality</string>
+    <string name="ring_detected_restless">Ring detected restless nights</string>
+    <string name="start">Start</string>
+    <string name="stress_resilience_title">Stress &amp; Resilience</string>
+    <string name="elevated_heart_rate_desc">Elevated work-hours heart rate</string>
+    <string name="complete">Complete</string>
+    <string name="health_reports_title">Health reports</string>
+    <string name="health_reports_desc">We extract data points from PDFs and sync them in</string>
+    <string name="blood_count_pdf">complete-blood-count.pdf</string>
+    <string name="data_points_synced_format">%1$d data points · Synced</string>
+    <string name="upload_sync_report">Upload or sync a report</string>
+    <string name="every_source_you_bring">Every source you bring in makes your picture more complete — and every reading and recommendation sharper. With Humotron, more is genuinely better.</string>
 </resources>
+
 
