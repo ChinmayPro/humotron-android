@@ -1,10 +1,14 @@
 package com.humotron.app.ui.connect
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.ColorInt
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.humotron.app.R
@@ -12,7 +16,6 @@ import com.humotron.app.bt.ring.RingBleDevice
 import com.humotron.app.core.App
 import com.humotron.app.databinding.FragmentDeviceConnectedBinding
 import com.humotron.app.domain.modal.DeviceType
-import com.humotron.app.domain.modal.param.DeviceMetaDataParam
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -33,6 +36,11 @@ class DeviceConnectedFragment : Fragment(R.layout.fragment_device_connected) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentDeviceConnectedBinding.bind(view)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
+            insets
+        }
 
         viewModel.currBtMac = device?.device?.address ?: ""
         val metaData = args.deviceMetaData
@@ -41,26 +49,53 @@ class DeviceConnectedFragment : Fragment(R.layout.fragment_device_connected) {
         }
         val deviceType = args.deviceType
         if (deviceType != null) {
-            // Set the correct icon based on device type
             when (deviceType) {
                 DeviceType.WEIGHT_MACHINE -> {
-                    binding.ivDevice.setImageResource(R.drawable.ic_connect_weightscale_logo)
+                    //binding.ivDevice.setImageResource(R.drawable.ic_smart_scale_vector)
+                    binding.tvTitle.text = getString(R.string.dvc_connected, "Smart Scale")
+                    binding.tvDesc.text = getString(R.string.it_s_paired_and_feeding_track_scale)
+                    setColor(
+                        ContextCompat.getColor(requireActivity(), R.color.cool),
+                        ContextCompat.getColor(requireActivity(), R.color.cool_40)
+                    )
                 }
+
                 DeviceType.RING -> {
-                    binding.ivDevice.setImageResource(R.drawable.ic_ring_horizontal_2x)
+                    //binding.ivDevice.setImageResource(R.drawable.ic_ring_vector)
+                    binding.tvTitle.text = getString(R.string.dvc_connected, "Ring")
+                    binding.tvDesc.text = getString(R.string.it_s_paired_and_feeding_track_ring)
+                    setColor(
+                        ContextCompat.getColor(requireActivity(), R.color.lime),
+                        ContextCompat.getColor(requireActivity(), R.color.lime_40)
+                    )
                 }
+
                 DeviceType.BAND -> {
-                    binding.ivDevice.setImageResource(R.drawable.ic_smart_band)
+                    //binding.ivDevice.setImageResource(R.drawable.ic_band_vectr)
+                    binding.tvTitle.text = getString(R.string.dvc_connected, "Wrist Band")
+                    binding.tvDesc.text = getString(R.string.it_s_paired_and_feeding_track_band)
+                    setColor(
+                        ContextCompat.getColor(requireActivity(), R.color.good),
+                        ContextCompat.getColor(requireActivity(), R.color.good_40)
+                    )
                 }
-                else -> {
-                    binding.ivDevice.setImageResource(R.drawable.ic_ring_horizontal_2x)
+
+                DeviceType.BP_MACHINE -> {
+                    //binding.ivDevice.setImageResource(R.drawable.ic_smart_cuff_vector)
+                    binding.tvTitle.text = getString(R.string.dvc_connected, "Smart Cuff")
+                    binding.tvDesc.text = getString(R.string.it_s_paired_and_feeding_track_scale)
+                    setColor(
+                        ContextCompat.getColor(requireActivity(), R.color.series),
+                        ContextCompat.getColor(requireActivity(), R.color.series_40)
+                    )
+                }
+
+                DeviceType.UNKNOWN -> {
+
                 }
             }
         }
-
         //viewModel.currBtMac = metaData?.data?.mac ?: device?.device?.address ?: ""
-
-
         //viewModel.loadDateData()
         binding.btnSubmit.setOnClickListener {
             //findNavController().navigate(R.id.fragmentDeviceData)
@@ -75,5 +110,11 @@ class DeviceConnectedFragment : Fragment(R.layout.fragment_device_connected) {
             //If you want to go back to the existing TrackFragment (not recreate it)
             findNavController().popBackStack(R.id.fragmentTrack, false)
         }
+    }
+
+    fun setColor(@ColorInt color: Int, @ColorInt strokeColor: Int) {
+        binding.mcvSuccessIcon.strokeColor = strokeColor
+        binding.ivDevice.imageTintList = ColorStateList.valueOf(color)
+        binding.tvTitle.setTextColor(color)
     }
 }

@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@drawable/ic_bg_main_2"
+    tools:context=".ui.connect.HumotronDeviceConnectInstructionFragment">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header_3" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header">
+
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/_20dp"
+            android:paddingBottom="@dimen/_20dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clContentContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cvRingIcon"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    app:cardBackgroundColor="#1AC4F23E"
+                    app:cardCornerRadius="17dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:strokeColor="#52C4F23E"
+                    app:strokeWidth="1dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivRingIcon"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/ic_ring_vector"
+                        app:tint="#C4F23E" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvDeviceTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:fontFamily="@font/manrope_extra_bold"
+                    android:text="Humotron Ring."
+                    android:textColor="#FFFFFF"
+                    android:textSize="23sp"
+                    app:layout_constraintTop_toBottomOf="@id/cvRingIcon" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvSubtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/manrope_medium"
+                    android:lineSpacingExtra="4dp"
+                    android:text="The Ring streams your heart, sleep and temperature signals around the clock, and runs the four instant scans on demand."
+                    android:textColor="@color/ink2"
+                    android:textSize="14.5sp"
+                    app:layout_constraintTop_toBottomOf="@id/tvDeviceTitle" />
+
+                <LinearLayout
+                    android:id="@+id/llBeforePairHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="26dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/tvSubtitle">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvBeforePairLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:fontFamily="@font/manrope_extra_bold"
+                        android:letterSpacing="0.05"
+                        android:text="BEFORE YOU PAIR"
+                        android:textAllCaps="true"
+                        android:textColor="#AEBBB8"
+                        android:textSize="11sp" />
+
+                    <View
+                        android:id="@+id/vDivider"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"
+                        android:background="#12FFFFFF" />
+                </LinearLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clStep1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    app:layout_constraintTop_toBottomOf="@id/llBeforePairHeader">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cvStep1Num"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        app:cardBackgroundColor="#1FC4F23E"
+                        app:cardCornerRadius="9dp"
+                        app:cardElevation="0dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:strokeWidth="0dp">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvStep1Num"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/manrope_extra_bold"
+                            android:gravity="center"
+                            android:text="1"
+                            android:textColor="#C4F23E"
+                            android:textSize="13sp" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvStep1Text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="13dp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:text="Take the Ring off its charger"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="@id/cvStep1Num"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/cvStep1Num"
+                        app:layout_constraintTop_toTopOf="@id/cvStep1Num" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clStep2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    app:layout_constraintTop_toBottomOf="@id/clStep1">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cvStep2Num"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        app:cardBackgroundColor="#1FC4F23E"
+                        app:cardCornerRadius="9dp"
+                        app:cardElevation="0dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:strokeWidth="0dp">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvStep2Num"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/manrope_extra_bold"
+                            android:gravity="center"
+                            android:text="2"
+                            android:textColor="#C4F23E"
+                            android:textSize="13sp" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvStep2Text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="13dp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:text="Wear it on your finger"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="@id/cvStep2Num"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/cvStep2Num"
+                        app:layout_constraintTop_toTopOf="@id/cvStep2Num" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clStep3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    app:layout_constraintTop_toBottomOf="@id/clStep2">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cvStep3Num"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        app:cardBackgroundColor="#1FC4F23E"
+                        app:cardCornerRadius="9dp"
+                        app:cardElevation="0dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:strokeWidth="0dp">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvStep3Num"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/manrope_extra_bold"
+                            android:gravity="center"
+                            android:text="3"
+                            android:textColor="#C4F23E"
+                            android:textSize="13sp" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvStep3Text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="13dp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:text="Keep it close to your phone"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="@id/cvStep3Num"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/cvStep3Num"
+                        app:layout_constraintTop_toTopOf="@id/cvStep3Num" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnStartPairing"
+        app:srcCompat="@drawable/bg_black_gradient" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnStartPairing"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/manrope_bold"
+        android:text="@string/start_pairing"
+        android:textAllCaps="false"
+        android:textColor="#000000"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:backgroundTint="#CFF551"
+        app:cornerRadius="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/footerDisclaimerTextView" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/footerDisclaimerTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginBottom="12dp"
+        android:gravity="center"
+        android:text="@string/make_sure_bluetooth_is_on"
+        android:textColor="#879A9C"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

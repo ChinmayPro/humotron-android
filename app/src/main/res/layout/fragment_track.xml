@@ -74,7 +74,7 @@
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/clHeader"
-        tools:visibility="visible">
+        tools:visibility="gone">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefreshSources"
@@ -130,7 +130,7 @@
                         <View
                             android:layout_width="7dp"
                             android:layout_height="7dp"
-                            android:background="@drawable/bg_track_progress_fill_lime" />
+                            android:background="@drawable/bg_track_progress_fill_lime_1" />
 
                         <TextView
                             android:id="@+id/tvSourcesSynced"
@@ -187,7 +187,7 @@
                         android:layout_marginHorizontal="@dimen/_20dp"
                         android:orientation="vertical"
                         android:visibility="visible"
-                        tools:visibility="gone">
+                        tools:visibility="visible">
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rvDevices"
@@ -239,42 +239,42 @@
                                     android:layout_width="0dp"
                                     android:layout_height="5dp"
                                     android:layout_weight="1"
-                                    android:background="@drawable/bg_track_progress_fill_lime" />
+                                    android:background="@drawable/bg_track_progress_fill_lime_1" />
 
                                 <View
                                     android:layout_width="0dp"
                                     android:layout_height="5dp"
                                     android:layout_marginStart="7dp"
                                     android:layout_weight="1"
-                                    android:background="@drawable/bg_track_progress_fill_lime" />
+                                    android:background="@drawable/bg_track_progress_fill_lime_1" />
 
                                 <View
                                     android:layout_width="0dp"
                                     android:layout_height="5dp"
                                     android:layout_marginStart="7dp"
                                     android:layout_weight="1"
-                                    android:background="@drawable/bg_track_progress_fill_lime" />
+                                    android:background="@drawable/bg_track_progress_fill_lime_1" />
 
                                 <View
                                     android:layout_width="0dp"
                                     android:layout_height="5dp"
                                     android:layout_marginStart="7dp"
                                     android:layout_weight="1"
-                                    android:background="@drawable/bg_track_progress_fill_lime" />
+                                    android:background="@drawable/bg_track_progress_fill_lime_1" />
 
                                 <View
                                     android:layout_width="0dp"
                                     android:layout_height="5dp"
                                     android:layout_marginStart="7dp"
                                     android:layout_weight="1"
-                                    android:background="@drawable/bg_track_progress_fill_lime" />
+                                    android:background="@drawable/bg_track_progress_fill_lime_1" />
 
                                 <View
                                     android:layout_width="0dp"
                                     android:layout_height="5dp"
                                     android:layout_marginStart="7dp"
                                     android:layout_weight="1"
-                                    android:background="@drawable/bg_track_progress_track" />
+                                    android:background="@drawable/bg_track_progress_track_1" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -509,7 +509,7 @@
                         android:layout_marginHorizontal="@dimen/_20dp"
                         android:orientation="vertical"
                         android:visibility="gone"
-                        tools:visibility="visible">
+                        tools:visibility="gone">
 
                         <!-- Clinical & lab section -->
                         <LinearLayout
@@ -1223,7 +1223,7 @@
                                 android:layout_width="8dp"
                                 android:layout_height="8dp"
                                 android:layout_marginTop="@dimen/_2dp"
-                                android:background="@drawable/bg_track_progress_fill_lime" />
+                                android:background="@drawable/bg_track_progress_fill_lime_1" />
 
                             <TextView
                                 android:id="@+id/tvTracking"
@@ -2278,7 +2278,7 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/clHeader"
-        tools:visibility="gone">
+        tools:visibility="visible">
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nsv_track"
@@ -2290,203 +2290,6 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvTitle1"
-                    style="@style/Text.OnBoard.Title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_20dp"
-                    android:layout_marginTop="@dimen/_24dp"
-                    android:text="@string/manage_your_data_sources_here"
-                    android:textColor="@color/white50"
-                    android:textSize="24sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvHeader1"
-                    style="@style/Text.OnBoard.Title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_20dp"
-                    android:layout_marginTop="@dimen/_24dp"
-                    android:text="@string/wearables"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvTitle1" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnAddWearables"
-                    android:layout_width="@dimen/_24dp"
-                    android:layout_height="@dimen/_24dp"
-                    android:layout_marginEnd="@dimen/_20dp"
-                    android:insetLeft="0dp"
-                    android:insetTop="0dp"
-                    android:insetRight="0dp"
-                    android:insetBottom="0dp"
-                    android:padding="0dp"
-                    app:backgroundTint="@color/colorBgBtn"
-                    app:icon="@drawable/ic_add_24px"
-                    app:iconGravity="textStart"
-                    app:iconPadding="0dp"
-                    app:iconSize="22dp"
-                    app:iconTint="@color/black"
-                    app:layout_constraintBottom_toBottomOf="@id/tvHeader1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/tvHeader1"
-                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/card"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/tvHeader1">
-
-                    <com.yarolegovich.discretescrollview.DiscreteScrollView
-                        android:id="@+id/dsvWearables"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:visibility="gone"
-                        app:layout_constraintDimensionRatio="1:0.65"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:listitem="@layout/item_wearables"
-                        tools:visibility="visible" />
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/cl_no_device_found"
-                        android:layout_width="280dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:visibility="gone"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:visibility="visible">
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/manrope_medium"
-                            android:gravity="center"
-                            android:text="@string/no_device_found"
-                            android:textColor="@color/d100"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintDimensionRatio="1:0.65"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:visibility="gone" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/cardShadow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/card"
-                    app:srcCompat="@drawable/ic_track_card_shadow" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvHealthMonitoringHeader"
-                    style="@style/Text.OnBoard.Title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_20dp"
-                    android:layout_marginTop="@dimen/_24dp"
-                    android:text="@string/health_monitoring"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/cardShadow" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnAddHealthMonitoring"
-                    android:layout_width="@dimen/_24dp"
-                    android:layout_height="@dimen/_24dp"
-                    android:layout_marginEnd="@dimen/_20dp"
-                    android:insetLeft="0dp"
-                    android:insetTop="0dp"
-                    android:insetRight="0dp"
-                    android:insetBottom="0dp"
-                    android:padding="0dp"
-                    app:backgroundTint="@color/colorBgBtn"
-                    app:icon="@drawable/ic_add_24px"
-                    app:iconGravity="textStart"
-                    app:iconPadding="0dp"
-                    app:iconSize="22dp"
-                    app:iconTint="@color/black"
-                    app:layout_constraintBottom_toBottomOf="@id/tvHealthMonitoringHeader"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/tvHealthMonitoringHeader"
-                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/clHealthMonitoringCard"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/tvHealthMonitoringHeader">
-
-                    <com.yarolegovich.discretescrollview.DiscreteScrollView
-                        android:id="@+id/dsvHealthMonitoring"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:visibility="gone"
-                        app:layout_constraintDimensionRatio="1:0.65"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:listitem="@layout/item_wearables"
-                        tools:visibility="gone" />
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/clNoHealthMonitoringFound"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginHorizontal="@dimen/_20dp"
-                        android:layout_marginTop="@dimen/_20dp"
-                        android:visibility="gone"
-                        app:cardBackgroundColor="@color/white30"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:strokeWidth="0dp"
-                        tools:visibility="visible">
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/tvNoHealthMonitoringFound"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/manrope_medium"
-                            android:padding="@dimen/_20dp"
-                            android:text="@string/no_device_found"
-                            android:textColor="@color/white"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintDimensionRatio="1:0.65"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                    </com.google.android.material.card.MaterialCardView>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivHealthMonitoringShadow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/clHealthMonitoringCard"
-                    app:srcCompat="@drawable/ic_track_card_shadow" />
 
                 <TextView
                     android:id="@+id/tvTitleCompleteYourPicture"
@@ -2503,7 +2306,7 @@
                     android:textStyle="normal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ivHealthMonitoringShadow" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tvSubCompleteYourPicture"

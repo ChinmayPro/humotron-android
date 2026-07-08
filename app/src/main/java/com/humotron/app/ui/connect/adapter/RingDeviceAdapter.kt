@@ -26,6 +26,22 @@ class RingDeviceAdapter(private val onDeviceSelected: (RingBleDevice?) -> Unit) 
         }
     }
 
+    fun clearData() {
+        val hadSelection = selectedPosition != -1
+        val previousSize = devices.size
+
+        devices.clear()
+        selectedPosition = -1
+
+        if (hadSelection) {
+            onDeviceSelected(null)
+        }
+
+        if (previousSize > 0) {
+            notifyItemRangeRemoved(0, previousSize)
+        }
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             ItemRingDeviceBinding.inflate(
@@ -54,6 +70,9 @@ class RingDeviceAdapter(private val onDeviceSelected: (RingBleDevice?) -> Unit) 
             binding.cbDeviceChecked.isChecked = isSelected
 
             binding.root.setOnClickListener {
+                if (bindingAdapterPosition == RecyclerView.NO_POSITION) {
+                    return@setOnClickListener
+                }
                 val previousSelected = selectedPosition
                 selectedPosition = bindingAdapterPosition
                 if (previousSelected != -1) {

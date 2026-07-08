@@ -1,6 +1,7 @@
 package com.humotron.app.domain.modal.response
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class PastScanResponse(
     @SerializedName("status")
@@ -30,4 +31,4 @@ data class PastScanData(
     val type: String?,
     @SerializedName("createdAt")
     val createdAt: String?
-)
+) : Serializable

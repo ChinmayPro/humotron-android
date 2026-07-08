@@ -4,34 +4,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:background="#DA000000">
+    tools:background="@drawable/ic_bg_main_2">
 
     <include
         android:id="@+id/header"
-        layout="@layout/layout_header" />
+        layout="@layout/layout_header_3" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvTitle"
+        android:id="@+id/tvHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_20dp"
-        android:layout_marginTop="@dimen/_24dp"
         android:textColor="@color/white"
-        android:textSize="17sp"
+        android:textSize="23sp"
         app:fontFamily="@font/manrope_bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header"
-        tools:text="Stress Levels During Past Scans"
+        tools:text="Check History"
+        tools:visibility="visible" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvSubTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginTop="@dimen/_7dp"
+        android:textColor="@color/ink2"
+        android:textSize="14sp"
+        app:fontFamily="@font/manrope_bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvHeader"
+        tools:text="Every stress scan you’ve run, newest first. Open any one to see its full report."
         tools:visibility="visible" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvPastScans"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/_16dp"
+        android:layout_marginTop="@dimen/_7dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/btnScanNow"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintTop_toBottomOf="@id/tvSubTitle"
         tools:listitem="@layout/item_past_scan"
         tools:visibility="visible" />
 
@@ -48,13 +62,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_20dp"
-        android:layout_marginTop="@dimen/_40dp"
+        android:layout_marginTop="@dimen/_20dp"
         android:textColor="@color/white50"
         android:textSize="16sp"
         app:fontFamily="@font/manrope_bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintTop_toBottomOf="@id/tvSubTitle"
         tools:text="You haven't taken any stress scan yet. Take one now to see how it works." />
 
     <com.google.android.material.button.MaterialButton
@@ -75,19 +89,18 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnScanNow"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_20dp"
-        android:layout_marginBottom="@dimen/_60dp"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginBottom="@dimen/_20dp"
         android:backgroundTint="@color/colorBgBtn"
         android:fontFamily="@font/manrope_bold"
-        android:paddingHorizontal="@dimen/_40dp"
-        android:paddingVertical="@dimen/_12dp"
-        android:text="@string/scan_now"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="@string/run_a_new_scan"
         android:textColor="@color/black"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/progress"

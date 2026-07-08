@@ -1,4 +1,4 @@
-package com.humotron.app.ui.track
+package com.humotron.app.ui.connect
 
 import android.os.Bundle
 import android.view.View
@@ -33,47 +33,47 @@ class PairHumotronDeviceFragment : BaseFragment(R.layout.fragment_pair_humotron_
         }
 
         binding.mcvRing.setOnClickListener {
-            openConnectInfo(
-                DeviceInfo(
-                    R.drawable.ic_ring,
-                    getString(R.string.device_ring),
-                    getString(R.string.pair_humotron_ring_desc),
-                    DeviceType.RING
-                )
+            findNavController().navigate(
+                R.id.fragmentHumotronDeviceConnectInstruction,
+                Bundle().apply {
+                    putSerializable(NavKeys.KEY_DEVICE_TYPE, DeviceType.RING)
+                }
             )
         }
 
         binding.mcvBand.setOnClickListener {
-            openConnectInfo(
-                DeviceInfo(
-                    R.drawable.ic_smart_band,
-                    getString(R.string.device_band),
-                    getString(R.string.pair_humotron_band_desc),
-                    DeviceType.BAND
-                )
+            findNavController().navigate(
+                R.id.fragmentHumotronDeviceConnectInstruction,
+                Bundle().apply {
+                    putSerializable(NavKeys.KEY_DEVICE_TYPE, DeviceType.BAND)
+                }
             )
         }
 
         binding.mcvScale.setOnClickListener {
-            openConnectInfo(
-                DeviceInfo(
-                    R.drawable.ic_weight_scale,
-                    getString(R.string.pair_humotron_scale_title),
-                    getString(R.string.pair_humotron_scale_desc),
-                    DeviceType.WEIGHT_MACHINE
-                )
+            findNavController().navigate(
+                R.id.fragmentHumotronDeviceConnectInstruction,
+                Bundle().apply {
+                    putSerializable(NavKeys.KEY_DEVICE_TYPE, DeviceType.WEIGHT_MACHINE)
+                }
             )
         }
 
         binding.mcvCuff.setOnClickListener {
-            openConnectInfo(
+            findNavController().navigate(
+                R.id.fragmentHumotronDeviceConnectInstruction,
+                Bundle().apply {
+                    putSerializable(NavKeys.KEY_DEVICE_TYPE, DeviceType.BP_MACHINE)
+                }
+            )
+            /*openConnectInfo(
                 DeviceInfo(
                     R.drawable.ic_smart_cuff,
                     getString(R.string.pair_humotron_cuff_title),
                     getString(R.string.pair_humotron_cuff_desc),
                     DeviceType.BP_MACHINE
                 )
-            )
+            )*/
         }
     }
 

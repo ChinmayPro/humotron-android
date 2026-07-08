@@ -69,7 +69,7 @@ class App : Application() {
             initPluto()
         }
 
-        //weightScaleSdkManager.initializeSdk()
+        weightScaleSdkManager.initializeSdk()
         bpMachineSdkManager.initializeSdk()
     }
 

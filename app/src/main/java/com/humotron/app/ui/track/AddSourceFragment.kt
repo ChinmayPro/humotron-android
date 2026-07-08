@@ -9,7 +9,7 @@ import com.humotron.app.databinding.FragmentAddSourceBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FragmentAddSource : BaseFragment(R.layout.fragment_add_source) {
+class AddSourceFragment : BaseFragment(R.layout.fragment_add_source) {
 
     private lateinit var binding: FragmentAddSourceBinding
 
@@ -21,9 +21,10 @@ class FragmentAddSource : BaseFragment(R.layout.fragment_add_source) {
 
     private fun initViews() {
         binding.header.tvTitle.text = getString(R.string.track_add_source)
-        binding.llPairHumotronDevice.setOnClickListener {
+        binding.mcvPairHumotronDevice.setOnClickListener {
             findNavController().navigate(R.id.fragmentPairHumotronDevice)
         }
+
         binding.header.btnBack.setOnClickListener {
             if (findNavController().previousBackStackEntry == null) {
                 requireActivity().finish()

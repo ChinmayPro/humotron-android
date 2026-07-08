@@ -206,6 +206,8 @@ dependencies {
 
     //Weight Scale
     implementation(libs.qnscalesdkx)
+    // Added to prevent NoClassDefFoundError in QNBleApi
+    implementation("androidx.localbroadcastmanager:localbroadcastmanager:1.1.0")
 
     // -------------------- Debug Tools --------------------
     debugImplementation(libs.pluto)

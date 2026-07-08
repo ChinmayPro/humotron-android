@@ -46,7 +46,6 @@ class DeviceAdapter(
             binding.tvSourceVia.text = binding.root.context.getString(R.string.src_humotron)
 
             val deviceType = DeviceType.from(userDevice.deviceName)
-
             when (deviceType) {
                 DeviceType.BAND, DeviceType.RING -> {
                     binding.tvHrTitle.text = binding.root.context.getString(R.string.hr)
@@ -128,11 +127,34 @@ class DeviceAdapter(
                 binding.tvLastSync.text = "-"
             }
 
-            if (!userDevice.deviceImage.isNullOrEmpty()) {
+            val drawable = when (deviceType) {
+                DeviceType.RING -> {
+                    R.drawable.ic_ring_vector
+                }
+
+                DeviceType.BAND -> {
+                    R.drawable.ic_band_vectr
+                }
+
+                DeviceType.BP_MACHINE -> {
+                    R.drawable.ic_smart_cuff_vector
+                }
+
+                DeviceType.WEIGHT_MACHINE -> {
+                    R.drawable.ic_smart_scale_vector
+                }
+
+                DeviceType.UNKNOWN -> {
+                    R.drawable.ic_ring_vector
+                }
+            }
+            binding.ivDevice.setImageResource(drawable)
+
+            /*if (!userDevice.deviceImage.isNullOrEmpty()) {
                 Glide.with(binding.root.context)
                     .load(userDevice.deviceImage[0])
                     .into(binding.ivDevice)
-            }
+            }*/
 
             binding.root.setOnClickListener {
                 onItemClick(userDevice)

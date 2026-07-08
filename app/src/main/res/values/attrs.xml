@@ -113,4 +113,24 @@
         <attr name="otp_filledFont" format="reference" />
 
     </declare-styleable>
+
+    <declare-styleable name="ScanAnimationView">
+        <attr name="scanColor" format="color" />
+        <attr name="scanValue" format="string" />
+        <attr name="scanValueSuffix" format="string" />
+        <attr name="scanUnit" format="string" />
+        <attr name="scanValueColor" format="color" />
+        <attr name="scanUnitColor" format="color" />
+
+        <attr name="scanProgress" format="float" />
+        <attr name="scanProgressMargin" format="dimension" />
+
+        <attr name="scanProgressBackgroundColor" format="color" />
+    </declare-styleable>
+
+    <!-- Shared by HdevRingView / HdevBandView / HdevScaleView / HdevCuffView -->
+    <declare-styleable name="HdevAnimationView">
+        <attr name="hdevColor" format="color" />
+        <attr name="hdevProgress" format="float" />
+    </declare-styleable>
 </resources>

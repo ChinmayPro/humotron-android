@@ -93,7 +93,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
         binding = FragmentDeviceDataBinding.bind(view)
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
             insets
         }
 
@@ -135,6 +135,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
             val deviceType = DeviceType.from(userDevice?.deviceName)
             when (deviceType) {
                 DeviceType.BAND -> {
+                    binding.ivDevice.setImageResource(R.drawable.ic_band_vectr)
                     setupHealthScanAdapter()
                     binding.clTabMetrics.groupViewsRingBand.isVisible = true
                     observeBand()
@@ -142,6 +143,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
                 }
 
                 DeviceType.RING -> {
+                    binding.ivDevice.setImageResource(R.drawable.ic_ring_vector)
                     setupHealthScanAdapter()
                     binding.clTabMetrics.groupViewsRingBand.isVisible = true
                     observeRing()
@@ -150,6 +152,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
                 }
 
                 DeviceType.BP_MACHINE -> {
+                    binding.ivDevice.setImageResource(R.drawable.ic_smart_cuff_vector)
                     viewModel.getAllMetricsByDeviceId(deviceId)
                     binding.let {
                         //it.ivBtStatus.isVisible = false
@@ -158,6 +161,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
                 }
 
                 DeviceType.WEIGHT_MACHINE -> {
+                    binding.ivDevice.setImageResource(R.drawable.ic_smart_scale_vector)
                     viewModel.getAllMetricsByDeviceId(deviceId)
                     binding.let {
                         //it.ivBtStatus.isVisible = false
@@ -174,12 +178,12 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
             }
         }
 
-        val deviceImage = userDevice?.deviceImage
+        /*val deviceImage = userDevice?.deviceImage
         deviceImage?.let {
             Glide.with(requireActivity())
                 .load("${it[0]}")
                 .into(binding.ivDevice)
-        }
+        }*/
         binding.tvDeviceName.text = userDevice?.deviceName ?: ""
         binding.header.tvTitle.text = "${userDevice?.deviceFacingName} Metrics"
 
@@ -431,7 +435,8 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
 
         //batteryView.isCharging = false
 
-        btnTakeReading.isEnabled = isConnected
+        // TODO: uncomment after new ui changes is done
+        //btnTakeReading.isEnabled = isConnected
         btnTakeReading.alpha = if (isConnected) 1f else 0.5f
     }
 
@@ -446,7 +451,8 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
         )
         progressBattery.isVisible = false
         tvBatteryLevel.isVisible = false
-        btnTakeReading.isEnabled = false
+        // TODO: uncomment after new ui changes is done
+        //btnTakeReading.isEnabled = false
         btnTakeReading.alpha = 0.5f
     }
 
@@ -627,6 +633,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
     private fun initClicks() {
         binding.header.btnBack.setOnClickListener(this)
         binding.ivDevice.setOnClickListener(this)
+        binding.btnAlert.setOnClickListener(this)
         binding.clTabMetrics.cardExerciseIntensity.setOnClickListener(this)
         binding.clTabMetrics.cardPhysicalRecovery.setOnClickListener(this)
         binding.clTabMetrics.cardStressScore.setOnClickListener(this)
@@ -696,12 +703,18 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
             }
 
             binding.btnTakeReading -> {
-                if (DeviceType.from(userDevice?.deviceName) == DeviceType.WEIGHT_MACHINE) {
+                val deviceType = DeviceType.from(userDevice?.deviceName)
+                if (deviceType == DeviceType.RING || deviceType == DeviceType.BAND) {
+                    findNavController().navigate(
+                        R.id.action_fragmentDeviceData_to_fragmentTakeReadingRingBand,
+                        bundleOf(NavKeys.WEARABLE to userDevice)
+                    )
+                } else if (deviceType == DeviceType.WEIGHT_MACHINE) {
                     findNavController().navigate(
                         R.id.action_fragmentDeviceData_to_fragmentWeightScaleReading,
                         bundleOf(NavKeys.WEARABLE to userDevice)
                     )
-                } else if (DeviceType.from(userDevice?.deviceName) == DeviceType.BP_MACHINE) {
+                } else if (deviceType == DeviceType.BP_MACHINE) {
                     val bpReadingOptions = arrayListOf(
                         MeasurementInfo(
                             "Measure Blood Pressure",
@@ -754,6 +767,13 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
                     navigateToMetricDetails(metricType)
                 }
             }
+
+            binding.btnAlert -> {
+                findNavController().navigate(
+                    R.id.action_fragmentDeviceData_to_fragmentAlert,
+                    bundleOf(NavKeys.WEARABLE to userDevice)
+                )
+            }
         }
     }
 
@@ -783,28 +803,28 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
 
         val healthScans = listOf(
             HealthScanItem(
-                "Instant\nStress Scan",
+                "Stress Scan",
                 "Stress",
                 "Quick 2 min stress scan to get a quick sense of your stress levels",
                 HealthScanType.HRV,
                 "Stress"
             ),
             HealthScanItem(
-                "Body\nLoad Scan",
+                "Body Load Scan",
                 "Body Load",
                 "Not doing much, but still feel tired or wired? Check if your body is working harder than it should.",
                 HealthScanType.HR,
                 "Heart Rate"
             ),
             HealthScanItem(
-                "Oxygen\nCheck",
+                "Oxygen Check",
                 "Oxygen",
                 "Brain fog? Low energy? Check if low oxygen is draining your energy.",
                 HealthScanType.SPO2,
                 "Oxygen"
             ),
             HealthScanItem(
-                "Thermal\nScan",
+                "Thermal Scan",
                 "Thermal",
                 "Feeling unusually warm, restless, or off? Detect early physical strain.",
                 HealthScanType.TEMPERATURE,

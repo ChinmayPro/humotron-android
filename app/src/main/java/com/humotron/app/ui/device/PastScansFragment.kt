@@ -11,10 +11,13 @@ import com.humotron.app.core.base.BaseFragment
 import com.humotron.app.data.network.Status
 import com.humotron.app.databinding.FragmentPastScansBinding
 import com.humotron.app.domain.modal.response.GetAllDeviceResponse
+import com.humotron.app.domain.modal.response.PastScanData
 import com.humotron.app.ui.device.adapter.HealthScanItem
 import com.humotron.app.ui.device.adapter.PastScansAdapter
 import com.humotron.app.ui.navigation.NavKeys
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Locale
+import java.util.Locale.getDefault
 
 @AndroidEntryPoint
 class PastScansFragment : BaseFragment(R.layout.fragment_past_scans) {
@@ -39,12 +42,14 @@ class PastScansFragment : BaseFragment(R.layout.fragment_past_scans) {
         healthScanItem = arguments?.getParcelable(NavKeys.HEALTH_SCAN_ITEM)
         userDevice = arguments?.getParcelable(NavKeys.WEARABLE)
 
-        binding.header.title.text = "Past ${healthScanItem?.metricName?.replace("\n", " ")} Scans"
-        binding.tvTitle.text = "${healthScanItem?.metricName} Levels During Past Scans"
+        binding.header.tvTitle.text = "Past ${healthScanItem?.metricName?.replace("\n", " ")} Scans"
+        binding.tvHeader.text = getString(R.string.check_history, healthScanItem?.title)
+        binding.tvSubTitle.text = getString(
+            R.string.every_scan,
+            healthScanItem?.header?.lowercase(getDefault())
+        )
 
-        adapter = PastScansAdapter {
-            // Handle item click if needed
-        }
+        adapter = PastScansAdapter(::openScanReport)
         binding.rvPastScans.adapter = adapter
 
         val type = healthScanItem?.type?.name ?: ""
@@ -54,8 +59,19 @@ class PastScansFragment : BaseFragment(R.layout.fragment_past_scans) {
         }
     }
 
+    private fun openScanReport(scanData: PastScanData) {
+        findNavController().navigate(
+            R.id.fragmentScanReportRingBand,
+            bundleOf(
+                NavKeys.PAST_SCAN to scanData,
+                NavKeys.HEALTH_SCAN_ITEM to healthScanItem,
+                NavKeys.WEARABLE to userDevice
+            )
+        )
+    }
+
     private fun initClicks() {
-        binding.header.ivBack.setOnClickListener {
+        binding.header.btnBack.setOnClickListener {
             findNavController().popBackStack()
         }
 
@@ -89,7 +105,6 @@ class PastScansFragment : BaseFragment(R.layout.fragment_past_scans) {
                     binding.groupEmpty.isVisible = isEmpty
                     binding.rvPastScans.isVisible = !isEmpty
                     binding.btnScanNow.isVisible = !isEmpty
-                    binding.tvTitle.isVisible = !isEmpty
 
                     if (isEmpty) {
                         binding.tvEmpty.text =

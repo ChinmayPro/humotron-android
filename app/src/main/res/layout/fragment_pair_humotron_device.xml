@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:background="@drawable/ic_bg_main_2"
-    tools:context=".ui.track.PairHumotronDeviceFragment">
+    tools:context=".ui.connect.PairHumotronDeviceFragment">
 
     <include
         android:id="@+id/header"
@@ -74,8 +74,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_pair_humotron_card"
-                    android:padding="16dp">
+                    android:background="@drawable/bg_pair_humotron_card">
 
                     <View
                         android:id="@+id/viewRingAccent"
@@ -103,8 +102,9 @@
                             android:layout_width="28dp"
                             android:layout_height="28dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_ring"
+                            android:src="@drawable/ic_ring_vector"
                             app:tint="@color/lime" />
+
                     </com.google.android.material.card.MaterialCardView>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -113,6 +113,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="14dp"
                         android:layout_marginEnd="12dp"
+                        android:paddingVertical="16dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/ivRingChevron"
                         app:layout_constraintStart_toEndOf="@id/cvRingIcon"
@@ -155,18 +156,22 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvRingKind" />
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivRingChevron"
                         android:layout_width="18dp"
                         android:layout_height="18dp"
+                        android:layout_marginEnd="16dp"
                         android:src="@drawable/ic_chevron_right_24px"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:tint="@color/ink4" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -187,8 +192,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_pair_humotron_card"
-                    android:padding="16dp">
+                    android:background="@drawable/bg_pair_humotron_card">
 
                     <View
                         android:id="@+id/viewBandAccent"
@@ -216,7 +220,7 @@
                             android:layout_width="28dp"
                             android:layout_height="28dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_smart_band"
+                            android:src="@drawable/ic_band_vectr"
                             app:tint="@color/good" />
                     </com.google.android.material.card.MaterialCardView>
 
@@ -226,6 +230,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="14dp"
                         android:layout_marginEnd="12dp"
+                        android:paddingVertical="16dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/ivBandChevron"
                         app:layout_constraintStart_toEndOf="@id/cvBandIcon"
@@ -233,18 +238,18 @@
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/tvBandTitle"
+                            style="@style/Text.16x.Manrope.SemiBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:includeFontPadding="false"
                             android:text="@string/pair_humotron_band_title"
                             android:textColor="@color/white"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/tvBandKind"
+                            style="@style/Text.10x.Manrope.SemiBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
@@ -252,13 +257,12 @@
                             android:text="@string/pair_humotron_band_kind"
                             android:textAllCaps="true"
                             android:textColor="@color/good"
-                            android:textSize="10sp"
-                            android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvBandTitle" />
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/tvBandDesc"
+                            style="@style/Text.12x.Manrope.Medium"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -266,22 +270,25 @@
                             android:lineSpacingExtra="3dp"
                             android:text="@string/pair_humotron_band_desc"
                             android:textColor="@color/ink3"
-                            android:textSize="12sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvBandKind" />
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivBandChevron"
                         android:layout_width="18dp"
                         android:layout_height="18dp"
+                        android:layout_marginEnd="16dp"
                         android:src="@drawable/ic_chevron_right_24px"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:tint="@color/ink4" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -302,8 +309,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_pair_humotron_card"
-                    android:padding="16dp">
+                    android:background="@drawable/bg_pair_humotron_card">
 
                     <View
                         android:id="@+id/viewScaleAccent"
@@ -331,7 +337,7 @@
                             android:layout_width="28dp"
                             android:layout_height="28dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_weight_scale"
+                            android:src="@drawable/ic_smart_scale_vector"
                             app:tint="@color/cool" />
                     </com.google.android.material.card.MaterialCardView>
 
@@ -341,6 +347,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="14dp"
                         android:layout_marginEnd="12dp"
+                        android:paddingVertical="16dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/ivScaleChevron"
                         app:layout_constraintStart_toEndOf="@id/cvScaleIcon"
@@ -348,18 +355,18 @@
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/tvScaleTitle"
+                            style="@style/Text.16x.Manrope.SemiBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:includeFontPadding="false"
                             android:text="@string/pair_humotron_scale_title"
                             android:textColor="@color/white"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/tvScaleKind"
+                            style="@style/Text.10x.Manrope.SemiBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
@@ -367,13 +374,12 @@
                             android:text="@string/pair_humotron_scale_kind"
                             android:textAllCaps="true"
                             android:textColor="@color/cool"
-                            android:textSize="10sp"
-                            android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvScaleTitle" />
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/tvScaleDesc"
+                            style="@style/Text.12x.Manrope.Medium"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -381,22 +387,25 @@
                             android:lineSpacingExtra="3dp"
                             android:text="@string/pair_humotron_scale_desc"
                             android:textColor="@color/ink3"
-                            android:textSize="12sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvScaleKind" />
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivScaleChevron"
                         android:layout_width="18dp"
                         android:layout_height="18dp"
+                        android:layout_marginEnd="16dp"
                         android:src="@drawable/ic_chevron_right_24px"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:tint="@color/ink4" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -417,8 +426,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_pair_humotron_card"
-                    android:padding="16dp">
+                    android:background="@drawable/bg_pair_humotron_card">
 
                     <View
                         android:id="@+id/viewCuffAccent"
@@ -446,7 +454,7 @@
                             android:layout_width="28dp"
                             android:layout_height="28dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_smart_cuff"
+                            android:src="@drawable/ic_smart_cuff_vector"
                             app:tint="@color/series" />
                     </com.google.android.material.card.MaterialCardView>
 
@@ -456,6 +464,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="14dp"
                         android:layout_marginEnd="12dp"
+                        android:paddingVertical="16dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/ivCuffChevron"
                         app:layout_constraintStart_toEndOf="@id/cvCuffIcon"
@@ -463,18 +472,18 @@
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/tvCuffTitle"
+                            style="@style/Text.16x.Manrope.SemiBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:includeFontPadding="false"
                             android:text="@string/pair_humotron_cuff_title"
                             android:textColor="@color/white"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/tvCuffKind"
+                            style="@style/Text.10x.Manrope.SemiBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
@@ -482,13 +491,12 @@
                             android:text="@string/pair_humotron_cuff_kind"
                             android:textAllCaps="true"
                             android:textColor="@color/series"
-                            android:textSize="10sp"
-                            android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvCuffTitle" />
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/tvCuffDesc"
+                            style="@style/Text.12x.Manrope.Medium"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -496,7 +504,6 @@
                             android:lineSpacingExtra="3dp"
                             android:text="@string/pair_humotron_cuff_desc"
                             android:textColor="@color/ink3"
-                            android:textSize="12sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvCuffKind" />
@@ -506,12 +513,14 @@
                         android:id="@+id/ivCuffChevron"
                         android:layout_width="18dp"
                         android:layout_height="18dp"
+                        android:layout_marginEnd="16dp"
                         android:src="@drawable/ic_chevron_right_24px"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:tint="@color/ink4" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.textview.MaterialTextView
@@ -520,7 +529,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="26dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="28dp"
                 android:gravity="center"
                 android:includeFontPadding="false"
                 android:lineSpacingExtra="3dp"

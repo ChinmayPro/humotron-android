@@ -77,11 +77,12 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_20dp"
         android:layout_marginTop="@dimen/_24dp"
-        app:cardBackgroundColor="@color/black"
+        app:cardBackgroundColor="#99040809"
         app:cardCornerRadius="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rvMetrics"
-        app:strokeWidth="0dp">
+        app:strokeColor="@color/card_stroke"
+        app:strokeWidth="1dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -147,11 +148,12 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_20dp"
         android:layout_marginTop="@dimen/_14dp"
-        app:cardBackgroundColor="@color/black"
+        app:cardBackgroundColor="#99040809"
         app:cardCornerRadius="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cardExerciseIntensity"
-        app:strokeWidth="0dp">
+        app:strokeColor="@color/card_stroke"
+        app:strokeWidth="1dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -304,11 +306,12 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_20dp"
         android:layout_marginTop="@dimen/_14dp"
-        app:cardBackgroundColor="@color/black"
+        app:cardBackgroundColor="#99040809"
         app:cardCornerRadius="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cardSleepMetrics"
-        app:strokeWidth="0dp">
+        app:strokeColor="@color/card_stroke"
+        app:strokeWidth="1dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -376,11 +379,12 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_20dp"
         android:layout_marginTop="@dimen/_14dp"
-        app:cardBackgroundColor="@color/black"
+        app:cardBackgroundColor="#99040809"
         app:cardCornerRadius="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cardPhysicalRecovery"
-        app:strokeWidth="0dp">
+        app:strokeColor="@color/card_stroke"
+        app:strokeWidth="1dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

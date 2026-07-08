@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@drawable/ic_bg_main_2"
+    tools:context=".ui.device.ReadingInstructionsRingBandFragment">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header_3" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/_20dp"
+            android:paddingBottom="@dimen/_20dp">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mcvIcon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                app:cardBackgroundColor="@color/series_14"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivType"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_heart_2"
+                    app:tint="@color/series" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/mainTitleTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/manrope_bold"
+                android:includeFontPadding="false"
+                android:text="How wound up are you, right now?"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/mainDescriptionTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/manrope_regular"
+                android:lineSpacingExtra="2dp"
+                android:text="A two-minute read of your heart-rate variability against your own baseline — a live look at how your nervous system is coping."
+                android:textColor="@color/ink2"
+                android:textSize="14sp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/hrvSummaryCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                app:cardBackgroundColor="#80040809"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/card_stroke"
+                app:strokeWidth="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/hrvSummaryConstraintLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="00"
+                        android:textColor="#EA755F"
+                        android:textSize="40sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvUnit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="ms"
+                        android:textColor="#879A9C"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvValue"
+                        app:layout_constraintStart_toEndOf="@+id/tvValue" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/hrvAverageLabelTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Your 30-day average HRV"
+                        android:textColor="#879A9C"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvValue" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnPastScans"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="@string/past_scans"
+                        android:textAllCaps="false"
+                        android:textColor="#EA755F"
+                        android:textSize="16sp"
+                        app:icon="@drawable/ic_chevron_right_24px"
+                        app:iconGravity="textEnd"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/instructionCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="@color/lime_6"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/lime_18"
+                app:strokeWidth="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/instructionConstraintLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/infoIconCardView"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        app:cardBackgroundColor="@color/lime_12"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="0dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:strokeWidth="0dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/infoIconImageView"
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:layout_gravity="center"
+                            app:srcCompat="@android:drawable/ic_dialog_info"
+                            app:tint="@color/lime" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/instructionTitleTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="Before you start"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/infoIconCardView"
+                        app:layout_constraintTop_toTopOf="@+id/infoIconCardView" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/instructionDescriptionTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:lineSpacingExtra="4dp"
+                        android:text="Sit still, rest your hand and breathe normally. Keep the Ring snug so the signal stays clean."
+                        android:textColor="@color/ink3"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/instructionTitleTextView"
+                        app:layout_constraintTop_toBottomOf="@+id/instructionTitleTextView" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/detailsCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="@color/deep_dives_card"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/white_7">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/detailsConstraintLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="20dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/whenToRunIconImageView"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginTop="20dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_when_to_run"
+                        app:tint="@color/series" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/whenToRunTitleTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="20dp"
+                        android:text="When to run it"
+                        android:textColor="#FFFFFF"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/whenToRunIconImageView"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/whenToRunIconImageView"
+                        app:layout_constraintTop_toTopOf="@+id/whenToRunIconImageView" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/whenToRunDescriptionTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="20dp"
+                        android:lineSpacingExtra="4dp"
+                        android:text="When you feel tense, wired or oddly flat — or before a big moment, after a stressful patch, or at the end of a long day."
+                        android:textColor="@color/ink3"
+                        android:textSize="13sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/whenToRunTitleTextView"
+                        app:layout_constraintTop_toBottomOf="@+id/whenToRunTitleTextView" />
+
+                    <View
+                        android:id="@+id/firstDividerView"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="20dp"
+                        android:background="#1E3133"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/whenToRunDescriptionTextView" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/whatItMeasuresIconImageView"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginTop="20dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/firstDividerView"
+                        app:srcCompat="@drawable/ic_where_it_measure"
+                        app:tint="@color/series" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/whatItMeasuresTitleTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="20dp"
+                        android:text="What it measures"
+                        android:textColor="#FFFFFF"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/whatItMeasuresIconImageView"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/whatItMeasuresIconImageView"
+                        app:layout_constraintTop_toTopOf="@+id/whatItMeasuresIconImageView" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/whatItMeasuresDescriptionTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="20dp"
+                        android:lineSpacingExtra="4dp"
+                        android:text="It reads the tiny timing differences between your heartbeats (HRV). More variability generally means a calmer, better-recovered nervous system."
+                        android:textColor="@color/ink3"
+                        android:textSize="13sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/whatItMeasuresTitleTextView"
+                        app:layout_constraintTop_toBottomOf="@+id/whatItMeasuresTitleTextView" />
+
+                    <View
+                        android:id="@+id/secondDividerView"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="20dp"
+                        android:background="#1E3133"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/whatItMeasuresDescriptionTextView" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/whatToDoIconImageView"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginTop="20dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/secondDividerView"
+                        app:srcCompat="@drawable/ic_decode_new"
+                        app:tint="@color/series" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/whatToDoTitleTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="20dp"
+                        android:text="What to do with it"
+                        android:textColor="#FFFFFF"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/whatToDoIconImageView"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/whatToDoIconImageView"
+                        app:layout_constraintTop_toTopOf="@+id/whatToDoIconImageView" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/whatToDoDescriptionTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="20dp"
+                        android:lineSpacingExtra="4dp"
+                        android:text="Below baseline is a nudge to ease off and protect your evening. Above it, you're clear to push."
+                        android:textColor="@color/ink3"
+                        android:textSize="13sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/whatToDoTitleTextView"
+                        app:layout_constraintTop_toBottomOf="@+id/whatToDoTitleTextView" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <Space
+                android:id="@+id/bottomSpacerView"
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnStartScan"
+        app:srcCompat="@drawable/bg_black_gradient" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnStartScan"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/manrope_bold"
+        android:text="Start stress scan"
+        android:textAllCaps="false"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:backgroundTint="#CFF551"
+        app:cornerRadius="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/footerDisclaimerTextView" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/footerDisclaimerTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginBottom="12dp"
+        android:gravity="center"
+        android:text="@string/takes_about_2_minutes"
+        android:textColor="#879A9C"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
