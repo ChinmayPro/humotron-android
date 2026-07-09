@@ -1,65 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginVertical="8dp"
-    app:cardBackgroundColor="#0A0A0A"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="0dp">
+    android:layout_marginHorizontal="22dp"
+    android:layout_marginBottom="11dp"
+    app:cardBackgroundColor="#132123"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp"
+    app:strokeColor="#12FFFFFF"
+    app:strokeWidth="1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="15dp">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvOrderId"
-            style="@style/Text.12x.Manrope.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="#319365235"
-            android:textColor="@color/white_60"
+            android:fontFamily="@font/manrope_bold"
+            android:textSize="11.5sp"
+            android:textColor="#859390"
+            tools:text="#319365235 · 18 jun 2026"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <View
-            android:id="@+id/dot1"
-            android:layout_width="5dp"
-            android:layout_height="5dp"
-            android:layout_marginStart="8dp"
-            android:background="@drawable/bg_gallery_indicator_inactive"
-            app:layout_constraintBottom_toBottomOf="@id/tvOrderId"
-            app:layout_constraintStart_toEndOf="@id/tvOrderId"
-            app:layout_constraintTop_toTopOf="@id/tvOrderId" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvOrderDate"
-            style="@style/Text.12x.Manrope.Medium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            tools:text="05 may 2026"
-            android:textColor="@color/white_60"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintBottom_toBottomOf="@id/tvOrderId"
-            app:layout_constraintEnd_toStartOf="@id/tvStatus"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@id/dot1"
-            app:layout_constraintTop_toTopOf="@id/tvOrderId" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/tvStatus" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvStatus"
-            style="@style/Text.12x.Manrope.Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_gallery_indicator_active"
-            android:paddingHorizontal="6dp"
-            android:paddingVertical="1dp"
+            android:background="@drawable/bg_pill_lime"
+            android:fontFamily="@font/manrope_extra_bold"
+            android:letterSpacing="0.02"
+            android:textSize="11sp"
             tools:text="Payment Successful"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
@@ -67,47 +45,57 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvPrice"
-            style="@style/Text.18x.Manrope.Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="9dp"
+            android:fontFamily="@font/manrope_extra_bold"
+            android:letterSpacing="-0.02"
+            android:textSize="18sp"
+            android:textColor="#FFFFFF"
             tools:text="£229.06"
-            android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvOrderId" />
+            app:layout_constraintTop_toBottomOf="@id/tvStatus" />
 
-        <View
-            android:id="@+id/dot2"
-            android:layout_width="5dp"
-            android:layout_height="5dp"
-            android:layout_marginStart="8dp"
-            android:background="@drawable/bg_gallery_indicator_inactive"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvItemCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:fontFamily="@font/manrope_semibold"
+            android:textSize="11sp"
+            android:textColor="#6F7E7D"
+            tools:text="2 items"
             app:layout_constraintBottom_toBottomOf="@id/tvPrice"
             app:layout_constraintStart_toEndOf="@id/tvPrice"
             app:layout_constraintTop_toTopOf="@id/tvPrice" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvItemCount"
-            style="@style/Text.12x.Manrope.Medium"
+        <LinearLayout
+            android:id="@+id/llExpectedDelivery"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            tools:text="2 items"
-            android:textColor="@color/white_60"
-            app:layout_constraintBottom_toBottomOf="@id/tvPrice"
-            app:layout_constraintStart_toEndOf="@id/dot2"
-            app:layout_constraintTop_toTopOf="@id/tvPrice" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvExpectedDelivery"
-            style="@style/Text.12x.Manrope.Medium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            tools:text="Expected: 8th - 9th May"
-            android:textColor="@color/white30"
+            android:layout_marginTop="6dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvPrice" />
+            app:layout_constraintTop_toBottomOf="@id/tvPrice">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivClock"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:layout_marginEnd="6dp"
+                android:src="@drawable/ic_clock"
+                app:tint="#6F7E7D" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvExpectedDelivery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/manrope_medium"
+                android:textSize="11sp"
+                android:textColor="#6F7E7D"
+                tools:text="Expected: 8th - 9th May" />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

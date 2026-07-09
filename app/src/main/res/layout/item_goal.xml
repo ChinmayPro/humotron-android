@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    android:background="@drawable/bg_config_item"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="16dp">
+
+    <!-- Icon Box -->
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/llDeviceIcon"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:background="@drawable/bg_rounded_12"
+        android:backgroundTint="#0CFFFFFF"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivGoalIcon"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            app:srcCompat="@drawable/ic_start_stress"
+            app:tint="#C4F23E" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <!-- Title -->
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvGoalName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:fontFamily="@font/manrope_bold"
+        app:layout_constraintEnd_toStartOf="@id/ivCheckbox"
+        app:layout_constraintStart_toEndOf="@id/llDeviceIcon"
+        app:layout_constraintTop_toTopOf="@id/llDeviceIcon"
+        app:layout_constraintBottom_toTopOf="@id/tvGoalDesc"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="Systolic BP" />
+
+    <!-- Subtitle (128 mmHg · improving · 2h ago) -->
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvGoalDesc"
+        style="@style/Text.14x.Manrope.Regular"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:textColor="#A0B3AF"
+        android:textSize="12.5sp"
+        app:layout_constraintEnd_toStartOf="@id/ivCheckbox"
+        app:layout_constraintStart_toStartOf="@id/tvGoalName"
+        app:layout_constraintTop_toBottomOf="@id/tvGoalName"
+        app:layout_constraintBottom_toBottomOf="@id/llDeviceIcon"
+        tools:text="128 mmHg · improving · 2h ago" />
+
+    <!-- Checkbox -->
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivCheckbox"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        app:srcCompat="@drawable/ic_checkbox_unselected"
+        app:tint="#6E837F"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

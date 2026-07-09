@@ -50,7 +50,8 @@ class ShopBoosterDetailFragment : BaseFragment(R.layout.fragment_shop_booster_de
     }
 
     private fun setupViews() {
-        binding.btnBack.setOnClickListener {
+        binding.clHeaderCard.title.text = getString(R.string.booster_label)
+        binding.clHeaderCard.ivBack.setOnClickListener {
             findNavController().popBackStack()
         }
 
@@ -72,13 +73,79 @@ class ShopBoosterDetailFragment : BaseFragment(R.layout.fragment_shop_booster_de
         booster?.let { bindBooster(it) }
     }
 
+    private data class BoosterStyle(
+        val iconRes: Int,
+        val accentColorRes: Int
+    )
+
+    private fun getBoosterStyle(boosterId: String?, displayName: String): BoosterStyle {
+        val id = boosterId?.lowercase() ?: ""
+        val name = displayName.lowercase()
+        return when {
+            id == "ai" || name.contains("insight") -> {
+                BoosterStyle(R.drawable.ic_spark, R.color.booster_accent_lime)
+            }
+            id == "aichat" || name.contains("chat") -> {
+                BoosterStyle(R.drawable.ic_bot, R.color.booster_accent_cool)
+            }
+            id == "cm" || name.contains("computed") -> {
+                BoosterStyle(R.drawable.ic_shop_optimize, R.color.booster_accent_cool)
+            }
+            id == "ss" || name.contains("suggestion") -> {
+                BoosterStyle(R.drawable.ic_target, R.color.booster_accent_good)
+            }
+            id == "ln" || name.contains("lifestyle") || name.contains("nudge") -> {
+                BoosterStyle(R.drawable.ic_shop_scan, R.color.booster_accent_watch)
+            }
+            id == "md" || name.contains("multiple") || name.contains("device") -> {
+                BoosterStyle(R.drawable.ic_shop_device, R.color.booster_accent_cool)
+            }
+            id == "dt" || name.contains("dependent") || name.contains("track") -> {
+                BoosterStyle(R.drawable.ic_shop_tools, R.color.booster_accent_lime)
+            }
+            id == "rg" || name.contains("recipe") -> {
+                BoosterStyle(R.drawable.ic_bowl, R.color.booster_accent_good)
+            }
+            else -> {
+                BoosterStyle(R.drawable.ic_spark, R.color.booster_accent_cool)
+            }
+        }
+    }
+
     private fun bindBooster(booster: BoosterResponse.Booster) {
         this.booster = booster
+
+        val style = getBoosterStyle(booster.boosterId, booster.displayName)
+        val accentColor = requireContext().getColor(style.accentColorRes)
+
+        binding.ivBoosterTagIcon.setImageResource(style.iconRes)
+        binding.ivBoosterTagIcon.imageTintList = ColorStateList.valueOf(accentColor)
+        binding.tvBoosterTagText.setTextColor(accentColor)
+        binding.tvBoosterPrice.setTextColor(accentColor)
+
+        val limeColor = requireContext().getColor(R.color.booster_accent_lime)
+
+        // Set accent colors to what you'll unlock header (always lime green in HTML)
+        binding.ivUnlockTitleIcon.imageTintList = ColorStateList.valueOf(limeColor)
+        binding.tvUnlockTitleText.setTextColor(limeColor)
+
+        // Dynamically style clUnlockBox background with color-mix 5% bg / 18% border (always lime green in HTML)
+        val unlockBg = android.graphics.drawable.GradientDrawable().apply {
+            shape = android.graphics.drawable.GradientDrawable.RECTANGLE
+            cornerRadius = 16 * resources.displayMetrics.density
+            setColor(Color.argb(13, Color.red(limeColor), Color.green(limeColor), Color.blue(limeColor))) // ~5% alpha
+            setStroke(
+                (1 * resources.displayMetrics.density).toInt(),
+                Color.argb(46, Color.red(limeColor), Color.green(limeColor), Color.blue(limeColor)) // ~18% alpha
+            )
+        }
+        binding.clUnlockBox.background = unlockBg
+
         binding.tvBoosterName.text = booster.displayName
         binding.tvBoosterTagline.text = booster.displayDescription
-
         binding.tvDescription.text = booster.heroCopy ?: ""
 
+        // Build benefits list dynamically with lime green checkmarks (always lime green in HTML)
         binding.llUnlockBenefitsContainer.removeAllViews()
         val benefitsList = booster.whatUnlock ?: emptyList()
         benefitsList.forEachIndexed { index, benefitText ->
@@ -89,27 +156,31 @@ class ShopBoosterDetailFragment : BaseFragment(R.layout.fragment_shop_booster_de
                     android.widget.LinearLayout.LayoutParams.MATCH_PARENT,
                     android.widget.LinearLayout.LayoutParams.WRAP_CONTENT
                 ).apply {
-                    topMargin = if (index == 0) (20 * resources.displayMetrics.density).toInt() else (16 * resources.displayMetrics.density).toInt()
+                    topMargin = (6 * resources.displayMetrics.density).toInt()
+                    bottomMargin = (6 * resources.displayMetrics.density).toInt()
                 }
                 layoutParams = lp
             }
 
-            val bullet = androidx.appcompat.widget.AppCompatTextView(requireContext()).apply {
-                setTextAppearance(R.style.Text_16x_Manrope_SemiBold)
-                text = "•"
+            // Lime Green Checkmark icon
+            val checkIcon = androidx.appcompat.widget.AppCompatImageView(requireContext()).apply {
+                setImageResource(R.drawable.ic_check_thin)
+                imageTintList = ColorStateList.valueOf(limeColor)
                 val lp = android.widget.LinearLayout.LayoutParams(
-                    android.widget.LinearLayout.LayoutParams.WRAP_CONTENT,
-                    android.widget.LinearLayout.LayoutParams.WRAP_CONTENT
+                    (15 * resources.displayMetrics.density).toInt(),
+                    (15 * resources.displayMetrics.density).toInt()
                 ).apply {
                     marginEnd = (10 * resources.displayMetrics.density).toInt()
+                    topMargin = (2 * resources.displayMetrics.density).toInt()
                 }
                 layoutParams = lp
             }
 
             val text = androidx.appcompat.widget.AppCompatTextView(requireContext()).apply {
-                setTextAppearance(R.style.Text_16x_Manrope_Medium)
+                setTextAppearance(R.style.Text_14x_Manrope_Medium)
                 this.text = benefitText
-                setLineSpacing(0f, 1.1f)
+                setTextColor(requireContext().getColor(R.color.booster_text_benefit))
+                setLineSpacing(0f, 1.45f)
                 val lp = android.widget.LinearLayout.LayoutParams(
                     0,
                     android.widget.LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -118,19 +189,28 @@ class ShopBoosterDetailFragment : BaseFragment(R.layout.fragment_shop_booster_de
                 layoutParams = lp
             }
 
-            row.addView(bullet)
+            row.addView(checkIcon)
             row.addView(text)
             binding.llUnlockBenefitsContainer.addView(row)
         }
 
-        com.bumptech.glide.Glide.with(binding.ivPreviewScreen)
-            .load(booster.imageUrl)
-            .placeholder(R.drawable.shop_deatils_preview_screen)
-            .error(R.drawable.shop_deatils_preview_screen)
-            .into(binding.ivPreviewScreen)
+        // Preview Section visibility and configuration (matches HTML only AI Chat preview card style)
+        val isAiChat = booster.boosterId?.lowercase() == "aichat" || booster.displayName.lowercase().contains("chat")
+        if (isAiChat) {
+            binding.clPreviewMock.visibility = View.VISIBLE
+            binding.ivPreviewScreen.visibility = View.GONE
 
-        binding.tvPreviewTitle.text = booster.bbcTitle ?: ""
-        binding.tvPreviewDesc.text = booster.bbcDescription ?: ""
+            // Set dynamic bubble bg color tint
+            val chatResponseBg = android.graphics.drawable.GradientDrawable().apply {
+                shape = android.graphics.drawable.GradientDrawable.RECTANGLE
+                cornerRadius = 10 * resources.displayMetrics.density
+                setColor(Color.argb(18, Color.red(accentColor), Color.green(accentColor), Color.blue(accentColor))) // ~7% alpha
+            }
+            binding.tvChatResponse.background = chatResponseBg
+        } else {
+            binding.clPreviewMock.visibility = View.GONE
+            binding.ivPreviewScreen.visibility = View.GONE
+        }
 
         updatePriceAndCta(booster)
     }
@@ -148,19 +228,37 @@ class ShopBoosterDetailFragment : BaseFragment(R.layout.fragment_shop_booster_de
         binding.tvBoosterPrice.text = priceText
         binding.tvBoosterPeriod.text = booster.priceModel ?: ""
 
+        val isInPro = when (booster.boosterId?.lowercase()) {
+            "ai", "aichat", "cm", "ss" -> true
+            else -> {
+                val name = booster.displayName.lowercase()
+                name.contains("insight") || name.contains("chat") || name.contains("computed") || name.contains("suggestion")
+            }
+        }
+
+        val inProActive = isInPro && isUnlocked
+
         if (isUnlocked) {
-            binding.btnBuyNow.text = getString(R.string.unlocked_label)
-            binding.btnBuyNow.isEnabled = false
-            binding.btnBuyNow.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.unlocked_btn_bg))
-            binding.btnBuyNow.setTextColor(requireContext().getColor(R.color.white50))
-            binding.btnBuyNow.setOnClickListener(null)
-            
-            binding.clProPlanSection.visibility = View.VISIBLE
+            binding.btnBuyNow.visibility = View.GONE
+            binding.layoutOwnedBar.visibility = View.VISIBLE
+
+            if (inProActive) {
+                binding.tvOwnedBarText.text = getString(R.string.included_in_pro_plan)
+                binding.btnExploreProPlan.visibility = View.VISIBLE
+                binding.btnExploreProPlan.text = getString(R.string.explore_pro_plan)
+                binding.btnExploreProPlan.setOnClickListener {
+                    Toast.makeText(requireContext(), "Explore Pro plan clicked!", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                binding.tvOwnedBarText.text = "${booster.displayName} is active"
+                binding.btnExploreProPlan.visibility = View.GONE
+            }
         } else {
-            binding.btnBuyNow.text = getString(R.string.upgrade_label)
+            binding.layoutOwnedBar.visibility = View.GONE
+            binding.btnBuyNow.visibility = View.VISIBLE
+
+            binding.btnBuyNow.text = "Add ${booster.displayName} — $priceText/mo"
             binding.btnBuyNow.isEnabled = true
-            binding.btnBuyNow.backgroundTintList = requireContext().getColorStateList(R.color.lime_green)
-            binding.btnBuyNow.setTextColor(requireContext().getColor(R.color.black))
             binding.btnBuyNow.setOnClickListener {
                 val productDetails = viewModel.getProductDetailsForId(booster.playStoreProductId)
                 if (productDetails != null) {
@@ -177,8 +275,16 @@ class ShopBoosterDetailFragment : BaseFragment(R.layout.fragment_shop_booster_de
                     ).show()
                 }
             }
-            
-            binding.clProPlanSection.visibility = View.VISIBLE
+
+            if (isInPro) {
+                binding.btnExploreProPlan.visibility = View.VISIBLE
+                binding.btnExploreProPlan.text = getString(R.string.or_get_in_pro_plan)
+                binding.btnExploreProPlan.setOnClickListener {
+                    findNavController().navigate(R.id.fragmentShopPlanDetail)
+                }
+            } else {
+                binding.btnExploreProPlan.visibility = View.GONE
+            }
         }
     }
 
@@ -259,7 +365,7 @@ class ShopBoosterDetailFragment : BaseFragment(R.layout.fragment_shop_booster_de
 
     private fun toggleLoader(show: Boolean) {
         binding.progressBar.visibility = if (show) View.VISIBLE else View.GONE
-        binding.groupHeaderContent.visibility = if (show) View.GONE else View.VISIBLE
         binding.nsvContent.visibility = if (show) View.GONE else View.VISIBLE
+        binding.clFooter.visibility = if (show) View.GONE else View.VISIBLE
     }
 }

@@ -10,6 +10,10 @@
         android:name="com.humotron.app.ui.shop.ShopFragment"
         android:label="Shop"
         tools:layout="@layout/fragment_shop" >
+        <argument
+            android:name="selectedTabId"
+            app:argType="integer"
+            android:defaultValue="0" />
         <action
             android:id="@+id/action_fragmentShop_to_fragmentBookingType"
             app:destination="@id/fragmentBookingType"
@@ -128,5 +132,11 @@
             android:name="booster"
             app:argType="com.humotron.app.domain.modal.response.BoosterResponse$Booster" />
     </fragment>
+
+    <fragment
+        android:id="@+id/fragmentShopPlanDetail"
+        android:name="com.humotron.app.ui.shop.ShopPlanDetailFragment"
+        android:label="Plan Details"
+        tools:layout="@layout/fragment_shop_plan_detail" />
 
 </navigation>

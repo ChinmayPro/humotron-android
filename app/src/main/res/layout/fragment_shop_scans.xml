@@ -6,81 +6,182 @@
     android:layout_height="match_parent"
     android:fillViewport="true">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="24dp"
+        android:orientation="vertical"
         android:paddingBottom="40dp">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivScanDiagram"
-            android:layout_width="280dp"
-            android:layout_height="280dp"
-            android:layout_marginTop="20dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/body_scan_image"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/cardShadow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_track_card_shadow"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ivScanDiagram" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvScanTitle"
-            style="@style/Text.24x.Manrope.Bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/deep_scan_title"
-            android:textColor="@color/colorBgBtn"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cardShadow" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvScanSubtitle"
-            style="@style/Text.18x.Manrope.SemiBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:text="@string/deep_scan_subtitle"
-            android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvScanTitle" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvScanDesc"
-            style="@style/Text.14x.Manrope.SemiBold"
+        <!-- Hero Card -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:lineSpacingExtra="4dp"
-            android:text="@string/deep_scan_desc"
-            android:textColor="@color/white70"
-            app:layout_constraintTop_toBottomOf="@id/tvScanSubtitle" />
+            android:layout_marginHorizontal="22dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_scan_hero"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingHorizontal="22dp"
+            android:paddingVertical="26dp">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnBookNow"
-            style="@style/Text.14x.Manrope.SemiBold"
-            android:layout_width="180dp"
-            android:layout_height="36dp"
-            android:layout_marginTop="25dp"
-            android:background="@drawable/bg_btn_round_corner"
-            android:text="@string/book_now_arrow"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvScanDesc" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="150dp"
+                android:layout_height="200dp"
+                android:layout_marginBottom="6dp"
+                android:src="@drawable/ic_body_scan_outline" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                style="@style/Text.20x.Manrope.Bold"
+                android:letterSpacing="-0.02"
+                android:text="Humotron Deep Scan"
+                android:textColor="@color/white" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_scan_pill"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="5dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:src="@drawable/ic_scan_node" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    style="@style/Text.12x.Manrope.Bold"
+                    android:text="60+ biomarkers"
+                    android:textColor="#5FB7C4" />
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                style="@style/Text.12x.Manrope.SemiBold"
+                android:gravity="center"
+                android:lineSpacingExtra="4dp"
+                android:text="Two simple, non-invasive tests — blood and saliva. We read them against your environment and activity, then map clear steps for better sleep, sharper focus and a healthier life."
+                android:textColor="@color/white70" />
+        </LinearLayout>
+
+        <!-- Explainer Box -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="22dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_scan_explainer"
+            android:orientation="vertical">
+
+            <!-- Row 1 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_scan_droplet" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="9dp"
+                        style="@style/Text.14x.Manrope.Bold"
+                        android:text="What we measure"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="8dp"
+                    style="@style/Text.12x.Manrope.SemiBold"
+                    android:lineSpacingExtra="4dp"
+                    android:text="Metabolic, hormonal, inflammatory and nutrient markers — the signals a wearable can't reach."
+                    android:textColor="@color/white50" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#12FFFFFF" />
+
+            <!-- Row 2 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_scan_shield" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="9dp"
+                        style="@style/Text.14x.Manrope.Bold"
+                        android:text="How your sample is handled"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="8dp"
+                    style="@style/Text.12x.Manrope.SemiBold"
+                    android:lineSpacingExtra="4dp"
+                    android:text="Processed in an accredited lab. Results flow back as biomarkers; your identity and your health data are kept apart."
+                    android:textColor="@color/white50" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Button -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="22dp"
+            android:layout_marginTop="24dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnBookNow"
+                style="@style/Text.16x.Manrope.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/bg_btn_round_corner"
+                android:backgroundTint="@color/green_1"
+                android:text="Book a scan · £149"
+                android:textAllCaps="false"
+                android:textColor="#0d1618" />
+        </FrameLayout>
+    </LinearLayout>
 </androidx.core.widget.NestedScrollView>

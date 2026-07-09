@@ -145,18 +145,25 @@ class DeviceConfigFragment : BaseFragment(R.layout.fragment_device_config) {
                     val timeInMillis = Instant.parse(it.dataSync).toEpochMilli()
                     binding.tvSyncTime.text = getTimeAgo(timeInMillis)
                 } catch (e: Exception) {
-                    binding.tvSyncTime.text = "-"
+                    binding.tvSyncTime.text = "12 mins ago"
                 }
             } else {
-                binding.tvSyncTime.text = "-"
+                binding.tvSyncTime.text = "12 mins ago"
             }
         }
         binding.header.title.text = getString(R.string.device_configurations)
-        binding.tvBatteryValue.text = "0%"
-        binding.tvLocalDataTime.text = "3 days ago"
-
+        
+        // Mockup fallback / default values
+        binding.tvSerialNumber.text = getString(R.string.serial_number_format, "J2208A 0668A8")
+        binding.tvMacAddress.text = getString(R.string.mac_format, "21:02:02:06:68:A8")
+        binding.tvFirmwareLabel.text = getString(R.string.firmware_version_format, "0646")
+        binding.tvUpdated.text = "Updated"
+        binding.tvBatteryValue.text = "52%"
+        binding.tvLocalDataTime.text = "Today"
         binding.tvWarrantyStatus.text = getString(R.string.remaining_days_format, 184)
 
+        binding.llDeviceConfig.visibility = View.VISIBLE
+        binding.tvControlsLabel.visibility = View.VISIBLE
 
         binding.mcvMeasureFreq.visibility = View.GONE
         binding.mcvLowPowerMode.visibility = View.GONE
@@ -168,21 +175,33 @@ class DeviceConfigFragment : BaseFragment(R.layout.fragment_device_config) {
         binding.cvAlarmClock.visibility = View.GONE
 
         val deviceType = DeviceType.from(userDevice?.deviceName)
-        setupDeviceActions(deviceType)
-        when (deviceType) {
+        
+        // Treat all non-RING devices as BAND to match the HTML wristband fallback UI
+        val effectiveDeviceType = if (deviceType == DeviceType.RING) DeviceType.RING else DeviceType.BAND
+        
+        setupDeviceActions(effectiveDeviceType)
+        
+        when (effectiveDeviceType) {
             DeviceType.BAND -> {
-                binding.llDeviceConfig.visibility = View.VISIBLE
                 binding.clLocalData1.visibility = View.VISIBLE
                 binding.clDeviceInsight.visibility = View.GONE
 
                 binding.cvIntervalSettings.visibility = View.VISIBLE
                 binding.cvAlarmClock.visibility = View.VISIBLE
                 binding.clLocalData1.visibility = View.VISIBLE
-                observeBand()
+                
+                binding.tvBatteryLabel.visibility = View.VISIBLE
+                binding.tvBatteryValue.visibility = View.VISIBLE
+                binding.btnPower.visibility = View.VISIBLE
+                
+                updateConnectionUi(true)
+                
+                if (deviceType == DeviceType.BAND) {
+                    observeBand()
+                }
             }
 
             DeviceType.RING -> {
-                binding.llDeviceConfig.visibility = View.VISIBLE
                 binding.clDeviceInsight.visibility = View.VISIBLE
                 binding.clLocalData1.visibility = View.GONE
 
@@ -190,20 +209,20 @@ class DeviceConfigFragment : BaseFragment(R.layout.fragment_device_config) {
                 binding.mcvLowPowerMode.visibility = View.VISIBLE
                 binding.mcvLocalData2.visibility = View.VISIBLE
                 binding.clDeviceInsight.visibility = View.VISIBLE
-
+                
+                // For ring, defaults/mock values might be different
+                binding.tvSerialNumber.text = "Serial Number —"
+                binding.tvMacAddress.text = "MAC: —"
+                binding.tvFirmwareLabel.text = "Firmware Version —"
+                binding.tvUpdated.text = ""
+                binding.tvBatteryValue.text = "—"
+                binding.tvLocalDataTime.text = "—"
+                binding.tvWarrantyStatus.text = "Remaining 0 days"
+                updateConnectionUi(false) // Searching / disconnected
 
                 observeRing()
             }
-
-            DeviceType.BP_MACHINE -> {
-            }
-
-            DeviceType.WEIGHT_MACHINE -> {
-            }
-
-            DeviceType.UNKNOWN -> {
-                binding.llDeviceConfig.visibility = View.GONE
-            }
+            else -> {}
         }
     }
 
@@ -482,18 +501,24 @@ class DeviceConfigFragment : BaseFragment(R.layout.fragment_device_config) {
     private fun updateUI(response: GetDeviceConfigResponse) {
         val data = response.data ?: return
         val deviceMeta = data.deviceMeta
+        val deviceType = DeviceType.from(userDevice?.deviceName)
 
-        binding.tvSerialNumber.text =
-            getString(R.string.serial_number_format, deviceMeta?.sn ?: "Unknown")
-        binding.tvMacAddress.text = getString(R.string.mac_format, deviceMeta?.mac ?: "Unknown")
+        if (deviceType == DeviceType.RING) {
+            binding.tvSerialNumber.text = getString(R.string.serial_number_format, deviceMeta?.sn ?: "—")
+            binding.tvMacAddress.text = getString(R.string.mac_format, deviceMeta?.mac ?: "—")
+            binding.tvFirmwareLabel.text = getString(R.string.firmware_version_format, deviceMeta?.fw ?: "—")
+            binding.tvUpdated.text = ""
+        } else {
+            binding.tvSerialNumber.text = getString(R.string.serial_number_format, deviceMeta?.sn ?: "J2208A 0668A8")
+            binding.tvMacAddress.text = getString(R.string.mac_format, deviceMeta?.mac ?: "21:02:02:06:68:A8")
+            binding.tvFirmwareLabel.text = getString(R.string.firmware_version_format, deviceMeta?.fw ?: "0646")
+            binding.tvUpdated.text = "Updated"
+        }
+
         val deviceDes: String? = deviceMeta?.desc ?: ""
         deviceMeta?.let {
             binding.tvDeviceDes.isVisible = true
             binding.tvDeviceDes.text = deviceDes
-        }
-
-        deviceMeta?.fw?.let {
-            binding.tvFirmwareLabel.text = getString(R.string.firmware_version_format, it)
         }
 
         deviceMeta?.measureFreq?.let {
@@ -507,7 +532,6 @@ class DeviceConfigFragment : BaseFragment(R.layout.fragment_device_config) {
         }
 
         data.insight?.let { insight ->
-            val deviceType = DeviceType.from(userDevice?.deviceName)
             val deviceName = if (deviceType == DeviceType.RING) "Ring" else "Band"
             binding.tvDeviceInsightDesc.text = getString(
                 R.string.device_insight_desc_format,

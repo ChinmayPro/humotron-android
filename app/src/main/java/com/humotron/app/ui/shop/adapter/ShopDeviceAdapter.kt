@@ -85,35 +85,60 @@ class ShopDeviceAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             binding.btnExplore.setOnClickListener {
                 onItemClick?.invoke(device)
             }
-            // Set basic details
             binding.tvDeviceName.text = device.deviceFacingName ?: device.deviceName
-            binding.tvDeviceCategory.text = device.deviceName // Using internal name as sub-label or model
+            binding.tvDeviceCategory.text = when (device.deviceName?.uppercase()) {
+                "WEIGHTMACHINE" -> "BODY COMPOSITION"
+                "BPMACHINE" -> "BLOOD PRESSURE"
+                "WEIGHTMACHINEADVANCED" -> "BODY METRICS"
+                "URINESTRIP", "URINE_STRIP", "HYDRATION_KETONES" -> "HYDRATION & KETONES"
+                else -> device.deviceName ?: ""
+            }
             
-            // Format metrics list with arrows (Limit to 4)
-            val metricsText = device.metrics?.take(4)?.joinToString("\n") { "➔ ${it.metricName}" }
-            binding.tvMetrics.text = metricsText
+            // Format metrics list using Flexbox chips (Limit to 3)
+            val metricsList = device.metrics?.mapNotNull { it.metricName } ?: emptyList()
+            binding.tvMetric1.visibility = if (metricsList.isNotEmpty()) android.view.View.VISIBLE else android.view.View.GONE
+            binding.tvMetric2.visibility = if (metricsList.size > 1) android.view.View.VISIBLE else android.view.View.GONE
+            binding.tvMetric3.visibility = if (metricsList.size > 2) android.view.View.VISIBLE else android.view.View.GONE
+            
+            if (metricsList.isNotEmpty()) binding.tvMetric1.text = metricsList[0]
+            if (metricsList.size > 1) binding.tvMetric2.text = metricsList[1]
+            if (metricsList.size > 2) binding.tvMetric3.text = metricsList[2]
 
             // Handle price from deviceModel object
             val price = device.deviceModel?.deviceModelPrice
             binding.tvPrice.text = if (!price.isNullOrEmpty()) "£$price" else "£---"
 
             // Load remote image with Glide, fallback to local generated placeholders
-            val imageUrl = device.deviceImage?.firstOrNull()
-            if (!imageUrl.isNullOrEmpty()) {
-                Glide.with(binding.ivDeviceImage.context)
-                    .load(imageUrl)
-                    .placeholder(R.drawable.ic_bg_main)
-                    .error(R.drawable.ic_bg_main)
-                    .into(binding.ivDeviceImage)
+            val localDrawableRes = when {
+                device.deviceFacingName?.contains("Scale", true) == true || 
+                device.deviceName?.contains("Scale", true) == true -> R.drawable.ic_device_scale
+                device.deviceFacingName?.contains("Cuff", true) == true || 
+                device.deviceName?.contains("Cuff", true) == true -> R.drawable.ic_device_cuff
+                device.deviceFacingName?.contains("Strip", true) == true || 
+                device.deviceName?.contains("Strip", true) == true -> R.drawable.ic_scan_droplet
+                else -> null
+            }
+
+            if (localDrawableRes != null) {
+                binding.ivDeviceImage.setImageResource(localDrawableRes)
             } else {
-                val placeholderRes = when {
-                    device.deviceFacingName?.contains("Ring", true) == true || 
-                    device.deviceName?.contains("Ring", true) == true -> R.drawable.ic_smart_ring
-                    device.deviceFacingName?.contains("Band", true) == true || 
-                    device.deviceName?.contains("Band", true) == true -> R.drawable.ic_wrist_band
-                    else -> R.drawable.ic_bg_main
+                val imageUrl = device.deviceImage?.firstOrNull()
+                if (!imageUrl.isNullOrEmpty()) {
+                    Glide.with(binding.ivDeviceImage.context)
+                        .load(imageUrl)
+                        .placeholder(R.drawable.ic_bg_main)
+                        .error(R.drawable.ic_bg_main)
+                        .into(binding.ivDeviceImage)
+                } else {
+                    val placeholderRes = when {
+                        device.deviceFacingName?.contains("Ring", true) == true || 
+                        device.deviceName?.contains("Ring", true) == true -> R.drawable.ic_ring
+                        device.deviceFacingName?.contains("Band", true) == true || 
+                        device.deviceName?.contains("Band", true) == true -> R.drawable.ic_wrist_band
+                        else -> R.drawable.ic_bg_main
+                    }
+                    binding.ivDeviceImage.setImageResource(placeholderRes)
                 }
-                binding.ivDeviceImage.setImageResource(placeholderRes)
             }
         }
     }

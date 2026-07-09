@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Outer ring (Shadow) -->
+    <item
+        android:width="13dp"
+        android:height="13dp">
+        <shape android:shape="oval">
+            <solid android:color="#2E7BD88F" />
+        </shape>
+    </item>
+    <!-- Inner solid dot -->
+    <item
+        android:width="7dp"
+        android:height="7dp"
+        android:top="3dp"
+        android:bottom="3dp"
+        android:left="3dp"
+        android:right="3dp">
+        <shape android:shape="oval">
+            <solid android:color="#7BD88F" />
+        </shape>
+    </item>
+</layer-list>

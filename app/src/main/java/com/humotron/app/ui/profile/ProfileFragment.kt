@@ -7,6 +7,7 @@ import android.transition.TransitionManager
 import android.transition.TransitionSet
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.core.view.WindowInsetsControllerCompat
 import com.bumptech.glide.Glide
@@ -32,33 +33,39 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         val user = prefUtils.getLoginResponse()
 
         binding.tvName.text = "${user.firstName} ${user.lastName}"
-        binding.tvBadge.text = getString(R.string.basic)
-        binding.tvPlanBadge.text = getString(R.string.basic)
-        binding.tvAddOnsStatus.text = getString(R.string.activated_count, 2)
+        binding.tvBadge.text = getString(R.string.profile_plan_format, getString(R.string.basic))
+//        binding.tvPlanBadge.text = getString(R.string.basic)
+//        binding.tvAddOnsStatus.text = getString(R.string.activated_count, 2)
 
         Glide.with(this)
             .load(user.profileImages)
             .placeholder(R.drawable.ic_profile)
             .into(binding.ivProfile)
 
-        binding.llExpandGroup.setOnClickListener {
+        binding.ivArrowDown.setOnClickListener {
             toggleExpansion()
         }
 
-        binding.clActivePlan.setOnClickListener {
-            // Toast.makeText(context, "Active Plan clicked", Toast.LENGTH_SHORT).show()
+        binding.btnInsights.setOnClickListener {
+            findNavController().navigate(R.id.action_fragmentProfile_to_fragmentInsights)
         }
 
-        binding.clAddOns.setOnClickListener {
-            // Toast.makeText(context, "Add-ons clicked", Toast.LENGTH_SHORT).show()
+        binding.clActivePlan.setOnClickListener {
+            val bundle = Bundle().apply {
+                putInt("selectedTabId", R.id.fragmentShopTools)
+            }
+            findNavController().navigate(R.id.action_fragmentProfile_to_nav_graph_shop, bundle)
         }
 
         binding.tvManageAccount.setOnClickListener {
-            // Toast.makeText(context, "Manage Account clicked", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.action_fragmentProfile_to_fragmentManageAccount)
         }
 
         binding.clShop.setOnClickListener {
-            findNavController().navigate(R.id.action_fragmentProfile_to_nav_graph_shop)
+            val bundle = Bundle().apply {
+                putInt("selectedTabId", R.id.fragmentShopTools)
+            }
+            findNavController().navigate(R.id.action_fragmentProfile_to_nav_graph_shop, bundle)
         }
 
         binding.clOrder.setOnClickListener {
@@ -69,9 +76,6 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             findNavController().navigate(R.id.action_fragmentProfile_to_fragmentCart)
         }
 
-        binding.btnPreferences.setOnClickListener {
-            findNavController().navigate(R.id.action_fragmentProfile_to_fragmentPreferences)
-        }
 
         binding.btnDevices.setOnClickListener {
             findNavController().navigate(R.id.action_fragmentProfile_to_fragmentDeviceList)
@@ -85,12 +89,52 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             findNavController().navigate(R.id.action_fragmentProfile_to_fragmentSupport)
         }
 
-        binding.clFaq.setOnClickListener {
-            // TODO: Navigate to FAQ screen
-        }
+        
 
         binding.clLegal.setOnClickListener {
             // TODO: Navigate to Legal screen
+        }
+
+        
+        binding.clRecipes.setOnClickListener {
+            findNavController().navigate(R.id.action_fragmentProfile_to_fragmentRecipes)
+        }
+
+        binding.clDigitalTools.setOnClickListener {
+            val bundle = Bundle().apply {
+                putInt("selectedTabId", R.id.fragmentShopTools)
+            }
+            findNavController().navigate(R.id.action_fragmentProfile_to_nav_graph_shop, bundle)
+        }
+
+        binding.btnDataSources.setOnClickListener {
+            findNavController().navigate(R.id.action_fragmentProfile_to_fragmentDataSources)
+        }
+
+        binding.btnGoals.setOnClickListener {
+            findNavController().navigate(R.id.action_fragmentProfile_to_fragmentGoals)
+        }
+
+
+
+        binding.btnChatWithAI.setOnClickListener {
+            findNavController().navigate(R.id.action_fragmentProfile_to_fragmentAiChat)
+        }
+
+        binding.btnRecipeGenerator.setOnClickListener {
+            findNavController().navigate(R.id.action_fragmentProfile_to_fragmentRecipeGenerator)
+        }
+
+        binding.btnLearning.setOnClickListener {
+            findNavController().navigate(R.id.action_fragmentProfile_to_fragmentLearningPreferences)
+        }
+
+        binding.btnShopping.setOnClickListener {
+            findNavController().navigate(R.id.action_fragmentProfile_to_fragmentShopping)
+        }
+
+        binding.clDeleteAccount.setOnClickListener {
+            Toast.makeText(context, "Delete Account clicked", Toast.LENGTH_SHORT).show()
         }
 
         binding.clLogout.setOnClickListener {
@@ -104,7 +148,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         val rotation = if (isExpanded) 180f else 0f
         val animDuration = 400L
 
-        binding.llExpandGroup.animate()
+        binding.ivArrowDown.animate()
             .rotation(rotation)
             .setDuration(animDuration)
             .setInterpolator(AccelerateDecelerateInterpolator())

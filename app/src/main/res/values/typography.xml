@@ -11,6 +11,7 @@
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/textColorWhite</item>
         <item name="android:fontFamily">@font/manrope_semibold</item>
+        <item name="fontFamily">@font/manrope_semibold</item>
     </style>
 
     <style name="Text.OnBoard.Desc" parent="Widget.AppCompat.TextView">
@@ -41,6 +42,7 @@
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/textColorWhite</item>
         <item name="android:fontFamily">@font/manrope_extra_bold</item>
+        <item name="fontFamily">@font/manrope_extra_bold</item>
     </style>
 
 
@@ -54,18 +56,21 @@
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/textColorWhite</item>
         <item name="android:fontFamily">@font/manrope_bold</item>
+        <item name="fontFamily">@font/manrope_bold</item>
     </style>
 
     <style name="Text.14x.Manrope.Bold" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/textColorWhite</item>
         <item name="android:fontFamily">@font/manrope_bold</item>
+        <item name="fontFamily">@font/manrope_bold</item>
     </style>
 
     <style name="Text.16x.Manrope.Bold" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/textColorWhite</item>
         <item name="android:fontFamily">@font/manrope_bold</item>
+        <item name="fontFamily">@font/manrope_bold</item>
     </style>
 
     <style name="Text.17x.Manrope.Bold" parent="Widget.AppCompat.TextView">
@@ -84,6 +89,7 @@
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/textColorWhite</item>
         <item name="android:fontFamily">@font/manrope_bold</item>
+        <item name="fontFamily">@font/manrope_bold</item>
     </style>
 
     <style name="Text.22x.Manrope.Bold" parent="Widget.AppCompat.TextView">
@@ -96,6 +102,7 @@
         <item name="android:textSize">24sp</item>
         <item name="android:textColor">@color/textColorWhite</item>
         <item name="android:fontFamily">@font/manrope_bold</item>
+        <item name="fontFamily">@font/manrope_bold</item>
     </style>
 
     <style name="Text.28x.Manrope.Bold" parent="Widget.AppCompat.TextView">
@@ -283,5 +290,54 @@
         <item name="android:textSize">26sp</item>
         <item name="android:textColor">@color/textColorWhite</item>
         <item name="android:fontFamily">@font/manrope_bold</item>
+    </style>
+
+    <style name="Text.24x.Manrope.ExtraBold" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/textColorWhite</item>
+        <item name="android:fontFamily">@font/manrope_extra_bold</item>
+        <item name="fontFamily">@font/manrope_extra_bold</item>
+    </style>
+
+    <style name="Text.16x.Manrope.ExtraBold" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/textColorWhite</item>
+        <item name="android:fontFamily">@font/manrope_extra_bold</item>
+        <item name="fontFamily">@font/manrope_extra_bold</item>
+    </style>
+
+    <style name="Text.15_5x.Manrope.ExtraBold" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">15.5sp</item>
+        <item name="android:textColor">@color/textColorWhite</item>
+        <item name="android:fontFamily">@font/manrope_extra_bold</item>
+        <item name="fontFamily">@font/manrope_extra_bold</item>
+    </style>
+
+    <style name="Text.15x.Manrope.ExtraBold" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/textColorWhite</item>
+        <item name="android:fontFamily">@font/manrope_extra_bold</item>
+        <item name="fontFamily">@font/manrope_extra_bold</item>
+    </style>
+
+    <style name="Text.12_5x.Manrope.ExtraBold" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">12.5sp</item>
+        <item name="android:textColor">@color/textColorWhite</item>
+        <item name="android:fontFamily">@font/manrope_extra_bold</item>
+        <item name="fontFamily">@font/manrope_extra_bold</item>
+    </style>
+
+    <style name="Text.12_5x.Manrope.Medium" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">12.5sp</item>
+        <item name="android:textColor">@color/textColorWhite</item>
+        <item name="android:fontFamily">@font/manrope_medium</item>
+        <item name="fontFamily">@font/manrope_medium</item>
+    </style>
+
+    <style name="Text.10_5x.Manrope.Bold" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">10.5sp</item>
+        <item name="android:textColor">@color/textColorWhite</item>
+        <item name="android:fontFamily">@font/manrope_bold</item>
+        <item name="fontFamily">@font/manrope_bold</item>
     </style>
 </resources>

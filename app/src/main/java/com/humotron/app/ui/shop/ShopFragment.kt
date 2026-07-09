@@ -24,8 +24,19 @@ class ShopFragment : BaseFragment(R.layout.fragment_shop) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentShopBinding.bind(view)
 
+        // Read navigation argument to determine which tab to select
+        arguments?.getInt("selectedTabId")?.let { tabId ->
+            if (tabId != 0) {
+                viewModel.lastSelectedTabId = tabId
+            }
+        }
+
         setupTabs()
         setupNavigationListener()
+
+        binding.header.ivBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     private fun setupNavigationListener() {
@@ -62,61 +73,44 @@ class ShopFragment : BaseFragment(R.layout.fragment_shop) {
 
     private fun updateTabUI(destinationId: Int) {
         viewModel.lastSelectedTabId = destinationId
-        val selectedColor = requireContext().getColor(R.color.colorBgBtn)
-        val unselectedColor = requireContext().getColor(R.color.white30)
+        val selectedColor = requireContext().getColor(R.color.green_1)
+        val unselectedColor = requireContext().getColor(R.color.white50)
 
         // Reset all tabs
-        resetTab(binding.header.ivDevices, binding.header.tvDevices, unselectedColor)
-        resetTab(binding.header.ivScans, binding.header.tvScans, unselectedColor)
-        resetTab(binding.header.ivOptimize, binding.header.tvOptimize, unselectedColor)
-        resetTab(binding.header.ivBooks, binding.header.tvBooks, unselectedColor)
-        resetTab(binding.header.ivTools, binding.header.tvTools, unselectedColor)
+        resetTab(binding.header.tabDevices, binding.header.ivDevices, binding.header.tvDevices, unselectedColor)
+        resetTab(binding.header.tabScans, binding.header.ivScans, binding.header.tvScans, unselectedColor)
+        resetTab(binding.header.tabOptimize, binding.header.ivOptimize, binding.header.tvOptimize, unselectedColor)
+        resetTab(binding.header.tabBooks, binding.header.ivBooks, binding.header.tvBooks, unselectedColor)
+        resetTab(binding.header.tabTools, binding.header.ivTools, binding.header.tvTools, unselectedColor)
 
-        // Highlight selected tab & update title
+        // Highlight selected tab
         when (destinationId) {
-            R.id.fragmentShopDevices -> {
-                highlightTab(binding.header.ivDevices, binding.header.tvDevices, selectedColor)
-                binding.header.tvShopTitle.text = getString(R.string.header_devices)
-            }
-            R.id.fragmentShopScans -> {
-                highlightTab(binding.header.ivScans, binding.header.tvScans, selectedColor)
-                binding.header.tvShopTitle.text = getString(R.string.header_scans)
-            }
-            R.id.fragmentShopOptimize -> {
-                highlightTab(binding.header.ivOptimize, binding.header.tvOptimize, selectedColor)
-                binding.header.tvShopTitle.text = getString(R.string.optimize)
-            }
-            R.id.fragmentShopBooks -> {
-                highlightTab(binding.header.ivBooks, binding.header.tvBooks, selectedColor)
-                binding.header.tvShopTitle.text = getString(R.string.header_books)
-            }
-            R.id.fragmentShopTools -> {
-                highlightTab(binding.header.ivTools, binding.header.tvTools, selectedColor)
-                binding.header.tvShopTitle.text = getString(R.string.header_tools)
-            }
+            R.id.fragmentShopDevices -> highlightTab(binding.header.tabDevices, binding.header.ivDevices, binding.header.tvDevices, selectedColor)
+            R.id.fragmentShopScans -> highlightTab(binding.header.tabScans, binding.header.ivScans, binding.header.tvScans, selectedColor)
+            R.id.fragmentShopOptimize -> highlightTab(binding.header.tabOptimize, binding.header.ivOptimize, binding.header.tvOptimize, selectedColor)
+            R.id.fragmentShopBooks -> highlightTab(binding.header.tabBooks, binding.header.ivBooks, binding.header.tvBooks, selectedColor)
+            R.id.fragmentShopTools -> highlightTab(binding.header.tabTools, binding.header.ivTools, binding.header.tvTools, selectedColor)
         }
     }
 
-    private fun resetTab(imageView: android.widget.ImageView, textView: android.widget.TextView, color: Int) {
+    private fun resetTab(tab: android.view.View, imageView: android.widget.ImageView, textView: android.widget.TextView, color: Int) {
+        tab.background = null
         imageView.imageTintList = ColorStateList.valueOf(color)
         textView.setTextColor(color)
     }
 
-    private fun highlightTab(imageView: android.widget.ImageView, textView: android.widget.TextView, color: Int) {
+    private fun highlightTab(tab: android.view.View, imageView: android.widget.ImageView, textView: android.widget.TextView, color: Int) {
+        tab.setBackgroundResource(R.drawable.bg_shop_tab_active)
         imageView.imageTintList = ColorStateList.valueOf(color)
         textView.setTextColor(color)
     }
 
     fun showTitleShimmer() {
-        binding.header.shimmerTitle.startShimmer()
-        binding.header.tvShopTitle.visibility = View.INVISIBLE
-        binding.header.viewTitlePlaceholder.visibility = View.VISIBLE
+        // Removed shimmer for title
     }
 
     fun hideTitleShimmer() {
-        binding.header.shimmerTitle.stopShimmer()
-        binding.header.tvShopTitle.visibility = View.VISIBLE
-        binding.header.viewTitlePlaceholder.visibility = View.GONE
+        // Removed shimmer for title
     }
 
 

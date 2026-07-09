@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="16dp">
+
+    <!-- Icon Box -->
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/llDeviceIcon"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:background="@drawable/bg_rounded_12"
+        android:backgroundTint="#2E1B17"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivDeviceIcon"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            app:srcCompat="@drawable/ic_wrist_band"
+            app:tint="#EE4D3D" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <!-- Title -->
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvDeviceName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:textColor="@color/white"
+        android:textSize="14.5sp"
+        android:fontFamily="@font/manrope_bold"
+        app:fontFamily="@font/manrope_bold"
+        app:layout_constraintEnd_toStartOf="@id/llStatus"
+        app:layout_constraintStart_toEndOf="@id/llDeviceIcon"
+        app:layout_constraintTop_toTopOf="@id/llDeviceIcon"
+        app:layout_constraintBottom_toTopOf="@id/tvDeviceDesc"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="Apple Watch" />
+
+    <!-- Subtitle -->
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvDeviceDesc"
+        style="@style/Text.14x.Manrope.Regular"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:textColor="#859390"
+        android:textSize="11.5sp"
+        android:lineSpacingMultiplier="1.2"
+        app:layout_constraintEnd_toStartOf="@id/llStatus"
+        app:layout_constraintStart_toStartOf="@id/tvDeviceName"
+        app:layout_constraintTop_toBottomOf="@id/tvDeviceName"
+        app:layout_constraintBottom_toBottomOf="@id/llDeviceIcon"
+        tools:text="Activity, heart rate &amp; workouts" />
+
+    <!-- Status & Chevron -->
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/llStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <View
+            android:id="@+id/vStatusDot"
+            android:layout_width="7dp"
+            android:layout_height="7dp"
+            android:background="@drawable/bg_circle_icon"
+            android:backgroundTint="@color/lime_green" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvStatus"
+            style="@style/Text.14x.Manrope.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="8dp"
+            android:textColor="@color/lime_green"
+            android:textSize="12sp"
+            android:fontFamily="@font/manrope_bold"
+            app:fontFamily="@font/manrope_bold"
+            tools:text="Connected" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivChevron"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            app:srcCompat="@drawable/ic_chevron_right_24px"
+            app:tint="#6E837F" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

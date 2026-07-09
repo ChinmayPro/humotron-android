@@ -37,47 +37,34 @@ class AppointmentAdapter(
 
         fun bind(appointment: GetBloodTestOrderResponse.BloodTestOrder) {
             val context = binding.root.context
-            binding.tvOrderNumber.text = "#${appointment.orderNumber ?: ""}"
             
-            binding.tvBookingDate.text = utcOffsetToLocalTime(appointment.date, "d MMM''yy, hh:mm a", true)
+            // Format order number string similar to HTML
+            binding.tvOrderNumber.text = "#${appointment.orderNumber ?: ""} · Self-collection kit"
 
-            // Default visibility
-            binding.ivBookingIcon.visibility = View.VISIBLE
-            binding.ivCall.visibility = View.VISIBLE
-            binding.ivMessage.visibility = View.VISIBLE
-            binding.ivLocation.visibility = View.VISIBLE
+            // Visibility defaults
             binding.btnCancel.visibility = View.VISIBLE
             binding.tvReschedule.visibility = View.VISIBLE
             binding.btnJoinHere.visibility = View.GONE
 
+            binding.tvTitle.text = appointment.title ?: if (appointment.bookingType == "expert_review") {
+                "Expert Consultation"
+            } else {
+                context.getString(com.humotron.app.R.string.comprehensive_full_body_checkup)
+            }
 
             if (appointment.bookingType == "expert_review") {
-                binding.ivBookingIcon.visibility = View.GONE
-                binding.ivCall.visibility = View.GONE
-                binding.ivMessage.visibility = View.GONE
-                binding.ivLocation.visibility = View.GONE
                 binding.btnCancel.visibility = View.VISIBLE
                 binding.tvReschedule.visibility = View.VISIBLE
                 binding.btnJoinHere.visibility = View.VISIBLE
 
-                binding.tvBookingDetailsLabel.text = context.getString(com.humotron.app.R.string.appointment_details)
-                
-                binding.tvSubTitle.text = utcOffsetToLocalTime(appointment.date, "d MMM''yy, hh:mm a", true)
-                
-                binding.tvAppointmentDateTime.text = context.getString(com.humotron.app.R.string.audio_only)
+                binding.tvSubTitle.text = context.getString(com.humotron.app.R.string.audio_only)
+                binding.tvAppointmentDateTime.text = utcOffsetToLocalTime(appointment.date, "d MMM yyyy · HH:mm", true)
             } else {
-                // Visibility for normal blood tests
                 binding.btnJoinHere.visibility = View.GONE
-                binding.ivBookingIcon.visibility = View.VISIBLE
-                binding.ivCall.visibility = View.VISIBLE
-                binding.ivMessage.visibility = View.VISIBLE
-                binding.ivLocation.visibility = View.VISIBLE
                 binding.btnCancel.visibility = View.VISIBLE
                 binding.tvReschedule.visibility = View.VISIBLE
 
-                binding.tvBookingDetailsLabel.text = context.getString(com.humotron.app.R.string.booking_details_format, appointment.title ?: "")
-
-                // Address formatting matching iOS
+                // Address formatting: e.g. London E16 2PH format (no England, no postcode comma)
                 val addr = appointment.address
                 if (addr != null) {
                     val address1 = addr.address1 ?: ""
@@ -88,30 +75,28 @@ class AppointmentAdapter(
                         address1.ifBlank { address2 }
                     }
                     
+                    val city = addr.city ?: ""
+                    val postcode = addr.postcode ?: ""
+                    val cityAndPostcode = if (city.isNotBlank() && postcode.isNotBlank()) {
+                        "$city $postcode"
+                    } else {
+                        city.ifBlank { postcode }
+                    }
+                    
                     val addressParts = listOf(
                         address1And2,
                         addr.address3 ?: "",
-                        addr.city ?: "",
-                        addr.country ?: "",
-                        addr.postcode ?: ""
+                        cityAndPostcode
                     ).filter { it.isNotBlank() }
                     
                     binding.tvSubTitle.text = addressParts.joinToString(", ")
                 } else {
-                    binding.tvSubTitle.text = context.getString(com.humotron.app.R.string.comprehensive_full_body_checkup)
+                    binding.tvSubTitle.text = ""
                 }
 
-                // iOS logic: lbl_appointment_date = appointment.paymentDate
-                binding.tvAppointmentDateTime.text = utcOffsetToLocalTime(appointment.paymentDate, "d MMM''yy, hh:mm a", true)
+                binding.tvAppointmentDateTime.text = utcOffsetToLocalTime(appointment.paymentDate, "d MMM yyyy · HH:mm", true)
             }
 
-            val prepareText = context.getString(com.humotron.app.R.string.read_how_to_prepare_html)
-            binding.tvPrepare.text = android.text.Html.fromHtml(prepareText, android.text.Html.FROM_HTML_MODE_LEGACY)
-
-            // Icons and Buttons
-            binding.ivCall.setOnClickListener { }
-            binding.ivMessage.setOnClickListener {  }
-            binding.ivLocation.setOnClickListener {  }
             binding.btnCancel.setOnClickListener {  }
             binding.tvReschedule.setOnClickListener {  }
         }

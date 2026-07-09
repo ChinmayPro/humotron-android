@@ -90,13 +90,9 @@ class SubFavouriteFragment : BaseFragment(R.layout.fragment_sub_favourite), Shop
                         data?.books?.let { books ->
                             if (books.isNotEmpty()) {
                                 currentUIItems.add(FavouriteUIItem.Header("Books"))
-                                currentUIItems.add(FavouriteUIItem.BookCarousel(
-                                    BookPreferenceResponse.BookData.Book(
-                                        bookRecommendation = books,
-                                        category = null,
-                                        primaryTag = null
-                                    )
-                                ))
+                                books.forEach { book ->
+                                    currentUIItems.add(FavouriteUIItem.Book(book))
+                                }
                             }
                         }
 
@@ -191,21 +187,15 @@ class SubFavouriteFragment : BaseFragment(R.layout.fragment_sub_favourite), Shop
 
     private fun updateCartUIStatus(bookId: String, isInCart: Boolean) {
         val updatedList = currentUIItems.toMutableList()
-        val carouselIndex = updatedList.indexOfFirst { it is FavouriteUIItem.BookCarousel }
+        val bookIndex = updatedList.indexOfFirst { it is FavouriteUIItem.Book && it.data.id == bookId }
         
-        if (carouselIndex != -1) {
-            val item = updatedList[carouselIndex] as FavouriteUIItem.BookCarousel
-            val recommendations = item.books.bookRecommendation?.toMutableList() ?: mutableListOf()
-            val bookIndex = recommendations.indexOfFirst { it.id == bookId }
-            
-            if (bookIndex != -1) {
-                recommendations[bookIndex] = recommendations[bookIndex].copy(isCart = isInCart)
-                updatedList[carouselIndex] = FavouriteUIItem.BookCarousel(
-                    item.books.copy(bookRecommendation = recommendations)
-                )
-                currentUIItems = updatedList
-                parentAdapter.setItems(ArrayList(currentUIItems))
-            }
+        if (bookIndex != -1) {
+            val item = updatedList[bookIndex] as FavouriteUIItem.Book
+            updatedList[bookIndex] = FavouriteUIItem.Book(
+                item.data.copy(isCart = isInCart)
+            )
+            currentUIItems = updatedList
+            parentAdapter.setItems(ArrayList(currentUIItems))
         }
     }
 
@@ -215,27 +205,19 @@ class SubFavouriteFragment : BaseFragment(R.layout.fragment_sub_favourite), Shop
         var i = 0
         while (i < currentUIItems.size) {
             val item = currentUIItems[i]
-            if (item is FavouriteUIItem.BookCarousel) {
-                val filteredBooks = item.books.bookRecommendation?.filter { it.id != bookId }
-                if (!filteredBooks.isNullOrEmpty()) {
-                    updatedList.add(FavouriteUIItem.BookCarousel(
-                        item.books.copy(bookRecommendation = filteredBooks)
-                    ))
-                    i++
-                } else {
-                    // This carousel is now empty. Skip it AND its preceding Header if it was "Books"
-                    if (updatedList.isNotEmpty() && updatedList.last() is FavouriteUIItem.Header) {
-                        val lastHeader = updatedList.last() as FavouriteUIItem.Header
-                        if (lastHeader.title == "Books") {
-                            updatedList.removeAt(updatedList.size - 1)
-                        }
-                    }
-                    i++
-                }
+            if (item is FavouriteUIItem.Book && item.data.id == bookId) {
+                // Skip adding this item
+                i++
             } else {
                 updatedList.add(item)
                 i++
             }
+        }
+        
+        // Check if there are no books left, remove "Books" header if necessary
+        val hasBooks = updatedList.any { it is FavouriteUIItem.Book }
+        if (!hasBooks) {
+            updatedList.removeAll { it is FavouriteUIItem.Header && it.title == "Books" }
         }
         
         currentUIItems = updatedList

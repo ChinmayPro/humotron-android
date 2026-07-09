@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- ══════ HEADER ══════ -->
+    <include
+        android:id="@+id/clHeaderCard"
+        layout="@layout/layout_header_2" />
+
+    <!-- ══════ SCROLLABLE CONTENT ══════ -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsvContent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@id/clFooter"
+        app:layout_constraintTop_toBottomOf="@id/clHeaderCard">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="24dp">
+
+            <!-- ══════ HERO SECTION ══════ -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clHeroCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="22dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_planhero"
+                android:padding="18dp">
+
+                <!-- Tag row: icon + PLAN -->
+                <LinearLayout
+                    android:id="@+id/llPlanTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivPlanTagIcon"
+                        android:layout_width="13dp"
+                        android:layout_height="13dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_spark"
+                        app:tint="@color/lime_green" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPlanTagText"
+                        style="@style/Text.11x.Manrope.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
+                        android:layout_gravity="center_vertical"
+                        android:includeFontPadding="false"
+                        android:text="PLAN"
+                        android:textColor="@color/lime_green"
+                        android:letterSpacing="0.04" />
+                </LinearLayout>
+
+                <!-- Name row + Price area -->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPlanName"
+                    style="@style/Text.24x.Manrope.Bold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="14dp"
+                    android:text="Pro"
+                    android:textColor="@color/white"
+                    android:letterSpacing="-0.025"
+                    app:layout_constraintEnd_toStartOf="@id/layoutPriceArea"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/llPlanTag" />
+
+                <!-- Description / Blurb -->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPlanTagline"
+                    style="@style/Text.13x.Manrope.Regular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:textColor="@color/textColorMuted"
+                    android:lineSpacingMultiplier="1.5"
+                    android:text="Unlock advanced insights, computed metrics, AI chat, and personalised guidance across your health data."
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvPlanName" />
+
+                <!-- Price Area Container -->
+                <LinearLayout
+                    android:id="@+id/layoutPriceArea"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="@id/tvPlanName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tvPlanName">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPlanPrice"
+                        style="@style/Text.22x.Manrope.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="£19.90"
+                        android:textColor="@color/lime_green"
+                        android:letterSpacing="-0.02" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPlanPeriod"
+                        style="@style/Text.11x.Manrope.SemiBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="per month"
+                        android:textColor="@color/colorTextGrey" />
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- ══════ LEGEND ROW (.leglabel) ══════ -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="22dp"
+                android:paddingRight="22dp"
+                android:paddingTop="18dp"
+                android:paddingBottom="6dp"
+                android:orientation="horizontal">
+
+                <!-- Included -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="13dp"
+                        android:layout_height="13dp"
+                        android:src="@drawable/ic_check_thin"
+                        app:tint="@color/booster_accent_good" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Text.11x.Manrope.SemiBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
+                        android:text="Included in plan"
+                        android:textColor="@color/textColorMuted"
+                        android:textSize="11.5sp" />
+                </LinearLayout>
+
+                <!-- Divider / Spacer -->
+                <View
+                    android:layout_width="18dp"
+                    android:layout_height="1dp" />
+
+                <!-- Add-on -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="13dp"
+                        android:layout_height="13dp"
+                        android:src="@drawable/ic_plus"
+                        app:tint="@color/textColorMuted" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Text.11x.Manrope.SemiBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
+                        android:text="Available as add-on"
+                        android:textColor="@color/textColorMuted"
+                        android:textSize="11.5sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- ══════ FEATURES / BOOSTERS LIST ══════ -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Card 1: AI Insights -->
+                <include
+                    android:id="@+id/cardAiInsights"
+                    layout="@layout/item_shop_plan_feature" />
+
+                <!-- Card 2: AI Chat -->
+                <include
+                    android:id="@+id/cardAiChat"
+                    layout="@layout/item_shop_plan_feature" />
+
+                <!-- Card 3: Computed Metrics -->
+                <include
+                    android:id="@+id/cardComputedMetrics"
+                    layout="@layout/item_shop_plan_feature" />
+
+                <!-- Card 4: Smart Suggestions -->
+                <include
+                    android:id="@+id/cardSmartSuggestions"
+                    layout="@layout/item_shop_plan_feature" />
+
+            </LinearLayout>
+
+            <!-- ══════ DECISIONS DIVIDER (.cfgsec) ══════ -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="22dp"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <!-- 1px Hair Border Line -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#14FFFFFF" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Text.16x.Manrope.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="22dp"
+                    android:text="Turn raw signals into real decisions"
+                    android:textColor="@color/white"
+                    android:letterSpacing="-0.01" />
+
+            </LinearLayout>
+
+            <!-- ══════ DECISIONS BOX (.decisions) ══════ -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="22dp"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical">
+
+                <!-- Decision Bullet 1 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="8dp"
+                    android:gravity="top"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginTop="1dp"
+                        android:src="@drawable/ic_check_thin"
+                        app:tint="@color/booster_accent_lime" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="11dp"
+                        android:layout_weight="1"
+                        android:lineSpacingMultiplier="1.45"
+                        android:text="See your stress patterns from BP + HRV"
+                        android:textColor="@color/booster_text_ghost"
+                        android:textSize="13.5sp"
+                        android:fontFamily="@font/manrope_medium"
+                        app:fontFamily="@font/manrope_medium" />
+                </LinearLayout>
+
+                <!-- Decision Bullet 2 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="8dp"
+                    android:gravity="top"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginTop="1dp"
+                        android:src="@drawable/ic_check_thin"
+                        app:tint="@color/booster_accent_lime" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="11dp"
+                        android:layout_weight="1"
+                        android:lineSpacingMultiplier="1.45"
+                        android:text="Know what to eat for recovery"
+                        android:textColor="@color/booster_text_ghost"
+                        android:textSize="13.5sp"
+                        android:fontFamily="@font/manrope_medium"
+                        app:fontFamily="@font/manrope_medium" />
+                </LinearLayout>
+
+                <!-- Decision Bullet 3 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="8dp"
+                    android:gravity="top"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginTop="1dp"
+                        android:src="@drawable/ic_check_thin"
+                        app:tint="@color/booster_accent_lime" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="11dp"
+                        android:layout_weight="1"
+                        android:lineSpacingMultiplier="1.45"
+                        android:text="Understand if your HRV is low for your age and goal"
+                        android:textColor="@color/booster_text_ghost"
+                        android:textSize="13.5sp"
+                        android:fontFamily="@font/manrope_medium"
+                        app:fontFamily="@font/manrope_medium" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- ══════ TRUST BULLETS (.trustrow) ══════ -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="22dp"
+                android:layout_marginTop="18dp"
+                android:orientation="vertical">
+
+                <!-- Bullet 1 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/ic_check_thin"
+                        app:tint="@color/booster_accent_good" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="9dp"
+                        android:text="@string/trust_bullet_cancel"
+                        android:textColor="@color/colorTextGrey"
+                        android:textSize="12.5sp"
+                        android:fontFamily="@font/manrope_semibold"
+                        app:fontFamily="@font/manrope_semibold" />
+                </LinearLayout>
+
+                <!-- Bullet 2 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/ic_check_thin"
+                        app:tint="@color/booster_accent_good" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="9dp"
+                        android:text="@string/trust_bullet_privacy"
+                        android:textColor="@color/colorTextGrey"
+                        android:textSize="12.5sp"
+                        android:fontFamily="@font/manrope_semibold"
+                        app:fontFamily="@font/manrope_semibold" />
+                </LinearLayout>
+
+                <!-- Bullet 3 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/ic_check_thin"
+                        app:tint="@color/booster_accent_good" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="9dp"
+                        android:text="@string/trust_bullet_users"
+                        android:textColor="@color/colorTextGrey"
+                        android:textSize="12.5sp"
+                        android:fontFamily="@font/manrope_semibold"
+                        app:fontFamily="@font/manrope_semibold" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- ══════ STICKY FOOTER (.sheetfoot) ══════ -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clFooter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_footer_gradient"
+        android:paddingHorizontal="22dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <!-- Owned bar (hidden by default) -->
+        <LinearLayout
+            android:id="@+id/layoutOwnedBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_booster_unlocked"
+            android:paddingVertical="15dp"
+            android:paddingHorizontal="16dp"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_check_thin"
+                app:tint="@color/booster_accent_good" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvOwnedBarText"
+                style="@style/Text.14x.Manrope.SemiBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="11dp"
+                android:textColor="@color/white"
+                android:text="You're on Pro" />
+        </LinearLayout>
+
+        <!-- CTA Buy Button -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnBuyNow"
+            style="@style/Text.16x.Manrope.Bold"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@drawable/bg_btn_round_corner"
+            android:backgroundTint="@color/lime_green"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/layoutOwnedBar"
+            android:text="Upgrade to Pro — £19.90/mo" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

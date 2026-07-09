@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- Center circle (12, 12, r=2.4) -->
+    <path
+        android:pathData="M 9.6 12 A 2.4 2.4 0 1 0 14.4 12 A 2.4 2.4 0 1 0 9.6 12"
+        android:fillColor="#00000000"
+        android:strokeColor="#C4F23E"
+        android:strokeWidth="1.7"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <!-- Top-left circle (5, 6, r=1.8) -->
+    <path
+        android:pathData="M 3.2 6 A 1.8 1.8 0 1 0 6.8 6 A 1.8 1.8 0 1 0 3.2 6"
+        android:fillColor="#00000000"
+        android:strokeColor="#C4F23E"
+        android:strokeWidth="1.7"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <!-- Top-right circle (19, 6, r=1.8) -->
+    <path
+        android:pathData="M 17.2 6 A 1.8 1.8 0 1 0 20.8 6 A 1.8 1.8 0 1 0 17.2 6"
+        android:fillColor="#00000000"
+        android:strokeColor="#C4F23E"
+        android:strokeWidth="1.7"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <!-- Bottom-left circle (5, 18, r=1.8) -->
+    <path
+        android:pathData="M 3.2 18 A 1.8 1.8 0 1 0 6.8 18 A 1.8 1.8 0 1 0 3.2 18"
+        android:fillColor="#00000000"
+        android:strokeColor="#C4F23E"
+        android:strokeWidth="1.7"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <!-- Bottom-right circle (19, 18, r=1.8) -->
+    <path
+        android:pathData="M 17.2 18 A 1.8 1.8 0 1 0 20.8 18 A 1.8 1.8 0 1 0 17.2 18"
+        android:fillColor="#00000000"
+        android:strokeColor="#C4F23E"
+        android:strokeWidth="1.7"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <!-- Connector lines -->
+    <path
+        android:pathData="M 6.6 7 L 10.2 10.4 M 17.4 7 L 13.8 10.4 M 6.6 17 L 10.2 13.6 M 17.4 17 L 13.8 13.6"
+        android:fillColor="#00000000"
+        android:strokeColor="#C4F23E"
+        android:strokeWidth="1.7"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+</vector>

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="#E5C08C" />
-    <corners  android:topRightRadius="@dimen/_7dp" android:bottomRightRadius="@dimen/_7dp"/>
+    <!-- HTML .planpill: background:rgba(231,169,60,.15); border:1px solid rgba(231,169,60,.25) -->
+    <solid android:color="#26E7A93C" />
+    <stroke android:width="1dp" android:color="#40E7A93C" />
+    <corners android:radius="11dp" />
 </shape>

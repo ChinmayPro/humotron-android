@@ -690,7 +690,7 @@ To get started:\n
     <string name="manage_alarms_on_wrist_band">Manage alarms on wrist band</string>
     <string name="support_label">SUPPORT</string>
     <string name="warranty_label">Warranty</string>
-    <string name="remaining_days_format">Remaining: %1$d days</string>
+    <string name="remaining_days_format">Remaining %1$d days</string>
     <string name="user_manuals_label">User Manuals</string>
     <string name="device_actions_label">DEVICE ACTIONS</string>
     <string name="restart_device_label">Restart Device</string>
@@ -1169,5 +1169,69 @@ To get started:\n
     <string name="status_next_due">NEXT DUE</string>
     <string name="label_splash_subtitle">One read on your whole body</string>
     <string name="weather_resilience_report_title">Weather Resilience Report</string>
-</resources>
 
+    <!-- Console / Profile Screen -->
+    <string name="console_personal_information">Personal information</string>
+    <string name="console_personal_info_desc">Name, body metrics, account</string>
+    <string name="console_plan_and_addons">Plan &amp; add-ons</string>
+    <string name="console_plan_desc_placeholder">Basic · 0 add-ons active</string>
+    <string name="console_manage">Manage</string>
+    <string name="console_quick_access">Quick access</string>
+    <string name="console_store">Store</string>
+    <string name="console_store_desc">Devices, books &amp; supplements</string>
+    <string name="console_recipes">Recipes</string>
+    <string name="console_recipes_desc">Your nutrition plan</string>
+    <string name="console_orders">Orders</string>
+    <string name="console_orders_desc">Track &amp; manage orders</string>
+    <string name="console_cart">Cart</string>
+    <string name="console_cart_desc">Review &amp; check out</string>
+    <string name="console_unlock_digital_tools">Unlock Digital Tools</string>
+    <string name="console_ai_insights_desc">AI insights, computed metrics &amp; more</string>
+    <string name="console_configurations">Configurations</string>
+    <string name="console_configurations_desc">Shape how Humotron works for you — tune your devices and data, set the goals you\'re optimising for, and decide how insights, chat and recipes respond.</string>
+    <string name="console_data_sources">Data Sources</string>
+    <string name="console_goals">Goals</string>
+    <string name="console_ai_chat">AI Chat</string>
+    <string name="console_recipe_generator_multiline">Recipe\nGenerator</string>
+    <string name="console_shopping">Shopping</string>
+    <string name="console_legal_centre">Legal centre</string>
+    <string name="console_delete_account">Delete account</string>
+    <string name="console_brand_name">Humotron</string>
+    <string name="console_brand_tagline">Your body, understood.</string>
+
+    <!-- Recipes Screen -->
+    <string name="recipes_tuned_to_metric">Recipes tuned to this metric</string>
+    <string name="meals_replaced">Meals replaced</string>
+    <string name="recipes_journal_desc">Each meal below targets this metric. Tap \"I had this\" to log it — you can log the same meal more than once.</string>
+    <string name="journal_not_cookbook">This is your journal, not just a cookbook</string>
+    <string name="journal_tap_hint">Tap \"I had this\" to log a date — you can log the same meal more than once.</string>
+
+    <!-- Booster Detail Screen -->
+    <string name="booster_tag_label">BOOSTER</string>
+    <string name="what_you_will_unlock">WHAT YOU\'LL UNLOCK</string>
+    <string name="preview_mock_title">See your health in scores</string>
+    <string name="preview_mock_desc">Scores help you know if you\'re improving, stagnating, or falling behind.</string>
+    <string name="preview_mock_chat_time">08:30 AM</string>
+    <string name="preview_mock_chat_question">Why has my HRV been low this week?</string>
+    <string name="preview_mock_chat_response">Your HRV\'s been ~18%% lower than usual — the dip started after a few late evening meetings. Try a screen-free wind-down to bounce back.</string>
+    <string name="trust_bullet_cancel">Cancel anytime</string>
+    <string name="trust_bullet_privacy">Your data stays private</string>
+    <string name="trust_bullet_users">Used by 3,000+ Humotron users</string>
+    <string name="i_had_this">I had this</string>
+
+    <!-- Additional required references -->
+    <string name="profile_plan_format">%1$s Plan</string>
+    <string name="time_min">%1$d min</string>
+    <string name="kcal_per_serving">%1$d kcal</string>
+    <string name="suggested">%1$s suggested</string>
+    <string name="improving">improving</string>
+    <string name="last_30_days">last 30 days</string>
+    <string name="included_in_pro_plan">Included in your Pro plan</string>
+    <string name="explore_pro_plan">Explore Pro plan</string>
+    <string name="or_get_in_pro_plan">Or get it in the Pro plan</string>
+    <string name="plan_title">Plan</string>
+    <string name="in_pro_badge">In Pro</string>
+    <string name="add_on_badge">Add-on</string>
+    <string name="view_label">View</string>
+
+</resources>

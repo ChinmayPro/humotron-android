@@ -1,126 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://tools.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/_10dp"
-    android:layout_marginVertical="@dimen/_10dp"
-    app:cardBackgroundColor="@color/black"
-    app:cardCornerRadius="16dp"
+    android:layout_marginHorizontal="22dp"
+    android:layout_marginBottom="12dp"
+    app:cardBackgroundColor="#080F10"
+    app:cardCornerRadius="18dp"
     app:cardElevation="0dp"
-    app:strokeWidth="0dp">
+    app:strokeColor="#12FFFFFF"
+    app:strokeWidth="1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="@dimen/_20dp"
-        android:paddingHorizontal="@dimen/_15dp">
+        android:padding="16dp">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivDeviceImage"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:scaleType="fitCenter"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_bg_main" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvDeviceName"
-            style="@style/Text.16x.Manrope.SemiBold"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/ivDeviceImage"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Humotron Smart Ring" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvDeviceCategory"
-            style="@style/Text.12x.Manrope.Medium"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white50"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/tvDeviceName"
-            app:layout_constraintTop_toBottomOf="@id/tvDeviceName"
-            tools:text="Accessories" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvKeyMetricsLabel"
-            style="@style/Text.10x.Manrope.SemiBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10dp"
-            android:text="Key Metrics"
-            android:textColor="@color/textColorOrange"
-            app:layout_constraintStart_toStartOf="@id/tvDeviceName"
-            app:layout_constraintTop_toBottomOf="@id/tvDeviceCategory" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvMetrics"
-            style="@style/Text.12x.Manrope.Medium"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:lineSpacingExtra="4dp"
-            android:textColor="@color/white50"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/tvDeviceName"
-            app:layout_constraintTop_toBottomOf="@id/tvKeyMetricsLabel"
-            tools:text="➔ Heart Rate\n➔ Steps\n➔ Heart Rate Variability\n➔ Skin Temperature" />
-
+        <!-- Top Section: Icon & Info -->
         <LinearLayout
-            android:layout_width="0dp"
+            android:id="@+id/llTopSection"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_15dp"
-            android:layout_marginStart="@dimen/_15dp"
-            android:gravity="center_vertical"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvMetrics">
+            app:layout_constraintTop_toTopOf="parent">
 
+            <!-- Icon Box -->
+            <FrameLayout
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:background="@drawable/bg_shop_device_icon_box"
+                android:padding="18dp">
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivDeviceImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitCenter"
+                    app:tint="@color/booster_accent_cool"
+                    tools:src="@drawable/ic_bg_main" />
+            </FrameLayout>
+
+            <!-- Info Column -->
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="14dp"
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvPrice"
-                    style="@style/Text.16x.Manrope.Bold"
+                    android:id="@+id/tvDeviceName"
+                    style="@style/Text.15_5x.Manrope.ExtraBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="£249" />
+                    android:letterSpacing="-0.01"
+                    tools:text="Humotron Weight Scale" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvDeviceCategory"
+                    style="@style/Text.10_5x.Manrope.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:textAllCaps="true"
+                    android:letterSpacing="0.04"
+                    android:textColor="@color/textColorMuted"
+                    tools:text="BODY COMPOSITION" />
+
+                <!-- Note: tvKeyMetricsLabel and tvMetrics are removed in favor of a flow layout / metric pills -->
+                <com.google.android.flexbox.FlexboxLayout
+                    android:id="@+id/fbMetrics"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
+                    app:flexWrap="wrap"
+                    app:alignItems="flex_start"
+                    app:alignContent="flex_start">
+                    <!-- Chips will be added programmatically or we can add a few dummy ones that we toggle visibility on -->
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvMetric1"
+                        style="@style/Text.10_5x.Manrope.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginBottom="6dp"
+                        android:background="@drawable/bg_shop_metric_chip"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="5dp"
+                        android:textColor="#CFDAD8"
+                        tools:text="Body fat %" />
+                    
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvMetric2"
+                        style="@style/Text.10_5x.Manrope.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginBottom="6dp"
+                        android:background="@drawable/bg_shop_metric_chip"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="5dp"
+                        android:textColor="#CFDAD8"
+                        tools:text="Lean mass" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvMetric3"
+                        style="@style/Text.10_5x.Manrope.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginBottom="6dp"
+                        android:background="@drawable/bg_shop_metric_chip"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="5dp"
+                        android:textColor="#CFDAD8"
+                        tools:text="Body water" />
+                </com.google.android.flexbox.FlexboxLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Bottom Section: Price & Button -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/llTopSection">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvOnwardsLabel"
-                    style="@style/Text.12x.Manrope.Medium"
+                    style="@style/Text.10x.Manrope.Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Onwards" />
+                    android:layout_marginEnd="4dp"
+                    android:textAllCaps="true"
+                    android:textColor="@color/textColorMuted"
+                    android:text="FROM" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPrice"
+                    style="@style/Text.15x.Manrope.ExtraBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="£79" />
             </LinearLayout>
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
-            <androidx.appcompat.widget.AppCompatButton
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/btnExplore"
-                style="@style/Text.12x.Manrope.Bold"
+                style="@style/Text.12_5x.Manrope.ExtraBold"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/_28dp"
-                android:background="@drawable/bg_btn_round_corner"
-                android:paddingHorizontal="@dimen/_60dp"
-                android:text="Explore &amp; Buy ➔"
-                android:textAllCaps="false"
-                android:textColor="@color/black" />
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_shop_explore_btn"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="10dp"
+                android:text="Explore &amp; buy ›"
+                android:textColor="@color/colorBgBtn"
+                android:gravity="center" />
+
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </com.google.android.material.card.MaterialCardView>

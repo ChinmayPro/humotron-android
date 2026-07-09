@@ -26,15 +26,22 @@ class OrderFragment : BaseFragment(R.layout.fragment_order) {
         binding.viewPager.adapter = adapter
         binding.viewPager.isUserInputEnabled = false // Disable swiping if needed, or keep enabled
 
-        binding.tabOrder.setOnClickListener {
+        // Header setup
+        binding.header.title.text = "Orders"
+        binding.header.ivBack.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
+        binding.header.divider.visibility = View.GONE
+
+        binding.tvTabOrder.setOnClickListener {
             binding.viewPager.currentItem = 0
             updateTabUI(0)
         }
-        binding.tabAppointments.setOnClickListener {
+        binding.tvTabAppointments.setOnClickListener {
             binding.viewPager.currentItem = 1
             updateTabUI(1)
         }
-        binding.tabFavourite.setOnClickListener {
+        binding.tvTabFavourite.setOnClickListener {
             binding.viewPager.currentItem = 2
             updateTabUI(2)
         }
@@ -50,23 +57,18 @@ class OrderFragment : BaseFragment(R.layout.fragment_order) {
     }
 
     private fun updateTabUI(position: Int) {
-        val inactiveColor = resources.getColor(R.color.white30, null)
+        val inactiveColor = android.graphics.Color.parseColor("#8ea09e")
         val activeColor = resources.getColor(R.color.lime_green, null)
 
-        val tabs = listOf(
-            Pair(binding.ivTabOrder, binding.tvTabOrder),
-            Pair(binding.ivTabAppointments, binding.tvTabAppointments),
-            Pair(binding.ivTabFavourite, binding.tvTabFavourite)
-        )
+        val tabs = listOf(binding.tvTabOrder, binding.tvTabAppointments, binding.tvTabFavourite)
 
-        tabs.forEachIndexed { index, (icon, text) ->
-            val color = if (index == position) activeColor else inactiveColor
-            icon.imageTintList = android.content.res.ColorStateList.valueOf(color)
-            text.setTextColor(color)
-            
-            // Update the main header title based on selection
+        tabs.forEachIndexed { index, text ->
             if (index == position) {
-                binding.tvTitle.text = text.text
+                text.setTextColor(activeColor)
+                text.setBackgroundResource(R.drawable.bg_order_tab_selected)
+            } else {
+                text.setTextColor(inactiveColor)
+                text.setBackgroundResource(R.drawable.bg_order_tab_unselected)
             }
         }
     }
