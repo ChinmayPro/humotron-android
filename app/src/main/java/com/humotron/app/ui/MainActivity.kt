@@ -91,7 +91,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             binding.vStatusBarBg.layoutParams.height = systemBars.top
             binding.vStatusBarBg.requestLayout()
             val extraPadding = (40 * resources.displayMetrics.density).toInt()
-            (binding.rlBottom.layoutParams).height = systemBars.bottom + extraPadding
+            //(binding.rlBtnNavigation.layoutParams).height = systemBars.bottom + extraPadding
+            // Correctly handle bottom insets for the navigation bar
+            binding.rlBtnNavigation.setPadding(
+                0,
+                (6 * resources.displayMetrics.density).toInt(), // Original paddingTop
+                0,
+                systemBars.bottom + (10 * resources.displayMetrics.density).toInt() // System bottom + original paddingBottom
+            )
             insets
         }
 
@@ -115,7 +122,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             val isVisible =
                 destination.id == R.id.fragmentTrack || destination.id == R.id.fragmentBioHack || destination.id == R.id.fragmentDecode || destination.id == R.id.fragmentDecodeMetrics || destination.id == R.id.fragmentProfile || destination.id == R.id.fragmentShop || destination.id == R.id.fragmentOrder || destination.id == R.id.fragmentTronChat
-            binding.rlBottom.isVisible = isVisible
+            //binding.rlBottom.isVisible = isVisible
             binding.rlBtnNavigation.isVisible = isVisible
 
             when (destination.id) {
@@ -169,7 +176,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     fun showOrHideBottomNav(show: Boolean) {
-        binding.rlBottom.isVisible = show
+        //binding.rlBottom.isVisible = show
         binding.rlBtnNavigation.isVisible = show
     }
 

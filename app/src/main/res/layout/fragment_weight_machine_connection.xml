@@ -2,141 +2,200 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:background="@color/black"
+    tools:background="@drawable/ic_bg_main_2"
     tools:context=".ui.connect.WeightMachineConnectionFragment">
 
     <include
         android:id="@+id/header"
-        layout="@layout/layout_header" />
+        layout="@layout/layout_header_3" />
 
-    <FrameLayout
-        android:id="@+id/ringContainer"
-        android:layout_width="@dimen/_80dp"
-        android:layout_height="@dimen/_80dp"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvDeviceIcon"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
         android:layout_marginStart="@dimen/_20dp"
-        android:layout_marginTop="@dimen/_30dp"
-        android:background="@drawable/ic_shadow"
-        android:gravity="center"
+        app:cardBackgroundColor="@color/cool_14"
+        app:cardCornerRadius="17dp"
+        app:cardElevation="0dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/header">
-
-        <com.humotron.app.view.RadiatingRingsView
-            android:id="@+id/ringsView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center" />
+        app:layout_constraintTop_toBottomOf="@+id/header"
+        app:strokeColor="#52C4F23E"
+        app:strokeWidth="1dp">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/bluetoothIcon"
-            android:layout_width="@dimen/_40dp"
-            android:layout_height="@dimen/_40dp"
+            android:id="@+id/ivRingIcon"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
             android:layout_gravity="center"
-            android:background="@drawable/bg_round_white"
-            android:backgroundTint="#1e1e1e"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_power_settings_new_24px"
-            app:tint="@color/green_1" />
+            app:srcCompat="@drawable/ic_smart_scale_vector"
+            app:tint="@color/cool" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_weight_scale"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:visibility="gone"
-            app:srcCompat="@drawable/ic_connect_weightscale_logo" />
+    </com.google.android.material.card.MaterialCardView>
 
-    </FrameLayout>
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvDeviceDiscoverStatus"
-        style="@style/Text.OnBoard.Title"
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvDeviceTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_15dp"
-        android:text="@string/humotron_weight_scale_basic"
-        android:textSize="28sp"
+        android:layout_marginStart="@dimen/_20dp"
+        android:fontFamily="@font/manrope_extra_bold"
+        android:text="@string/device_title_scale"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/cvDeviceIcon"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/ringContainer"
-        app:layout_constraintTop_toTopOf="@id/ringContainer" />
+        app:layout_constraintStart_toEndOf="@+id/cvDeviceIcon"
+        app:layout_constraintTop_toTopOf="@+id/cvDeviceIcon" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvTitle"
+        android:id="@+id/tvDeviceStatus"
         style="@style/Text.OnBoard.Sub.Medium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_20dp"
-        android:layout_marginTop="@dimen/_40dp"
-        android:text="@string/smart_scale_instruction_1"
-        android:textColor="@color/white70"
-        android:textSize="12sp"
-        app:layout_constraintTop_toBottomOf="@id/ringContainer" />
+        android:layout_marginTop="@dimen/_14dp"
+        android:text="@string/device_found_tap_to"
+        android:textColor="@color/ink2"
+        android:textSize="14sp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/cvDeviceIcon"
+        tools:visibility="visible" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvDevices"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginHorizontal="@dimen/_20dp"
-        android:layout_marginTop="@dimen/_10dp"
+        android:layout_marginTop="@dimen/_14dp"
         android:clipToPadding="false"
         android:paddingBottom="@dimen/_10dp"
+        android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/btnSubmit"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintTop_toBottomOf="@id/tvDeviceStatus"
         tools:itemCount="3"
-        tools:listitem="@layout/item_ring_device" />
+        tools:listitem="@layout/item_ring_device"
+        tools:visibility="gone" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clNoDeviceFound"
+    <LinearLayout
+        android:id="@+id/llAnimationView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_20dp"
-        android:layout_marginTop="@dimen/_10dp"
-        android:background="@drawable/bg_btn_round_rect_8"
-        android:backgroundTint="@color/black"
-        android:minHeight="@dimen/_80dp"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle"
-        tools:visibility="gone">
+        android:layout_height="0dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/btnSubmit"
+        app:layout_constraintTop_toBottomOf="@id/tvDeviceStatus">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            style="@style/Text.OnBoard.Title1"
-            android:layout_width="match_parent"
+        <com.humotron.app.view.HdevScaleView
+            android:id="@+id/scanAnimationView"
+            android:layout_width="280dp"
+            android:layout_height="280dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_60dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:scanProgress="0"
+            app:scanProgressMargin="35dp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_32dp"
-            android:text="@string/no_devices_found_yet"
-            android:textColor="@color/textColorOrange"
-            android:textSize="13sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:fontFamily="@font/manrope_bold"
+            android:gravity="center"
+            android:text="Connecting your Scale"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvSubtitleStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10dp"
+            android:fontFamily="@font/manrope_bold"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@string/searching_for_your_smart_scale"
+            android:textColor="#F0F4F4"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:id="@+id/llBluetoothStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivBluetoothIcon"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginEnd="8dp"
+                app:srcCompat="@drawable/ic_bluetooth_24px"
+                app:tint="@color/lime" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvBluetoothInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/manrope_bold"
+                android:text="@string/bt_keep_your_device_nearby"
+                android:textColor="@color/ink4"
+                android:textSize="11sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSubmit"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_24dp"
-        android:layout_marginTop="@dimen/_50dp"
-        android:layout_marginBottom="@dimen/_20dp"
-        android:backgroundTint="@color/btn_continue"
-        android:enabled="false"
+        android:layout_height="64dp"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/manrope_bold"
         android:text="@string/connect"
-        android:textColor="@color/btn_text_color"
-        app:layout_constraintBottom_toTopOf="@id/tvWeightIns" />
+        android:textAllCaps="false"
+        android:textColor="@color/ink2"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:backgroundTint="@color/white05"
+        app:cornerRadius="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/footerDisclaimerTextView"
+        tools:visibility="visible" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvWeightIns"
-        style="@style/Text.OnBoard.Sub"
-        android:layout_width="0dp"
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/footerDisclaimerTextView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_20dp"
-        android:layout_marginBottom="@dimen/_60dp"
+        android:layout_marginBottom="12dp"
         android:gravity="center"
-        android:text="@string/smart_scale_connection_help"
-        android:textSize="12sp"
+        android:text="@string/if_you_don_t_see_your_device"
+        android:textColor="#879A9C"
+        android:textSize="13sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/tvScanAgain"
+        tools:visibility="visible" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvScanAgain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginBottom="12dp"
+        android:fontFamily="@font/manrope_semibold"
+        android:gravity="center"
+        android:paddingVertical="7dp"
+        android:text="@string/scan_again"
+        android:textColor="@color/ink3"
+        android:textSize="14sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

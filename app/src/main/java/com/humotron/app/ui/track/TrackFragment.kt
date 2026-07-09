@@ -38,6 +38,8 @@ import com.yarolegovich.discretescrollview.transform.Pivot
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 
 @AndroidEntryPoint
 class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
@@ -45,9 +47,8 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
     private lateinit var binding: FragmentTrackBinding
     private val viewModel: DeviceViewModel by viewModels()
     private val bloodTestViewModel: BloodTestViewModel by activityViewModels()
-    private var wearableAdapter: WearableAdapter? = null
+    private var deviceAdapter: DeviceAdapter? = null
 
-    private var healthAdapter: WearableAdapter? = null
     private var assessmentAdapter: AssessmentAdapter? = null
     private var healthReportAdapter: HealthReportAdapter? = null
 
@@ -61,14 +62,29 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
     }
 
     private fun initViews() {
+        val calendar = java.util.Calendar.getInstance()
+        val dateFormat = java.text.SimpleDateFormat("EEEE, MMMM dd", java.util.Locale.getDefault())
+        binding.tvTrackDate.text = dateFormat.format(calendar.time)
+        binding.tvGreeting.text = "Hello, ${prefUtils.getLoginResponse().firstName ?: "User"}"
+        showSourcesTab()
+
+        binding.rvDevices.layoutManager =
+            androidx.recyclerview.widget.LinearLayoutManager(requireContext())
+        deviceAdapter = DeviceAdapter(emptyList()) { userDevice ->
+            findNavController().navigate(R.id.fragmentDeviceData, Bundle().apply {
+                putParcelable(NavKeys.WEARABLE, userDevice)
+            })
+        }
+        binding.rvDevices.adapter = deviceAdapter
+
         if (prefUtils.getHardwareDetailsList().isEmpty()) {
-            binding.dsvWearables.isVisible = false
-            binding.dsvHealthMonitoring.isVisible = false
+            // binding.dsvWearables.isVisible = false
+            // binding.dsvHealthMonitoring.isVisible = false
             viewModel.getHardwareList()
         } else {
             viewModel.getDeviceData()
-            binding.dsvWearables.isVisible = true
-            binding.dsvHealthMonitoring.isVisible = true
+            // binding.dsvWearables.isVisible = true
+            // binding.dsvHealthMonitoring.isVisible = true
         }
 
         viewModel.getMergedAssessmentList()
@@ -84,8 +100,13 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
     }
 
     private fun initClicks() {
-        binding.btnAddWearables.setOnClickListener(this)
-        binding.btnAddHealthMonitoring.setOnClickListener(this)
+        binding.btnSources.setOnClickListener(this)
+        binding.btnMetrics.setOnClickListener(this)
+        binding.tvLiveStreaming.setOnClickListener(this)
+        binding.tvTestCheckIns.setOnClickListener(this)
+        binding.llTabTracking.setOnClickListener(this)
+        binding.llTabYetToTrack.setOnClickListener(this)
+        binding.layoutAddSourceRow.setOnClickListener(this)
         binding.tvUpload.setOnClickListener(this)
         binding.swipeRefreshLayout.setOnRefreshListener {
             binding.swipeRefreshLayout.isRefreshing = false
@@ -93,6 +114,82 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
             viewModel.getMergedAssessmentList(true)
             viewModel.getMedicalPdfList(true)
         }
+        binding.swipeRefreshSources.setOnRefreshListener {
+            binding.swipeRefreshSources.isRefreshing = false
+            viewModel.refreshUserDeviceData(true)
+            viewModel.getMergedAssessmentList(true)
+            viewModel.getMedicalPdfList(true)
+        }
+    }
+
+    private fun showSourcesTab() {
+        binding.clTabSources.isVisible = true
+        binding.clTabMetrics.isVisible = false
+    }
+
+    private fun showMetricsTab() {
+        binding.clTabSources.isVisible = false
+        binding.clTabMetrics.isVisible = true
+    }
+
+    private fun showLiveStreamingTab() {
+        binding.llLiveStreamingContent.isVisible = true
+        binding.llTestCheckInsContent.isVisible = false
+
+        binding.tvLiveStreaming.setBackgroundResource(R.drawable.bg_track_chip_selected)
+        binding.tvLiveStreaming.setTextColor(
+            ContextCompat.getColor(requireContext(), R.color.lime)
+        )
+        binding.tvTestCheckIns.setBackgroundResource(R.drawable.bg_track_chip_unselected)
+        binding.tvTestCheckIns.setTextColor(
+            ContextCompat.getColor(requireContext(), R.color.ink3)
+        )
+    }
+
+    private fun showTestCheckInsTab() {
+        binding.llTestCheckInsContent.isVisible = true
+        binding.llLiveStreamingContent.isVisible = false
+
+        binding.tvLiveStreaming.setBackgroundResource(R.drawable.bg_track_chip_unselected)
+        binding.tvLiveStreaming.setTextColor(
+            ContextCompat.getColor(requireContext(), R.color.ink3)
+        )
+        binding.tvTestCheckIns.setBackgroundResource(R.drawable.bg_track_chip_selected)
+        binding.tvTestCheckIns.setTextColor(
+            ContextCompat.getColor(requireContext(), R.color.lime)
+        )
+    }
+
+    private fun showTrackingTab() {
+        binding.llTrackContent.isVisible = true
+        binding.llYetToTrackContent.isVisible = false
+        binding.llTabTracking.setBackgroundResource(R.drawable.bg_metrics_chip_selected)
+        binding.llTabYetToTrack.setBackgroundResource(R.drawable.bg_metrics_chip_unselected)
+        binding.viewTracking.setBackgroundResource(R.drawable.bg_track_progress_fill_lime)
+        binding.viewYetToTrack.setBackgroundResource(R.drawable.bg_track_progress_track)
+        binding.tvYetToTrack.setBackgroundResource(0)
+
+        binding.tvTracking.setTextColor(ContextCompat.getColor(requireContext(), R.color.lime))
+        binding.tvYetToTrack.setTextColor(ContextCompat.getColor(requireContext(), R.color.ink4))
+    }
+
+    private fun showYetToTrackTab() {
+        binding.llYetToTrackContent.isVisible = true
+        binding.llTrackContent.isVisible = false
+        binding.llTabTracking.setBackgroundResource(R.drawable.bg_metrics_chip_unselected)
+        binding.llTabYetToTrack.setBackgroundResource(R.drawable.bg_metrics_chip_selected)
+
+        binding.viewYetToTrack.setBackgroundResource(R.drawable.bg_track_progress_fill_lime)
+        binding.viewTracking.setBackgroundResource(R.drawable.bg_track_progress_track)
+
+        binding.tvYetToTrack.setBackgroundResource(R.drawable.bg_track_progress_track)
+
+        binding.tvTracking.setTextColor(
+            ContextCompat.getColor(requireContext(), R.color.ink4)
+        )
+        binding.tvYetToTrack.setTextColor(
+            ContextCompat.getColor(requireContext(), R.color.lime)
+        )
     }
 
     private fun initObservers() {
@@ -120,20 +217,18 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
                 Status.SUCCESS -> {
                     hideProgress()
                     val data = it.data?.data ?: return@observe
-                    if (!data.wearables.isNullOrEmpty()) {
-                        setupWearablesDiscreteScrollView(data.wearables)
-                        binding.dsvWearables.showWithFade { }
-                    } else {
-                        binding.dsvWearables.isVisible = false
-                        binding.clNoDeviceFound.showWithFade { }
-                    }
+                    val allDevices = mutableListOf<UserDevice>()
+                    data.wearables?.let { allDevices.addAll(it) }
+                    data.health?.let { allDevices.addAll(it) }
 
-                    if (!data.health.isNullOrEmpty()) {
-                        setupHealthMonitoringDiscreteScrollView(data.health)
-                        binding.dsvHealthMonitoring.showWithFade { }
+                    if (allDevices.isNotEmpty()) {
+                        deviceAdapter?.updateData(allDevices)
+                        binding.rvDevices.showWithFade {  }
+                        binding.tvSourcesSynced.text =
+                            "${allDevices.size} sources feeding Track · synced just now"
                     } else {
-                        binding.dsvHealthMonitoring.isVisible = false
-                        binding.clNoHealthMonitoringFound.showWithFade { }
+                        binding.rvDevices.isVisible = false
+                        binding.tvSourcesSynced.text = "No sources feeding Track"
                     }
                 }
 
@@ -147,9 +242,7 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
 
                 Status.LOADING -> {
                     // Only show progress if we don't have any wearables yet
-                    if ((wearableAdapter == null || wearableAdapter?.itemCount == 0) &&
-                        (healthAdapter == null || healthAdapter?.itemCount == 0)
-                    ) {
+                    if ((deviceAdapter == null || deviceAdapter?.itemCount == 0)) {
                         showProgress()
                     }
                 }
@@ -198,8 +291,7 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
 
                 Status.LOADING -> {
                     // Only show progress if we don't have any wearables yet
-                    if ((wearableAdapter == null || wearableAdapter?.itemCount == 0) &&
-                        (healthAdapter == null || healthAdapter?.itemCount == 0)
+                    if ((deviceAdapter == null || deviceAdapter?.itemCount == 0)
                     ) {
                         showProgress()
                     }
@@ -286,40 +378,6 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
         }
     }
 
-    private fun setupWearablesDiscreteScrollView(userDevices: List<UserDevice>) {
-        wearableAdapter = WearableAdapter(userDevices) { userDevice ->
-            findNavController().navigate(R.id.fragmentDeviceData, Bundle().apply {
-                putParcelable(NavKeys.WEARABLE, userDevice)
-            })
-        }
-        binding.dsvWearables.adapter = wearableAdapter
-        binding.dsvWearables.setItemTransformer(
-            ScaleTransformer.Builder()
-                .setMaxScale(1.05f)
-                .setMinScale(0.8f)
-                .setPivotX(Pivot.X.CENTER)
-                .setPivotY(Pivot.Y.CENTER)
-                .build()
-        )
-    }
-
-    private fun setupHealthMonitoringDiscreteScrollView(userDevices: List<UserDevice>) {
-        healthAdapter = WearableAdapter(userDevices) { userDevice ->
-            findNavController().navigate(R.id.fragmentDeviceData, Bundle().apply {
-                putParcelable(NavKeys.WEARABLE, userDevice)
-            })
-        }
-        binding.dsvHealthMonitoring.adapter = healthAdapter
-        binding.dsvHealthMonitoring.setItemTransformer(
-            ScaleTransformer.Builder()
-                .setMaxScale(1.05f)
-                .setMinScale(0.8f)
-                .setPivotX(Pivot.X.CENTER)
-                .setPivotY(Pivot.Y.CENTER)
-                .build()
-        )
-    }
-
     private fun showAssessmentSheet(assessment: MergedAssessment) {
 
         val json = Gson().toJson(assessment)
@@ -398,7 +456,7 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
                             bloodTestViewModel.setUploadResult(extractMetricsResponse, clickedIndex)
                             findNavController().navigate(
                                 R.id.action_fragmentTrack_to_fragmentUploadedReports,
-                                android.os.Bundle().apply { putBoolean("isFromTrack", true) }
+                                Bundle().apply { putBoolean("isFromTrack", true) }
                             )
                         }
 
@@ -434,7 +492,18 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
 
     override fun onClick(v: View?) {
         when (v) {
-            binding.btnAddWearables -> {
+            binding.llTabTracking -> showTrackingTab()
+            binding.llTabYetToTrack -> showYetToTrackTab()
+            binding.btnSources -> showSourcesTab()
+            binding.btnMetrics -> showMetricsTab()
+            binding.tvLiveStreaming -> showLiveStreamingTab()
+            binding.tvTestCheckIns -> showTestCheckInsTab()
+            binding.layoutAddSourceRow -> {
+                if (v == binding.layoutAddSourceRow) {
+                    findNavController().navigate(R.id.fragmentAddSource)
+                    return
+                }
+
                 val wearableDevices = arrayListOf(
                     DeviceInfo(
                         R.drawable.ic_bg_ring,
@@ -446,22 +515,7 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
                         "Humotron Wrist Band",
                         "Health tracking smart band",
                         deviceType = DeviceType.BAND
-                    )
-                )
-
-                val bottomSheet = DeviceSelectionBottomSheet.newInstance(wearableDevices)
-                bottomSheet.setDeviceSelectionListener { deviceInfo ->
-                    bottomSheet.dismiss()
-
-                    findNavController().navigate(R.id.fragmentConnectInfo, Bundle().apply {
-                        putParcelable(NavKeys.DEVICE_INFO, deviceInfo)
-                    })
-                }
-                bottomSheet.show(childFragmentManager, DeviceSelectionBottomSheet.TAG)
-            }
-
-            binding.btnAddHealthMonitoring -> {
-                val healthMonitoringDevices = arrayListOf(
+                    ),
                     DeviceInfo(
                         R.drawable.ic_bp_machine_setup,
                         "BP Monitor",
@@ -474,9 +528,11 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
                         deviceType = DeviceType.WEIGHT_MACHINE
                     )
                 )
-                val bottomSheet = DeviceSelectionBottomSheet.newInstance(healthMonitoringDevices)
+
+                val bottomSheet = DeviceSelectionBottomSheet.newInstance(wearableDevices)
                 bottomSheet.setDeviceSelectionListener { deviceInfo ->
                     bottomSheet.dismiss()
+
                     findNavController().navigate(R.id.fragmentConnectInfo, Bundle().apply {
                         putParcelable(NavKeys.DEVICE_INFO, deviceInfo)
                     })

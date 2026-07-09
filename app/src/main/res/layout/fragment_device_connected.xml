@@ -2,39 +2,59 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:background="@color/black"
+    tools:background="@drawable/ic_bg_main_2"
     tools:context=".ui.connect.DeviceConnectedFragment">
 
-    <include
-        android:id="@+id/header"
-        layout="@layout/layout_header" />
-
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ivDevice"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:background="@drawable/ic_bg_device_connected"
-        app:layout_constraintBottom_toTopOf="@id/tvTitle"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:layout_gravity="center"
+        android:src="@drawable/bg_success_ring"
+        app:layout_constraintBottom_toBottomOf="@+id/mcvSuccessIcon"
+        app:layout_constraintEnd_toEndOf="@+id/mcvSuccessIcon"
+        app:layout_constraintStart_toStartOf="@+id/mcvSuccessIcon"
+        app:layout_constraintTop_toTopOf="@+id/mcvSuccessIcon"
+        app:tint="#C4F23E" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/mcvSuccessIcon"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_marginTop="@dimen/_80dp"
+        app:cardBackgroundColor="#0C1416"
+        app:cardCornerRadius="22dp"
+        app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:srcCompat="@drawable/ic_ring_horizontal_2x" />
+        app:strokeColor="#66C4F23E"
+        app:strokeWidth="1dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivDevice"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_check_custom"
+            app:tint="#C4F23E" />
+
+    </com.google.android.material.card.MaterialCardView>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvTitle"
-        style="@style/Text.20x.Manrope.SemiBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_30dp"
+        android:layout_marginTop="@dimen/_50dp"
+        android:fontFamily="@font/manrope_extra_bold"
         android:text="@string/device_connected"
         android:textColor="@color/colorBgBtn"
-        app:layout_constraintBottom_toTopOf="@id/tvDesc"
+        android:textSize="23sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivDevice" />
+        app:layout_constraintTop_toBottomOf="@id/mcvSuccessIcon" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvDesc"
@@ -42,28 +62,49 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_60dp"
-        android:layout_marginTop="@dimen/_30dp"
+        android:layout_marginTop="@dimen/_14dp"
+        android:fontFamily="@font/manrope_medium"
         android:gravity="center"
-        android:text="@string/device_connected_desc"
-        android:textColor="@color/white70"
-        app:layout_constraintBottom_toTopOf="@id/btnSubmit"
+        android:text="@string/it_s_paired_and_feeding_track_ring"
+        android:textColor="@color/ink2"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnSubmit"
+        app:srcCompat="@drawable/bg_black_gradient" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSubmit"
         android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/manrope_bold"
+        android:text="@string/see_it_in_track"
+        android:textAllCaps="false"
+        android:textColor="#000000"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:backgroundTint="#CFF551"
+        app:cornerRadius="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/tvTakeReadingNow" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvTakeReadingNow"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_24dp"
-        android:layout_marginTop="@dimen/_50dp"
-        android:layout_marginBottom="@dimen/_20dp"
-        android:backgroundTint="@color/btn_continue"
-        android:text="@string/_continue"
-        android:textColor="@color/btn_text_color"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvDesc" />
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginBottom="12dp"
+        android:gravity="center"
+        android:text="@string/take_a_reading_now"
+        android:textColor="#879A9C"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

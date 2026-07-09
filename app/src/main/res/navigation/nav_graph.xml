@@ -19,6 +19,25 @@
     </fragment>
 
     <fragment
+        android:id="@+id/fragmentAddSource"
+        android:name="com.humotron.app.ui.track.AddSourceFragment"
+        tools:layout="@layout/fragment_add_source" />
+
+    <fragment
+        android:id="@+id/fragmentPairHumotronDevice"
+        android:name="com.humotron.app.ui.connect.PairHumotronDeviceFragment"
+        tools:layout="@layout/fragment_pair_humotron_device" />
+
+    <fragment
+        android:id="@+id/fragmentHumotronDeviceConnectInstruction"
+        android:name="com.humotron.app.ui.connect.HumotronDeviceConnectInstructionFragment"
+        tools:layout="@layout/fragment_humotron_device_connect_instruction">
+        <argument
+            android:name="deviceType"
+            app:argType="com.humotron.app.domain.modal.DeviceType" />
+    </fragment>
+
+    <fragment
         android:id="@+id/fragmentDecode"
         android:name="com.humotron.app.ui.decode.DecodeFragment"
         tools:layout="@layout/fragment_decode">
@@ -136,8 +155,34 @@
             android:id="@+id/action_fragmentDeviceData_to_fragmentMetricDetails"
             app:destination="@id/fragmentMetricDetails" />
         <action
+            android:id="@+id/action_fragmentDeviceData_to_fragmentAlert"
+            app:destination="@id/fragmentAlert" />
+        <action
             android:id="@+id/action_fragmentDeviceData_to_fragmentWeightScaleReading"
             app:destination="@id/fragmentWeightScaleReading" />
+        <action
+            android:id="@+id/action_fragmentDeviceData_to_fragmentTakeReadingRingBand"
+            app:destination="@id/fragmentTakeReadingRingBand" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentAlert"
+        android:name="com.humotron.app.ui.device.AlertFragment"
+        tools:layout="@layout/fragment_alert">
+        <argument
+            android:name="wearable"
+            app:argType="com.humotron.app.domain.modal.response.GetAllDeviceResponse$Data$UserDevice"
+            app:nullable="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentTakeReadingRingBand"
+        android:name="com.humotron.app.ui.device.ReadingTypesRingBandFragment"
+        tools:layout="@layout/fragment_reading_types_ring_band">
+        <argument
+            android:name="wearable"
+            app:argType="com.humotron.app.domain.modal.response.GetAllDeviceResponse$Data$UserDevice"
+            app:nullable="true" />
     </fragment>
 
     <fragment
@@ -317,12 +362,54 @@
     </fragment>
 
     <fragment
+        android:id="@+id/fragmentReadingInstructionsRingBand"
+        android:name="com.humotron.app.ui.device.ReadingInstructionsRingBandFragment"
+        tools:layout="@layout/fragment_reading_instructions_ring_band">
+        <argument
+            android:name="healthScanItem"
+            app:argType="com.humotron.app.ui.device.adapter.HealthScanItem" />
+        <argument
+            android:name="wearable"
+            app:argType="com.humotron.app.domain.modal.response.GetAllDeviceResponse$Data$UserDevice"
+            app:nullable="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentRealTimeScanRingBand"
+        android:name="com.humotron.app.ui.device.RealTimeScanRingBandFragment"
+        tools:layout="@layout/fragment_real_time_scan_ring_band">
+        <argument
+            android:name="healthScanItem"
+            app:argType="com.humotron.app.ui.device.adapter.HealthScanItem" />
+        <argument
+            android:name="wearable"
+            app:argType="com.humotron.app.domain.modal.response.GetAllDeviceResponse$Data$UserDevice"
+            app:nullable="true" />
+    </fragment>
+
+    <fragment
         android:id="@+id/fragmentPastScans"
         android:name="com.humotron.app.ui.device.PastScansFragment"
         tools:layout="@layout/fragment_past_scans">
         <argument
             android:name="healthScanItem"
             app:argType="com.humotron.app.ui.device.adapter.HealthScanItem" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentScanReportRingBand"
+        android:name="com.humotron.app.ui.device.ScanReportRingBandFragment"
+        tools:layout="@layout/fragment_scan_report_ring_band">
+        <argument
+            android:name="pastScan"
+            app:argType="com.humotron.app.domain.modal.response.PastScanData" />
+        <argument
+            android:name="healthScanItem"
+            app:argType="com.humotron.app.ui.device.adapter.HealthScanItem" />
+        <argument
+            android:name="wearable"
+            app:argType="com.humotron.app.domain.modal.response.GetAllDeviceResponse$Data$UserDevice"
+            app:nullable="true" />
     </fragment>
 
     <fragment

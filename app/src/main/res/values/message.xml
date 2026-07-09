@@ -21,13 +21,19 @@
     <string name="cmd_execute_failed_6">Command executed failed. Parameter error.</string>
 
 
-    <string name="ring_color_deep_black">Deep black</string>
+    <string name="ring_color_black">Black</string>
     <string name="ring_color_sliver">Sliver</string>
     <string name="ring_color_golden">Golden</string>
+    <string name="ring_color_gold">Gold</string>
     <string name="ring_color_rose_gold">Rose Gold</string>
+    <string name="ring_color_silver_gold_mixed">Silver &amp; Gold Mixed</string>
     <string name="ring_color_gold_silver_mixed">Gold &amp; Silver Mixed</string>
+    <string name="ring_color_champagne_gold_silver_mixed">Champagne Gold &amp; Silver Mixed</string>
     <string name="ring_color_purple_silver_mixed">Purple &amp; Silver Mixed</string>
     <string name="ring_color_rose_gold_silver_mixed">Rose Gold &amp; Silver Mixed</string>
+    <string name="ring_color_brushed_silver">Brushed Silver</string>
+    <string name="ring_color_stealth">Stealth</string>
+    <string name="ring_color_dark_gray">Dark Gray</string>
     <string name="battery_level_charging">Charging</string>
     <string name="battery_level_discharging">Discharging</string>
 </resources>

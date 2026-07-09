@@ -1,8 +1,12 @@
 package com.humotron.app.ui.connect
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -50,13 +54,19 @@ class WeightMachineConnectionFragment : Fragment(R.layout.fragment_weight_machin
     private val adapter by lazy {
         WeightScaleDeviceAdapter { selected ->
             selectedDevice = selected
-            binding.btnSubmit.isEnabled = selected != null
+            val enabled = selected != null
+            setBtnEnabled(enabled)
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentWeightMachineConnectionBinding.bind(view)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
+            insets
+        }
 
         initClicks()
         initViews()
@@ -66,15 +76,32 @@ class WeightMachineConnectionFragment : Fragment(R.layout.fragment_weight_machin
     private fun initClicks() {
         binding.btnSubmit.setOnClickListener {
             val device = selectedDevice ?: return@setOnClickListener
+
+            binding.scanAnimationView.setProgress(0.75f, animate = true, duration = 300)
+            binding.tvSubtitleStatus.text = getString(R.string.pairing_securely)
+            with(binding) {
+                rvDevices.isVisible = false
+                btnSubmit.isVisible = false
+                footerDisclaimerTextView.isVisible = false
+                tvScanAgain.isVisible = false
+                tvDeviceStatus.isVisible = false
+
+                llAnimationView.isVisible = true
+            }
             showProgress()
             viewModel.connect(device.mac, buildUserProfile())
+        }
+        binding.tvScanAgain.setOnClickListener { v ->
+            startScan()
         }
     }
 
     private fun initViews() {
-        binding.btnSubmit.isEnabled = false
-        binding.ringsView.startAnimation()
+        binding.scanAnimationView.color =ContextCompat.getColor(requireContext(), R.color.cool)
+        binding.header.tvTitle.text = getString(R.string.connect_device)
         binding.rvDevices.adapter = adapter
+        binding.btnSubmit.isEnabled = false
+        binding.llAnimationView.isVisible = true
         viewModel.initializeSdk()
     }
 
@@ -85,12 +112,14 @@ class WeightMachineConnectionFragment : Fragment(R.layout.fragment_weight_machin
     private fun observeViewModel() {
         viewModel.sdkState.observe(viewLifecycleOwner) { state ->
             when (state) {
-                WeightScaleSdkState.Ready -> viewModel.startScan()
-                WeightScaleSdkState.Initializing -> binding.tvTitle.text =
-                    getString(R.string.connecting)
+                WeightScaleSdkState.Ready -> startScan()
+                WeightScaleSdkState.Initializing -> {
+                    /*binding.tvTitle.text =
+                        getString(R.string.connecting)*/
+                }
 
                 is WeightScaleSdkState.Failed -> {
-                    binding.tvTitle.text = state.message
+                    //binding.tvTitle.text = state.message
                     ToastUtils.showShort(requireContext(), state.message)
                 }
 
@@ -103,17 +132,19 @@ class WeightMachineConnectionFragment : Fragment(R.layout.fragment_weight_machin
                 WeightScaleScanState.Starting,
                 WeightScaleScanState.Scanning,
                     -> {
-                    binding.ringsView.startAnimation()
-                    binding.tvTitle.text = getString(R.string.smart_scale_instruction_1)
+                    /*binding.ringsView.startAnimation()
+                    binding.tvTitle.text = getString(R.string.smart_scale_instruction_1)*/
                 }
 
                 WeightScaleScanState.Idle,
                 WeightScaleScanState.Stopping,
-                    -> binding.ringsView.stopAnimation()
+                    -> {
+                    //binding.ringsView.stopAnimation()
+                }
 
                 is WeightScaleScanState.Failed -> {
-                    binding.ringsView.stopAnimation()
-                    binding.tvTitle.text = state.message
+                    /*binding.ringsView.stopAnimation()
+                    binding.tvTitle.text = state.message*/
                 }
             }
         }
@@ -121,13 +152,21 @@ class WeightMachineConnectionFragment : Fragment(R.layout.fragment_weight_machin
         viewModel.devices.observe(viewLifecycleOwner) { devices ->
             adapter.submitList(devices)
             val hasDevices = devices.isNotEmpty()
-            binding.rvDevices.isVisible = hasDevices
-            binding.clNoDeviceFound.isVisible = !hasDevices
             if (hasDevices) {
-                binding.tvTitle.text =
-                    getString(R.string.weight_scale_is_detected)
-                binding.ivWeightScale.isVisible = true
-                binding.ringsView.stopAnimation()
+                with(binding) {
+                    binding.tvSubtitleStatus.text = getString(R.string.scale_found)
+                    binding.scanAnimationView.setProgress(0.5f, animate = true, duration = 300)
+
+                    binding.llAnimationView.postDelayed({
+                        rvDevices.isVisible = true
+                        btnSubmit.isVisible = true
+                        footerDisclaimerTextView.isVisible = true
+                        tvScanAgain.isVisible = true
+                        tvDeviceStatus.isVisible = true
+
+                        binding.llAnimationView.isVisible = false
+                    }, 1000)
+                }
             }
         }
 
@@ -135,37 +174,38 @@ class WeightMachineConnectionFragment : Fragment(R.layout.fragment_weight_machin
             when (state) {
                 WeightScaleConnectionState.Idle -> hideProgress()
                 is WeightScaleConnectionState.Connecting -> {
-                    binding.tvTitle.text = getString(R.string.connecting_to_device)
+                    //binding.tvTitle.text = getString(R.string.connecting_to_device)
                     showProgress()
                 }
 
                 is WeightScaleConnectionState.Connected -> {
-                    binding.tvTitle.text = getString(R.string.connected)
+                    //binding.tvTitle.text = getString(R.string.connected)
+                    binding.tvSubtitleStatus.text = getString(R.string.connected)
                     handleDeviceConnected(state.device)
                 }
 
                 is WeightScaleConnectionState.Ready -> {
                     hideProgress()
-                    binding.tvTitle.text = getString(R.string.connected)
+                    //binding.tvTitle.text = getString(R.string.connected)
                     //ToastUtils.showShort(requireContext(), "Scale connected successfully.")
                 }
 
                 is WeightScaleConnectionState.Disconnecting -> {
-                    binding.tvTitle.text = getString(R.string.disconnected)
+                    //binding.tvTitle.text = getString(R.string.disconnected)
                 }
 
                 is WeightScaleConnectionState.Disconnected -> {
                     hideProgress()
-                    binding.tvTitle.text = getString(R.string.smart_scale_connection_help)
+                    //binding.tvTitle.text = getString(R.string.smart_scale_connection_help)
                 }
 
                 is WeightScaleConnectionState.Reconnecting -> {
-                    binding.tvTitle.text = "Reconnecting to scale (attempt ${state.attempt})"
+                    //binding.tvTitle.text = "Reconnecting to scale (attempt ${state.attempt})"
                 }
 
                 is WeightScaleConnectionState.Failed -> {
                     hideProgress()
-                    binding.tvTitle.text = state.message
+                    //binding.tvTitle.text = state.message
                     ToastUtils.showShort(requireContext(), state.message)
                 }
             }
@@ -211,22 +251,22 @@ class WeightMachineConnectionFragment : Fragment(R.layout.fragment_weight_machin
             when (state) {
                 WeightScaleMeasurementState.Idle -> Unit
                 is WeightScaleMeasurementState.Measuring -> {
-                    binding.tvTitle.text = getString(R.string.smart_scale_instruction_1)
+                    //binding.tvTitle.text = getString(R.string.smart_scale_instruction_1)
                 }
 
                 is WeightScaleMeasurementState.UnsteadyWeight -> {
-                    binding.tvTitle.text =
-                        "Reading... ${String.format(Locale.US, "%.1f", state.weightKg)} kg"
+                    /*binding.tvTitle.text =
+                        "Reading... ${String.format(Locale.US, "%.1f", state.weightKg)} kg"*/
                 }
 
                 is WeightScaleMeasurementState.Completed -> {
                     hideProgress()
-                    binding.tvTitle.text =
-                        "Weight ${String.format(Locale.US, "%.1f", state.measurement.weightKg)} kg"
+                    /*binding.tvTitle.text =
+                        "Weight ${String.format(Locale.US, "%.1f", state.measurement.weightKg)} kg"*/
                 }
 
                 is WeightScaleMeasurementState.StoredDataReceived -> {
-                    binding.tvTitle.text = "Stored readings received: ${state.count}"
+                    //binding.tvTitle.text = "Stored readings received: ${state.count}"
                 }
             }
         }
@@ -234,7 +274,7 @@ class WeightMachineConnectionFragment : Fragment(R.layout.fragment_weight_machin
         viewModel.events.observe(viewLifecycleOwner) { event ->
             when (event) {
                 is WeightScaleEvent.BatteryUpdated -> {
-                    binding.tvTitle.text = "Battery ${event.level}%"
+                    //binding.tvTitle.text = "Battery ${event.level}%"
                 }
 
                 is WeightScaleEvent.ResultMessage -> {
@@ -255,6 +295,23 @@ class WeightMachineConnectionFragment : Fragment(R.layout.fragment_weight_machin
                 is WeightScaleError.UserValidation -> error.message
             }
             ToastUtils.showShort(requireContext(), message)
+        }
+    }
+
+    private fun startScan() {
+        viewModel.startScan()
+        binding.scanAnimationView.setProgress(0.25f, animate = true, duration = 300)
+
+        binding.tvSubtitleStatus.text = getString(R.string.searching_for_your_smart_scale)
+        adapter.clearData()
+        with(binding) {
+            rvDevices.isVisible = false
+            btnSubmit.isVisible = false
+            footerDisclaimerTextView.isVisible = false
+            tvScanAgain.isVisible = false
+            tvDeviceStatus.isVisible = false
+
+            llAnimationView.isVisible = true
         }
     }
 
@@ -364,6 +421,26 @@ class WeightMachineConnectionFragment : Fragment(R.layout.fragment_weight_machin
             }
         }
         return null
+    }
+
+    fun setBtnEnabled(enabled: Boolean) {
+        binding.btnSubmit.apply {
+            isEnabled = enabled
+
+            backgroundTintList = ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    context,
+                    if (enabled) R.color.lime else R.color.white05
+                )
+            )
+
+            setTextColor(
+                ContextCompat.getColor(
+                    context,
+                    if (enabled) android.R.color.black else R.color.ink2
+                )
+            )
+        }
     }
 
     override fun onDestroyView() {

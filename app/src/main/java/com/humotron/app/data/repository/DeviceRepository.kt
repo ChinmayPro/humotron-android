@@ -62,14 +62,12 @@ class DeviceRepository(val dao: SleepDao) {
                     data.id,
                     data.duration,
                     data.efficiency,
-                    data.sleepStates.getOrNull(3)?.percent ?: 0f,
+                    /*data.sleepStates.getOrNull(3)?.percent ?: 0f*/0f,
                     dateSf.format(date)
                 )
             }
         }
     }
-
-
 
 
 }

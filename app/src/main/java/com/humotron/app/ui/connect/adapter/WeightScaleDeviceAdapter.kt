@@ -24,6 +24,26 @@ class WeightScaleDeviceAdapter(
         notifyDataSetChanged()
     }
 
+    fun clearData() {
+        val hadSelection = selectedMac != null
+        val previousSize = devices.size
+
+        if (previousSize == 0 && !hadSelection) {
+            return
+        }
+
+        devices.clear()
+        selectedMac = null
+
+        if (hadSelection) {
+            onDeviceSelected(null)
+        }
+
+        if (previousSize > 0) {
+            notifyItemRangeRemoved(0, previousSize)
+        }
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             ItemWeightScaleDeviceBinding.inflate(
@@ -45,13 +65,16 @@ class WeightScaleDeviceAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(device: WeightScaleDeviceSummary, isSelected: Boolean) {
-            binding.ivDeviceImage.setImageResource(R.drawable.ic_connect_weightscale_logo)
+            binding.ivDeviceIcon.setImageResource(R.drawable.ic_smart_scale_vector)
             binding.tvDeviceName.text =
                 itemView.context.getString(R.string.humotron_weight_scale)
             binding.tvDeviceModel.text = device.name.ifBlank { device.bluetoothName ?: device.mac }
             binding.cbDeviceChecked.isChecked = isSelected
 
             binding.root.setOnClickListener {
+                if (bindingAdapterPosition == RecyclerView.NO_POSITION) {
+                    return@setOnClickListener
+                }
                 selectedMac = device.mac
                 notifyDataSetChanged()
                 onDeviceSelected(device)

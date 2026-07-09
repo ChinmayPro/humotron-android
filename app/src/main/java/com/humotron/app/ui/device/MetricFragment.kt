@@ -27,7 +27,7 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IFillFormatter
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
-import com.google.android.material.tabs.TabLayout
+import com.google.android.material.chip.Chip
 import com.humotron.app.R
 import com.humotron.app.core.base.BaseFragment
 import com.humotron.app.data.network.Status
@@ -90,7 +90,7 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
     }
 
     private fun initClicks() {
-        binding.header.ivBack.setOnClickListener {
+        binding.header.btnBack.setOnClickListener {
             findNavController().popBackStack()
         }
 
@@ -102,23 +102,16 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
             viewModel.next()
         }
 
-        binding.trackTrends.tabLayout.addOnTabSelectedListener(object :
-            TabLayout.OnTabSelectedListener {
-
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                val tabText = tab?.text?.toString()
+        binding.trackTrends.chipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
+            if (checkedIds.isNotEmpty()) {
+                val chip = group.findViewById<Chip>(checkedIds.first())
+                val tabText = chip?.text?.toString()
                 val dateTime = arguments?.getString("dateTime")
                 if (!dateTime.isNullOrEmpty()) {
                     viewModel.setMode(tabText, dateTime)
                 }
             }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-            }
-        })
+        }
 
         binding.trackTrends.lineChart.setOnTouchListener { v, event ->
             v.parent.requestDisallowInterceptTouchEvent(true)
@@ -176,7 +169,7 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
     }
 
     private fun initData() {
-        binding.header.title.text = "Device Details"
+        binding.header.tvTitle.text = "Device Details"
 
         binding.dsvInsight.adapter = insightAdapter
         binding.dsvInsight.setItemTransformer(
@@ -236,15 +229,20 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
 
             }
         }
+        val chips = listOf(
+            binding.trackTrends.chip1,
+            binding.trackTrends.chip2,
+            binding.trackTrends.chip3
+        )
         tabNames.forEachIndexed { index, title ->
-            binding.trackTrends.tabLayout.getTabAt(index)?.text = title
+            chips.getOrNull(index)?.text = title
         }
-        binding.trackTrends.tabLayout.getTabAt(1)?.select()
+        binding.trackTrends.chip2.isChecked = true
 
         val metric = arguments?.getParcelable<AllMetricsResponse.Data.Metric>(NavKeys.KEY_METRIC)
 
         if (metric != null) {
-            binding.header.title.text = metric.metricName
+            binding.header.tvTitle.text = metric.metricName
             binding.tvTypeLabel.text = metric.metricName
             binding.trackTrends.tvNoGraphData.text =
                 getString(R.string.no_health_data_available, metric.metricName)
@@ -444,10 +442,10 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
                         binding.trackTrends.tvNoGraphData.visibility = View.GONE
 
                         var selectedTab: String? = "Day"
-                        val selectedTabPosition = binding.trackTrends.tabLayout.selectedTabPosition
-                        if (selectedTabPosition != TabLayout.Tab.INVALID_POSITION) {
-                            val tab = binding.trackTrends.tabLayout.getTabAt(selectedTabPosition)
-                            selectedTab = tab?.text?.toString()
+                        val checkedId = binding.trackTrends.chipGroup.checkedChipId
+                        if (checkedId != View.NO_ID) {
+                            val chip = binding.trackTrends.chipGroup.findViewById<Chip>(checkedId)
+                            selectedTab = chip?.text?.toString()
                         }
 
                         //to split value in two entries if receive like 125/70
@@ -537,12 +535,11 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
                     viewModel.dateRange.collect { (start, end) ->
                         if (start != null && end != null) {
                             var selectedText: String? = "Day".uppercase()
-                            val selectedTabPosition =
-                                binding.trackTrends.tabLayout.selectedTabPosition
-                            if (selectedTabPosition != TabLayout.Tab.INVALID_POSITION) {
-                                val tab =
-                                    binding.trackTrends.tabLayout.getTabAt(selectedTabPosition)
-                                selectedText = tab?.text?.toString()?.uppercase()
+                            val checkedId = binding.trackTrends.chipGroup.checkedChipId
+                            if (checkedId != View.NO_ID) {
+                                val chip =
+                                    binding.trackTrends.chipGroup.findViewById<Chip>(checkedId)
+                                selectedText = chip?.text?.toString()?.uppercase()
                             }
 
                             val metric =

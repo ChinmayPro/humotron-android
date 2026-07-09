@@ -3,14 +3,14 @@ package com.humotron.app.data.local.converters
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import lib.linktop.nexring.api.SleepStage
-import lib.linktop.nexring.api.SleepState
+//import lib.linktop.nexring.api.SleepStage
+//import lib.linktop.nexring.api.SleepState
 
 
 class SleepConverters {
     private val gson = Gson()
 
-    @TypeConverter
+    /*@TypeConverter
     fun fromSleepStages(value: List<SleepStage>): String = gson.toJson(value)
 
     @TypeConverter
@@ -22,7 +22,7 @@ class SleepConverters {
 
     @TypeConverter
     fun toSleepStates(value: String): List<SleepState> =
-        gson.fromJson(value, object : TypeToken<List<SleepState>>() {}.type)
+        gson.fromJson(value, object : TypeToken<List<SleepState>>() {}.type)*/
 
     @TypeConverter
     fun fromIntList(value: List<Int>): String {

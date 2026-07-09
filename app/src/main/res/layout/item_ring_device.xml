@@ -1,91 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginVertical="@dimen/_4dp"
-    android:background="@drawable/bg_btn_round_rect_8"
-    android:backgroundTint="@color/black"
-    android:padding="@dimen/_8dp">
+    app:cardBackgroundColor="#99040809"
+    app:cardCornerRadius="16dp"
+    app:strokeColor="#99040809"
+    app:strokeWidth="1dp">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ivDeviceImage"
-        android:layout_width="@dimen/_80dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_connect_weightscale_logo" />
+        android:padding="@dimen/_15dp">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvDeviceName"
-        style="@style/Text.OnBoard.Sub.Medium"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Humotron Smart Ring"
-        android:textColor="@color/textColorGray"
-        android:textSize="13sp"
-        app:layout_constraintStart_toEndOf="@id/ivDeviceImage"
-        app:layout_constraintTop_toTopOf="parent" />
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvDeviceIcon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:cardBackgroundColor="#0c1416"
+            app:cardCornerRadius="17dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="#52C4F23E"
+            app:strokeWidth="0dp">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvDeviceModel"
-        style="@style/Text.OnBoard.Sub.Medium"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textColor="#b2b1b1"
-        android:textSize="10sp"
-        app:layout_constraintEnd_toEndOf="@id/tvDeviceName"
-        app:layout_constraintStart_toStartOf="@id/tvDeviceName"
-        app:layout_constraintTop_toBottomOf="@id/tvDeviceName" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivDeviceIcon"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_ring_vector"
+                app:tint="@color/white" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvDeviceColor"
-        style="@style/Text.OnBoard.Sub.Medium"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textColor="#b2b1b1"
-        android:textSize="10sp"
-        app:layout_constraintStart_toStartOf="@id/tvDeviceName"
-        app:layout_constraintTop_toBottomOf="@id/tvDeviceModel"
-        tools:text="Test" />
+        </com.google.android.material.card.MaterialCardView>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvDeviceGeneration"
-        style="@style/Text.OnBoard.Sub.Medium"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_3dp"
-        android:textColor="#b2b1b1"
-        android:textSize="10sp"
-        app:layout_constraintStart_toEndOf="@id/tvDeviceColor"
-        app:layout_constraintTop_toBottomOf="@id/tvDeviceModel"
-        tools:text="Test" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDeviceName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:fontFamily="@font/manrope_bold"
+            android:text="Humotron Smart Ring"
+            android:textColor="@color/textColorGray"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@id/cvDeviceIcon"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvDeviceSize"
-        style="@style/Text.OnBoard.Sub.Medium"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_3dp"
-        android:textColor="#b2b1b1"
-        android:textSize="10sp"
-        app:layout_constraintStart_toEndOf="@id/tvDeviceGeneration"
-        app:layout_constraintTop_toBottomOf="@id/tvDeviceModel"
-        tools:text="Test" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDeviceModel"
+            style="@style/Text.OnBoard.Sub.Medium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="#b2b1b1"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="@id/tvDeviceName"
+            app:layout_constraintStart_toStartOf="@id/tvDeviceName"
+            app:layout_constraintTop_toBottomOf="@id/tvDeviceName" />
 
-    <androidx.appcompat.widget.AppCompatCheckBox
-        android:id="@+id/cbDeviceChecked"
-        android:layout_width="@dimen/_16dp"
-        android:layout_height="@dimen/_16dp"
-        android:layout_marginEnd="@dimen/_24dp"
-        android:background="@drawable/chekbox_device"
-        android:button="@null"
-        android:clickable="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDeviceColor"
+            style="@style/Text.OnBoard.Sub.Medium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="#b2b1b1"
+            android:textSize="10sp"
+            app:layout_constraintStart_toStartOf="@id/tvDeviceName"
+            app:layout_constraintTop_toBottomOf="@id/tvDeviceModel"
+            tools:text="Test" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDeviceGeneration"
+            style="@style/Text.OnBoard.Sub.Medium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_3dp"
+            android:textColor="#b2b1b1"
+            android:textSize="10sp"
+            app:layout_constraintStart_toEndOf="@id/tvDeviceColor"
+            app:layout_constraintTop_toBottomOf="@id/tvDeviceModel"
+            tools:text="Test" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDeviceSize"
+            style="@style/Text.OnBoard.Sub.Medium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_3dp"
+            android:textColor="#b2b1b1"
+            android:textSize="10sp"
+            app:layout_constraintStart_toEndOf="@id/tvDeviceGeneration"
+            app:layout_constraintTop_toBottomOf="@id/tvDeviceModel"
+            tools:text="Test" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/cbDeviceChecked"
+            android:layout_width="@dimen/_24dp"
+            android:layout_height="@dimen/_24dp"
+            android:background="@drawable/custom_checkbox_icon"
+            android:button="@null"
+            android:clickable="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

@@ -41,7 +41,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
-            <com.kevinschildhorn.otpview.OTPView
+            <com.humotron.app.view.OTPView
                 android:id="@+id/otpView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -1,0 +1,993 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ic_bg_main_2"
+    tools:context=".ui.track.AddSourceFragment">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header_3" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:paddingBottom="@dimen/_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/_22dp">
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/Text.22x.Manrope.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="2dp"
+                android:text="@string/track_add_source" />
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/Text.14x.Manrope.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_9dp"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="3dp"
+                android:text="@string/track_add_source_subtitle"
+                android:textColor="@color/ink2" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_14dp"
+                app:cardBackgroundColor="@color/deep_dives_card"
+                app:cardCornerRadius="@dimen/_20dp"
+                app:cardElevation="0dp"
+                app:cardUseCompatPadding="false"
+                app:strokeColor="@color/card_stroke"
+                app:strokeWidth="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_17dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvPictureTitle"
+                        style="@style/Text.14x.Manrope.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="@string/track_your_picture"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvCoverageCount"
+                        style="@style/Text.12x.Manrope.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="@string/track_areas_covered_complete"
+                        android:textColor="@color/lime"
+                        app:layout_constraintBaseline_toBaselineOf="@id/tvPictureTitle"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <LinearLayout
+                        android:id="@+id/layoutCoveragePips"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_14dp"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvPictureTitle">
+
+                        <LinearLayout
+                            android:id="@+id/layoutCoverageBars"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="14dp"
+                            android:orientation="horizontal"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tvPictureTitle">
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="5dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_track_progress_fill_lime_1" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="5dp"
+                                android:layout_marginStart="7dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_track_progress_fill_lime_1" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="5dp"
+                                android:layout_marginStart="7dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_track_progress_fill_lime_1" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="5dp"
+                                android:layout_marginStart="7dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_track_progress_fill_lime_1" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="5dp"
+                                android:layout_marginStart="7dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_track_progress_fill_lime_1" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="5dp"
+                                android:layout_marginStart="7dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_track_progress_track_1" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layoutCoverageLabels"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="7dp"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/layoutCoverageBars">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/manrope_bold"
+                                android:gravity="center"
+                                android:text="Heart"
+                                android:textColor="@color/ink2"
+                                android:textSize="9sp" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/manrope_bold"
+                                android:gravity="center"
+                                android:text="Sleep"
+                                android:textColor="@color/ink2"
+                                android:textSize="9sp" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/manrope_bold"
+                                android:gravity="center"
+                                android:text="Movement"
+                                android:textColor="@color/ink2"
+                                android:textSize="9sp" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/manrope_bold"
+                                android:gravity="center"
+                                android:text="Body"
+                                android:textColor="@color/ink2"
+                                android:textSize="9sp" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/manrope_bold"
+                                android:gravity="center"
+                                android:text="Bloods"
+                                android:textColor="@color/ink2"
+                                android:textSize="9sp" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/manrope_bold"
+                                android:gravity="center"
+                                android:text="Mind"
+                                android:textColor="@color/ink2"
+                                android:textSize="9sp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvCoverageNote"
+                        style="@style/Text.12x.Manrope.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_14dp"
+                        android:includeFontPadding="false"
+                        android:lineSpacingExtra="2dp"
+                        android:text="@string/track_coverage_note_complete"
+                        android:textColor="@color/ink3"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/layoutCoveragePips" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_22dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/Text.10x.Manrope.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:letterSpacing="0.05"
+                        android:text="@string/track_already_wearing_something"
+                        android:textAllCaps="true"
+                        android:textColor="@color/eyebrow" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="@dimen/_10dp"
+                        android:layout_weight="1"
+                        android:background="@color/card_stroke" />
+                </LinearLayout>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_11dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/deep_dives_card"
+                    app:cardCornerRadius="@dimen/_18dp"
+                    app:cardElevation="0dp"
+                    app:cardUseCompatPadding="false"
+                    app:strokeColor="@color/card_stroke"
+                    app:strokeWidth="0dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <View
+                            android:id="@+id/viewWearableAccent"
+                            android:layout_width="@dimen/_3dp"
+                            android:layout_height="0dp"
+                            android:background="@color/cool"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/layoutWearableIcon"
+                            android:layout_width="@dimen/_46dp"
+                            android:layout_height="@dimen/_46dp"
+                            android:layout_marginStart="@dimen/_14dp"
+                            android:layout_marginTop="@dimen/_16dp"
+                            app:cardBackgroundColor="@color/cool_14"
+                            app:cardCornerRadius="13dp"
+                            app:layout_constraintStart_toEndOf="@id/viewWearableAccent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:strokeWidth="0dp">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="@dimen/_22dp"
+                                android:layout_height="@dimen/_22dp"
+                                android:layout_gravity="center"
+                                app:srcCompat="@drawable/ic_wave_heart"
+                                app:tint="@color/cool" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvWearableTitle"
+                            style="@style/Text.15x.Manrope.Bold"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_14dp"
+                            android:ellipsize="end"
+                            android:includeFontPadding="false"
+                            android:maxLines="2"
+                            android:text="@string/track_connect_wearable_title"
+                            android:textColor="@color/white"
+                            app:layout_constraintStart_toEndOf="@id/layoutWearableIcon"
+                            app:layout_constraintTop_toTopOf="@id/layoutWearableIcon" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/buttonWearableTag"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10dp"
+                            android:fontFamily="@font/manrope_semibold"
+                            android:insetLeft="0dp"
+                            android:insetTop="0dp"
+                            android:insetRight="0dp"
+                            android:insetBottom="0dp"
+                            android:minWidth="0dp"
+                            android:minHeight="0dp"
+                            android:paddingHorizontal="@dimen/_8dp"
+                            android:paddingVertical="@dimen/_3dp"
+                            android:text="@string/track_easiest_start"
+                            android:textAllCaps="true"
+                            android:textColor="@color/insights_btn_text_dark"
+                            android:textSize="10sp"
+                            app:backgroundTint="@color/lime"
+                            app:cornerRadius="@dimen/_7dp"
+                            app:iconPadding="0dp"
+                            app:layout_constraintStart_toStartOf="@+id/tvWearableTitle"
+                            app:layout_constraintTop_toBottomOf="@id/tvWearableTitle" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvWearableDesc"
+                            style="@style/Text.12x.Manrope.Regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_14dp"
+                            android:layout_marginTop="@dimen/_5dp"
+                            android:includeFontPadding="false"
+                            android:lineSpacingExtra="2dp"
+                            android:text="@string/track_connect_wearable_desc"
+                            android:textColor="@color/ink3"
+                            app:layout_constraintEnd_toStartOf="@id/imageWearableChevron"
+                            app:layout_constraintStart_toEndOf="@id/layoutWearableIcon"
+                            app:layout_constraintTop_toBottomOf="@id/buttonWearableTag" />
+
+                        <LinearLayout
+                            android:id="@+id/layoutWearableBenefit"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_14dp"
+                            android:layout_marginTop="@dimen/_8dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            app:layout_constraintEnd_toStartOf="@id/imageWearableChevron"
+                            app:layout_constraintStart_toEndOf="@id/layoutWearableIcon"
+                            app:layout_constraintTop_toBottomOf="@id/tvWearableDesc">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="@dimen/_12dp"
+                                android:layout_height="@dimen/_12dp"
+                                app:srcCompat="@drawable/ic_sparkle"
+                                app:tint="@color/ink4" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_6dp"
+                                android:includeFontPadding="false"
+                                android:text="@string/track_adds_sleep_recovery_hrv"
+                                android:textColor="@color/ink4"
+                                android:textSize="11sp" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            app:layout_constraintTop_toBottomOf="@+id/layoutWearableBenefit" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/imageWearableChevron"
+                            android:layout_width="@dimen/_18dp"
+                            android:layout_height="@dimen/_18dp"
+                            android:layout_marginEnd="@dimen/_16dp"
+                            app:layout_constraintBottom_toBottomOf="@id/layoutWearableIcon"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/layoutWearableIcon"
+                            app:srcCompat="@drawable/ic_chevron_right_24px"
+                            app:tint="@color/ink4" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_22dp"
+                    android:gravity="center_vertical">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/Text.10x.Manrope.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:letterSpacing="0.05"
+                        android:text="@string/track_your_humotron_devices"
+                        android:textAllCaps="true"
+                        android:textColor="@color/eyebrow" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="@dimen/_10dp"
+                        android:layout_weight="1"
+                        android:background="@color/card_stroke" />
+                </LinearLayout>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/mcvPairHumotronDevice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_11dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/deep_dives_card"
+                    app:cardCornerRadius="@dimen/_18dp"
+                    app:cardElevation="0dp"
+                    app:cardUseCompatPadding="false"
+                    app:strokeColor="@color/card_stroke"
+                    app:strokeWidth="0dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <View
+                            android:id="@+id/viewDeviceAccent"
+                            android:layout_width="@dimen/_3dp"
+                            android:layout_height="0dp"
+                            android:background="@color/lime"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/layoutDeviceIcon"
+                            android:layout_width="@dimen/_46dp"
+                            android:layout_height="@dimen/_46dp"
+                            android:layout_marginStart="@dimen/_14dp"
+                            android:layout_marginTop="@dimen/_16dp"
+                            app:cardBackgroundColor="@color/lime_14"
+                            app:cardCornerRadius="13dp"
+                            app:layout_constraintStart_toEndOf="@id/viewDeviceAccent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:strokeWidth="0dp">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="@dimen/_22dp"
+                                android:layout_height="@dimen/_22dp"
+                                android:layout_gravity="center"
+                                app:srcCompat="@drawable/ic_ring_vector"
+                                app:tint="@color/lime" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvDeviceTitle"
+                            style="@style/Text.15x.Manrope.Bold"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_14dp"
+                            android:ellipsize="end"
+                            android:includeFontPadding="false"
+                            android:maxLines="2"
+                            android:text="@string/track_pair_device_title"
+                            android:textColor="@color/white"
+                            app:layout_constraintEnd_toStartOf="@id/imageDeviceChevron"
+                            app:layout_constraintStart_toEndOf="@id/layoutDeviceIcon"
+                            app:layout_constraintTop_toTopOf="@id/layoutDeviceIcon" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvDeviceDesc"
+                            style="@style/Text.12x.Manrope.Regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_14dp"
+                            android:layout_marginTop="@dimen/_5dp"
+                            android:includeFontPadding="false"
+                            android:lineSpacingExtra="2dp"
+                            android:text="@string/track_pair_device_desc"
+                            android:textColor="@color/ink3"
+                            app:layout_constraintEnd_toStartOf="@id/imageDeviceChevron"
+                            app:layout_constraintStart_toEndOf="@id/layoutDeviceIcon"
+                            app:layout_constraintTop_toBottomOf="@id/tvDeviceTitle" />
+
+                        <LinearLayout
+                            android:id="@+id/llPair"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_14dp"
+                            android:layout_marginTop="@dimen/_8dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            app:layout_constraintEnd_toStartOf="@id/imageDeviceChevron"
+                            app:layout_constraintStart_toEndOf="@id/layoutDeviceIcon"
+                            app:layout_constraintTop_toBottomOf="@id/tvDeviceDesc">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="@dimen/_12dp"
+                                android:layout_height="@dimen/_12dp"
+                                app:srcCompat="@drawable/ic_sparkle"
+                                app:tint="@color/ink4" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_6dp"
+                                android:includeFontPadding="false"
+                                android:text="@string/track_adds_live_readings"
+                                android:textColor="@color/ink4"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            app:layout_constraintTop_toBottomOf="@+id/llPair" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/imageDeviceChevron"
+                            android:layout_width="@dimen/_18dp"
+                            android:layout_height="@dimen/_18dp"
+                            android:layout_marginEnd="@dimen/_16dp"
+                            app:layout_constraintBottom_toBottomOf="@id/layoutDeviceIcon"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/layoutDeviceIcon"
+                            app:srcCompat="@drawable/ic_chevron_right_24px"
+                            app:tint="@color/ink4" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_22dp"
+                    android:gravity="center_vertical">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/Text.10x.Manrope.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:letterSpacing="0.05"
+                        android:text="@string/track_go_deeper"
+                        android:textAllCaps="true"
+                        android:textColor="@color/eyebrow" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="@dimen/_10dp"
+                        android:layout_weight="1"
+                        android:background="@color/card_stroke" />
+                </LinearLayout>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_11dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/deep_dives_card"
+                    app:cardCornerRadius="@dimen/_18dp"
+                    app:cardElevation="0dp"
+                    app:cardUseCompatPadding="false"
+                    app:strokeColor="@color/card_stroke"
+                    app:strokeWidth="0dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <View
+                            android:id="@+id/viewScanAccent"
+                            android:layout_width="@dimen/_3dp"
+                            android:layout_height="0dp"
+                            android:background="@color/series"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/layoutScanIcon"
+                            android:layout_width="@dimen/_46dp"
+                            android:layout_height="@dimen/_46dp"
+                            android:layout_marginStart="@dimen/_14dp"
+                            android:layout_marginTop="@dimen/_16dp"
+                            app:cardBackgroundColor="@color/series_14"
+                            app:cardCornerRadius="13dp"
+                            app:layout_constraintStart_toEndOf="@id/viewScanAccent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:strokeWidth="0dp">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="@dimen/_22dp"
+                                android:layout_height="@dimen/_22dp"
+                                android:layout_gravity="center"
+                                app:srcCompat="@drawable/ic_lab_scan"
+                                app:tint="@color/series" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvScanTitle"
+                            style="@style/Text.15x.Manrope.Bold"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_14dp"
+                            android:ellipsize="end"
+                            android:includeFontPadding="false"
+                            android:maxLines="2"
+                            android:text="@string/track_book_deep_scan_title"
+                            android:textColor="@color/white"
+                            app:layout_constraintEnd_toStartOf="@id/imageScanChevron"
+                            app:layout_constraintStart_toEndOf="@id/layoutScanIcon"
+                            app:layout_constraintTop_toTopOf="@id/layoutScanIcon" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvScanDesc"
+                            style="@style/Text.12x.Manrope.Regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_14dp"
+                            android:layout_marginTop="@dimen/_5dp"
+                            android:includeFontPadding="false"
+                            android:lineSpacingExtra="2dp"
+                            android:text="@string/track_deep_scan_desc"
+                            android:textColor="@color/ink3"
+                            app:layout_constraintEnd_toStartOf="@id/imageScanChevron"
+                            app:layout_constraintStart_toEndOf="@id/layoutScanIcon"
+                            app:layout_constraintTop_toBottomOf="@id/tvScanTitle" />
+
+                        <LinearLayout
+                            android:id="@+id/llBook"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_14dp"
+                            android:layout_marginTop="@dimen/_8dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            app:layout_constraintEnd_toStartOf="@id/imageScanChevron"
+                            app:layout_constraintStart_toEndOf="@id/layoutScanIcon"
+                            app:layout_constraintTop_toBottomOf="@id/tvScanDesc">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="@dimen/_12dp"
+                                android:layout_height="@dimen/_12dp"
+                                app:srcCompat="@drawable/ic_sparkle"
+                                app:tint="@color/ink4" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_6dp"
+                                android:includeFontPadding="false"
+                                android:text="@string/track_adds_60_plus_biomarkers"
+                                android:textColor="@color/ink4"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            app:layout_constraintTop_toBottomOf="@+id/llBook" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/imageScanChevron"
+                            android:layout_width="@dimen/_18dp"
+                            android:layout_height="@dimen/_18dp"
+                            android:layout_marginEnd="@dimen/_16dp"
+                            app:layout_constraintBottom_toBottomOf="@id/layoutScanIcon"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/layoutScanIcon"
+                            app:srcCompat="@drawable/ic_chevron_right_24px"
+                            app:tint="@color/ink4" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_11dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/deep_dives_card"
+                    app:cardCornerRadius="@dimen/_18dp"
+                    app:cardElevation="0dp"
+                    app:cardUseCompatPadding="false"
+                    app:strokeColor="@color/card_stroke"
+                    app:strokeWidth="0dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <View
+                            android:id="@+id/viewAssessAccent"
+                            android:layout_width="@dimen/_3dp"
+                            android:layout_height="0dp"
+                            android:background="@color/watch"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/layoutAssessIcon"
+                            android:layout_width="@dimen/_46dp"
+                            android:layout_height="@dimen/_46dp"
+                            android:layout_marginStart="@dimen/_14dp"
+                            android:layout_marginTop="@dimen/_16dp"
+                            app:cardBackgroundColor="@color/watch_14"
+                            app:cardCornerRadius="13dp"
+                            app:layout_constraintStart_toEndOf="@id/viewAssessAccent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:strokeWidth="0dp">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="@dimen/_22dp"
+                                android:layout_height="@dimen/_22dp"
+                                android:layout_gravity="center"
+                                app:srcCompat="@drawable/ic_edit_2"
+                                app:tint="@color/watch" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvAssessTitle"
+                            style="@style/Text.15x.Manrope.Bold"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_14dp"
+                            android:ellipsize="end"
+                            android:includeFontPadding="false"
+                            android:maxLines="2"
+                            android:text="@string/track_fill_assessment_title"
+                            android:textColor="@color/white"
+                            app:layout_constraintEnd_toStartOf="@id/imageAssessChevron"
+                            app:layout_constraintStart_toEndOf="@id/layoutAssessIcon"
+                            app:layout_constraintTop_toTopOf="@id/layoutAssessIcon" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvAssessDesc"
+                            style="@style/Text.12x.Manrope.Regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_14dp"
+                            android:layout_marginTop="@dimen/_5dp"
+                            android:includeFontPadding="false"
+                            android:lineSpacingExtra="2dp"
+                            android:text="@string/track_assessment_desc"
+                            android:textColor="@color/ink3"
+                            app:layout_constraintEnd_toStartOf="@id/imageAssessChevron"
+                            app:layout_constraintStart_toEndOf="@id/layoutAssessIcon"
+                            app:layout_constraintTop_toBottomOf="@id/tvAssessTitle" />
+
+                        <LinearLayout
+                            android:id="@+id/llFill"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_14dp"
+                            android:layout_marginTop="@dimen/_8dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            app:layout_constraintEnd_toStartOf="@id/imageAssessChevron"
+                            app:layout_constraintStart_toEndOf="@id/layoutAssessIcon"
+                            app:layout_constraintTop_toBottomOf="@id/tvAssessDesc">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="@dimen/_12dp"
+                                android:layout_height="@dimen/_12dp"
+                                app:srcCompat="@drawable/ic_sparkle"
+                                app:tint="@color/ink4" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_6dp"
+                                android:includeFontPadding="false"
+                                android:text="@string/track_adds_context_devices_miss"
+                                android:textColor="@color/ink4"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            app:layout_constraintTop_toBottomOf="@+id/llFill" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/imageAssessChevron"
+                            android:layout_width="@dimen/_18dp"
+                            android:layout_height="@dimen/_18dp"
+                            android:layout_marginEnd="@dimen/_16dp"
+                            app:layout_constraintBottom_toBottomOf="@id/layoutAssessIcon"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/layoutAssessIcon"
+                            app:srcCompat="@drawable/ic_chevron_right_24px"
+                            app:tint="@color/ink4" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_11dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/deep_dives_card"
+                    app:cardCornerRadius="@dimen/_18dp"
+                    app:cardElevation="0dp"
+                    app:cardUseCompatPadding="false"
+                    app:strokeColor="@color/card_stroke"
+                    app:strokeWidth="0dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <View
+                            android:id="@+id/viewUploadAccent"
+                            android:layout_width="@dimen/_3dp"
+                            android:layout_height="0dp"
+                            android:background="@color/cool"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/layoutUploadIcon"
+                            android:layout_width="@dimen/_46dp"
+                            android:layout_height="@dimen/_46dp"
+                            android:layout_marginStart="@dimen/_14dp"
+                            android:layout_marginTop="@dimen/_16dp"
+                            app:cardBackgroundColor="@color/cool_14"
+                            app:cardCornerRadius="13dp"
+                            app:layout_constraintStart_toEndOf="@id/viewUploadAccent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:strokeWidth="0dp">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="@dimen/_22dp"
+                                android:layout_height="@dimen/_22dp"
+                                android:layout_gravity="center"
+                                app:srcCompat="@drawable/ic_report"
+                                app:tint="@color/cool" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvUploadTitle"
+                            style="@style/Text.15x.Manrope.Bold"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_14dp"
+                            android:ellipsize="end"
+                            android:includeFontPadding="false"
+                            android:maxLines="2"
+                            android:text="@string/track_upload_report_title"
+                            android:textColor="@color/white"
+                            app:layout_constraintEnd_toStartOf="@id/imageUploadChevron"
+                            app:layout_constraintStart_toEndOf="@id/layoutUploadIcon"
+                            app:layout_constraintTop_toTopOf="@id/layoutUploadIcon" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvUploadDesc"
+                            style="@style/Text.12x.Manrope.Regular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_14dp"
+                            android:layout_marginTop="@dimen/_5dp"
+                            android:includeFontPadding="false"
+                            android:lineSpacingExtra="2dp"
+                            android:text="@string/track_upload_report_desc"
+                            android:textColor="@color/ink3"
+                            app:layout_constraintEnd_toStartOf="@id/imageUploadChevron"
+                            app:layout_constraintStart_toEndOf="@id/layoutUploadIcon"
+                            app:layout_constraintTop_toBottomOf="@id/tvUploadTitle" />
+
+                        <LinearLayout
+                            android:id="@+id/llUpload"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_14dp"
+                            android:layout_marginTop="@dimen/_8dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            app:layout_constraintEnd_toStartOf="@id/imageUploadChevron"
+                            app:layout_constraintStart_toEndOf="@id/layoutUploadIcon"
+                            app:layout_constraintTop_toBottomOf="@id/tvUploadDesc">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="@dimen/_12dp"
+                                android:layout_height="@dimen/_12dp"
+                                app:srcCompat="@drawable/ic_sparkle"
+                                app:tint="@color/ink4" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_6dp"
+                                android:includeFontPadding="false"
+                                android:text="@string/track_adds_data_from_any_pdf"
+                                android:textColor="@color/ink4"
+                                android:textSize="11sp" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            app:layout_constraintTop_toBottomOf="@+id/llUpload" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/imageUploadChevron"
+                            android:layout_width="@dimen/_18dp"
+                            android:layout_height="@dimen/_18dp"
+                            android:layout_marginEnd="@dimen/_16dp"
+                            app:layout_constraintBottom_toBottomOf="@id/layoutUploadIcon"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/layoutUploadIcon"
+                            app:srcCompat="@drawable/ic_chevron_right_24px"
+                            app:tint="@color/ink4" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_18dp"
+                    android:layout_marginBottom="@dimen/_4dp"
+                    android:includeFontPadding="false"
+                    android:lineSpacingExtra="2dp"
+                    android:text="@string/track_data_privacy_note"
+                    android:textAlignment="center"
+                    android:textColor="@color/ink4"
+                    android:textSize="11sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="16dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

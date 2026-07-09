@@ -1,8 +1,12 @@
 package com.humotron.app.ui.connect
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -12,15 +16,15 @@ import com.humotron.app.bt.bp.BpConnectionState
 import com.humotron.app.bt.bp.BpDiscoveredDevice
 import com.humotron.app.bt.bp.BpError
 import com.humotron.app.bt.bp.BpMachineEvent
+import com.humotron.app.bt.bp.BpMachineViewModel
 import com.humotron.app.bt.bp.BpScanState
 import com.humotron.app.bt.bp.BpSdkState
-import com.humotron.app.bt.bp.BpMachineViewModel
 import com.humotron.app.core.Preference
 import com.humotron.app.data.network.Status
+import com.humotron.app.databinding.FragmentBpMachineConnectionBinding
 import com.humotron.app.domain.modal.DeviceType
 import com.humotron.app.domain.modal.param.AddHardware
 import com.humotron.app.domain.modal.param.DeviceMetaDataParam
-import com.humotron.app.databinding.FragmentBpMachineConnectionBinding
 import com.humotron.app.ui.connect.adapter.BpMachineDeviceAdapter
 import com.humotron.app.ui.dialogs.LoadingDialog
 import com.humotron.app.ui.navigation.NavKeys
@@ -30,7 +34,6 @@ import com.lepu.blepro.constants.Ble
 import com.lepu.blepro.observer.BIOL
 import com.lepu.blepro.observer.BleChangeObserver
 import dagger.hilt.android.AndroidEntryPoint
-
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -51,13 +54,19 @@ class BPMachineConnectionFragment : Fragment(R.layout.fragment_bp_machine_connec
     private val adapter by lazy {
         BpMachineDeviceAdapter { device ->
             selectedDevice = device
-            binding.btnSubmit.isEnabled = device != null
+            val enabled = device != null
+            setBtnEnabled(enabled)
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentBpMachineConnectionBinding.bind(view)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
+            insets
+        }
 
         initClicks()
         initViews()
@@ -67,20 +76,34 @@ class BPMachineConnectionFragment : Fragment(R.layout.fragment_bp_machine_connec
     private fun initClicks() {
         binding.btnSubmit.setOnClickListener {
             val device = selectedDevice ?: return@setOnClickListener
+            binding.scanAnimationView.setProgress(0.75f, animate = true, duration = 300)
+
+            binding.tvSubtitleStatus.text = getString(R.string.pairing_securely)
+
+            with(binding) {
+                rvDevices.isVisible = false
+                btnSubmit.isVisible = false
+                footerDisclaimerTextView.isVisible = false
+                tvScanAgain.isVisible = false
+                tvDeviceStatus.isVisible = false
+
+                llAnimationView.isVisible = true
+            }
             connectionHandled = false
             showProgress()
             attachBleInterface(device.model)
             viewModel.connect(device)
         }
+        binding.tvScanAgain.setOnClickListener { v ->
+            startScan()
+        }
     }
 
     private fun initViews() {
+        binding.scanAnimationView.color =ContextCompat.getColor(requireContext(), R.color.series)
+        binding.header.tvTitle.text = getString(R.string.connect_device)
         binding.btnSubmit.isEnabled = false
-        binding.ringsView.startAnimation()
         binding.rvDevices.adapter = adapter
-        binding.ivWeightScale.setImageResource(R.drawable.ic_bp_machine_setup)
-        binding.tvDeviceDiscoverStatus.text = getString(R.string.humotron_bp_machine)
-        binding.tvTitle.text = getString(R.string.connect_your_bp_machine)
         viewModel.initialize()
     }
 
@@ -91,7 +114,9 @@ class BPMachineConnectionFragment : Fragment(R.layout.fragment_bp_machine_connec
     private fun observeViewModel() {
         viewModel.sdkState.observe(viewLifecycleOwner) { state ->
             when (state) {
-                BpSdkState.Ready -> viewModel.startScan()
+                BpSdkState.Ready -> {
+                    startScan()
+                }
                 BpSdkState.Initializing -> {
 
                 }
@@ -109,18 +134,16 @@ class BPMachineConnectionFragment : Fragment(R.layout.fragment_bp_machine_connec
                 BpScanState.Starting,
                 BpScanState.Scanning,
                     -> {
-                    binding.ringsView.startAnimation()
-                    binding.clNoDeviceFound.isVisible = false
+                    binding.llAnimationView.isVisible = true
                 }
 
                 BpScanState.Idle,
                 BpScanState.Stopping,
                     -> {
-                    binding.ringsView.stopAnimation()
                 }
 
                 is BpScanState.Failed -> {
-                    binding.ringsView.stopAnimation()
+                    binding.llAnimationView.isVisible = false
                     ToastUtils.showShort(requireContext(), state.message)
                 }
             }
@@ -129,11 +152,21 @@ class BPMachineConnectionFragment : Fragment(R.layout.fragment_bp_machine_connec
         viewModel.devices.observe(viewLifecycleOwner) { devices ->
             adapter.submitList(devices)
             val hasDevices = devices.isNotEmpty()
-            binding.rvDevices.isVisible = hasDevices
-            binding.clNoDeviceFound.isVisible = !hasDevices
             if (hasDevices) {
-                binding.ivWeightScale.isVisible = true
-                binding.ringsView.stopAnimation()
+                with(binding) {
+                    binding.tvSubtitleStatus.text = getString(R.string.cuff_found)
+                    binding.scanAnimationView.setProgress(0.5f, animate = true, duration = 300)
+
+                    binding.llAnimationView.postDelayed({
+                        rvDevices.isVisible = true
+                        btnSubmit.isVisible = true
+                        footerDisclaimerTextView.isVisible = true
+                        tvScanAgain.isVisible = true
+                        tvDeviceStatus.isVisible = true
+
+                        binding.llAnimationView.isVisible = false
+                    }, 1000)
+                }
             }
         }
 
@@ -249,6 +282,23 @@ class BPMachineConnectionFragment : Fragment(R.layout.fragment_bp_machine_connec
         }
     }
 
+    private fun startScan() {
+        binding.scanAnimationView.setProgress(0.25f, animate = true, duration = 300)
+
+        binding.tvSubtitleStatus.text = getString(R.string.searching_for_your_smart_cuff)
+        adapter.clearData()
+        with(binding) {
+            rvDevices.isVisible = false
+            btnSubmit.isVisible = false
+            footerDisclaimerTextView.isVisible = false
+            tvScanAgain.isVisible = false
+            tvDeviceStatus.isVisible = false
+
+            llAnimationView.isVisible = true
+        }
+        viewModel.startScan()
+    }
+
     private fun showProgress() {
         if (dialog == null) {
             initDialog()
@@ -324,6 +374,26 @@ class BPMachineConnectionFragment : Fragment(R.layout.fragment_bp_machine_connec
         }
     }
 
+    fun setBtnEnabled(enabled: Boolean) {
+        binding.btnSubmit.apply {
+            isEnabled = enabled
+
+            backgroundTintList = ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    context,
+                    if (enabled) R.color.lime else R.color.white05
+                )
+            )
+
+            setTextColor(
+                ContextCompat.getColor(
+                    context,
+                    if (enabled) android.R.color.black else R.color.ink2
+                )
+            )
+        }
+    }
+
     override fun onDestroyView() {
         biol?.let { lifecycle.removeObserver(it) }
         biol = null
@@ -331,8 +401,5 @@ class BPMachineConnectionFragment : Fragment(R.layout.fragment_bp_machine_connec
         viewModel.stopScan()
         selectedDevice = null
         super.onDestroyView()
-    }
-
-    companion object {
     }
 }

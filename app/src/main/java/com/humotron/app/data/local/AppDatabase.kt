@@ -18,6 +18,10 @@ import com.humotron.app.data.local.entity.band.BandHrvData
 import com.humotron.app.data.local.entity.band.BandSleepData
 import com.humotron.app.data.local.entity.band.BandSpO2Data
 import com.humotron.app.data.local.entity.band.BandTotalActivityData
+import com.humotron.app.data.local.entity.ring.RingActivityIntensityEntity
+import com.humotron.app.data.local.entity.ring.RingHistoricalDataEntity
+import com.humotron.app.data.local.entity.ring.RingSleepEventEntity
+import com.humotron.app.data.local.entity.ring.RingSleepSessionEntity
 import com.humotron.app.data.local.entity.bpmachine.BpData
 import com.humotron.app.data.local.entity.bpmachine.EcgData
 import com.humotron.app.data.local.entity.scale.WeightScaleMeasurementEntity
@@ -35,11 +39,16 @@ import com.humotron.app.data.local.entity.scale.WeightScaleMeasurementEntity
         BandDetailActivityData::class,
         BandTotalActivityData::class,
         BandSleepData::class,
+        RingHistoricalDataEntity::class,
+        RingSleepEventEntity::class,
+        RingActivityIntensityEntity::class,
+        RingSleepSessionEntity::class,
         WeightScaleMeasurementEntity::class,
         BpData::class,
         EcgData::class
     ],
-    version = 7
+    version = 10,
+    exportSchema = false
 )
 @TypeConverters(SleepConverters::class)
 abstract class AppDatabase : RoomDatabase() {

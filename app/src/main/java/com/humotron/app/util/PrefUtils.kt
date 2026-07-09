@@ -69,7 +69,7 @@ class PrefUtils(private val sharedPreferences: SharedPreferences) {
         return data
     }
 
-    fun getHardwareId(): String? {
+    fun getRingHardwareId(): String? {
         val hardwareString = sharedPreferences.getString(Preference.HARDWARE_DATA, "{}")
         val data = Gson().fromJson(hardwareString, UserHardware::class.java)
         return data?.id

@@ -4,88 +4,2281 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:background="@drawable/ic_bg_main"
+    tools:background="@drawable/ic_bg_main_2"
     tools:context=".ui.track.TrackFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/_10dp"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            style="@style/Text.OnBoard.Title"
+        <TextView
+            android:id="@+id/tvTrackTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_20dp"
+            android:fontFamily="@font/manrope_extra_bold"
+            android:letterSpacing="-0.02"
             android:text="@string/track"
-            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:textSize="21sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivData"
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/toggleGroupMainTabs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_20dp"
-            android:src="@drawable/ic_data"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/ivTrack1"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            style="@style/Text.OnBoard.Title1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5dp"
-            android:layout_marginBottom="@dimen/_14dp"
-            android:text="@string/data"
-            android:textSize="8sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/ivData"
-            app:layout_constraintStart_toStartOf="@id/ivData"
-            app:layout_constraintTop_toBottomOf="@id/ivData"
-            tools:ignore="SmallSp" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivTrack1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_20dp"
-            android:src="@drawable/ic_track"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:checkedButton="@+id/btnSources"
+            app:innerCornerSize="12dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:singleSelection="true">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            style="@style/Text.OnBoard.Title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5dp"
-            android:layout_marginBottom="@dimen/_14dp"
-            android:text="@string/track"
-            android:textSize="8sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/ivTrack1"
-            app:layout_constraintStart_toStartOf="@id/ivTrack1"
-            app:layout_constraintTop_toBottomOf="@id/ivTrack1"
-            tools:ignore="SmallSp" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSources"
+                style="@style/Widget.App.Button.ToggleGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/manrope_bold"
+                android:insetLeft="0dp"
+                android:insetRight="0dp"
+                android:text="@string/track_sources"
+                android:textSize="10.5sp"
+                app:cornerRadius="12dp"
+                app:icon="@drawable/ic_grid" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnMetrics"
+                style="@style/Widget.App.Button.ToggleGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/manrope_bold"
+                android:text="@string/metrics"
+                android:textSize="10.5sp"
+                app:cornerRadius="12dp"
+                app:icon="@drawable/ic_menu_24px" />
+
+        </com.google.android.material.button.MaterialButtonToggleGroup>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.divider.MaterialDivider
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clTabSources"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:dividerColor="@color/_7e"
-        app:layout_constraintBottom_toBottomOf="@id/clHeader" />
+        android:layout_height="0dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/clHeader"
+        tools:visibility="gone">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshSources"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true">
+
+                <LinearLayout
+                    android:id="@+id/ll_temp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvTrackDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_20dp"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:letterSpacing="0.16"
+                        android:text="@string/date_eyebrow"
+                        android:textAllCaps="true"
+                        android:textColor="@color/eyebrow"
+                        android:textSize="10.5sp" />
+
+                    <TextView
+                        android:id="@+id/tvGreeting"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_20dp"
+                        android:layout_marginTop="6dp"
+                        android:fontFamily="@font/manrope_extra_bold"
+                        android:includeFontPadding="false"
+                        android:letterSpacing="-0.02"
+                        android:textColor="@color/white"
+                        android:textSize="23sp"
+                        tools:text="@string/greeting_title" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_20dp"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:layout_width="7dp"
+                            android:layout_height="7dp"
+                            android:background="@drawable/bg_track_progress_fill_lime_1" />
+
+                        <TextView
+                            android:id="@+id/tvSourcesSynced"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:fontFamily="@font/manrope_semibold"
+                            android:text="@string/status_line"
+                            android:textColor="@color/ink3"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginTop="14dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvLiveStreaming"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_track_chip_selected"
+                            android:fontFamily="@font/manrope_bold"
+                            android:gravity="center"
+                            android:paddingVertical="10dp"
+                            android:text="@string/track_live_streaming"
+                            android:textColor="@color/lime"
+                            android:textSize="12.5sp" />
+
+                        <TextView
+                            android:id="@+id/tvTestCheckIns"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_track_chip_unselected"
+                            android:fontFamily="@font/manrope_bold"
+                            android:gravity="center"
+                            android:paddingVertical="10dp"
+                            android:text="@string/track_tests_check_ins"
+                            android:textColor="#8ea09e"
+                            android:textSize="12.5sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llLiveStreamingContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_20dp"
+                        android:orientation="vertical"
+                        android:visibility="visible"
+                        tools:visibility="visible">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvDevices"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="14dp"
+                            tools:itemCount="1"
+                            tools:listitem="@layout/item_device_new" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_track_card"
+                            android:padding="17dp">
+
+                            <TextView
+                                android:id="@+id/tvPictureTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/manrope_extra_bold"
+                                android:text="@string/track_your_picture"
+                                android:textColor="@color/white"
+                                android:textSize="14sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/tvPictureCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/manrope_bold"
+                                android:text="@string/track_areas_covered_text"
+                                android:textColor="@color/lime"
+                                android:textSize="12sp"
+                                app:layout_constraintBaseline_toBaselineOf="@id/tvPictureTitle"
+                                app:layout_constraintEnd_toEndOf="parent" />
+
+                            <LinearLayout
+                                android:id="@+id/layoutCoverageBars"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="14dp"
+                                android:orientation="horizontal"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/tvPictureTitle">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="5dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/bg_track_progress_fill_lime_1" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="5dp"
+                                    android:layout_marginStart="7dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/bg_track_progress_fill_lime_1" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="5dp"
+                                    android:layout_marginStart="7dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/bg_track_progress_fill_lime_1" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="5dp"
+                                    android:layout_marginStart="7dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/bg_track_progress_fill_lime_1" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="5dp"
+                                    android:layout_marginStart="7dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/bg_track_progress_fill_lime_1" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="5dp"
+                                    android:layout_marginStart="7dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/bg_track_progress_track_1" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/layoutCoverageLabels"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="7dp"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/layoutCoverageBars">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/manrope_bold"
+                                    android:gravity="center"
+                                    android:text="Heart"
+                                    android:textColor="@color/ink2"
+                                    android:textSize="9sp" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/manrope_bold"
+                                    android:gravity="center"
+                                    android:text="Sleep"
+                                    android:textColor="@color/ink2"
+                                    android:textSize="9sp" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/manrope_bold"
+                                    android:gravity="center"
+                                    android:text="Movement"
+                                    android:textColor="@color/ink2"
+                                    android:textSize="9sp" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/manrope_bold"
+                                    android:gravity="center"
+                                    android:text="Body"
+                                    android:textColor="@color/ink2"
+                                    android:textSize="9sp" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/manrope_bold"
+                                    android:gravity="center"
+                                    android:text="Bloods"
+                                    android:textColor="@color/ink2"
+                                    android:textSize="9sp" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/manrope_bold"
+                                    android:gravity="center"
+                                    android:text="Mind"
+                                    android:textColor="@color/ink2"
+                                    android:textSize="9sp" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/tvPicDes"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="13dp"
+                                android:fontFamily="@font/manrope_regular"
+                                android:lineSpacingExtra="2dp"
+                                android:text="@string/track_coverage_note"
+                                android:textColor="@color/ink3"
+                                android:textSize="11.5sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/layoutCoverageLabels" />
+
+                            <View
+                                android:id="@+id/viewCoverageDivider"
+                                android:layout_width="0dp"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="14dp"
+                                android:background="@color/card_stroke"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/tvPicDes" />
+
+                            <LinearLayout
+                                android:id="@+id/layoutAddSourceRow"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="14dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/viewCoverageDivider">
+
+                                <FrameLayout
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:background="@drawable/bg_track_icon_bg"
+                                    android:backgroundTint="@color/lime_transparent">
+
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:layout_width="18dp"
+                                        android:layout_height="18dp"
+                                        android:layout_gravity="center"
+                                        android:tint="@color/lime"
+                                        app:srcCompat="@drawable/ic_plus" />
+                                </FrameLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="12dp"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/manrope_extra_bold"
+                                        android:text="@string/track_add_source"
+                                        android:textColor="@color/white"
+                                        android:textSize="14.5sp" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="2dp"
+                                        android:fontFamily="@font/manrope_semibold"
+                                        android:text="@string/track_more_sources_sharper_reads"
+                                        android:textColor="#BCD98A"
+                                        android:textSize="11.5sp" />
+                                </LinearLayout>
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    android:tint="@color/lime"
+                                    app:srcCompat="@drawable/ic_chevron_right_24px" />
+
+                            </LinearLayout>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:background="@drawable/bg_track_card_lime"
+                            android:padding="18dp">
+
+                            <FrameLayout
+                                android:id="@+id/viewDecodeBadge"
+                                android:layout_width="38dp"
+                                android:layout_height="38dp"
+                                android:background="@drawable/bg_track_icon_bg"
+                                android:backgroundTint="@color/lime_transparent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    android:layout_gravity="center"
+                                    android:tint="@color/lime"
+                                    app:srcCompat="@drawable/ic_sparkle" />
+
+                            </FrameLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="13dp"
+                                android:orientation="vertical"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/viewDecodeChevron"
+                                app:layout_constraintStart_toEndOf="@id/viewDecodeBadge"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/manrope_extra_bold"
+                                    android:text="@string/track_want_full_read"
+                                    android:textColor="@color/white"
+                                    android:textSize="14.5sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="3dp"
+                                    android:fontFamily="@font/manrope_semibold"
+                                    android:text="@string/track_decode_copy"
+                                    android:textColor="#BCD98A"
+                                    android:textSize="11.5sp" />
+                            </LinearLayout>
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/viewDecodeChevron"
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:layout_gravity="center_vertical"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/ic_chevron_right_24px"
+                                app:tint="@color/lime" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llTestCheckInsContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_20dp"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        tools:visibility="gone">
+
+                        <!-- Clinical & lab section -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingTop="16dp"
+                            android:paddingBottom="6dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/manrope_bold"
+                                android:text="@string/clinical_lab_title"
+                                android:textColor="@color/white"
+                                android:textSize="18sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:fontFamily="@font/manrope_medium"
+                                android:text="@string/clinical_lab_desc"
+                                android:textColor="@color/ink4"
+                                android:textSize="11.5sp" />
+
+                        </LinearLayout>
+
+                        <!-- Deep Scan Card -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="11dp"
+                            app:cardBackgroundColor="@color/transparent"
+                            app:cardCornerRadius="18dp"
+                            app:cardElevation="0dp"
+                            app:strokeWidth="0dp">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_track_card">
+
+                                <View
+                                    android:layout_width="3dp"
+                                    android:layout_height="0dp"
+                                    android:background="@color/cool"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <FrameLayout
+                                    android:id="@+id/flDeepScanIcon"
+                                    android:layout_width="42dp"
+                                    android:layout_height="42dp"
+                                    android:layout_marginVertical="@dimen/_15dp"
+                                    android:layout_marginStart="13dp"
+                                    android:background="@drawable/bg_track_icon_bg"
+                                    android:backgroundTint="@color/cool_14"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent">
+
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_gravity="center"
+                                        android:tint="@color/cool"
+                                        app:srcCompat="@drawable/ic_lab_scan" />
+                                </FrameLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginVertical="15dp"
+                                    android:layout_marginStart="13dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:orientation="vertical"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toStartOf="@id/tvBookPill"
+                                    app:layout_constraintStart_toEndOf="@id/flDeepScanIcon"
+                                    app:layout_constraintTop_toTopOf="parent">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/manrope_bold"
+                                        android:text="@string/deep_scan_title"
+                                        android:textColor="@color/white"
+                                        android:textSize="14.5sp" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="3dp"
+                                        android:fontFamily="@font/manrope_medium"
+                                        android:text="@string/deep_scan_card_desc"
+                                        android:textColor="@color/ink4"
+                                        android:textSize="11.5sp" />
+                                </LinearLayout>
+
+                                <TextView
+                                    android:id="@+id/tvBookPill"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="@dimen/_15dp"
+                                    android:background="@drawable/bg_track_pill_lime"
+                                    android:fontFamily="@font/manrope_extra_bold"
+                                    android:paddingHorizontal="10dp"
+                                    android:paddingVertical="5dp"
+                                    android:text="@string/book"
+                                    android:textColor="@color/lime"
+                                    android:textSize="11sp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <!-- Assessments section -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingTop="16dp"
+                            android:paddingBottom="6dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/manrope_bold"
+                                android:text="@string/assessments_title"
+                                android:textColor="@color/white"
+                                android:textSize="18sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:fontFamily="@font/manrope_medium"
+                                android:text="@string/assessments_desc"
+                                android:textColor="@color/ink4"
+                                android:textSize="11.5sp" />
+                        </LinearLayout>
+
+                        <!-- Cardiovascular Health Card -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="11dp"
+                            app:cardBackgroundColor="@color/transparent"
+                            app:cardCornerRadius="18dp"
+                            app:cardElevation="0dp"
+                            app:strokeWidth="0dp">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_track_card">
+
+                                <View
+                                    android:layout_width="3dp"
+                                    android:layout_height="0dp"
+                                    android:background="@color/series"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <FrameLayout
+                                    android:id="@+id/flCardioIcon"
+                                    android:layout_width="42dp"
+                                    android:layout_height="42dp"
+                                    android:layout_marginVertical="@dimen/_15dp"
+                                    android:layout_marginStart="13dp"
+                                    android:background="@drawable/bg_track_icon_bg"
+                                    android:backgroundTint="@color/series_14"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent">
+
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_gravity="center"
+                                        android:tint="@color/series"
+                                        app:srcCompat="@drawable/ic_edit_2" />
+
+                                </FrameLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="13dp"
+                                    android:layout_marginEnd="@dimen/_15dp"
+                                    android:orientation="vertical"
+                                    android:paddingVertical="@dimen/_15dp"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toEndOf="@id/flCardioIcon"
+                                    app:layout_constraintTop_toTopOf="parent">
+
+                                    <androidx.constraintlayout.widget.ConstraintLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:fontFamily="@font/manrope_bold"
+                                            android:text="@string/cardio_health_title"
+                                            android:textColor="@color/white"
+                                            android:textSize="14.5sp"
+                                            app:layout_constraintEnd_toStartOf="@id/tvResumePill"
+                                            app:layout_constraintStart_toStartOf="parent"
+                                            app:layout_constraintTop_toTopOf="parent" />
+
+                                        <TextView
+                                            android:id="@+id/tvResumePill"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/bg_track_pill_amber"
+                                            android:fontFamily="@font/manrope_extra_bold"
+                                            android:paddingHorizontal="10dp"
+                                            android:paddingVertical="5dp"
+                                            android:text="@string/resume"
+                                            android:textColor="@color/watch"
+                                            android:textSize="11sp"
+                                            app:layout_constraintEnd_toEndOf="parent"
+                                            app:layout_constraintTop_toTopOf="parent" />
+                                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="3dp"
+                                        android:fontFamily="@font/manrope_medium"
+                                        android:text="@string/male_40_years"
+                                        android:textColor="@color/ink4"
+                                        android:textSize="11.5sp" />
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="5dp"
+                                        android:layout_marginTop="9dp"
+                                        android:background="@drawable/bg_mini_prog_track" />
+
+                                    <View
+                                        android:layout_width="160dp"
+                                        android:layout_height="5dp"
+                                        android:layout_marginTop="-5dp"
+                                        android:background="@drawable/bg_mini_prog_fill_amber" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="7dp"
+                                        android:fontFamily="@font/manrope_bold"
+                                        android:text="@string/questions_answered_format"
+                                        android:textColor="@color/watch"
+                                        android:textSize="11.5sp"
+                                        tools:text="3/5 questions answered" />
+
+                                </LinearLayout>
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <!-- Sleep Quality Card -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="11dp"
+                            app:cardBackgroundColor="@color/transparent"
+                            app:cardCornerRadius="18dp"
+                            app:cardElevation="0dp"
+                            app:strokeWidth="0dp">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_track_card">
+
+                                <View
+                                    android:layout_width="3dp"
+                                    android:layout_height="0dp"
+                                    android:background="@color/cool"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <FrameLayout
+                                    android:id="@+id/flSleepIcon"
+                                    android:layout_width="42dp"
+                                    android:layout_height="42dp"
+                                    android:layout_marginVertical="@dimen/_15dp"
+                                    android:layout_marginStart="13dp"
+                                    android:background="@drawable/bg_track_icon_bg"
+                                    android:backgroundTint="@color/cool_14"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent">
+
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_gravity="center"
+                                        android:tint="@color/cool"
+                                        app:srcCompat="@drawable/ic_edit_2" />
+                                </FrameLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="13dp"
+                                    android:layout_marginEnd="@dimen/_15dp"
+                                    android:orientation="vertical"
+                                    android:paddingVertical="@dimen/_15dp"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toEndOf="@id/flSleepIcon"
+                                    app:layout_constraintTop_toTopOf="parent">
+
+                                    <androidx.constraintlayout.widget.ConstraintLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:fontFamily="@font/manrope_bold"
+                                            android:text="@string/sleep_quality_title"
+                                            android:textColor="@color/white"
+                                            android:textSize="14.5sp"
+                                            app:layout_constraintEnd_toStartOf="@id/tvStartPill"
+                                            app:layout_constraintStart_toStartOf="parent"
+                                            app:layout_constraintTop_toTopOf="parent" />
+
+                                        <TextView
+                                            android:id="@+id/tvStartPill"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/bg_track_pill_grey"
+                                            android:fontFamily="@font/manrope_extra_bold"
+                                            android:paddingHorizontal="10dp"
+                                            android:paddingVertical="5dp"
+                                            android:text="@string/start"
+                                            android:textColor="#9aa8a6"
+                                            android:textSize="11sp"
+                                            app:layout_constraintEnd_toEndOf="parent"
+                                            app:layout_constraintTop_toTopOf="parent" />
+                                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="3dp"
+                                        android:fontFamily="@font/manrope_medium"
+                                        android:text="@string/ring_detected_restless"
+                                        android:textColor="@color/ink4"
+                                        android:textSize="11.5sp" />
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="5dp"
+                                        android:layout_marginTop="9dp"
+                                        android:background="@drawable/bg_mini_prog_track" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="7dp"
+                                        android:fontFamily="@font/manrope_bold"
+                                        android:text="@string/questions_answered_format"
+                                        android:textColor="@color/ink4"
+                                        android:textSize="11.5sp"
+                                        tools:text="0/3 questions answered" />
+                                </LinearLayout>
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <!-- Stress & Resilience Card -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="11dp"
+                            app:cardBackgroundColor="@color/transparent"
+                            app:cardCornerRadius="18dp"
+                            app:cardElevation="0dp"
+                            app:strokeWidth="0dp">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_track_card">
+
+                                <View
+                                    android:layout_width="3dp"
+                                    android:layout_height="0dp"
+                                    android:background="@color/watch"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <FrameLayout
+                                    android:id="@+id/flStressIcon"
+                                    android:layout_width="42dp"
+                                    android:layout_height="42dp"
+                                    android:layout_marginVertical="@dimen/_15dp"
+                                    android:layout_marginStart="13dp"
+                                    android:background="@drawable/bg_track_icon_bg"
+                                    android:backgroundTint="@color/series_14"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent">
+
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_gravity="center"
+                                        android:tint="@color/watch"
+                                        app:srcCompat="@drawable/ic_edit_2" />
+
+                                </FrameLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="13dp"
+                                    android:layout_marginEnd="15dp"
+                                    android:orientation="vertical"
+                                    android:paddingVertical="15dp"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toEndOf="@id/flStressIcon"
+                                    app:layout_constraintTop_toTopOf="parent">
+
+                                    <androidx.constraintlayout.widget.ConstraintLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:fontFamily="@font/manrope_bold"
+                                            android:text="@string/stress_resilience_title"
+                                            android:textColor="@color/white"
+                                            android:textSize="14.5sp"
+                                            app:layout_constraintEnd_toStartOf="@id/tvCompletePill"
+                                            app:layout_constraintStart_toStartOf="parent"
+                                            app:layout_constraintTop_toTopOf="parent" />
+
+                                        <TextView
+                                            android:id="@+id/tvCompletePill"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/bg_track_pill_lime"
+                                            android:fontFamily="@font/manrope_extra_bold"
+                                            android:paddingHorizontal="10dp"
+                                            android:paddingVertical="5dp"
+                                            android:text="@string/complete"
+                                            android:textColor="@color/good"
+                                            android:textSize="11sp"
+                                            app:layout_constraintEnd_toEndOf="parent"
+                                            app:layout_constraintTop_toTopOf="parent" />
+                                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="3dp"
+                                        android:fontFamily="@font/manrope_medium"
+                                        android:text="@string/elevated_heart_rate_desc"
+                                        android:textColor="@color/ink4"
+                                        android:textSize="11.5sp" />
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="5dp"
+                                        android:layout_marginTop="9dp"
+                                        android:background="@drawable/bg_mini_prog_fill_green" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="7dp"
+                                        android:fontFamily="@font/manrope_bold"
+                                        android:text="@string/questions_answered_format"
+                                        android:textColor="@color/good"
+                                        android:textSize="11.5sp"
+                                        tools:text="3/3 questions answered" />
+                                </LinearLayout>
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <!-- Health reports section -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingTop="16dp"
+                            android:paddingBottom="6dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/manrope_bold"
+                                android:text="@string/health_reports_title"
+                                android:textColor="@color/white"
+                                android:textSize="18sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:fontFamily="@font/manrope_medium"
+                                android:text="@string/health_reports_desc"
+                                android:textColor="@color/ink4"
+                                android:textSize="11.5sp" />
+                        </LinearLayout>
+
+                        <!-- Health Report Card -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="11dp"
+                            app:cardBackgroundColor="@color/transparent"
+                            app:cardCornerRadius="18dp"
+                            app:cardElevation="0dp"
+                            app:strokeWidth="0dp">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_track_card">
+
+                                <View
+                                    android:layout_width="3dp"
+                                    android:layout_height="0dp"
+                                    android:background="@color/cool"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <FrameLayout
+                                    android:id="@+id/flReportIcon"
+                                    android:layout_width="42dp"
+                                    android:layout_height="42dp"
+                                    android:layout_marginStart="13dp"
+                                    android:background="@drawable/bg_track_icon_bg"
+                                    android:backgroundTint="@color/cool_14"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent">
+
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_gravity="center"
+                                        android:tint="@color/cool"
+                                        app:srcCompat="@drawable/ic_sheet_document" />
+                                </FrameLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="13dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:orientation="vertical"
+                                    android:paddingVertical="15dp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toStartOf="@id/tvViewPill"
+                                    app:layout_constraintStart_toEndOf="@id/flReportIcon"
+                                    app:layout_constraintTop_toTopOf="parent">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/manrope_bold"
+                                        android:text="@string/blood_count_pdf"
+                                        android:textColor="@color/white"
+                                        android:textSize="14.5sp" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="3dp"
+                                        android:fontFamily="@font/manrope_medium"
+                                        android:text="@string/data_points_synced_format"
+                                        android:textColor="@color/ink4"
+                                        android:textSize="11.5sp"
+                                        tools:text="7 data points · Synced" />
+                                </LinearLayout>
+
+                                <TextView
+                                    android:id="@+id/tvViewPill"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="15dp"
+                                    android:background="@drawable/bg_track_pill_lime"
+                                    android:fontFamily="@font/manrope_extra_bold"
+                                    android:paddingHorizontal="10dp"
+                                    android:paddingVertical="5dp"
+                                    android:text="@string/view"
+                                    android:textColor="@color/good"
+                                    android:textSize="11sp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <!-- Upload or sync link -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:tint="@color/lime"
+                                app:srcCompat="@drawable/ic_plus" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="9dp"
+                                android:fontFamily="@font/manrope_bold"
+                                android:text="@string/upload_sync_report"
+                                android:textColor="@color/lime"
+                                android:textSize="13sp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="26dp" />
+
+                </LinearLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clTabMetrics"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/clHeader"
+        tools:visibility="gone">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="20dp"
+                    android:paddingTop="18dp"
+                    android:paddingEnd="20dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/manrope_extra_bold"
+                        android:letterSpacing="-0.02"
+                        android:lineSpacingExtra="1dp"
+                        android:text="@string/metrics_all_one_place"
+                        android:textColor="@color/white"
+                        android:textSize="23sp" />
+
+                    <!--Tabs-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:background="@drawable/bg_segmented_tab"
+                        android:orientation="horizontal"
+                        android:padding="4dp">
+
+                        <LinearLayout
+                            android:id="@+id/llTabTracking"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_metrics_chip_selected"
+                            android:gravity="center|center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingVertical="10dp">
+
+                            <View
+                                android:id="@+id/viewTracking"
+                                android:layout_width="8dp"
+                                android:layout_height="8dp"
+                                android:layout_marginTop="@dimen/_2dp"
+                                android:background="@drawable/bg_track_progress_fill_lime_1" />
+
+                            <TextView
+                                android:id="@+id/tvTracking"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="7dp"
+                                android:fontFamily="@font/manrope_bold"
+                                android:includeFontPadding="false"
+                                android:text="@string/metrics_tracking_tab"
+                                android:textColor="@color/lime"
+                                android:textSize="12.5sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llTabYetToTrack"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_metrics_chip_unselected"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:paddingVertical="10dp">
+
+                            <View
+                                android:id="@+id/viewYetToTrack"
+                                android:layout_width="8dp"
+                                android:layout_height="8dp"
+                                android:layout_marginTop="2dp"
+                                android:background="@drawable/bg_track_progress_track" />
+
+                            <TextView
+                                android:id="@+id/tvYetToTrack"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="7dp"
+                                android:fontFamily="@font/manrope_bold"
+                                android:text="@string/metrics_yet_to_track_tab"
+                                android:textColor="@color/ink4"
+                                android:textSize="12.5sp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llTrackContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="visible"
+                        tools:visibility="visible">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="14dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/manrope_bold"
+                                    android:text="@string/metrics_smart_suggestions"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="3dp"
+                                    android:fontFamily="@font/manrope_medium"
+                                    android:text="@string/metrics_smart_suggestions_hint"
+                                    android:textColor="@color/ink4"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="46dp"
+                                android:layout_height="26dp"
+                                android:background="@drawable/bg_toggle"
+                                android:padding="3dp">
+
+                                <View
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:background="@drawable/bg_round_white" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="14dp"
+                            android:background="@drawable/bg_metrics_card"
+                            android:padding="16dp">
+
+                            <TextView
+                                android:id="@+id/tvBpValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/manrope_extra_bold"
+                                android:letterSpacing="-0.02"
+                                android:text="@string/metrics_bp_value"
+                                android:textColor="@color/series"
+                                android:textSize="27sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/tvBpUnit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:baselineAligned="false"
+                                android:fontFamily="@font/manrope_bold"
+                                android:text="@string/metrics_bp_unit"
+                                android:textColor="@color/ink3"
+                                android:textSize="12sp"
+                                app:layout_constraintBaseline_toBaselineOf="@id/tvBpValue"
+                                app:layout_constraintStart_toEndOf="@id/tvBpValue" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivBpChevron"
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/ic_metrics_chevron_right"
+                                app:tint="@color/ink4" />
+
+                            <TextView
+                                android:id="@+id/tvBpLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:fontFamily="@font/manrope_extra_bold"
+                                android:text="@string/metrics_blood_pressure"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/tvBpValue" />
+
+                            <View
+                                android:id="@+id/vBpMetaDot"
+                                android:layout_width="5dp"
+                                android:layout_height="5dp"
+                                android:background="@drawable/bg_track_progress_track"
+                                app:layout_constraintBottom_toBottomOf="@id/tvBpMeta"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="@id/tvBpMeta" />
+
+                            <TextView
+                                android:id="@+id/tvBpMeta"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/manrope_medium"
+                                android:text="@string/metrics_bp_meta"
+                                android:textColor="@color/ink4"
+                                android:textSize="11.5sp"
+                                app:layout_constraintEnd_toStartOf="@id/ivBpChevron"
+                                app:layout_constraintStart_toEndOf="@id/vBpMetaDot"
+                                app:layout_constraintTop_toBottomOf="@id/tvBpLabel" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:background="@drawable/bg_metrics_card"
+                            android:padding="16dp">
+
+                            <TextView
+                                android:id="@+id/tvHrvValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/manrope_extra_bold"
+                                android:letterSpacing="-0.02"
+                                android:text="@string/metrics_hrv_value"
+                                android:textColor="@color/lime"
+                                android:textSize="27sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/tvHrvUnit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:fontFamily="@font/manrope_bold"
+                                android:text="@string/metrics_hrv_unit"
+                                android:textColor="@color/ink3"
+                                android:textSize="12sp"
+                                app:layout_constraintBaseline_toBaselineOf="@id/tvHrvValue"
+                                app:layout_constraintStart_toEndOf="@id/tvHrvValue" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivHrvChevron"
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/ic_metrics_chevron_right"
+                                app:tint="@color/ink4" />
+
+                            <TextView
+                                android:id="@+id/tvHrvLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:fontFamily="@font/manrope_extra_bold"
+                                android:text="@string/metrics_hrv"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/tvHrvValue" />
+
+                            <View
+                                android:id="@+id/vHrvMetaDot"
+                                android:layout_width="5dp"
+                                android:layout_height="5dp"
+                                android:background="@drawable/bg_track_progress_track"
+                                app:layout_constraintBottom_toBottomOf="@id/tvHrvMeta"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="@id/tvHrvMeta" />
+
+                            <TextView
+                                android:id="@+id/tvHrvMeta"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/manrope_medium"
+                                android:text="@string/metrics_humotron_band_meta"
+                                android:textColor="@color/ink4"
+                                android:textSize="11.5sp"
+                                app:layout_constraintEnd_toStartOf="@id/ivHrvChevron"
+                                app:layout_constraintStart_toEndOf="@id/vHrvMetaDot"
+                                app:layout_constraintTop_toBottomOf="@id/tvHrvLabel" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:background="@drawable/bg_metrics_card"
+                            android:padding="16dp">
+
+                            <TextView
+                                android:id="@+id/tvRhrValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/manrope_extra_bold"
+                                android:letterSpacing="-0.02"
+                                android:text="@string/metrics_resting_hr_value"
+                                android:textColor="@color/lime"
+                                android:textSize="27sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/tvRhrUnit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:fontFamily="@font/manrope_bold"
+                                android:text="@string/metrics_resting_hr_unit"
+                                android:textColor="@color/ink3"
+                                android:textSize="12sp"
+                                app:layout_constraintBaseline_toBaselineOf="@id/tvRhrValue"
+                                app:layout_constraintStart_toEndOf="@id/tvRhrValue" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivRhrChevron"
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/ic_metrics_chevron_right"
+                                app:tint="@color/ink4" />
+
+                            <TextView
+                                android:id="@+id/tvRhrLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:fontFamily="@font/manrope_extra_bold"
+                                android:text="@string/metrics_resting_hr_label"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/tvRhrValue" />
+
+                            <View
+                                android:id="@+id/vRhrMetaDot"
+                                android:layout_width="5dp"
+                                android:layout_height="5dp"
+                                android:background="@drawable/bg_track_progress_track"
+                                app:layout_constraintBottom_toBottomOf="@id/tvRhrMeta"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="@id/tvRhrMeta" />
+
+                            <TextView
+                                android:id="@+id/tvRhrMeta"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/manrope_medium"
+                                android:text="@string/metrics_humotron_band_meta"
+                                android:textColor="@color/ink4"
+                                android:textSize="11.5sp"
+                                app:layout_constraintEnd_toStartOf="@id/ivRhrChevron"
+                                app:layout_constraintStart_toEndOf="@id/vRhrMetaDot"
+                                app:layout_constraintTop_toBottomOf="@id/tvRhrLabel" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:background="@drawable/bg_metrics_card"
+                            android:padding="16dp">
+
+                            <TextView
+                                android:id="@+id/tvSleepValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/manrope_extra_bold"
+                                android:letterSpacing="-0.02"
+                                android:text="@string/metrics_sleep_score_value"
+                                android:textColor="@color/cool"
+                                android:textSize="27sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivSleepChevron"
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/ic_metrics_chevron_right"
+                                app:tint="@color/ink4" />
+
+                            <TextView
+                                android:id="@+id/tvSleepLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:fontFamily="@font/manrope_extra_bold"
+                                android:text="@string/metrics_sleep_score"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/tvSleepValue" />
+
+                            <View
+                                android:id="@+id/vSleepMetaDot"
+                                android:layout_width="5dp"
+                                android:layout_height="5dp"
+                                android:background="@drawable/bg_track_progress_track"
+                                app:layout_constraintBottom_toBottomOf="@id/tvSleepMeta"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="@id/tvSleepMeta" />
+
+                            <TextView
+                                android:id="@+id/tvSleepMeta"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/manrope_medium"
+                                android:text="@string/metrics_humotron_ring_meta"
+                                android:textColor="@color/ink4"
+                                android:textSize="11.5sp"
+                                app:layout_constraintEnd_toStartOf="@id/ivSleepChevron"
+                                app:layout_constraintStart_toEndOf="@id/vSleepMetaDot"
+                                app:layout_constraintTop_toBottomOf="@id/tvSleepLabel" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:background="@drawable/bg_metrics_card"
+                            android:padding="16dp">
+
+                            <TextView
+                                android:id="@+id/tvWeightValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/manrope_extra_bold"
+                                android:letterSpacing="-0.02"
+                                android:text="@string/metrics_weight_value"
+                                android:textColor="@color/lime"
+                                android:textSize="27sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/tvWeightUnit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:fontFamily="@font/manrope_bold"
+                                android:text="@string/metrics_weight_unit"
+                                android:textColor="@color/ink3"
+                                android:textSize="12sp"
+                                app:layout_constraintBaseline_toBaselineOf="@id/tvWeightValue"
+                                app:layout_constraintStart_toEndOf="@id/tvWeightValue" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivWeightChevron"
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/ic_metrics_chevron_right"
+                                app:tint="@color/ink4" />
+
+                            <TextView
+                                android:id="@+id/tvWeightLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:fontFamily="@font/manrope_extra_bold"
+                                android:text="@string/metrics_weight"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/tvWeightValue" />
+
+                            <View
+                                android:id="@+id/vWeightMetaDot"
+                                android:layout_width="5dp"
+                                android:layout_height="5dp"
+                                android:background="@drawable/bg_track_progress_track"
+                                app:layout_constraintBottom_toBottomOf="@id/tvWeightMeta"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="@id/tvWeightMeta" />
+
+                            <TextView
+                                android:id="@+id/tvWeightMeta"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/manrope_medium"
+                                android:text="@string/metrics_smart_scale_meta"
+                                android:textColor="@color/ink4"
+                                android:textSize="11.5sp"
+                                app:layout_constraintEnd_toStartOf="@id/ivWeightChevron"
+                                app:layout_constraintStart_toEndOf="@id/vWeightMetaDot"
+                                app:layout_constraintTop_toBottomOf="@id/tvWeightLabel" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="24dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llYetToTrackContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        tools:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="14dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/manrope_bold"
+                                    android:text="@string/metrics_smart_suggestions"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="3dp"
+                                    android:fontFamily="@font/manrope_medium"
+                                    android:text="@string/surface_the_metrics"
+                                    android:textColor="@color/ink4"
+                                    android:textSize="12sp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="46dp"
+                                android:layout_height="26dp"
+                                android:background="@drawable/bg_toggle"
+                                android:padding="3dp">
+
+                                <View
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:background="@drawable/bg_round_white" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="14dp"
+                            app:cardBackgroundColor="#8C080F10"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="0dp"
+                            app:strokeColor="@color/card_stroke"
+                            app:strokeWidth="1dp">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="16dp">
+
+                                <com.google.android.material.card.MaterialCardView
+                                    android:id="@+id/clSleepIcon"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    app:cardBackgroundColor="@color/cool_14"
+                                    app:cardCornerRadius="12dp"
+                                    app:cardElevation="0dp"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:strokeWidth="0dp">
+
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_gravity="center"
+                                        app:srcCompat="@drawable/ic_metrics_moon"
+                                        app:tint="@color/cool" />
+
+                                </com.google.android.material.card.MaterialCardView>
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/ivSleepLock"
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:srcCompat="@drawable/ic_lock_card"
+                                    app:tint="@color/ink4" />
+
+                                <TextView
+                                    android:id="@+id/tvSleepTitle"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="14dp"
+                                    android:fontFamily="@font/manrope_extra_bold"
+                                    android:includeFontPadding="false"
+                                    android:text="@string/metrics_total_sleep_duration"
+                                    android:textColor="@color/white"
+                                    android:textSize="15sp"
+                                    app:layout_constraintEnd_toStartOf="@id/ivSleepLock"
+                                    app:layout_constraintStart_toEndOf="@id/clSleepIcon"
+                                    app:layout_constraintTop_toTopOf="@id/clSleepIcon" />
+
+                                <TextView
+                                    android:id="@+id/tvSleepDesc"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="14dp"
+                                    android:layout_marginTop="4dp"
+                                    android:fontFamily="@font/manrope_medium"
+                                    android:lineSpacingExtra="2dp"
+                                    android:text="@string/metrics_total_sleep_desc"
+                                    android:textColor="@color/ink3"
+                                    android:textSize="12sp"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toEndOf="@id/clSleepIcon"
+                                    app:layout_constraintTop_toBottomOf="@id/tvSleepTitle" />
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/btnSleepTrack"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="12dp"
+                                    android:backgroundTint="@color/lime_10"
+                                    android:fontFamily="@font/manrope_bold"
+                                    android:insetLeft="0dp"
+                                    android:insetRight="0dp"
+                                    android:minHeight="0dp"
+                                    android:paddingHorizontal="14dp"
+                                    android:paddingVertical="7dp"
+                                    android:text="@string/metrics_track_with_ring"
+                                    android:textAllCaps="false"
+                                    android:textColor="@color/lime"
+                                    android:textSize="11sp"
+                                    app:icon="@drawable/ic_add_24px"
+                                    app:iconGravity="textStart"
+                                    app:iconPadding="4dp"
+                                    app:iconSize="14dp"
+                                    app:iconTint="@color/lime"
+                                    app:layout_constraintStart_toEndOf="@id/clSleepIcon"
+                                    app:layout_constraintTop_toBottomOf="@id/tvSleepDesc"
+                                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            app:cardBackgroundColor="#8C080F10"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="0dp"
+                            app:strokeColor="@color/card_stroke"
+                            app:strokeWidth="1dp">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="16dp">
+
+                                <com.google.android.material.card.MaterialCardView
+                                    android:id="@+id/clDeepSleepIcon"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    app:cardBackgroundColor="@color/cool_14"
+                                    app:cardCornerRadius="12dp"
+                                    app:cardElevation="0dp"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:strokeWidth="0dp">
+
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_gravity="center"
+                                        app:srcCompat="@drawable/ic_metrics_moon"
+                                        app:tint="@color/cool" />
+
+                                </com.google.android.material.card.MaterialCardView>
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/ivDeepSleepLock"
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:srcCompat="@drawable/ic_lock_card"
+                                    app:tint="@color/ink4" />
+
+                                <TextView
+                                    android:id="@+id/tvDeepSleepTitle"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="14dp"
+                                    android:fontFamily="@font/manrope_extra_bold"
+                                    android:includeFontPadding="false"
+                                    android:text="@string/metrics_deep_sleep_duration"
+                                    android:textColor="@color/white"
+                                    android:textSize="15sp"
+                                    app:layout_constraintEnd_toStartOf="@id/ivDeepSleepLock"
+                                    app:layout_constraintStart_toEndOf="@id/clDeepSleepIcon"
+                                    app:layout_constraintTop_toTopOf="@id/clDeepSleepIcon" />
+
+                                <TextView
+                                    android:id="@+id/tvDeepSleepDesc"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="14dp"
+                                    android:layout_marginTop="4dp"
+                                    android:fontFamily="@font/manrope_medium"
+                                    android:lineSpacingExtra="2dp"
+                                    android:text="@string/metrics_deep_sleep_desc"
+                                    android:textColor="@color/ink3"
+                                    android:textSize="12sp"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toEndOf="@id/clDeepSleepIcon"
+                                    app:layout_constraintTop_toBottomOf="@id/tvDeepSleepTitle" />
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/btnDeepSleepTrack"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="12dp"
+                                    android:backgroundTint="@color/lime_10"
+                                    android:fontFamily="@font/manrope_bold"
+                                    android:insetLeft="0dp"
+                                    android:insetRight="0dp"
+                                    android:minHeight="0dp"
+                                    android:paddingHorizontal="14dp"
+                                    android:paddingVertical="7dp"
+                                    android:text="@string/metrics_track_with_ring"
+                                    android:textAllCaps="false"
+                                    android:textColor="@color/lime"
+                                    android:textSize="11sp"
+                                    app:icon="@drawable/ic_add_24px"
+                                    app:iconGravity="textStart"
+                                    app:iconPadding="4dp"
+                                    app:iconSize="14dp"
+                                    app:iconTint="@color/lime"
+                                    app:layout_constraintStart_toEndOf="@id/clDeepSleepIcon"
+                                    app:layout_constraintTop_toBottomOf="@id/tvDeepSleepDesc"
+                                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            app:cardBackgroundColor="#8C080F10"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="0dp"
+                            app:strokeColor="@color/card_stroke"
+                            app:strokeWidth="1dp">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="16dp">
+
+                                <com.google.android.material.card.MaterialCardView
+                                    android:id="@+id/clGlucoseIcon"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    app:cardBackgroundColor="@color/series_14"
+                                    app:cardCornerRadius="12dp"
+                                    app:cardElevation="0dp"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:strokeWidth="0dp">
+
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_gravity="center"
+                                        app:srcCompat="@drawable/ic_metrics_droplet"
+                                        app:tint="@color/series" />
+                                </com.google.android.material.card.MaterialCardView>
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/ivGlucoseLock"
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:srcCompat="@drawable/ic_lock_card"
+                                    app:tint="@color/ink4" />
+
+                                <TextView
+                                    android:id="@+id/tvGlucoseTitle"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="14dp"
+                                    android:fontFamily="@font/manrope_extra_bold"
+                                    android:includeFontPadding="false"
+                                    android:text="@string/metrics_glucose_response"
+                                    android:textColor="@color/white"
+                                    android:textSize="15sp"
+                                    app:layout_constraintEnd_toStartOf="@id/ivGlucoseLock"
+                                    app:layout_constraintStart_toEndOf="@id/clGlucoseIcon"
+                                    app:layout_constraintTop_toTopOf="@id/clGlucoseIcon" />
+
+                                <TextView
+                                    android:id="@+id/tvGlucoseDesc"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="14dp"
+                                    android:layout_marginTop="4dp"
+                                    android:fontFamily="@font/manrope_medium"
+                                    android:lineSpacingExtra="2dp"
+                                    android:text="@string/metrics_glucose_desc"
+                                    android:textColor="@color/ink3"
+                                    android:textSize="12sp"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toEndOf="@id/clGlucoseIcon"
+                                    app:layout_constraintTop_toBottomOf="@id/tvGlucoseTitle" />
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/btnGlucoseTrack"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="12dp"
+                                    android:backgroundTint="@color/lime_10"
+                                    android:fontFamily="@font/manrope_bold"
+                                    android:insetLeft="0dp"
+                                    android:insetRight="0dp"
+                                    android:minHeight="0dp"
+                                    android:paddingHorizontal="14dp"
+                                    android:paddingVertical="7dp"
+                                    android:text="@string/metrics_track_with_glucose_monitor"
+                                    android:textAllCaps="false"
+                                    android:textColor="@color/lime"
+                                    android:textSize="11sp"
+                                    app:icon="@drawable/ic_add_24px"
+                                    app:iconGravity="textStart"
+                                    app:iconPadding="4dp"
+                                    app:iconSize="14dp"
+                                    app:iconTint="@color/lime"
+                                    app:layout_constraintStart_toEndOf="@id/clGlucoseIcon"
+                                    app:layout_constraintTop_toBottomOf="@id/tvGlucoseDesc"
+                                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            app:cardBackgroundColor="#8C080F10"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="0dp"
+                            app:strokeColor="@color/card_stroke"
+                            app:strokeWidth="1dp">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="16dp">
+
+                                <com.google.android.material.card.MaterialCardView
+                                    android:id="@+id/clTempIcon"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    app:cardBackgroundColor="@color/cool_14"
+                                    app:cardCornerRadius="12dp"
+                                    app:cardElevation="0dp"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:strokeWidth="0dp">
+
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_gravity="center"
+                                        app:srcCompat="@drawable/ic_metrics_thermo"
+                                        app:tint="@color/cool" />
+                                </com.google.android.material.card.MaterialCardView>
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/ivTempLock"
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:srcCompat="@drawable/ic_lock_card"
+                                    app:tint="@color/ink4" />
+
+                                <TextView
+                                    android:id="@+id/tvTempTitle"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="14dp"
+                                    android:fontFamily="@font/manrope_extra_bold"
+                                    android:includeFontPadding="false"
+                                    android:text="@string/metrics_skin_temperature"
+                                    android:textColor="@color/white"
+                                    android:textSize="15sp"
+                                    app:layout_constraintEnd_toStartOf="@id/ivTempLock"
+                                    app:layout_constraintStart_toEndOf="@id/clTempIcon"
+                                    app:layout_constraintTop_toTopOf="@id/clTempIcon" />
+
+                                <TextView
+                                    android:id="@+id/tvTempDesc"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="14dp"
+                                    android:layout_marginTop="4dp"
+                                    android:fontFamily="@font/manrope_medium"
+                                    android:lineSpacingExtra="2dp"
+                                    android:text="@string/metrics_skin_temp_desc"
+                                    android:textColor="@color/ink3"
+                                    android:textSize="12sp"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toEndOf="@id/clTempIcon"
+                                    app:layout_constraintTop_toBottomOf="@id/tvTempTitle" />
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/btnTempTrack"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="12dp"
+                                    android:backgroundTint="@color/lime_10"
+                                    android:fontFamily="@font/manrope_bold"
+                                    android:insetLeft="0dp"
+                                    android:insetRight="0dp"
+                                    android:minHeight="0dp"
+                                    android:paddingHorizontal="14dp"
+                                    android:paddingVertical="7dp"
+                                    android:text="@string/metrics_track_with_ring"
+                                    android:textAllCaps="false"
+                                    android:textColor="@color/lime"
+                                    android:textSize="11sp"
+                                    app:icon="@drawable/ic_add_24px"
+                                    app:iconGravity="textStart"
+                                    app:iconPadding="4dp"
+                                    app:iconSize="14dp"
+                                    app:iconTint="@color/lime"
+                                    app:layout_constraintStart_toEndOf="@id/clTempIcon"
+                                    app:layout_constraintTop_toBottomOf="@id/tvTempDesc"
+                                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            app:cardBackgroundColor="#8C080F10"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="0dp"
+                            app:strokeColor="@color/card_stroke"
+                            app:strokeWidth="1dp">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="16dp">
+
+                                <com.google.android.material.card.MaterialCardView
+                                    android:id="@+id/clTrainingIcon"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    app:cardBackgroundColor="@color/series_14"
+                                    app:cardCornerRadius="12dp"
+                                    app:cardElevation="0dp"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:strokeWidth="0dp">
+
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_gravity="center"
+                                        app:srcCompat="@drawable/ic_current"
+                                        app:tint="@color/series" />
+
+                                </com.google.android.material.card.MaterialCardView>
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/ivTrainingLock"
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:srcCompat="@drawable/ic_lock_card"
+                                    app:tint="@color/ink4" />
+
+                                <TextView
+                                    android:id="@+id/tvTrainingTitle"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="14dp"
+                                    android:fontFamily="@font/manrope_extra_bold"
+                                    android:includeFontPadding="false"
+                                    android:text="@string/training_strain"
+                                    android:textColor="@color/white"
+                                    android:textSize="15sp"
+                                    app:layout_constraintEnd_toStartOf="@id/ivTrainingLock"
+                                    app:layout_constraintStart_toEndOf="@id/clTrainingIcon"
+                                    app:layout_constraintTop_toTopOf="@id/clTrainingIcon" />
+
+                                <TextView
+                                    android:id="@+id/tvTrainingDesc"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="14dp"
+                                    android:layout_marginTop="4dp"
+                                    android:fontFamily="@font/manrope_medium"
+                                    android:lineSpacingExtra="2dp"
+                                    android:text="@string/how_much_cardiovascular_load"
+                                    android:textColor="@color/ink3"
+                                    android:textSize="12sp"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toEndOf="@id/clTrainingIcon"
+                                    app:layout_constraintTop_toBottomOf="@id/tvTrainingTitle" />
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/btnTrainingTrack"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="12dp"
+                                    android:backgroundTint="@color/lime_10"
+                                    android:fontFamily="@font/manrope_bold"
+                                    android:insetLeft="0dp"
+                                    android:insetRight="0dp"
+                                    android:minHeight="0dp"
+                                    android:paddingHorizontal="14dp"
+                                    android:paddingVertical="7dp"
+                                    android:text="Track with Humotron Band"
+                                    android:textAllCaps="false"
+                                    android:textColor="@color/lime"
+                                    android:textSize="11sp"
+                                    app:icon="@drawable/ic_add_24px"
+                                    app:iconGravity="textStart"
+                                    app:iconPadding="4dp"
+                                    app:iconSize="14dp"
+                                    app:iconTint="@color/lime"
+                                    app:layout_constraintStart_toEndOf="@id/clTrainingIcon"
+                                    app:layout_constraintTop_toBottomOf="@id/tvTrainingDesc"
+                                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_20dp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/clHeader">
+        app:layout_constraintTop_toBottomOf="@id/clHeader"
+        tools:visibility="visible">
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nsv_track"
@@ -97,203 +2290,6 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvTitle1"
-                    style="@style/Text.OnBoard.Title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_20dp"
-                    android:layout_marginTop="@dimen/_24dp"
-                    android:text="@string/manage_your_data_sources_here"
-                    android:textColor="@color/white50"
-                    android:textSize="24sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvHeader1"
-                    style="@style/Text.OnBoard.Title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_20dp"
-                    android:layout_marginTop="@dimen/_24dp"
-                    android:text="@string/wearables"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvTitle1" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnAddWearables"
-                    android:layout_width="@dimen/_24dp"
-                    android:layout_height="@dimen/_24dp"
-                    android:layout_marginEnd="@dimen/_20dp"
-                    android:insetLeft="0dp"
-                    android:insetTop="0dp"
-                    android:insetRight="0dp"
-                    android:insetBottom="0dp"
-                    android:padding="0dp"
-                    app:backgroundTint="@color/colorBgBtn"
-                    app:icon="@drawable/ic_add_24px"
-                    app:iconGravity="textStart"
-                    app:iconPadding="0dp"
-                    app:iconSize="22dp"
-                    app:iconTint="@color/black"
-                    app:layout_constraintBottom_toBottomOf="@id/tvHeader1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/tvHeader1"
-                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/card"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/tvHeader1">
-
-                    <com.yarolegovich.discretescrollview.DiscreteScrollView
-                        android:id="@+id/dsv_wearables"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:visibility="gone"
-                        app:layout_constraintDimensionRatio="1:0.65"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:listitem="@layout/item_wearables"
-                        tools:visibility="visible" />
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/cl_no_device_found"
-                        android:layout_width="280dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:visibility="gone"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:visibility="visible">
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/manrope_medium"
-                            android:gravity="center"
-                            android:text="@string/no_device_found"
-                            android:textColor="@color/d100"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintDimensionRatio="1:0.65"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:visibility="gone" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/cardShadow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_track_card_shadow"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/card" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvHealthMonitoringHeader"
-                    style="@style/Text.OnBoard.Title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_20dp"
-                    android:layout_marginTop="@dimen/_24dp"
-                    android:text="@string/health_monitoring"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/cardShadow" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnAddHealthMonitoring"
-                    android:layout_width="@dimen/_24dp"
-                    android:layout_height="@dimen/_24dp"
-                    android:layout_marginEnd="@dimen/_20dp"
-                    android:insetLeft="0dp"
-                    android:insetTop="0dp"
-                    android:insetRight="0dp"
-                    android:insetBottom="0dp"
-                    android:padding="0dp"
-                    app:backgroundTint="@color/colorBgBtn"
-                    app:icon="@drawable/ic_add_24px"
-                    app:iconGravity="textStart"
-                    app:iconPadding="0dp"
-                    app:iconSize="22dp"
-                    app:iconTint="@color/black"
-                    app:layout_constraintBottom_toBottomOf="@id/tvHealthMonitoringHeader"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/tvHealthMonitoringHeader"
-                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/clHealthMonitoringCard"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/tvHealthMonitoringHeader">
-
-                    <com.yarolegovich.discretescrollview.DiscreteScrollView
-                        android:id="@+id/dsvHealthMonitoring"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:visibility="gone"
-                        app:layout_constraintDimensionRatio="1:0.65"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:listitem="@layout/item_wearables"
-                        tools:visibility="gone" />
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/clNoHealthMonitoringFound"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginHorizontal="@dimen/_20dp"
-                        android:layout_marginTop="@dimen/_20dp"
-                        android:visibility="gone"
-                        app:cardBackgroundColor="@color/white30"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:strokeWidth="0dp"
-                        tools:visibility="visible">
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/tvNoHealthMonitoringFound"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/manrope_medium"
-                            android:padding="@dimen/_20dp"
-                            android:text="@string/no_device_found"
-                            android:textColor="@color/white"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintDimensionRatio="1:0.65"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                    </com.google.android.material.card.MaterialCardView>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivHealthMonitoringShadow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_track_card_shadow"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/clHealthMonitoringCard" />
 
                 <TextView
                     android:id="@+id/tvTitleCompleteYourPicture"
@@ -310,7 +2306,7 @@
                     android:textStyle="normal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ivHealthMonitoringShadow" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tvSubCompleteYourPicture"
@@ -377,10 +2373,10 @@
                     android:id="@+id/iv_shadow_assessments"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_track_card_shadow"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/clCompleteYourPicture" />
+                    app:layout_constraintTop_toBottomOf="@id/clCompleteYourPicture"
+                    app:srcCompat="@drawable/ic_track_card_shadow" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/clHealthReportsHeader"
@@ -420,10 +2416,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_20dp"
-                        android:src="@drawable/ic_track_card_shadow"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/dsv_health_reports" />
+                        app:layout_constraintTop_toBottomOf="@id/dsv_health_reports"
+                        app:srcCompat="@drawable/ic_track_card_shadow" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -472,10 +2468,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="45dip"
-                        android:src="@drawable/ic_folder_glow"
                         app:layout_constraintBottom_toBottomOf="@+id/rightContent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/rightContent" />
+                        app:layout_constraintTop_toTopOf="@+id/rightContent"
+                        app:srcCompat="@drawable/ic_folder_glow" />
 
                     <LinearLayout
                         android:id="@+id/rightContent"
@@ -523,10 +2519,10 @@
                         android:id="@+id/iv_shadow_history"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_track_card_shadow"
                         app:layout_constraintEnd_toEndOf="@+id/ivIcon"
                         app:layout_constraintStart_toStartOf="@id/ivIcon"
-                        app:layout_constraintTop_toBottomOf="@id/rightContent" />
+                        app:layout_constraintTop_toBottomOf="@id/rightContent"
+                        app:srcCompat="@drawable/ic_track_card_shadow" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -555,23 +2551,23 @@
                             android:id="@+id/ivStore"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_store"
                             app:layout_constraintBottom_toTopOf="@id/shadowStore"
                             app:layout_constraintEnd_toEndOf="@id/gl40"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_chainStyle="packed" />
+                            app:layout_constraintVertical_chainStyle="packed"
+                            app:srcCompat="@drawable/ic_store" />
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/shadowStore"
                             android:layout_width="@dimen/_50dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_20dp"
-                            android:src="@drawable/ic_track_card_shadow"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="@id/ivStore"
                             app:layout_constraintStart_toStartOf="@id/ivStore"
-                            app:layout_constraintTop_toBottomOf="@id/ivStore" />
+                            app:layout_constraintTop_toBottomOf="@id/ivStore"
+                            app:srcCompat="@drawable/ic_track_card_shadow" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvStoreTitle"

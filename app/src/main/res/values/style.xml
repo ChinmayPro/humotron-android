@@ -22,16 +22,33 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
-
-
-
     <style name="TransparentBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@android:color/transparent</item>
     </style>
 
-    <style name="TransparentBottomSheetDialogTheme"
-        parent="Theme.Design.Light.BottomSheetDialog">
+    <style name="TransparentBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/TransparentBottomSheetStyle</item>
+    </style>
+
+    <style name="Widget.App.Button.ToggleGroup" parent="Widget.Material3.Button.TextButton">
+        <item name="iconGravity">textTop</item>
+        <item name="android:textColor">@color/toggle_text_color</item>
+        <item name="iconTint">@color/toggle_text_color</item>
+        <item name="backgroundTint">@color/toggle_bg_color</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.App.Rounded16</item>
+    </style>
+
+    <style name="Widget.App.Button.Tracks.ToggleGroup" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textColor">@color/toggle_text_color</item>
+        <item name="backgroundTint">@color/toggle_track_bg_color</item>
+        <item name="strokeColor">@color/toggle_border_color</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.App.Rounded16</item>
+    </style>
+
+    <style name="ShapeAppearance.App.Rounded16" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
     </style>
 
 </resources>

@@ -20,6 +20,10 @@ import com.humotron.app.data.local.entity.band.BandHrvData
 import com.humotron.app.data.local.entity.band.BandSleepData
 import com.humotron.app.data.local.entity.band.BandSpO2Data
 import com.humotron.app.data.local.entity.band.BandTotalActivityData
+import com.humotron.app.data.local.entity.ring.RingActivityIntensityEntity
+import com.humotron.app.data.local.entity.ring.RingHistoricalDataEntity
+import com.humotron.app.data.local.entity.ring.RingSleepEventEntity
+import com.humotron.app.data.local.entity.ring.RingSleepSessionEntity
 import com.humotron.app.data.local.entity.scale.WeightScaleMeasurementEntity
 import com.humotron.app.data.network.Resource
 import com.humotron.app.data.network.ResponseHandler
@@ -33,11 +37,17 @@ import com.humotron.app.domain.modal.param.BandUploadData
 import com.humotron.app.domain.modal.param.BandUploadDeviceData
 import com.humotron.app.domain.modal.param.BaselineScanDataParam
 import com.humotron.app.domain.modal.param.DailyCalculatedMetricsParam
-import com.humotron.app.domain.modal.param.DeviceMetaDataParam
 import com.humotron.app.domain.modal.param.DetailActivityData
+import com.humotron.app.domain.modal.param.DeviceMetaDataParam
 import com.humotron.app.domain.modal.param.GetAllScanByTypeParam
 import com.humotron.app.domain.modal.param.HeartRateData
+import com.humotron.app.domain.modal.param.RingActivityIntensity
+import com.humotron.app.domain.modal.param.RingHistoricalReading
 import com.humotron.app.domain.modal.param.RingReadingParam
+import com.humotron.app.domain.modal.param.RingSleepEvent
+import com.humotron.app.domain.modal.param.RingSleepSession
+import com.humotron.app.domain.modal.param.RingUploadData
+import com.humotron.app.domain.modal.param.RingUploadDeviceData
 import com.humotron.app.domain.modal.param.SaveScanDataParam
 import com.humotron.app.domain.modal.param.ScaleUploadData
 import com.humotron.app.domain.modal.param.ScaleUploadDeviceData
@@ -61,6 +71,7 @@ import com.humotron.app.domain.modal.response.RingReadingData
 import com.humotron.app.domain.modal.response.TemperatureResponse
 import com.humotron.app.domain.modal.response.WristBandSleepDurationResponse
 import com.humotron.app.util.PrefUtils
+import com.humotron.app.util.TAG
 import com.humotron.app.util.TAG_BAND_DEBUG
 import com.humotron.app.util.TAG_RING_DEBUG
 import com.humotron.app.util.formatMillisToIsoUtc
@@ -75,7 +86,6 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
-import lib.linktop.nexring.api.SleepData
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
@@ -139,6 +149,22 @@ class SleepRepository(
 
     suspend fun insertBandSleepList(data: List<BandSleepData>) {
         sleepDao.insertBandSleepList(data)
+    }
+
+    suspend fun insertRingHistoricalData(data: List<RingHistoricalDataEntity>) {
+        sleepDao.insertRingHistoricalData(data)
+    }
+
+    suspend fun insertRingSleepEventData(data: List<RingSleepEventEntity>) {
+        sleepDao.insertRingSleepEventData(data)
+    }
+
+    suspend fun insertRingActivityIntensityData(data: List<RingActivityIntensityEntity>) {
+        sleepDao.insertRingActivityIntensityData(data)
+    }
+
+    suspend fun insertRingSleepSessionData(data: List<RingSleepSessionEntity>) {
+        sleepDao.insertRingSleepSessionData(data)
     }
 
     suspend fun insertWeightScaleMeasurement(measurement: WeightScaleMeasurementEntity) {
@@ -245,6 +271,10 @@ class SleepRepository(
     val bandDetailActivityFlow = sleepDao.getUnSyncBandDetailActivity()
     val bandTotalActivityFlow = sleepDao.getUnSyncBandTotalActivity()
     val bandSleepFlow = sleepDao.getUnSyncBandSleep()
+    val ringHistoricalFlow = sleepDao.getUnSyncRingHistoricalData()
+    val ringSleepEventFlow = sleepDao.getUnSyncRingSleepEventData()
+    val ringActivityIntensityFlow = sleepDao.getUnSyncRingActivityIntensityData()
+    val ringSleepSessionFlow = sleepDao.getUnSyncRingSleepSessionData()
     val weightScaleFlow = weightScaleDao.getUnSyncMeasurements()
 
     fun getUnSyncData(): Flow<Resource<AddDeviceDataResponse>> = flow {
@@ -291,7 +321,7 @@ class SleepRepository(
             )
         }
 
-        val hardwareID = prefUtils.getHardwareId() ?: ""
+        val hardwareID = prefUtils.getRingHardwareId() ?: ""
         val recordTime = prefUtils.getLong(Preference.RECORD_DATE)
         val uploadData = UploadData(
             hardwareID, UploadDeviceData(
@@ -317,6 +347,104 @@ class SleepRepository(
         emit(responseHandler.handleException(ValidationException(it.message)))
     }
 
+    fun getUnSyncRingData(): Flow<Resource<AddDeviceDataResponse>> = flow {
+        val ringHistoricalList = ringHistoricalFlow.first()
+        val ringSleepEventList = ringSleepEventFlow.first()
+        val ringActivityIntensityList = ringActivityIntensityFlow.first()
+        val ringSleepSessionList = ringSleepSessionFlow.first()
+
+        val isEmpty = ringHistoricalList.isEmpty()
+            && ringSleepEventList.isEmpty()
+            && ringActivityIntensityList.isEmpty()
+            && ringSleepSessionList.isEmpty()
+
+        if (isEmpty) {
+            emit(Resource.success(AddDeviceDataResponse(null, null, null)))
+            return@flow
+        }
+
+        val hardwareId = prefUtils.getRingHardwareId().orEmpty()
+        if (hardwareId.isBlank()) {
+            emit(Resource.success(AddDeviceDataResponse(null, null, null)))
+            return@flow
+        }
+
+        val payload = RingUploadData(
+            hardwareId = hardwareId,
+            data = RingUploadDeviceData(
+                historical = ringHistoricalList.map {
+                    RingHistoricalReading(
+                        ts = it.ts,
+                        sourceType = it.sourceType,
+                        uuid = it.uuid,
+                        heartRate = it.heartRate,
+                        hrv = it.hrv,
+                        spo2 = it.spo2,
+                        rr = it.rr,
+                        skinTemperature = it.skinTemperature,
+                        totalSteps = it.totalSteps,
+                        motion = it.motion,
+                        batteryLevel = it.batteryLevel,
+                        workout = it.workout,
+                        ibi = it.ibi,
+                        cc = it.cc,
+                        t90 = it.t90,
+                    )
+                },
+                sleepEvents = ringSleepEventList.map {
+                    RingSleepEvent(
+                        sleepTs = it.sleepTs,
+                        type = it.type,
+                        bedRestDuration = it.bedRestDuration,
+                        awakeningOrder = it.awakeningOrder,
+                    )
+                },
+                activityIntensity = ringActivityIntensityList.map {
+                    RingActivityIntensity(
+                        ts = it.ts,
+                        intensity = it.intensity,
+                        steps = it.steps,
+                    )
+                },
+                sleepSessions = ringSleepSessionList.map {
+                    RingSleepSession(
+                        startTs = it.startTs,
+                        endTs = it.endTs,
+                        duration = it.duration,
+                        efficiency = it.efficiency,
+                        avgHr = it.avgHr,
+                        hrv = it.hrv,
+                        rr = it.rr,
+                        spo2 = it.spo2,
+                        restHr = it.restHr,
+                        t90 = it.t90,
+                        sleepLatencyStartTs = it.sleepLatencyStartTs,
+                        sleepLatencyEndTs = it.sleepLatencyEndTs,
+                        isNap = it.isNap,
+                        stagesJson = it.stagesJson,
+                    )
+                }
+            ),
+            recordTimestamp = System.currentTimeMillis() / 1000,
+        )
+
+        try {
+            PlutoLog.e(TAG_RING_DEBUG, "Send Ring Data to Server")
+            val response = responseHandler.handleResponse(api.sendRingDataToServer(payload), false)
+            if (response.status == Status.SUCCESS) {
+                sleepDao.syncRingHistoricalData(ringHistoricalList.map { it.id })
+                sleepDao.syncRingSleepEventData(ringSleepEventList.map { it.id })
+                sleepDao.syncRingActivityIntensityData(ringActivityIntensityList.map { it.id })
+                sleepDao.syncRingSleepSessionData(ringSleepSessionList.map { it.id })
+            }
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
     suspend fun syncBandDataOnce(): Resource<AddDeviceDataResponse> {
         val bandSpO2 = bandSpO2Flow.first()
         val bandHrv = bandHrvFlow.first()
@@ -332,6 +460,114 @@ class SleepRepository(
             bandTotal = bandTotal,
             bandSleep = bandSleep,
         )
+    }
+
+    suspend fun syncRingDataOnce(): Resource<AddDeviceDataResponse> {
+        val ringHistoricalList = ringHistoricalFlow.first()
+        val ringSleepEventList = ringSleepEventFlow.first()
+        val ringActivityIntensityList = ringActivityIntensityFlow.first()
+        val ringSleepSessionList = ringSleepSessionFlow.first()
+        return syncRingDataInternal(
+            ringHistoricalList = ringHistoricalList,
+            ringSleepEventList = ringSleepEventList,
+            ringActivityIntensityList = ringActivityIntensityList,
+            ringSleepSessionList = ringSleepSessionList,
+        )
+    }
+
+    private suspend fun syncRingDataInternal(
+        ringHistoricalList: List<RingHistoricalDataEntity>,
+        ringSleepEventList: List<RingSleepEventEntity>,
+        ringActivityIntensityList: List<RingActivityIntensityEntity>,
+        ringSleepSessionList: List<RingSleepSessionEntity>,
+    ): Resource<AddDeviceDataResponse> {
+        val isEmpty = ringHistoricalList.isEmpty()
+            && ringSleepEventList.isEmpty()
+            && ringActivityIntensityList.isEmpty()
+            && ringSleepSessionList.isEmpty()
+        if (isEmpty) {
+            PlutoLog.e(TAG_RING_DEBUG, "empty ring data in SQl")
+            return Resource.success(AddDeviceDataResponse(null, null, null))
+        }
+
+        val hardwareId = prefUtils.getRingHardwareId().orEmpty()
+        if (hardwareId.isBlank()) {
+            return Resource.success(AddDeviceDataResponse(null, null, null))
+        }
+
+        val payload = RingUploadData(
+            hardwareId = hardwareId,
+            data = RingUploadDeviceData(
+                historical = ringHistoricalList.map {
+                    RingHistoricalReading(
+                        ts = it.ts,
+                        sourceType = it.sourceType,
+                        uuid = it.uuid,
+                        heartRate = it.heartRate,
+                        hrv = it.hrv,
+                        spo2 = it.spo2,
+                        rr = it.rr,
+                        skinTemperature = it.skinTemperature,
+                        totalSteps = it.totalSteps,
+                        motion = it.motion,
+                        batteryLevel = it.batteryLevel,
+                        workout = it.workout,
+                        ibi = it.ibi,
+                        cc = it.cc,
+                        t90 = it.t90,
+                    )
+                },
+                sleepEvents = ringSleepEventList.map {
+                    RingSleepEvent(
+                        sleepTs = it.sleepTs,
+                        type = it.type,
+                        bedRestDuration = it.bedRestDuration,
+                        awakeningOrder = it.awakeningOrder,
+                    )
+                },
+                activityIntensity = ringActivityIntensityList.map {
+                    RingActivityIntensity(
+                        ts = it.ts,
+                        intensity = it.intensity,
+                        steps = it.steps,
+                    )
+                },
+                sleepSessions = ringSleepSessionList.map {
+                    RingSleepSession(
+                        startTs = it.startTs,
+                        endTs = it.endTs,
+                        duration = it.duration,
+                        efficiency = it.efficiency,
+                        avgHr = it.avgHr,
+                        hrv = it.hrv,
+                        rr = it.rr,
+                        spo2 = it.spo2,
+                        restHr = it.restHr,
+                        t90 = it.t90,
+                        sleepLatencyStartTs = it.sleepLatencyStartTs,
+                        sleepLatencyEndTs = it.sleepLatencyEndTs,
+                        isNap = it.isNap,
+                        stagesJson = it.stagesJson,
+                    )
+                }
+            ),
+            recordTimestamp = System.currentTimeMillis() / 1000,
+        )
+
+        return try {
+            PlutoLog.e(TAG, "Send Ring Data to Server")
+            // val response = responseHandler.handleResponse(api.sendRingDataToServer(payload), false)
+            val response = Resource.success(AddDeviceDataResponse(null, null, null))
+            if (response.status == Status.SUCCESS) {
+                sleepDao.syncRingHistoricalData(ringHistoricalList.map { it.id })
+                sleepDao.syncRingSleepEventData(ringSleepEventList.map { it.id })
+                sleepDao.syncRingActivityIntensityData(ringActivityIntensityList.map { it.id })
+                sleepDao.syncRingSleepSessionData(ringSleepSessionList.map { it.id })
+            }
+            response
+        } catch (e: Exception) {
+            responseHandler.handleException(e)
+        }
     }
 
     private suspend fun syncBandDataInternal(
@@ -711,7 +947,7 @@ class SleepRepository(
     }
 }
 
-fun SleepData.toSleepEntity(): SleepEntity {
+/*fun SleepData.toSleepEntity(): SleepEntity {
     return SleepEntity(
         btMac = btMac,
         startTs = startTs,
@@ -729,4 +965,4 @@ fun SleepData.toSleepEntity(): SleepEntity {
         startTimeStamp = sf.format(startTs),
         endTimeStamp = sf.format(endTs)
     )
-}
+}*/

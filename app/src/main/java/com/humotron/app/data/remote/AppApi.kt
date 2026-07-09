@@ -13,6 +13,7 @@ import com.humotron.app.domain.modal.param.NuggetsInteraction
 import com.humotron.app.domain.modal.param.PostFollowUpConversationParam
 import com.humotron.app.domain.modal.param.RemovePdfParam
 import com.humotron.app.domain.modal.param.RingReadingParam
+import com.humotron.app.domain.modal.param.RingUploadData
 import com.humotron.app.domain.modal.param.BandUploadData
 import com.humotron.app.domain.modal.param.BaselineScanDataParam
 import com.humotron.app.domain.modal.param.GetAllScanByTypeParam
@@ -163,6 +164,9 @@ interface AppApi {
 
     @POST("hardwareSpecificDetail/addHardwareSpecificDetail")
     suspend fun sendBandDataToServer(@Body data: BandUploadData): Response<AddDeviceDataResponse>
+
+    @POST("hardwareSpecificDetail/addHardwareSpecificDetail")
+    suspend fun sendRingDataToServer(@Body data: RingUploadData): Response<AddDeviceDataResponse>
 
     @POST("hardwareSpecificDetail/addHardwareSpecificDetail")
     suspend fun sendScaleDataToServer(@Body data: ScaleUploadData): Response<AddScaleDataResponse>

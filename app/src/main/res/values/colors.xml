@@ -28,8 +28,12 @@
     <color name="assessmentBnt">#B1F042</color>
     <color name="assessment_unselect_stroke">#4DA1A1A1</color>
 
+    <color name="white_3">#08FFFFFF</color>
     <color name="white05">#0DFFFFFF</color>
+    <color name="white_7">#12FFFFFF</color>
+    <color name="white_8">#14FFFFFF</color>
     <color name="white10">#1AFFFFFF</color>
+    <color name="white_14">#24FFFFFF</color>
     <color name="white20">#33FFFFFF</color>
     <color name="white30">#4DFFFFFF</color>
     <color name="white40">#66FFFFFF</color>
@@ -96,7 +100,6 @@
     <color name="week_day_back">#395A67</color>
     <color name="week_day_back_disabled">#4F6E7A</color>
     <color name="card_back">#121212</color>
-    <color name="card_stroke">#FF7269</color>
     <color name="medium_gray">#444444</color>
     <color name="accent_gold">#E5C08C</color>
     <color name="brown">#7E3F11</color>
@@ -120,6 +123,52 @@
     <color name="support_open_badge_bg">#2A3640</color>
     <color name="support_card_bg_detail">#1D2730</color>
     <color name="support_link_blue">#5EC4FF</color>
+
+    <color name="bg_dark">#0B1315</color>
+    <color name="card_bg">#44080F10</color>
+    <color name="card_stroke">#12FFFFFF</color>
+    <color name="bottom_nav_bg">#DB040809</color>
+
+    <color name="ink_white">#FFFFFF</color>
+    <color name="ink2">#9DACA9</color>
+    <color name="ink3">#859390</color>
+    <color name="ink4">#6F7E7D</color>
+    <color name="eyebrow">#73827F</color>
+
+    <color name="lime">#C4F23E</color>
+    <color name="lime_6">#0FC4F23E</color>
+    <color name="lime_10">#1AC4F23E</color>
+    <color name="lime_12">#1FC4F23E</color>
+    <color name="lime_14">#24C4F23E</color>
+    <color name="lime_18">#2EC4F23E</color>
+    <color name="lime_40">#66C4F23E</color>
+    <color name="attention">#EE4D3D</color>
+    <color name="watch">#E7A93C</color>
+    <color name="watch_14">#24E7A93C</color>
+    <color name="series">#F0795E</color>
+    <color name="series_14">#24F0795E</color>
+    <color name="series_40">#66F0795E</color>
+    <color name="cool">#5FB7C4</color>
+    <color name="cool_14">#245FB7C4</color>
+    <color name="cool_40">#665FB7C4</color>
+    <color name="good">#7BD88F</color>
+    <color name="good_14">#247BD88F</color>
+    <color name="good_15">#267BD88F</color>
+    <color name="good_40">#667BD88F</color>
+
+    <color name="lime_transparent">#29C4F23E</color>
+    <color name="cool_transparent">#295FB7C4</color>
+    <color name="take_reading_card_bg">#8C080F10</color>
+    <color name="take_reading_card_bg_soft">#0C1618</color>
+    <color name="take_reading_card_stroke">#12FFFFFF</color>
+    <color name="take_reading_chip_bg">#1AFFFFFF</color>
+    <color name="take_reading_icon_bg">#3A2A27</color>
+    <color name="take_reading_scan_accent">#FF8A72</color>
+    <color name="tab_bg">#52000000</color>
+    <color name="transparent">#00FFFFFF</color>
+
+    <color name="text_title_primary">#CDD6D5</color>
+    <color name="card_bg_2">#80080F10</color>
     <color name="support_chat_user_bubble_bg">#203628</color>
     <color name="support_chat_user_time">#8A9B8F</color>
     <color name="support_status_awaiting_reply_bg">#FFCA28</color>
@@ -168,7 +217,6 @@
     <color name="deep_dives_zone_track_bg">#0FFFFFFF</color> <!-- rgba(255,255,255,.06) -->
     <color name="heatmap_empty_cell">#1B2321</color>
     <color name="tab_unselected_text_color">#90A0A0</color>
-
     <!-- Console redesign: plan pill amber -->
     <color name="plan_pill_amber_bg">#26E7A93C</color>
     <color name="plan_pill_amber_text">#E7A93C</color>

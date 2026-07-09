@@ -93,7 +93,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
         binding = FragmentDeviceDataBinding.bind(view)
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
             insets
         }
 
@@ -108,7 +108,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
         } else {
             arguments?.getParcelable(NavKeys.WEARABLE)
         }
-        binding.header.title.text = "Humotron Smart Ring Metrics"
+        binding.header.tvTitle.text = "Humotron Smart Ring Metrics"
 
         metricsAdapter = MetricsAdapter { item, dateTime ->
             val deviceId = userDevice?.id
@@ -135,6 +135,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
             val deviceType = DeviceType.from(userDevice?.deviceName)
             when (deviceType) {
                 DeviceType.BAND -> {
+                    binding.ivDevice.setImageResource(R.drawable.ic_band_vectr)
                     setupHealthScanAdapter()
                     binding.clTabMetrics.groupViewsRingBand.isVisible = true
                     observeBand()
@@ -142,6 +143,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
                 }
 
                 DeviceType.RING -> {
+                    binding.ivDevice.setImageResource(R.drawable.ic_ring_vector)
                     setupHealthScanAdapter()
                     binding.clTabMetrics.groupViewsRingBand.isVisible = true
                     observeRing()
@@ -150,20 +152,22 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
                 }
 
                 DeviceType.BP_MACHINE -> {
+                    binding.ivDevice.setImageResource(R.drawable.ic_smart_cuff_vector)
                     viewModel.getAllMetricsByDeviceId(deviceId)
                     binding.let {
-                        it.ivBtStatus.isVisible = false
+                        //it.ivBtStatus.isVisible = false
                     }
                     observeBPMachine()
                 }
 
                 DeviceType.WEIGHT_MACHINE -> {
+                    binding.ivDevice.setImageResource(R.drawable.ic_smart_scale_vector)
                     viewModel.getAllMetricsByDeviceId(deviceId)
                     binding.let {
-                        it.ivBtStatus.isVisible = false
+                        //it.ivBtStatus.isVisible = false
                         it.ivDeviceStatus.isVisible = false
                         it.tvDeviceStatus.isVisible = false
-                        it.batteryView.isVisible = false
+                        it.progressBattery.isVisible = false
                         it.tvBatteryLevel.isVisible = false
                     }
                 }
@@ -174,14 +178,14 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
             }
         }
 
-        val deviceImage = userDevice?.deviceImage
+        /*val deviceImage = userDevice?.deviceImage
         deviceImage?.let {
             Glide.with(requireActivity())
                 .load("${it[0]}")
                 .into(binding.ivDevice)
-        }
+        }*/
         binding.tvDeviceName.text = userDevice?.deviceName ?: ""
-        binding.header.title.text = "${userDevice?.deviceFacingName} Metrics"
+        binding.header.tvTitle.text = "${userDevice?.deviceFacingName} Metrics"
 
         if (!userDevice?.dataSync.isNullOrEmpty()) {
             try {
@@ -207,9 +211,9 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
         app.ringDeviceManager.isSyncingData.observe(viewLifecycleOwner) { isSyncing ->
             isSyncing?.let {
                 if (!it) {
-                    binding.progress.isVisible = false
+                    binding.header.progress.isVisible = false
                 } else {
-                    binding.progress.isVisible = true
+                    binding.header.progress.isVisible = true
                 }
             }
         }
@@ -238,7 +242,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
                 }
 
                 STATE_DEVICE_CHARGING -> {
-                    binding.batteryView.isCharging = true
+                    //binding.batteryView.isCharging = true
                     PlutoLog.e(
                         "Bluetooth",
                         "STATE_DEVICE_CHARGING"
@@ -246,7 +250,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
                 }
 
                 STATE_DEVICE_DISCHARGING -> {
-                    binding.batteryView.isCharging = false
+                    //binding.batteryView.isCharging = false
                     PlutoLog.e(
                         "Bluetooth",
                         "STATE_DEVICE_DISCHARGING"
@@ -254,7 +258,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
                 }
 
             }
-            binding.batteryView.batteryLevel = it.second
+            binding.progressBattery.progress = it.second
             binding.tvBatteryLevel.text = "${it.second}%"
         }
 
@@ -310,26 +314,26 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
         bpViewModel.events.observe(viewLifecycleOwner) { event ->
             when (event) {
                 is BpMachineEvent.AirBp.BatteryInfo -> {
-                    binding.batteryView.batteryLevel = event.data.percent
+                    binding.progressBattery.progress = event.data.percent
                     binding.tvBatteryLevel.text = "${event.data.percent}%"
                 }
 
                 is BpMachineEvent.Bp2.RtData -> {
-                    binding.batteryView.batteryLevel = event.data.status.percent
+                    binding.progressBattery.progress = event.data.status.percent
                     binding.tvBatteryLevel.text = "${event.data.status.percent}%"
-                    binding.batteryView.isCharging = event.data.status.batteryStatus == 1
+                    //binding.batteryView.isCharging = event.data.status.batteryStatus == 1
                 }
 
                 is BpMachineEvent.Bp2W.RtData -> {
-                    binding.batteryView.batteryLevel = event.data.status.percent
+                    binding.progressBattery.progress = event.data.status.percent
                     binding.tvBatteryLevel.text = "${event.data.status.percent}%"
-                    binding.batteryView.isCharging = event.data.status.batteryStatus == 1
+                    //binding.batteryView.isCharging = event.data.status.batteryStatus == 1
                 }
 
                 is BpMachineEvent.Bp3.RtData -> {
-                    binding.batteryView.batteryLevel = event.data.status.percent
+                    binding.progressBattery.progress = event.data.status.percent
                     binding.tvBatteryLevel.text = "${event.data.status.percent}%"
-                    binding.batteryView.isCharging = event.data.status.batteryStatus == 1
+                    //binding.batteryView.isCharging = event.data.status.batteryStatus == 1
                 }
 
                 else -> {}
@@ -362,9 +366,9 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
         viewLifecycleOwner.lifecycleScope.launch {
             bandBleManager.batteryLevel.collect { level ->
                 if (level != null) {
-                    binding.batteryView.batteryLevel = level
+                    binding.progressBattery.progress = level
                     binding.tvBatteryLevel.text = "$level%"
-                    binding.batteryView.isCharging = false
+                    //binding.batteryView.isCharging = false
                 }
             }
         }
@@ -406,7 +410,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
                 syncing || uploading
             }.collect { isBusy ->
                 PlutoLog.e(TAG_BAND_DEBUG, "isBusy: $isBusy")
-                binding.progress.isVisible = isBusy
+                binding.header.progress.isVisible = isBusy
             }
         }
     }
@@ -426,12 +430,13 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
             )
         )
 
-        batteryView.isVisible = isConnected
+        progressBattery.isVisible = isConnected
         tvBatteryLevel.isVisible = isConnected
 
-        batteryView.isCharging = false
+        //batteryView.isCharging = false
 
-        btnTakeReading.isEnabled = isConnected
+        // TODO: uncomment after new ui changes is done
+        //btnTakeReading.isEnabled = isConnected
         btnTakeReading.alpha = if (isConnected) 1f else 0.5f
     }
 
@@ -444,9 +449,10 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
                 R.color.w200
             )
         )
-        batteryView.isVisible = false
+        progressBattery.isVisible = false
         tvBatteryLevel.isVisible = false
-        btnTakeReading.isEnabled = false
+        // TODO: uncomment after new ui changes is done
+        //btnTakeReading.isEnabled = false
         btnTakeReading.alpha = 0.5f
     }
 
@@ -625,8 +631,9 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
     }
 
     private fun initClicks() {
-        binding.header.ivBack.setOnClickListener(this)
+        binding.header.btnBack.setOnClickListener(this)
         binding.ivDevice.setOnClickListener(this)
+        binding.btnAlert.setOnClickListener(this)
         binding.clTabMetrics.cardExerciseIntensity.setOnClickListener(this)
         binding.clTabMetrics.cardPhysicalRecovery.setOnClickListener(this)
         binding.clTabMetrics.cardStressScore.setOnClickListener(this)
@@ -688,7 +695,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
         }
 
         when (p0) {
-            binding.header.ivBack -> {
+            binding.header.btnBack -> {
                 findNavController().popBackStack(R.id.fragmentTrack, false)
             }
 
@@ -696,12 +703,18 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
             }
 
             binding.btnTakeReading -> {
-                if (DeviceType.from(userDevice?.deviceName) == DeviceType.WEIGHT_MACHINE) {
+                val deviceType = DeviceType.from(userDevice?.deviceName)
+                if (deviceType == DeviceType.RING || deviceType == DeviceType.BAND) {
+                    findNavController().navigate(
+                        R.id.action_fragmentDeviceData_to_fragmentTakeReadingRingBand,
+                        bundleOf(NavKeys.WEARABLE to userDevice)
+                    )
+                } else if (deviceType == DeviceType.WEIGHT_MACHINE) {
                     findNavController().navigate(
                         R.id.action_fragmentDeviceData_to_fragmentWeightScaleReading,
                         bundleOf(NavKeys.WEARABLE to userDevice)
                     )
-                } else if (DeviceType.from(userDevice?.deviceName) == DeviceType.BP_MACHINE) {
+                } else if (deviceType == DeviceType.BP_MACHINE) {
                     val bpReadingOptions = arrayListOf(
                         MeasurementInfo(
                             "Measure Blood Pressure",
@@ -754,6 +767,13 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
                     navigateToMetricDetails(metricType)
                 }
             }
+
+            binding.btnAlert -> {
+                findNavController().navigate(
+                    R.id.action_fragmentDeviceData_to_fragmentAlert,
+                    bundleOf(NavKeys.WEARABLE to userDevice)
+                )
+            }
         }
     }
 
@@ -783,28 +803,28 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
 
         val healthScans = listOf(
             HealthScanItem(
-                "Instant\nStress Scan",
+                "Stress Scan",
                 "Stress",
                 "Quick 2 min stress scan to get a quick sense of your stress levels",
                 HealthScanType.HRV,
                 "Stress"
             ),
             HealthScanItem(
-                "Body\nLoad Scan",
+                "Body Load Scan",
                 "Body Load",
                 "Not doing much, but still feel tired or wired? Check if your body is working harder than it should.",
                 HealthScanType.HR,
                 "Heart Rate"
             ),
             HealthScanItem(
-                "Oxygen\nCheck",
+                "Oxygen Check",
                 "Oxygen",
                 "Brain fog? Low energy? Check if low oxygen is draining your energy.",
                 HealthScanType.SPO2,
                 "Oxygen"
             ),
             HealthScanItem(
-                "Thermal\nScan",
+                "Thermal Scan",
                 "Thermal",
                 "Feeling unusually warm, restless, or off? Detect early physical strain.",
                 HealthScanType.TEMPERATURE,
@@ -823,13 +843,13 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
 
     private fun updateBtStatusIcon(isEnabled: Boolean) {
         if (isEnabled) {
-            binding.ivBtStatus.setImageResource(R.drawable.ic_bluetooth_24px)
+            /*binding.ivBtStatus.setImageResource(R.drawable.ic_bluetooth_24px)
             binding.ivBtStatus.alpha = 1f
-            binding.ivBtStatus.isVisible = false
+            binding.ivBtStatus.isVisible = false*/
         } else {
-            binding.ivBtStatus.isVisible = true
+            /*binding.ivBtStatus.isVisible = true
             binding.ivBtStatus.setImageResource(R.drawable.ic_bluetooth_off)
-            binding.ivBtStatus.alpha = 0.5f
+            binding.ivBtStatus.alpha = 0.5f*/
         }
     }
 

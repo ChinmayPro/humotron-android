@@ -5,12 +5,12 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:background="#33000000"
+    tools:background="@drawable/ic_bg_main_2"
     tools:context=".ui.device.MetricFragment">
 
     <include
         android:id="@+id/header"
-        layout="@layout/layout_header" />
+        layout="@layout/layout_header_3" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
                 android:layout_marginTop="@dimen/_24dp"
                 android:text="@string/your_latest_reading"
                 android:textAlignment="center"
-                android:textColor="@color/white_70"
+                android:textColor="@color/text_title_primary"
                 android:textSize="28sp"
                 android:textStyle="bold" />
 
@@ -42,10 +42,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_24dp"
                 android:layout_marginTop="@dimen/_24dp"
-                app:cardBackgroundColor="@color/card_translucent"
+                app:cardBackgroundColor="@color/card_bg_2"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="0dp"
-                app:strokeWidth="0dp">
+                app:strokeColor="@color/card_stroke"
+                app:strokeWidth="1dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -75,7 +76,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_7dp"
-                            android:textColor="@color/white_80"
+                            android:textColor="@color/ink3"
                             android:textSize="18sp"
                             tools:text="°C" />
 
@@ -87,7 +88,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="Temperature"
-                        android:textColor="@color/white"
+                        android:textColor="#cfdad8"
                         android:textSize="18sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -99,7 +100,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:text=""
-                        android:textColor="@color/white_70"
+                        android:textColor="@color/ink4"
                         android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -121,7 +122,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/source"
-                            android:textColor="@color/white_50"
+                            android:textColor="@color/ink4"
                             android:textSize="12sp" />
 
                         <TextView
@@ -129,7 +130,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="2dp"
-                            android:textColor="@color/white_50"
+                            android:textColor="@color/ink4"
                             android:textSize="12sp" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -148,10 +149,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_24dp"
                 android:layout_marginTop="32dp"
-                app:cardBackgroundColor="@color/graph_card_bg"
+                app:cardBackgroundColor="@color/card_bg_2"
                 app:cardDescription="@string/faq_a1_hrv"
-                app:cardStrokeColor="@color/card_border"
-                app:cardStrokeWidth="0dp"
+                app:cardStrokeColor="@color/card_stroke"
+                app:cardStrokeWidth="1dp"
                 app:cardTitle="@string/what_is" />
 
             <com.humotron.app.view.ExpandableCardView
@@ -160,10 +161,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_24dp"
                 android:layout_marginTop="@dimen/_14dp"
-                app:cardBackgroundColor="@color/graph_card_bg"
+                app:cardBackgroundColor="@color/card_bg_2"
                 app:cardDescription="@string/faq_a1_hrv"
-                app:cardStrokeColor="@color/card_border"
-                app:cardStrokeWidth="0dp"
+                app:cardStrokeColor="@color/card_stroke"
+                app:cardStrokeWidth="1dp"
                 app:cardTitle="@string/why_it_matters_question" />
 
             <TextView
@@ -172,9 +173,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="48dp"
-                android:text="Decode your\nReading"
+                android:text="@string/decode_your_reading"
                 android:textAlignment="center"
-                android:textColor="@color/white_70"
+                android:textColor="@color/text_title_primary"
                 android:textSize="28sp"
                 android:textStyle="bold" />
 
@@ -195,7 +196,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_24dp"
                 android:layout_marginTop="16dp"
-                app:cardBackgroundColor="@color/card_back"
+                app:cardBackgroundColor="@color/card_bg_2"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
                 app:strokeColor="@color/card_stroke"
@@ -213,7 +214,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.yarolegovich.discretescrollview.DiscreteScrollView
-                android:id="@+id/dsv_insight"
+                android:id="@+id/dsvInsight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -225,9 +226,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="60dp"
-                android:text="How you are\ndoing"
+                android:text="@string/how_you_are_doing"
                 android:textAlignment="center"
-                android:textColor="@color/white_70"
+                android:textColor="@color/text_title_primary"
                 android:textSize="28sp"
                 android:textStyle="bold" />
 
@@ -361,7 +362,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_24dp"
                 android:layout_marginTop="40dp"
-                app:cardBackgroundColor="@color/card_back"
+                app:cardBackgroundColor="@color/card_bg_2"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
                 app:strokeColor="@color/card_stroke"
@@ -406,7 +407,7 @@
                 android:textStyle="bold" />
 
             <com.yarolegovich.discretescrollview.DiscreteScrollView
-                android:id="@+id/dsv_supplements"
+                android:id="@+id/dsvSupplements"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp" />
@@ -427,7 +428,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_24dp"
                 android:layout_marginTop="16dp"
-                app:cardBackgroundColor="@color/card_back"
+                app:cardBackgroundColor="@color/card_bg_2"
                 app:cardCornerRadius="16dp"
                 app:cardUseCompatPadding="false"
                 app:strokeColor="@color/card_stroke"
@@ -455,7 +456,7 @@
                 android:textStyle="bold" />
 
             <com.yarolegovich.discretescrollview.DiscreteScrollView
-                android:id="@+id/dsv_recipes"
+                android:id="@+id/dsvRecipes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp" />
@@ -476,7 +477,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_24dp"
                 android:layout_marginTop="16dp"
-                app:cardBackgroundColor="@color/card_back"
+                app:cardBackgroundColor="@color/card_bg_2"
                 app:cardCornerRadius="16dp"
                 app:cardUseCompatPadding="false"
                 app:strokeColor="@color/card_stroke"
@@ -498,7 +499,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_24dp"
                 android:layout_marginTop="@dimen/_60dp"
-                app:cardBackgroundColor="#000000"
+                app:cardBackgroundColor="@color/card_bg_2"
                 app:cardCornerRadius="20dp"
                 app:strokeWidth="0dp">
 
@@ -556,8 +557,8 @@
                         android:layout_marginTop="20dp"
                         android:text="@string/start_chat"
                         android:textAllCaps="false"
-                        android:textColor="@color/white_90"
-                        app:backgroundTint="#3A3A3A"
+                        android:textColor="#0d1618"
+                        app:backgroundTint="@color/lime"
                         app:cornerRadius="24dp"
                         app:icon="@drawable/ic_arrow_right_alt_24px"
                         app:iconGravity="textEnd"
@@ -577,6 +578,7 @@
                 android:layout_marginHorizontal="@dimen/_24dp"
                 android:layout_marginTop="@dimen/_40dp"
                 android:layout_marginBottom="@dimen/_40dp"
+                app:cardBackgroundColor="@color/card_bg_2"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="0dp"
                 app:strokeWidth="0dp">
@@ -599,7 +601,6 @@
                         android:id="@+id/contentContainer"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:background="#000000"
                         android:padding="24dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -637,16 +638,273 @@
                             android:layout_marginTop="20dp"
                             android:text="Schedule a Consultation"
                             android:textAllCaps="false"
-                            android:textColor="@color/white_90"
-                            app:backgroundTint="#3A3A3A"
+                            android:textColor="#0d1618"
+                            app:backgroundTint="@color/lime"
                             app:cornerRadius="24dp"
                             app:icon="@drawable/ic_arrow_right_alt_24px"
                             app:iconGravity="textEnd"
+                            app:iconTint="#0d1618"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvDescription" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/tvGoDeeper"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:text="Go deeper"
+                android:textColor="@color/white"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardAskTron"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="24dp"
+                app:cardBackgroundColor="#0AFFFFFF"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/card_stroke"
+                app:strokeWidth="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivTronIcon"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_bot"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/lime" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="Ask the Tron about this reading"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/ivChevron1"
+                        app:layout_constraintStart_toEndOf="@id/ivTronIcon"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivChevron1"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_chevron_right_24px"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/lime" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardExpertReviewItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="12dp"
+                app:cardBackgroundColor="#0AFFFFFF"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/card_stroke"
+                app:strokeWidth="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivExpertIcon"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_user_analyst"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/lime" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="Expert review · £69"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/ivChevron2"
+                        app:layout_constraintStart_toEndOf="@id/ivExpertIcon"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivChevron2"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_chevron_right_24px"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/lime" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="32dp"
+                android:text="Follow-up questions"
+                android:textColor="@color/white_50"
+                android:textSize="14sp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardQuestion1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="#0AFFFFFF"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/card_stroke"
+                app:strokeWidth="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivSparkle1"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_sparkle"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/lime" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="Why did this change overnight?"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/ivSparkle1"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardQuestion2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="12dp"
+                app:cardBackgroundColor="#0AFFFFFF"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/card_stroke"
+                app:strokeWidth="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivSparkle2"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_sparkle"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/lime" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="Show me my 90-day trend"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/ivSparkle2"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardQuestion3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="40dp"
+                app:cardBackgroundColor="#0AFFFFFF"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/card_stroke"
+                app:strokeWidth="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivSparkle3"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_sparkle"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/lime" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="What should I change first?"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/ivSparkle3"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

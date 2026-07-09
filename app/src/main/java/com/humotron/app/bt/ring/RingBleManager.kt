@@ -28,14 +28,14 @@ import com.humotron.app.util.logi
 import com.humotron.app.util.post
 import com.humotron.app.util.postDelay
 import com.pluto.plugins.logger.PlutoLog
-import lib.linktop.nexring.api.NexRingBluetoothGattCallback
-import lib.linktop.nexring.api.NexRingManager
-import lib.linktop.nexring.api.OEM_AUTHENTICATION_FAILED_FOR_CHECK_R2
-import lib.linktop.nexring.api.OEM_AUTHENTICATION_FAILED_FOR_DECRYPT
-import lib.linktop.nexring.api.OEM_AUTHENTICATION_FAILED_FOR_SN_NULL
-import lib.linktop.nexring.api.OEM_AUTHENTICATION_START
-import lib.linktop.nexring.api.OEM_AUTHENTICATION_SUCCESS
-import lib.linktop.nexring.api.parseScanRecord
+import lib.smart.carering.api.CareRingBluetoothGattCallback
+import lib.smart.carering.api.CareRingManager
+import lib.smart.carering.api.OEM_AUTHENTICATION_FAILED_FOR_CHECK_R2
+import lib.smart.carering.api.OEM_AUTHENTICATION_FAILED_FOR_DECRYPT
+import lib.smart.carering.api.OEM_AUTHENTICATION_FAILED_FOR_SN_NULL
+import lib.smart.carering.api.OEM_AUTHENTICATION_START
+import lib.smart.carering.api.OEM_AUTHENTICATION_SUCCESS
+import lib.smart.carering.api.parseScanRecord
 
 private const val OEM_STEP_CHECK_OEM_AUTHENTICATION_STATUS = 0
 private const val OEM_STEP_AUTHENTICATE_OEM = 1
@@ -132,7 +132,7 @@ class RingBleManager(val app: App) {
     var bleState = 0
     var connectedDevice: BluetoothDevice? = null
 
-    private val mGattCallback = object : NexRingBluetoothGattCallback(NexRingManager.get()) {
+    private val mGattCallback = object : CareRingBluetoothGattCallback(CareRingManager.get()) {
 
         @SuppressLint("MissingPermission")
         override fun onConnectionStateChange(
@@ -145,7 +145,8 @@ class RingBleManager(val app: App) {
             )
             when (newState) {
                 BluetoothProfile.STATE_DISCONNECTED -> {
-                    NexRingManager.get().apply {
+                    PlutoLog.e(TAG_RING_DEBUG, "STATE_DISCONNECTED")
+                    CareRingManager.get().apply {
                         setBleGatt(null)
                         unregisterRingService()
                     }
@@ -156,12 +157,13 @@ class RingBleManager(val app: App) {
                 }
 
                 BluetoothProfile.STATE_CONNECTING -> {
+                    PlutoLog.e(TAG_RING_DEBUG, "STATE_CONNECTING")
                     bleState = BluetoothProfile.STATE_CONNECTING
                     postBleState()
                 }
 
                 BluetoothProfile.STATE_CONNECTED -> {
-                    PlutoLog.e(TAG_RING_DEBUG,"STATE_CONNECTED Ring Ble Manager")
+                    PlutoLog.e(TAG_RING_DEBUG, "STATE_CONNECTED")
                     bleState = BluetoothProfile.STATE_CONNECTED
                     connectedDevice = gatt.device
                     postBleState()
@@ -196,10 +198,10 @@ class RingBleManager(val app: App) {
             loge(tag, "onServicesDiscovered(), status:${status}")
             // Refresh device cache. This is the safest place to initiate the procedure.
             if (status == BluetoothGatt.GATT_SUCCESS) {
-                NexRingManager.get().setBleGatt(gatt)
+                CareRingManager.get().setBleGatt(gatt)
                 logi(tag, "onServicesDiscovered(), registerHealthData")
                 postDelay {
-                    NexRingManager.get().registerRingService()
+                    CareRingManager.get().registerRingService()
                 }
             }
         }
@@ -209,12 +211,12 @@ class RingBleManager(val app: App) {
         ) {
             super.onDescriptorWrite(gatt, descriptor, status)
             if (status == BluetoothGatt.GATT_SUCCESS &&
-                NexRingManager.get().isRingServiceRegistered()
+                CareRingManager.get().isRingServiceRegistered()
             ) {
                 post {
                     //you need to synchronize the timestamp with the device first after
-                    //the the service registration is successful.
-                    with(NexRingManager.get()) {
+                    //the service registration is successful.
+                    with(CareRingManager.get()) {
                         settingsApi()
                             .timestampSync(System.currentTimeMillis()) {
                                 synchronized(mOnBleConnectionListeners) {
@@ -276,12 +278,12 @@ class RingBleManager(val app: App) {
     @SuppressLint("MissingPermission")
     fun connect(address: String): Boolean {
         val remoteDevice = mBluetoothAdapter.getRemoteDevice(address)
-        loge("JKL", "connect to remoteDevice by address, ${remoteDevice.name}")
+        loge(TAG_RING_DEBUG, "connect to remoteDevice by address, ${remoteDevice.name}")
         return if (!remoteDevice.name.isNullOrEmpty()) {
             connect(remoteDevice)
             true
         } else {
-            loge("JKL", "reject, because it cannot connect success.")
+            loge(TAG_RING_DEBUG, "reject, because it cannot connect success.")
             false
         }
     }
@@ -353,7 +355,7 @@ class RingBleManager(val app: App) {
                     when (step) {
                         OEM_STEP_CHECK_OEM_AUTHENTICATION_STATUS -> {
                             loge(innerTag, "OEM_STEP_CHECK_OEM_AUTHENTICATION_STATUS")
-                            NexRingManager.get().securityApi().checkOemAuthenticationStatus {
+                            CareRingManager.get().securityApi().checkOemAuthenticationStatus {
                                 step =
                                     if (it) OEM_STEP_AUTHENTICATE_OEM else OEM_STEP_TIMESTAMP_SYNC
                                 synchronized(locked) {
@@ -364,7 +366,7 @@ class RingBleManager(val app: App) {
 
                         OEM_STEP_AUTHENTICATE_OEM -> {
                             loge(innerTag, "OEM_STEP_AUTHENTICATE_OEM")
-                            NexRingManager.get().securityApi().authenticateOem { result ->
+                            CareRingManager.get().securityApi().authenticateOem { result ->
                                 when (result) {
                                     OEM_AUTHENTICATION_FAILED_FOR_CHECK_R2 -> {
                                         logi(innerTag, "OEM_AUTHENTICATION_FAILED_FOR_CHECK_R2")
@@ -410,7 +412,7 @@ class RingBleManager(val app: App) {
 
                         OEM_STEP_TIMESTAMP_SYNC -> {
                             loge(innerTag, "OEM_STEP_TIMESTAMP_SYNC")
-                            NexRingManager.get()
+                            CareRingManager.get()
                                 .settingsApi()
                                 .timestampSync(System.currentTimeMillis()) {
                                     loge(innerTag, "OEM_STEP_TIMESTAMP_SYNC result $it")

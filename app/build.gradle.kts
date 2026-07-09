@@ -1,4 +1,5 @@
 import com.android.build.gradle.ProguardFiles.getDefaultProguardFile
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Properties
@@ -75,8 +76,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = "17"
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+        }
     }
     buildFeatures {
         buildConfig = true
@@ -157,7 +160,7 @@ dependencies {
     implementation(libs.google.http.client.gson)
 
     // -------------------- OTP --------------------
-    implementation(libs.kevinschildhorn.otpview)
+    //implementation(libs.kevinschildhorn.otpview)
 
     // -------------------- Room Database ----------------
     implementation(libs.androidx.room.runtime)
@@ -176,6 +179,7 @@ dependencies {
     // -------------------- Dependency Injection ----------
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
+    ksp(libs.kotlin.metadata.jvm)
 
     // -------------------- Permissions --------------------
     implementation(libs.permissionx)
@@ -202,6 +206,8 @@ dependencies {
 
     //Weight Scale
     implementation(libs.qnscalesdkx)
+    // Added to prevent NoClassDefFoundError in QNBleApi
+    implementation("androidx.localbroadcastmanager:localbroadcastmanager:1.1.0")
 
     // -------------------- Debug Tools --------------------
     debugImplementation(libs.pluto)

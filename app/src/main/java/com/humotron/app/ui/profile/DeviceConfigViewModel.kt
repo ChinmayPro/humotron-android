@@ -10,13 +10,12 @@ import com.humotron.app.domain.modal.param.DeviceMetaData
 import com.humotron.app.domain.modal.param.DeviceMetaDataParam
 import com.humotron.app.domain.modal.response.CommonResponse
 import com.humotron.app.domain.modal.response.GetDeviceConfigResponse
-import com.humotron.app.domain.modal.response.UserHardware
 import com.humotron.app.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import lib.linktop.nexring.api.DeviceInfo
-import lib.linktop.nexring.api.NexRingManager
+import lib.smart.carering.api.CareRingManager
+import lib.smart.carering.api.DeviceInfo
 import javax.inject.Inject
 
 @HiltViewModel
@@ -89,7 +88,7 @@ class DeviceConfigViewModel @Inject constructor(
     }
 
     fun fetchRingDeviceInfo() {
-        NexRingManager.get().deviceApi().getDeviceInfo { info ->
+        CareRingManager.get().deviceApi().getDeviceInfo { info ->
             ringDeviceInfoLiveData.postValue(info)
         }
     }

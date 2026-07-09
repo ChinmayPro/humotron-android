@@ -17,6 +17,7 @@ import android.util.Log
 import com.humotron.app.bt.band.model.BleData
 import com.humotron.app.util.ResolveData
 import com.humotron.app.util.SDUtil
+import com.humotron.app.util.TAG_RING_DEBUG
 import com.jstyle.blesdk2208a.Util.BleSDK
 import com.jstyle.blesdk2208a.model.MyDeviceTime
 import java.lang.reflect.Method
@@ -111,7 +112,7 @@ internal class BandBleGattClient(
                 if (needReconnect) startScan(true)
                 return
             }
-            Log.i(TAG, "onConnectionStateChange:  status$status newstate $newState")
+            Log.e(TAG_RING_DEBUG, "onConnectionStateChange:  status$status newstate $newState")
             if (newState == BluetoothProfile.STATE_CONNECTED) {
                 try {
                     gatt.discoverServices()

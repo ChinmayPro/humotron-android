@@ -28,7 +28,7 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
-import com.google.android.material.tabs.TabLayout
+import com.google.android.material.chip.Chip
 import com.humotron.app.R
 import com.humotron.app.core.base.BaseFragment
 import com.humotron.app.data.network.Status
@@ -161,11 +161,10 @@ class MetricDetailsFragment : BaseFragment(R.layout.fragment_metric_details) {
             viewModel.next()
         }
 
-        binding.trackTrends.tabLayout.addOnTabSelectedListener(object :
-            TabLayout.OnTabSelectedListener {
-
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                val tabText = tab?.text?.toString()
+        binding.trackTrends.chipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
+            if (checkedIds.isNotEmpty()) {
+                val chip = group.findViewById<Chip>(checkedIds.first())
+                val tabText = chip?.text?.toString()
                 val dateTime = when (val metricType = viewModel.getMetric()) {
                     is MetricType.PhysicalRecovery -> metricType.dataSync
                     is MetricType.Stress -> metricType.dataSync
@@ -175,13 +174,7 @@ class MetricDetailsFragment : BaseFragment(R.layout.fragment_metric_details) {
                     viewModel.setMode(tabText, dateTime)
                 }
             }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-            }
-        })
+        }
 
         binding.trackTrends.lineChart.setOnTouchListener { v, event ->
             v.parent.requestDisallowInterceptTouchEvent(true)
@@ -292,7 +285,7 @@ class MetricDetailsFragment : BaseFragment(R.layout.fragment_metric_details) {
 
                     //show track your trends for PhysicalRecovery
                     binding.trackTrends.root.visibility = View.VISIBLE
-                    binding.trackTrends.tabLayout.getTabAt(1)?.select()
+                    binding.trackTrends.chip2.isChecked = true
                 }
 
                 is MetricType.Stress -> {
@@ -310,7 +303,7 @@ class MetricDetailsFragment : BaseFragment(R.layout.fragment_metric_details) {
 
                     //show track your trends for Stress Score
                     binding.trackTrends.root.visibility = View.VISIBLE
-                    binding.trackTrends.tabLayout.getTabAt(1)?.select()
+                    binding.trackTrends.chip2.isChecked = true
                 }
             }
 
@@ -415,10 +408,10 @@ class MetricDetailsFragment : BaseFragment(R.layout.fragment_metric_details) {
                         binding.trackTrends.tvNoGraphData.visibility = View.GONE
 
                         var selectedTab: String? = "Day"
-                        val selectedTabPosition = binding.trackTrends.tabLayout.selectedTabPosition
-                        if (selectedTabPosition != TabLayout.Tab.INVALID_POSITION) {
-                            val tab = binding.trackTrends.tabLayout.getTabAt(selectedTabPosition)
-                            selectedTab = tab?.text?.toString()
+                        val checkedId = binding.trackTrends.chipGroup.checkedChipId
+                        if (checkedId != View.NO_ID) {
+                            val chip = binding.trackTrends.chipGroup.findViewById<Chip>(checkedId)
+                            selectedTab = chip?.text?.toString()
                         }
 
                         //to split value in two entries if receive like 125/70
@@ -497,12 +490,11 @@ class MetricDetailsFragment : BaseFragment(R.layout.fragment_metric_details) {
                     viewModel.dateRange.collect { (start, end) ->
                         if (start != null && end != null) {
                             var selectedText: String? = "Day".uppercase()
-                            val selectedTabPosition =
-                                binding.trackTrends.tabLayout.selectedTabPosition
-                            if (selectedTabPosition != TabLayout.Tab.INVALID_POSITION) {
-                                val tab =
-                                    binding.trackTrends.tabLayout.getTabAt(selectedTabPosition)
-                                selectedText = tab?.text?.toString()?.uppercase()
+                            val checkedId = binding.trackTrends.chipGroup.checkedChipId
+                            if (checkedId != View.NO_ID) {
+                                val chip =
+                                    binding.trackTrends.chipGroup.findViewById<Chip>(checkedId)
+                                selectedText = chip?.text?.toString()?.uppercase()
                             }
                             val param = WristBandApiParam(
                                 range = selectedText,
