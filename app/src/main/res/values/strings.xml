@@ -121,7 +121,7 @@
     <string name="device_connected">Device Connected</string>
     <string name="device_connected_desc">Congratulations!! You are all set to start capturing health metrics with your smart ring.</string>
     <string name="null_value">-</string>
-    <string name="time_format_hh_mm">%dh %dm</string>
+    <string name="time_format_hh_mm">%1$dh %2$dm</string>
     <string name="time_format_hh">%dh</string>
     <string name="time_format_mm">%dm</string>
     <string name="humotron_smart_ring">Humotron Smart Ring</string>
@@ -154,7 +154,7 @@
     <string name="resend">[Resend]</string>
     <string name="did_you_know">Did you know?</string>
     <string name="what_areas_of_s_do_you_want_to_focus_on">What areas of %s do you want to focus on?</string>
-    <string name="selected_d_d">selected %d of %d\n</string>
+    <string name="selected_d_d">selected %1$d of %2$d\n</string>
     <string name="related_books">Related Books</string>
     <string name="buy_now">Buy Now</string>
     <string name="biohack_book_tiltle">Suggested books to fuel your biohacking journey!</string>
@@ -878,7 +878,7 @@ To get started:\n
     <string name="support_search_contact_support_desc">Our support team is here to help.</string>
     <string name="support_top_articles">Top articles</string>
     <string name="support_search_view_all">View all %d articles</string>
-    <string name="support_search_load_more">Load more (%d of %d)</string>
+    <string name="support_search_load_more">Load more (%1$d of %2$d)</string>
     <string name="support_search_loading_more">Loading more articles…</string>
     <string name="support_article_detail_title">Article</string>
     <string name="support_short_answer">Short answer</string>
@@ -1531,4 +1531,6 @@ To get started:\n
     <string name="dvc_connected">%1$s connected</string>
     <string name="it_s_paired_and_feeding_track_band">It’s paired and feeding Track. Your signals will start flowing in over the next few minutes.</string>
     <string name="it_s_paired_and_feeding_track_scale">It’s paired and feeding Track. Take your first reading whenever you’re ready.</string>
+    <string name="browse_the_store">Browse the store</string>
+    <string name="add_a_product">Add a product</string>
 </resources>

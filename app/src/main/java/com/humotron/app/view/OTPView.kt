@@ -73,8 +73,8 @@ class OTPView @JvmOverloads constructor(
     private val marginBetween: Int
     private val isPassword: Boolean
 
-    private val otpViewLayoutBinding: OtpViewLayoutBinding = OtpViewLayoutBinding.bind(
-        LayoutInflater.from(context).inflate(R.layout.otp_view_layout, this, true)
+    private val otpViewLayoutBinding: OtpViewLayoutBinding = OtpViewLayoutBinding.inflate(
+        LayoutInflater.from(context), this, true
     )
 
     // Default
@@ -189,13 +189,15 @@ class OTPView @JvmOverloads constructor(
         }
 
         styleEditTexts()
-        val et = editTexts[0]
-        et.postDelayed({
-            val editText = editTexts[focusIndex]
-            editText.requestFocus()
-            styleEditTexts()
-            showKeyboard(true, editText)
-        }, 100)
+        if (editTexts.isNotEmpty()) {
+            val et = editTexts[0]
+            et.postDelayed({
+                val editText = editTexts[focusIndex]
+                editText.requestFocus()
+                styleEditTexts()
+                showKeyboard(true, editText)
+            }, 100)
+        }
     }
 
     private fun addListenerForIndex(index: Int) {
@@ -365,13 +367,11 @@ class OTPView @JvmOverloads constructor(
             val et = editTexts[x]
             if (x < focusIndex) {
                 styleFilled(et)
-                return
-            }
-            if (x == focusIndex) {
+            } else if (x == focusIndex) {
                 styleHighlighted(et)
-                return
+            } else {
+                styleDefault(et)
             }
-            styleDefault(et)
         }
     }
 
