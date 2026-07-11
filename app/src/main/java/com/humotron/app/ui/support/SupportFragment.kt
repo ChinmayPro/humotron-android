@@ -157,14 +157,6 @@ class SupportFragment : BaseFragment(R.layout.fragment_support) {
             findNavController().navigate(R.id.action_fragmentSupport_to_fragmentMyRequests)
         }
 
-        binding.btnViewAllDevices.setOnClickListener {
-            findNavController().navigate(R.id.action_fragmentSupport_to_fragmentSupportDevices)
-        }
-
-        binding.btnViewAllArticles.setOnClickListener {
-            findNavController().navigate(R.id.action_fragmentSupport_to_fragmentSupportArticles)
-        }
-
         binding.clSearchBar.setOnClickListener {
             findNavController().navigate(R.id.action_fragmentSupport_to_fragmentSupportSearch)
         }

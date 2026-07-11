@@ -43,6 +43,9 @@ class SupportCategoryAdapter(
             binding.tvCategoryDesc.text = item.description ?: ""
             
             binding.ivCategoryIcon.loadImage(item.icon)
+            binding.ivCategoryIcon.setColorFilter(
+                androidx.core.content.ContextCompat.getColor(binding.root.context, com.humotron.app.R.color.colorBgBtn1)
+            )
 
             binding.root.setOnClickListener {
                 onCategoryClick(item)

@@ -2,61 +2,89 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="7dp"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/bg_support_category_card"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="15dp"
+    android:clickable="true"
+    android:focusable="true">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ivDeviceIcon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+    <FrameLayout
+        android:id="@+id/flDeviceIconBg"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_support_doc_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvDeviceName"
-        style="@style/Text.16x.Manrope.SemiBold"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivDeviceIcon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            app:tint="@color/ink2" />
+    </FrameLayout>
+
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toTopOf="@id/tvDeviceStatus"
+        android:layout_marginStart="13dp"
+        android:layout_marginEnd="12dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/ivChevron"
-        app:layout_constraintStart_toEndOf="@id/ivDeviceIcon"
-        app:layout_constraintTop_toTopOf="@id/ivDeviceIcon"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintStart_toEndOf="@id/flDeviceIconBg"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvDeviceStatus"
-        style="@style/Text.12x.Manrope.Medium"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:textColor="@color/colorBgBtn1"
-        app:layout_constraintBottom_toBottomOf="@id/ivDeviceIcon"
-        app:layout_constraintEnd_toEndOf="@id/tvDeviceName"
-        app:layout_constraintStart_toStartOf="@id/tvDeviceName"
-        app:layout_constraintTop_toBottomOf="@id/tvDeviceName" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDeviceName"
+            style="@style/Text.16x.Manrope.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/manrope_bold"
+            app:fontFamily="@font/manrope_bold"
+            android:textStyle="bold"
+            android:textSize="14.5sp"
+            android:textColor="@color/white" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <View
+                android:id="@+id/vStatusDot"
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:background="@drawable/bg_status_dot" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDeviceStatus"
+                style="@style/Text.12x.Manrope.Regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:textSize="11.5sp"
+                android:fontFamily="@font/manrope_medium"
+                app:fontFamily="@font/manrope_medium"
+                android:textColor="@color/white50" />
+        </LinearLayout>
+
+    </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivChevron"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginEnd="16dp"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
         android:src="@drawable/ic_chevron_right_24px"
-        app:tint="@color/white70"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-        android:id="@+id/divider"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@color/support_search_border"
+        app:tint="#6E837F"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

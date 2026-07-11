@@ -47,23 +47,22 @@ class SupportDeviceAdapter(
             
             val statusText = item.status ?: ""
             val capitalizedStatus = statusText.replaceFirstChar { it.uppercase() }
-            binding.tvDeviceStatus.text = "● $capitalizedStatus"
+            binding.tvDeviceStatus.text = capitalizedStatus
             
-            if (statusText.equals("connected", ignoreCase = true)) {
-                binding.tvDeviceStatus.setTextColor(
-                    ContextCompat.getColor(binding.root.context, R.color.colorBgBtn1)
-                )
+            val dotColorRes = if (statusText.equals("connected", ignoreCase = true)) {
+                R.color.colorBgBtn1
             } else {
-                binding.tvDeviceStatus.setTextColor(
-                    ContextCompat.getColor(binding.root.context, R.color.disconnected)
-                )
+                R.color.disconnected
             }
+            binding.vStatusDot.backgroundTintList = android.content.res.ColorStateList.valueOf(
+                ContextCompat.getColor(binding.root.context, dotColorRes)
+            )
 
             // Load device image (automatically handles PNG or SVG using loadImage extension)
             binding.ivDeviceIcon.loadImage(item.deviceUrl)
-
-            // Hide divider for the last item in the list
-            binding.divider.isVisible = position < itemCount - 1
+            binding.ivDeviceIcon.setColorFilter(
+                ContextCompat.getColor(binding.root.context, R.color.ink2)
+            )
 
             binding.root.setOnClickListener {
                 onDeviceClick(item)

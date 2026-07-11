@@ -921,16 +921,16 @@ To get started:\n
     <string name="contact_describe_hint">Type your message here...</string>
     <string name="contact_describe_subtitle">Please share as much detail as possible.</string>
     <!-- Contact Support Screen Step 2 -->
-    <string name="contact_step2_title">2. Tell us more</string>
+    <string name="contact_step2_title">Tell us more</string>
     <string name="contact_step2_subtitle">This helps us understand your issue better.</string>
-    <string name="contact_select_device_title">Select your device (optional)</string>
+    <string name="contact_select_device_title">Device (optional)</string>
     <string name="contact_select_device_desc">Choose the device related to your issue.</string>
     <string name="contact_problem_title">What seems to be the problem?</string>
     <string name="contact_problem_desc">Choose the option that best matches your issue.</string>
     <string name="contact_start_title">When did this start?</string>
     <string name="contact_start_desc">Select the best option.</string>
     <string name="contact_app_version_title">App version (optional)</string>
-    <string name="contact_app_version_desc">You can find this in Profile &gt; Settings.</string>
+    <string name="contact_app_version_desc">You can find this in Console &gt; Personal information.</string>
     <string name="contact_back">Back</string>
     <string name="contact_continue">Continue</string>
 
@@ -958,14 +958,14 @@ To get started:\n
     <string name="contact_select_issue">Select an issue</string>
 
     <!-- Contact Support Screen Step 3 -->
-    <string name="contact_step3_title">3. Add attachments (optional)</string>
-    <string name="contact_step3_subtitle">Attachments help our team understand the issue faster.</string>
+    <string name="contact_step3_title">Add attachments</string>
+    <string name="contact_step3_subtitle">Optional — attachments help our team understand your issue faster.</string>
     <string name="contact_add_photos_desc">Add photos or screenshots</string>
-    <string name="contact_file_types_desc">PNG, JPG up to 10MB each</string>
+    <string name="contact_file_types_desc">PNG, JPG up to 10MB each · up to 5 files</string>
     <string name="contact_max_files_desc">You can add up to 5 files.</string>
     <string name="contact_additional_notes_title">Additional notes (optional)</string>
     <string name="contact_additional_notes_desc">Anything else we should know?</string>
-    <string name="contact_additional_notes_hint">Type your message here...</string>
+    <string name="contact_additional_notes_hint">Anything else we should know?</string>
 
     <string name="date_eyebrow">TUESDAY · 16 JUNE</string>
     <string name="greeting_title">Morning, Chinmay.</string>

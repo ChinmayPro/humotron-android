@@ -126,6 +126,7 @@
 
     <color name="bg_dark">#0B1315</color>
     <color name="card_bg">#44080F10</color>
+    <color name="support_card_bg">#8C080F10</color>
     <color name="card_stroke">#12FFFFFF</color>
     <color name="bottom_nav_bg">#DB040809</color>
 

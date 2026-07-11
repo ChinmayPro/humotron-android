@@ -52,7 +52,6 @@ class ContactCategoryAdapter(
         fun bind(item: SupportCategory) {
             binding.tvTitle.text = item.label ?: ""
             binding.tvDescription.text = item.description ?: ""
-            binding.ivIcon.loadImage(item.icon)
 
             val isSelected = item.key == selectedCategoryKey
             if (isSelected) {

@@ -46,6 +46,7 @@
         app:trackThickness="3dp" />
 
     <View
+        android:id="@+id/headerDivider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/deep_dives_hair"

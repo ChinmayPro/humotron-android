@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:focusable="true"
     android:focusableInTouchMode="true"
     tools:background="@drawable/ic_bg_main_dark"
@@ -22,236 +21,82 @@
         android:id="@+id/llTopContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingHorizontal="20dp"
-        android:paddingTop="12dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp"
+        android:paddingHorizontal="22dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header">
 
-        <!-- Title & Subtitle -->
-        <TextView
-            android:id="@+id/tvSupportTitle"
-            android:layout_width="match_parent"
+        <View
+            android:id="@+id/circle1"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:background="@drawable/bg_stepper_node_current" />
+
+        <View
+            android:id="@+id/line1"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_weight="1"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="1dp"
+            android:background="#1EFFFFFF" />
+
+        <View
+            android:id="@+id/circle2"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:background="@drawable/bg_stepper_node_inactive" />
+
+        <View
+            android:id="@+id/line2"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_weight="1"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="1dp"
+            android:background="#1EFFFFFF" />
+
+        <View
+            android:id="@+id/circle3"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:background="@drawable/bg_stepper_node_inactive" />
+
+        <View
+            android:id="@+id/line3"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_weight="1"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="1dp"
+            android:background="#1EFFFFFF" />
+
+        <View
+            android:id="@+id/circle4"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:background="@drawable/bg_stepper_node_inactive" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvStepEnd"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/contact_support_title"
-            android:textAppearance="@style/Text.20x.Manrope.SemiBold"
-            android:textColor="@color/white" />
+            android:layout_marginStart="8dp"
+            android:background="@drawable/bg_stepper_end_badge"
+            android:paddingHorizontal="9dp"
+            android:paddingVertical="5dp"
+            android:text="1/4"
+            android:textSize="9.5sp"
+            android:textAllCaps="true"
+            android:fontFamily="@font/manrope_bold"
+            app:fontFamily="@font/manrope_bold"
+            android:textStyle="bold"
+            android:textColor="#7d8a89" />
 
-        <TextView
-            android:id="@+id/tvSupportSubtitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="12dp"
-            android:text="@string/contact_support_subtitle"
-            android:textAppearance="@style/Text.14x.Manrope.Regular"
-            android:textColor="@color/white50" />
-
-        <!-- Step Indicator Container -->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/clStepIndicator"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp">
-
-            <!-- Guidelines representing center of 4 equal columns -->
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guide1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.125" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guide2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.375" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guide3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.625" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guide4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.875" />
-
-            <!-- Column boundary Guidelines -->
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guide_col1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.25" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guide_col2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.50" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guide_col3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.75" />
-
-            <!-- Circle 1 -->
-            <TextView
-                android:id="@+id/circle1"
-                style="@style/Text.14x.Manrope.Bold"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/bg_contact_step_active"
-                android:gravity="center"
-                android:text="1"
-                android:textColor="@color/colorBgBtn1"
-                app:layout_constraintEnd_toEndOf="@id/guide1"
-                app:layout_constraintStart_toStartOf="@id/guide1"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <!-- Circle 2 -->
-            <TextView
-                android:id="@+id/circle2"
-                style="@style/Text.14x.Manrope.Bold"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/bg_contact_radio_inactive"
-                android:gravity="center"
-                android:text="2"
-                android:textColor="@color/white30"
-                app:layout_constraintEnd_toEndOf="@id/guide2"
-                app:layout_constraintStart_toStartOf="@id/guide2"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <!-- Circle 3 -->
-            <TextView
-                android:id="@+id/circle3"
-                style="@style/Text.14x.Manrope.Bold"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/bg_contact_radio_inactive"
-                android:gravity="center"
-                android:text="3"
-                android:textColor="@color/white30"
-                app:layout_constraintEnd_toEndOf="@id/guide3"
-                app:layout_constraintStart_toStartOf="@id/guide3"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <!-- Circle 4 -->
-            <TextView
-                android:id="@+id/circle4"
-                style="@style/Text.14x.Manrope.Bold"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/bg_contact_radio_inactive"
-                android:gravity="center"
-                android:text="4"
-                android:textColor="@color/white30"
-                app:layout_constraintEnd_toEndOf="@id/guide4"
-                app:layout_constraintStart_toStartOf="@id/guide4"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <!-- Line 1: Circle 1 to Circle 2 -->
-            <View
-                android:id="@+id/line1"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:background="@color/white10"
-                app:layout_constraintBottom_toBottomOf="@id/circle1"
-                app:layout_constraintEnd_toStartOf="@id/circle2"
-                app:layout_constraintStart_toEndOf="@id/circle1"
-                app:layout_constraintTop_toTopOf="@id/circle1" />
-
-            <!-- Line 2: Circle 2 to Circle 3 -->
-            <View
-                android:id="@+id/line2"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:background="@color/white10"
-                app:layout_constraintBottom_toBottomOf="@id/circle1"
-                app:layout_constraintEnd_toStartOf="@id/circle3"
-                app:layout_constraintStart_toEndOf="@id/circle2"
-                app:layout_constraintTop_toTopOf="@id/circle1" />
-
-            <!-- Line 3: Circle 3 to Circle 4 -->
-            <View
-                android:id="@+id/line3"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:background="@color/white10"
-                app:layout_constraintBottom_toBottomOf="@id/circle1"
-                app:layout_constraintEnd_toStartOf="@id/circle4"
-                app:layout_constraintStart_toEndOf="@id/circle3"
-                app:layout_constraintTop_toTopOf="@id/circle1" />
-
-            <!-- Label 1 -->
-            <TextView
-                android:id="@+id/tvLabel1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:gravity="center"
-                android:text="@string/contact_step_issue_details"
-                android:textAppearance="@style/Text.12x.Manrope.Regular"
-                android:textColor="@color/colorBgBtn1"
-                app:layout_constraintEnd_toStartOf="@id/guide_col1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/circle1" />
-
-            <!-- Label 2 -->
-            <TextView
-                android:id="@+id/tvLabel2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:gravity="center"
-                android:text="@string/contact_step_more_info"
-                android:textAppearance="@style/Text.12x.Manrope.Regular"
-                android:textColor="@color/white30"
-                app:layout_constraintEnd_toStartOf="@id/guide_col2"
-                app:layout_constraintStart_toStartOf="@id/guide_col1"
-                app:layout_constraintTop_toBottomOf="@id/circle2" />
-
-            <!-- Label 3 -->
-            <TextView
-                android:id="@+id/tvLabel3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:gravity="center"
-                android:text="@string/contact_step_attachments"
-                android:textAppearance="@style/Text.12x.Manrope.Regular"
-                android:textColor="@color/white30"
-                app:layout_constraintEnd_toStartOf="@id/guide_col3"
-                app:layout_constraintStart_toStartOf="@id/guide_col2"
-                app:layout_constraintTop_toBottomOf="@id/circle3" />
-
-            <!-- Label 4 -->
-            <TextView
-                android:id="@+id/tvLabel4"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:gravity="center"
-                android:text="@string/contact_step_review"
-                android:textAppearance="@style/Text.12x.Manrope.Regular"
-                android:textColor="@color/white30"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/guide_col3"
-                app:layout_constraintTop_toBottomOf="@id/circle4" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -271,24 +116,55 @@
             android:paddingHorizontal="20dp"
             android:paddingBottom="24dp">
 
-            <!-- Section 1 -->
-            <TextView
-                android:id="@+id/tvSection1Title"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvSupportTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/contact_what_help"
-                android:textAppearance="@style/Text.16x.Manrope.SemiBold"
+                android:text="@string/contact_support_title"
+                android:textSize="24sp"
+                android:fontFamily="@font/manrope_bold"
+                app:fontFamily="@font/manrope_bold"
+                android:textStyle="bold"
                 android:textColor="@color/white" />
 
-            <TextView
-                android:id="@+id/tvSection1Subtitle"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvSupportSubtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@string/contact_select_option"
-                android:textAppearance="@style/Text.14x.Manrope.Regular"
+                android:text="@string/contact_support_subtitle"
+                android:textSize="14sp"
+                android:fontFamily="@font/manrope_medium"
+                app:fontFamily="@font/manrope_medium"
                 android:textColor="@color/white50" />
+
+            <!-- Section 1 Eyebrow Header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="24dp">
+
+                <TextView
+                    android:id="@+id/tvSection1Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="WHAT CAN WE HELP YOU WITH?"
+                    android:textSize="11.5sp"
+                    android:fontFamily="@font/manrope_bold"
+                    app:fontFamily="@font/manrope_bold"
+                    android:textStyle="bold"
+                    android:textColor="@color/ink2" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="10dp"
+                    android:background="@color/card_stroke" />
+            </LinearLayout>
 
             <!-- Category Container -->
             <androidx.recyclerview.widget.RecyclerView
@@ -401,19 +277,10 @@
                 android:id="@+id/tvDeviceTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="20dp"
                 android:text="@string/contact_select_device_title"
                 android:textAppearance="@style/Text.16x.Manrope.SemiBold"
                 android:textColor="@color/white" />
-
-            <TextView
-                android:id="@+id/tvDeviceDesc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/contact_select_device_desc"
-                android:textAppearance="@style/Text.14x.Manrope.Regular"
-                android:textColor="@color/white50" />
 
             <RelativeLayout
                 android:id="@+id/rlDeviceSelector"
@@ -455,19 +322,10 @@
                 android:id="@+id/tvProblemTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="20dp"
                 android:text="@string/contact_problem_title"
                 android:textAppearance="@style/Text.18x.Manrope.SemiBold"
                 android:textColor="@color/white" />
-
-            <TextView
-                android:id="@+id/tvProblemDesc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/contact_problem_desc"
-                android:textAppearance="@style/Text.14x.Manrope.Regular"
-                android:textColor="@color/white50" />
 
             <RelativeLayout
                 android:id="@+id/rlProblemSelector"
@@ -495,108 +353,109 @@
                     app:tint="@color/white" />
             </RelativeLayout>
 
-            <!-- When did this start? Selection -->
-            <TextView
-                android:id="@+id/tvStartTitle"
+            <!-- Eyebrow Section for Start Duration -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="@string/contact_start_title"
-                android:textAppearance="@style/Text.16x.Manrope.SemiBold"
-                android:textColor="@color/white" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tvStartDesc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/contact_start_desc"
-                android:textAppearance="@style/Text.14x.Manrope.Regular"
-                android:textColor="@color/white50" />
+                <TextView
+                    android:id="@+id/tvStartTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="WHEN DID THIS START?"
+                    android:textAllCaps="true"
+                    android:textAppearance="@style/Text.12x.Manrope.Bold"
+                    android:textColor="@color/white50" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="10dp"
+                    android:background="@color/card_stroke" />
+            </LinearLayout>
 
             <RadioGroup
                 android:id="@+id/rgStartDuration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/bg_contact_description_input"
-                android:padding="2dp">
+                android:background="@null"
+                android:padding="0dp">
 
                 <RadioButton
                     android:id="@+id/rbToday"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
+                    android:layout_marginBottom="10dp"
                     android:button="@null"
                     android:checked="true"
-                    android:drawableEnd="@drawable/selector_contact_radio"
+                    android:background="@drawable/bg_contact_radio_card"
+                    android:drawableStart="@drawable/selector_contact_radio"
+                    android:drawablePadding="12dp"
                     android:gravity="center_vertical"
                     android:paddingHorizontal="16dp"
                     android:text="Today"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/support_search_border" />
-
                 <RadioButton
                     android:id="@+id/rbLast7Days"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
+                    android:layout_marginBottom="10dp"
                     android:button="@null"
-                    android:drawableEnd="@drawable/selector_contact_radio"
+                    android:background="@drawable/bg_contact_radio_card"
+                    android:drawableStart="@drawable/selector_contact_radio"
+                    android:drawablePadding="12dp"
                     android:gravity="center_vertical"
                     android:paddingHorizontal="16dp"
                     android:text="In the last 7 days"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/support_search_border" />
-
                 <RadioButton
                     android:id="@+id/rbLast30Days"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
+                    android:layout_marginBottom="10dp"
                     android:button="@null"
-                    android:drawableEnd="@drawable/selector_contact_radio"
+                    android:background="@drawable/bg_contact_radio_card"
+                    android:drawableStart="@drawable/selector_contact_radio"
+                    android:drawablePadding="12dp"
                     android:gravity="center_vertical"
                     android:paddingHorizontal="16dp"
                     android:text="In the last 30 days"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/support_search_border" />
-
                 <RadioButton
                     android:id="@+id/rbMoreThan30Days"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
+                    android:layout_marginBottom="10dp"
                     android:button="@null"
-                    android:drawableEnd="@drawable/selector_contact_radio"
+                    android:background="@drawable/bg_contact_radio_card"
+                    android:drawableStart="@drawable/selector_contact_radio"
+                    android:drawablePadding="12dp"
                     android:gravity="center_vertical"
                     android:paddingHorizontal="16dp"
                     android:text="More than 30 days ago"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/support_search_border" />
-
                 <RadioButton
                     android:id="@+id/rbNotSure"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
+                    android:layout_marginBottom="10dp"
                     android:button="@null"
-                    android:drawableEnd="@drawable/selector_contact_radio"
+                    android:background="@drawable/bg_contact_radio_card"
+                    android:drawableStart="@drawable/selector_contact_radio"
+                    android:drawablePadding="12dp"
                     android:gravity="center_vertical"
                     android:paddingHorizontal="16dp"
                     android:text="Not sure"
@@ -609,25 +468,16 @@
                 android:id="@+id/tvAppVersionTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="20dp"
                 android:text="@string/contact_app_version_title"
                 android:textAppearance="@style/Text.16x.Manrope.SemiBold"
                 android:textColor="@color/white" />
-
-            <TextView
-                android:id="@+id/tvAppVersionDesc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/contact_app_version_desc"
-                android:textAppearance="@style/Text.14x.Manrope.Regular"
-                android:textColor="@color/white50" />
 
             <RelativeLayout
                 android:id="@+id/rlAppVersionSelector"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="12dp"
                 android:background="@drawable/bg_contact_description_input"
                 android:paddingHorizontal="16dp">
 
@@ -648,6 +498,15 @@
                     android:src="@drawable/ic_keyboard_arrow_down_24px"
                     app:tint="@color/white" />
             </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tvAppVersionDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/contact_app_version_desc"
+                android:textAppearance="@style/Text.12x.Manrope.Regular"
+                android:textColor="@color/white30" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
@@ -705,9 +564,9 @@
 
                 <ImageView
                     android:id="@+id/ivUploadIcon"
-                    android:layout_width="38dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_contact_upload_gallery" />
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_upload_tray" />
 
                 <TextView
                     android:id="@+id/tvAddPhotos"
@@ -747,7 +606,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/contact_max_files_desc"
-                android:textColor="@color/white50" />
+                android:textColor="@color/white50"
+                android:visibility="gone" />
 
             <!-- Additional Notes -->
             <TextView
@@ -766,7 +626,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="@string/contact_additional_notes_desc"
-                android:textColor="@color/white50" />
+                android:textColor="@color/white50"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/llAdditionalNotesContainer"
@@ -800,7 +661,8 @@
                     android:layout_gravity="end"
                     android:layout_marginTop="8dp"
                     android:text="0/1000"
-                    android:textColor="@color/white30" />
+                    android:textColor="@color/white30"
+                    android:visibility="gone" />
             </LinearLayout>
 
         </LinearLayout>
@@ -831,8 +693,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="4. Review &amp; send"
-                android:textAppearance="@style/Text.18x.Manrope.SemiBold"
+                android:text="Review &amp; send"
+                android:textSize="24dp"
+                android:fontFamily="@font/manrope_bold"
+                app:fontFamily="@font/manrope_bold"
+                android:textStyle="bold"
                 android:textColor="@color/white" />
 
             <TextView
@@ -840,7 +705,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Please review your details before submitting your request."
+                android:text="Please review your details before submitting."
                 android:textAppearance="@style/Text.14x.Manrope.Regular"
                 android:textColor="@color/white50" />
 
@@ -857,29 +722,25 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <FrameLayout
-                        android:id="@+id/flSummaryIconContainer"
-                        android:layout_width="38dp"
-                        android:layout_height="38dp"
-                        android:background="@drawable/bg_contact_step_active">
-
-                        <ImageView
-                            android:id="@+id/ivSummaryIcon"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_sheet_document"
-                            app:tint="@color/colorBgBtn1" />
-                    </FrameLayout>
+                    <ImageView
+                        android:id="@+id/ivSummaryIcon"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_list_24px"
+                        app:tint="@color/colorBgBtn1" />
 
                     <TextView
+                        style="@style/Text.16x.Manrope.Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/flSummaryIconContainer"
+                        android:layout_toEndOf="@id/ivSummaryIcon"
                         android:layout_marginStart="12dp"
                         android:layout_centerVertical="true"
-                        android:text="Issue\nsummary"
-                        android:textAppearance="@style/Text.16x.Manrope.SemiBold"
+                        android:text="Issue summary"
+                        android:fontFamily="@font/manrope_bold"
+                        app:fontFamily="@font/manrope_bold"
                         android:textColor="@color/white" />
 
                     <TextView
@@ -889,7 +750,9 @@
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:text="Edit"
-                        android:textAppearance="@style/Text.14x.Manrope.SemiBold"
+                        android:textAppearance="@style/Text.14x.Manrope.Bold"
+                        android:fontFamily="@font/manrope_bold"
+                        app:fontFamily="@font/manrope_bold"
                         android:textColor="@color/colorBgBtn1"
                         android:clickable="true"
                         android:focusable="true" />
@@ -905,8 +768,7 @@
                     <!-- Category -->
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp">
+                        android:layout_height="wrap_content">
                         <TextView
                             android:id="@+id/tvCategoryLabel"
                             android:layout_width="wrap_content"
@@ -928,11 +790,49 @@
                             android:textColor="@color/white" />
                     </RelativeLayout>
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="#1EFFFFFF" />
+
+                    <!-- Device -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/tvDeviceLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:text="Device"
+                            android:textAppearance="@style/Text.14x.Manrope.Regular"
+                            android:textColor="@color/white50" />
+                        <TextView
+                            android:id="@+id/tvReviewDevice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_toEndOf="@id/tvDeviceLabel"
+                            android:layout_marginStart="16dp"
+                            android:gravity="end"
+                            android:text="-"
+                            android:textAppearance="@style/Text.14x.Manrope.SemiBold"
+                            android:textColor="@color/white" />
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="#1EFFFFFF" />
+
                     <!-- Problem -->
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp">
+                        android:layout_height="wrap_content">
                         <TextView
                             android:id="@+id/tvProblemLabel"
                             android:layout_width="wrap_content"
@@ -954,15 +854,22 @@
                             android:textColor="@color/white" />
                     </RelativeLayout>
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="#1EFFFFFF" />
+
                     <!-- When did this start -->
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp">
+                        android:layout_height="wrap_content">
                         <TextView
                             android:id="@+id/tvStartLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
                             android:text="When did this start?"
                             android:textAppearance="@style/Text.14x.Manrope.Regular"
                             android:textColor="@color/white50" />
@@ -979,6 +886,13 @@
                             android:textColor="@color/white" />
                     </RelativeLayout>
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="#1EFFFFFF" />
+
                     <!-- App Version -->
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -987,6 +901,7 @@
                             android:id="@+id/tvAppVersionLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
                             android:text="App version"
                             android:textAppearance="@style/Text.14x.Manrope.Regular"
                             android:textColor="@color/white50" />
@@ -1572,6 +1487,14 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
+    <!-- Bottom Gradient Overlay -->
+    <View
+        android:id="@+id/vBottomFade"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:background="@drawable/bg_bottom_fade"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
     <LinearLayout
         android:id="@+id/bottomBar"
         android:layout_width="0dp"
@@ -1579,7 +1502,7 @@
         android:orientation="vertical"
         android:paddingHorizontal="20dp"
         android:paddingTop="12dp"
-        android:paddingBottom="24dp"
+        android:paddingBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -1595,11 +1518,11 @@
                 android:id="@+id/btnContinue"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
-                android:background="@drawable/bg_btn_round_rect_16"
+                android:background="@drawable/bg_cta_button"
                 android:fontFamily="@font/manrope_bold"
                 android:text="@string/contact_continue"
                 android:textAllCaps="false"
-                android:textColor="@color/d900"
+                android:textColor="@color/color_cta_text"
                 android:textSize="16sp" />
 
             <ProgressBar
@@ -1622,10 +1545,10 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnBackStep2"
                 android:layout_width="0dp"
-                android:layout_height="56dp"
+                android:layout_height="54dp"
                 android:layout_marginEnd="12dp"
                 android:layout_weight="1"
-                android:background="@drawable/bg_btn_back_step2"
+                android:background="@drawable/bg_back_button"
                 android:fontFamily="@font/manrope_bold"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
@@ -1645,14 +1568,14 @@
                     android:id="@+id/btnContinueStep2"
                     android:layout_width="match_parent"
                     android:layout_height="54dp"
-                    android:background="@drawable/bg_btn_round_rect_16"
+                    android:background="@drawable/bg_cta_button"
                     android:fontFamily="@font/manrope_bold"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
                     android:minHeight="0dp"
                     android:text="@string/contact_continue"
                     android:textAllCaps="false"
-                    android:textColor="@color/d900"
+                    android:textColor="@color/color_cta_text"
                     android:textSize="16sp" />
 
                 <ProgressBar
@@ -1676,10 +1599,10 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnBackStep3"
                 android:layout_width="0dp"
-                android:layout_height="56dp"
+                android:layout_height="54dp"
                 android:layout_marginEnd="12dp"
                 android:layout_weight="1"
-                android:background="@drawable/bg_btn_back_step2"
+                android:background="@drawable/bg_back_button"
                 android:fontFamily="@font/manrope_bold"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
@@ -1699,14 +1622,14 @@
                     android:id="@+id/btnContinueStep3"
                     android:layout_width="match_parent"
                     android:layout_height="54dp"
-                    android:background="@drawable/bg_btn_round_rect_16"
+                    android:background="@drawable/bg_cta_button"
                     android:fontFamily="@font/manrope_bold"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
                     android:minHeight="0dp"
                     android:text="@string/contact_continue"
                     android:textAllCaps="false"
-                    android:textColor="@color/d900"
+                    android:textColor="@color/color_cta_text"
                     android:textSize="16sp" />
 
                 <ProgressBar
@@ -1736,7 +1659,7 @@
                     android:id="@+id/btnSubmitRequest"
                     android:layout_width="match_parent"
                     android:layout_height="54dp"
-                    android:background="@drawable/bg_btn_round_rect_16"
+                    android:background="@drawable/bg_cta_button"
                     app:backgroundTint="@null"
                     android:fontFamily="@font/manrope_bold"
                     android:insetTop="0dp"
@@ -1744,10 +1667,10 @@
                     android:minHeight="0dp"
                     android:text="Submit request"
                     android:textAllCaps="false"
-                    android:textColor="@color/d900"
+                    android:textColor="@color/color_cta_text"
                     android:textSize="16sp"
                     app:icon="@drawable/ic_send"
-                    app:iconTint="@color/d900"
+                    app:iconTint="@color/color_cta_text"
                     app:iconSize="20dp"
                     app:iconGravity="textStart"
                     app:iconPadding="8dp"
