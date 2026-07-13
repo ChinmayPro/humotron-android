@@ -190,15 +190,29 @@ class DeviceConfigFragment : BaseFragment(R.layout.fragment_device_config) {
                 binding.mcvLowPowerMode.visibility = View.VISIBLE
                 binding.mcvLocalData2.visibility = View.VISIBLE
                 binding.clDeviceInsight.visibility = View.VISIBLE
-
-
                 observeRing()
             }
 
-            DeviceType.BP_MACHINE -> {
+            DeviceType.SMART_CUFF -> {
+                binding.llDeviceConfig.visibility = View.VISIBLE
+                binding.clDeviceInsight.visibility = View.VISIBLE
+                binding.clLocalData1.visibility = View.GONE
+
+                binding.mcvMeasureFreq.visibility = View.GONE
+                binding.mcvLowPowerMode.visibility = View.GONE
+                binding.mcvLocalData2.visibility = View.GONE
+                binding.clDeviceInsight.visibility = View.GONE
             }
 
             DeviceType.WEIGHT_MACHINE -> {
+                binding.llDeviceConfig.visibility = View.VISIBLE
+                binding.clDeviceInsight.visibility = View.VISIBLE
+                binding.clLocalData1.visibility = View.GONE
+
+                binding.mcvMeasureFreq.visibility = View.GONE
+                binding.mcvLowPowerMode.visibility = View.GONE
+                binding.mcvLocalData2.visibility = View.GONE
+                binding.clDeviceInsight.visibility = View.GONE
             }
 
             DeviceType.UNKNOWN -> {
@@ -351,7 +365,7 @@ class DeviceConfigFragment : BaseFragment(R.layout.fragment_device_config) {
                 DeviceAction.RE_SETUP
             )
 
-            DeviceType.BP_MACHINE -> {
+            DeviceType.SMART_CUFF -> {
                 listOf(
                     DeviceAction.RESET_FACTORY,
                     DeviceAction.REMOVE_FROM_ACCOUNT,
@@ -418,7 +432,7 @@ class DeviceConfigFragment : BaseFragment(R.layout.fragment_device_config) {
                     DeviceType.BAND -> {
                     }
 
-                    DeviceType.BP_MACHINE -> {
+                    DeviceType.SMART_CUFF -> {
                     }
 
                     DeviceType.WEIGHT_MACHINE -> {
@@ -453,12 +467,12 @@ class DeviceConfigFragment : BaseFragment(R.layout.fragment_device_config) {
                         val hwId = when (deviceType) {
                             DeviceType.BAND -> prefUtils.getBandHardware()?.id
                             DeviceType.RING -> prefUtils.getRingHardwareData()?.id
-                            DeviceType.BP_MACHINE -> {
-                                ""
+                            DeviceType.SMART_CUFF -> {
+                                prefUtils.getBpHardware()?.id
                             }
 
                             DeviceType.WEIGHT_MACHINE -> {
-                                ""
+                                prefUtils.getWeightHardware()?.id
                             }
 
                             DeviceType.UNKNOWN -> null
@@ -544,10 +558,14 @@ class DeviceConfigFragment : BaseFragment(R.layout.fragment_device_config) {
                 prefUtils.remove(Preference.HARDWARE_DATA)
             }
 
-            DeviceType.BP_MACHINE -> {
+            DeviceType.SMART_CUFF -> {
+                prefUtils.remove(Preference.BP_MACHINE)
+                prefUtils.remove(Preference.BP_HARDWARE_DATA)
             }
 
             DeviceType.WEIGHT_MACHINE -> {
+                prefUtils.remove(Preference.WEIGHT_SCALE)
+                prefUtils.remove(Preference.WEIGHT_HARDWARE_DATA)
             }
 
             DeviceType.UNKNOWN -> Unit
@@ -565,7 +583,7 @@ class DeviceConfigFragment : BaseFragment(R.layout.fragment_device_config) {
                 app.ringDeviceManager.unregisterCb()
             }
 
-            DeviceType.BP_MACHINE -> {
+            DeviceType.SMART_CUFF -> {
             }
 
             DeviceType.WEIGHT_MACHINE -> {

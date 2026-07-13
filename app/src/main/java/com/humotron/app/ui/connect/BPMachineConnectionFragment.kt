@@ -263,7 +263,7 @@ class BPMachineConnectionFragment : Fragment(R.layout.fragment_bp_machine_connec
                                 deviceId
                             )
                         )
-                        bundle.putSerializable(NavKeys.KEY_DEVICE_TYPE, DeviceType.BP_MACHINE)
+                        bundle.putSerializable(NavKeys.KEY_DEVICE_TYPE, DeviceType.SMART_CUFF)
                     }
                     findNavController().navigate(R.id.fragmentDeviceConnected, bundle)
                 }
@@ -271,7 +271,7 @@ class BPMachineConnectionFragment : Fragment(R.layout.fragment_bp_machine_connec
                 Status.ERROR, Status.EXCEPTION -> {
                     hideProgress()
                     val bundle = Bundle()
-                    bundle.putSerializable(NavKeys.KEY_DEVICE_TYPE, DeviceType.BP_MACHINE)
+                    bundle.putSerializable(NavKeys.KEY_DEVICE_TYPE, DeviceType.SMART_CUFF)
                     findNavController().navigate(R.id.fragmentDeviceConnected, bundle)
                 }
 
@@ -338,7 +338,7 @@ class BPMachineConnectionFragment : Fragment(R.layout.fragment_bp_machine_connec
         if (prefUtils.getBpHardwareId().isNullOrEmpty()) {
             viewModel.addHardwareInProfile(
                 AddHardware(
-                    DeviceType.BP_MACHINE.value,
+                    DeviceType.SMART_CUFF.value,
                     device.macAddress
                 )
             )
@@ -357,7 +357,7 @@ class BPMachineConnectionFragment : Fragment(R.layout.fragment_bp_machine_connec
                         deviceId
                     )
                 )
-                bundle.putSerializable(NavKeys.KEY_DEVICE_TYPE, DeviceType.BP_MACHINE)
+                bundle.putSerializable(NavKeys.KEY_DEVICE_TYPE, DeviceType.SMART_CUFF)
             }
             findNavController().navigate(R.id.fragmentDeviceConnected, bundle)
         }

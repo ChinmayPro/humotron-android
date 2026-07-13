@@ -133,4 +133,25 @@
         <attr name="hdevColor" format="color" />
         <attr name="hdevProgress" format="float" />
     </declare-styleable>
+
+    <!--BpMeasurementView-->
+    <declare-styleable name="BpMeasurementView">
+        <attr name="minValueBP" format="float" />
+        <attr name="maxValueBP" format="float" />
+        <attr name="stepBP" format="float" />
+        <attr name="trackColorBP" format="color" />
+        <!--  fillColor is split into two stops so it can reproduce the HTML's
+                     linear-gradient(180deg, #9be84f, #5fbf6e) — a single color can't
+                     express a gradient.  -->
+        <attr name="fillColorStart" format="color" />
+        <attr name="fillColorEnd" format="color" />
+        <attr name="textColorBP" format="color" />
+        <attr name="valueTextSize" format="dimension" />
+        <attr name="stepTextSize" format="dimension" />
+        <attr name="minMaxLabelTopMarginBP" format="dimension" />
+        <attr name="minMaxLabelBottomMarginBP" format="dimension" />
+        <attr name="barLabelGapBP" format="dimension" />
+        <attr name="showValueLabel" format="boolean" />
+        <attr name="showStepLabels" format="boolean" />
+    </declare-styleable>
 </resources>

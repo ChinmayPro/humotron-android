@@ -3,7 +3,7 @@ package com.humotron.app.domain.modal
 enum class DeviceType(val value: String) {
     BAND("WristBand"),
     RING("HumotronRing"),
-    BP_MACHINE("BPMachine"),
+    SMART_CUFF("BPMachine"),
     WEIGHT_MACHINE("WeightMachine"),
     UNKNOWN("Unknown");
 

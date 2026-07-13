@@ -47,7 +47,6 @@ import com.humotron.app.ui.device.adapter.SupplementsAdapter
 import com.humotron.app.ui.dialogs.InfoBottomSheetDialog
 import com.humotron.app.ui.navigation.NavKeys
 import com.humotron.app.util.utcOffsetToLocalTime
-import com.pluto.plugins.logger.PlutoLog
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -218,7 +217,7 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
                 tabNames = resources.getStringArray(R.array.tabs_hour_day_week)
             }
 
-            DeviceType.BP_MACHINE -> {
+            DeviceType.SMART_CUFF -> {
             }
 
             DeviceType.WEIGHT_MACHINE -> {
@@ -580,7 +579,7 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
                                         )
                                     }
 
-                                    DeviceType.BP_MACHINE -> {
+                                    DeviceType.SMART_CUFF -> {
                                     }
 
                                     DeviceType.WEIGHT_MACHINE -> {

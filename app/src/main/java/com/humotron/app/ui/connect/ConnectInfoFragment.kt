@@ -55,7 +55,7 @@ class ConnectInfoFragment : Fragment(R.layout.fragment_connect_info) {
         }
 
         when (mDeviceInfo?.deviceType) {
-            DeviceType.BP_MACHINE -> {
+            DeviceType.SMART_CUFF -> {
                 binding.tvDeviceName.text =
                     getString(R.string.connect_your_bp_machine)
                 binding.tvHeader.isVisible = false
@@ -133,7 +133,7 @@ class ConnectInfoFragment : Fragment(R.layout.fragment_connect_info) {
                 findNavController().navigate(R.id.fragmentBandConnection)
             }
 
-            DeviceType.BP_MACHINE -> {
+            DeviceType.SMART_CUFF -> {
                 findNavController().navigate(R.id.fragmentBPMachineConnection)
             }
 

@@ -33,12 +33,11 @@
                 android:id="@+id/tvMainTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/manrope_medium"
+                android:fontFamily="@font/manrope_extra_bold"
                 android:text="Warm"
                 android:textAlignment="center"
                 android:textColor="#FF9800"
-                android:textSize="36sp"
-                android:textStyle="bold" />
+                android:textSize="34sp" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tvSubtitle"
@@ -48,16 +47,16 @@
                 android:fontFamily="@font/manrope_medium"
                 android:text="Skin temperature · just now"
                 android:textAlignment="center"
-                android:textColor="#597A7A"
-                android:textSize="14sp" />
+                android:textColor="@color/ink4"
+                android:textSize="11.5sp" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cvStatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                app:cardBackgroundColor="#213028"
-                app:cardCornerRadius="12dp"
+                app:cardBackgroundColor="@color/good_14"
+                app:cardCornerRadius="14dp"
                 app:cardElevation="0dp"
                 app:strokeWidth="0dp">
 
@@ -70,11 +69,11 @@
                         android:id="@+id/tvStatusMessage"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/manrope_medium"
+                        android:fontFamily="@font/manrope_bold"
                         android:text="A mild upward drift from your baseline."
                         android:textAlignment="center"
                         android:textColor="#FF9800"
-                        android:textSize="16sp"
+                        android:textSize="13sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -184,11 +183,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="@font/manrope_medium"
+                        android:fontFamily="@font/manrope_bold"
                         android:text="Stable"
                         android:textAlignment="center"
-                        android:textColor="#597A7A"
-                        android:textSize="12sp" />
+                        android:textColor="@color/ink4"
+                        android:textSize="9.5sp" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tvLabelWarm"
@@ -199,7 +198,7 @@
                         android:text="Warm"
                         android:textAlignment="center"
                         android:textColor="#FFFFFF"
-                        android:textSize="12sp"
+                        android:textSize="9.5sp"
                         android:textStyle="bold" />
 
                     <com.google.android.material.textview.MaterialTextView
@@ -207,22 +206,22 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="@font/manrope_medium"
+                        android:fontFamily="@font/manrope_bold"
                         android:text="Elevated"
                         android:textAlignment="center"
-                        android:textColor="#597A7A"
-                        android:textSize="12sp" />
+                        android:textColor="@color/ink4"
+                        android:textSize="9.5sp" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tvLabelHigh"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="@font/manrope_medium"
+                        android:fontFamily="@font/manrope_bold"
                         android:text="High drift"
                         android:textAlignment="center"
-                        android:textColor="#597A7A"
-                        android:textSize="12sp" />
+                        android:textColor="@color/ink4"
+                        android:textSize="9.5sp" />
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -242,7 +241,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
                     app:cardBackgroundColor="@color/deep_dives_card"
-                    app:cardCornerRadius="12dp"
+                    app:cardCornerRadius="14dp"
                     app:cardElevation="0dp"
                     app:strokeColor="@color/card_stroke"
                     app:strokeWidth="@dimen/_1dp">
@@ -256,11 +255,10 @@
                             android:id="@+id/tvBaselineTitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/manrope_medium"
+                            android:fontFamily="@font/manrope_bold"
                             android:text="YOUR BASELINE"
-                            android:textColor="#597A7A"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
+                            android:textColor="@color/ink4"
+                            android:textSize="11sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -270,10 +268,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:fontFamily="@font/manrope_medium"
+                            android:fontFamily="@font/manrope_extra_bold"
                             android:text="36.6"
                             android:textColor="#B0C4C4"
-                            android:textSize="28sp"
+                            android:textSize="22sp"
                             android:textStyle="bold"
                             app:layout_constraintEnd_toStartOf="@+id/tvBaselineUnit"
                             app:layout_constraintHorizontal_chainStyle="packed"
@@ -285,14 +283,16 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
-                            android:fontFamily="@font/manrope_medium"
+                            android:fontFamily="@font/manrope_bold"
                             android:text="°C"
                             android:textColor="#B0C4C4"
-                            android:textSize="16sp"
+                            android:textSize="11sp"
                             app:layout_constraintBaseline_toBaselineOf="@+id/tvBaselineVal"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/tvBaselineVal" />
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
+
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
@@ -302,7 +302,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
                     app:cardBackgroundColor="#132323"
-                    app:cardCornerRadius="12dp"
+                    app:cardCornerRadius="14dp"
                     app:cardElevation="0dp"
                     app:strokeColor="@color/card_stroke"
                     app:strokeWidth="@dimen/_1dp">
@@ -316,11 +316,10 @@
                             android:id="@+id/tvCurrentTitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/manrope_medium"
+                            android:fontFamily="@font/manrope_bold"
                             android:text="CURRENT TEMPERATURE"
-                            android:textColor="#597A7A"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
+                            android:textColor="@color/ink4"
+                            android:textSize="11sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -330,10 +329,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:fontFamily="@font/manrope_medium"
+                            android:fontFamily="@font/manrope_extra_bold"
                             android:text="37.2"
                             android:textColor="#FF9800"
-                            android:textSize="28sp"
+                            android:textSize="22sp"
                             android:textStyle="bold"
                             app:layout_constraintEnd_toStartOf="@+id/tvCurrentUnit"
                             app:layout_constraintHorizontal_chainStyle="packed"
@@ -345,15 +344,18 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
-                            android:fontFamily="@font/manrope_medium"
+                            android:fontFamily="@font/manrope_bold"
                             android:text="°C"
                             android:textColor="#FF9800"
-                            android:textSize="16sp"
+                            android:textSize="11sp"
                             app:layout_constraintBaseline_toBaselineOf="@+id/tvCurrentVal"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/tvCurrentVal" />
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
+
                 </com.google.android.material.card.MaterialCardView>
+
             </LinearLayout>
 
             <com.google.android.material.textview.MaterialTextView
@@ -361,12 +363,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                android:fontFamily="@font/manrope_medium"
+                android:fontFamily="@font/manrope_extra_bold"
                 android:text="What this means"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textSize="22sp" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cvMeansBox"
@@ -374,30 +375,31 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 app:cardBackgroundColor="@color/white_3"
-                app:cardCornerRadius="16dp"
+                app:cardCornerRadius="14dp"
                 app:cardElevation="0dp"
-                app:strokeColor="#254240"
+                app:strokeColor="@color/white_7"
                 app:strokeWidth="1dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="20dp">
+                    android:padding="14dp">
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tvMeansDesc"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/manrope_medium"
+                        android:fontFamily="@font/manrope_semibold"
                         android:lineSpacingExtra="4dp"
                         android:text="Your skin is running a little warmer than your normal. Often it's a warm room, a late workout or a drink — but if it holds, it can be an early sign of illness or under-recovery."
                         android:textColor="#FFFFFF"
-                        android:textSize="15sp"
+                        android:textSize="12.5sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.textview.MaterialTextView
@@ -405,12 +407,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:fontFamily="@font/manrope_medium"
+                android:fontFamily="@font/manrope_extra_bold"
                 android:text="What to do next"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textSize="22sp" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clStep1"
@@ -434,11 +435,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:fontFamily="@font/manrope_medium"
+                        android:fontFamily="@font/manrope_extra_bold"
                         android:text="1"
                         android:textColor="#A2D973"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                        android:textSize="12sp" />
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.textview.MaterialTextView
@@ -449,8 +449,8 @@
                     android:fontFamily="@font/manrope_medium"
                     android:lineSpacingExtra="2dp"
                     android:text="Re-check when settled. Take another read once you've cooled and rested."
-                    android:textColor="#92A9A9"
-                    android:textSize="15sp"
+                    android:textColor="@color/ink2"
+                    android:textSize="12.5sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/cvNum1"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -478,11 +478,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:fontFamily="@font/manrope_medium"
+                        android:fontFamily="@font/manrope_extra_bold"
                         android:text="2"
                         android:textColor="#A2D973"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                        android:textSize="12sp" />
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.textview.MaterialTextView
@@ -493,11 +492,12 @@
                     android:fontFamily="@font/manrope_medium"
                     android:lineSpacingExtra="2dp"
                     android:text="Protect recovery. Prioritise sleep and hydration tonight."
-                    android:textColor="#92A9A9"
-                    android:textSize="15sp"
+                    android:textColor="@color/ink2"
+                    android:textSize="12.5sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/cvNum2"
                     app:layout_constraintTop_toTopOf="parent" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -522,11 +522,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:fontFamily="@font/manrope_medium"
+                        android:fontFamily="@font/manrope_extra_bold"
                         android:text="3"
                         android:textColor="#A2D973"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                        android:textSize="12sp" />
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.textview.MaterialTextView
@@ -537,8 +536,8 @@
                     android:fontFamily="@font/manrope_medium"
                     android:lineSpacingExtra="2dp"
                     android:text="Watch the trend. A drift that holds for a day or two is worth attention."
-                    android:textColor="#92A9A9"
-                    android:textSize="15sp"
+                    android:textColor="@color/ink2"
+                    android:textSize="12.5sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/cvNum3"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -550,13 +549,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:fontFamily="@font/manrope_medium"
+                android:fontFamily="@font/manrope_bold"
                 android:gravity="start|center_vertical"
                 android:paddingStart="1dp"
                 android:text="See Skin temperature in your metrics"
                 android:textAllCaps="false"
                 android:textColor="#FF6A5C"
-                android:textSize="14sp"
+                android:textSize="13sp"
                 app:icon="@drawable/ic_menu_24px"
                 app:iconGravity="start"
                 app:iconPadding="14dp"
@@ -567,16 +566,16 @@
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/manrope_medium"
+                android:fontFamily="@font/manrope_semibold"
                 android:paddingStart="1dp"
                 android:text="Download scan report"
                 android:textAllCaps="false"
-                android:textColor="#597A7A"
-                android:textSize="14sp"
+                android:textColor="@color/ink4"
+                android:textSize="12.5sp"
                 app:icon="@drawable/ic_report"
                 app:iconGravity="start"
                 app:iconPadding="14dp"
-                app:iconTint="#597A7A" />
+                app:iconTint="@color/ink4" />
 
             <Space
                 android:layout_width="match_parent"
@@ -602,7 +601,7 @@
         android:text="Done"
         android:textAllCaps="false"
         android:textColor="#000000"
-        android:textSize="16sp"
+        android:textSize="15sp"
         android:textStyle="bold"
         app:backgroundTint="#CFF744"
         app:cornerRadius="32dp"

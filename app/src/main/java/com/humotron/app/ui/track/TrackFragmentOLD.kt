@@ -468,7 +468,7 @@ class TrackFragmentOLD : BaseFragment(R.layout.fragment_track_old), OnClickListe
                         R.drawable.ic_bp_machine_setup,
                         "BP Monitor",
                         "One-click arm BP measurement",
-                        deviceType = DeviceType.BP_MACHINE
+                        deviceType = DeviceType.SMART_CUFF
                     ), DeviceInfo(
                         R.drawable.ic_weight_scale,
                         "Humotron Weight Scale",
