@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://tools.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
+
+    <!-- Hero Image Background (Behind ScrollView) -->
+    <ImageView
+        android:id="@+id/ivHeroImage"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/backgrounds/scenic" />
+
+    <!-- Hero Image Gradient Overlay -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="@drawable/bg_recipe_image_gradient"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Content ScrollView -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsvContent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        app:layout_constraintBottom_toTopOf="@id/llBottomBar"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Spacer to let the Hero Image show behind -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="210dp"
+                android:background="@android:color/transparent" />
+
+            <!-- Content Sheet Card -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_recipe_detail_sheet"
+                android:orientation="vertical"
+                android:paddingTop="22dp"
+                android:paddingBottom="40dp">
+
+                <!-- Title & Subtitle Card Section -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="22dp">
+
+                    <TextView
+                        android:id="@+id/tvMetricPill"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_recipe_detail_metric_pill"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="5dp"
+                        android:textSize="11sp"
+                        android:textColor="@color/booster_text_ghost"
+                        android:fontFamily="sans-serif-bold"
+                        tools:text="↓ Systolic BP" />
+
+                    <TextView
+                        android:id="@+id/tvRecipeName"
+                        style="@style/Text.24x.Manrope.ExtraBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:textColor="@color/white"
+                        tools:text="Salmon with Kale" />
+
+                    <TextView
+                        android:id="@+id/tvRecipeMeta"
+                        style="@style/Text.12_5x.Manrope.Medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/textColorMuted"
+                        tools:text="Medium · 350 kcal per serving" />
+                </LinearLayout>
+
+                <!-- Macros Row -->
+                <LinearLayout
+                    android:id="@+id/llMacros"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="22dp"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal" />
+
+                <!-- Meta Grid Details -->
+                <GridLayout
+                    android:id="@+id/glMetaGrid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="22dp"
+                    android:layout_marginTop="20dp"
+                    android:columnCount="2"
+                    android:rowCount="3"
+                    android:useDefaultMargins="true" />
+
+                <!-- Tags List -->
+                <com.google.android.flexbox.FlexboxLayout
+                    android:id="@+id/fbTags"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="22dp"
+                    android:layout_marginTop="18dp"
+                    app:flexWrap="wrap" />
+
+                <!-- Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="#12FFFFFF" />
+
+                <!-- Ingredients Title -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="22dp"
+                    android:paddingBottom="12dp">
+
+                    <TextView
+                        style="@style/Text.10_5x.Manrope.Bold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="INGREDIENTS"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorTextGrey" />
+                </LinearLayout>
+
+                <!-- Ingredients Scroll List -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvIngredients"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="22dp" />
+
+                <!-- Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="#12FFFFFF" />
+
+                <!-- Method Title -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="22dp"
+                    android:paddingBottom="12dp">
+
+                    <TextView
+                        style="@style/Text.10_5x.Manrope.Bold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="METHOD"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorTextGrey" />
+                </LinearLayout>
+
+                <!-- Method Steps Column -->
+                <LinearLayout
+                    android:id="@+id/llMethodSteps"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="22dp" />
+
+                <!-- Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#12FFFFFF" />
+
+                <!-- Why This Meal Title -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="22dp"
+                    android:paddingBottom="12dp">
+
+                    <TextView
+                        style="@style/Text.10_5x.Manrope.Bold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="WHY THIS MEAL"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorTextGrey" />
+                </LinearLayout>
+
+                <!-- Benefits Column -->
+                <LinearLayout
+                    android:id="@+id/llBenefits"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="22dp" />
+
+                <!-- Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#12FFFFFF" />
+
+                <!-- Track Impact Title -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="22dp"
+                    android:paddingBottom="12dp">
+
+                    <TextView
+                        style="@style/Text.10_5x.Manrope.Bold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="TRACK THE IMPACT"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorTextGrey" />
+                </LinearLayout>
+
+                <!-- Track Impact Content -->
+                <TextView
+                    android:id="@+id/tvTrackGuide"
+                    style="@style/Text.12_5x.Manrope.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="22dp"
+                    android:lineSpacingExtra="3dp"
+                    android:textColor="@color/textColorMuted"
+                    tools:text="You've logged this meal 0×. Keep replacing your dinners with it to see your systolic bp respond." />
+
+                <!-- Streak Circles -->
+                <LinearLayout
+                    android:id="@+id/llStreak"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginHorizontal="22dp"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center"
+                    android:orientation="horizontal" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Header Overlay (Fixed at top, above ScrollView) -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="4dp"
+            android:src="@drawable/ic_back_arrow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/textColorWhite" />
+
+        <ImageView
+            android:id="@+id/btnLike"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="4dp"
+            android:src="@drawable/ic_fav"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/textColorWhite" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Fixed Bottom Sheet Footer Button (At the very bottom) -->
+    <LinearLayout
+        android:id="@+id/llBottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#E60B1315"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:id="@+id/btnLogMeal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_btn_round_corner"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingVertical="14dp">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_check_thin"
+                app:tint="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="sans-serif-black"
+                android:text="I had this meal"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

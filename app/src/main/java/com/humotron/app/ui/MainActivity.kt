@@ -138,13 +138,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             val controller = WindowInsetsControllerCompat(window, decorView)
 
             when (destination.id) {
-                R.id.fragmentProfile, R.id.fragmentUploadedReports, R.id.fragmentBookingType, R.id.fragmentSelectAddress, R.id.fragmentChooseDateTime, R.id.fragmentVerifyBooking -> {
+                R.id.fragmentUploadedReports, R.id.fragmentBookingType, R.id.fragmentSelectAddress, R.id.fragmentChooseDateTime, R.id.fragmentVerifyBooking -> {
                     window.statusBarColor = android.graphics.Color.BLACK
                     binding.vStatusBarBg.setBackgroundColor(android.graphics.Color.BLACK)
                     controller.isAppearanceLightStatusBars = false
                 }
 
-                R.id.fragmentShop -> {
+                R.id.fragmentShop, R.id.fragmentProfile -> {
                     window.statusBarColor = android.graphics.Color.TRANSPARENT
                     binding.vStatusBarBg.setBackgroundColor(android.graphics.Color.TRANSPARENT)
                     controller.isAppearanceLightStatusBars = false

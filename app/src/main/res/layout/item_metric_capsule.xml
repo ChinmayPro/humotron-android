@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="9dp"
+    android:background="@drawable/bg_metric_capsule_inactive"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingHorizontal="15dp"
+    android:paddingVertical="10dp">
+
+    <View
+        android:id="@+id/vIndicator"
+        android:layout_width="7dp"
+        android:layout_height="7dp"
+        android:layout_marginEnd="9dp"
+        android:background="@drawable/circle_green"
+        android:backgroundTint="@color/insights_green" />
+
+    <TextView
+        android:id="@+id/tvMetricTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="@color/textColorWhite"
+        android:textSize="12.5sp"
+        tools:text="Recovery" />
+
+    <TextView
+        android:id="@+id/tvMetricValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="9dp"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="@color/textColorMuted"
+        android:textSize="12.5sp"
+        tools:text="65%" />
+
+</LinearLayout>

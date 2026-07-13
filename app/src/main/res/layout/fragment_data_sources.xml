@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.profile.DataSourcesFragment">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header_2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="22dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="40dp">
+
+            <!-- Intro Section -->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:background="@drawable/bg_rounded_14"
+                android:backgroundTint="#19C4F23E"
+                android:gravity="center">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
+                    android:src="@drawable/ic_scan_node"
+                    app:tint="#C4F23E" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Text.OnBoard.Title1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
+                android:text="Data Sources"
+                android:textSize="21sp"
+                android:textColor="#FFFFFF"
+                android:fontFamily="@font/manrope_extra_bold"
+                app:fontFamily="@font/manrope_extra_bold"
+                android:letterSpacing="-0.02" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Text.14x.Manrope.Regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Everything that feeds your insights, in one place — split by where it comes from."
+                android:textColor="#A0B3AF"
+                android:textSize="13sp" />
+
+            <!-- Assure bar -->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_assure_card"
+                android:padding="16dp"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/ic_lock_outline"
+                    app:tint="#7BD88F" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvAssureText"
+                    style="@style/Text.14x.Manrope.Regular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="12dp"
+                    android:lineSpacingMultiplier="1.1"
+                    android:text="Your data may live in the cloud, but the controls live with you. Pause, exclude or delete anything, any time — and we'll never share it."
+                    android:textColor="#dfe9e3"/>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!-- External devices -->
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Text.14x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="External devices"
+                android:textColor="#cdd6d5"
+                android:textSize="13sp" />
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Text.14x.Manrope.Regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="12dp"
+                android:text="Wearables that stream in continuously."
+                android:textColor="#80A0B3AF"
+                android:textSize="13sp" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_config_item"
+                android:paddingVertical="8dp">
+
+                <!-- Apple Watch -->
+                <include
+                    layout="@layout/item_data_source"
+                    android:id="@+id/dsAppleWatch" />
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#1AFFFFFF" android:layout_marginHorizontal="16dp" />
+                <!-- Whoop -->
+                <include
+                    layout="@layout/item_data_source"
+                    android:id="@+id/dsWhoop" />
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#1AFFFFFF" android:layout_marginHorizontal="16dp" />
+                <!-- Garmin -->
+                <include
+                    layout="@layout/item_data_source"
+                    android:id="@+id/dsGarmin" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!-- Digital sources -->
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Text.14x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Digital sources"
+                android:textColor="#cdd6d5"
+                android:textSize="13sp" />
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Text.14x.Manrope.Regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="12dp"
+                android:text="Context we read from your digital life."
+                android:textColor="#80A0B3AF"
+                android:textSize="13sp" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_config_item"
+                android:paddingVertical="8dp">
+
+                <include
+                    layout="@layout/item_data_source"
+                    android:id="@+id/dsEnv" />
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#1AFFFFFF" android:layout_marginHorizontal="16dp" />
+                <include
+                    layout="@layout/item_data_source"
+                    android:id="@+id/dsCalendar" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!-- Imported sources -->
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Text.14x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Imported sources"
+                android:textColor="#cdd6d5"
+                android:textSize="13sp" />
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Text.14x.Manrope.Regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="12dp"
+                android:text="Files and scans you've brought in."
+                android:textColor="#80A0B3AF"
+                android:textSize="13sp" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_config_item"
+                android:paddingVertical="8dp">
+
+                <include
+                    layout="@layout/item_data_source"
+                    android:id="@+id/dsReports" />
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#1AFFFFFF" android:layout_marginHorizontal="16dp" />
+                <include
+                    layout="@layout/item_data_source"
+                    android:id="@+id/dsDeepScan" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!-- Your assessments -->
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Text.14x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Your assessments"
+                android:textColor="#cdd6d5"
+                android:textSize="13sp" />
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Text.14x.Manrope.Regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="12dp"
+                android:text="Answers you've given us — fully in your control."
+                android:textColor="#80A0B3AF"
+                android:textSize="13sp" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_config_item"
+                android:paddingVertical="8dp">
+
+                <include
+                    layout="@layout/item_data_source"
+                    android:id="@+id/dsLifestyle" />
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#1AFFFFFF" android:layout_marginHorizontal="16dp" />
+                <include
+                    layout="@layout/item_data_source"
+                    android:id="@+id/dsHealth" />
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#1AFFFFFF" android:layout_marginHorizontal="16dp" />
+                <include
+                    layout="@layout/item_data_source"
+                    android:id="@+id/dsGoals" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!-- Footer Promise -->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_promise_card"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="14dp">
+
+                <!-- .pi: 34x34, border-radius:10px, bg:rgba(196,242,62,.1), color:lime -->
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:background="@drawable/bg_promise_icon_box"
+                    android:gravity="center">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/ic_lock_outline"
+                        app:tint="#C4F23E" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="12dp"
+                    android:orientation="vertical">
+
+                    <!-- .ph: color:#fff; font-size:13px; font-weight:700 -->
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/manrope_bold"
+                        android:textStyle="bold"
+                        android:text="Encrypted end to end"
+                        android:textColor="#FFFFFF"
+                        android:textSize="13sp"
+                        app:fontFamily="@font/manrope_bold" />
+
+                    <!-- .pp: color:ink3=#859390; font-size:11.5px -->
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/manrope_regular"
+                        android:lineSpacingMultiplier="1.45"
+                        android:text="Processed securely and never sold. Learn how your data is used."
+                        android:textColor="#859390"
+                        android:textSize="11.5sp"
+                        app:fontFamily="@font/manrope_regular" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

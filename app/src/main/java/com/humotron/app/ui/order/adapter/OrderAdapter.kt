@@ -40,10 +40,8 @@ class OrderAdapter : RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
 
     inner class OrderViewHolder(private val binding: ItemOrderBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(order: GetAllOrderResponse.Order) {
-            binding.tvOrderId.text = "#${order.orderNumber ?: ""}"
-            
             val formattedDate = utcOffsetToLocalTime(order.updatedAt, "dd MMM yyyy")
-            binding.tvOrderDate.text = formattedDate.lowercase()
+            binding.tvOrderId.text = "#${order.orderNumber ?: ""} · $formattedDate"
             
             binding.tvStatus.text = order.orderStatusName ?: ""
             
@@ -51,20 +49,23 @@ class OrderAdapter : RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
             try {
                 val colorStr = order.statusColorCode
                 if (!colorStr.isNullOrEmpty()) {
-                    binding.tvStatus.backgroundTintList = ColorStateList.valueOf(Color.parseColor(colorStr))
+                    val colorInt = Color.parseColor(colorStr)
+                    binding.tvStatus.setTextColor(colorInt)
+                    // Set background with 16% opacity (~41 in alpha 0-255)
+                    val bgTint = Color.argb(41, Color.red(colorInt), Color.green(colorInt), Color.blue(colorInt))
+                    binding.tvStatus.backgroundTintList = ColorStateList.valueOf(bgTint)
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
             }
             
             val price = order.payableAmount ?: 0.0
-            // Format price as in screenshot £229.06
             binding.tvPrice.text = "£${String.format("%.2f", price)}"
             
             val itemCount = order.cartProducts?.sumOf { it.quantity ?: 0 } ?: 0
-            binding.tvItemCount.text = binding.root.context.getString(com.humotron.app.R.string.items_count_format, itemCount)
+            binding.tvItemCount.text = "${itemCount} item${if (itemCount > 1) "s" else ""}"
             
-            binding.tvExpectedDelivery.text = binding.root.context.getString(com.humotron.app.R.string.expected_delivery_format, order.estimatedDelivery ?: "")
+            binding.tvExpectedDelivery.text = order.estimatedDelivery ?: ""
             
             binding.root.setOnClickListener {
                 onItemClick?.invoke(order)

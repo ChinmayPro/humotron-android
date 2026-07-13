@@ -4,172 +4,606 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ic_bg_main"
-    tools:background="@drawable/ic_bg_main_dark"
     tools:context=".ui.profile.ProfileFragment">
 
-    <!-- Spacer to reserve room for the arrow button in collapsed state -->
-    <android.widget.Space
-        android:id="@+id/vHeaderSpace"
+    <!-- Console Title & Divider -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clTitleBar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_50dp"
-        app:layout_constraintTop_toBottomOf="@id/clConsole" />
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitle"
+            style="@style/Text.Home.ExtraBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="12dp"
+            android:text="@string/console"
+            android:textSize="18sp"
+            android:fontFamily="@font/manrope_extra_bold"
+            app:fontFamily="@font/manrope_extra_bold"
+            app:layout_constraintBottom_toTopOf="@id/dividerTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/dividerTitle"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/deep_dives_hair"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nsvProfile"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_10dp"
         android:overScrollMode="never"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/vHeaderSpace">
+        app:layout_constraintTop_toBottomOf="@id/clTitleBar">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/_15dp"
-            android:paddingTop="@dimen/_20dp"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/_20dp"
             android:paddingBottom="@dimen/_30dp">
 
-            <!-- Shop Card -->
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clShop"
-                android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:layout_marginEnd="@dimen/_7dp"
-                android:background="@drawable/bg_profile_grid_card"
-                android:padding="@dimen/_18dp"
-                app:layout_constraintEnd_toStartOf="@id/clOrder"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivShop"
-                    android:layout_width="@dimen/_30dp"
-                    android:layout_height="@dimen/_30dp"
-                    android:src="@drawable/ic_store"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:tint="@color/green_1" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/Text.16x.Manrope.SemiBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/shop"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <!-- Order Card -->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clOrder"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_100dp"
-                android:layout_marginStart="@dimen/_7dp"
-                android:background="@drawable/bg_profile_grid_card"
-                android:padding="@dimen/_18dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/clShop"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivOrder"
-                    android:layout_width="@dimen/_30dp"
-                    android:layout_height="@dimen/_30dp"
-                    android:src="@drawable/ic_order"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:tint="@color/green_1" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/Text.16x.Manrope.SemiBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/order"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <!-- Cart Card -->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clCart"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_100dp"
-                android:layout_marginTop="@dimen/_14dp"
-                android:layout_marginEnd="@dimen/_7dp"
-                android:background="@drawable/bg_profile_grid_card"
-                android:padding="@dimen/_18dp"
-                app:layout_constraintEnd_toStartOf="@id/clRecipes"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/clShop">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivCart"
-                    android:layout_width="@dimen/_30dp"
-                    android:layout_height="@dimen/_30dp"
-                    android:src="@drawable/ic_shopping_cart"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:tint="@color/green_1" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/Text.16x.Manrope.SemiBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/cart"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <!-- Recipes Card -->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clRecipes"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_100dp"
-                android:layout_marginStart="@dimen/_7dp"
-                android:layout_marginTop="@dimen/_14dp"
-                android:background="@drawable/bg_profile_grid_card"
-                android:padding="@dimen/_18dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/clCart"
-                app:layout_constraintTop_toBottomOf="@id/clOrder">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivRecipes"
-                    android:layout_width="@dimen/_30dp"
-                    android:layout_height="@dimen/_30dp"
-                    android:src="@drawable/ic_book_summary"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:tint="@color/green_1" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/Text.16x.Manrope.SemiBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/recipes"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <!-- Key Configurations Header -->
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/llKeyConfigHeader"
-                android:layout_width="wrap_content"
+                android:id="@+id/clConsole"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_40dp"
+                android:layout_marginTop="@dimen/_15dp"
+                android:background="@drawable/bg_profcard"
+                android:paddingStart="20dp"
+                android:paddingTop="22dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="16dp">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/ivProfile"
+                    android:layout_width="78dp"
+                    android:layout_height="78dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_profile"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvName"
+                    style="@style/Text.21x.Manrope.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="13dp"
+                    android:fontFamily="@font/manrope_extra_bold"
+                    android:letterSpacing="-0.02"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ivProfile"
+                    tools:text="Name" />
+
+                <!-- Plan Pill Badge (HTML .planpill amber style) -->
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/llBadgeContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_badge_membership"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingStart="14dp"
+                    android:paddingTop="6dp"
+                    android:paddingEnd="14dp"
+                    android:paddingBottom="6dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvName">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:src="@drawable/ic_onboard_shield"
+                        app:tint="@color/plan_pill_amber_text" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvBadge"
+                        style="@style/Text.12x.Manrope.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:fontFamily="@font/manrope_extra_bold"
+                        android:letterSpacing="0.04"
+                        tools:text="Basic plan"
+                        android:textAllCaps="true"
+                        android:textColor="@color/plan_pill_amber_text" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <!-- Chevron Down -->
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivArrowDown"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="14dp"
+                    android:src="@drawable/ic_chevdown_profile"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/llBadgeContainer"
+                    app:tint="@color/colorTextGrey" />
+
+                <!-- Expanded Content -->
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/clExpandedContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingTop="8dp"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@id/ivArrowDown">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@color/white05" />
+
+                    <!-- Personal Information -->
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/tvManageAccount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="2dp"
+                        android:paddingVertical="10dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="34dp"
+                            android:layout_height="34dp"
+                            android:background="@drawable/bg_acct_icon"
+                            android:padding="8dp"
+                            android:src="@drawable/ic_info_24px"
+                            app:tint="@color/white_80" />
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="13dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Text.16x.Manrope.Bold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/console_personal_information"
+                                android:textColor="@color/white" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Text.13x.Manrope.Regular"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="1dp"
+                                android:text="@string/console_personal_info_desc"
+                                android:textColor="@color/colorTextGreyDark"
+                                android:textSize="11sp" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/ic_chevron_right_24px"
+                            app:tint="@color/textColorMuted" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/white05" />
+
+                    <!-- Plan & add-ons -->
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/clActivePlan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="2dp"
+                        android:paddingVertical="10dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="34dp"
+                            android:layout_height="34dp"
+                            android:background="@drawable/bg_acct_icon"
+                            android:padding="8dp"
+                            android:src="@drawable/ic_sparkle"
+                            app:tint="@color/white_80" />
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="13dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Text.16x.Manrope.Bold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/console_plan_and_addons"
+                                android:textColor="@color/white" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Text.13x.Manrope.Regular"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="1dp"
+                                android:text="@string/console_plan_desc_placeholder"
+                                android:textColor="@color/colorTextGreyDark"
+                                android:textSize="11sp" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Text.12x.Manrope.SemiBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="7dp"
+                                android:text="@string/console_manage"
+                                android:textColor="@color/textColorMuted" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:src="@drawable/ic_chevron_right_24px"
+                                app:tint="@color/textColorMuted" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- ===== Quick Access Header (.speedhead) ===== -->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_30dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/clRecipes">
+                android:paddingBottom="@dimen/_10dp">
 
                 <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/ic_grid"
+                    app:tint="@color/green_1" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Text.14x.Manrope.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10dp"
+                    android:text="@string/console_quick_access"
+                    android:textColor="@color/white" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!-- ===== Quick Access Grid 2x2 (.speed) ===== -->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
+
+                    <!-- Store Card (.spd) -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clShop"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginBottom="12dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_quick_access_card"
+                        android:padding="@dimen/_15dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivShopChevron"
+                            android:layout_width="@dimen/_16dp"
+                            android:layout_height="@dimen/_16dp"
+                            android:src="@drawable/ic_chevron_right_24px"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:tint="@color/booster_accent_lime" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivShop"
+                            android:layout_width="42dp"
+                            android:layout_height="42dp"
+                            android:background="@drawable/bg_speed_icon"
+                            android:padding="11dp"
+                            android:src="@drawable/ic_quick_access_store"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:tint="@color/booster_accent_lime" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvShopLabel"
+                            style="@style/Text.16x.Manrope.Bold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="14dp"
+                            android:text="@string/console_store"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/ivShop" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Text.12x.Manrope.Regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:text="@string/console_store_desc"
+                            android:textColor="@color/textColorMuted"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tvShopLabel" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!-- Recipes Card (.spd) -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clRecipes"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginBottom="12dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_quick_access_card"
+                        android:padding="@dimen/_15dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivRecipesChevron"
+                            android:layout_width="@dimen/_16dp"
+                            android:layout_height="@dimen/_16dp"
+                            android:src="@drawable/ic_chevron_right_24px"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:tint="@color/booster_accent_lime" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivRecipes"
+                            android:layout_width="42dp"
+                            android:layout_height="42dp"
+                            android:background="@drawable/bg_speed_icon"
+                            android:padding="11dp"
+                            android:src="@drawable/ic_quick_access_recipes"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:tint="@color/booster_accent_lime" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvRecipesLabel"
+                            style="@style/Text.16x.Manrope.Bold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="14dp"
+                            android:text="@string/console_recipes"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/ivRecipes" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Text.12x.Manrope.Regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:text="@string/console_recipes_desc"
+                            android:textColor="@color/textColorMuted"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tvRecipesLabel" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
+                    <!-- Orders Card (.spd) -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clOrder"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginBottom="12dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_quick_access_card"
+                        android:padding="@dimen/_15dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivOrderChevron"
+                            android:layout_width="@dimen/_16dp"
+                            android:layout_height="@dimen/_16dp"
+                            android:src="@drawable/ic_chevron_right_24px"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:tint="@color/booster_accent_lime" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivOrder"
+                            android:layout_width="42dp"
+                            android:layout_height="42dp"
+                            android:background="@drawable/bg_speed_icon"
+                            android:padding="11dp"
+                            android:src="@drawable/ic_quick_access_orders"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:tint="@color/booster_accent_lime" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvOrderLabel"
+                            style="@style/Text.16x.Manrope.Bold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="14dp"
+                            android:text="@string/console_orders"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/ivOrder" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Text.12x.Manrope.Regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:text="@string/console_orders_desc"
+                            android:textColor="@color/textColorMuted"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tvOrderLabel" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!-- Cart Card (.spd) -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clCart"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginBottom="12dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_quick_access_card"
+                        android:padding="@dimen/_15dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivCartChevron"
+                            android:layout_width="@dimen/_16dp"
+                            android:layout_height="@dimen/_16dp"
+                            android:src="@drawable/ic_chevron_right_24px"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:tint="@color/booster_accent_lime" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivCart"
+                            android:layout_width="42dp"
+                            android:layout_height="42dp"
+                            android:background="@drawable/bg_speed_icon"
+                            android:padding="11dp"
+                            android:src="@drawable/ic_quick_access_cart"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:tint="@color/booster_accent_lime" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvCartLabel"
+                            style="@style/Text.16x.Manrope.Bold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="14dp"
+                            android:text="@string/console_cart"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/ivCart" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Text.12x.Manrope.Regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:text="@string/console_cart_desc"
+                            android:textColor="@color/textColorMuted"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tvCartLabel" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!-- ===== Digital Tools Banner (.planhero) ===== -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clDigitalTools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10dp"
+                android:background="@drawable/bg_planhero"
+                android:paddingHorizontal="@dimen/_20dp"
+                android:paddingVertical="@dimen/_20dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivDigitalToolsBox"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_speed_icon"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivDigitalTools"
                     android:layout_width="@dimen/_24dp"
                     android:layout_height="@dimen/_24dp"
+                    android:src="@drawable/ic_sparkle"
+                    app:layout_constraintBottom_toBottomOf="@id/ivDigitalToolsBox"
+                    app:layout_constraintEnd_toEndOf="@id/ivDigitalToolsBox"
+                    app:layout_constraintStart_toStartOf="@id/ivDigitalToolsBox"
+                    app:layout_constraintTop_toTopOf="@id/ivDigitalToolsBox"
+                    app:tint="@color/green_1" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvDigitalToolsLabel"
+                    style="@style/Text.16x.Manrope.Bold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15dp"
+                    android:text="@string/console_unlock_digital_tools"
+                    app:layout_constraintEnd_toStartOf="@id/ivDigitalToolsChevron"
+                    app:layout_constraintStart_toEndOf="@id/ivDigitalToolsBox"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Text.12x.Manrope.Regular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4dp"
+                    android:text="@string/console_ai_insights_desc"
+                    android:textColor="@color/white_60"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tvDigitalToolsLabel"
+                    app:layout_constraintTop_toBottomOf="@id/tvDigitalToolsLabel" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivDigitalToolsChevron"
+                    android:layout_width="@dimen/_20dp"
+                    android:layout_height="@dimen/_20dp"
+                    android:src="@drawable/ic_chevron_right_24px"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/green_1" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- ===== Key Configurations Header (.cfgintrohead) ===== -->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llKeyConfigHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_30dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/_20dp"
+                    android:layout_height="@dimen/_20dp"
                     android:src="@drawable/ic_tune"
                     app:tint="@color/green_1" />
 
@@ -178,150 +612,334 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10dp"
-                    android:text="@string/key_configurations"
-                    android:textColor="@color/white_80" />
+                    android:text="@string/console_configurations"
+                    android:textColor="@color/white" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <!-- Key Configurations Grid -->
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <!-- Configurations Description -->
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Text.12x.Manrope.Regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8dp"
+                android:lineSpacingMultiplier="1.5"
+                android:text="@string/console_configurations_desc"
+                android:textColor="@color/white_60" />
+
+            <!-- ===== Key Configurations Grid (.kcgrid) ===== -->
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/clKeyConfigs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20dp"
-                app:layout_constraintTop_toBottomOf="@id/llKeyConfigHeader">
+                android:layout_marginTop="@dimen/_15dp"
+                android:orientation="vertical">
 
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/guidelineColumn2"
-                    android:layout_width="wrap_content"
+                <!-- Row 1: Devices & Data Sources -->
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.48" />
+                    android:layout_marginBottom="10dp"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
 
-                <!-- Row 1 -->
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/btnDevices"
-                    style="@style/Text.14x.Manrope.SemiBold"
-                    android:layout_width="150dp"
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/btnDevices"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_config_item"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="15dp"
+                        android:paddingVertical="14dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/bg_config_icon"
+                            android:padding="6dp"
+                            android:src="@drawable/ic_bluetooth_24px"
+                            app:tint="@color/white_80" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Text.14x.Manrope.SemiBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10dp"
+                            android:text="@string/header_devices"
+                            android:textColor="@color/white" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/btnDataSources"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_config_item"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="15dp"
+                        android:paddingVertical="14dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/bg_config_icon"
+                            android:padding="6dp"
+                            android:src="@drawable/ic_signal_waves"
+                            app:tint="@color/white_80" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Text.14x.Manrope.SemiBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10dp"
+                            android:text="@string/console_data_sources"
+                            android:textColor="@color/white" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <!-- Row 2: Goals & Insights -->
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_config_button"
-                    android:gravity="start|center_vertical"
-                    android:paddingVertical="@dimen/_5dp"
-                    android:paddingStart="@dimen/_30dp"
-                    android:paddingEnd="@dimen/_20dp"
-                    android:text="@string/header_devices"
-                    android:textColor="@color/white_80"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_marginBottom="10dp"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/btnPreferences"
-                    style="@style/Text.14x.Manrope.SemiBold"
-                    android:layout_width="150dp"
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/btnGoals"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_config_item"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="15dp"
+                        android:paddingVertical="14dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/bg_config_icon"
+                            android:padding="6dp"
+                            android:src="@drawable/ic_start_focus"
+                            app:tint="@color/white_80" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Text.14x.Manrope.SemiBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10dp"
+                            android:text="@string/console_goals"
+                            android:textColor="@color/white" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/btnInsights"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_config_item"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="15dp"
+                        android:paddingVertical="14dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/bg_config_icon"
+                            android:padding="6dp"
+                            android:src="@drawable/ic_sparkle"
+                            app:tint="@color/white_80" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Text.14x.Manrope.SemiBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10dp"
+                            android:text="@string/insights"
+                            android:textColor="@color/white" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <!-- Row 3: AI Chat & Recipe Generator -->
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_config_button"
-                    android:gravity="start|center_vertical"
-                    android:paddingVertical="@dimen/_5dp"
-                    android:paddingStart="@dimen/_30dp"
-                    android:paddingEnd="@dimen/_20dp"
-                    android:text="@string/preferences"
-                    android:textColor="@color/white_80"
-                    app:layout_constraintStart_toStartOf="@id/guidelineColumn2"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_marginBottom="10dp"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
 
-                <!-- Row 2 -->
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/btnChatWithAI"
-                    style="@style/Text.14x.Manrope.SemiBold"
-                    android:layout_width="150dp"
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/btnChatWithAI"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_config_item"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="15dp"
+                        android:paddingVertical="14dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/bg_config_icon"
+                            android:padding="6dp"
+                            android:src="@drawable/ic_bot"
+                            app:tint="@color/white_80" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Text.14x.Manrope.SemiBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10dp"
+                            android:text="@string/console_ai_chat"
+                            android:textColor="@color/white" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/btnRecipeGenerator"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_config_item"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="15dp"
+                        android:paddingVertical="14dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/bg_config_icon"
+                            android:padding="6dp"
+                            android:src="@drawable/ic_book_summary"
+                            app:tint="@color/white_80" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Text.14x.Manrope.SemiBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10dp"
+                            android:text="@string/console_recipe_generator_multiline"
+                            android:textColor="@color/white" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <!-- Row 4: Learning & Shopping -->
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_20dp"
-                    android:background="@drawable/bg_config_button"
-                    android:gravity="start|center_vertical"
-                    android:paddingVertical="@dimen/_5dp"
-                    android:paddingStart="@dimen/_30dp"
-                    android:paddingEnd="@dimen/_20dp"
-                    android:text="@string/chat_with_ai"
-                    android:textColor="@color/white_80"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/btnDevices" />
+                    android:layout_marginBottom="10dp"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/btnInsights"
-                    style="@style/Text.14x.Manrope.SemiBold"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_20dp"
-                    android:background="@drawable/bg_config_button"
-                    android:gravity="start|center_vertical"
-                    android:paddingVertical="@dimen/_5dp"
-                    android:paddingStart="@dimen/_30dp"
-                    android:paddingEnd="@dimen/_20dp"
-                    android:text="@string/insights"
-                    android:textColor="@color/white_80"
-                    app:layout_constraintStart_toStartOf="@id/guidelineColumn2"
-                    app:layout_constraintTop_toBottomOf="@id/btnDevices" />
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/btnLearning"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_config_item"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="15dp"
+                        android:paddingVertical="14dp">
 
-                <!-- Row 3 -->
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/btnRecipeGenerator"
-                    style="@style/Text.14x.Manrope.SemiBold"
-                    android:layout_width="250dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_20dp"
-                    android:background="@drawable/bg_config_button"
-                    android:gravity="center"
-                    android:paddingVertical="@dimen/_5dp"
-                    android:paddingStart="@dimen/_30dp"
-                    android:paddingEnd="@dimen/_20dp"
-                    android:text="@string/recipe_generator"
-                    android:textColor="@color/white_80"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/btnChatWithAI" />
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/bg_config_icon"
+                            android:padding="6dp"
+                            android:src="@drawable/ic_sheet_document"
+                            app:tint="@color/white_80" />
 
-                <!-- Row 4 -->
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/btnLearning"
-                    style="@style/Text.14x.Manrope.SemiBold"
-                    android:layout_width="250dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10dp"
-                    android:background="@drawable/bg_config_button"
-                    android:gravity="center"
-                    android:paddingVertical="@dimen/_5dp"
-                    android:paddingStart="@dimen/_30dp"
-                    android:paddingEnd="@dimen/_20dp"
-                    android:text="@string/learning"
-                    android:textColor="@color/white_80"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/btnRecipeGenerator" />
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Text.14x.Manrope.SemiBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10dp"
+                            android:text="@string/learning"
+                            android:textColor="@color/white" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/btnShopping"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_config_item"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="15dp"
+                        android:paddingVertical="14dp">
 
-            <!-- Profile Options List -->
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/bg_config_icon"
+                            android:padding="6dp"
+                            android:src="@drawable/ic_store"
+                            app:tint="@color/white_80" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Text.14x.Manrope.SemiBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10dp"
+                            android:text="@string/console_shopping"
+                            android:textColor="@color/white" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!-- ===== Profile Options / Footer Links (.flinks) ===== -->
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_50dp"
+                android:layout_marginTop="@dimen/_40dp"
                 android:orientation="vertical"
-                android:paddingBottom="@dimen/_20dp"
-                app:layout_constraintTop_toBottomOf="@id/clKeyConfigs">
+                android:paddingBottom="@dimen/_10dp">
 
                 <!-- Privacy -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/clPrivacy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
                     android:paddingVertical="@dimen/_15dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivPrivacyIcon"
+                        android:layout_width="@dimen/_20dp"
+                        android:layout_height="@dimen/_20dp"
+                        android:src="@drawable/ic_lock"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/white_60" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/Text.16x.Manrope.SemiBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10dp"
                         android:text="@string/privacy"
-                        android:textColor="@color/white_60"
+                        android:textColor="@color/white_80"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/ivPrivacyIcon"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatImageView
@@ -344,16 +962,28 @@
                     android:id="@+id/clSupport"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
                     android:paddingVertical="@dimen/_15dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivSupportIcon"
+                        android:layout_width="@dimen/_20dp"
+                        android:layout_height="@dimen/_20dp"
+                        android:src="@drawable/ic_help_outline_24px"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/white_60" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/Text.16x.Manrope.SemiBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10dp"
                         android:text="@string/support"
-                        android:textColor="@color/white_60"
+                        android:textColor="@color/white_80"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/ivSupportIcon"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatImageView
@@ -371,53 +1001,77 @@
                     android:layout_height="1dp"
                     android:background="@color/assessment_unselect_stroke" />
 
-                <!-- FAQ -->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/clFaq"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="@dimen/_15dp">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/Text.16x.Manrope.SemiBold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/faq_label"
-                        android:textColor="@color/white_60"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="@dimen/_20dp"
-                        android:layout_height="@dimen/_20dp"
-                        android:src="@drawable/ic_chevron_right_24px"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:tint="@color/white_60" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/assessment_unselect_stroke" />
-
-                <!-- Legal & Privacy Center -->
+                <!-- Legal Centre -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/clLegal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
                     android:paddingVertical="@dimen/_15dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivLegalIcon"
+                        android:layout_width="@dimen/_20dp"
+                        android:layout_height="@dimen/_20dp"
+                        android:src="@drawable/ic_sheet_document"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/white_60" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/Text.16x.Manrope.SemiBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/legal_privacy_center"
-                        android:textColor="@color/white_60"
+                        android:layout_marginStart="@dimen/_10dp"
+                        android:text="@string/console_legal_centre"
+                        android:textColor="@color/white_80"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/ivLegalIcon"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/_20dp"
+                        android:layout_height="@dimen/_20dp"
+                        android:src="@drawable/ic_chevron_right_24px"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/white_60" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/assessment_unselect_stroke" />
+
+                <!-- Delete Account (danger) -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clDeleteAccount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:paddingVertical="@dimen/_15dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivDeleteIcon"
+                        android:layout_width="@dimen/_20dp"
+                        android:layout_height="@dimen/_20dp"
+                        android:src="@drawable/ic_delete"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/console_danger_red" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Text.16x.Manrope.SemiBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10dp"
+                        android:text="@string/console_delete_account"
+                        android:textColor="@color/console_danger_red"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/ivDeleteIcon"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatImageView
@@ -440,16 +1094,28 @@
                     android:id="@+id/clLogout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
                     android:paddingVertical="@dimen/_15dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivLogoutIcon"
+                        android:layout_width="@dimen/_20dp"
+                        android:layout_height="@dimen/_20dp"
+                        android:src="@drawable/ic_power_settings_new_24px"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/white_60" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/Text.16x.Manrope.SemiBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10dp"
                         android:text="@string/logout"
-                        android:textColor="@color/white70"
+                        android:textColor="@color/white_80"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/ivLogoutIcon"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatImageView
@@ -464,226 +1130,45 @@
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <!-- ===== Brand Footer (.brandfoot) ===== -->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0.42"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/_30dp"
+                android:paddingBottom="@dimen/_20dp">
+
+                <!-- Divider line -->
+                <View
+                    android:layout_width="30dp"
+                    android:layout_height="2dp"
+                    android:layout_marginBottom="@dimen/_15dp"
+                    android:background="@color/brand_divider" />
+
+                <!-- Brand name -->
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Text.16x.Manrope.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:letterSpacing="0.04"
+                    android:text="@string/console_brand_name"
+                    android:textColor="@color/brand_footer_text" />
+
+                <!-- Tagline -->
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Text.12x.Manrope.Regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8dp"
+                    android:letterSpacing="0.03"
+                    android:text="@string/console_brand_tagline"
+                    android:textColor="@color/brand_footer_tagline" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>
-
-    <!-- Console Background -->
-    <View
-        android:id="@+id/viewConsoleBg"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@drawable/bg_profile_console"
-        app:layout_constraintBottom_toBottomOf="@id/llExpandGroup"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clConsole"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/_10dp"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvTitle"
-            style="@style/Text.OnBoard.Title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20dp"
-            android:text="@string/console"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.divider.MaterialDivider
-            android:id="@+id/divider"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10dp"
-            app:dividerColor="@color/_3B"
-            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/ivProfile"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="@dimen/_20dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_profile"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider"
-            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvName"
-            style="@style/Text.18x.Manrope.Bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ivProfile"
-            tools:text="Name" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvBadge"
-            style="@style/Text.12x.Manrope.Bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10dp"
-            android:background="@drawable/bg_badge_membership"
-            android:paddingHorizontal="@dimen/_17dp"
-            android:text="@string/basic"
-            android:textColor="@color/brown"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvName"
-            tools:text="Basic" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!-- Expanded Content -->
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/clExpandedContent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_5dp"
-        android:orientation="vertical"
-        android:paddingHorizontal="@dimen/_15dp"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/clConsole">
-
-        <!-- Active Plan Card -->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/clActivePlan"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_profile_card"
-            android:paddingVertical="@dimen/_12dp"
-            android:paddingStart="@dimen/_20dp"
-            android:paddingEnd="@dimen/_15dp">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                style="@style/Text.16x.Manrope.SemiBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/active_plan"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvPlanBadge"
-                style="@style/Text.12x.Manrope.Bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_10dp"
-                android:background="@drawable/bg_badge_membership"
-                android:paddingHorizontal="@dimen/_17dp"
-                android:text="@string/basic"
-                android:textColor="@color/brown"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/ivPlanArrow"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Basic" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivPlanArrow"
-                android:layout_width="@dimen/_30dp"
-                android:layout_height="@dimen/_30dp"
-                android:src="@drawable/ic_arrow_right_begin"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/d600" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <!-- Add-Ons Card -->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/clAddOns"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_18dp"
-            android:background="@drawable/bg_profile_card"
-            android:paddingVertical="@dimen/_12dp"
-            android:paddingStart="@dimen/_20dp"
-            android:paddingEnd="@dimen/_15dp">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                style="@style/Text.16x.Manrope.SemiBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/add_ons"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvAddOnsStatus"
-                style="@style/Text.14x.Manrope.SemiBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_10dp"
-                android:text="@string/activated_count"
-                android:textColor="@color/green_1"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/ivAddOnsArrow"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="2 Activated" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivAddOnsArrow"
-                android:layout_width="@dimen/_30dp"
-                android:layout_height="@dimen/_30dp"
-                android:src="@drawable/ic_arrow_right_begin"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/d600" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <!-- Manage Account -->
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvManageAccount"
-            style="@style/Text.14x.Manrope.Regular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/_20dp"
-            android:text="@string/manage_account"
-            android:textColor="@color/white70" />
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/llExpandGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_5dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="@dimen/_10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/clExpandedContent">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivArrowDown"
-            android:layout_width="@dimen/_20dp"
-            android:layout_height="@dimen/_20dp"
-            android:src="@drawable/ic_et_arrow_down"
-            app:tint="@color/_3B" />
-
-        <View
-            android:id="@+id/viewDot"
-            android:layout_width="4dp"
-            android:layout_height="4dp"
-            android:layout_marginTop="2dp"
-            android:background="@drawable/bg_dot_gray" />
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

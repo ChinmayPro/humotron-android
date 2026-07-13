@@ -1,113 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llBoosterRoot"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="16dp"
-    android:layout_marginVertical="10dp"
-    app:cardBackgroundColor="@color/black"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="0dp"
-    app:strokeWidth="0dp">
+    android:layout_marginHorizontal="22dp"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/bg_booster"
+    android:orientation="vertical"
+    android:padding="16dp">
 
+    <!-- Top section -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="20dp"
-        android:paddingBottom="24dp">
+        android:layout_height="wrap_content">
 
         <LinearLayout
-            android:id="@+id/layoutBoosterBadge"
-            android:layout_width="wrap_content"
+            android:id="@+id/llBoosterInfo"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_badge_booster"
-            android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingHorizontal="15dp"
-            android:paddingVertical="5dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/layoutBoosterBadge"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvBoosterIcon"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                app:cardBackgroundColor="#245FB7C4"
+                app:cardCornerRadius="11dp"
+                app:cardElevation="0dp">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_gravity="center"
-                android:layout_marginEnd="8dp"
-                android:src="@drawable/ic_booster" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivBoosterIcon"
+                    android:layout_width="19dp"
+                    android:layout_height="19dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_spark"
+                    app:tint="#5FB7C4" />
+            </androidx.cardview.widget.CardView>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                style="@style/Text.14x.Manrope.SemiBold"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/booster_label"
-                android:textColor="@color/white" />
+                android:layout_marginStart="12dp"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvToolName"
+                    style="@style/Text.16x.Manrope.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="AI Insights" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvToolDescription"
+                    style="@style/Text.14x.Manrope.Medium"
+                    android:layout_width="wrap_content"
+                    android:maxWidth="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:textColor="@color/white50"
+                    tools:text="Monthly insights decoded for you" />
+            </LinearLayout>
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvToolName"
-            style="@style/Text.16x.Manrope.SemiBold"
-            android:layout_width="0dp"
+            android:id="@+id/layoutBoosterBadge"
+            style="@style/Text.12x.Manrope.Bold"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20dp"
-            android:layout_marginEnd="16dp"
-            android:textColor="@color/white"
-            app:layout_constraintEnd_toStartOf="@id/layoutBoosterBadge"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="AI Chat" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvToolDescription"
-            style="@style/Text.12x.Manrope.Regular"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:textColor="@color/white50"
+            android:background="@drawable/bg_booster_tag"
+            android:paddingHorizontal="9dp"
+            android:paddingVertical="4dp"
+            android:text="ADD-ON"
+            android:textColor="#E7A93C"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvToolName"
-            tools:text="Make sense of your metrics. Just ask" />
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="14dp"
+        android:background="#12FFFFFF" />
+
+    <!-- Bottom section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvToolPrice"
-            style="@style/Text.18x.Manrope.SemiBold"
+            style="@style/Text.16x.Manrope.ExtraBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvToolDescription"
-            tools:text="₹ 799" />
+            tools:text="£6.90" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvToolPricePeriod"
-            style="@style/Text.14x.Manrope.Medium"
+            style="@style/Text.11x.Manrope.Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:text="@string/period_monthly"
-            android:textColor="@color/white50"
-            app:layout_constraintBaseline_toBaselineOf="@id/tvToolPrice"
-            app:layout_constraintStart_toEndOf="@id/tvToolPrice" />
+            android:layout_marginStart="2dp"
+            android:text="/mo"
+            android:textColor="@color/white50" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnBuy"
-            style="@style/Text.12x.Manrope.Bold"
+            style="@style/Text.14x.Manrope.Bold"
             android:layout_width="wrap_content"
-            android:layout_height="35dp"
+            android:layout_height="36dp"
             android:background="@drawable/bg_btn_round_corner"
             android:backgroundTint="@color/lime_green"
-            android:paddingHorizontal="30dp"
-            android:text="@string/upgrade_label"
+            android:paddingHorizontal="16dp"
+            android:text="View"
             android:textAllCaps="false"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="@id/tvToolPrice"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tvToolPrice" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</com.google.android.material.card.MaterialCardView>
+            android:textColor="@color/black" />
+    </LinearLayout>
+</LinearLayout>

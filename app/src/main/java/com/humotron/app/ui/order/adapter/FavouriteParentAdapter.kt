@@ -14,99 +14,103 @@ import com.humotron.app.ui.shop.adapter.ShopBookAdapter
 import com.yarolegovich.discretescrollview.transform.Pivot
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer
 
-sealed class FavouriteUIItem {
-    data class Header(val title: String) : FavouriteUIItem()
-    data class BookCarousel(val books: BookPreferenceResponse.BookData.Book) : FavouriteUIItem()
-    data class Device(val data: GetShopDevicesResponse.Device) : FavouriteUIItem()
-    data class Product(val data: SupplementItem) : FavouriteUIItem()
-}
-
-class FavouriteParentAdapter(
-    private val action: ShopBookAdapter.OnBookItemActions,
-    private val onDeviceClick: (GetShopDevicesResponse.Device) -> Unit,
-    private val onProductClick: (SupplementItem) -> Unit
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-    private var items = listOf<FavouriteUIItem>()
-
-    companion object {
-        private const val TYPE_HEADER = 0
-        private const val TYPE_BOOK_CAROUSEL = 1
-        private const val TYPE_DEVICE = 2
-        private const val TYPE_PRODUCT = 3
+    sealed class FavouriteUIItem {
+        data class Header(val title: String) : FavouriteUIItem()
+        data class Book(val data: com.humotron.app.domain.modal.response.BookRecommendation) : FavouriteUIItem()
+        data class Device(val data: GetShopDevicesResponse.Device) : FavouriteUIItem()
+        data class Product(val data: SupplementItem) : FavouriteUIItem()
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return when (items[position]) {
-            is FavouriteUIItem.Header -> TYPE_HEADER
-            is FavouriteUIItem.BookCarousel -> TYPE_BOOK_CAROUSEL
-            is FavouriteUIItem.Device -> TYPE_DEVICE
-            is FavouriteUIItem.Product -> TYPE_PRODUCT
-        }
-    }
+    class FavouriteParentAdapter(
+        private val action: ShopBookAdapter.OnBookItemActions,
+        private val onDeviceClick: (GetShopDevicesResponse.Device) -> Unit,
+        private val onProductClick: (SupplementItem) -> Unit
+    ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        return when (viewType) {
-            TYPE_HEADER -> HeaderViewHolder(ItemOptimizeHeaderBinding.inflate(inflater, parent, false))
-            TYPE_BOOK_CAROUSEL -> BookCarouselViewHolder(ItemShopCategoryRowBinding.inflate(inflater, parent, false), action)
-            TYPE_DEVICE -> DeviceViewHolder(ItemShopDeviceBinding.inflate(inflater, parent, false), onDeviceClick)
-            TYPE_PRODUCT -> ProductViewHolder(ItemOptimizeSupplementBinding.inflate(inflater, parent, false), onProductClick)
-            else -> throw IllegalArgumentException("Invalid view type")
-        }
-    }
+        private var items = listOf<FavouriteUIItem>()
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (val item = items[position]) {
-            is FavouriteUIItem.Header -> (holder as HeaderViewHolder).bind(item)
-            is FavouriteUIItem.BookCarousel -> (holder as BookCarouselViewHolder).bind(item)
-            is FavouriteUIItem.Device -> (holder as DeviceViewHolder).bind(item)
-            is FavouriteUIItem.Product -> (holder as ProductViewHolder).bind(item)
-        }
-    }
-
-    override fun getItemCount(): Int = items.size
-
-    fun setItems(newItems: List<FavouriteUIItem>) {
-        this.items = newItems
-        notifyDataSetChanged()
-    }
-
-    class HeaderViewHolder(private val binding: ItemOptimizeHeaderBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: FavouriteUIItem.Header) {
-            binding.tvHeader.text = item.title
-            val params = binding.tvHeader.layoutParams as ViewGroup.MarginLayoutParams
-            params.marginStart = binding.root.context.resources.getDimensionPixelSize(R.dimen._15dp)
-            params.marginEnd = binding.root.context.resources.getDimensionPixelSize(R.dimen._15dp)
-            binding.tvHeader.layoutParams = params
-        }
-    }
-
-    class BookCarouselViewHolder(
-        val binding: ItemShopCategoryRowBinding,
-        action: ShopBookAdapter.OnBookItemActions
-    ) : RecyclerView.ViewHolder(binding.root) {
-        private val adapter = ShopBookAdapter(action)
-
-        init {
-            binding.dsvBooks.adapter = adapter
-            binding.dsvBooks.setItemTransformer(
-                ScaleTransformer.Builder()
-                    .setMaxScale(1.05f)
-                    .setMinScale(0.8f)
-                    .setPivotX(Pivot.X.CENTER)
-                    .setPivotY(Pivot.Y.CENTER)
-                    .build()
-            )
-            // Hide the redundant headers inside the row since we have Parent Header
-            binding.tvCategory.visibility = View.GONE
-            binding.tvTag.visibility = View.GONE
+        companion object {
+            private const val TYPE_HEADER = 0
+            private const val TYPE_BOOK = 1
+            private const val TYPE_DEVICE = 2
+            private const val TYPE_PRODUCT = 3
         }
 
-        fun bind(item: FavouriteUIItem.BookCarousel) {
-            item.books.bookRecommendation?.let { adapter.setData(it) }
+        override fun getItemViewType(position: Int): Int {
+            return when (items[position]) {
+                is FavouriteUIItem.Header -> TYPE_HEADER
+                is FavouriteUIItem.Book -> TYPE_BOOK
+                is FavouriteUIItem.Device -> TYPE_DEVICE
+                is FavouriteUIItem.Product -> TYPE_PRODUCT
+            }
         }
-    }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+            val inflater = LayoutInflater.from(parent.context)
+            return when (viewType) {
+                TYPE_HEADER -> HeaderViewHolder(ItemOptimizeHeaderBinding.inflate(inflater, parent, false))
+                TYPE_BOOK -> BookViewHolder(ItemFavouriteBookBinding.inflate(inflater, parent, false), action)
+                TYPE_DEVICE -> DeviceViewHolder(ItemShopDeviceBinding.inflate(inflater, parent, false), onDeviceClick)
+                TYPE_PRODUCT -> ProductViewHolder(ItemOptimizeSupplementBinding.inflate(inflater, parent, false), onProductClick)
+                else -> throw IllegalArgumentException("Invalid view type")
+            }
+        }
+
+        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+            when (val item = items[position]) {
+                is FavouriteUIItem.Header -> (holder as HeaderViewHolder).bind(item)
+                is FavouriteUIItem.Book -> (holder as BookViewHolder).bind(item)
+                is FavouriteUIItem.Device -> (holder as DeviceViewHolder).bind(item)
+                is FavouriteUIItem.Product -> (holder as ProductViewHolder).bind(item)
+            }
+        }
+
+        override fun getItemCount(): Int = items.size
+
+        fun setItems(newItems: List<FavouriteUIItem>) {
+            this.items = newItems
+            notifyDataSetChanged()
+        }
+
+        class HeaderViewHolder(private val binding: ItemOptimizeHeaderBinding) : RecyclerView.ViewHolder(binding.root) {
+            fun bind(item: FavouriteUIItem.Header) {
+                binding.tvHeader.text = item.title
+            }
+        }
+
+        class BookViewHolder(
+            private val binding: ItemFavouriteBookBinding,
+            private val action: ShopBookAdapter.OnBookItemActions
+        ) : RecyclerView.ViewHolder(binding.root) {
+            fun bind(item: FavouriteUIItem.Book) {
+                val data = item.data
+                binding.tvTitle.text = data.bookTitle
+                binding.tvAuthor.text = data.author1
+                binding.tvPrice.text = "£${data.price ?: ""}"
+                
+                val context = binding.root.context
+                if (data.isCart == true) {
+                    binding.tvAddToCartText.text = context.getString(R.string.remove_cart)
+                    binding.btnAddToCart.backgroundTintList = android.content.res.ColorStateList.valueOf(android.graphics.Color.parseColor("#E74C3C"))
+                    binding.tvAddToCartText.setTextColor(android.graphics.Color.WHITE)
+                    binding.ivAddToCartIcon.imageTintList = android.content.res.ColorStateList.valueOf(android.graphics.Color.WHITE)
+                } else {
+                    binding.tvAddToCartText.text = context.getString(R.string.add_to_cart)
+                    binding.btnAddToCart.backgroundTintList = null
+                    binding.btnAddToCart.background = context.getDrawable(R.drawable.bg_cart_lime)
+                    binding.tvAddToCartText.setTextColor(android.graphics.Color.parseColor("#C4F23E"))
+                    binding.ivAddToCartIcon.imageTintList = android.content.res.ColorStateList.valueOf(android.graphics.Color.parseColor("#C4F23E"))
+                }
+
+                binding.btnAddToCart.setOnClickListener {
+                    data.id?.let { bookId -> action.addToCart(bookId) }
+                }
+                
+                binding.root.setOnClickListener {
+                    data.id?.let { bookId -> action.openSummary(bookId) }
+                }
+            }
+        }
 
     class DeviceViewHolder(
         private val binding: ItemShopDeviceBinding,
@@ -125,15 +129,14 @@ class FavouriteParentAdapter(
             binding.btnExplore.setOnClickListener { onDeviceClick(data) }
             
             // Handle Metrics display if present
-            if (!data.metrics.isNullOrEmpty()) {
-                binding.tvKeyMetricsLabel.visibility = View.VISIBLE
-                binding.tvMetrics.visibility = View.VISIBLE
-                val metricsText = data.metrics.take(4).joinToString("\n") { "➔ ${it.metricName}" }
-                binding.tvMetrics.text = metricsText
-            } else {
-                binding.tvMetrics.visibility = View.GONE
-                binding.tvKeyMetricsLabel.visibility = View.GONE
-            }
+            val metricsList = data.metrics?.mapNotNull { it.metricName } ?: emptyList()
+            binding.tvMetric1.visibility = if (metricsList.isNotEmpty()) View.VISIBLE else View.GONE
+            binding.tvMetric2.visibility = if (metricsList.size > 1) View.VISIBLE else View.GONE
+            binding.tvMetric3.visibility = if (metricsList.size > 2) View.VISIBLE else View.GONE
+            
+            if (metricsList.isNotEmpty()) binding.tvMetric1.text = metricsList[0]
+            if (metricsList.size > 1) binding.tvMetric2.text = metricsList[1]
+            if (metricsList.size > 2) binding.tvMetric3.text = metricsList[2]
 
             // Apply horizontal margins to the root view
             val params = binding.root.layoutParams as ViewGroup.MarginLayoutParams

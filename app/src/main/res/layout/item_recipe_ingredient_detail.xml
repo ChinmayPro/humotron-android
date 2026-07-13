@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="100dp"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="10dp"
+    android:background="@drawable/bg_recipe_card"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="12dp">
+
+    <FrameLayout
+        android:id="@+id/ivIconContainer"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/bg_shop_device_icon_box"
+        android:backgroundTint="#1A5FB7C4"
+        android:padding="12dp">
+
+        <ImageView
+            android:id="@+id/ivIcon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_spark"
+            app:tint="@color/booster_accent_cool" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tvName"
+        style="@style/Text.12x.Manrope.Bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/white"
+        android:maxLines="1"
+        android:ellipsize="end" />
+
+    <TextView
+        android:id="@+id/tvAmount"
+        style="@style/Text.10x.Manrope.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:textColor="@color/textColorMuted"
+        android:maxLines="1"
+        android:ellipsize="end" />
+</LinearLayout>

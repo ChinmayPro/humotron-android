@@ -175,7 +175,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_8dp"
-                        android:text="Sync:"
+                        android:text="Sync"
                         android:textColor="@color/text_secondary"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tvFirmwareLabel" />
@@ -196,7 +196,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_8dp"
-                        android:text="Battery:"
+                        android:text="Battery"
                         android:textColor="@color/text_secondary"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tvSyncLabel" />
@@ -703,7 +703,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_4dp"
-                            android:textColor="@color/lime_green"
+                            android:textColor="@color/text_secondary"
                             android:textSize="12sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/tvWarrantyTitle"
@@ -748,8 +748,19 @@
                             android:text="@string/user_manuals_label"
                             android:textColor="@color/white"
                             android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent" />
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/ivManualsIcon" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvManualsStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_4dp"
+                            android:text="Guides &amp; setup"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="12sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tvManualsTitle" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

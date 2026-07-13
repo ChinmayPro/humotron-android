@@ -220,4 +220,33 @@
     <color name="deep_dives_zone_track_bg">#0FFFFFFF</color> <!-- rgba(255,255,255,.06) -->
     <color name="heatmap_empty_cell">#1B2321</color>
     <color name="tab_unselected_text_color">#90A0A0</color>
+    <!-- Console redesign: plan pill amber -->
+    <color name="plan_pill_amber_bg">#26E7A93C</color>
+    <color name="plan_pill_amber_text">#E7A93C</color>
+    <color name="plan_pill_amber_stroke">#40E7A93C</color>
+    <!-- Console redesign: brand footer -->
+    <color name="brand_footer_text">#9FB0AD</color>
+    <color name="brand_footer_tagline">#6F7E7D</color>
+    <color name="brand_divider">#24FFFFFF</color>
+    <!-- Console redesign: danger/delete red -->
+    <color name="console_danger_red">#F0795E</color>
+    <color name="console_bg">#0B1315</color>
+    
+    <!-- Shop Redesign Colors -->
+    <color name="shop_card_bg">#8C080F10</color>
+    <color name="shop_icon_bg">#0c1416</color>
+    <color name="shop_metric_pill_bg">#0DFFFFFF</color>
+    <color name="shop_explore_btn_bg">#1EC4F23E</color>
+
+    <!-- Profile Custom Colors -->
+    <color name="console_profile_card_bg">#9E05090A</color>
+    <color name="console_profile_card_stroke">#14FFFFFF</color>
+
+    <!-- Booster Accent Colors -->
+    <color name="booster_accent_lime">#C4F23E</color>
+    <color name="booster_accent_cool">#5FB7C4</color>
+    <color name="booster_accent_good">#7BD88F</color>
+    <color name="booster_accent_watch">#E7A93C</color>
+    <color name="booster_text_benefit">#DFE9E3</color>
+    <color name="booster_text_ghost">#CFDAD8</color>
 </resources>

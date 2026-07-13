@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.profile.LearningPreferencesFragment">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header_2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:clipToPadding="false"
+        android:paddingBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="22dp"
+            android:paddingTop="16dp">
+
+            <!-- Intro Section -->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:background="@drawable/bg_rounded_14"
+                android:backgroundTint="#19C4F23E"
+                android:gravity="center">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
+                    android:src="@drawable/ic_sheet_document"
+                    app:tint="#C4F23E" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Text.OnBoard.Title1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
+                android:text="Learning Preferences"
+                android:textSize="21sp"
+                android:textStyle="bold"
+                android:letterSpacing="-0.02" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Text.14x.Manrope.Regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="24dp"
+                android:lineSpacingMultiplier="1.5"
+                android:text="3 categories, 15 sub-categories. Your books, nuggets and tests are catalogued from these — view and tune what they're drawn from."
+                android:textColor="#A0B3AF"
+                android:textSize="13sp" />
+
+            <!-- Card 1: Metabolic Science -->
+            <include layout="@layout/item_learning_card" android:id="@+id/cardMetabolic" />
+
+            <!-- Card 2: Brain & Cognitive -->
+            <include layout="@layout/item_learning_card" android:id="@+id/cardBrain" />
+
+            <!-- Card 3: Environmental & Lifestyle -->
+            <include layout="@layout/item_learning_card" android:id="@+id/cardEnvironment" />
+
+            <!-- Re-run Master Biohacking -->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_target"
+                    app:tint="#8ea09e" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Text.14x.Manrope.SemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="Re-run Master Biohacking setup"
+                    android:textColor="#8ea09e"
+                    android:textSize="13sp" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

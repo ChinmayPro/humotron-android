@@ -52,7 +52,154 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentProfile_to_fragmentRecipes"
+            app:destination="@id/fragmentRecipes"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentProfile_to_fragmentManageAccount"
+            app:destination="@id/fragmentManageAccount"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentProfile_to_fragmentDataSources"
+            app:destination="@id/fragmentDataSources"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentProfile_to_fragmentGoals"
+            app:destination="@id/fragmentGoals"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentProfile_to_fragmentInsights"
+            app:destination="@id/fragmentInsights"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentProfile_to_fragmentAiChat"
+            app:destination="@id/fragmentAiChat"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentProfile_to_fragmentRecipeGenerator"
+            app:destination="@id/fragmentRecipeGenerator"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentProfile_to_fragmentLearningPreferences"
+            app:destination="@id/fragmentLearningPreferences"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentProfile_to_fragmentShopping"
+            app:destination="@id/fragmentShopping"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+
+    <fragment
+        android:id="@+id/fragmentDataSources"
+        android:name="com.humotron.app.ui.profile.DataSourcesFragment"
+        android:label="Data Sources"
+        tools:layout="@layout/fragment_data_sources">
+        <action
+            android:id="@+id/action_fragmentDataSources_to_fragmentDeviceConfig"
+            app:destination="@id/fragmentDeviceConfig"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentDataSources_to_fragmentUploadedReports"
+            app:destination="@id/fragmentUploadedReports"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentDataSources_to_fragmentGoals"
+            app:destination="@id/fragmentGoals"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentDataSources_to_fragmentDataSourceDetail"
+            app:destination="@id/fragmentDataSourceDetail"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentDataSources_to_fragmentAssessmentDetail"
+            app:destination="@id/fragmentAssessmentDetail"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentUploadedReports"
+        android:name="com.humotron.app.ui.bloodTest.UploadedReportsFragment"
+        android:label="Uploaded Reports"
+        tools:layout="@layout/fragment_uploaded_reports" />
+
+    <fragment
+        android:id="@+id/fragmentGoals"
+        android:name="com.humotron.app.ui.profile.GoalsFragment"
+        android:label="Goals"
+        tools:layout="@layout/fragment_goals" />
+
+    <fragment
+        android:id="@+id/fragmentInsights"
+        android:name="com.humotron.app.ui.profile.InsightsFragment"
+        android:label="Insights"
+        tools:layout="@layout/fragment_insights" />
+
+    <fragment
+        android:id="@+id/fragmentAiChat"
+        android:name="com.humotron.app.ui.profile.AiChatFragment"
+        android:label="AI Chat"
+        tools:layout="@layout/fragment_ai_chat" />
+
+    <fragment
+        android:id="@+id/fragmentRecipeGenerator"
+        android:name="com.humotron.app.ui.profile.RecipeGeneratorFragment"
+        android:label="Recipe Generator"
+        tools:layout="@layout/fragment_recipe_generator" />
+
+    <fragment
+        android:id="@+id/fragmentLearningPreferences"
+        android:name="com.humotron.app.ui.profile.LearningPreferencesFragment"
+        android:label="Learning Preferences"
+        tools:layout="@layout/fragment_learning_preferences" />
+
+    <fragment
+        android:id="@+id/fragmentShopping"
+        android:name="com.humotron.app.ui.profile.ShoppingFragment"
+        android:label="Shopping"
+        tools:layout="@layout/fragment_shopping" />
 
     <fragment
         android:id="@+id/fragmentDeviceList"
@@ -315,5 +462,85 @@
         android:name="com.humotron.app.ui.support.SupportRequestDetailsFragment"
         android:label="Request details"
         tools:layout="@layout/fragment_support_request_details" />
+
+    <fragment
+        android:id="@+id/fragmentRecipes"
+        android:name="com.humotron.app.ui.recipes.RecipesFragment"
+        android:label="Recipes"
+        tools:layout="@layout/fragment_recipes">
+        <action
+            android:id="@+id/action_fragmentRecipes_to_fragmentRecipeDetail"
+            app:destination="@id/fragmentRecipeDetail"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentRecipeDetail"
+        android:name="com.humotron.app.ui.recipes.RecipeDetailFragment"
+        android:label="Recipe Details"
+        tools:layout="@layout/fragment_recipe_detail">
+        <argument
+            android:name="recipeId"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentManageAccount"
+        android:name="com.humotron.app.ui.profile.ManageAccountFragment"
+        android:label="Manage Account"
+        tools:layout="@layout/fragment_manage_account" />
+
+    <fragment
+        android:id="@+id/fragmentDataSourceDetail"
+        android:name="com.humotron.app.ui.profile.DataSourceDetailFragment"
+        android:label="Source Details"
+        tools:layout="@layout/fragment_data_source_detail">
+        <argument
+            android:name="sourceId"
+            app:argType="string" />
+        <argument
+            android:name="sourceName"
+            app:argType="string" />
+        <argument
+            android:name="sourceIcon"
+            app:argType="integer" />
+        <argument
+            android:name="sourceDesc"
+            app:argType="string" />
+        <argument
+            android:name="sourceColor"
+            app:argType="string" />
+        <argument
+            android:name="sourceStatus"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentAssessmentDetail"
+        android:name="com.humotron.app.ui.profile.AssessmentDetailFragment"
+        android:label="Assessment Details"
+        tools:layout="@layout/fragment_assessment_detail">
+        <argument
+            android:name="assessmentId"
+            app:argType="string" />
+        <argument
+            android:name="assessmentName"
+            app:argType="string" />
+        <argument
+            android:name="assessmentIcon"
+            app:argType="integer" />
+        <argument
+            android:name="assessmentDesc"
+            app:argType="string" />
+        <argument
+            android:name="assessmentColor"
+            app:argType="string" />
+        <argument
+            android:name="assessmentDate"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

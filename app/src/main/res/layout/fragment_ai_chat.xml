@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.profile.AiChatFragment">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header_2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:clipToPadding="false"
+        android:paddingBottom="120dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="22dp"
+            android:paddingTop="16dp">
+
+            <!-- Intro Section -->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:background="@drawable/bg_rounded_14"
+                android:backgroundTint="#19C4F23E"
+                android:gravity="center">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
+                    android:src="@drawable/ic_bot"
+                    app:tint="#C4F23E" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Text.OnBoard.Title1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
+                android:text="AI Chat"
+                android:textSize="21sp"
+                android:textStyle="bold"
+                android:letterSpacing="-0.02" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Text.14x.Manrope.Regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:lineSpacingMultiplier="1.5"
+                android:text="Shape how Tron AI talks to you — its depth, focus, and what it remembers."
+                android:textColor="#A0B3AF"
+                android:textSize="13sp" />
+
+            <!-- Response style -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/manrope_extra_bold"
+                android:text="Response style"
+                android:textColor="#ffffff"
+                android:textSize="16.5sp"
+                android:textStyle="bold"
+                app:fontFamily="@font/manrope_extra_bold" />
+                
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/manrope_regular"
+                android:text="How should responses feel?"
+                android:textColor="#8EA09E"
+                android:textSize="12.5sp"
+                app:fontFamily="@font/manrope_regular" />
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:flexWrap="wrap">
+                <include layout="@layout/item_insight_style_chip" android:id="@+id/chipStyleDirect" />
+                <include layout="@layout/item_insight_style_chip" android:id="@+id/chipStyleBalanced" />
+                <include layout="@layout/item_insight_style_chip" android:id="@+id/chipStyleDeep" />
+            </com.google.android.flexbox.FlexboxLayout>
+
+            <!-- Focus -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/manrope_extra_bold"
+                android:text="Focus"
+                android:textColor="#ffffff"
+                android:textSize="16.5sp"
+                android:textStyle="bold"
+                app:fontFamily="@font/manrope_extra_bold" />
+                
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/manrope_regular"
+                android:text="What are you looking for?"
+                android:textColor="#8EA09E"
+                android:textSize="12.5sp"
+                app:fontFamily="@font/manrope_regular" />
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:flexWrap="wrap">
+                <include layout="@layout/item_insight_style_chip" android:id="@+id/chipFocusGuidance" />
+                <include layout="@layout/item_insight_style_chip" android:id="@+id/chipFocusBoth" />
+                <include layout="@layout/item_insight_style_chip" android:id="@+id/chipFocusUnderstanding" />
+            </com.google.android.flexbox.FlexboxLayout>
+
+            <!-- Context -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/manrope_extra_bold"
+                android:text="Context"
+                android:textColor="#ffffff"
+                android:textSize="16.5sp"
+                android:textStyle="bold"
+                app:fontFamily="@font/manrope_extra_bold" />
+                
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/manrope_regular"
+                android:text="What should chat consider?"
+                android:textColor="#8EA09E"
+                android:textSize="12.5sp"
+                app:fontFamily="@font/manrope_regular" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_config_item"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp">
+
+                <include layout="@layout/item_config_switch" android:id="@+id/switchGuidance" />
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#1AFFFFFF" />
+                <include layout="@layout/item_config_switch" android:id="@+id/switchPatterns" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!-- Chat history -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:fontFamily="@font/manrope_extra_bold"
+                android:text="Chat history"
+                android:textColor="#ffffff"
+                android:textSize="16.5sp"
+                android:textStyle="bold"
+                app:fontFamily="@font/manrope_extra_bold" />
+                
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/manrope_regular"
+                android:text="How long should we store the conversation?"
+                android:textColor="#8EA09E"
+                android:textSize="12.5sp"
+                app:fontFamily="@font/manrope_regular" />
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:flexWrap="wrap">
+                <include layout="@layout/item_insight_chip" android:id="@+id/chipHistory60" />
+                <include layout="@layout/item_insight_chip" android:id="@+id/chipHistory90" />
+                <include layout="@layout/item_insight_chip" android:id="@+id/chipHistory180" />
+            </com.google.android.flexbox.FlexboxLayout>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Bottom Gradient Overlay -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/bg_bottom_fade"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <!-- Save Button -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSaveAiChat"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginHorizontal="22dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/bg_btn_lime_pill"
+        android:text="Save"
+        android:textAllCaps="false"
+        android:textColor="#0d1618"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:letterSpacing="-0.01"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
