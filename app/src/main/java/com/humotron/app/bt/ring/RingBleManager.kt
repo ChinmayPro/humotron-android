@@ -213,7 +213,7 @@ class RingBleManager(val app: App) {
             if (status == BluetoothGatt.GATT_SUCCESS &&
                 CareRingManager.get().isRingServiceRegistered()
             ) {
-                post {
+                /*post {
                     //you need to synchronize the timestamp with the device first after
                     //the service registration is successful.
                     with(CareRingManager.get()) {
@@ -227,7 +227,7 @@ class RingBleManager(val app: App) {
                             }
                     }
 
-                }
+                }*/
                 OemAuthenticationProcess().start()
             }
         }

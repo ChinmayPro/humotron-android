@@ -1,8 +1,8 @@
-package com.humotron.app.ui.device
+package com.humotron.app.ui.device.cuff
 
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.graphics.Color
 import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -27,27 +27,19 @@ import com.humotron.app.databinding.FragmentBpMachineReadingBinding
 import com.humotron.app.domain.modal.BPMachineBpResult
 import com.humotron.app.domain.modal.BPMachineDeviceStatus
 import com.humotron.app.domain.modal.BPMachineReadingType
-import com.humotron.app.domain.modal.response.GetAllDeviceResponse.Data.UserDevice
+import com.humotron.app.domain.modal.response.GetAllDeviceResponse
 import com.humotron.app.ui.navigation.NavKeys
-import com.humotron.app.util.loge
+import com.lepu.blepro.ext.airbp.RtResult
+import com.lepu.blepro.ext.bp2.RtBpIng
+import com.lepu.blepro.ext.bp2.RtBpResult
+import com.lepu.blepro.ext.bp2.RtEcgIng
+import com.lepu.blepro.ext.bp2.RtEcgResult
+import com.lepu.blepro.ext.bp2.RtStatus
+import com.lepu.blepro.ext.bp3.RtBpEcgIng
 import com.lepu.blepro.objs.Bluetooth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import com.lepu.blepro.ext.airbp.RtResult as AirBpRtResult
-import com.lepu.blepro.ext.bp2.RtBpIng as Bp2RtBpIng
-import com.lepu.blepro.ext.bp2.RtBpResult as Bp2RtBpResult
-import com.lepu.blepro.ext.bp2.RtEcgIng as Bp2RtEcgIng
-import com.lepu.blepro.ext.bp2.RtEcgResult as Bp2RtEcgResult
-import com.lepu.blepro.ext.bp2w.RtBpIng as Bp2wRtBpIng
-import com.lepu.blepro.ext.bp2w.RtBpResult as Bp2wRtBpResult
-import com.lepu.blepro.ext.bp2w.RtEcgIng as Bp2wRtEcgIng
-import com.lepu.blepro.ext.bp2w.RtEcgResult as Bp2wRtEcgResult
-import com.lepu.blepro.ext.bp3.RtBpEcgIng as Bp3RtBpEcgIng
-import com.lepu.blepro.ext.bp3.RtBpIng as Bp3RtBpIng
-import com.lepu.blepro.ext.bp3.RtBpResult as Bp3RtBpResult
-import com.lepu.blepro.ext.bp3.RtEcgIng as Bp3RtEcgIng
-import com.lepu.blepro.ext.bp3.RtEcgResult as Bp3RtEcgResult
 
 @AndroidEntryPoint
 class BPMachineReadingFragment :
@@ -59,7 +51,7 @@ class BPMachineReadingFragment :
 
     @Inject
     lateinit var bluetoothManager: BluetoothManager
-    private var userDevice: UserDevice? = null
+    private var userDevice: GetAllDeviceResponse.Data.UserDevice? = null
     private var readingType: BPMachineReadingType? = null
     private var isResultSuccessOrFail: Boolean? = false
 
@@ -81,7 +73,7 @@ class BPMachineReadingFragment :
 
     private fun initViews() = with(binding) {
         userDevice = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            arguments?.getParcelable(NavKeys.WEARABLE, UserDevice::class.java)
+            arguments?.getParcelable(NavKeys.WEARABLE, GetAllDeviceResponse.Data.UserDevice::class.java)
         } else {
             @Suppress("DEPRECATION")
             arguments?.getParcelable(NavKeys.WEARABLE)
@@ -245,19 +237,19 @@ class BPMachineReadingFragment :
         source: String,
     ) {
         val percent = when (status) {
-            is com.lepu.blepro.ext.bp2.RtStatus -> status.percent
+            is RtStatus -> status.percent
             is com.lepu.blepro.ext.bp2w.RtStatus -> status.percent
             is com.lepu.blepro.ext.bp3.RtStatus -> status.percent
             else -> return
         }
         val batteryStatus = when (status) {
-            is com.lepu.blepro.ext.bp2.RtStatus -> status.batteryStatus
+            is RtStatus -> status.batteryStatus
             is com.lepu.blepro.ext.bp2w.RtStatus -> status.batteryStatus
             is com.lepu.blepro.ext.bp3.RtStatus -> status.batteryStatus
             else -> 0
         }
         val deviceStatus = when (status) {
-            is com.lepu.blepro.ext.bp2.RtStatus -> status.deviceStatus
+            is RtStatus -> status.deviceStatus
             is com.lepu.blepro.ext.bp2w.RtStatus -> status.deviceStatus
             is com.lepu.blepro.ext.bp3.RtStatus -> status.deviceStatus
             else -> -1
@@ -272,7 +264,7 @@ class BPMachineReadingFragment :
         //Log.e("BP Machine", "deviceStatusMsg: $deviceStatusMsg")
 
         val batteryStatusMsg = when (status) {
-            is com.lepu.blepro.ext.bp2.RtStatus -> status.batteryStatusMsg
+            is RtStatus -> status.batteryStatusMsg
             is com.lepu.blepro.ext.bp2w.RtStatus -> status.batteryStatusMsg
             is com.lepu.blepro.ext.bp3.RtStatus -> status.batteryStatusMsg
             else -> ""
@@ -349,40 +341,40 @@ class BPMachineReadingFragment :
 
     private fun renderBpPressure(payload: Any?, statusText: String, detailText: String) {
         val parsed = when (payload) {
-            is Bp2RtBpIng -> payload
-            is Bp2wRtBpIng -> payload
-            is Bp3RtBpIng -> payload
-            is Bp3RtBpEcgIng -> payload
-            is ByteArray -> runCatching { Bp2RtBpIng(payload) }.getOrNull()
-                ?: runCatching { Bp2wRtBpIng(payload) }.getOrNull()
-                ?: runCatching { Bp3RtBpIng(payload) }.getOrNull()
-                ?: runCatching { Bp3RtBpEcgIng(payload) }.getOrNull()
+            is RtBpIng -> payload
+            is com.lepu.blepro.ext.bp2w.RtBpIng -> payload
+            is com.lepu.blepro.ext.bp3.RtBpIng -> payload
+            is RtBpEcgIng -> payload
+            is ByteArray -> runCatching { RtBpIng(payload) }.getOrNull()
+                ?: runCatching { com.lepu.blepro.ext.bp2w.RtBpIng(payload) }.getOrNull()
+                ?: runCatching { com.lepu.blepro.ext.bp3.RtBpIng(payload) }.getOrNull()
+                ?: runCatching { RtBpEcgIng(payload) }.getOrNull()
 
             else -> null
         }
         //Log.e("BP Machine", "renderBpPressure parsed: $parsed")
 
         val pressure = when (parsed) {
-            is Bp2RtBpIng -> parsed.pressure
-            is Bp2wRtBpIng -> parsed.pressure
-            is Bp3RtBpIng -> parsed.pressure
-            is Bp3RtBpEcgIng -> parsed.pressure
+            is RtBpIng -> parsed.pressure
+            is com.lepu.blepro.ext.bp2w.RtBpIng -> parsed.pressure
+            is com.lepu.blepro.ext.bp3.RtBpIng -> parsed.pressure
+            is RtBpEcgIng -> parsed.pressure
             else -> null
         }
 
         val pulse = when (parsed) {
-            is Bp2RtBpIng -> parsed.pr
-            is Bp2wRtBpIng -> parsed.pr
-            is Bp3RtBpIng -> parsed.pr
-            is Bp3RtBpEcgIng -> parsed.pr
+            is RtBpIng -> parsed.pr
+            is com.lepu.blepro.ext.bp2w.RtBpIng -> parsed.pr
+            is com.lepu.blepro.ext.bp3.RtBpIng -> parsed.pr
+            is RtBpEcgIng -> parsed.pr
             else -> null
         }
 
         val isDeflating = when (parsed) {
-            is Bp2RtBpIng -> parsed.isDeflate
-            is Bp2wRtBpIng -> parsed.isDeflate
-            is Bp3RtBpIng -> parsed.isDeflate
-            is Bp3RtBpEcgIng -> parsed.isDeflate
+            is RtBpIng -> parsed.isDeflate
+            is com.lepu.blepro.ext.bp2w.RtBpIng -> parsed.isDeflate
+            is com.lepu.blepro.ext.bp3.RtBpIng -> parsed.isDeflate
+            is RtBpEcgIng -> parsed.isDeflate
             else -> null
         } == true
 
@@ -418,39 +410,39 @@ class BPMachineReadingFragment :
 
     private fun renderBpResult(payload: Any?, statusText: String, detailText: String) {
         val parsed = when (payload) {
-            is Bp2RtBpResult -> payload
-            is Bp2wRtBpResult -> payload
-            is Bp3RtBpResult -> payload
-            is ByteArray -> runCatching { Bp2RtBpResult(payload) }.getOrNull()
-                ?: runCatching { Bp2wRtBpResult(payload) }.getOrNull()
-                ?: runCatching { Bp3RtBpResult(payload) }.getOrNull()
+            is RtBpResult -> payload
+            is com.lepu.blepro.ext.bp2w.RtBpResult -> payload
+            is com.lepu.blepro.ext.bp3.RtBpResult -> payload
+            is ByteArray -> runCatching { RtBpResult(payload) }.getOrNull()
+                ?: runCatching { com.lepu.blepro.ext.bp2w.RtBpResult(payload) }.getOrNull()
+                ?: runCatching { com.lepu.blepro.ext.bp3.RtBpResult(payload) }.getOrNull()
 
             else -> null
         }
         //Log.e("BP Machine", "renderBpResult parsed: $parsed")
 
         val sys = when (parsed) {
-            is Bp2RtBpResult -> parsed.sys
-            is Bp2wRtBpResult -> parsed.sys
-            is Bp3RtBpResult -> parsed.sys
+            is RtBpResult -> parsed.sys
+            is com.lepu.blepro.ext.bp2w.RtBpResult -> parsed.sys
+            is com.lepu.blepro.ext.bp3.RtBpResult -> parsed.sys
             else -> 0
         }
         val dia = when (parsed) {
-            is Bp2RtBpResult -> parsed.dia
-            is Bp2wRtBpResult -> parsed.dia
-            is Bp3RtBpResult -> parsed.dia
+            is RtBpResult -> parsed.dia
+            is com.lepu.blepro.ext.bp2w.RtBpResult -> parsed.dia
+            is com.lepu.blepro.ext.bp3.RtBpResult -> parsed.dia
             else -> 0
         }
         val pulse = when (parsed) {
-            is Bp2RtBpResult -> parsed.pr
-            is Bp2wRtBpResult -> parsed.pr
-            is Bp3RtBpResult -> parsed.pr
+            is RtBpResult -> parsed.pr
+            is com.lepu.blepro.ext.bp2w.RtBpResult -> parsed.pr
+            is com.lepu.blepro.ext.bp3.RtBpResult -> parsed.pr
             else -> 0
         }
         val resultValue = when (parsed) {
-            is Bp2RtBpResult -> parsed.result
-            is Bp2wRtBpResult -> parsed.result
-            is Bp3RtBpResult -> parsed.result
+            is RtBpResult -> parsed.result
+            is com.lepu.blepro.ext.bp2w.RtBpResult -> parsed.result
+            is com.lepu.blepro.ext.bp3.RtBpResult -> parsed.result
             else -> -1
         }
 
@@ -494,45 +486,45 @@ class BPMachineReadingFragment :
         detailText: String,
     ) {
         val parsed = when (payload) {
-            is Bp2RtEcgIng -> payload
-            is Bp2wRtEcgIng -> payload
-            is Bp3RtEcgIng -> payload
-            is Bp3RtBpEcgIng -> payload
-            is ByteArray -> runCatching { Bp2RtEcgIng(payload) }.getOrNull()
-                ?: runCatching { Bp2wRtEcgIng(payload) }.getOrNull()
-                ?: runCatching { Bp3RtEcgIng(payload) }.getOrNull()
-                ?: runCatching { Bp3RtBpEcgIng(payload) }.getOrNull()
+            is RtEcgIng -> payload
+            is com.lepu.blepro.ext.bp2w.RtEcgIng -> payload
+            is com.lepu.blepro.ext.bp3.RtEcgIng -> payload
+            is RtBpEcgIng -> payload
+            is ByteArray -> runCatching { RtEcgIng(payload) }.getOrNull()
+                ?: runCatching { com.lepu.blepro.ext.bp2w.RtEcgIng(payload) }.getOrNull()
+                ?: runCatching { com.lepu.blepro.ext.bp3.RtEcgIng(payload) }.getOrNull()
+                ?: runCatching { RtBpEcgIng(payload) }.getOrNull()
 
             else -> null
         }
         //Log.e("BP Machine", "renderEcgProgress parsed: $parsed")
 
         val hr = when (parsed) {
-            is Bp2RtEcgIng -> parsed.hr
-            is Bp2wRtEcgIng -> parsed.hr
-            is Bp3RtEcgIng -> parsed.hr
-            is Bp3RtBpEcgIng -> parsed.hr
+            is RtEcgIng -> parsed.hr
+            is com.lepu.blepro.ext.bp2w.RtEcgIng -> parsed.hr
+            is com.lepu.blepro.ext.bp3.RtEcgIng -> parsed.hr
+            is RtBpEcgIng -> parsed.hr
             else -> null
         }
         val leadOff = when (parsed) {
-            is Bp2RtEcgIng -> parsed.isLeadOff
-            is Bp2wRtEcgIng -> parsed.isLeadOff
-            is Bp3RtEcgIng -> parsed.isLeadOff
-            is Bp3RtBpEcgIng -> parsed.isLeadOff
+            is RtEcgIng -> parsed.isLeadOff
+            is com.lepu.blepro.ext.bp2w.RtEcgIng -> parsed.isLeadOff
+            is com.lepu.blepro.ext.bp3.RtEcgIng -> parsed.isLeadOff
+            is RtBpEcgIng -> parsed.isLeadOff
             else -> null
         } == true
         val poorSignal = when (parsed) {
-            is Bp2RtEcgIng -> parsed.isPoolSignal
-            is Bp2wRtEcgIng -> parsed.isPoolSignal
-            is Bp3RtEcgIng -> parsed.isPoolSignal
-            is Bp3RtBpEcgIng -> parsed.isPoolSignal
+            is RtEcgIng -> parsed.isPoolSignal
+            is com.lepu.blepro.ext.bp2w.RtEcgIng -> parsed.isPoolSignal
+            is com.lepu.blepro.ext.bp3.RtEcgIng -> parsed.isPoolSignal
+            is RtBpEcgIng -> parsed.isPoolSignal
             else -> null
         } == true
         val duration = when (parsed) {
-            is Bp2RtEcgIng -> parsed.curDuration
-            is Bp2wRtEcgIng -> parsed.curDuration
-            is Bp3RtEcgIng -> parsed.curDuration
-            is Bp3RtBpEcgIng -> parsed.curDuration
+            is RtEcgIng -> parsed.curDuration
+            is com.lepu.blepro.ext.bp2w.RtEcgIng -> parsed.curDuration
+            is com.lepu.blepro.ext.bp3.RtEcgIng -> parsed.curDuration
+            is RtBpEcgIng -> parsed.curDuration
             else -> null
         }
         with(binding) {
@@ -562,34 +554,34 @@ class BPMachineReadingFragment :
 
     private fun renderEcgResult(payload: Any?, statusText: String, detailText: String) {
         val parsed = when (payload) {
-            is Bp2RtEcgResult -> payload
-            is Bp2wRtEcgResult -> payload
-            is Bp3RtEcgResult -> payload
-            is ByteArray -> runCatching { Bp2RtEcgResult(payload) }.getOrNull()
-                ?: runCatching { Bp2wRtEcgResult(payload) }.getOrNull()
-                ?: runCatching { Bp3RtEcgResult(payload) }.getOrNull()
+            is RtEcgResult -> payload
+            is com.lepu.blepro.ext.bp2w.RtEcgResult -> payload
+            is com.lepu.blepro.ext.bp3.RtEcgResult -> payload
+            is ByteArray -> runCatching { RtEcgResult(payload) }.getOrNull()
+                ?: runCatching { com.lepu.blepro.ext.bp2w.RtEcgResult(payload) }.getOrNull()
+                ?: runCatching { com.lepu.blepro.ext.bp3.RtEcgResult(payload) }.getOrNull()
 
             else -> null
         }
         //Log.e("BP Machine", "renderEcgResult parsed: $parsed")
 
         val hr = when (parsed) {
-            is Bp2RtEcgResult -> parsed.hr
-            is Bp2wRtEcgResult -> parsed.hr
-            is Bp3RtEcgResult -> parsed.hr
+            is RtEcgResult -> parsed.hr
+            is com.lepu.blepro.ext.bp2w.RtEcgResult -> parsed.hr
+            is com.lepu.blepro.ext.bp3.RtEcgResult -> parsed.hr
             else -> 0
         }
         val result = when (parsed) {
-            is Bp2RtEcgResult -> parsed.result
-            is Bp2wRtEcgResult -> parsed.result
-            is Bp3RtEcgResult -> parsed.result
+            is RtEcgResult -> parsed.result
+            is com.lepu.blepro.ext.bp2w.RtEcgResult -> parsed.result
+            is com.lepu.blepro.ext.bp3.RtEcgResult -> parsed.result
             else -> null
         } ?: 0
 
         val diagnosisText = when (parsed) {
-            is Bp2RtEcgResult -> parsed.diagnosis?.resultMess
-            is Bp2wRtEcgResult -> parsed.diagnosis?.resultMess
-            is Bp3RtEcgResult -> parsed.diagnosis?.resultMess
+            is RtEcgResult -> parsed.diagnosis?.resultMess
+            is com.lepu.blepro.ext.bp2w.RtEcgResult -> parsed.diagnosis?.resultMess
+            is com.lepu.blepro.ext.bp3.RtEcgResult -> parsed.diagnosis?.resultMess
             else -> null
         }?.toString().orEmpty()
 
@@ -623,7 +615,7 @@ class BPMachineReadingFragment :
 
     }
 
-    private fun renderAirBpResult(result: AirBpRtResult) {
+    private fun renderAirBpResult(result: RtResult) {
 
     }
 
@@ -741,7 +733,7 @@ class BPMachineReadingFragment :
         }
     }
 
-    private fun dateText(result: AirBpRtResult): String {
+    private fun dateText(result: RtResult): String {
         return buildString {
             append(result.year)
             append("-")
