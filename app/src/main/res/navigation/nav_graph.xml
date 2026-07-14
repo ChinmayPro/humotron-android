@@ -161,8 +161,14 @@
             android:id="@+id/action_fragmentDeviceData_to_fragmentWeightScaleReading"
             app:destination="@id/fragmentWeightScaleReading" />
         <action
+            android:id="@+id/action_fragmentDeviceData_to_fragmentSmartScaleReadingInstructions"
+            app:destination="@id/fragmentSmartScaleReadingInstructions" />
+        <action
             android:id="@+id/action_fragmentDeviceData_to_fragmentTakeReadingRingBand"
             app:destination="@id/fragmentTakeReadingRingBand" />
+        <action
+            android:id="@+id/action_fragmentDeviceData_to_fragmentReadingTypesSmartCuff"
+            app:destination="@id/fragmentReadingTypesSmartCuff" />
     </fragment>
 
     <fragment
@@ -186,12 +192,145 @@
     </fragment>
 
     <fragment
-        android:id="@+id/fragmentWeightScaleReading"
-        android:name="com.humotron.app.ui.device.WeightScaleReadingFragment"
-        tools:layout="@layout/fragment_weight_scale_reading">
+        android:id="@+id/fragmentReadingTypesSmartCuff"
+        android:name="com.humotron.app.ui.device.cuff.SmartCuffReadingTypesFragment"
+        tools:layout="@layout/fragment_smart_cuff_reading_types">
         <argument
             android:name="wearable"
             app:argType="com.humotron.app.domain.modal.response.GetAllDeviceResponse$Data$UserDevice"
+            app:nullable="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentSmartCuffReadingInstructions"
+        android:name="com.humotron.app.ui.device.cuff.SmartCuffReadingInstructionFragment"
+        tools:layout="@layout/fragment_smart_cuff_reading_instructions">
+        <argument
+            android:name="wearable"
+            app:argType="com.humotron.app.domain.modal.response.GetAllDeviceResponse$Data$UserDevice"
+            app:nullable="true" />
+        <argument
+            android:name="readingType"
+            app:argType="com.humotron.app.domain.modal.BPMachineReadingType" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentSmartCuffBPReading"
+        android:name="com.humotron.app.ui.device.cuff.SmartCuffBPReadingFragment"
+        tools:layout="@layout/fragment_smart_cuff_bp_reading">
+        <argument
+            android:name="wearable"
+            app:argType="com.humotron.app.domain.modal.response.GetAllDeviceResponse$Data$UserDevice"
+            app:nullable="true" />
+        <argument
+            android:name="readingType"
+            app:argType="com.humotron.app.domain.modal.BPMachineReadingType" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentSmartCuffBPResult"
+        android:name="com.humotron.app.ui.device.cuff.SmartCuffBPResultFragment"
+        tools:layout="@layout/fragment_smart_cuff_bp_result">
+        <argument
+            android:name="wearable"
+            app:argType="com.humotron.app.domain.modal.response.GetAllDeviceResponse$Data$UserDevice"
+            app:nullable="true" />
+        <argument
+            android:name="readingType"
+            app:argType="com.humotron.app.domain.modal.BPMachineReadingType" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentSmartCuffECGResult"
+        android:name="com.humotron.app.ui.device.cuff.SmartCuffECGResultFragment"
+        tools:layout="@layout/fragment_smart_cuff_ecg_result">
+        <argument
+            android:name="wearable"
+            app:argType="com.humotron.app.domain.modal.response.GetAllDeviceResponse$Data$UserDevice"
+            app:nullable="true" />
+        <argument
+            android:name="readingType"
+            app:argType="com.humotron.app.domain.modal.BPMachineReadingType" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentSmartCuffECGReading"
+        android:name="com.humotron.app.ui.device.cuff.SmartCuffECGReadingFragment"
+        tools:layout="@layout/fragment_smart_cuff_ecg_reading">
+        <argument
+            android:name="wearable"
+            app:argType="com.humotron.app.domain.modal.response.GetAllDeviceResponse$Data$UserDevice"
+            app:nullable="true" />
+        <argument
+            android:name="readingType"
+            app:argType="com.humotron.app.domain.modal.BPMachineReadingType" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentSmartScaleReadingInstructions"
+        android:name="com.humotron.app.ui.device.scale.SmartScaleReadingInstructionsFragment"
+        tools:layout="@layout/fragment_smart_scale_reading_instructions">
+        <argument
+            android:name="wearable"
+            app:argType="com.humotron.app.domain.modal.response.GetAllDeviceResponse$Data$UserDevice"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_fragmentSmartScaleReadingInstructions_to_fragmentWeightScaleReading"
+            app:destination="@id/fragmentWeightScaleReading" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentWeightScaleReading"
+        android:name="com.humotron.app.ui.device.scale.SmartScaleReadingFragment"
+        tools:layout="@layout/fragment_smart_scale_reading">
+        <argument
+            android:name="wearable"
+            app:argType="com.humotron.app.domain.modal.response.GetAllDeviceResponse$Data$UserDevice"
+            app:nullable="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentSmartScaleResult"
+        android:name="com.humotron.app.ui.device.scale.SmartScaleResultFragment"
+        tools:layout="@layout/fragment_smart_scale_result">
+        <argument
+            android:name="wearable"
+            app:argType="com.humotron.app.domain.modal.response.GetAllDeviceResponse$Data$UserDevice"
+            app:nullable="true" />
+        <argument
+            android:name="scaleMeasuredAt"
+            app:argType="string"
+            android:defaultValue="@null"
+            app:nullable="true" />
+        <argument
+            android:name="scaleWeight"
+            app:argType="string"
+            android:defaultValue="@null"
+            app:nullable="true" />
+        <argument
+            android:name="scaleBmi"
+            app:argType="string"
+            android:defaultValue="@null"
+            app:nullable="true" />
+        <argument
+            android:name="scaleBodyFat"
+            app:argType="string"
+            android:defaultValue="@null"
+            app:nullable="true" />
+        <argument
+            android:name="scaleLeanBodyWeight"
+            app:argType="string"
+            android:defaultValue="@null"
+            app:nullable="true" />
+        <argument
+            android:name="scaleMuscleMass"
+            app:argType="string"
+            android:defaultValue="@null"
+            app:nullable="true" />
+        <argument
+            android:name="scaleBoneMass"
+            app:argType="string"
+            android:defaultValue="@null"
             app:nullable="true" />
     </fragment>
 

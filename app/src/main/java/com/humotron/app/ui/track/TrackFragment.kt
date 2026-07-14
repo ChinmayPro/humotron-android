@@ -38,7 +38,6 @@ import com.yarolegovich.discretescrollview.transform.Pivot
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 
 @AndroidEntryPoint
@@ -272,6 +271,26 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
                             it.userHardwareUUID?.let { value ->
                                 prefUtils.setString(
                                     Preference.WEARABLE_BAND,
+                                    value
+                                )
+                            }
+                        }
+                    data.hardwareDetails?.firstOrNull { it.hardwareType == DeviceType.SMART_CUFF.value }
+                        ?.let {
+                            prefUtils.setBpHardwareData(it)
+                            it.userHardwareUUID?.let { value ->
+                                prefUtils.setString(
+                                    Preference.BP_MACHINE,
+                                    value
+                                )
+                            }
+                        }
+                    data.hardwareDetails?.firstOrNull { it.hardwareType == DeviceType.WEIGHT_MACHINE.value }
+                        ?.let {
+                            prefUtils.setWeightHardwareData(it)
+                            it.userHardwareUUID?.let { value ->
+                                prefUtils.setString(
+                                    Preference.WEIGHT_SCALE,
                                     value
                                 )
                             }
@@ -520,7 +539,7 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
                         R.drawable.ic_bp_machine_setup,
                         "BP Monitor",
                         "One-click arm BP measurement",
-                        deviceType = DeviceType.BP_MACHINE
+                        deviceType = DeviceType.SMART_CUFF
                     ), DeviceInfo(
                         R.drawable.ic_weight_scale,
                         "Humotron Weight Scale",

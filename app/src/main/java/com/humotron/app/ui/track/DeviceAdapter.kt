@@ -3,7 +3,6 @@ package com.humotron.app.ui.track
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.humotron.app.R
 import com.humotron.app.databinding.ItemDeviceNewBinding
 import com.humotron.app.domain.modal.DeviceType
@@ -136,7 +135,7 @@ class DeviceAdapter(
                     R.drawable.ic_band_vectr
                 }
 
-                DeviceType.BP_MACHINE -> {
+                DeviceType.SMART_CUFF -> {
                     R.drawable.ic_smart_cuff_vector
                 }
 

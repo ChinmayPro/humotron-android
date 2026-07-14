@@ -63,7 +63,7 @@ class PairHumotronDeviceFragment : BaseFragment(R.layout.fragment_pair_humotron_
             findNavController().navigate(
                 R.id.fragmentHumotronDeviceConnectInstruction,
                 Bundle().apply {
-                    putSerializable(NavKeys.KEY_DEVICE_TYPE, DeviceType.BP_MACHINE)
+                    putSerializable(NavKeys.KEY_DEVICE_TYPE, DeviceType.SMART_CUFF)
                 }
             )
             /*openConnectInfo(

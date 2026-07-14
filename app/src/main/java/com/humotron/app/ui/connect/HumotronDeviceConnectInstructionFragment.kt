@@ -95,7 +95,7 @@ class HumotronDeviceConnectInstructionFragment :
                 tvStep3Text.setText(R.string.device_step3_band)
             }
 
-            DeviceType.BP_MACHINE -> {
+            DeviceType.SMART_CUFF -> {
                 setColorIcons(R.color.cool, R.color.cool_14, R.drawable.ic_smart_cuff_vector)
                 binding.header.tvTitle.text = getString(R.string.pair_humotron_cuff_title)
                 tvDeviceTitle.setText(R.string.device_title_cuff)
@@ -153,7 +153,7 @@ class HumotronDeviceConnectInstructionFragment :
                 findNavController().navigate(R.id.fragmentBandConnection)
             }
 
-            DeviceType.BP_MACHINE -> {
+            DeviceType.SMART_CUFF -> {
                 findNavController().navigate(R.id.fragmentBPMachineConnection)
             }
 

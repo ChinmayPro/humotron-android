@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@drawable/ic_bg_main_2"
+    tools:context=".ui.device.scale.SmartScaleResultFragment">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header_3" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toTopOf="@+id/btnDone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="24dp">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvReadingStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:fontFamily="@font/manrope_extra_bold"
+                android:gravity="center"
+                android:letterSpacing="-0.02"
+                android:text="Reading complete"
+                android:textColor="@color/lime"
+                android:textSize="30sp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvTimestamp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/manrope_medium"
+                android:gravity="center"
+                android:text="Smart Scale · just now"
+                android:textColor="@color/ink4"
+                android:textSize="11.5sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="22dp"
+                android:layout_marginTop="14dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cvLeadMetric"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/lime_6"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/lime_20"
+                    app:strokeWidth="1dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvLeadValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_extra_bold"
+                            android:letterSpacing="-0.02"
+                            android:text="75.70"
+                            android:textColor="@color/lime"
+                            android:textSize="34sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvLeadUnit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginBottom="4dp"
+                            android:fontFamily="@font/manrope_extra_bold"
+                            android:text="kg"
+                            android:textColor="@color/ink3"
+                            android:textSize="13sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/tvLeadValue"
+                            app:layout_constraintStart_toEndOf="@+id/tvLeadValue" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvLeadLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:fontFamily="@font/manrope_semibold"
+                            android:text="Weight · was 74.0 kg"
+                            android:textColor="@color/ink3"
+                            android:textSize="12sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tvLeadValue" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cvBmiMetric"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5.5dp"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="@color/deep_dives_card"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="0dp"
+                        app:strokeColor="@color/hair"
+                        app:strokeWidth="1dp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="16dp">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvBmiValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/manrope_medium"
+                                android:letterSpacing="-0.02"
+                                android:text="21.9"
+                                android:textColor="@color/black"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvBmiUnit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="2dp"
+                                android:layout_marginBottom="4dp"
+                                android:fontFamily="@font/manrope_medium"
+                                android:text="kg/m²"
+                                android:textColor="@color/ink3"
+                                android:textSize="13sp"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toBottomOf="@+id/tvBmiValue"
+                                app:layout_constraintStart_toEndOf="@+id/tvBmiValue" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvBmiLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:fontFamily="@font/manrope_medium"
+                                android:text="BMI"
+                                android:textColor="@color/ink3"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/tvBmiValue" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cvBodyFatMetric"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5.5dp"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="@color/deep_dives_card"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="0dp"
+                        app:strokeColor="@color/hair"
+                        app:strokeWidth="1dp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="16dp">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvBodyFatValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/manrope_medium"
+                                android:letterSpacing="-0.02"
+                                android:text="18.2"
+                                android:textColor="@color/black"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvBodyFatUnit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="2dp"
+                                android:layout_marginBottom="4dp"
+                                android:fontFamily="@font/manrope_medium"
+                                android:text="%"
+                                android:textColor="@color/ink3"
+                                android:textSize="13sp"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toBottomOf="@+id/tvBodyFatValue"
+                                app:layout_constraintStart_toEndOf="@+id/tvBodyFatValue" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvBodyFatLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:fontFamily="@font/manrope_medium"
+                                android:text="Body fat"
+                                android:textColor="@color/ink3"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/tvBodyFatValue" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cvLeanBodyMetric"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5.5dp"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="@color/deep_dives_card"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="0dp"
+                        app:strokeColor="@color/hair"
+                        app:strokeWidth="1dp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="16dp">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvLeanBodyValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/manrope_medium"
+                                android:letterSpacing="-0.02"
+                                android:text="54.90"
+                                android:textColor="@color/black"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvLeanBodyUnit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="2dp"
+                                android:layout_marginBottom="4dp"
+                                android:fontFamily="@font/manrope_medium"
+                                android:text="kg"
+                                android:textColor="@color/ink3"
+                                android:textSize="13sp"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toBottomOf="@+id/tvLeanBodyValue"
+                                app:layout_constraintStart_toEndOf="@+id/tvLeanBodyValue" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvLeanBodyLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:fontFamily="@font/manrope_medium"
+                                android:text="Lean body weight"
+                                android:textColor="@color/ink3"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/tvLeanBodyValue" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cvMuscleMassMetric"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5.5dp"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="@color/deep_dives_card"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="0dp"
+                        app:strokeColor="@color/hair"
+                        app:strokeWidth="1dp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="16dp">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvMuscleMassValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/manrope_medium"
+                                android:letterSpacing="-0.02"
+                                android:text="52.20"
+                                android:textColor="@color/black"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvMuscleMassUnit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="2dp"
+                                android:layout_marginBottom="4dp"
+                                android:fontFamily="@font/manrope_medium"
+                                android:text="kg"
+                                android:textColor="@color/ink3"
+                                android:textSize="13sp"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toBottomOf="@+id/tvMuscleMassValue"
+                                app:layout_constraintStart_toEndOf="@+id/tvMuscleMassValue" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvMuscleMassLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:fontFamily="@font/manrope_medium"
+                                android:text="Muscle mass"
+                                android:textColor="@color/ink3"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/tvMuscleMassValue" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cvBoneMassMetric"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5.5dp"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="@color/deep_dives_card"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="0dp"
+                        app:strokeColor="@color/hair"
+                        app:strokeWidth="1dp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="16dp">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvBoneMassValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/manrope_medium"
+                                android:letterSpacing="-0.02"
+                                android:text="2.75"
+                                android:textColor="@color/black"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvBoneMassUnit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="2dp"
+                                android:layout_marginBottom="4dp"
+                                android:fontFamily="@font/manrope_medium"
+                                android:text="kg"
+                                android:textColor="@color/ink3"
+                                android:textSize="13sp"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toBottomOf="@+id/tvBoneMassValue"
+                                app:layout_constraintStart_toEndOf="@+id/tvBoneMassValue" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvBoneMassLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:fontFamily="@font/manrope_medium"
+                                android:text="Bone mass"
+                                android:textColor="@color/ink3"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/tvBoneMassValue" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5.5dp"
+                        android:layout_weight="1" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvInsightTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/manrope_extra_bold"
+                android:gravity="center"
+                android:letterSpacing="-0.01"
+                android:text="What this means"
+                android:textColor="#CDD6D5"
+                android:textSize="22sp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvSupportive"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="22dp"
+                android:layout_marginTop="6dp"
+                app:cardBackgroundColor="@color/white_3"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/hair"
+                app:strokeWidth="1dp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvSupportiveText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_semibold"
+                    android:lineSpacingMultiplier="1.5"
+                    android:paddingHorizontal="15dp"
+                    android:paddingVertical="13dp"
+                    android:text="A small rise since your last reading, mostly within normal daily variation. Your lean and muscle mass are holding well — watch the weekly trend rather than any single morning."
+                    android:textColor="#DFE9E3"
+                    android:textSize="12.5sp" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnViewMetrics"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="14dp"
+                android:fontFamily="@font/manrope_medium"
+                android:gravity="start|center_vertical"
+                android:paddingHorizontal="6dp"
+                android:text="See weight in your metrics"
+                android:textAllCaps="false"
+                android:textColor="@color/lime"
+                android:textSize="13sp"
+                app:icon="@drawable/ic_menu_24px"
+                app:iconGravity="textStart"
+                app:iconPadding="9dp"
+                app:iconTint="@color/lime" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/space"
+        app:srcCompat="@drawable/bg_black_gradient" />
+
+    <Space
+        android:id="@+id/space"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_15dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnDone" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnDone"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/manrope_bold"
+        android:text="@string/done"
+        android:textAllCaps="false"
+        android:textColor="#000000"
+        android:textSize="15sp"
+
+        app:backgroundTint="#CFF551"
+        app:cornerRadius="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/tvTakeAnotherReading" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvTakeAnotherReading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginBottom="12dp"
+        android:gravity="center"
+        android:text="@string/read_again"
+        android:textColor="#879A9C"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

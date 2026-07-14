@@ -54,7 +54,7 @@ class ReadingTypesRingBandFragment :
 
         header.tvTitle.text = getString(R.string.take_a_reading)
 
-        val resolvedType = DeviceType.from(userDevice?.deviceType ?: userDevice?.deviceName)
+        val resolvedType = DeviceType.from( userDevice?.deviceName)
         val deviceLabel = if (resolvedType == DeviceType.RING) {
             getString(R.string.take_reading_device_ring)
         } else {
@@ -95,28 +95,28 @@ class ReadingTypesRingBandFragment :
             HealthScanItem(
                 "Stress Scan",
                 "Stress",
-                "Quick 2 min stress scan to get a quick sense of your stress levels",
+                "How wound up are you, right now?",
                 HealthScanType.HRV,
                 "Stress"
             ),
             HealthScanItem(
                 "Body Load Scan",
                 "Body Load",
-                "Not doing much, but still feel tired or wired? Check if your body is working harder than it should.",
+                "Is your body working harder than it should, right now?",
                 HealthScanType.HR,
                 "Heart Rate"
             ),
             HealthScanItem(
                 "Oxygen Check",
                 "Oxygen",
-                "Brain fog? Low energy? Check if low oxygen is draining your energy.",
+                "Is your blood well-oxygenated, right now?",
                 HealthScanType.SPO2,
                 "Oxygen"
             ),
             HealthScanItem(
                 "Thermal Scan",
                 "Thermal",
-                "Feeling unusually warm, restless, or off? Detect early physical strain.",
+                "Is your body temperature drifting from your normal?",
                 HealthScanType.TEMPERATURE,
                 "Temperature"
             )

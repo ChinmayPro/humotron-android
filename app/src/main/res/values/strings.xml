@@ -1533,4 +1533,38 @@ To get started:\n
     <string name="it_s_paired_and_feeding_track_scale">It’s paired and feeding Track. Take your first reading whenever you’re ready.</string>
     <string name="browse_the_store">Browse the store</string>
     <string name="add_a_product">Add a product</string>
+    <string name="what_would_you_like_to_measure">What would you like to measure?</string>
+    <string name="your_humotron_smart_cuff">Your Humotron Smart Cuff can take two readings. Pick one to begin.</string>
+    <string name="measure_blood_pressure">Measure blood pressure</string>
+    <string name="a_cuff_reading_of_your_">A cuff reading of your systolic, diastolic and pulse — against healthy ranges.</string>
+    <string name="record_an_ecg">Record an ECG</string>
+    <string name="a_30_second_single_lead">A 30-second single-lead trace of your heart’s rhythm, with your pulse.</string>
+
+    <string name="bp_title">Let\'s take your blood pressure.</string>
+    <string name="bp_desc">Rest your arm on a flat surface, level with your heart. Keep still and quiet while the cuff inflates.</string>
+    <string name="bp_step1_title">Get into position</string>
+    <string name="bp_step1_desc">Sit upright, feet flat, arm supported and level with your heart.</string>
+    <string name="bp_step2_title">Start the cuff</string>
+    <string name="bp_step2_desc">Press start on the Smart Cuff, then stay on this screen to watch the reading.</string>
+    <string name="bp_step3_title">Stay calm and still</string>
+    <string name="bp_step3_desc">Don\'t talk or move — it takes about a minute to complete.</string>
+    <string name="bp_button">Start measurement</string>
+
+    <string name="ecg_title">Record a single-lead ECG.</string>
+    <string name="ecg_desc">A 30-second trace of your heart\'s electrical rhythm. Rest your hands and stay relaxed.</string>
+    <string name="ecg_step1_title">Get comfortable</string>
+    <string name="ecg_step1_desc">Sit upright with your forearms resting on a flat surface.</string>
+    <string name="ecg_step2_title">Hold the electrodes</string>
+    <string name="ecg_step2_desc">Touch the metal electrodes on each side of the device with the palms of your hands.</string>
+    <string name="ecg_step3_title">Stay still</string>
+    <string name="ecg_step3_desc">Don\'t move or talk during the 30-second reading.</string>
+    <string name="ecg_button">Start ECG</string>
+    <string name="done">Done</string>
+    <string name="take_another_reading">Take another reading</string>
+    <string name="one_reading_captures_your_weight">One reading captures your weight and breaks it down into body composition — lean mass, muscle, bone and fat.</string>
+    <string name="your_last_weight">Your last weight</string>
+    <string name="past_readings">Past readings</string>
+    <string name="step_onto_the_scale">Step onto the scale barefoot and stand still. We’ll capture your full body composition in a few seconds.</string>
+    <string name="stand_still_until_the_reading_completes">Stand still until the reading completes</string>
+    <string name="read_again">Read again</string>
 </resources>

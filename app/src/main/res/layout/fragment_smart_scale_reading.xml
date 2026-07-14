@@ -5,12 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:background="#33000000"
-    tools:context=".ui.device.WeightScaleReadingFragment">
-
-    <include
-        android:id="@+id/header"
-        layout="@layout/layout_header_2" />
+    tools:background="@drawable/ic_bg_main_2"
+    tools:context=".ui.device.scale.SmartScaleReadingFragment">
 
     <LinearLayout
         android:id="@+id/content"
@@ -18,11 +14,12 @@
         android:layout_height="0dp"
         android:layout_marginHorizontal="@dimen/_20dp"
         android:layout_marginTop="@dimen/_20dp"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btnStop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/header">
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
@@ -45,7 +42,6 @@
                     android:layout_marginEnd="@dimen/_12dp"
                     android:text="@string/humotron_smart_weight_scale"
                     android:textColor="@color/white"
-                    app:layout_constraintEnd_toStartOf="@id/ivDevice"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -74,43 +70,28 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_48dp"
-            android:baselineAligned="true"
-            android:gravity="bottom"
-            android:orientation="horizontal">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvWeightValue"
-                style="@style/Text.28x.Manrope.Bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="00.00"
-                android:textColor="@color/white"
-                android:textSize="48sp" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvWeightUnit"
-                style="@style/Text.16x.Manrope.Medium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_8dp"
-                android:layout_marginBottom="@dimen/_8dp"
-                android:text="@string/kg"
-                android:textColor="@color/white50"
-                android:textSize="17sp" />
-        </LinearLayout>
+        <com.humotron.app.view.ScanAnimationView
+            android:id="@+id/scanAnimationView"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:scanColor="@color/lime"
+            app:scanProgress="0"
+            app:scanProgressBackgroundColor="@color/white05"
+            app:scanProgressMargin="35dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvInstruction"
-            style="@style/Text.14x.Manrope.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20dp"
-            android:text="@string/weight_scale_instruction_default"
-            android:textColor="@color/white50" />
+            android:layout_marginTop="@dimen/_60dp"
+            android:fontFamily="@font/manrope_bold"
+            android:text="Capturing your weight"
+            android:textColor="#cfdad8" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -124,8 +105,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:cardBackgroundColor="@color/surface_dark"
-                app:strokeColor="#3A3A3A"
+                app:cardBackgroundColor="#38080F10"
+                app:strokeColor="@color/hair"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -151,7 +132,9 @@
                                 android:id="@+id/view1"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_12dp"
-                                android:background="@drawable/bg_rounded_loading" />
+                                android:background="@drawable/bg_rounded_loading"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/tvLeanBwValue"
@@ -160,21 +143,23 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:textColor="@color/white"
-                                android:textSize="12sp" />
+                                android:textSize="12sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                     </com.facebook.shimmer.ShimmerFrameLayout>
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/Text.14x.Manrope.SemiBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5dp"
+                        android:fontFamily="@font/manrope_bold"
                         android:gravity="center"
                         android:text="@string/lean_bw"
-                        android:textColor="@color/white"
-                        android:textSize="12sp" />
+                        android:textColor="@color/ink4"
+                        android:textSize="10sp" />
 
                 </LinearLayout>
 
@@ -188,8 +173,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:cardBackgroundColor="@color/surface_dark"
-                app:strokeColor="#3A3A3A"
+                app:cardBackgroundColor="#38080F10"
+                app:strokeColor="@color/hair"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -215,7 +200,9 @@
                                 android:id="@+id/view2"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_12dp"
-                                android:background="@drawable/bg_rounded_loading" />
+                                android:background="@drawable/bg_rounded_loading"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/tvMuscleMassValue"
@@ -224,21 +211,23 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:textColor="@color/white"
-                                android:textSize="12sp" />
+                                android:textSize="12sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                     </com.facebook.shimmer.ShimmerFrameLayout>
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/Text.14x.Manrope.SemiBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5dp"
+                        android:fontFamily="@font/manrope_bold"
                         android:gravity="center"
                         android:text="@string/muscle_mass"
-                        android:textColor="@color/white"
-                        android:textSize="12sp" />
+                        android:textColor="@color/ink4"
+                        android:textSize="10sp" />
 
                 </LinearLayout>
 
@@ -252,8 +241,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:cardBackgroundColor="@color/surface_dark"
-                app:strokeColor="#3A3A3A"
+                app:cardBackgroundColor="#38080F10"
+                app:strokeColor="@color/hair"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -279,7 +268,9 @@
                                 android:id="@+id/view3"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_12dp"
-                                android:background="@drawable/bg_rounded_loading" />
+                                android:background="@drawable/bg_rounded_loading"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/tvBoneMassValue"
@@ -288,21 +279,23 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:textColor="@color/white"
-                                android:textSize="12sp" />
+                                android:textSize="12sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                     </com.facebook.shimmer.ShimmerFrameLayout>
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/Text.14x.Manrope.SemiBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5dp"
+                        android:fontFamily="@font/manrope_bold"
                         android:gravity="center"
                         android:text="@string/bone_mass"
-                        android:textColor="@color/white"
-                        android:textSize="12sp" />
+                        android:textColor="@color/ink4"
+                        android:textSize="10sp" />
 
                 </LinearLayout>
 
@@ -311,5 +304,21 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnStop"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/manrope_bold"
+        android:text="@string/stop"
+        android:textAllCaps="false"
+        android:textColor="@color/ink3"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:backgroundTint="@color/transparent"
+        app:cornerRadius="32dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

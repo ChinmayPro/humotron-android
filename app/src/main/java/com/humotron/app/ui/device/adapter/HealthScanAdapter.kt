@@ -42,6 +42,7 @@ class HealthScanAdapter(
                         )
                     )
                     vBinding.ivScan.setColorFilter(ContextCompat.getColor(context, R.color.series))
+                    vBinding.ivChevron.setColorFilter(ContextCompat.getColor(context, R.color.series))
                     vBinding.iconContainer.setCardBackgroundColor(
                         ContextCompat.getColor(context, R.color.series_14)
                     )
@@ -57,6 +58,7 @@ class HealthScanAdapter(
                         )
                     )
                     vBinding.ivScan.setColorFilter(ContextCompat.getColor(context, R.color.watch))
+                    vBinding.ivChevron.setColorFilter(ContextCompat.getColor(context, R.color.watch))
                     vBinding.iconContainer.setCardBackgroundColor(
                         ContextCompat.getColor(context, R.color.watch_14)
                     )
@@ -72,6 +74,7 @@ class HealthScanAdapter(
                         )
                     )
                     vBinding.ivScan.setColorFilter(ContextCompat.getColor(context, R.color.cool))
+                    vBinding.ivChevron.setColorFilter(ContextCompat.getColor(context, R.color.cool))
                     vBinding.iconContainer.setCardBackgroundColor(
                         ContextCompat.getColor(context, R.color.cool_14)
                     )
@@ -87,6 +90,7 @@ class HealthScanAdapter(
                         )
                     )
                     vBinding.ivScan.setColorFilter(ContextCompat.getColor(context, R.color.series))
+                    vBinding.ivChevron.setColorFilter(ContextCompat.getColor(context, R.color.series))
                     vBinding.iconContainer.setCardBackgroundColor(
                         ContextCompat.getColor(context, R.color.series_14)
                     )

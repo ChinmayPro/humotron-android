@@ -1,4 +1,4 @@
-package com.humotron.app.ui.device
+package com.humotron.app.ui.device.scale
 
 import android.Manifest
 import android.app.Activity
@@ -12,6 +12,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.ui.text.font.FontVariation.weight
+import androidx.core.os.bundleOf
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -33,11 +35,10 @@ import com.humotron.app.bt.weight.WeightScaleViewModel
 import com.humotron.app.core.Preference
 import com.humotron.app.core.base.BaseFragment
 import com.humotron.app.data.network.Status
-import com.humotron.app.databinding.FragmentWeightScaleReadingBinding
-import com.humotron.app.domain.modal.response.GetAllDeviceResponse.Data.UserDevice
+import com.humotron.app.databinding.FragmentSmartScaleReadingBinding
+import com.humotron.app.domain.modal.response.GetAllDeviceResponse
 import com.humotron.app.ui.navigation.NavKeys
 import com.humotron.app.util.ToastUtils
-import com.humotron.app.util.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.text.ParseException
@@ -47,24 +48,25 @@ import java.util.Locale
 import kotlin.math.roundToInt
 
 @AndroidEntryPoint
-class WeightScaleReadingFragment :
-    BaseFragment(R.layout.fragment_weight_scale_reading),
+class SmartScaleReadingFragment :
+    BaseFragment(R.layout.fragment_smart_scale_reading),
     View.OnClickListener {
 
-    private lateinit var binding: FragmentWeightScaleReadingBinding
+    private lateinit var binding: FragmentSmartScaleReadingBinding
     private val viewModel: WeightScaleViewModel by viewModels()
-    private var userDevice: UserDevice? = null
+    private var userDevice: GetAllDeviceResponse.Data.UserDevice? = null
 
     private var selectedDevice: WeightScaleDeviceSummary? = null
     private var savedScaleMac: String? = null
     private var isSavedScaleConnecting = false
     private var shouldAutoConnectSavedScale = false
+    private var hasNavigatedToResult = false
 
     private var mBluetoothAdapter: BluetoothAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentWeightScaleReadingBinding.bind(view)
+        binding = FragmentSmartScaleReadingBinding.bind(view)
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -78,15 +80,15 @@ class WeightScaleReadingFragment :
 
     private fun initViews() = with(binding) {
         userDevice = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            arguments?.getParcelable(NavKeys.WEARABLE, UserDevice::class.java)
+            arguments?.getParcelable(
+                NavKeys.WEARABLE,
+                GetAllDeviceResponse.Data.UserDevice::class.java
+            )
         } else {
             @Suppress("DEPRECATION")
             arguments?.getParcelable(NavKeys.WEARABLE)
         }
-
-        header.title.text = getString(R.string.take_a_reading)
-        header.ivBack.setOnClickListener(this@WeightScaleReadingFragment)
-
+        binding.scanAnimationView.setScanData("0", "kg", "WEIGHT")
         tvDeviceName.text = userDevice?.deviceFacingName ?: userDevice?.deviceName ?: ""
 
         /*val deviceImage = userDevice?.deviceImage?.firstOrNull()
@@ -192,8 +194,10 @@ class WeightScaleReadingFragment :
                 }
 
                 is WeightScaleMeasurementState.UnsteadyWeight -> {
-                    binding.tvWeightValue.text =
-                        String.format(Locale.US, "%05.2f", state.weightKg)
+                    /*binding.tvWeightValue.text =
+                        String.format(Locale.US, "%05.2f", state.weightKg)*/
+                    Log.e(TAG, "renderMeasurement: UnsteadyWeight weight $state.weightKg" )
+                    binding.scanAnimationView.setScanData(formatMeasurementValue(state.weightKg), "kg", "WEIGHT")
                     binding.tvInstruction.text =
                         getString(R.string.weight_scale_instruction_stabilizing)
                 }
@@ -203,10 +207,10 @@ class WeightScaleReadingFragment :
                         "Weight Scale Machine",
                         "observeData: WeightScaleMeasurementState.Completed"
                     )
-                    renderMeasurement(state.measurement, true)
                     binding.tvInstruction.text =
                         getString(R.string.weight_scale_instruction_complete)
                     viewModel.saveAndUploadMeasurement(state.measurement)
+                    renderMeasurement(state.measurement, true)
                 }
 
                 is WeightScaleMeasurementState.StoredDataReceived -> {
@@ -300,8 +304,9 @@ class WeightScaleReadingFragment :
     ) = with(binding) {
         measurement?.let {
             if (isMeasurementCompleted) {
-                val weight = measurement?.weightKg ?: 0.0
-                tvWeightValue.text = String.format(Locale.US, "%05.2f", weight)
+                val weight = measurement.weightKg
+                Log.e(TAG, "renderMeasurement: weight $weight" )
+                scanAnimationView.setScanData(formatMeasurementValue(weight), "kg", "WEIGHT")
 
                 tvLeanBwValue.text = measurement.findMetricValue("lean body weight") ?: "--"
                 tvMuscleMassValue.text = measurement.findMetricValue("muscle mass") ?: "--"
@@ -314,7 +319,40 @@ class WeightScaleReadingFragment :
                 view1.isVisible = false
                 view2.isVisible = false
                 view3.isVisible = false
+
+                navigateToResult(measurement)
             }
+        }
+    }
+
+    private fun navigateToResult(measurement: WeightScaleMeasurement) {
+        if (hasNavigatedToResult) return
+        hasNavigatedToResult = true
+
+        val bodyFatValue =
+            measurement.findMetricValue("body fat rate") ?: measurement.findMetricValue("body fat")
+
+        val resultArgs = bundleOf(
+            NavKeys.WEARABLE to userDevice,
+            NavKeys.SCALE_MEASURED_AT to formatMeasurementTimestamp(measurement.measuredAt),
+            NavKeys.SCALE_WEIGHT to formatMeasurementValue(measurement.weightKg),
+            NavKeys.SCALE_BMI to measurement.findMetricValue("BMI"),
+            NavKeys.SCALE_BODY_FAT to bodyFatValue,
+            NavKeys.SCALE_LEAN_BODY_WEIGHT to measurement.findMetricValue("lean body weight"),
+            NavKeys.SCALE_MUSCLE_MASS to measurement.findMetricValue("muscle mass"),
+            NavKeys.SCALE_BONE_MASS to measurement.findMetricValue("bone mass"),
+        )
+
+        findNavController().navigate(R.id.fragmentSmartScaleResult, resultArgs)
+    }
+
+    private fun formatMeasurementValue(value: Double): String {
+        return String.format(Locale.US, "%.2f", value)
+    }
+
+    private fun formatMeasurementTimestamp(date: Date?): String? {
+        return date?.let {
+            SimpleDateFormat("MMM d, yyyy h:mm a", Locale.getDefault()).format(it)
         }
     }
 
@@ -326,7 +364,7 @@ class WeightScaleReadingFragment :
     }
 
     override fun onClick(view: View?) {
-        if (view === binding.header.ivBack) {
+        if (view === binding.btnStop) {
             findNavController().popBackStack()
         }
     }
@@ -459,6 +497,7 @@ class WeightScaleReadingFragment :
         hideProgress()
         shouldAutoConnectSavedScale = false
         isSavedScaleConnecting = false
+        hasNavigatedToResult = false
         viewModel.stopScan()
         viewModel.disconnect()
         viewModel.clearMeasurements()

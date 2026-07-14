@@ -27,7 +27,7 @@ enum class HRVState(
         1,
         "Balanced",
         "Your nervous system is well regulated.",
-        Color.parseColor("#00C620")
+        Color.parseColor("#7BD88F")
     ),
 
     ALERT(

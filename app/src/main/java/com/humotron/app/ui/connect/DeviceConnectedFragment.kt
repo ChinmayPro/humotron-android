@@ -80,7 +80,7 @@ class DeviceConnectedFragment : Fragment(R.layout.fragment_device_connected) {
                     )
                 }
 
-                DeviceType.BP_MACHINE -> {
+                DeviceType.SMART_CUFF -> {
                     //binding.ivDevice.setImageResource(R.drawable.ic_smart_cuff_vector)
                     binding.tvTitle.text = getString(R.string.dvc_connected, "Smart Cuff")
                     binding.tvDesc.text = getString(R.string.it_s_paired_and_feeding_track_scale)

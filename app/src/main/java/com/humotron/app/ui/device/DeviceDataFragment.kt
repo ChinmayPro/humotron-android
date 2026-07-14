@@ -14,7 +14,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.humotron.app.R
 import com.humotron.app.bt.band.BandBleManager
@@ -28,7 +27,6 @@ import com.humotron.app.core.App
 import com.humotron.app.core.base.BaseFragment
 import com.humotron.app.data.network.Status
 import com.humotron.app.databinding.FragmentDeviceDataBinding
-import com.humotron.app.domain.modal.BPMachineReadingType
 import com.humotron.app.domain.modal.DeviceType
 import com.humotron.app.domain.modal.response.ExerciseIntensityMetric
 import com.humotron.app.domain.modal.response.GetAllDeviceResponse.Data.UserDevice
@@ -41,9 +39,7 @@ import com.humotron.app.ui.connect.HomeViewModel
 import com.humotron.app.ui.device.adapter.HealthScanAdapter
 import com.humotron.app.ui.device.adapter.HealthScanItem
 import com.humotron.app.ui.device.adapter.HealthScanType
-import com.humotron.app.ui.device.adapter.MeasurementInfo
 import com.humotron.app.ui.device.adapter.MetricsAdapter
-import com.humotron.app.ui.device.dialog.MeasurementTypeBottomSheet
 import com.humotron.app.ui.navigation.NavKeys
 import com.humotron.app.util.STATE_DEVICE_CHARGING
 import com.humotron.app.util.STATE_DEVICE_CONNECTED
@@ -151,7 +147,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
                     viewModel.getAllMetricsByDeviceId(deviceId)
                 }
 
-                DeviceType.BP_MACHINE -> {
+                DeviceType.SMART_CUFF -> {
                     binding.ivDevice.setImageResource(R.drawable.ic_smart_cuff_vector)
                     viewModel.getAllMetricsByDeviceId(deviceId)
                     binding.let {
@@ -547,7 +543,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
                                 )
                             }
 
-                            DeviceType.BP_MACHINE -> {
+                            DeviceType.SMART_CUFF -> {
                             }
 
                             DeviceType.WEIGHT_MACHINE -> {
@@ -702,7 +698,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
             binding.ivDevice -> {
             }
 
-            binding.btnTakeReading -> {
+                binding.btnTakeReading -> {
                 val deviceType = DeviceType.from(userDevice?.deviceName)
                 if (deviceType == DeviceType.RING || deviceType == DeviceType.BAND) {
                     findNavController().navigate(
@@ -711,11 +707,11 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
                     )
                 } else if (deviceType == DeviceType.WEIGHT_MACHINE) {
                     findNavController().navigate(
-                        R.id.action_fragmentDeviceData_to_fragmentWeightScaleReading,
+                        R.id.action_fragmentDeviceData_to_fragmentSmartScaleReadingInstructions,
                         bundleOf(NavKeys.WEARABLE to userDevice)
                     )
-                } else if (deviceType == DeviceType.BP_MACHINE) {
-                    val bpReadingOptions = arrayListOf(
+                } else if (deviceType == DeviceType.SMART_CUFF) {
+                    /*val bpReadingOptions = arrayListOf(
                         MeasurementInfo(
                             "Measure Blood Pressure",
                             BPMachineReadingType.BLOOD_PRESSURE
@@ -736,7 +732,11 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
                             )
                         )
                     }
-                    bottomSheet.show(childFragmentManager, MeasurementTypeBottomSheet.TAG)
+                    bottomSheet.show(childFragmentManager, MeasurementTypeBottomSheet.TAG)*/
+                    findNavController().navigate(
+                        R.id.action_fragmentDeviceData_to_fragmentReadingTypesSmartCuff,
+                        bundleOf(NavKeys.WEARABLE to userDevice)
+                    )
                 }
             }
 

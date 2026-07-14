@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@drawable/ic_bg_main_2"
+    tools:context=".ui.device.cuff.SmartCuffECGResultFragment">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header_3" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="24dp">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvMeasurementStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/manrope_extra_bold"
+                android:gravity="center"
+                android:letterSpacing="-0.02"
+                android:text="Measurement complete"
+                android:textColor="@color/series"
+                android:textSize="30sp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvTimestamp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/manrope_medium"
+                android:gravity="center"
+                android:text="Smart Cuff · just now"
+                android:textColor="@color/ink4"
+                android:textSize="11.5sp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvStatusBanner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="@color/good_14"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvStatusMessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_bold"
+                    android:gravity="center"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="13dp"
+                    android:text="Normal sinus rhythm — no irregularities detected."
+                    android:textColor="@color/good"
+                    android:textSize="13sp" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.humotron.app.view.EcgWaveFormView
+                android:id="@+id/ecgWaveformView"
+                android:layout_width="match_parent"
+                android:layout_height="164dp"
+                android:layout_marginHorizontal="@dimen/_20dp"
+                android:layout_marginTop="14dp"
+                android:contentDescription="@null"
+                app:autoScale="true"
+                app:backgroundColor="@color/black"
+                app:baselineOffset="0dp"
+                app:ecgCornerRadius="@dimen/_16dp"
+                app:gridColor="@color/white10"
+                app:gridGap="@dimen/_20dp"
+                app:gridStrokeWidth="0.75dp"
+                app:maxVisibleSamples="600"
+                app:showBorder="true"
+                app:showGrid="true"
+                app:strokeColor="@color/card_stroke"
+                app:strokeWidth="2dp"
+                app:waveLineColor="@color/green_1"
+                app:waveScale="0.85"
+                app:waveStrokeWidth="2.5dp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvLeadMetric"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="14dp"
+                app:cardBackgroundColor="@color/lime_6"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/lime_20"
+                app:strokeWidth="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvLeadValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/manrope_extra_bold"
+                        android:letterSpacing="-0.02"
+                        android:text="65"
+                        android:textColor="@color/good"
+                        android:textSize="34sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvLeadUnit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:text="bpm"
+                        android:textColor="@color/ink3"
+                        android:textSize="13sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvLeadValue"
+                        app:layout_constraintStart_toEndOf="@+id/tvLeadValue" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvLeadLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:fontFamily="@font/manrope_semibold"
+                        android:text="Pulse rate · resting"
+                        android:textColor="@color/ink3"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvLeadValue" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvSupportive"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="@color/white_3"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/hair"
+                app:strokeWidth="1dp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvSupportiveText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_semibold"
+                    android:lineSpacingMultiplier="1.1"
+                    android:paddingHorizontal="15dp"
+                    android:paddingVertical="13dp"
+                    android:text="This is a wellness reading, not a medical diagnosis. For more accurate insights, take a few readings at different times."
+                    android:textColor="#DFE9E3"
+                    android:textSize="12.5sp" />
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/space"
+        app:srcCompat="@drawable/bg_black_gradient" />
+
+    <Space
+        android:id="@+id/space"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_15dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnDone" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnDone"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/manrope_bold"
+        android:text="@string/done"
+        android:textAllCaps="false"
+        android:textColor="#000000"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:backgroundTint="#CFF551"
+        app:cornerRadius="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/tvTakeAnotherReading" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvTakeAnotherReading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginBottom="12dp"
+        android:gravity="center"
+        android:text="@string/take_another_reading"
+        android:textColor="#879A9C"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
