@@ -10,6 +10,8 @@ import com.humotron.app.domain.modal.response.BookPreferenceResponse
 import com.humotron.app.domain.modal.response.DeviceDetailResponse
 import com.humotron.app.domain.modal.response.DeviceFaqResponse
 import com.humotron.app.domain.modal.response.GetOptimizedRecipeWithMetricsResponse
+import com.humotron.app.domain.modal.response.GetOptimizedRecommendationsWithMetricsResponse
+import com.humotron.app.domain.modal.response.GetOptimizedRecommendationDetailResponse
 import com.humotron.app.domain.modal.response.GetShopDevicesResponse
 import com.humotron.app.domain.modal.response.ProductDetailResponse
 import com.humotron.app.domain.modal.response.ProductVariantResponse
@@ -175,6 +177,19 @@ class ShopRepository @Inject constructor(
         emit(responseHandler.handleException(ValidationException(it.message)))
     }
 
+    fun getOptimizedRecommendationsWithMetrics(): Flow<Resource<GetOptimizedRecommendationsWithMetricsResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.getOptimizedRecommendationsWithMetrics(), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
     fun getBookByUserPreference(): Flow<Resource<BookPreferenceResponse>> = flow {
         emit(Resource.loading())
         try {
@@ -283,6 +298,20 @@ class ShopRepository @Inject constructor(
         emit(Resource.loading())
         try {
             val response = responseHandler.handleResponse(api.getProductById(id), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun getOptimizedRecommendationDetail(id: String, type: String): Flow<Resource<GetOptimizedRecommendationDetailResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val body = mapOf("type" to type)
+            val response = responseHandler.handleResponse(api.getOptimizedRecommendationDetail(id, body), false)
             emit(response)
         } catch (e: Exception) {
             emit(responseHandler.handleException(e))
