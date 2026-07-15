@@ -285,7 +285,10 @@ class CartFragment : BaseFragment(R.layout.fragment_cart) {
         bindAddress(null)
         bindShippingMethod(null)
         binding.llAddressActions.visibility = View.GONE
-        updateCheckoutButtonState()
+        
+        // Change bottom button to Browse Store when empty
+        binding.btnCheckout.text = getString(R.string.browse_the_store)
+        binding.btnCheckout.isEnabled = true
     }
 
     private fun showCartItems(data: GetCartResponse.Data?) {
@@ -307,12 +310,15 @@ class CartFragment : BaseFragment(R.layout.fragment_cart) {
         bindTotal(data)
         bindCoupon(data)
 
+        // Restore Confirm Order button when items exist
+        binding.btnCheckout.text = getString(R.string.confirm_order)
         updateCheckoutButtonState()
     }
 
     private fun bindCoupon(data: GetCartResponse.Data?) {
         val coupon = data?.couponDetails
         if (coupon != null && !coupon.promoCode.isNullOrEmpty()) {
+            binding.clCoupon.setBackgroundResource(R.drawable.bg_insight_chip_selected)
             binding.tvApplyCouponLabel.visibility = View.GONE
             binding.ivApplyCoupon.visibility = View.GONE
             binding.llCouponApplied.visibility = View.VISIBLE
@@ -322,6 +328,7 @@ class CartFragment : BaseFragment(R.layout.fragment_cart) {
             binding.tvCouponDiscount.text = getString(R.string.discount_text_format, getString(R.string.currency_symbol), discount)
             binding.tvCouponCode.text = coupon.promoCode
         } else {
+            binding.clCoupon.setBackgroundResource(R.drawable.bg_linkrow)
             binding.tvApplyCouponLabel.visibility = View.VISIBLE
             binding.ivApplyCoupon.visibility = View.VISIBLE
             binding.llCouponApplied.visibility = View.GONE
@@ -369,12 +376,26 @@ class CartFragment : BaseFragment(R.layout.fragment_cart) {
             binding.tvDetailedDeliveryPrice.text = getString(R.string.free)
         }
         
-        binding.tvDetailedCouponDiscount.text = getString(R.string.price_format_decimal, getString(R.string.currency_symbol), couponDiscount)
-        binding.tvDetailedVatValue.text = getString(R.string.price_format_decimal, getString(R.string.currency_symbol), vat)
+        val coupon = data?.couponDetails
+        if (coupon != null && !coupon.promoCode.isNullOrEmpty() && couponDiscount > 0.0) {
+            binding.llCouponDiscountRow.visibility = View.VISIBLE
+            binding.tvDetailedCouponLabel.text = "Coupon · ${coupon.promoCode}"
+            binding.tvDetailedCouponDiscount.text = "-${getString(R.string.price_format_decimal, getString(R.string.currency_symbol), couponDiscount)}"
+        } else {
+            binding.llCouponDiscountRow.visibility = View.GONE
+        }
+
+        if (vat > 0.0) {
+            binding.llVatRow.visibility = View.VISIBLE
+            binding.tvDetailedVatValue.text = getString(R.string.price_format_decimal, getString(R.string.currency_symbol), vat)
+        } else {
+            binding.llVatRow.visibility = View.GONE
+        }
     }
 
     private fun bindAddress(address: GetCartResponse.Address?) {
         if (address != null) {
+            binding.clAddress.setBackgroundResource(R.drawable.bg_insight_chip_selected)
             binding.tvShippingAddressLabel.visibility = View.GONE
             binding.ivAddAddress.visibility = View.GONE
             binding.llAddressSelected.visibility = View.VISIBLE
@@ -392,6 +413,7 @@ class CartFragment : BaseFragment(R.layout.fragment_cart) {
             
             binding.tvAddressDetails.text = addressParts.joinToString(", ")
         } else {
+            binding.clAddress.setBackgroundResource(R.drawable.bg_linkrow)
             binding.tvShippingAddressLabel.visibility = View.VISIBLE
             binding.ivAddAddress.visibility = View.VISIBLE
             binding.llAddressSelected.visibility = View.GONE
@@ -403,6 +425,7 @@ class CartFragment : BaseFragment(R.layout.fragment_cart) {
         selectedDeliveryMethod = method
         viewModel.setSelectedDeliveryMethod(method)
         if (method != null) {
+            binding.clShippingMethod.setBackgroundResource(R.drawable.bg_insight_chip_selected)
             binding.tvShippingMethodLabel.visibility = View.GONE
             binding.ivAddShipping.visibility = View.GONE
             binding.llShippingApplied.visibility = View.VISIBLE
@@ -421,6 +444,7 @@ class CartFragment : BaseFragment(R.layout.fragment_cart) {
             
             binding.tvSelectedShippingDelivery.text = "${getString(R.string.expected_delivery_colon)}\n${method.estimatedDelivery ?: ""}"
         } else {
+            binding.clShippingMethod.setBackgroundResource(R.drawable.bg_linkrow)
             binding.tvShippingMethodLabel.visibility = View.VISIBLE
             binding.ivAddShipping.visibility = View.VISIBLE
             binding.llShippingApplied.visibility = View.GONE
@@ -432,15 +456,19 @@ class CartFragment : BaseFragment(R.layout.fragment_cart) {
         val hasItems = cartAdapter.itemCount > 0
         val hasShippingMethod = selectedDeliveryMethod != null
         val hasAddress = binding.llAddressSelected.visibility == View.VISIBLE
-        binding.btnCheckout.isEnabled = hasItems && hasShippingMethod && hasAddress
+        
+        // Only update if it is in Confirm Order mode
+        if (binding.btnCheckout.text == getString(R.string.confirm_order)) {
+            binding.btnCheckout.isEnabled = hasItems && hasShippingMethod && hasAddress
+        }
     }
 
     private fun initViews() {
         binding.header.ivBack.setOnClickListener {
             findNavController().popBackStack()
         }
-
-        binding.header.title.text = getString(R.string.review_details)
+        // Header Title
+        binding.header.title.text = getString(R.string.cart)
 
         binding.ivApplyCoupon.setOnClickListener {
             val currentCoupon = viewModel.getCartLiveData().value?.data?.data?.couponDetails?.promoCode
@@ -529,18 +557,17 @@ class CartFragment : BaseFragment(R.layout.fragment_cart) {
             }
         }
 
-        binding.btnViewDetailedBill.setOnClickListener {
-            if (binding.llDetailedBill.visibility == View.VISIBLE) {
-                binding.llDetailedBill.visibility = View.GONE
-                binding.ivViewDetailedBill.rotation = 0f
-            } else {
-                binding.llDetailedBill.visibility = View.VISIBLE
-                binding.ivViewDetailedBill.rotation = 180f
-            }
+        binding.clAddProduct.setOnClickListener {
+            findNavController().navigate(R.id.nav_graph_shop)
         }
 
+
         binding.btnCheckout.setOnClickListener {
-            viewModel.startCheckout(finalPayableAmount)
+            if (binding.btnCheckout.text == getString(R.string.browse_the_store)) {
+                findNavController().navigate(R.id.nav_graph_shop)
+            } else {
+                viewModel.startCheckout(finalPayableAmount)
+            }
         }
     }
 

@@ -30,6 +30,8 @@ import com.humotron.app.domain.modal.response.AllMetricsResponse
 import com.humotron.app.domain.modal.response.AssessmentResponse
 import com.humotron.app.domain.modal.response.BioHackProgressResponse
 import com.humotron.app.domain.modal.response.GetOptimizedRecipeWithMetricsResponse
+import com.humotron.app.domain.modal.response.GetOptimizedRecommendationsWithMetricsResponse
+import com.humotron.app.domain.modal.response.GetOptimizedRecommendationDetailResponse
 import com.humotron.app.domain.modal.response.GetCartResponse
 import com.humotron.app.domain.modal.response.BookDetailResponse
 import com.humotron.app.domain.modal.response.BookLikeResponse
@@ -417,6 +419,15 @@ interface AppApi {
 
     @POST("metric/getOptimizedRecipeWithMetrics")
     suspend fun getOptimizedRecipeWithMetrics(): Response<GetOptimizedRecipeWithMetricsResponse>
+
+    @POST("metric/getOptimizedRecommendationsWithMetrics")
+    suspend fun getOptimizedRecommendationsWithMetrics(): Response<GetOptimizedRecommendationsWithMetricsResponse>
+
+    @POST("metric/getOptimizedRecommendationDetail/{id}")
+    suspend fun getOptimizedRecommendationDetail(
+        @Path("id") id: String,
+        @Body body: Map<String, String>
+    ): Response<GetOptimizedRecommendationDetailResponse>
 
     @POST("product/getAllTestBookingsType")
     suspend fun getAllTestBookingsType(): Response<BookingTypeResponse>

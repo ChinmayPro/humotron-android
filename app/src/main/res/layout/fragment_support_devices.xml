@@ -31,11 +31,13 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvDevicesTitle"
-                style="@style/Text.18x.Manrope.SemiBold"
+                style="@style/Text.28x.Manrope.Bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/support_your_devices"
-                android:textSize="28sp"
+                android:fontFamily="@font/manrope_bold"
+                app:fontFamily="@font/manrope_bold"
+                android:textStyle="bold"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -77,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="24dp"
-                android:background="@drawable/bg_popular_search_chip"
+                android:background="@drawable/bg_glass_card"
                 android:padding="20dp"
                 app:layout_constraintTop_toBottomOf="@id/clYourDevices"
                 app:layout_constraintStart_toStartOf="parent"

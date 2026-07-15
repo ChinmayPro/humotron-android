@@ -204,6 +204,7 @@ class ContactSupportFragment : BaseFragment(R.layout.fragment_contact_support) {
         binding.header.ivBack.setOnClickListener {
             handleBackAction()
         }
+        binding.header.headerDivider.visibility = View.GONE
     }
 
     private fun handleBackAction() {
@@ -220,21 +221,6 @@ class ContactSupportFragment : BaseFragment(R.layout.fragment_contact_support) {
         }
     }
 
-    private fun animateHeaderVisibility(show: Boolean) {
-        val transition = androidx.transition.TransitionSet().apply {
-            addTransition(androidx.transition.Fade())
-            addTransition(androidx.transition.ChangeBounds())
-            duration = 300
-        }
-        androidx.transition.TransitionManager.beginDelayedTransition(binding.llTopContainer, transition)
-        if (show) {
-            binding.tvSupportTitle.visibility = View.VISIBLE
-            binding.tvSupportSubtitle.visibility = View.VISIBLE
-        } else {
-            binding.tvSupportTitle.visibility = View.GONE
-            binding.tvSupportSubtitle.visibility = View.GONE
-        }
-    }
 
     private fun setupStep2Selectors() {
         val deviceIcons = mapOf(
@@ -531,7 +517,8 @@ class ContactSupportFragment : BaseFragment(R.layout.fragment_contact_support) {
 
     private fun validateStep2Fields() {
         val isProblemSelected = binding.tvSelectedProblem.text != getString(R.string.contact_select_issue)
-        binding.flContinueStep2Container.visibility = if (isProblemSelected) View.VISIBLE else View.GONE
+        binding.btnContinueStep2.isEnabled = isProblemSelected
+        binding.flContinueStep2Container.visibility = View.VISIBLE
     }
 
     private fun showModernDropdown(
@@ -596,7 +583,7 @@ class ContactSupportFragment : BaseFragment(R.layout.fragment_contact_support) {
 
     private fun setupRecyclerView() {
         categoryAdapter = ContactCategoryAdapter { _ ->
-            // Selection is handled within the adapter
+            updateStep1ButtonState()
         }
         binding.rvCategories.adapter = categoryAdapter
 
@@ -771,7 +758,7 @@ class ContactSupportFragment : BaseFragment(R.layout.fragment_contact_support) {
     }
 
     private fun setupDescriptionWatcher() {
-        binding.bottomBar.visibility = View.GONE
+        updateStep1ButtonState()
 
         binding.etDescription.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -779,7 +766,7 @@ class ContactSupportFragment : BaseFragment(R.layout.fragment_contact_support) {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val length = s?.length ?: 0
                 binding.tvCharCounter.text = "$length/1000"
-                binding.bottomBar.visibility = if (s?.toString()?.trim().isNullOrEmpty()) View.GONE else View.VISIBLE
+                updateStep1ButtonState()
             }
 
             override fun afterTextChanged(s: Editable?) {}
@@ -870,6 +857,62 @@ class ContactSupportFragment : BaseFragment(R.layout.fragment_contact_support) {
         }
     }
 
+    private fun updateStepperUI(step: Int) {
+        if (step == 5) {
+            binding.llTopContainer.visibility = View.GONE
+            return
+        }
+        binding.llTopContainer.visibility = View.VISIBLE
+        binding.tvStepEnd.text = "$step/4"
+
+        // Node 1
+        binding.circle1.setBackgroundResource(
+            if (1 < step) R.drawable.bg_stepper_node_done
+            else if (1 == step) R.drawable.bg_stepper_node_current
+            else R.drawable.bg_stepper_node_inactive
+        )
+        // Node 2
+        binding.circle2.setBackgroundResource(
+            if (2 < step) R.drawable.bg_stepper_node_done
+            else if (2 == step) R.drawable.bg_stepper_node_current
+            else R.drawable.bg_stepper_node_inactive
+        )
+        // Node 3
+        binding.circle3.setBackgroundResource(
+            if (3 < step) R.drawable.bg_stepper_node_done
+            else if (3 == step) R.drawable.bg_stepper_node_current
+            else R.drawable.bg_stepper_node_inactive
+        )
+        // Node 4
+        binding.circle4.setBackgroundResource(
+            if (4 < step) R.drawable.bg_stepper_node_done
+            else if (4 == step) R.drawable.bg_stepper_node_current
+            else R.drawable.bg_stepper_node_inactive
+        )
+
+        // Segment 1
+        binding.line1.setBackgroundColor(
+            if (1 < step) resources.getColor(R.color.colorBgBtn1, null)
+            else android.graphics.Color.parseColor("#1EFFFFFF")
+        )
+        // Segment 2
+        binding.line2.setBackgroundColor(
+            if (2 < step) resources.getColor(R.color.colorBgBtn1, null)
+            else android.graphics.Color.parseColor("#1EFFFFFF")
+        )
+        // Segment 3
+        binding.line3.setBackgroundColor(
+            if (3 < step) resources.getColor(R.color.colorBgBtn1, null)
+            else android.graphics.Color.parseColor("#1EFFFFFF")
+        )
+    }
+
+    private fun updateStep1ButtonState() {
+        val selectedKey = categoryAdapter.getSelectedCategoryKey()
+        val isDescNotEmpty = !binding.etDescription.text?.toString()?.trim().isNullOrEmpty()
+        binding.btnContinue.isEnabled = !selectedKey.isNullOrEmpty() && isDescNotEmpty
+    }
+
     private fun navigateToStep(step: Int) {
         // Hide all steps first
         binding.scrollView.visibility = View.GONE
@@ -883,90 +926,38 @@ class ContactSupportFragment : BaseFragment(R.layout.fragment_contact_support) {
         binding.llStep3Buttons.visibility = View.GONE
         binding.llStep4Buttons.visibility = View.GONE
         binding.flStep5Buttons.visibility = View.GONE
-
-        // Reset all indicators to default inactive/completed
-        binding.circle1.text = "1"
-        binding.circle1.setBackgroundResource(R.drawable.bg_contact_radio_inactive)
-        binding.circle1.setTextColor(resources.getColor(R.color.white30, null))
-        binding.tvLabel1.setTextColor(resources.getColor(R.color.white30, null))
-
-        binding.circle2.text = "2"
-        binding.circle2.setBackgroundResource(R.drawable.bg_contact_radio_inactive)
-        binding.circle2.setTextColor(resources.getColor(R.color.white30, null))
-        binding.tvLabel2.setTextColor(resources.getColor(R.color.white30, null))
-
-        binding.circle3.text = "3"
-        binding.circle3.setBackgroundResource(R.drawable.bg_contact_radio_inactive)
-        binding.circle3.setTextColor(resources.getColor(R.color.white30, null))
-        binding.tvLabel3.setTextColor(resources.getColor(R.color.white30, null))
-
-        binding.circle4.text = "4"
-        binding.circle4.setBackgroundResource(R.drawable.bg_contact_radio_inactive)
-        binding.circle4.setTextColor(resources.getColor(R.color.white30, null))
-        binding.tvLabel4.setTextColor(resources.getColor(R.color.white30, null))
-
-        animateHeaderVisibility(step == 1)
+        updateStepperUI(step)
         currentStep = step
 
         when (step) {
             1 -> {
                 binding.scrollView.visibility = View.VISIBLE
                 binding.flStep1Buttons.visibility = View.VISIBLE
-                
-                binding.circle1.text = "1"
-                binding.circle1.setBackgroundResource(R.drawable.bg_contact_step_active)
-                binding.circle1.setTextColor(resources.getColor(R.color.colorBgBtn1, null))
-                binding.tvLabel1.setTextColor(resources.getColor(R.color.colorBgBtn1, null))
+                updateStep1ButtonState()
             }
             2 -> {
                 binding.scrollViewStep2.visibility = View.VISIBLE
                 binding.llStep2Buttons.visibility = View.VISIBLE
-
-                binding.circle1.text = ""
-                binding.circle1.setBackgroundResource(R.drawable.bg_contact_step_completed)
-                
-                binding.circle2.text = "2"
-                binding.circle2.setBackgroundResource(R.drawable.bg_contact_step_active)
-                binding.circle2.setTextColor(resources.getColor(R.color.colorBgBtn1, null))
-                binding.tvLabel2.setTextColor(resources.getColor(R.color.colorBgBtn1, null))
             }
             3 -> {
                 binding.scrollViewStep3.visibility = View.VISIBLE
                 binding.llStep3Buttons.visibility = View.VISIBLE
-
-                binding.circle1.text = ""
-                binding.circle1.setBackgroundResource(R.drawable.bg_contact_step_completed)
-                binding.circle2.text = ""
-                binding.circle2.setBackgroundResource(R.drawable.bg_contact_step_completed)
-
-                binding.circle3.text = "3"
-                binding.circle3.setBackgroundResource(R.drawable.bg_contact_step_active)
-                binding.circle3.setTextColor(resources.getColor(R.color.colorBgBtn1, null))
-                binding.tvLabel3.setTextColor(resources.getColor(R.color.colorBgBtn1, null))
             }
             4 -> {
                 binding.scrollViewStep4.visibility = View.VISIBLE
                 binding.llStep4Buttons.visibility = View.VISIBLE
-
-                binding.circle1.text = ""
-                binding.circle1.setBackgroundResource(R.drawable.bg_contact_step_completed)
-                binding.circle2.text = ""
-                binding.circle2.setBackgroundResource(R.drawable.bg_contact_step_completed)
-                binding.circle3.text = ""
-                binding.circle3.setBackgroundResource(R.drawable.bg_contact_step_completed)
-
-                binding.circle4.text = "4"
-                binding.circle4.setBackgroundResource(R.drawable.bg_contact_step_active)
-                binding.circle4.setTextColor(resources.getColor(R.color.colorBgBtn1, null))
-                binding.tvLabel4.setTextColor(resources.getColor(R.color.colorBgBtn1, null))
                 
                 // Populate Review details
                 val selectedKey = categoryAdapter.getSelectedCategoryKey() ?: ""
                 val selectedCategory = categoryAdapter.currentList.find { it.key == selectedKey }
                 binding.tvReviewCategory.text = selectedCategory?.label ?: ""
 
+                val selectedDeviceText = binding.tvSelectedDevice.text?.toString() ?: ""
+                val deviceName = if (selectedDeviceText == getString(R.string.contact_select_device)) "-" else selectedDeviceText
+                binding.tvReviewDevice.text = deviceName
+
                 val selectedProblem = binding.tvSelectedProblem.text?.toString() ?: ""
-                binding.tvReviewProblem.text = if (selectedProblem == getString(R.string.contact_select_issue)) "" else selectedProblem
+                binding.tvReviewProblem.text = if (selectedProblem == getString(R.string.contact_select_issue)) "-" else selectedProblem
 
                 val selectedDuration = when (binding.rgStartDuration.checkedRadioButtonId) {
                     R.id.rbToday -> "Today"
@@ -1008,18 +999,6 @@ class ContactSupportFragment : BaseFragment(R.layout.fragment_contact_support) {
                     @Suppress("DEPRECATION")
                     binding.tvStatusInstructions.text = android.text.Html.fromHtml(instructionsHtml)
                 }
-
-                binding.circle1.text = ""
-                binding.circle1.setBackgroundResource(R.drawable.bg_contact_step_completed)
-                binding.circle2.text = ""
-                binding.circle2.setBackgroundResource(R.drawable.bg_contact_step_completed)
-                binding.circle3.text = ""
-                binding.circle3.setBackgroundResource(R.drawable.bg_contact_step_completed)
-
-                binding.circle4.text = "4"
-                binding.circle4.setBackgroundResource(R.drawable.bg_contact_step_active)
-                binding.circle4.setTextColor(resources.getColor(R.color.colorBgBtn1, null))
-                binding.tvLabel4.setTextColor(resources.getColor(R.color.colorBgBtn1, null))
             }
         }
     }

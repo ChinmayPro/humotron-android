@@ -3,15 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/black">
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ivBg"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_bg_main" />
+    android:layout_height="match_parent">
 
     <!-- Top Sticky Bar -->
     <include
@@ -76,29 +68,57 @@
                 tools:visibility="gone" />
 
             <!-- Empty Cart Message Box -->
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/clEmptyCart"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/bg_cart_item"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_empty_cart"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="18dp"
                 android:visibility="gone"
                 tools:visibility="visible">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvEmptyCartMessage"
-                    style="@style/Text.18x.Manrope.Medium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Currently no any item in cart!"
-                    android:textColor="@color/white70"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                <FrameLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/bg_circle_icon"
+                    android:backgroundTint="#0DFFFFFF"
+                    android:layout_marginEnd="13dp">
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                     <androidx.appcompat.widget.AppCompatImageView
+                         android:layout_width="20dp"
+                         android:layout_height="20dp"
+                         android:layout_gravity="center"
+                         android:src="@drawable/ic_shopping_cart"
+                         app:tint="@color/colorTextGrey" />
+                </FrameLayout>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Text.15x.Manrope.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Your cart is empty"
+                        android:textColor="@color/white" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Text.12x.Manrope.Medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:text="Add a device, book or supplement to begin."
+                        android:textColor="@color/colorTextGreyDark" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <!-- Summary Sections Container -->
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -110,15 +130,52 @@
                 tools:visibility="visible">
 
                 <!-- Add Another Product -->
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvAddMore"
-                    style="@style/Text.14x.Manrope.Medium"
-                    android:layout_width="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clAddProduct"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/add_another_product"
-                    android:textColor="@color/white50" />
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="12dp"
+                    android:background="@drawable/bg_linkrow"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="15dp">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/ivAddProductChevron"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:src="@drawable/ic_plus"
+                            app:tint="@color/colorBgBtn" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Text.14x.Manrope.Bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="@string/add_a_product"
+                            android:textColor="#cfdad8" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivAddProductChevron"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/ic_chevron_right_24px"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="#6E837F" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <!-- Apply Coupon -->
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -127,32 +184,30 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="15dp"
                     android:layout_marginTop="20dp"
-                    android:background="@drawable/bg_cart_item"
+                    android:background="@drawable/bg_linkrow"
                     android:padding="15dp">
 
                     <!-- Initial State -->
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvApplyCouponLabel"
-                        style="@style/Text.18x.Manrope.Bold"
+                        style="@style/Text.14x.Manrope.Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/apply_coupon"
-                        android:textColor="@color/white"
+                        android:textColor="#cfdad8"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivApplyCoupon"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:background="@drawable/bg_add_button"
-                        android:padding="3dp"
-                        android:src="@drawable/ic_plus"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/ic_chevron_right_24px"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:tint="@color/black" />
+                        app:tint="#6E837F" />
 
                     <!-- Applied State (Hidden by default) -->
                     <androidx.appcompat.widget.LinearLayoutCompat
@@ -217,31 +272,29 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="15dp"
                     android:layout_marginTop="12dp"
-                    android:background="@drawable/bg_cart_item"
+                    android:background="@drawable/bg_linkrow"
                     android:padding="15dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvShippingAddressLabel"
-                        style="@style/Text.18x.Manrope.Bold"
+                        style="@style/Text.14x.Manrope.Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/shipping_address"
-                        android:textColor="@color/white"
+                        android:textColor="#cfdad8"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivAddAddress"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:background="@drawable/bg_add_button"
-                        android:padding="3dp"
-                        android:src="@drawable/ic_plus"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/ic_chevron_right_24px"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:tint="@color/black" />
+                        app:tint="#6E837F" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/llAddressSelected"
@@ -330,32 +383,30 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="15dp"
                     android:layout_marginTop="20dp"
-                    android:background="@drawable/bg_cart_item"
+                    android:background="@drawable/bg_linkrow"
                     android:padding="15dp">
 
                     <!-- Default/Unselected State -->
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvShippingMethodLabel"
-                        style="@style/Text.18x.Manrope.Bold"
+                        style="@style/Text.14x.Manrope.Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/select_shipping_method"
-                        android:textColor="@color/white"
+                        android:textColor="#cfdad8"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivAddShipping"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:background="@drawable/bg_add_button"
-                        android:padding="3dp"
-                        android:src="@drawable/ic_plus"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/ic_chevron_right_24px"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:tint="@color/black" />
+                        app:tint="#6E837F" />
 
                     <!-- Applied State (Hidden by default) -->
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -402,216 +453,201 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <!-- To Pay -->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/clToPay"
+                <!-- Billing Details Summary -->
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/llBillingSummary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/bg_cart_item"
-                    android:padding="15dp">
+                    android:layout_marginHorizontal="22dp"
+                    android:layout_marginTop="18dp"
+                    android:orientation="vertical">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvToPayLabel"
-                        style="@style/Text.18x.Manrope.Bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/to_pay"
-                        android:textColor="@color/white"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvTotalAmount"
-                        style="@style/Text.18x.Manrope.Bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/lime_green"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:text="£965.58" />
-
+                    <!-- Item Price Row -->
                     <androidx.appcompat.widget.LinearLayoutCompat
-                        android:id="@+id/btnViewDetailedBill"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tvToPayLabel">
+                        android:orientation="vertical">
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvViewDetailedBillLabel"
-                            style="@style/Text.12x.Manrope.Medium"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/view_detailed_bill"
-                            android:textColor="@color/white70" />
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/ivViewDetailedBill"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:src="@drawable/ic_keyboard_arrow_down_24px"
-                            app:tint="@color/white70" />
-
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:id="@+id/llDetailedBill"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:orientation="vertical"
-                        android:visibility="gone"
-                        app:layout_constraintTop_toBottomOf="@id/btnViewDetailedBill"
-                        tools:visibility="visible">
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:alpha="0.1"
-                            android:background="@color/white" />
-
-                        <!-- Item Price -->
-                        <androidx.constraintlayout.widget.ConstraintLayout
+                        <androidx.appcompat.widget.LinearLayoutCompat
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingVertical="12dp">
+                            android:paddingVertical="11dp"
+                            android:orientation="horizontal">
 
                             <androidx.appcompat.widget.AppCompatTextView
-                                style="@style/Text.16x.Manrope.Medium"
-                                android:layout_width="wrap_content"
+                                style="@style/Text.13x.Manrope.Bold"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="1"
                                 android:text="@string/item_price"
-                                android:textColor="@color/white70"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                android:textColor="#9DACA9" />
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/tvDetailedItemPrice"
-                                style="@style/Text.20x.Manrope.Bold"
+                                style="@style/Text.13x.Manrope.Bold"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                tools:text="£483.97" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+                                tools:text="£0.00" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
 
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:alpha="0.1"
-                            android:background="@color/white" />
+                            android:background="@color/console_profile_card_stroke" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
 
-                        <!-- Delivery Charges -->
-                        <androidx.constraintlayout.widget.ConstraintLayout
+                    <!-- Delivery Charges Row -->
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingVertical="12dp">
+                            android:paddingVertical="11dp"
+                            android:orientation="horizontal">
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/tvDetailedDeliveryLabel"
-                                style="@style/Text.16x.Manrope.Medium"
-                                android:layout_width="wrap_content"
+                                style="@style/Text.13x.Manrope.Bold"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="1"
                                 android:text="@string/delivery_charges"
-                                android:textColor="@color/white70"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                android:textColor="#9DACA9" />
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/tvDetailedDeliveryPrice"
-                                style="@style/Text.20x.Manrope.Bold"
+                                style="@style/Text.13x.Manrope.Bold"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                tools:text="£5.9" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+                                tools:text="£0.00" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
 
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:alpha="0.1"
-                            android:background="@color/white" />
+                            android:background="@color/console_profile_card_stroke" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
 
-                        <!-- Coupon Discount -->
-                        <androidx.constraintlayout.widget.ConstraintLayout
+                    <!-- Coupon Discount Row -->
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/llCouponDiscountRow"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        tools:visibility="visible">
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingVertical="12dp">
+                            android:paddingVertical="11dp"
+                            android:orientation="horizontal">
 
                             <androidx.appcompat.widget.AppCompatTextView
-                                style="@style/Text.16x.Manrope.Medium"
-                                android:layout_width="wrap_content"
+                                android:id="@+id/tvDetailedCouponLabel"
+                                style="@style/Text.13x.Manrope.Bold"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="1"
                                 android:text="@string/coupon_discount"
-                                android:textColor="@color/white70"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                android:textColor="#9DACA9" />
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/tvDetailedCouponDiscount"
-                                style="@style/Text.20x.Manrope.Bold"
+                                style="@style/Text.13x.Manrope.Bold"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/textColorOrange"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                tools:text="£0.0" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+                                android:textColor="#7BD88F"
+                                tools:text="-£0.00" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
 
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:alpha="0.1"
-                            android:background="@color/white" />
+                            android:background="@color/console_profile_card_stroke" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
 
-                        <!-- VAT -->
-                        <androidx.constraintlayout.widget.ConstraintLayout
+                    <!-- VAT Row -->
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/llVatRow"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        tools:visibility="visible">
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingVertical="12dp">
+                            android:paddingVertical="11dp"
+                            android:orientation="horizontal">
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/tvDetailedVatLabel"
-                                style="@style/Text.16x.Manrope.Medium"
-                                android:layout_width="wrap_content"
+                                style="@style/Text.13x.Manrope.Bold"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:text="VAT (Taxes at 20%)"
-                                android:textColor="@color/white70"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                android:layout_weight="1"
+                                android:text="VAT"
+                                android:textColor="#9DACA9" />
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/tvDetailedVatValue"
-                                style="@style/Text.20x.Manrope.Bold"
+                                style="@style/Text.13x.Manrope.Bold"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                tools:text="£90.78" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+                                tools:text="£0.00" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
 
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/console_profile_card_stroke" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                    <!-- To Pay Row -->
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingVertical="11dp"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvToPayLabel"
+                                style="@style/Text.14x.Manrope.Bold"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/to_pay"
+                                android:textColor="@color/white" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvTotalAmount"
+                                style="@style/Text.16x.Manrope.ExtraBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/colorBgBtn"
+                                tools:text="£0.00" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/console_profile_card_stroke" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <!-- Footer Labels -->
                 <androidx.appcompat.widget.AppCompatTextView

@@ -5,22 +5,32 @@
     android:layout_height="wrap_content"
     android:layout_margin="6dp"
     android:background="@drawable/bg_support_category_card"
-    android:minHeight="175dp"
     android:orientation="vertical"
     android:padding="16dp">
 
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ivCategoryIcon"
-        android:layout_width="30dp"
-        android:layout_height="30dp" />
+    <FrameLayout
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:background="@drawable/bg_support_doc_icon">
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivCategoryIcon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:tint="@color/colorBgBtn1" />
+
+    </FrameLayout>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvCategoryTitle"
-        style="@style/Text.16x.Manrope.SemiBold"
+        style="@style/Text.14x.Manrope.Bold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/manrope_bold"
+        app:fontFamily="@font/manrope_bold"
+        android:textStyle="bold"
         android:layout_marginTop="12dp" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -28,7 +38,10 @@
         style="@style/Text.12x.Manrope.Regular"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/manrope_medium"
+        app:fontFamily="@font/manrope_medium"
         android:layout_marginTop="6dp"
-        android:textColor="@color/white50" />
+        android:textSize="11sp"
+        android:textColor="@color/ink3" />
 
 </LinearLayout>

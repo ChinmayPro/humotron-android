@@ -211,9 +211,7 @@ class TronChatFragment : BaseFragment(R.layout.fragment_tron_chat) {
             hideKeyboard()
         }
 
-        binding.ivBg.setOnClickListener {
-            hideKeyboard()
-        }
+
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.contentRoot) { v, insets ->
             val imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime())

@@ -492,6 +492,36 @@
     </fragment>
 
     <fragment
+        android:id="@+id/fragmentDecodeOptimizeDetail"
+        android:name="com.humotron.app.ui.decode.DecodeOptimizeDetailFragment"
+        android:label="Optimize Detail Screen">
+        <argument
+            android:name="productId"
+            app:argType="string" />
+        <argument
+            android:name="productType"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentSeeRetailers"
+        android:name="com.humotron.app.ui.decode.SeeRetailersFragment"
+        android:label="See Retailers Screen">
+        <argument
+            android:name="productId"
+            app:argType="string" />
+        <argument
+            android:name="productTitle"
+            app:argType="string" />
+        <argument
+            android:name="matchPercentage"
+            app:argType="integer" />
+        <argument
+            android:name="productUrl"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
         android:id="@+id/fragmentHealthScan"
         android:name="com.humotron.app.ui.device.HealthScanFragment"
         tools:layout="@layout/fragment_health_scan">

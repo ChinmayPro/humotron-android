@@ -3,49 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp"
+    android:layout_marginBottom="10dp"
     android:background="@drawable/bg_contact_category_unselected"
-    android:padding="16dp"
+    android:padding="15dp"
     android:clickable="true"
     android:focusable="true">
-
-    <ImageView
-        android:id="@+id/ivIcon"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:contentDescription="Category Icon"
-        app:tint="@color/colorBgBtn1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/llTextContainer"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/rbSelector"
-        app:layout_constraintStart_toEndOf="@+id/ivIcon"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/tvTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/Text.16x.Manrope.SemiBold"
-            android:textColor="@color/white" />
-
-        <TextView
-            android:id="@+id/tvDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textAppearance="@style/Text.12x.Manrope.Regular"
-            android:textColor="@color/white50" />
-    </LinearLayout>
 
     <RadioButton
         android:id="@+id/rbSelector"
@@ -56,7 +18,41 @@
         android:clickable="false"
         android:focusable="false"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/llTextContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/rbSelector"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            style="@style/Text.16x.Manrope.Bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/manrope_bold"
+            app:fontFamily="@font/manrope_bold"
+            android:textStyle="bold"
+            android:textSize="15.5sp"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tvDescription"
+            style="@style/Text.12x.Manrope.Regular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:fontFamily="@font/manrope_medium"
+            app:fontFamily="@font/manrope_medium"
+            android:textSize="12sp"
+            android:textColor="@color/white50" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

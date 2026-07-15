@@ -7,6 +7,8 @@ import com.humotron.app.data.repository.ShopRepository
 import com.humotron.app.domain.modal.response.DeviceDetailResponse
 import com.humotron.app.domain.modal.response.DeviceFaqResponse
 import com.humotron.app.domain.modal.response.GetOptimizedRecipeWithMetricsResponse
+import com.humotron.app.domain.modal.response.GetOptimizedRecommendationsWithMetricsResponse
+import com.humotron.app.domain.modal.response.GetOptimizedRecommendationDetailResponse
 import com.humotron.app.domain.modal.response.GetShopDevicesResponse
 import com.humotron.app.domain.modal.response.ProductDetailResponse
 import com.humotron.app.domain.modal.response.BookingTypeResponse
@@ -57,12 +59,14 @@ class ShopViewModel @Inject constructor(
     private val deviceDetailLiveData: SingleLiveEvent<Resource<DeviceDetailResponse>> = SingleLiveEvent()
     private val deviceFaqsLiveData: SingleLiveEvent<Resource<DeviceFaqResponse>> = SingleLiveEvent()
     private val optimizedRecipeLiveData: SingleLiveEvent<Resource<GetOptimizedRecipeWithMetricsResponse>> = SingleLiveEvent()
+    private val optimizedRecommendationsLiveData: SingleLiveEvent<Resource<GetOptimizedRecommendationsWithMetricsResponse>> = SingleLiveEvent()
     private val bookPreferenceLiveData: SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.BookPreferenceResponse>> = SingleLiveEvent()
 
     fun getDevicesLiveData(): SingleLiveEvent<Resource<GetShopDevicesResponse>> = devicesLiveData
     fun getDeviceDetailLiveData(): SingleLiveEvent<Resource<DeviceDetailResponse>> = deviceDetailLiveData
     fun getDeviceFaqsLiveData(): SingleLiveEvent<Resource<DeviceFaqResponse>> = deviceFaqsLiveData
     fun getOptimizedRecipeLiveData(): SingleLiveEvent<Resource<GetOptimizedRecipeWithMetricsResponse>> = optimizedRecipeLiveData
+    fun getOptimizedRecommendationsLiveData(): SingleLiveEvent<Resource<GetOptimizedRecommendationsWithMetricsResponse>> = optimizedRecommendationsLiveData
     fun getBookPreferenceLiveData(): SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.BookPreferenceResponse>> = bookPreferenceLiveData
     
     private val addressAutocompleteLiveData: SingleLiveEvent<Resource<AddressAutocompleteResponse>> = SingleLiveEvent()
@@ -113,6 +117,12 @@ class ShopViewModel @Inject constructor(
     fun fetchOptimizedRecipe() {
         repository.getOptimizedRecipeWithMetrics().onEach { state ->
             optimizedRecipeLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
+
+    fun fetchOptimizedRecommendations() {
+        repository.getOptimizedRecommendationsWithMetrics().onEach { state ->
+            optimizedRecommendationsLiveData.value = state
         }.launchIn(viewModelScope)
     }
 
@@ -222,6 +232,15 @@ class ShopViewModel @Inject constructor(
     fun fetchProductDetail(id: String) {
         repository.getProductDetail(id).onEach { state ->
             productDetailLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
+
+    private val recommendationDetailLiveData: SingleLiveEvent<Resource<GetOptimizedRecommendationDetailResponse>> = SingleLiveEvent()
+    fun getRecommendationDetailLiveData(): SingleLiveEvent<Resource<GetOptimizedRecommendationDetailResponse>> = recommendationDetailLiveData
+
+    fun fetchRecommendationDetail(id: String, type: String) {
+        repository.getOptimizedRecommendationDetail(id, type).onEach { state ->
+            recommendationDetailLiveData.value = state
         }.launchIn(viewModelScope)
     }
 

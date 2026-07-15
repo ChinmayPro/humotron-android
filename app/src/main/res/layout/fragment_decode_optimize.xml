@@ -6,16 +6,105 @@
     android:layout_height="match_parent"
     tools:context=".ui.decode.DecodeOptimizeFragment">
 
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsvContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Hero Eyebrow -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvHeaderEyebrow"
+                style="@style/Text.11x.Manrope.SemiBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:text="Your read · week of Jun 8"
+                android:textColor="@color/textColorMuted"
+                android:textAllCaps="true"
+                android:letterSpacing="0.14"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Hero Title -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvHeaderTitle"
+                style="@style/Text.28x.Manrope.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="12dp"
+                android:text="Recovery is lagging your training load."
+                android:textColor="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/tvHeaderEyebrow" />
+
+            <!-- Hero Subtitle -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvHeaderSubtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="11dp"
+                android:textSize="15sp"
+                android:fontFamily="@font/manrope_medium"
+                android:text="Three signals point the same way this week."
+                android:textColor="@color/textColorMuted"
+                app:layout_constraintTop_toBottomOf="@id/tvHeaderTitle" />
+
+            <!-- Filter Capsules RecyclerView -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvFilters"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:clipToPadding="false"
+                android:paddingHorizontal="20dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/tvHeaderSubtitle"
+                tools:listitem="@layout/item_optimize_filter" />
+
+            <!-- Recommendations RecyclerView -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvOptimize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"
+                android:paddingHorizontal="20dp"
+                android:paddingBottom="40dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/rvFilters"
+                tools:listitem="@layout/item_optimize_recommendation" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvViewMetricsTitle"
-        style="@style/Text.20x.Manrope.Bold"
+        android:id="@+id/tvNoData"
+        style="@style/Text.16x.Manrope.SemiBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_20dp"
-        android:layout_marginTop="@dimen/_20dp"
-        android:text="Optimize"
-        android:textAlignment="textStart"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:text="@string/no_data_found"
+        android:textColor="@color/white50"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/layoutLoader"
+        layout="@layout/layout_bar_loader"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

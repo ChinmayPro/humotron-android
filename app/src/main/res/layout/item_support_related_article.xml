@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/bg_support_related_article_card"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -13,12 +17,20 @@
         android:paddingVertical="14dp"
         android:background="?attr/selectableItemBackground">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivArticleIcon"
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:tint="@color/assessmentBnt"
-            android:src="@drawable/ic_sheet_document" />
+        <FrameLayout
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:background="@drawable/bg_support_icon_holder_rect"
+            android:layout_gravity="center_vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivArticleIcon"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center"
+                app:tint="@color/white80"
+                tools:src="@drawable/ic_sheet_document" />
+        </FrameLayout>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="0dp"
@@ -29,17 +41,43 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvArticleTitle"
-                style="@style/Text.16x.Manrope.Bold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvArticleCategory"
-                style="@style/Text.12x.Manrope.Regular"
+                style="@style/Text.14x.Manrope.Bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textColor="@color/white50" />
+                android:textColor="@color/white"
+                tools:text="My Smart Ring is not charging" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvArticleTypeBadge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="9sp"
+                    android:textColor="@color/cool"
+                    android:textAllCaps="true"
+                    android:fontFamily="@font/manrope_bold"
+                    android:letterSpacing="0.04"
+                    android:paddingHorizontal="7dp"
+                    android:paddingVertical="3dp"
+                    android:background="@drawable/bg_support_article_tag"
+                    android:layout_marginEnd="8dp"
+                    tools:text="TROUBLESHOOTING" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvArticleCategory"
+                    style="@style/Text.12x.Manrope.Regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white50"
+                    tools:text="Smart Ring • Sync &amp; Connectivity" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -48,7 +86,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:src="@drawable/ic_chevron_right_24px"
-            android:tint="@color/white30" />
+            app:tint="@color/white30" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -56,6 +94,7 @@
         android:id="@+id/vArticleDivider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/white10" />
+        android:background="@color/white10"
+        android:visibility="gone" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

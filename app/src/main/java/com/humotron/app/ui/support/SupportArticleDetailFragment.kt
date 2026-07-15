@@ -8,6 +8,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
+import androidx.core.content.ContextCompat
 import com.humotron.app.R
 import com.humotron.app.core.base.BaseFragment
 import com.humotron.app.data.network.Status
@@ -61,8 +64,39 @@ class SupportArticleDetailFragment : BaseFragment(R.layout.fragment_support_arti
         }
     }
 
+    private fun formatArticleType(type: String?): String {
+        if (type.isNullOrEmpty()) return ""
+        return when (type.lowercase()) {
+            "how_to" -> "How-to"
+            "troubleshooting" -> "Troubleshooting"
+            "faq" -> "FAQ"
+            "policy" -> "Policy"
+            "explanation" -> "Explanation"
+            "quick_read", "quick read" -> "Quick read"
+            else -> type.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
+        }
+    }
+
+    private fun formatDeviceName(device: String?): String {
+        if (device.isNullOrEmpty()) return ""
+        val words = device.split("_", "-")
+        val result = StringBuilder()
+        for (word in words) {
+            if (word.isEmpty()) continue
+            if (result.isNotEmpty()) result.append(" ")
+            val capitalized = if (word.length > 1) {
+                word.substring(0, 1).uppercase() + word.substring(1).lowercase()
+            } else {
+                word.uppercase()
+            }
+            result.append(capitalized)
+        }
+        return result.toString()
+    }
+
     private fun initViews() {
-        binding.header.title.text = getString(R.string.support)
+        binding.header.title.text = ""
+        binding.header.headerDivider.visibility = View.GONE
         binding.header.ivBack.setOnClickListener {
             findNavController().popBackStack()
         }
@@ -72,16 +106,32 @@ class SupportArticleDetailFragment : BaseFragment(R.layout.fragment_support_arti
 
             val subcategory = item.subcategoryLabel ?: ""
             val category = item.categoryLabel ?: ""
-            val metaText = if (subcategory.isNotEmpty() && category.isNotEmpty()) {
-                "$category • $subcategory"
-            } else {
-                subcategory.ifEmpty { category }
+            val typeFormatted = formatArticleType(item.articleType)
+            val device = formatDeviceName(item.deviceScope?.firstOrNull() ?: "")
+
+            val sb = StringBuilder()
+            if (typeFormatted.isNotEmpty()) {
+                sb.append(typeFormatted)
             }
-            binding.tvArticleMeta.text = metaText
+            if (category.isNotEmpty()) {
+                if (sb.isNotEmpty()) sb.append(" ")
+                sb.append(category)
+            }
+            if (device.isNotEmpty()) {
+                if (sb.isNotEmpty()) sb.append(" · ")
+                sb.append(device)
+            } else if (subcategory.isNotEmpty()) {
+                if (sb.isNotEmpty()) sb.append(" · ")
+                sb.append(subcategory)
+            }
+
+            binding.tvArticleMeta.text = sb.toString()
 
             binding.tvShortAnswerContent.text = item.shortAnswer ?: item.subtitle ?: ""
             
             binding.tvArticleUpdated.text = getString(R.string.support_updated_just_now)
+            binding.ivCategoryIcon.visibility = View.GONE
+            binding.llUpdatedRow.visibility = View.GONE
         }
 
         binding.llViewMoreArticles.setOnClickListener {
@@ -121,21 +171,28 @@ class SupportArticleDetailFragment : BaseFragment(R.layout.fragment_support_arti
                             categoryLabel = categoryVal
                             categoryKey = detailData.category?.key ?: topic.categoryKey ?: ""
 
-                            val metaText = if (categoryVal.isNotEmpty() && subcategoryLabel.isNotEmpty()) {
-                                "$categoryVal • $subcategoryLabel"
-                            } else {
-                                subcategoryLabel.ifEmpty { categoryVal }
-                            }
-                            binding.tvArticleMeta.text = metaText
+                            val typeFormatted = formatArticleType(topic.articleType)
+                            val device = formatDeviceName(topic.deviceScope?.firstOrNull() ?: "")
 
-                            val categoryIconUrl = detailData.category?.icon
-                            if (!categoryIconUrl.isNullOrEmpty()) {
-                                binding.ivCategoryIcon.visibility = View.VISIBLE
-                                binding.ivCategoryIcon.imageTintList = null
-                                binding.ivCategoryIcon.loadImage(categoryIconUrl)
-                            } else {
-                                binding.ivCategoryIcon.visibility = View.GONE
+                            val sb = StringBuilder()
+                            if (typeFormatted.isNotEmpty()) {
+                                sb.append(typeFormatted)
                             }
+                            if (categoryVal.isNotEmpty()) {
+                                if (sb.isNotEmpty()) sb.append(" ")
+                                sb.append(categoryVal)
+                            }
+                            if (device.isNotEmpty()) {
+                                if (sb.isNotEmpty()) sb.append(" · ")
+                                sb.append(device)
+                            } else if (subcategoryLabel.isNotEmpty()) {
+                                if (sb.isNotEmpty()) sb.append(" · ")
+                                sb.append(subcategoryLabel)
+                            }
+
+                            binding.tvArticleMeta.text = sb.toString()
+
+                            binding.ivCategoryIcon.visibility = View.GONE
 
                             // Relative updatedAt time
                             val parsedTime = try {
@@ -153,6 +210,7 @@ class SupportArticleDetailFragment : BaseFragment(R.layout.fragment_support_arti
                             } else {
                                 getString(R.string.support_updated_just_now)
                             }
+                            binding.llUpdatedRow.visibility = View.GONE
 
                             binding.tvShortAnswerContent.text = topic.shortAnswer ?: topic.subtitle ?: ""
 
@@ -168,7 +226,7 @@ class SupportArticleDetailFragment : BaseFragment(R.layout.fragment_support_arti
                                         false
                                     )
                                     stepBinding.tvStepText.text = stepText
-                                    stepBinding.vStepDivider.visibility = if (index == steps.size - 1) View.GONE else View.VISIBLE
+                                    stepBinding.vStepDivider.visibility = View.GONE
                                     binding.llStepsContainer.addView(stepBinding.root)
                                 }
                             } else {
@@ -192,7 +250,21 @@ class SupportArticleDetailFragment : BaseFragment(R.layout.fragment_support_arti
                                     relatedBinding.tvArticleTitle.text = relatedArticle.title ?: ""
                                     
                                     val relatedCategory = relatedArticle.categoryLabel ?: detailData.category?.label ?: ""
-                                    relatedBinding.tvArticleCategory.text = relatedCategory
+                                    val relatedDevice = formatDeviceName(relatedArticle.deviceScope?.firstOrNull() ?: "")
+                                    val metaText = if (relatedDevice.isNotEmpty() && relatedCategory.isNotEmpty()) {
+                                        "$relatedDevice · $relatedCategory"
+                                    } else {
+                                        relatedDevice.ifEmpty { relatedCategory }
+                                    }
+                                    relatedBinding.tvArticleCategory.text = metaText
+
+                                    val relatedTypeFormatted = formatArticleType(relatedArticle.articleType)
+                                    if (relatedTypeFormatted.isNotEmpty()) {
+                                        relatedBinding.tvArticleTypeBadge.visibility = View.VISIBLE
+                                        relatedBinding.tvArticleTypeBadge.text = relatedTypeFormatted
+                                    } else {
+                                        relatedBinding.tvArticleTypeBadge.visibility = View.GONE
+                                    }
 
                                     val typeIcon = when (relatedArticle.articleType?.lowercase()) {
                                         "how_to" -> R.drawable.ic_menu_book_24px
@@ -203,7 +275,7 @@ class SupportArticleDetailFragment : BaseFragment(R.layout.fragment_support_arti
                                     }
                                     relatedBinding.ivArticleIcon.setImageResource(typeIcon)
 
-                                    relatedBinding.vArticleDivider.visibility = if (index == relatedTopics.size - 1) View.GONE else View.VISIBLE
+                                    relatedBinding.vArticleDivider.visibility = View.GONE
 
                                     relatedBinding.root.setOnClickListener {
                                         val bundle = Bundle().apply {
