@@ -25,13 +25,17 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvCategory"
                 style="@style/Text.10x.Manrope.Bold"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textColor="#73827F"
                 android:textAllCaps="true"
                 android:letterSpacing="0.12"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:layout_marginEnd="8dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/clMetricPill"
                 tools:text="SUPPLEMENT" />
 
             <!-- Metric Pill -->

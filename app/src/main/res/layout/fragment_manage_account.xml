@@ -36,43 +36,44 @@
                 android:paddingVertical="32dp"
                 android:paddingHorizontal="24dp">
 
-                <!-- Add a ring around avatar as per design (green glow/border) -->
-                <View
-                    android:id="@+id/vAvatarRing"
-                    android:layout_width="86dp"
-                    android:layout_height="86dp"
-                    android:background="@drawable/bg_circle_lime"
-                    android:alpha="0.3"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/ivAvatarBg"
+                <FrameLayout
+                    android:id="@+id/clAvatarContainer"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:scaleType="centerCrop"
-                    android:background="@drawable/bg_circle_icon"
-                    android:backgroundTint="#2a3b3a"
-                    app:layout_constraintBottom_toBottomOf="@id/vAvatarRing"
-                    app:layout_constraintEnd_toEndOf="@id/vAvatarRing"
-                    app:layout_constraintStart_toStartOf="@id/vAvatarRing"
-                    app:layout_constraintTop_toTopOf="@id/vAvatarRing"
-                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle" />
-                    
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvAvatarInitials"
-                    style="@style/Text.24x.Manrope.Bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="C"
-                    android:textColor="@color/green_1"
-                    android:fontFamily="@font/manrope_bold"
-                    app:fontFamily="@font/manrope_bold"
-                    app:layout_constraintBottom_toBottomOf="@id/ivAvatarBg"
-                    app:layout_constraintEnd_toEndOf="@id/ivAvatarBg"
-                    app:layout_constraintStart_toStartOf="@id/ivAvatarBg"
-                    app:layout_constraintTop_toTopOf="@id/ivAvatarBg" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <!-- Gradient/Stroke Monogram Circle -->
+                    <View
+                        android:id="@+id/viewAvatarMonogram"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_avatar_monogram" />
+
+                    <!-- Monogram Initial Text -->
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvAvatarInitials"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/manrope_extra_bold"
+                        android:textSize="36sp"
+                        android:textColor="@color/lime"
+                        android:textStyle="bold"
+                        android:letterSpacing="-0.03"
+                        tools:text="C" />
+
+                    <!-- Optional User Image Profile (overlays text and bg if loaded) -->
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/ivAvatarBg"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone"
+                        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle"
+                        tools:visibility="visible" />
+                </FrameLayout>
 
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -87,7 +88,7 @@
                     app:fontFamily="@font/manrope_bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/ivAvatarBg" />
+                    app:layout_constraintTop_toBottomOf="@id/clAvatarContainer" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/btnEditDetails"

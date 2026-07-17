@@ -33,8 +33,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/bottom_nav_bg"
-        android:paddingTop="6dp"
+        android:paddingTop="12dp"
         android:paddingBottom="10dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -131,19 +133,68 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/llProfile"
             android:layout_width="@dimen/_60dp"
-            android:layout_height="@dimen/_60dp"
+            android:layout_height="wrap_content"
             android:elevation="@dimen/_5dp"
             android:gravity="center"
             android:orientation="vertical"
+            android:clipChildren="false"
+            android:clipToPadding="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/llBioHack">
+            app:layout_constraintStart_toEndOf="@id/llBioHack"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivProfile"
-                android:layout_width="@dimen/_34dp"
-                android:layout_height="@dimen/_34dp"
-                android:src="@drawable/ic_profile" />
+            <!-- Small Avatar Container matching console design -->
+            <FrameLayout
+                android:id="@+id/flNavProfileContainer"
+                android:layout_width="24dp"
+                android:layout_height="17dp"
+                android:clipChildren="false"
+                android:clipToPadding="false">
+
+                <!-- Gradient background with stroke (when selected, we show a glow/stroke or change border) -->
+                <View
+                    android:id="@+id/viewNavAvatarMonogram"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_nav_avatar_inactive" />
+
+                <!-- Monogram text initial -->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvNavAvatarInitial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/manrope_extra_bold"
+                    android:textSize="11sp"
+                    android:textColor="@color/lime"
+                    android:textStyle="bold"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="-0.03"
+                    tools:text="C" />
+
+                <!-- Optional User image profile overlay -->
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/ivProfile"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle" />
+            </FrameLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvProfile"
+                style="@style/Text.OnBoard.Title1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4dp"
+                android:gravity="center"
+                android:text="Console"
+                android:textColor="@color/_7e"
+                android:textSize="12sp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

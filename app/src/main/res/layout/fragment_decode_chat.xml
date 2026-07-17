@@ -78,17 +78,6 @@
                         android:textColor="#DFE6E5"
                         android:text="@string/chat_option_nutrition" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/btnOptionOptimize"
-                        style="@style/Text.14x.Manrope.SemiBold"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp"
-                        android:background="@drawable/bg_chat_option"
-                        android:padding="14dp"
-                        android:textColor="#DFE6E5"
-                        android:text="@string/chat_option_optimize" />
-
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

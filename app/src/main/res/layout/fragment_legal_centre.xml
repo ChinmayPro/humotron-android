@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.profile.LegalCentreFragment">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header_2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:clipToPadding="false"
+        android:paddingBottom="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="22dp"
+            android:paddingTop="16dp">
+
+            <!-- Intro Section -->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:background="@drawable/bg_rounded_14"
+                android:backgroundTint="#19C4F23E"
+                android:gravity="center">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
+                    android:src="@drawable/ic_sheet_document"
+                    app:tint="#C4F23E" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Text.OnBoard.Title1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
+                android:text="@string/console_legal_centre"
+                android:textSize="21sp"
+                android:textStyle="bold"
+                android:letterSpacing="-0.02" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Text.14x.Manrope.Regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/legal_centre_intro_desc"
+                android:textColor="@color/ink2"
+                android:textSize="13sp" />
+
+            <!-- Policies List -->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:orientation="vertical">
+
+                <!-- Terms of Service -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clTermsOfService"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_cfg_card"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="15dp"
+                    android:layout_marginBottom="10dp">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/llTermsIcon"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:background="@drawable/bg_rounded_12"
+                        android:backgroundTint="@color/white05"
+                        android:gravity="center"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/ic_sheet_document"
+                            app:tint="@color/booster_text_ghost" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="13dp"
+                        android:layout_marginEnd="12dp"
+                        android:orientation="vertical"
+                        app:layout_constraintStart_toEndOf="@id/llTermsIcon"
+                        app:layout_constraintEnd_toStartOf="@id/ivTermsNode"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Text.16x.Manrope.SemiBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/policy_terms_title"
+                            android:textSize="14.5sp"
+                            android:textColor="@color/white" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Text.12x.Manrope.Regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="@string/policy_terms_desc"
+                            android:textSize="11.5sp"
+                            android:textColor="@color/ink4" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivTermsNode"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/ic_scan_node"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:tint="#6E837F" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!-- Privacy Policy -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clPrivacyPolicy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_cfg_card"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="15dp"
+                    android:layout_marginBottom="10dp">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/llPrivacyIcon"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:background="@drawable/bg_rounded_12"
+                        android:backgroundTint="@color/white05"
+                        android:gravity="center"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/ic_sheet_document"
+                            app:tint="@color/booster_text_ghost" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="13dp"
+                        android:layout_marginEnd="12dp"
+                        android:orientation="vertical"
+                        app:layout_constraintStart_toEndOf="@id/llPrivacyIcon"
+                        app:layout_constraintEnd_toStartOf="@id/ivPrivacyNode"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Text.16x.Manrope.SemiBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/policy_privacy_title"
+                            android:textSize="14.5sp"
+                            android:textColor="@color/white" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Text.12x.Manrope.Regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="@string/policy_privacy_desc"
+                            android:textSize="11.5sp"
+                            android:textColor="@color/ink4" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivPrivacyNode"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/ic_scan_node"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:tint="#6E837F" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!-- Cookie Policy -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clCookiePolicy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_cfg_card"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="15dp"
+                    android:layout_marginBottom="10dp">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/llCookieIcon"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:background="@drawable/bg_rounded_12"
+                        android:backgroundTint="@color/white05"
+                        android:gravity="center"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/ic_sheet_document"
+                            app:tint="@color/booster_text_ghost" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="13dp"
+                        android:layout_marginEnd="12dp"
+                        android:orientation="vertical"
+                        app:layout_constraintStart_toEndOf="@id/llCookieIcon"
+                        app:layout_constraintEnd_toStartOf="@id/ivCookieNode"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Text.16x.Manrope.SemiBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/policy_cookie_title"
+                            android:textSize="14.5sp"
+                            android:textColor="@color/white" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Text.12x.Manrope.Regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="@string/policy_cookie_desc"
+                            android:textSize="11.5sp"
+                            android:textColor="@color/ink4" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivCookieNode"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/ic_scan_node"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:tint="#6E837F" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!-- Data Rights -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clDataRights"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_cfg_card"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="15dp"
+                    android:layout_marginBottom="10dp">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/llDataRightsIcon"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:background="@drawable/bg_rounded_12"
+                        android:backgroundTint="@color/white05"
+                        android:gravity="center"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/ic_sheet_document"
+                            app:tint="@color/booster_text_ghost" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="13dp"
+                        android:layout_marginEnd="12dp"
+                        android:orientation="vertical"
+                        app:layout_constraintStart_toEndOf="@id/llDataRightsIcon"
+                        app:layout_constraintEnd_toStartOf="@id/ivDataRightsNode"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Text.16x.Manrope.SemiBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/policy_data_rights_title"
+                            android:textSize="14.5sp"
+                            android:textColor="@color/white" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Text.12x.Manrope.Regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="@string/policy_data_rights_desc"
+                            android:textSize="11.5sp"
+                            android:textColor="@color/ink4" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivDataRightsNode"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/ic_scan_node"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:tint="#6E837F" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!-- Acceptable Use -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clAcceptableUse"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_cfg_card"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="15dp"
+                    android:layout_marginBottom="10dp">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/llAcceptableUseIcon"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:background="@drawable/bg_rounded_12"
+                        android:backgroundTint="@color/white05"
+                        android:gravity="center"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/ic_sheet_document"
+                            app:tint="@color/booster_text_ghost" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="13dp"
+                        android:layout_marginEnd="12dp"
+                        android:orientation="vertical"
+                        app:layout_constraintStart_toEndOf="@id/llAcceptableUseIcon"
+                        app:layout_constraintEnd_toStartOf="@id/ivAcceptableUseNode"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Text.16x.Manrope.SemiBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/policy_acceptable_use_title"
+                            android:textSize="14.5sp"
+                            android:textColor="@color/white" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Text.12x.Manrope.Regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="@string/policy_acceptable_use_desc"
+                            android:textSize="11.5sp"
+                            android:textColor="@color/ink4" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivAcceptableUseNode"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/ic_scan_node"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:tint="#6E837F" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!-- Footer Source text -->
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Text.14x.Manrope.Regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:text="@string/legal_centre_footer"
+                android:textColor="#6E837F"
+                android:textSize="12sp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

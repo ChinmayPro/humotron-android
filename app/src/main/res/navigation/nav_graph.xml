@@ -730,4 +730,22 @@
             app:nullable="true" />
     </fragment>
 
+    <fragment
+        android:id="@+id/fragmentBuyOnHumotron"
+        android:name="com.humotron.app.ui.decode.BuyOnHumotronFragment"
+        android:label="Buy on Humotron Screen">
+        <argument
+            android:name="productId"
+            app:argType="string" />
+        <argument
+            android:name="productTitle"
+            app:argType="string" />
+        <argument
+            android:name="productPrice"
+            app:argType="float" />
+        <argument
+            android:name="productType"
+            app:argType="string" />
+    </fragment>
+
 </navigation>

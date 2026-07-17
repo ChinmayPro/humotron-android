@@ -1567,4 +1567,18 @@ To get started:\n
     <string name="step_onto_the_scale">Step onto the scale barefoot and stand still. We’ll capture your full body composition in a few seconds.</string>
     <string name="stand_still_until_the_reading_completes">Stand still until the reading completes</string>
     <string name="read_again">Read again</string>
+
+    <!-- Legal Centre Screen -->
+    <string name="legal_centre_intro_desc">Our policies, opened in an in-app browser. Tap any to read the latest version on humotron.com.</string>
+    <string name="legal_centre_footer">humotron.com/legal · opens in-app</string>
+    <string name="policy_terms_title">Terms of Service</string>
+    <string name="policy_terms_desc">The agreement that governs your use of Humotron.</string>
+    <string name="policy_privacy_title">Privacy Policy</string>
+    <string name="policy_privacy_desc">What we collect, how we use it, and your choices.</string>
+    <string name="policy_cookie_title">Cookie Policy</string>
+    <string name="policy_cookie_desc">How we use cookies and similar technologies.</string>
+    <string name="policy_data_rights_title">Data Rights</string>
+    <string name="policy_data_rights_desc">Access, export, or delete your data.</string>
+    <string name="policy_acceptable_use_title">Acceptable Use</string>
+    <string name="policy_acceptable_use_desc">The rules for using Humotron responsibly.</string>
 </resources>

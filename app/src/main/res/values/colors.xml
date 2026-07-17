@@ -5,6 +5,9 @@
     <color name="black1">#1A1A1A</color>
     <color name="white">#FFFFFFFF</color>
     <color name="color_bg_ob">#1B464A</color>
+    <color name="avatar_gradient_start">#1C4E52</color>
+    <color name="avatar_gradient_end">#0F1E24</color>
+    <color name="lime_30">#4DC4F23E</color>
 
     <color name="textColorWhite">#ffffff</color>
     <color name="textColorDesc">#FFFEFE</color>

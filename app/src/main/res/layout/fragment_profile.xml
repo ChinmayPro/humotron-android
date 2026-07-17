@@ -67,16 +67,44 @@
                 android:paddingEnd="20dp"
                 android:paddingBottom="16dp">
 
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/ivProfile"
+                <FrameLayout
+                    android:id="@+id/clAvatarContainer"
                     android:layout_width="78dp"
                     android:layout_height="78dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_profile"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle" />
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <!-- Gradient/Stroke Monogram Circle -->
+                    <View
+                        android:id="@+id/viewAvatarMonogram"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_avatar_monogram" />
+
+                    <!-- Monogram Initial Text -->
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvAvatarInitial"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/manrope_extra_bold"
+                        android:textSize="36sp"
+                        android:textColor="@color/lime"
+                        android:textStyle="bold"
+                        android:letterSpacing="-0.03"
+                        tools:text="C" />
+
+                    <!-- Optional User Image Profile (overlays text and bg if loaded) -->
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/ivProfile"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone"
+                        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle"
+                        tools:visibility="visible" />
+                </FrameLayout>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvName"
@@ -88,7 +116,7 @@
                     android:letterSpacing="-0.02"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/ivProfile"
+                    app:layout_constraintTop_toBottomOf="@id/clAvatarContainer"
                     tools:text="Name" />
 
                 <!-- Plan Pill Badge (HTML .planpill amber style) -->

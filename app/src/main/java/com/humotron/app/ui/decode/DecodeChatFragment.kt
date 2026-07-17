@@ -101,7 +101,6 @@ class DecodeChatFragment : BaseFragment(R.layout.fragment_decode_chat) {
             }
             findNavController().navigate(R.id.fragmentDecodeQuestions, bundle)
         }
-        binding.btnOptionOptimize.setOnClickListener { /* Handle click */ }
         binding.ivSend.setOnClickListener {
             val message = binding.etInput.text.toString().trim()
             if (message.isNotEmpty()) {

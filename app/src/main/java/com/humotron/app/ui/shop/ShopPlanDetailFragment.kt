@@ -3,7 +3,11 @@ package com.humotron.app.ui.shop
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.humotron.app.R
@@ -25,6 +29,7 @@ class ShopPlanDetailFragment : BaseFragment(R.layout.fragment_shop_plan_detail) 
         setupHeader()
         setupFeatureCards()
         setupCta()
+        setupBottomBar()
     }
 
     private fun setupHeader() {
@@ -118,5 +123,20 @@ class ShopPlanDetailFragment : BaseFragment(R.layout.fragment_shop_plan_detail) 
         binding.btnBuyNow.setOnClickListener {
             Toast.makeText(requireContext(), "Upgrade to Pro plan clicked!", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun setupBottomBar() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.clFooter) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                bottomMargin = systemBars.bottom
+            }
+            insets
+        }
+    }
+
+    private fun dpToPx(dp: Int): Int {
+        val density = resources.displayMetrics.density
+        return (dp * density).toInt()
     }
 }

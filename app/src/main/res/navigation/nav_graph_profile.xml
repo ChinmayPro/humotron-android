@@ -115,6 +115,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentProfile_to_fragmentLegalCentre"
+            app:destination="@id/fragmentLegalCentre"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -542,5 +549,11 @@
             android:name="assessmentDate"
             app:argType="string" />
     </fragment>
+
+    <fragment
+        android:id="@+id/fragmentLegalCentre"
+        android:name="com.humotron.app.ui.profile.LegalCentreFragment"
+        android:label="Legal Centre"
+        tools:layout="@layout/fragment_legal_centre" />
 
 </navigation>

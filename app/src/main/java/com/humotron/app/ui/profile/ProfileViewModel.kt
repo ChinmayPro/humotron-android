@@ -44,6 +44,15 @@ class ProfileViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
+    private val deleteUserLiveData: androidx.lifecycle.MutableLiveData<Resource<com.humotron.app.domain.modal.response.CommonResponse>> = androidx.lifecycle.MutableLiveData()
+    fun getDeleteUserLiveData(): androidx.lifecycle.LiveData<Resource<com.humotron.app.domain.modal.response.CommonResponse>> = deleteUserLiveData
+
+    fun deleteUserById(id: String) {
+        repository.deleteUserById(id).onEach { state ->
+            deleteUserLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
+
     private val promoCodeDetailsLiveData: SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.PromoCodeDetailsResponse>> = SingleLiveEvent()
     fun getPromoCodeDetailsLiveData(): SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.PromoCodeDetailsResponse>> = promoCodeDetailsLiveData
 

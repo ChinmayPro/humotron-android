@@ -1,19 +1,34 @@
 package com.humotron.app.ui.profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.humotron.app.R
+import com.humotron.app.core.Preference
 import com.humotron.app.core.base.BaseFragment
+import com.humotron.app.data.local.AppDatabase
+import com.humotron.app.data.network.Status
 import com.humotron.app.databinding.FragmentManageAccountBinding
+import com.humotron.app.ui.onboarding.OnBoardingActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ManageAccountFragment : BaseFragment(R.layout.fragment_manage_account) {
 
     private lateinit var binding: FragmentManageAccountBinding
+    private val viewModel: ProfileViewModel by viewModels()
+
+    @Inject
+    lateinit var database: AppDatabase
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -24,18 +39,27 @@ class ManageAccountFragment : BaseFragment(R.layout.fragment_manage_account) {
     private fun initViews() {
         val user = prefUtils.getLoginResponse()
 
-        // Set user info
-        binding.tvName.text = "${user.firstName} ${user.lastName}"
-        
-        // Initial letter (Hide if profile image is present)
-        val hasProfileImage = !user.profileImages.isNullOrBlank()
-        binding.tvAvatarInitials.text = user.firstName?.firstOrNull()?.toString()?.uppercase() ?: "C"
-        binding.tvAvatarInitials.visibility = if (hasProfileImage) View.GONE else View.VISIBLE
+        // Set user info with robust fallback logic
+        val fullName = if (!user.name.isNullOrBlank() && user.name != "null") {
+            user.name.trim()
+        } else {
+            val f = user.firstName ?: ""
+            val l = user.lastName ?: ""
+            "$f $l".trim()
+        }
 
-        Glide.with(this)
-            .load(user.profileImages)
-            .placeholder(R.drawable.ic_bg_trans) // Use transparent placeholder so initials show through
-            .into(binding.ivAvatarBg)
+        val displayName = if (fullName.isEmpty()) "User" else fullName
+        binding.tvName.text = displayName
+
+        val initial = if (displayName.isNotEmpty()) {
+            displayName.split(" ").firstOrNull()?.firstOrNull()?.toString()?.uppercase() ?: "U"
+        } else {
+            "U"
+        }
+        binding.tvAvatarInitials.text = initial
+
+        binding.ivAvatarBg.visibility = View.GONE
+        binding.tvAvatarInitials.visibility = View.VISIBLE
 
         // Set data (Fallback defaults per design)
         binding.tvGender.text = user.gender?.takeIf { it.isNotBlank() } ?: "Male"

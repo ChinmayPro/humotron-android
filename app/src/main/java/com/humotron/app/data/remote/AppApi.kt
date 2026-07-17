@@ -100,6 +100,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
@@ -507,6 +508,12 @@ interface AppApi {
 
     @POST("userHardware/deleteUserHardwareById/{id}")
     suspend fun deleteUserHardwareById(@Path("id") id: String): Response<CommonResponse>
+
+    @POST("user/deleteUserById/{id}")
+    suspend fun deleteUserById(
+        @Path("id") id: String,
+        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0)),
+    ): Response<CommonResponse>
 
     @POST("order/getBloodTestOrders")
     suspend fun getBloodTestOrders(

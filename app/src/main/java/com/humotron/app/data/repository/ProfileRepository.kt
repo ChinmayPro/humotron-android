@@ -53,6 +53,20 @@ class ProfileRepository @Inject constructor(
     }.catch {
         emit(responseHandler.handleException(ValidationException(it.message)))
     }
+
+    fun deleteUserById(id: String): Flow<Resource<com.humotron.app.domain.modal.response.CommonResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val emptyBody = okhttp3.RequestBody.create(null, "")
+            val response = responseHandler.handleResponse(api.deleteUserById(id, emptyBody), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
     fun updateUserById(userId: String, data: HashMap<String, Any>): Flow<Resource<com.humotron.app.domain.modal.response.CommonResponse>> = flow {
         emit(Resource.loading())
         try {

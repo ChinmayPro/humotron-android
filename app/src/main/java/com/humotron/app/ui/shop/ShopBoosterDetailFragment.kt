@@ -4,9 +4,11 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.android.billingclient.api.ProductDetails
@@ -63,6 +65,14 @@ class ShopBoosterDetailFragment : BaseFragment(R.layout.fragment_shop_booster_de
                 v.paddingRight,
                 systemBars.bottom
             )
+            insets
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.clFooter) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                bottomMargin = systemBars.bottom
+            }
             insets
         }
 

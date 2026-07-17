@@ -77,10 +77,25 @@
                 android:clipToPadding="false"
                 android:nestedScrollingEnabled="false"
                 android:paddingHorizontal="20dp"
-                android:paddingBottom="40dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@id/rvFilters"
                 tools:listitem="@layout/item_optimize_recommendation" />
+
+            <!-- Recommendations Footer Disclaimer -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvFooterDisclaimer"
+                style="@style/Text.12x.Manrope.Regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="24dp"
+                android:gravity="center"
+                android:text="Tap a recommendation to see why · tap again for the full product page."
+                android:textColor="#6F7E7D"
+                android:textSize="11sp"
+                app:layout_constraintTop_toBottomOf="@id/rvOptimize"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

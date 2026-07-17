@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Top Bar -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clTopBar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:paddingHorizontal="16dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:padding="8dp"
+            android:src="@drawable/ic_back_arrow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/tvHeaderTitle"
+            style="@style/Text.16x.Manrope.Bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Buy on Humotron"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnBack"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Checkout Screen Container (visible initially) -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsvCheckout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/clTopBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            android:paddingBottom="24dp">
+
+            <!-- Humotron Direct Eyebrow Badge -->
+            <TextView
+                android:id="@+id/tvDirectBadge"
+                style="@style/Text.10x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:background="@drawable/bg_badge_high"
+                android:fontFamily="monospace"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:text="◆ Humotron Direct"
+                android:textColor="#C4F23E"
+                android:letterSpacing="0.04" />
+
+            <!-- Order Summary Title -->
+            <TextView
+                style="@style/Text.22x.Manrope.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Order summary"
+                android:textColor="@color/white" />
+
+            <!-- Order Summary Card -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/bg_card_semi_transparent"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Product Name Line -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/tvProductName"
+                        style="@style/Text.12x.Manrope.Medium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="#859390"
+                        tools:text="Magnesium Glycinate 400mg" />
+
+                    <TextView
+                        android:id="@+id/tvProductPrice"
+                        style="@style/Text.12x.Manrope.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        tools:text="£24" />
+
+                </LinearLayout>
+
+                <!-- Divider 1 -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="8dp"
+                    android:background="#12FFFFFF" />
+
+                <!-- Delivery Line -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        style="@style/Text.12x.Manrope.Medium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Delivery · 2 days"
+                        android:textColor="#859390" />
+
+                    <TextView
+                        style="@style/Text.12x.Manrope.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Free"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
+
+                <!-- Divider 2 -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="8dp"
+                    android:background="#12FFFFFF" />
+
+                <!-- Total Line -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        style="@style/Text.12x.Manrope.Medium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Total"
+                        android:textColor="#859390" />
+
+                    <TextView
+                        android:id="@+id/tvProductTotal"
+                        style="@style/Text.12x.Manrope.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        tools:text="£24" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Fulfilled by Humotron Note -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_privacy_card"
+                android:orientation="horizontal"
+                android:padding="14dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="◇"
+                    android:textColor="#C4F23E"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginEnd="10dp" />
+
+                <TextView
+                    android:id="@+id/tvFulfilledNote"
+                    style="@style/Text.12x.Manrope.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:lineSpacingMultiplier="1.5"
+                    android:textColor="#bcd98a"
+                    android:text="Fulfilled by Humotron. Bought and delivered in-app — your health signals never leave to a third party." />
+
+            </LinearLayout>
+
+            <!-- Place Order Button -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnPlaceOrder"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_btn_lime_pill"
+                android:text="Place order →"
+                android:textColor="#050808"
+                android:fontFamily="sans-serif-black"
+                android:textSize="14sp"
+                android:textAllCaps="false" />
+
+            <!-- Disclaimer Text -->
+            <TextView
+                style="@style/Text.12x.Manrope.Regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center_horizontal"
+                android:text="One-tap reorder and auto-replenish available after checkout."
+                android:textColor="#6F7E7D"
+                android:textSize="11sp" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Success Screen Container (hidden initially) -->
+    <LinearLayout
+        android:id="@+id/llSuccess"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingHorizontal="32dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/clTopBar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:visibility="visible">
+
+        <!-- Checkmark Circle -->
+        <FrameLayout
+            android:layout_width="74dp"
+            android:layout_height="74dp"
+            android:background="@drawable/bg_checkmark_circle">
+
+            <ImageView
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_check_thin"
+                app:tint="#C4F23E" />
+
+        </FrameLayout>
+
+        <!-- Ordered Title -->
+        <TextView
+            android:id="@+id/tvSuccessTitle"
+            style="@style/Text.22x.Manrope.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="Ordered on Humotron"
+            android:textColor="@color/white" />
+
+        <!-- Success Message -->
+        <TextView
+            android:id="@+id/tvSuccessMessage"
+            style="@style/Text.14x.Manrope.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:lineSpacingMultiplier="1.5"
+            android:textColor="#9DACA9"
+            tools:text="Your magnesium is on the way — 2-day delivery. We'll start watching your overnight HR and HRV from tonight." />
+
+        <!-- Back to Optimize Button -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnBackToOptimize"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginTop="26dp"
+            android:paddingHorizontal="24dp"
+            android:background="@drawable/bg_btn_lime_pill"
+            android:text="Back to Optimize"
+            android:textColor="#050808"
+            android:fontFamily="sans-serif-black"
+            android:textSize="14sp"
+            android:textAllCaps="false" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

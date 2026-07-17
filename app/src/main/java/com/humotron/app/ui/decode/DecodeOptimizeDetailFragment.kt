@@ -756,10 +756,13 @@ class DecodeOptimizeDetailFragment : BaseFragment(R.layout.fragment_decode_optim
         val primaryText = data.ctaPrimary ?: "Buy on Humotron"
         binding.btnBuyOnHumotron.text = if (primaryText.endsWith("→")) primaryText else "$primaryText →"
         binding.btnBuyOnHumotron.setOnClickListener {
-            data.url?.let { url ->
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                startActivity(intent)
+            val bundle = Bundle().apply {
+                putString("productId", data.id ?: "")
+                putString("productTitle", titleText)
+                putFloat("productPrice", (data.price ?: 0.0).toFloat())
+                putString("productType", data.type ?: "")
             }
+            findNavController().navigate(R.id.fragmentBuyOnHumotron, bundle)
         }
 
         binding.btnSeeRetailers.setOnClickListener {

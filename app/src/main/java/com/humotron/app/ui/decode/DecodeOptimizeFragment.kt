@@ -123,7 +123,7 @@ class DecodeOptimizeFragment : BaseFragment(R.layout.fragment_decode_optimize) {
     private fun updateFilterUI() {
         val filterList = categories.map { categoryName ->
             CategoryFilter(categoryName, countForCategory(categoryName, rawRecommendations))
-        }
+        }.filter { it.count > 0 || it.name == "All" }
         filterAdapter.updateFilters(filterList, selectedCategory)
     }
 

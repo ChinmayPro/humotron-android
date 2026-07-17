@@ -28,6 +28,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
+import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.humotron.app.R
 import com.humotron.app.bt.band.BandBleManager
@@ -95,7 +96,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             // Correctly handle bottom insets for the navigation bar
             binding.rlBtnNavigation.setPadding(
                 0,
-                (6 * resources.displayMetrics.density).toInt(), // Original paddingTop
+                (12 * resources.displayMetrics.density).toInt(), // Original paddingTop
                 0,
                 systemBars.bottom + (10 * resources.displayMetrics.density).toInt() // System bottom + original paddingBottom
             )
@@ -113,6 +114,34 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding.llBioHack.setOnClickListener(this)
         binding.llProfile.setOnClickListener(this)
         binding.llDecode.setOnClickListener(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initNavAvatar()
+    }
+
+    private fun initNavAvatar() {
+        if (!prefUtils.isLogin()) return
+        val user = prefUtils.getLoginResponse()
+        val fullName = if (!user.name.isNullOrBlank() && user.name != "null") {
+            user.name.trim()
+        } else {
+            val f = user.firstName ?: ""
+            val l = user.lastName ?: ""
+            "$f $l".trim()
+        }
+
+        val displayName = if (fullName.isEmpty()) "User" else fullName
+        val initial = if (displayName.isNotEmpty()) {
+            displayName.split(" ").firstOrNull()?.firstOrNull()?.toString()?.uppercase() ?: "U"
+        } else {
+            "U"
+        }
+        binding.tvNavAvatarInitial.text = initial
+
+        binding.ivProfile.visibility = View.GONE
+        binding.tvNavAvatarInitial.visibility = View.VISIBLE
     }
 
     private fun initViews() {
@@ -237,7 +266,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
       }*/
 
     private fun highlightView(count: Int) {
-        val textList = listOf(binding.tvTrack, binding.tvDecode, binding.tvBioHack)
+        val textList = listOf(binding.tvTrack, binding.tvDecode, binding.tvBioHack, binding.tvProfile)
         for (i in 0 until textList.size) {
             if (i == count) {
                 textList[i].setTextColor(ContextCompat.getColor(this, R.color.colorBgBtn))
@@ -246,33 +275,33 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
 
+        binding.viewNavAvatarMonogram.setBackgroundResource(
+            if (count == 3) R.drawable.bg_nav_avatar_active else R.drawable.bg_nav_avatar_inactive
+        )
+
         when (count) {
             0 -> {
                 binding.ivTrack.setImageResource(R.drawable.ic_trends_selected)
                 binding.ivDecode.setImageResource(R.drawable.ic_decode)
                 binding.ivBioHack.setImageResource(R.drawable.ic_bio_hack)
-                binding.ivProfile.setImageResource(R.drawable.ic_profile)
             }
 
             1 -> {
                 binding.ivTrack.setImageResource(R.drawable.ic_trends)
                 binding.ivDecode.setImageResource(R.drawable.ic_decode_selected)
                 binding.ivBioHack.setImageResource(R.drawable.ic_bio_hack)
-                binding.ivProfile.setImageResource(R.drawable.ic_profile)
             }
 
             2 -> {
                 binding.ivTrack.setImageResource(R.drawable.ic_trends)
                 binding.ivDecode.setImageResource(R.drawable.ic_decode)
                 binding.ivBioHack.setImageResource(R.drawable.ic_bio_hack_selected)
-                binding.ivProfile.setImageResource(R.drawable.ic_profile)
             }
 
             3 -> {
                 binding.ivTrack.setImageResource(R.drawable.ic_trends)
                 binding.ivDecode.setImageResource(R.drawable.ic_decode)
                 binding.ivBioHack.setImageResource(R.drawable.ic_bio_hack)
-                binding.ivProfile.setImageResource(R.drawable.ic_profile)
             }
         }
     }
