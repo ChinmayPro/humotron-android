@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:background="@drawable/ic_bg_main_2"
-    tools:context=".ui.device.ReadingInstructionsRingBandFragment">
+    tools:context=".ui.device.ringband.RingBandReadingInstructionsFragment">
 
     <include
         android:id="@+id/header"
@@ -394,14 +394,14 @@
         android:layout_marginHorizontal="@dimen/_20dp"
         android:layout_marginBottom="10dp"
         android:fontFamily="@font/manrope_bold"
-        android:text="Start stress scan"
         android:textAllCaps="false"
         android:textColor="#000000"
         android:textSize="15sp"
         android:textStyle="bold"
         app:backgroundTint="#CFF551"
         app:cornerRadius="32dp"
-        app:layout_constraintBottom_toTopOf="@+id/footerDisclaimerTextView" />
+        app:layout_constraintBottom_toTopOf="@+id/footerDisclaimerTextView"
+        tools:text="Start stress scan" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/footerDisclaimerTextView"

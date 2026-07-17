@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:background="#8B000000"
-    tools:context=".ui.device.BPMachineReadingFragment">
+    tools:context=".ui.device.cuff.BPMachineReadingFragment">
 
     <include
         android:id="@+id/header"

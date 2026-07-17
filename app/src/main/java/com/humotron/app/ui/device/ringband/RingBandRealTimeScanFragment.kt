@@ -1,38 +1,34 @@
-package com.humotron.app.ui.device
+package com.humotron.app.ui.device.ringband
 
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.humotron.app.R
 import com.humotron.app.core.base.BaseFragment
-import com.humotron.app.databinding.FragmentRealTimeScanRingBandBinding
+import com.humotron.app.databinding.FragmentRingBandRealTimeScanBinding
 import com.humotron.app.domain.modal.DeviceType
-import com.humotron.app.domain.modal.response.GetAllDeviceResponse.Data.UserDevice
+import com.humotron.app.domain.modal.response.GetAllDeviceResponse
 import com.humotron.app.ui.device.adapter.HealthScanItem
 import com.humotron.app.ui.device.adapter.HealthScanType
 import com.humotron.app.ui.navigation.NavKeys
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class RealTimeScanRingBandFragment :
-    BaseFragment(R.layout.fragment_real_time_scan_ring_band),
+class RingBandRealTimeScanFragment :
+    BaseFragment(R.layout.fragment_ring_band_real_time_scan),
     View.OnClickListener {
 
-    private lateinit var binding: FragmentRealTimeScanRingBandBinding
-    private var userDevice: UserDevice? = null
+    private lateinit var binding: FragmentRingBandRealTimeScanBinding
+    private var userDevice: GetAllDeviceResponse.Data.UserDevice? = null
     private var healthScanItem: HealthScanItem? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentRealTimeScanRingBandBinding.bind(view)
+        binding = FragmentRingBandRealTimeScanBinding.bind(view)
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
@@ -44,14 +40,14 @@ class RealTimeScanRingBandFragment :
     }
 
     private fun initClicks() {
-        binding.btnStopScan.setOnClickListener(this@RealTimeScanRingBandFragment)
+        binding.btnStopScan.setOnClickListener(this@RingBandRealTimeScanFragment)
 
 
     }
 
     private fun initViews() = with(binding) {
         userDevice = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            arguments?.getParcelable(NavKeys.WEARABLE, UserDevice::class.java)
+            arguments?.getParcelable(NavKeys.WEARABLE, GetAllDeviceResponse.Data.UserDevice::class.java)
         } else {
             @Suppress("DEPRECATION")
             arguments?.getParcelable(NavKeys.WEARABLE)

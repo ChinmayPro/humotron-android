@@ -1,4 +1,4 @@
-package com.humotron.app.ui.device
+package com.humotron.app.ui.device.ringband
 
 import android.os.Build
 import android.os.Bundle
@@ -9,9 +9,9 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.fragment.findNavController
 import com.humotron.app.R
 import com.humotron.app.core.base.BaseFragment
-import com.humotron.app.databinding.FragmentReadingTypesRingBandBinding
+import com.humotron.app.databinding.FragmentRingBandReadingTypesBinding
 import com.humotron.app.domain.modal.DeviceType
-import com.humotron.app.domain.modal.response.GetAllDeviceResponse.Data.UserDevice
+import com.humotron.app.domain.modal.response.GetAllDeviceResponse
 import com.humotron.app.ui.device.adapter.HealthScanAdapter
 import com.humotron.app.ui.device.adapter.HealthScanItem
 import com.humotron.app.ui.device.adapter.HealthScanType
@@ -19,17 +19,17 @@ import com.humotron.app.ui.navigation.NavKeys
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ReadingTypesRingBandFragment :
-    BaseFragment(R.layout.fragment_reading_types_ring_band),
+class RingBandReadingTypesFragment :
+    BaseFragment(R.layout.fragment_ring_band_reading_types),
     View.OnClickListener {
 
-    private lateinit var binding: FragmentReadingTypesRingBandBinding
-    private var userDevice: UserDevice? = null
+    private lateinit var binding: FragmentRingBandReadingTypesBinding
+    private var userDevice: GetAllDeviceResponse.Data.UserDevice? = null
     private lateinit var healthScanAdapter: HealthScanAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentReadingTypesRingBandBinding.bind(view)
+        binding = FragmentRingBandReadingTypesBinding.bind(view)
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
@@ -41,12 +41,12 @@ class ReadingTypesRingBandFragment :
     }
 
     private fun initClicks() {
-        binding.header.btnBack.setOnClickListener(this@ReadingTypesRingBandFragment)
+        binding.header.btnBack.setOnClickListener(this@RingBandReadingTypesFragment)
     }
 
     private fun initViews() = with(binding) {
         userDevice = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            arguments?.getParcelable(NavKeys.WEARABLE, UserDevice::class.java)
+            arguments?.getParcelable(NavKeys.WEARABLE, GetAllDeviceResponse.Data.UserDevice::class.java)
         } else {
             @Suppress("DEPRECATION")
             arguments?.getParcelable(NavKeys.WEARABLE)
@@ -54,7 +54,7 @@ class ReadingTypesRingBandFragment :
 
         header.tvTitle.text = getString(R.string.take_a_reading)
 
-        val resolvedType = DeviceType.from( userDevice?.deviceName)
+        val resolvedType = DeviceType.from(userDevice?.deviceName)
         val deviceLabel = if (resolvedType == DeviceType.RING) {
             getString(R.string.take_reading_device_ring)
         } else {

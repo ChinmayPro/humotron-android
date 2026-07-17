@@ -124,7 +124,7 @@ class RingDeviceManager(val app: App) : OnBleConnectionListener {
                 }
 
                 override fun onHistoricalData(index: Int, historicalData: HistoricalData) {
-                    //Log.e(TAG_RING_DEBUG, "onHistoricalData: $index")
+                    Log.e(TAG_RING_DEBUG, "onHistoricalData: $index")
                     if (historicalData.batteryChargingStatus != BATTERY_STATE_CHARGING
                         && historicalData.worn == 1
                         && historicalData.workout != 1
