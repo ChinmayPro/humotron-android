@@ -1,187 +1,293 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://tools.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <!-- Scrollable Content -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsvContent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/layoutFooter">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="24dp">
+
+            <!-- Hero Card -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="22dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_scan_hero"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingHorizontal="22dp"
+                android:paddingVertical="26dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layoutBodyScan"
+                    android:layout_width="150dp"
+                    android:layout_height="200dp"
+                    android:layout_marginBottom="6dp">
+
+                    <!-- The body outline SVG image -->
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivBodyOutline"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_body_scan_outline" />
+
+                    <!-- The scanning line -->
+                    <View
+                        android:id="@+id/vScanLine"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginHorizontal="12dp"
+                        android:background="@drawable/bg_scan_line_gradient"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <!-- Pulsing ring 1 -->
+                    <View
+                        android:id="@+id/vScanPulse1"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/bg_scan_pulse_ring"
+                        app:layout_constraintTop_toTopOf="@id/vScanDot1"
+                        app:layout_constraintBottom_toBottomOf="@id/vScanDot1"
+                        app:layout_constraintStart_toStartOf="@id/vScanDot1"
+                        app:layout_constraintEnd_toEndOf="@id/vScanDot1" />
+
+                    <!-- Dot 1 -->
+                    <View
+                        android:id="@+id/vScanDot1"
+                        android:layout_width="7dp"
+                        android:layout_height="7dp"
+                        android:background="@drawable/bg_scan_dot"
+                        app:layout_constraintHorizontal_bias="0.48"
+                        app:layout_constraintVertical_bias="0.38"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                    <!-- Pulsing ring 2 -->
+                    <View
+                        android:id="@+id/vScanPulse2"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/bg_scan_pulse_ring"
+                        app:layout_constraintTop_toTopOf="@id/vScanDot2"
+                        app:layout_constraintBottom_toBottomOf="@id/vScanDot2"
+                        app:layout_constraintStart_toStartOf="@id/vScanDot2"
+                        app:layout_constraintEnd_toEndOf="@id/vScanDot2" />
+
+                    <!-- Dot 2 -->
+                    <View
+                        android:id="@+id/vScanDot2"
+                        android:layout_width="7dp"
+                        android:layout_height="7dp"
+                        android:background="@drawable/bg_scan_dot"
+                        app:layout_constraintHorizontal_bias="0.30"
+                        app:layout_constraintVertical_bias="0.55"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                    <!-- Pulsing ring 3 -->
+                    <View
+                        android:id="@+id/vScanPulse3"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/bg_scan_pulse_ring"
+                        app:layout_constraintTop_toTopOf="@id/vScanDot3"
+                        app:layout_constraintBottom_toBottomOf="@id/vScanDot3"
+                        app:layout_constraintStart_toStartOf="@id/vScanDot3"
+                        app:layout_constraintEnd_toEndOf="@id/vScanDot3" />
+
+                    <!-- Dot 3 -->
+                    <View
+                        android:id="@+id/vScanDot3"
+                        android:layout_width="7dp"
+                        android:layout_height="7dp"
+                        android:background="@drawable/bg_scan_dot"
+                        app:layout_constraintHorizontal_bias="0.66"
+                        app:layout_constraintVertical_bias="0.62"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    style="@style/Text.20x.Manrope.Bold"
+                    android:letterSpacing="-0.02"
+                    android:text="Humotron Deep Scan"
+                    android:textColor="@color/white" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_scan_pill"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="5dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="13dp"
+                        android:layout_height="13dp"
+                        android:src="@drawable/ic_scan_node" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        style="@style/Text.12x.Manrope.Bold"
+                        android:text="60+ biomarkers"
+                        android:textColor="#5FB7C4" />
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    style="@style/Text.12x.Manrope.SemiBold"
+                    android:gravity="center"
+                    android:lineSpacingExtra="4dp"
+                    android:text="Two simple, non-invasive tests — blood and saliva. We read them against your environment and activity, then map clear steps for better sleep, sharper focus and a healthier life."
+                    android:textColor="@color/white70" />
+            </LinearLayout>
+
+            <!-- Explainer Box -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="22dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_scan_explainer"
+                android:orientation="vertical">
+
+                <!-- Row 1 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:src="@drawable/ic_scan_droplet" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="9dp"
+                            style="@style/Text.14x.Manrope.Bold"
+                            android:text="What we measure"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="25dp"
+                        android:layout_marginTop="8dp"
+                        style="@style/Text.12x.Manrope.SemiBold"
+                        android:lineSpacingExtra="4dp"
+                        android:text="Metabolic, hormonal, inflammatory and nutrient markers — the signals a wearable can't reach."
+                        android:textColor="@color/white50" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#12FFFFFF" />
+
+                <!-- Row 2 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:src="@drawable/ic_scan_shield" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="9dp"
+                            style="@style/Text.14x.Manrope.Bold"
+                            android:text="How your sample is handled"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="25dp"
+                        android:layout_marginTop="8dp"
+                        style="@style/Text.12x.Manrope.SemiBold"
+                        android:lineSpacingExtra="4dp"
+                        android:text="Processed in an accredited lab. Results flow back as biomarkers; your identity and your health data are kept apart."
+                        android:textColor="@color/white50" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Sticky Footer Container with linear gradient background -->
+    <FrameLayout
+        android:id="@+id/layoutFooter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="40dp">
+        android:background="@drawable/bg_scan_footer_gradient"
+        android:paddingTop="16dp"
+        android:paddingBottom="20dp"
+        android:paddingHorizontal="22dp"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-        <!-- Hero Card -->
-        <LinearLayout
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnBookNow"
+            style="@style/Text.16x.Manrope.Bold"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="22dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/bg_scan_hero"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:paddingHorizontal="22dp"
-            android:paddingVertical="26dp">
+            android:layout_height="52dp"
+            android:background="@drawable/bg_btn_round_corner"
+            android:backgroundTint="@color/green_1"
+            android:text="Book a scan · £149"
+            android:textAllCaps="false"
+            android:textColor="#0d1618" />
+    </FrameLayout>
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="150dp"
-                android:layout_height="200dp"
-                android:layout_marginBottom="6dp"
-                android:src="@drawable/ic_body_scan_outline" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                style="@style/Text.20x.Manrope.Bold"
-                android:letterSpacing="-0.02"
-                android:text="Humotron Deep Scan"
-                android:textColor="@color/white" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/bg_scan_pill"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="5dp">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="13dp"
-                    android:layout_height="13dp"
-                    android:src="@drawable/ic_scan_node" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    style="@style/Text.12x.Manrope.Bold"
-                    android:text="60+ biomarkers"
-                    android:textColor="#5FB7C4" />
-            </LinearLayout>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                style="@style/Text.12x.Manrope.SemiBold"
-                android:gravity="center"
-                android:lineSpacingExtra="4dp"
-                android:text="Two simple, non-invasive tests — blood and saliva. We read them against your environment and activity, then map clear steps for better sleep, sharper focus and a healthier life."
-                android:textColor="@color/white70" />
-        </LinearLayout>
-
-        <!-- Explainer Box -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="22dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/bg_scan_explainer"
-            android:orientation="vertical">
-
-            <!-- Row 1 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:src="@drawable/ic_scan_droplet" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="9dp"
-                        style="@style/Text.14x.Manrope.Bold"
-                        android:text="What we measure"
-                        android:textColor="@color/white" />
-                </LinearLayout>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginTop="8dp"
-                    style="@style/Text.12x.Manrope.SemiBold"
-                    android:lineSpacingExtra="4dp"
-                    android:text="Metabolic, hormonal, inflammatory and nutrient markers — the signals a wearable can't reach."
-                    android:textColor="@color/white50" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#12FFFFFF" />
-
-            <!-- Row 2 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:src="@drawable/ic_scan_shield" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="9dp"
-                        style="@style/Text.14x.Manrope.Bold"
-                        android:text="How your sample is handled"
-                        android:textColor="@color/white" />
-                </LinearLayout>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginTop="8dp"
-                    style="@style/Text.12x.Manrope.SemiBold"
-                    android:lineSpacingExtra="4dp"
-                    android:text="Processed in an accredited lab. Results flow back as biomarkers; your identity and your health data are kept apart."
-                    android:textColor="@color/white50" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <!-- Button -->
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="22dp"
-            android:layout_marginTop="24dp">
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnBookNow"
-                style="@style/Text.16x.Manrope.Bold"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:background="@drawable/bg_btn_round_corner"
-                android:backgroundTint="@color/green_1"
-                android:text="Book a scan · £149"
-                android:textAllCaps="false"
-                android:textColor="#0d1618" />
-        </FrameLayout>
-    </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

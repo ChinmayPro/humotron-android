@@ -262,7 +262,7 @@ To get started:\n
     <string name="select_options">Select options</string>
     <string name="you_can_select_multiple_options">You can select multiple options.</string>
     <string name="deep_dives">Deep Dives</string>
-    <string name="optimize">Optimize</string>
+    <string name="optimize">Optimise</string>
     <string name="chat">Chat</string>
     <string name="tron_chat_title">Tron beta</string>
     <string name="tron_chat_name">Tron</string>
@@ -277,7 +277,7 @@ To get started:\n
     <string name="chat_option_metrics">Metrics you are tracking</string>
     <string name="chat_option_felt_off">Something that\'s felt off lately</string>
     <string name="chat_option_nutrition">A nutrition idea you\'re curious about</string>
-    <string name="chat_option_optimize">Something you want to optimize</string>
+    <string name="chat_option_optimize">Something you want to optimise</string>
     <string name="chat_hint">Ask More</string>
     <string name="chat_disclaimer">Insights are AI-generated &amp; not medical advice.</string>
     <string name="chat_conversations_title">Conversations</string>
@@ -479,7 +479,7 @@ To get started:\n
     <string name="view_detailed_bill">View Detailed Bill</string>
     <string name="cart_trust_info">Incl. VAT &amp; shipping fees</string>
     <string name="cart_policy_info">100% secure payments • 7-day easy return</string>
-    <string name="optimize_title">Suggestions to Optimize\nYour Metrics</string>
+    <string name="optimize_title">Suggestions to Optimise\nYour Metrics</string>
     <string name="optimize_subtitle">Backed by data, powered by AI — these suggestions are not medical advice, but a guide to help you take action.</string>
     <string name="category_supplements">Supplements</string>
     <string name="category_recipes">Recipes</string>
@@ -620,7 +620,7 @@ To get started:\n
     <string name="selected_lab">Selected Lab</string>
     <string name="please_select_details">Please select all details</string>
     <string name="configurations_order_preferences">Configurations › Order Preferences</string>
-    <string name="optimize_checkout_desc">Optimize your checkout flow. Store your essentials here once and breeze through orders.</string>
+    <string name="optimize_checkout_desc">Optimise your checkout flow. Store your essentials here once and breeze through orders.</string>
     <string name="expected_delivery_colon">Expected Delivery:</string>
     <string name="vat_number">VAT Number</string>
     <string name="coupon_code">Coupon Code</string>

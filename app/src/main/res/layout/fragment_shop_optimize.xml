@@ -52,18 +52,118 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
     
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvNoData"
-        style="@style/Text.16x.Manrope.SemiBold"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutScaffold"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/no_data_found"
-        android:textColor="@color/white50"
+        android:layout_marginHorizontal="22dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/bg_scaffold_dashed_rect"
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="30dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Top Badge -->
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/badgeScaffold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_scaffold_badge"
+            android:orientation="horizontal"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="6dp"
+            android:gravity="center_vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@drawable/ic_scaffold_node"
+                app:tint="@color/lime" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Text.10x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:text="Scaffold"
+                android:textSize="9.5sp"
+                android:fontFamily="@font/manrope_extra_bold"
+                app:fontFamily="@font/manrope_extra_bold"
+                android:textColor="@color/lime"
+                android:letterSpacing="0.1" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <!-- Center Icon -->
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivScaffoldIcon"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/bg_scaffold_icon"
+            android:padding="14dp"
+            android:src="@drawable/ic_shop_optimize"
+            app:tint="@color/lime"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/badgeScaffold" />
+
+        <!-- Title -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvScaffoldTitle"
+            style="@style/Text.18x.Manrope.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="Optimise"
+            android:textColor="@color/white"
+            android:fontFamily="@font/manrope_extra_bold"
+            app:fontFamily="@font/manrope_extra_bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivScaffoldIcon" />
+
+        <!-- Description -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvScaffoldDesc"
+            style="@style/Text.13x.Manrope.Regular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:gravity="center"
+            android:lineSpacingExtra="4dp"
+            android:text="Supplement and lifestyle suggestions tuned to the metrics that are drifting — each with a &quot;How does this help?&quot; explainer."
+            android:textColor="@color/white50"
+            app:layout_constraintTop_toBottomOf="@id/tvScaffoldTitle" />
+
+        <!-- Divider -->
+        <View
+            android:id="@+id/dividerScaffold"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/white05"
+            app:layout_constraintTop_toBottomOf="@id/tvScaffoldDesc" />
+
+        <!-- Footer -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvScaffoldFooter"
+            style="@style/Text.12x.Manrope.Regular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="Awaiting brief · Optimise screen · supplements list + metric-linked rationale"
+            android:textColor="@color/white30"
+            android:textSize="11sp"
+            app:layout_constraintTop_toBottomOf="@id/dividerScaffold" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <include
         android:id="@+id/layoutLoader"
