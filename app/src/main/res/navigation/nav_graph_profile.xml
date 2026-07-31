@@ -498,7 +498,21 @@
         android:id="@+id/fragmentManageAccount"
         android:name="com.humotron.app.ui.profile.ManageAccountFragment"
         android:label="Manage Account"
-        tools:layout="@layout/fragment_manage_account" />
+        tools:layout="@layout/fragment_manage_account">
+        <action
+            android:id="@+id/action_fragmentManageAccount_to_fragmentUpdateProfile"
+            app:destination="@id/fragmentUpdateProfile"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentUpdateProfile"
+        android:name="com.humotron.app.ui.profile.UpdateProfileFragment"
+        android:label="Update Profile"
+        tools:layout="@layout/fragment_update_profile" />
 
     <fragment
         android:id="@+id/fragmentDataSourceDetail"

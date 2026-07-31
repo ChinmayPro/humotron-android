@@ -21,7 +21,7 @@ import java.util.Locale
 class PersonalInfoFragment : BaseFragment(R.layout.fragment_personal_info) {
 
     private lateinit var binding: FragmentPersonalInfoBinding
-    private var selectedDate: Calendar = Calendar.getInstance()
+    private var selectedDate: Calendar = Calendar.getInstance().apply { add(Calendar.YEAR, -18) }
     private val viewModel: OnboardingViewModel by viewModels()
     private val pagerViewModel: PagerViewModel by activityViewModels()
     private var apiBirthDate: String = ""
@@ -189,6 +189,8 @@ class PersonalInfoFragment : BaseFragment(R.layout.fragment_personal_info) {
 
             }, year, month, day)
 
+        val maxCalendar = Calendar.getInstance().apply { add(Calendar.YEAR, -18) }
+        datePickerDialog.datePicker.maxDate = maxCalendar.timeInMillis
         datePickerDialog.show()
     }
 
