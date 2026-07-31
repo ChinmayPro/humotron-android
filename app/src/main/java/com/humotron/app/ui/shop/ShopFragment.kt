@@ -14,6 +14,8 @@ import com.humotron.app.core.base.BaseFragment
 import com.humotron.app.databinding.FragmentShopBinding
 import dagger.hilt.android.AndroidEntryPoint
 
+import androidx.core.view.updatePadding
+
 @AndroidEntryPoint
 class ShopFragment : BaseFragment(R.layout.fragment_shop) {
 

@@ -540,6 +540,11 @@ interface AppApi {
         @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0))
     ): Response<com.humotron.app.domain.modal.response.BoosterResponse>
 
+    @POST("plan/getAllPlan")
+    suspend fun getAllPlan(
+        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0))
+    ): Response<com.humotron.app.domain.modal.response.PlanResponse>
+
     @GET("booster/getBoosterById/{boosterId}")
     suspend fun getBoosterById(
         @Path("boosterId") boosterId: String

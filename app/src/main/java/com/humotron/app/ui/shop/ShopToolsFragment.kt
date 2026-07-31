@@ -25,7 +25,38 @@ class ShopToolsFragment : BaseFragment(R.layout.fragment_shop_tools) {
         binding = FragmentShopToolsBinding.bind(view)
 
         setupRecyclerView()
+        setupPlanCardClicks()
         setupObservers()
+    }
+
+    private var isProSubscribedFromApi: Boolean = false
+    private var activePurchases: List<com.android.billingclient.api.Purchase> = emptyList()
+
+    private fun updateProPlanUI() {
+        val isProActive = isProSubscribedFromApi || activePurchases.any { purchase ->
+            purchase.products.contains(ShopToolsViewModel.PRO_PLAN_PRODUCT_ID)
+        }
+
+        if (isProActive) {
+            binding.btnBasicPlan.text = "Included"
+            binding.btnViewProPlan.text = getString(R.string.active)
+            binding.btnViewProPlan.backgroundTintList = android.content.res.ColorStateList.valueOf(requireContext().getColor(R.color.unlocked_btn_bg))
+            binding.btnViewProPlan.setTextColor(requireContext().getColor(R.color.white50))
+        } else {
+            binding.btnBasicPlan.text = getString(R.string.active)
+            binding.btnViewProPlan.text = "View plan >"
+            binding.btnViewProPlan.backgroundTintList = requireContext().getColorStateList(R.color.lime_green)
+            binding.btnViewProPlan.setTextColor(android.graphics.Color.BLACK)
+        }
+    }
+
+    private fun setupPlanCardClicks() {
+        val navigateToPlanDetail = {
+            (parentFragment?.parentFragment as? ShopFragment)?.findNavController()
+                ?.navigate(R.id.fragmentShopPlanDetail)
+        }
+        binding.cardProPlan.setOnClickListener { navigateToPlanDetail() }
+        binding.btnViewProPlan.setOnClickListener { navigateToPlanDetail() }
     }
 
     override fun onResume() {
@@ -35,6 +66,7 @@ class ShopToolsFragment : BaseFragment(R.layout.fragment_shop_tools) {
         } else {
             viewModel.refreshPurchases()
             viewModel.fetchBoosters()
+            viewModel.fetchPlans()
         }
     }
 
@@ -102,12 +134,46 @@ class ShopToolsFragment : BaseFragment(R.layout.fragment_shop_tools) {
             }
         }
 
+        viewModel.plansLiveData.observe(viewLifecycleOwner) { resource ->
+            if (resource.status == Status.SUCCESS) {
+                val plans = resource.data ?: emptyList()
+                val basicPlan = plans.find { it.planId == "Free_Plan" || it.displayName.equals("Basic", ignoreCase = true) }
+                val proPlan = plans.find { it.planId == "Pro_Plan" || it.displayName.equals("Pro", ignoreCase = true) }
+
+                basicPlan?.let { plan ->
+                    binding.tvBasicTitle.text = plan.displayName
+                    binding.tvBasicDesc.text = plan.displayDescription
+                    binding.tvBasicPrice.text = plan.displayPriceFallback
+                }
+
+                proPlan?.let { plan ->
+                    isProSubscribedFromApi = plan.isActive == true
+                    binding.tvProTitle.text = plan.displayName
+                    binding.tvProDesc.text = plan.displayDescription
+                    // Set fallback price from API if Play Store price isn't loaded yet
+                    if (binding.tvProPrice.text == "£19.90") {
+                        binding.tvProPrice.text = plan.displayPriceFallback
+                    }
+                    updateProPlanUI()
+                }
+            }
+        }
+
         viewModel.activePurchasesLiveData.observe(viewLifecycleOwner) { purchases ->
+            activePurchases = purchases
             toolsAdapter.setActivePurchases(purchases)
+            updateProPlanUI()
         }
 
         viewModel.playStoreProductsLiveData.observe(viewLifecycleOwner) { products ->
             toolsAdapter.setPlayStoreProducts(products)
+            val proDetails = products.find { it.productId == ShopToolsViewModel.PRO_PLAN_PRODUCT_ID }
+            val subscriptionOffer = proDetails?.subscriptionOfferDetails?.firstOrNull()
+            val subscriptionPrice = subscriptionOffer?.pricingPhases?.pricingPhaseList?.firstOrNull()?.formattedPrice
+            val priceText = subscriptionPrice ?: proDetails?.oneTimePurchaseOfferDetails?.formattedPrice
+            if (!priceText.isNullOrEmpty()) {
+                binding.tvProPrice.text = priceText
+            }
         }
 
         viewModel.orderResultLiveData.observe(viewLifecycleOwner) { resource ->

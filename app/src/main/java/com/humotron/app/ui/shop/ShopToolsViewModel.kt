@@ -31,6 +31,9 @@ class ShopToolsViewModel @Inject constructor(
     private val _boostersLiveData = MutableLiveData<Resource<List<BoosterResponse.Booster>>>()
     val boostersLiveData: LiveData<Resource<List<BoosterResponse.Booster>>> = _boostersLiveData
 
+    private val _plansLiveData = MutableLiveData<Resource<List<com.humotron.app.domain.modal.response.PlanResponse.Plan>>>()
+    val plansLiveData: LiveData<Resource<List<com.humotron.app.domain.modal.response.PlanResponse.Plan>>> = _plansLiveData
+
     private val _activePurchasesLiveData = MutableLiveData<List<Purchase>>()
     val activePurchasesLiveData: LiveData<List<Purchase>> = _activePurchasesLiveData
 
@@ -49,8 +52,13 @@ class ShopToolsViewModel @Inject constructor(
 
     private var playStoreProducts = listOf<ProductDetails>()
     private var pendingPurchaseBooster: BoosterResponse.Booster? = null
+    private var pendingPurchasePlan: com.humotron.app.domain.modal.response.PlanResponse.Plan? = null
 
-    private var cachedBoosterProductIds = listOf<String>()
+    private var cachedBoosterProductIds = listOf(PRO_PLAN_PRODUCT_ID)
+
+    companion object {
+        const val PRO_PLAN_PRODUCT_ID = "humotron_premium"
+    }
 
     init {
         observeBillingReady()
@@ -78,20 +86,29 @@ class ShopToolsViewModel @Inject constructor(
                 when (result) {
                     is BillingPurchaseResult.Success -> {
                         val booster = pendingPurchaseBooster
-                        if (booster != null && booster.id != null) {
-                            createDigitalProductOrder(booster.id)
+                        val plan = pendingPurchasePlan
+                        if (booster != null && !booster.id.isNullOrEmpty()) {
+                            createDigitalProductOrder(boosterId = booster.id, planId = "", productType = "booster")
+                        } else if (plan != null && !plan.id.isNullOrEmpty()) {
+                            createDigitalProductOrder(boosterId = "", planId = plan.id, productType = "plan")
                         } else {
-                            pendingPurchaseBooster = null
+                            val proPlan = plansLiveData.value?.data?.find { it.planId == "Pro_Plan" || it.displayName.equals("Pro", ignoreCase = true) }
+                            val planId = proPlan?.id ?: ""
+                            if (planId.isNotEmpty()) {
+                                createDigitalProductOrder(boosterId = "", planId = planId, productType = "plan")
+                            }
                         }
                         purchaseSuccessEvent.value = result.purchase
                     }
                     is BillingPurchaseResult.UserCanceled -> {
                         purchaseCancelEvent.value = Unit
                         pendingPurchaseBooster = null
+                        pendingPurchasePlan = null
                     }
                     is BillingPurchaseResult.Error -> {
                         purchaseErrorEvent.value = result.debugMessage
                         pendingPurchaseBooster = null
+                        pendingPurchasePlan = null
                     }
                 }
             }
@@ -134,8 +151,8 @@ class ShopToolsViewModel @Inject constructor(
                     val boosters = resource.data?.data?.booster ?: emptyList()
                     _boostersLiveData.value = Resource.success(boosters)
 
-                    // Extract product IDs dynamically from API and query Play Store
-                    val ids = boosters.mapNotNull { it.playStoreProductId.ifEmpty { null } }
+                    // Extract product IDs dynamically from API and query Play Store (including PRO_PLAN_PRODUCT_ID)
+                    val ids = (boosters.mapNotNull { it.playStoreProductId.ifEmpty { null } } + PRO_PLAN_PRODUCT_ID).distinct()
                     if (ids.isNotEmpty()) {
                         cachedBoosterProductIds = ids
                         if (billingManager.isReady.value) {
@@ -158,10 +175,42 @@ class ShopToolsViewModel @Inject constructor(
         }
     }
 
+    fun fetchPlans() {
+        viewModelScope.launch {
+            shopRepository.getAllPlan().collect { resource ->
+                if (resource.status == com.humotron.app.data.network.Status.SUCCESS) {
+                    val plans = resource.data?.data?.plan ?: emptyList()
+                    _plansLiveData.value = Resource.success(plans)
+
+                    // Extract plan product IDs and query Play Store
+                    val planProductIds = plans.mapNotNull { it.playStoreProductId.ifEmpty { null } }
+                    if (planProductIds.isNotEmpty()) {
+                        val combinedIds = (cachedBoosterProductIds + planProductIds).distinct()
+                        cachedBoosterProductIds = combinedIds
+                        if (billingManager.isReady.value) {
+                            fetchProductList()
+                        } else if (playStoreProducts.isNotEmpty()) {
+                            _playStoreProductsLiveData.value = playStoreProducts
+                        }
+                    }
+                } else if (resource.status == com.humotron.app.data.network.Status.ERROR || resource.status == com.humotron.app.data.network.Status.EXCEPTION) {
+                    val err = resource.error ?: com.humotron.app.data.network.error.Error(errorMessage = "Unknown error occurred")
+                    _plansLiveData.value = if (resource.status == com.humotron.app.data.network.Status.EXCEPTION) {
+                        Resource.exception(err)
+                    } else {
+                        Resource.error(err)
+                    }
+                } else {
+                    _plansLiveData.value = Resource.loading()
+                }
+            }
+        }
+    }
+
     fun queryProductsIfNeeded(productIds: List<String>) {
         val ids = productIds.filter { it.isNotEmpty() }
         if (ids.isEmpty()) return
-        val combinedIds = (cachedBoosterProductIds + ids).distinct()
+        val combinedIds = (cachedBoosterProductIds + ids + PRO_PLAN_PRODUCT_ID).distinct()
         cachedBoosterProductIds = combinedIds
         if (billingManager.isReady.value) {
             fetchProductList()
@@ -178,17 +227,18 @@ class ShopToolsViewModel @Inject constructor(
         }
     }
 
-    fun createDigitalProductOrder(boosterId: String) {
+    fun createDigitalProductOrder(boosterId: String = "", planId: String = "", productType: String = "booster") {
         viewModelScope.launch {
-            shopRepository.createDigitalProductOrder(boosterId).collect { resource ->
+            shopRepository.createDigitalProductOrder(boosterId, planId, productType).collect { resource ->
                 _orderResultLiveData.value = resource
                 // Handle states upon final confirmation from the backend API
-                if (resource.status == com.humotron.app.data.network.Status.SUCCESS) {
+                if (resource.status == com.humotron.app.data.network.Status.SUCCESS ||
+                    resource.status == com.humotron.app.data.network.Status.ERROR ||
+                    resource.status == com.humotron.app.data.network.Status.EXCEPTION) {
                     pendingPurchaseBooster = null
+                    pendingPurchasePlan = null
                     fetchBoosters()
-                } else if (resource.status == com.humotron.app.data.network.Status.ERROR || resource.status == com.humotron.app.data.network.Status.EXCEPTION) {
-                    pendingPurchaseBooster = null
-                    fetchBoosters()
+                    fetchPlans()
                 }
             }
         }
@@ -202,7 +252,7 @@ class ShopToolsViewModel @Inject constructor(
     }
 
     fun isPurchaseInProgress(): Boolean {
-        return pendingPurchaseBooster != null
+        return pendingPurchaseBooster != null || pendingPurchasePlan != null
     }
 
     fun getProductDetailsForId(productId: String): ProductDetails? {
@@ -215,7 +265,19 @@ class ShopToolsViewModel @Inject constructor(
 
     fun launchBillingFlow(activity: Activity, booster: BoosterResponse.Booster, productDetails: ProductDetails) {
         pendingPurchaseBooster = booster
+        pendingPurchasePlan = null
         isBillingFlowActive = true
-        billingManager.launchBillingFlow(activity, productDetails)
+        val offerToken = productDetails.subscriptionOfferDetails?.firstOrNull()?.offerToken
+        billingManager.launchBillingFlow(activity, productDetails, offerToken)
+    }
+
+    fun launchProPlanBillingFlow(activity: Activity, plan: com.humotron.app.domain.modal.response.PlanResponse.Plan? = null): Boolean {
+        val proProductDetails = getProductDetailsForId(PRO_PLAN_PRODUCT_ID) ?: return false
+        isBillingFlowActive = true
+        pendingPurchaseBooster = null
+        pendingPurchasePlan = plan ?: plansLiveData.value?.data?.find { it.planId == "Pro_Plan" || it.displayName.equals("Pro", ignoreCase = true) }
+        val offerToken = proProductDetails.subscriptionOfferDetails?.firstOrNull()?.offerToken
+        billingManager.launchBillingFlow(activity, proProductDetails, offerToken)
+        return true
     }
 }

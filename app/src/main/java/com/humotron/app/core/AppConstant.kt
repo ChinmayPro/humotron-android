@@ -1,10 +1,13 @@
 package com.humotron.app.core
 
+import com.humotron.app.BuildConfig
+
 object AppConstant {
 
     const val BASE_URL: String = "https://api.humotron.com:4200/api/v1/"
     const val ASSESSMENT_ID = "assessmentId"
     const val ASSESSMENT = "assessment"
+    val GOOGLE_WEB_CLIENT_ID = BuildConfig.GOOGLE_CLIENT_ID
 
 
 }

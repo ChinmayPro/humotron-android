@@ -2,6 +2,9 @@ package com.humotron.app.ui.shop
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import com.humotron.app.R
 import com.humotron.app.core.base.BaseFragment
@@ -18,6 +21,8 @@ class ShopScansFragment : BaseFragment(R.layout.fragment_shop_scans) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentShopScansBinding.bind(view)
 
+        setupInsets()
+
         binding.btnBookNow.setOnClickListener {
             val bottomSheet = CardiacTestDetailsBottomSheet.newInstance()
             bottomSheet.onProceedClicked = {
@@ -29,6 +34,15 @@ class ShopScansFragment : BaseFragment(R.layout.fragment_shop_scans) {
         }
 
         startAnimations()
+    }
+
+    private fun setupInsets() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            val density = resources.displayMetrics.density
+            binding.layoutFooter.updatePadding(bottom = systemBars.bottom + (20 * density).toInt())
+            insets
+        }
     }
 
     private fun startAnimations() {

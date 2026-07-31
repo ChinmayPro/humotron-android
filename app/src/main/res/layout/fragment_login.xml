@@ -192,26 +192,6 @@
                 android:textSize="15sp"
                 app:layout_constraintTop_toBottomOf="@id/llOr" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnApple"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="11dp"
-                android:background="@drawable/bg_btn_dark"
-                app:backgroundTint="@null"
-                app:icon="@drawable/ic_apple"
-                app:iconGravity="textStart"
-                app:iconPadding="10dp"
-                app:iconTint="@null"
-                android:fontFamily="@font/manrope_bold"
-                android:letterSpacing="-0.01"
-                android:paddingVertical="16dp"
-                android:text="@string/continue_with_apple"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="15sp"
-                app:layout_constraintTop_toBottomOf="@id/btnGoogle" />
-
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvTerms"
                 style="@style/Text.12x.Manrope.Regular"
@@ -223,7 +203,7 @@
                 android:text="@string/auth_terms_privacy"
                 android:textColor="@color/colorTextGreyDark"
                 android:textSize="11.5sp"
-                app:layout_constraintTop_toBottomOf="@id/btnApple" />
+                app:layout_constraintTop_toBottomOf="@id/btnGoogle" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

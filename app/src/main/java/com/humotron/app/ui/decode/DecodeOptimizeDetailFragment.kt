@@ -23,6 +23,10 @@ import com.humotron.app.domain.modal.response.RecommendationDetailData
 import com.humotron.app.domain.modal.response.RecipeDetailItem
 import com.humotron.app.ui.shop.ShopViewModel
 import androidx.core.text.HtmlCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -38,6 +42,7 @@ class DecodeOptimizeDetailFragment : BaseFragment(R.layout.fragment_decode_optim
         val productId = arguments?.getString("productId")
         val productType = arguments?.getString("productType")
 
+        setupInsets()
         initViews()
         initObservers()
 
@@ -47,6 +52,24 @@ class DecodeOptimizeDetailFragment : BaseFragment(R.layout.fragment_decode_optim
             binding.tvNoData.visibility = View.VISIBLE
             binding.nsvContent.visibility = View.GONE
         }
+    }
+
+    private fun setupInsets() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+
+            binding.llCtaBar.updatePadding(bottom = systemBars.bottom + dpToPx(24))
+            binding.vBottomGradient.updateLayoutParams<ViewGroup.LayoutParams> {
+                height = dpToPx(110) + systemBars.bottom
+            }
+            binding.nsvContent.updatePadding(bottom = dpToPx(120) + systemBars.bottom)
+
+            insets
+        }
+    }
+
+    private fun dpToPx(dp: Int): Int {
+        return (dp * resources.displayMetrics.density).toInt()
     }
 
     private fun initViews() {

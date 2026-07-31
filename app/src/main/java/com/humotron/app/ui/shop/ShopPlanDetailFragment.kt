@@ -22,6 +22,9 @@ class ShopPlanDetailFragment : BaseFragment(R.layout.fragment_shop_plan_detail) 
     private lateinit var binding: FragmentShopPlanDetailBinding
     private val viewModel: ShopToolsViewModel by activityViewModels()
 
+    private var isProSubscribedFromApi: Boolean = false
+    private var activePurchases: List<com.android.billingclient.api.Purchase> = emptyList()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentShopPlanDetailBinding.bind(view)
@@ -29,7 +32,56 @@ class ShopPlanDetailFragment : BaseFragment(R.layout.fragment_shop_plan_detail) 
         setupHeader()
         setupFeatureCards()
         setupCta()
+        setupObservers()
         setupBottomBar()
+    }
+
+    private fun setupObservers() {
+        viewModel.plansLiveData.observe(viewLifecycleOwner) { resource ->
+            if (resource.status == com.humotron.app.data.network.Status.SUCCESS) {
+                val plans = resource.data ?: emptyList()
+                val proPlan = plans.find { it.planId == "Pro_Plan" || it.displayName.equals("Pro", ignoreCase = true) }
+                proPlan?.let { plan ->
+                    isProSubscribedFromApi = plan.isActive == true
+                    if (binding.tvPlanPrice.text == "£19.90") {
+                        binding.tvPlanPrice.text = plan.displayPriceFallback
+                        binding.btnBuyNow.text = "Upgrade to Pro — ${plan.displayPriceFallback}/mo"
+                    }
+                    updateProPlanState()
+                }
+            }
+        }
+
+        viewModel.playStoreProductsLiveData.observe(viewLifecycleOwner) { products ->
+            val proDetails = products.find { it.productId == ShopToolsViewModel.PRO_PLAN_PRODUCT_ID }
+            val subscriptionOffer = proDetails?.subscriptionOfferDetails?.firstOrNull()
+            val subscriptionPrice = subscriptionOffer?.pricingPhases?.pricingPhaseList?.firstOrNull()?.formattedPrice
+            val priceText = subscriptionPrice ?: proDetails?.oneTimePurchaseOfferDetails?.formattedPrice
+            if (!priceText.isNullOrEmpty()) {
+                binding.tvPlanPrice.text = priceText
+                binding.btnBuyNow.text = "Upgrade to Pro — $priceText/mo"
+            }
+        }
+
+        viewModel.activePurchasesLiveData.observe(viewLifecycleOwner) { purchases ->
+            activePurchases = purchases
+            updateProPlanState()
+        }
+    }
+
+    private fun updateProPlanState() {
+        val isProActive = isProSubscribedFromApi || activePurchases.any { purchase ->
+            purchase.products.contains(ShopToolsViewModel.PRO_PLAN_PRODUCT_ID)
+        }
+
+        if (isProActive) {
+            binding.layoutOwnedBar.visibility = View.VISIBLE
+            binding.tvOwnedBarText.text = getString(R.string.included_in_pro_plan)
+            binding.btnBuyNow.visibility = View.GONE
+        } else {
+            binding.layoutOwnedBar.visibility = View.GONE
+            binding.btnBuyNow.visibility = View.VISIBLE
+        }
     }
 
     private fun setupHeader() {
@@ -121,7 +173,16 @@ class ShopPlanDetailFragment : BaseFragment(R.layout.fragment_shop_plan_detail) 
 
     private fun setupCta() {
         binding.btnBuyNow.setOnClickListener {
-            Toast.makeText(requireContext(), "Upgrade to Pro plan clicked!", Toast.LENGTH_SHORT).show()
+            val plans = viewModel.plansLiveData.value?.data ?: emptyList()
+            val proPlan = plans.find { it.planId == "Pro_Plan" || it.displayName.equals("Pro", ignoreCase = true) }
+            val launched = viewModel.launchProPlanBillingFlow(requireActivity(), proPlan)
+            if (!launched) {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.item_not_available_play_store),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 
