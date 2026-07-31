@@ -18,7 +18,7 @@ import com.github.mikephil.charting.formatter.IFillFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.humotron.app.R
 import com.humotron.app.databinding.ActivityTempBinding
-import com.humotron.app.domain.modal.response.TemperatureResponse
+import com.humotron.app.domain.modal.response.DeviceMetricReadingResponse
 import com.humotron.app.domain.modal.response.splitBloodPressure
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -40,26 +40,26 @@ class TempActivity : AppCompatActivity() {
         }
 
 
-        val dummyTemperatureResponse = TemperatureResponse(
+        val dummyDeviceMetricReadingResponse = DeviceMetricReadingResponse(
             status = "success",
             message = "Data found Successfully",
             data = listOf(
-                TemperatureResponse.TemperatureData(
+                DeviceMetricReadingResponse.DeviceMetricData(
                     time = "2026-05-04T21:00:00.000+0000",
                     value = "128",
                     type = "systolicBP"
                 ),
-                TemperatureResponse.TemperatureData(
+                DeviceMetricReadingResponse.DeviceMetricData(
                     time = "2026-05-04T22:00:00.000+0000",
                     value = "128",
                     type = "systolicBP"
                 ),
-                TemperatureResponse.TemperatureData(
+                DeviceMetricReadingResponse.DeviceMetricData(
                     time = "2026-05-05T00:00:00.000+0000",
                     value = "129",
                     type = "systolicBP"
                 ),
-                TemperatureResponse.TemperatureData(
+                DeviceMetricReadingResponse.DeviceMetricData(
                     time = "2026-05-05T01:00:00.000+0000",
                     value = "129",
                     type = "systolicBP"
@@ -71,8 +71,8 @@ class TempActivity : AppCompatActivity() {
         )
 
         //to split value in two entries if receive like 125/70
-        val expandedList = mutableListOf<TemperatureResponse.TemperatureData>()
-        dummyTemperatureResponse.data?.forEach { item ->
+        val expandedList = mutableListOf<DeviceMetricReadingResponse.DeviceMetricData>()
+        dummyDeviceMetricReadingResponse.data?.forEach { item ->
             expandedList.addAll(item.splitBloodPressure())
         }
         val sortedList = expandedList.sortedBy { data -> data.time }
@@ -83,13 +83,13 @@ class TempActivity : AppCompatActivity() {
             binding.lineChart,
             entries,
             selectedTab,
-            dummyTemperatureResponse.averageReading,
-            dummyTemperatureResponse.typicalRange
+            dummyDeviceMetricReadingResponse.averageReading,
+            dummyDeviceMetricReadingResponse.typicalRange
         )
     }
 
     private fun createLineChartEntries(
-        list: List<TemperatureResponse.TemperatureData>,
+        list: List<DeviceMetricReadingResponse.DeviceMetricData>,
         tab: String?,
     ): List<Entry> {
 

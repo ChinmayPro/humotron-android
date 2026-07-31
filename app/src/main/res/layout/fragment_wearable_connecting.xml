@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@drawable/ic_bg_main_2"
+    tools:context=".ui.connect.wearable.WearableConnectingFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:minHeight="700dp"
+            android:orientation="vertical"
+            android:paddingStart="30dp"
+            android:paddingTop="30dp"
+            android:paddingEnd="30dp"
+            android:paddingBottom="40dp">
+
+            <!-- ============ scan scene (animated) ============ -->
+            <!-- z-order bottom -> top: sweep, 3x pulse ring, progress ring, node graph, value text -->
+            <FrameLayout
+                android:id="@+id/flScanScene"
+                android:layout_width="240dp"
+                android:layout_height="240dp">
+
+                <com.humotron.app.view.ConicSweepView
+                    android:id="@+id/vSweep"
+                    android:layout_width="220dp"
+                    android:layout_height="220dp"
+                    android:layout_gravity="center"
+                    app:accentColor="@color/lime" />
+
+                <com.humotron.app.view.PulseRingView
+                    android:id="@+id/vPulseA"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:baseRadius="45dp"
+                    app:pulseStrokeWidth="1.5dp"
+                    app:ringColor="@color/lime" />
+
+                <com.humotron.app.view.PulseRingView
+                    android:id="@+id/vPulseB"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:baseRadius="45dp"
+                    app:pulseStrokeWidth="1.5dp"
+                    app:ringColor="@color/lime" />
+
+                <com.humotron.app.view.PulseRingView
+                    android:id="@+id/vPulseC"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:baseRadius="45dp"
+                    app:pulseStrokeWidth="1.5dp"
+                    app:ringColor="@color/lime" />
+
+                <com.humotron.app.view.RingProgressView
+                    android:id="@+id/vRing"
+                    android:layout_width="220dp"
+                    android:layout_height="220dp"
+                    android:layout_gravity="center"
+                    app:progressColorRP="@color/lime"
+                    app:progressPercent="43"
+                    app:ringStrokeWidth="6dp"
+                    app:trackColor="@color/hair" />
+
+                <com.humotron.app.view.NodeGraphView
+                    android:id="@+id/vNodeGraph"
+                    android:layout_width="220dp"
+                    android:layout_height="220dp"
+                    android:layout_gravity="center"
+                    app:centerDotSize="@dimen/_20dp"
+                    app:graphAccentColor="@color/lime"
+                    app:nodeColor="@color/node_dot" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvScanValue"
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/manrope_extra_bold"
+                    android:gravity="center"
+                    android:letterSpacing="-0.03"
+                    android:text="0%"
+                    android:textColor="@color/white"
+                    android:textSize="36sp" />
+
+            </FrameLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvHeadline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:fontFamily="@font/manrope_bold"
+                android:gravity="center"
+                android:letterSpacing="-0.01"
+                android:text="@string/headline_ext_synth"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvStageLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/manrope_bold"
+                android:gravity="center"
+                android:text="@string/synth_stage_label"
+                android:textColor="@color/ink2"
+                android:textSize="14sp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvStageSub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/manrope_regular"
+                android:gravity="center"
+                android:lineSpacingMultiplier="1.5"
+                android:text="@string/synth_stage_sub"
+                android:textColor="@color/ink4"
+                android:textSize="11.5sp" />
+
+            <!-- ============ connection status row ============ -->
+            <LinearLayout
+                android:id="@+id/llConnectionStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivConnectionShield"
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    app:srcCompat="@drawable/ic_shield_check"
+                    app:tint="@color/lime" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvConnectionStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:fontFamily="@font/manrope_bold"
+                    android:text="@string/synth_connection_status"
+                    android:textColor="@color/ink4"
+                    android:textSize="11sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

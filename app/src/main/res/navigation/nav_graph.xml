@@ -120,6 +120,71 @@
         android:name="com.humotron.app.ui.connect.ConnectInfoFragment" />
 
     <fragment
+        android:id="@+id/fragmentConnectWearable"
+        android:name="com.humotron.app.ui.connect.wearable.ConnectWearableFragment"
+        tools:layout="@layout/fragment_connect_wearable">
+        <action
+            android:id="@+id/action_fragmentConnectWearable_to_fragmentConnectWearableAuth"
+            app:destination="@id/fragmentConnectWearableAuth"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentConnectWearable_to_fragmentWearableDataUnlocks"
+            app:destination="@id/fragmentWearableDataUnlocks"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentConnectWearable_to_fragmentWearableAuthoriseAccess"
+            app:destination="@id/fragmentWearableAuthoriseAccess"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentWearableAuthoriseAccess"
+        android:name="com.humotron.app.ui.connect.wearable.WearableAuthoriseAccessFragment"
+        tools:layout="@layout/fragment_wearable_authorise_access">
+        <argument
+            android:name="provider"
+            app:argType="com.humotron.app.domain.modal.response.ProviderResponse$Data$Provider" />
+        <action
+            android:id="@+id/action_fragmentWearableAuthoriseAccess_to_fragmentConnectWearableAuth"
+            app:destination="@id/fragmentConnectWearableAuth"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentWearableDataUnlocks"
+        android:name="com.humotron.app.ui.connect.wearable.WearableDataUnlocksFragment"
+        tools:layout="@layout/fragment_wearable_data_unlocks" />
+
+    <fragment
+        android:id="@+id/fragmentConnectWearableAuth"
+        android:name="com.humotron.app.ui.connect.wearable.ConnectWearableAuthFragment"
+        tools:layout="@layout/fragment_connect_wearable_auth">
+        <argument
+            android:name="provider"
+            app:argType="com.humotron.app.domain.modal.response.ProviderResponse$Data$Provider" />
+        <argument
+            android:name="authorizationUrl"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_fragmentConnectWearableAuth_to_fragmentDeviceConnected"
+            app:destination="@id/fragmentDeviceConnected"
+            app:popUpTo="@id/fragmentConnectWearable"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
         android:id="@+id/fragmentRingConnection"
         android:name="com.humotron.app.ui.connect.RingConnectionFragment" />
 

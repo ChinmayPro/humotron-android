@@ -45,7 +45,7 @@ import kotlin.math.roundToInt
 import kotlin.system.exitProcess
 
 val DEBUG_ON: Boolean = BuildConfig.DEBUG
-const val TAG = "RingApp"
+const val TAG = "WearableAuth"
 const val TAG_RING_DEBUG = "RingApp"
 const val TAG_BAND_DEBUG = "Band Debug"
 

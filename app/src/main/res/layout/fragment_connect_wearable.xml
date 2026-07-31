@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@drawable/ic_bg_main_2"
+    tools:context=".ui.connect.wearable.ConnectWearableFragment">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header_3" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/_20dp"
+            android:paddingBottom="@dimen/_20dp">
+
+            <!-- Header icon + title + subtitle -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cvHeaderIcon"
+                    android:layout_width="54dp"
+                    android:layout_height="54dp"
+                    android:layout_marginBottom="14dp"
+                    app:cardBackgroundColor="@color/teal_12"
+                    app:cardCornerRadius="15dp"
+                    app:strokeWidth="0dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivHeaderIcon"
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@null"
+                        app:srcCompat="@drawable/ic_wave_2"
+                        app:tint="@color/cool" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_extra_bold"
+                    android:text="@string/title_bring_wearable"
+                    android:textColor="@color/white"
+                    android:textSize="23sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvSubtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/desc_bring_wearable"
+                    android:textColor="@color/ink2"
+                    android:textSize="14.5sp" />
+
+            </LinearLayout>
+
+            <!-- "What your data unlocks" clickable card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvUnlocks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="@color/deep_dives_card"
+                app:cardCornerRadius="20dp"
+                app:strokeColor="@color/hair"
+                app:strokeWidth="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="18dp">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cvUnlocksIcon"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        app:cardBackgroundColor="@color/lime_14"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="0dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:strokeWidth="0dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivUnlocksIcon"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="@null"
+                            app:srcCompat="@drawable/ic_spark"
+                            app:tint="@color/lime" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvUnlocksTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:text="@string/title_unlocks"
+                        android:textColor="@color/white"
+                        android:textSize="14.5sp"
+                        app:layout_constraintEnd_toStartOf="@id/ivUnlocksChevron"
+                        app:layout_constraintStart_toEndOf="@id/cvUnlocksIcon"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvUnlocksSubtitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/manrope_regular"
+                        android:text="@string/desc_unlocks"
+                        android:textColor="@color/ink4"
+                        android:textSize="11.5sp"
+                        app:layout_constraintEnd_toStartOf="@id/ivUnlocksChevron"
+                        app:layout_constraintStart_toStartOf="@id/tvUnlocksTitle"
+                        app:layout_constraintTop_toBottomOf="@id/tvUnlocksTitle" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivUnlocksChevron"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:contentDescription="@null"
+                        app:layout_constraintBottom_toBottomOf="@id/cvUnlocksIcon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/cvUnlocksIcon"
+                        app:srcCompat="@drawable/ic_chevron_right_24px"
+                        app:tint="@color/ink3" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- "How your data is handled" fold toggle -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvFoldToggle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:checkable="true"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardBackgroundColor="@color/deep_dives_day_chip_bg"
+                app:cardCornerRadius="13dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/hair"
+                app:strokeWidth="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="15dp"
+                    android:paddingTop="13dp"
+                    android:paddingEnd="15dp"
+                    android:paddingBottom="13dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivFoldShield"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:contentDescription="@null"
+                        app:layout_constraintBottom_toBottomOf="@id/tvFoldLabel"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/tvFoldLabel"
+                        app:srcCompat="@drawable/ic_scan_shield"
+                        app:tint="@color/white" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvFoldLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:text="@string/label_how_data_handled"
+                        android:textColor="@color/booster_text_ghost"
+                        android:textSize="13sp"
+                        app:layout_constraintEnd_toStartOf="@id/ivFoldChevron"
+                        app:layout_constraintStart_toEndOf="@id/ivFoldShield"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivFoldChevron"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:contentDescription="@null"
+                        app:layout_constraintBottom_toBottomOf="@id/tvFoldLabel"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/tvFoldLabel"
+                        app:srcCompat="@drawable/ic_chevron_down_green"
+                        app:tint="@color/ink3" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Fold content: split wall explainer. Collapsed by default (matches state.foldOpen == false). -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvFoldContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_22dp"
+                android:layout_marginTop="8dp"
+                android:visibility="gone"
+                app:cardBackgroundColor="#800B1315"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/hair"
+                app:strokeWidth="1dp"
+                tools:visibility="gone">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:id="@+id/llSplitRow"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top"
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <LinearLayout
+                            android:id="@+id/llSplitLeft"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical"
+                            android:paddingStart="4dp"
+                            android:paddingTop="6dp"
+                            android:paddingEnd="4dp">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvSplitLeftLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/manrope_extra_bold"
+                                android:gravity="center"
+                                android:text="@string/split_col_left_label"
+                                android:textColor="@color/ink4"
+                                android:textSize="10sp" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvSplitLeftValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="7dp"
+                                android:fontFamily="@font/manrope_bold"
+                                android:gravity="center"
+                                android:text="@string/split_col_left_value"
+                                android:textColor="@color/booster_text_ghost"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llSplitMid"
+                            android:layout_width="54dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <View
+                                android:id="@+id/vSplitLineTop"
+                                android:layout_width="1.5dp"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:background="@color/attention" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivSplitUnlink"
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:layout_marginTop="6dp"
+                                android:layout_marginBottom="6dp"
+                                android:contentDescription="@null"
+                                app:srcCompat="@drawable/ic_unlink" />
+
+                            <View
+                                android:id="@+id/vSplitLineBottom"
+                                android:layout_width="1.5dp"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:background="@color/attention" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llSplitRight"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical"
+                            android:paddingStart="4dp"
+                            android:paddingTop="6dp"
+                            android:paddingEnd="4dp">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvSplitRightLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/manrope_extra_bold"
+                                android:gravity="center"
+                                android:text="@string/split_col_right_label"
+                                android:textColor="@color/ink4"
+                                android:textSize="10sp" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvSplitRightValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="7dp"
+                                android:fontFamily="@font/manrope_bold"
+                                android:gravity="center"
+                                android:text="@string/split_col_right_value"
+                                android:textColor="@color/booster_text_ghost"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llAnonPill"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="13dp"
+                        android:background="@drawable/bg_anon_pill"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="13dp"
+                        android:paddingTop="8dp"
+                        android:paddingEnd="13dp"
+                        android:paddingBottom="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/llSplitRow">
+
+                        <View
+                            android:id="@+id/vAnonDot"
+                            android:layout_width="7dp"
+                            android:layout_height="7dp"
+                            android:background="@drawable/shape_dot" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvAnonPill"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="7dp"
+                            android:text="@string/anon_pill_text"
+                            android:textColor="@color/booster_text_ghost"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvSplitFooter"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="11dp"
+                        android:fontFamily="@font/manrope_regular"
+                        android:gravity="center"
+                        android:text="@string/split_wall_footer"
+                        android:textColor="@color/ink4"
+                        android:textSize="11.5sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/llAnonPill" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvWearables"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="2"
+                tools:listitem="@layout/item_wearable" />
+
+            <Space
+                android:id="@+id/bottomSpacerView"
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnChooseDevice"
+        app:srcCompat="@drawable/bg_black_gradient" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnChooseDevice"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/manrope_bold"
+        android:text="@string/choose_your_device"
+        android:textAllCaps="false"
+        android:textColor="#7d8a89"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:backgroundTint="@color/white10"
+        app:cornerRadius="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/tvTakeReadingNow" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvTakeReadingNow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginBottom="12dp"
+        android:gravity="center"
+        android:text="@string/one_secure_sign_in"
+        android:textColor="@color/ink4"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

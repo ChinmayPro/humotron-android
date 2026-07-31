@@ -47,6 +47,7 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
     private val viewModel: DeviceViewModel by viewModels()
     private val bloodTestViewModel: BloodTestViewModel by activityViewModels()
     private var deviceAdapter: DeviceAdapter? = null
+    private var wearableProviderAdapter: WearableProviderAdapter? = null
 
     private var assessmentAdapter: AssessmentAdapter? = null
     private var healthReportAdapter: HealthReportAdapter? = null
@@ -76,6 +77,13 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
         }
         binding.rvDevices.adapter = deviceAdapter
 
+        binding.rvWearableDevices.layoutManager =
+            androidx.recyclerview.widget.LinearLayoutManager(requireContext())
+        wearableProviderAdapter = WearableProviderAdapter(emptyList()) { provider ->
+            // handle click if needed
+        }
+        binding.rvWearableDevices.adapter = wearableProviderAdapter
+
         if (prefUtils.getHardwareDetailsList().isEmpty()) {
             // binding.dsvWearables.isVisible = false
             // binding.dsvHealthMonitoring.isVisible = false
@@ -94,6 +102,7 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
         super.onResume()
         binding.swipeRefreshLayout.isRefreshing = false
         viewModel.refreshUserDeviceData(true)
+        viewModel.refreshWearableDeviceData(true)
         viewModel.getMergedAssessmentList(true)
         viewModel.getMedicalPdfList(true)
     }
@@ -110,12 +119,14 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
         binding.swipeRefreshLayout.setOnRefreshListener {
             binding.swipeRefreshLayout.isRefreshing = false
             viewModel.refreshUserDeviceData(true)
+            //viewModel.refreshWearableDeviceData(true)
             viewModel.getMergedAssessmentList(true)
             viewModel.getMedicalPdfList(true)
         }
         binding.swipeRefreshSources.setOnRefreshListener {
             binding.swipeRefreshSources.isRefreshing = false
             viewModel.refreshUserDeviceData(true)
+            viewModel.refreshWearableDeviceData(true)
             viewModel.getMergedAssessmentList(true)
             viewModel.getMedicalPdfList(true)
         }
@@ -194,6 +205,29 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
     private fun initObservers() {
         viewModel.observeUserDeviceData()
 
+        viewModel.getWearableProviderListData().observe(viewLifecycleOwner) {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    hideProgress()
+                    val data = it.data?.data?.devices ?: return@observe
+                    if (data.isNotEmpty()) {
+                        wearableProviderAdapter?.updateData(data)
+                        binding.rvWearableDevices.showWithFade { }
+                    } else {
+                        binding.rvWearableDevices.isVisible = false
+                    }
+                }
+                Status.ERROR, Status.EXCEPTION -> {
+                    hideProgress()
+                }
+                Status.LOADING -> {
+                    if (wearableProviderAdapter?.itemCount == 0) {
+                        showProgress()
+                    }
+                }
+            }
+        }
+
         lifecycleScope.launch {
             viewModel.deviceData.collect {
                 /*it.hrvMapper.let {
@@ -222,7 +256,7 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
 
                     if (allDevices.isNotEmpty()) {
                         deviceAdapter?.updateData(allDevices)
-                        binding.rvDevices.showWithFade {  }
+                        binding.rvDevices.showWithFade { }
                         binding.tvSourcesSynced.text =
                             "${allDevices.size} sources feeding Track · synced just now"
                     } else {

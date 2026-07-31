@@ -37,10 +37,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_20dp"
                     app:cardBackgroundColor="#80070C0D"
-                    app:cardCornerRadius="18dp"
+                    app:cardCornerRadius="22dp"
                     app:cardElevation="0dp"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:strokeColor="@color/card_stroke"
+                    app:strokeColor="@color/hair"
                     app:strokeWidth="1dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -53,10 +53,10 @@
                             android:id="@+id/tvDeviceName"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_bold"
                             android:text="Humotron Band"
                             android:textColor="@android:color/white"
-                            android:textSize="24sp"
-                            android:textStyle="bold"
+                            android:textSize="18sp"
                             app:layout_constraintEnd_toStartOf="@id/iconContainer"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -67,17 +67,18 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
+                            android:fontFamily="@font/manrope_regular"
                             android:text="Sync today"
-                            android:textColor="#8C8C8C"
-                            android:textSize="14sp"
+                            android:textColor="@color/ink4"
+                            android:textSize="11.5sp"
                             app:layout_constraintStart_toStartOf="@id/tvDeviceName"
                             app:layout_constraintTop_toBottomOf="@id/tvDeviceName" />
 
                         <!-- Icon Background -->
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/iconContainer"
-                            android:layout_width="64dp"
-                            android:layout_height="64dp"
+                            android:layout_width="58dp"
+                            android:layout_height="58dp"
                             app:cardBackgroundColor="@color/lime_14"
                             app:cardCornerRadius="16dp"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -86,8 +87,8 @@
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/ivDevice"
-                                android:layout_width="28dp"
-                                android:layout_height="28dp"
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"
                                 android:layout_gravity="center"
                                 app:srcCompat="@drawable/ic_band_vectr"
                                 app:tint="#A4FF39" />
@@ -100,14 +101,16 @@
                             android:layout_width="wrap_content"
                             android:layout_height="52dp"
                             android:layout_marginTop="24dp"
+                            android:fontFamily="@font/manrope_extra_bold"
                             android:text="Take Reading"
                             android:textAllCaps="false"
                             android:textColor="@android:color/black"
-                            android:textStyle="bold"
+                            android:textSize="13.5sp"
                             app:backgroundTint="@color/lime"
                             app:cornerRadius="26dp"
                             app:icon="@drawable/ic_decode_new"
                             app:iconPadding="10dp"
+                            app:iconSize="13dp"
                             app:iconTint="@android:color/black"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvLastSyncTime" />
@@ -115,8 +118,8 @@
                         <!-- Alert Button -->
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/btnAlert"
-                            android:layout_width="52dp"
-                            android:layout_height="52dp"
+                            android:layout_width="42dp"
+                            android:layout_height="42dp"
                             android:backgroundTint="#0FFFFFFF"
                             android:insetLeft="0dp"
                             android:insetTop="0dp"
@@ -125,7 +128,7 @@
                             app:icon="@drawable/ic_device_notification"
                             app:iconGravity="textStart"
                             app:iconPadding="0dp"
-                            app:iconSize="22dp"
+                            app:iconSize="19dp"
                             app:iconTint="@color/white"
                             app:layout_constraintBottom_toBottomOf="@id/btnTakeReading"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -150,11 +153,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
+                            android:fontFamily="@font/manrope_bold"
                             android:includeFontPadding="false"
                             android:text="@string/disconnected"
                             android:textColor="@color/disconnected"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
+                            android:textSize="11.5sp"
                             app:layout_constraintBottom_toBottomOf="@id/ivDeviceStatus"
                             app:layout_constraintStart_toEndOf="@id/ivDeviceStatus"
                             app:layout_constraintTop_toTopOf="@id/ivDeviceStatus" />
@@ -183,9 +186,10 @@
                             android:id="@+id/tvBatteryLevel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_regular"
                             android:text="0%"
-                            android:textColor="@android:color/white"
-                            android:textSize="14sp"
+                            android:textColor="@color/ink4"
+                            android:textSize="11.5sp"
                             app:layout_constraintBottom_toBottomOf="@id/tvDeviceStatus"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@id/tvDeviceStatus" />

@@ -1567,4 +1567,85 @@ To get started:\n
     <string name="step_onto_the_scale">Step onto the scale barefoot and stand still. We’ll capture your full body composition in a few seconds.</string>
     <string name="stand_still_until_the_reading_completes">Stand still until the reading completes</string>
     <string name="read_again">Read again</string>
+    <string name="view_all_past_scans">View all past scans</string>
+    <string name="metrics_details">Metrics Details</string>
+    <string name="your_reading">Your reading</string>
+    <string name="choose_your_device">Choose your device</string>
+    <string name="one_secure_sign_in">One secure sign-in. Your password stays with the maker — we never see it.</string>
+
+    <string name="title_bring_wearable">Bring your wearable into Humotron.</string>
+    <string name="desc_bring_wearable">Connect the device you already wear and Humotron reads its history into your Track — so every signal lives in one place, and Decode can read the whole picture, not fragments.</string>
+    <string name="title_unlocks">What your data unlocks</string>
+    <string name="desc_unlocks">Guidance across supplements, food, protocols, experts &amp; kit</string>
+    <string name="label_how_data_handled">How your data is handled</string>
+    <string name="split_wall_footer">The two are processed on opposite sides of a wall and never joined. Only the finished recommendation crosses over.</string>
+    <string name="split_col_left_label">YOUR HEALTH DATA</string>
+    <string name="split_col_left_value">Sleep, HRV, recovery &amp; strain — read-only</string>
+    <string name="split_col_right_label">YOUR IDENTITY</string>
+    <string name="split_col_right_value">Name, email &amp; account stay on the other side</string>
+    <string name="anon_pill_text">anon-4471 · de-identified profile</string>
+
+    <string name="what_ur_data_unlocks">What your data unlocks</string>
+
+    <string name="headline_ext_unlock">One read of your body, many ways to act on it.</string>
+    <string name="subheadline_ext_unlock">Humotron turns your connected data into specific, reasoned guidance — and the same engine powers every kind of recommendation, not just one.</string>
+
+    <string name="unlock_supplements_name">Supplements</string>
+    <string name="unlock_supplements_desc">Formulations matched to your actual readings — with the reading, your baseline and the reasoning behind every pick.</string>
+    <string name="unlock_supplements_count">420+ products · honesty-calibrated citations</string>
+
+    <string name="unlock_nutrition_name">Recipes &amp; nutrition</string>
+    <string name="unlock_nutrition_desc">Meal plans and recipes tuned to your sleep, recovery and metabolic response — not a generic diet.</string>
+    <string name="unlock_nutrition_count">21 themes · everyday to targeted</string>
+
+    <string name="unlock_protocols_name">Protocols &amp; habits</string>
+    <string name="unlock_protocols_desc">Daily biohack protocols and experiments built around your baseline, with progress tracked against your data.</string>
+    <string name="unlock_protocols_count">Guided &amp; self-run</string>
+
+    <string name="unlock_expert_name">Expert reviews</string>
+    <string name="unlock_expert_desc">Book a specialist to read your data with you and turn it into a plan, through Expert Connect.</string>
+    <string name="unlock_expert_count">13 categories</string>
+
+    <string name="unlock_kit_name">Curated kit</string>
+    <string name="unlock_kit_desc">Devices and tools that fill the gaps your current setup misses — only what your data says you need.</string>
+    <string name="unlock_kit_count">Matched to your gaps</string>
+
+    <string name="unlock_footer_note">Every recommendation here is worked out inside Humotron, from your own readings. Your data stays with you — it’s never sold or shared.</string>
+    <string name="connect_my_wearable">Connect my wearable</string>
+    <string name="allow_read_only_access">Allow read-only access</string>
+    <string name="not_now">Not now</string>
+    <string name="authorise_access">Authorise access</string>
+
+    <string name="headline_ext_auth">Approve what Humotron can read.</string>
+    <string name="subheadline_ext_auth">You’ll sign in with %1$s and grant access there. Humotron only receives what you tick below.</string>
+
+    <string name="auth_provider_initial">W</string>
+    <string name="auth_provider_name">Whoop</string>
+    <string name="auth_oauth_url">%1$s.com/oauth/authorize</string>
+
+    <string name="auth_request_title">Humotron is requesting access</string>
+    <string name="auth_request_desc">So your %1$s history can flow into Track and inform your guidance.</string>
+
+    <string name="scope_sleep">Read sleep, recovery &amp; readiness (last 90 days)</string>
+    <string name="scope_heart">Read heart rate, HRV &amp; resting HR</string>
+    <string name="scope_activity">Read activity, strain &amp; respiratory rate</string>
+    <string name="scope_excluded">No name, email, profile, contacts or location</string>
+
+    <string name="promise_readonly_title">Read-only</string>
+    <string name="promise_readonly_desc">We can’t change anything on your device or %1$s account.</string>
+
+    <string name="promise_deidentified_title">De-identified</string>
+    <string name="promise_deidentified_desc">Your readings are processed against a coarse profile, never your name or login.</string>
+
+    <string name="promise_revoke_title">Yours to revoke</string>
+    <string name="promise_revoke_desc">Disconnect anytime and every reading we pulled is deleted with it.</string>
+    <string name="subheadline_ext_done">Your last 90 days are read and your baseline is set. Whoop now streams recovery, strain and HRV straight into Track.</string>
+    <string name="compare_metrics_added_label">Metrics added</string>
+    <string name="compare_days_read_label">Days read</string>
+    <string name="disconnect_delete_data">Disconnect &amp; delete my data</string>
+    <string name="synth_connection_status">Whoop · read-only · de-identified</string>
+    <string name="headline_ext_synth">Building your Humotron baseline</string>
+    <string name="synth_stage_label">Reading 90 days of signal</string>
+    <string name="synth_stage_sub">2,160 hours streaming in</string>
+
 </resources>

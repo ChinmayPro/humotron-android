@@ -26,6 +26,7 @@ class SplashViewModel @Inject constructor(
         // load user device data earlier so user don't have blank screen or loading.
         if (prefUtils.isLogin()) {
             sleepRepository.getUserDeviceData()
+            sleepRepository.getWearableProviderData()
         }
 
         viewModelScope.launch {

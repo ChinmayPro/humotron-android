@@ -18,3 +18,5 @@ local.properties
 *.apk
 *.aab
 output-metadata.json
+/app/src/main/java/com/humotron/app/ui/BlankFragment.kt
+/app/src/main/res/layout/fragment_blank.xml

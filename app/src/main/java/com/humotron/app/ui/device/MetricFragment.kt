@@ -1,5 +1,6 @@
 package com.humotron.app.ui.device
 
+import android.R.attr.data
 import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
@@ -32,12 +33,11 @@ import com.humotron.app.R
 import com.humotron.app.core.base.BaseFragment
 import com.humotron.app.data.network.Status
 import com.humotron.app.databinding.FragmentMetricBinding
+import com.humotron.app.domain.modal.ChartType
 import com.humotron.app.domain.modal.DeviceType
-import com.humotron.app.domain.modal.param.RingReadingParam
-import com.humotron.app.domain.modal.param.ScaleReadingParam
 import com.humotron.app.domain.modal.param.WristBandApiParam
 import com.humotron.app.domain.modal.response.AllMetricsResponse
-import com.humotron.app.domain.modal.response.TemperatureResponse
+import com.humotron.app.domain.modal.response.DeviceMetricReadingResponse
 import com.humotron.app.domain.modal.response.splitBloodPressure
 import com.humotron.app.ui.device.adapter.ChatPromptAdapter
 import com.humotron.app.ui.device.adapter.InsightAdapter
@@ -73,13 +73,14 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
     private var deviceName: String? = null
     private var deviceType: String? = null
 
+    private var deviceId: String? = ""
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentMetricBinding.bind(view)
-
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
             insets
         }
 
@@ -144,14 +145,14 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
             false
         }
 
-        binding.trackTrends.btnBaselineInfo.setOnClickListener {
+        binding.trackTrends.clBaseline.setOnClickListener {
             InfoBottomSheetDialog.newInstance(
                 title = getString(R.string.your_baseline),
                 message = getString(R.string.your_baseline_info)
             ).show(childFragmentManager, InfoBottomSheetDialog.TAG)
         }
 
-        binding.trackTrends.btnTypicalInfo.setOnClickListener {
+        binding.trackTrends.clTypicalRange.setOnClickListener {
             InfoBottomSheetDialog.newInstance(
                 title = getString(R.string.typical_range),
                 message = getString(R.string.typical_range_info)
@@ -168,7 +169,7 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
     }
 
     private fun initData() {
-        binding.header.tvTitle.text = "Device Details"
+        binding.header.tvTitle.text = getString(R.string.metrics_details)
 
         binding.dsvInsight.adapter = insightAdapter
         binding.dsvInsight.setItemTransformer(
@@ -201,7 +202,7 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
         binding.rvChatPrompts.adapter = chatPromptAdapter
         binding.rvRecipesChatPrompts.adapter = recipesChatPromptAdapter
 
-        val id = arguments?.getString(NavKeys.KEY_ID)
+        deviceId = arguments?.getString(NavKeys.KEY_DEVICE_ID)
         val dateTime = arguments?.getString(NavKeys.KEY_DATE_TIME)
         deviceName = arguments?.getString(NavKeys.KEY_DEVICE_NAME)
         deviceType = arguments?.getString(NavKeys.KEY_DEVICE_TYPE)
@@ -429,7 +430,7 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
             }
         }
 
-        viewModel.getDeviceGraphData().observe(viewLifecycleOwner) {
+        viewModel.getDeviceMetricReadingData().observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
                     hideProgress()
@@ -448,7 +449,8 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
                         }
 
                         //to split value in two entries if receive like 125/70
-                        val expandedList = mutableListOf<TemperatureResponse.TemperatureData>()
+                        val expandedList =
+                            mutableListOf<DeviceMetricReadingResponse.DeviceMetricData>()
                         it.data.data.forEach { item ->
                             expandedList.addAll(item.splitBloodPressure())
                         }
@@ -475,6 +477,22 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
                             ""
                         }
                         binding.trackTrends.tvRange.text = rangeText
+
+                        val chartType = ChartType.fromValue(it.data.chartType)
+                        when (chartType) {
+                            ChartType.BANDED_LINE -> {}
+                            ChartType.SPREAD_COLUMNS -> {}
+                            ChartType.GOAL_BARS -> {}
+                            ChartType.PAIRED_RANGE -> {}
+                            ChartType.COMPOSITION_STACK -> {}
+                            ChartType.ZONE_TREND -> {}
+                            ChartType.LEVEL_LADDER -> {}
+                            ChartType.LEVEL_HISTORY -> {}
+                            ChartType.REFERENCE_DELTA -> {}
+                            ChartType.DELTA_TREND -> {}
+                            ChartType.CLINICAL_THRESHOLD -> {}
+                            else -> {}
+                        }
 
                         when (selectedTab) {
                             "Week" -> {
@@ -545,61 +563,19 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
                                 arguments?.getParcelable<AllMetricsResponse.Data.Metric>("metric")
 
                             val fieldLabel = metric?.metricValue?.fieldLabel ?: ""
-                            metric?.deviceId?.let { deviceId ->
-                                //For WristBand call getWristBandGraphData for chart data, for Ring call getRingReadingGraphData
-                                val deviceType = DeviceType.from(deviceName)
-                                when (deviceType) {
-                                    DeviceType.BAND -> {
-                                        val param = WristBandApiParam(
-                                            range = selectedText,
-                                            startDate = start,
-                                            endDate = end,
-                                            offset = "+05:30",
-                                            metricId = metric.id,
-                                            metricName = fieldLabel
-                                        )
-                                        viewModel.getWristBandGraphData(
-                                            deviceId,
-                                            param
-                                        )
-                                    }
-
-                                    DeviceType.RING -> {
-                                        val param = RingReadingParam(
-                                            startDate = start,
-                                            endDate = end,
-                                            offset = "+05:30",
-                                            range = selectedText,
-                                            metricID = metric.id,
-                                            metricName = fieldLabel
-                                        )
-                                        viewModel.getRingReadingGraphData(
-                                            deviceId,
-                                            param
-                                        )
-                                    }
-
-                                    DeviceType.SMART_CUFF -> {
-                                    }
-
-                                    DeviceType.WEIGHT_MACHINE -> {
-                                        val param = ScaleReadingParam(
-                                            startDate = start,
-                                            endDate = end,
-                                            offset = "+05:30",
-                                            range = selectedText,
-                                            metricID = metric.id,
-                                            metricName = fieldLabel
-                                        )
-                                        viewModel.getBasicWeightScaleData(
-                                            deviceId,
-                                            param
-                                        )
-                                    }
-
-                                    DeviceType.UNKNOWN -> {
-                                    }
-                                }
+                            metric?.let { mMetric ->
+                                val param = WristBandApiParam(
+                                    range = selectedText,
+                                    startDate = start,
+                                    endDate = end,
+                                    offset = "+05:30",
+                                    metricId = mMetric.id,
+                                    metricName = fieldLabel
+                                )
+                                viewModel.getDeviceMetricReading(
+                                    deviceId,
+                                    param
+                                )
                             }
                         }
                     }
@@ -625,7 +601,7 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
     }
 
     private fun createLineChartEntries(
-        list: List<TemperatureResponse.TemperatureData>,
+        list: List<DeviceMetricReadingResponse.DeviceMetricData>,
         tab: String?,
     ): List<Entry> {
 
@@ -731,7 +707,7 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
     }
 
     private fun createCandleChartEntries(
-        list: List<TemperatureResponse.TemperatureData>,
+        list: List<DeviceMetricReadingResponse.DeviceMetricData>,
     ): List<CandleEntry> {
         val entries = mutableListOf<CandleEntry>()
 
