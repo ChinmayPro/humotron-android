@@ -16,23 +16,25 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvViewMetricsTitle"
-            style="@style/Text.20x.Manrope.Bold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/manrope_extra_bold"
             android:text="@string/view_all_metrics_and_ntake_the_next_step"
             android:textAlignment="textStart"
             android:textColor="@color/text_title_primary"
+            android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@+id/switchSmartSuggestion"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            style="@style/Text.14x.Manrope.SemiBold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/manrope_semibold"
             android:text="@string/turn_on_smart_suggestions"
             android:textAlignment="textStart"
             android:textColor="@color/ink4"
+            android:textSize="11.5sp"
             app:layout_constraintEnd_toStartOf="@+id/switchSmartSuggestion"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvViewMetricsTitle" />

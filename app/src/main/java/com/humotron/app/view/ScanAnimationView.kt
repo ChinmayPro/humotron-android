@@ -261,7 +261,7 @@ class ScanAnimationView @JvmOverloads constructor(
                 ringSweepAngle = (currentProgress / 100f) * 360f
 
                 // Automatically sync the center text
-                scanValue = currentProgress.toInt().toString()
+                //scanValue = currentProgress.toInt().toString()
 
                 invalidate()
             }

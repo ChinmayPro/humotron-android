@@ -1,6 +1,5 @@
 package com.humotron.app.ui.device
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,10 +14,10 @@ import com.humotron.app.data.network.Status
 import com.humotron.app.data.repository.DeviceRepository
 import com.humotron.app.data.repository.MedicalRepository
 import com.humotron.app.domain.modal.param.GetAllScanByTypeParam
-import com.humotron.app.domain.modal.param.RingReadingParam
 import com.humotron.app.domain.modal.param.WristBandApiParam
 import com.humotron.app.domain.modal.response.AllMetricsResponse
 import com.humotron.app.domain.modal.response.CommonResponse
+import com.humotron.app.domain.modal.response.WearableProviderResponse
 import com.humotron.app.domain.modal.response.GetAllDeviceResponse
 import com.humotron.app.domain.modal.response.HardwareListData
 import com.humotron.app.domain.modal.response.MedicalPdfResponse
@@ -26,7 +25,7 @@ import com.humotron.app.domain.modal.response.MergedAssessmentResponse
 import com.humotron.app.domain.modal.response.MetricResponse
 import com.humotron.app.domain.modal.response.PastScanResponse
 import com.humotron.app.domain.modal.response.RingReadingData
-import com.humotron.app.domain.modal.response.TemperatureResponse
+import com.humotron.app.domain.modal.response.DeviceMetricReadingResponse
 import com.humotron.app.domain.repository.SleepRepository
 import com.humotron.app.util.DefaultDayReadingTimeSlotNavigator
 import com.humotron.app.util.DefaultHourReadingTimeSlotNavigator
@@ -94,6 +93,13 @@ class DeviceViewModel @Inject constructor(
         return getDeviceListLiveData
     }
 
+    private val _wearableProviderLiveData = MutableLiveData<Resource<WearableProviderResponse>>()
+    val wearableProviderLiveData: LiveData<Resource<WearableProviderResponse>> = _wearableProviderLiveData
+
+    fun getWearableProviderListData(): LiveData<Resource<WearableProviderResponse>> {
+        return wearableProviderLiveData
+    }
+
     /* fun getUserDeviceData() {
          sleepRepository.getUserDeviceData().onEach { state ->
              getDeviceListLiveData.value = state
@@ -108,10 +114,22 @@ class DeviceViewModel @Inject constructor(
                 }
             }
             .launchIn(viewModelScope)
+
+        sleepRepository.wearableProviderCache
+            .onEach { state ->
+                state?.let {
+                    _wearableProviderLiveData.value = it
+                }
+            }
+            .launchIn(viewModelScope)
     }
 
     fun refreshUserDeviceData(forceRefresh: Boolean = false) {
         sleepRepository.getUserDeviceData(forceRefresh)
+    }
+
+    fun refreshWearableDeviceData(forceRefresh: Boolean = false) {
+        sleepRepository.getWearableProviderData(forceRefresh)
     }
 
     private val getHardwareListLiveData: MutableLiveData<Resource<HardwareListData>> =
@@ -140,57 +158,27 @@ class DeviceViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private val deviceGraphLiveData: MutableLiveData<Resource<TemperatureResponse>> =
+    private val deviceMetricReading: MutableLiveData<Resource<DeviceMetricReadingResponse>> =
         MutableLiveData()
 
-    fun getDeviceGraphData(): LiveData<Resource<TemperatureResponse>> {
-        return deviceGraphLiveData
+    fun getDeviceMetricReadingData(): LiveData<Resource<DeviceMetricReadingResponse>> {
+        return deviceMetricReading
     }
 
-    private val temperatureCache = mutableMapOf<String, Resource<TemperatureResponse>>()
+    private val temperatureCache = mutableMapOf<String, Resource<DeviceMetricReadingResponse>>()
 
-    fun getRingReadingGraphData(ringId: String, param: RingReadingParam) {
-        val cacheKey = "ring_${ringId}_${param.range}_${param.startDate}_${param.endDate}"
-        if (temperatureCache.containsKey(cacheKey)) {
-            deviceGraphLiveData.value = temperatureCache[cacheKey]
-            return
-        }
-
-        sleepRepository.getRingReadingGraphData(ringId, param).onEach { state ->
-            if (state.status == Status.SUCCESS) {
-                temperatureCache[cacheKey] = state
-            }
-            deviceGraphLiveData.value = state
-        }.launchIn(viewModelScope)
-    }
-
-    fun getWristBandGraphData(deviceId: String, param: WristBandApiParam) {
+    fun getDeviceMetricReading(deviceId: String?, param: WristBandApiParam) {
         val cacheKey = "wristBand_${deviceId}_${param.range}_${param.startDate}_${param.endDate}"
         if (temperatureCache.containsKey(cacheKey)) {
-            deviceGraphLiveData.value = temperatureCache[cacheKey]
+            deviceMetricReading.value = temperatureCache[cacheKey]
             return
         }
 
-        sleepRepository.getWristBandGraphData(deviceId, param).onEach { state ->
+        sleepRepository.getDeviceMetricReading(deviceId, param).onEach { state ->
             if (state.status == Status.SUCCESS) {
                 temperatureCache[cacheKey] = state
             }
-            deviceGraphLiveData.value = state
-        }.launchIn(viewModelScope)
-    }
-
-    fun getBasicWeightScaleData(deviceId: String, param: com.humotron.app.domain.modal.param.ScaleReadingParam) {
-        val cacheKey = "weightScale_${deviceId}_${param.range}_${param.startDate}_${param.endDate}"
-        if (temperatureCache.containsKey(cacheKey)) {
-            deviceGraphLiveData.value = temperatureCache[cacheKey]
-            return
-        }
-
-        sleepRepository.getBasicWeightScaleData(deviceId, param).onEach { state ->
-            if (state.status == Status.SUCCESS) {
-                temperatureCache[cacheKey] = state
-            }
-            deviceGraphLiveData.value = state
+            deviceMetricReading.value = state
         }.launchIn(viewModelScope)
     }
 

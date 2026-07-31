@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@drawable/ic_bg_main_2"
+    tools:context=".ui.connect.wearable.ConnectWearableSuccessFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/llContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="16dp">
+
+            <!-- ============ success block ============ -->
+            <LinearLayout
+                android:id="@+id/llSuccess"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingStart="30dp"
+                android:paddingTop="48dp"
+                android:paddingEnd="30dp"
+                android:paddingBottom="6dp">
+
+                <FrameLayout
+                    android:id="@+id/flSuccessRing"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:background="@drawable/bg_success_ring">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cvSuccessIconBox"
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:layout_gravity="center"
+                        app:cardBackgroundColor="@color/success_box_bg"
+                        app:cardCornerRadius="22dp"
+                        app:cardElevation="0dp"
+                        app:strokeColor="@color/lime_30"
+                        app:strokeWidth="1dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivSuccessCheck"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            app:srcCompat="@drawable/ic_check"
+                            app:tint="@color/lime" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                </FrameLayout>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvHeadline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/manrope_extra_bold"
+                    android:gravity="center"
+                    android:letterSpacing="-0.025"
+                    android:lineSpacingMultiplier="1.13"
+                    android:text="Whoop is in."
+                    android:textColor="@color/lime"
+                    android:textSize="23sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvSubheadline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/manrope_medium"
+                    android:gravity="center"
+                    android:lineSpacingMultiplier="1.1"
+                    android:maxWidth="280dp"
+                    android:text="@string/subheadline_ext_done"
+                    android:textColor="@color/ink2"
+                    android:textSize="14.5sp" />
+
+            </LinearLayout>
+
+            <!-- ============ compare chip row ============ -->
+            <LinearLayout
+                android:id="@+id/llCompare"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginEnd="22dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardCompareDaysRead"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@color/card"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/hair"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingStart="14dp"
+                        android:paddingTop="13dp"
+                        android:paddingEnd="14dp"
+                        android:paddingBottom="13dp">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvDaysReadLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_bold"
+                            android:letterSpacing="0.06"
+                            android:text="@string/compare_days_read_label"
+                            android:textAllCaps="true"
+                            android:textColor="@color/ink4"
+                            android:textSize="10sp" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvDaysReadValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:fontFamily="@font/manrope_extra_bold"
+                            android:letterSpacing="-0.02"
+                            android:text="90"
+                            android:textColor="@color/lime"
+                            android:textSize="22sp" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardCompareMetricsAdded"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="11dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@color/card"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/hair"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingStart="14dp"
+                        android:paddingTop="13dp"
+                        android:paddingEnd="14dp"
+                        android:paddingBottom="13dp">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvMetricsAddedLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_bold"
+                            android:letterSpacing="0.06"
+                            android:text="@string/compare_metrics_added_label"
+                            android:textAllCaps="true"
+                            android:textColor="@color/ink4"
+                            android:textSize="10sp" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvMetricsAddedValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:fontFamily="@font/manrope_extra_bold"
+                            android:letterSpacing="-0.02"
+                            android:text="12"
+                            android:textColor="@color/cool"
+                            android:textSize="22sp" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardCompareBaseline"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="11dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@color/card"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/hair"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingStart="14dp"
+                        android:paddingTop="13dp"
+                        android:paddingEnd="14dp"
+                        android:paddingBottom="13dp">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvBaselineLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_bold"
+                            android:letterSpacing="0.06"
+                            android:text="@string/baseline"
+                            android:textAllCaps="true"
+                            android:textColor="@color/ink4"
+                            android:textSize="10sp" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvBaselineValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:fontFamily="@font/manrope_extra_bold"
+                            android:letterSpacing="-0.02"
+                            android:text="Set"
+                            android:textColor="@color/good"
+                            android:textSize="22sp" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+            <!-- ============ disconnect / delete data link ============ -->
+            <LinearLayout
+                android:id="@+id/llDisconnect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="18dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="10dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="6dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivDisconnectTrash"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    app:srcCompat="@drawable/ic_delete_24px"
+                    app:tint="@color/ink3" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvDisconnectLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:fontFamily="@font/manrope_bold"
+                    android:text="@string/disconnect_delete_data"
+                    android:textColor="@color/ink3"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnChooseDevice"
+        app:srcCompat="@drawable/bg_black_gradient" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSeeItInTrack"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/manrope_bold"
+        android:text="@string/see_it_in_track"
+        android:textAllCaps="false"
+        android:textColor="#FF0D1618"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:backgroundTint="@color/lime"
+        app:cornerRadius="32dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

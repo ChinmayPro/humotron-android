@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class TemperatureResponse(
+data class DeviceMetricReadingResponse(
 
     @SerializedName("status")
     val status: String? = null,
@@ -14,7 +14,7 @@ data class TemperatureResponse(
     val message: String? = null,
 
     @SerializedName("data")
-    val data: List<TemperatureData>? = null,
+    val data: List<DeviceMetricData>? = null,
 
     @SerializedName("averageReading")
     val averageReading: Double? = null,
@@ -25,10 +25,16 @@ data class TemperatureResponse(
     @SerializedName("typicalRange")
     val typicalRange: List<Int>? = null,
 
+    @SerializedName("range")
+    val range: String? = null,
+
+    @SerializedName("chartType")
+    val chartType: String? = null,
+
     ) : Parcelable {
 
     @Parcelize
-    data class TemperatureData(
+    data class DeviceMetricData(
 
         @SerializedName("value")
         val value: String? = null,
@@ -38,10 +44,17 @@ data class TemperatureResponse(
 
         @SerializedName("time")
         val time: String? = null,
-    ) : Parcelable
+
+        @SerializedName("sleepStartTime")
+        val sleepStartTime: String? = null,
+
+        @SerializedName("sleepEndTime")
+        val sleepEndTime: String? = null,
+
+        ) : Parcelable
 }
 
-fun TemperatureResponse.TemperatureData.splitBloodPressure(): List<TemperatureResponse.TemperatureData> {
+fun DeviceMetricReadingResponse.DeviceMetricData.splitBloodPressure(): List<DeviceMetricReadingResponse.DeviceMetricData> {
 
     if (value.isNullOrEmpty()) return emptyList()
 

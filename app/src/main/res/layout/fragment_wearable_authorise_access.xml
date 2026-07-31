@@ -1,0 +1,574 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@drawable/ic_bg_main_2"
+    tools:context=".ui.connect.wearable.WearableAuthoriseAccessFragment">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header_3" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <LinearLayout
+            android:id="@+id/llContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/_20dp"
+            android:paddingBottom="@dimen/_20dp">
+
+            <!-- headline block -->
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvHeadline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/manrope_extra_bold"
+                android:letterSpacing="-0.025"
+                android:lineSpacingMultiplier="1.13"
+                android:text="@string/headline_ext_auth"
+                android:textColor="@color/white"
+                android:textSize="23sp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvSubheadline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/manrope_medium"
+                android:lineSpacingMultiplier="1.1"
+                android:text="@string/subheadline_ext_auth"
+                android:textColor="@color/ink2"
+                android:textSize="14.5sp" />
+
+            <!-- ============ auth card (whoop oauth mock) ============ -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardAuth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                app:cardBackgroundColor="@color/auth_card_bg"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/hair"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- auth-h: provider row -->
+                    <LinearLayout
+                        android:id="@+id/llAuthProviderRow"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/black30"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="16dp"
+                        android:paddingTop="15dp"
+                        android:paddingEnd="16dp"
+                        android:paddingBottom="15dp">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cvProviderMark"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            app:cardBackgroundColor="@color/wmark_bg"
+                            app:cardCornerRadius="11dp"
+                            app:cardElevation="0dp"
+                            app:strokeWidth="0dp">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvProviderInitial"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:fontFamily="@font/manrope_extra_bold"
+                                android:text="@string/auth_provider_initial"
+                                android:textColor="@color/white"
+                                android:textSize="16sp" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="11dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvProviderName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/manrope_bold"
+                                android:text="@string/auth_provider_name"
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/ivOauthLock"
+                                    android:layout_width="11dp"
+                                    android:layout_height="11dp"
+                                    app:srcCompat="@drawable/ic_lock_card"
+                                    app:tint="@color/ink3" />
+
+                                <com.google.android.material.textview.MaterialTextView
+                                    android:id="@+id/tvOauthUrl"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="5dp"
+                                    android:fontFamily="@font/manrope_semibold"
+                                    android:text="@string/auth_oauth_url"
+                                    android:textColor="@color/ink3"
+                                    android:textSize="11sp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <!-- auth-b: scopes body -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvAuthRequestTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_bold"
+                            android:text="@string/auth_request_title"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvAuthRequestDesc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="7dp"
+                            android:fontFamily="@font/manrope_regular"
+                            android:lineSpacingMultiplier="1.1"
+                            android:text="@string/auth_request_desc"
+                            android:textColor="@color/ink3"
+                            android:textSize="13sp" />
+
+                        <!-- scopes list -->
+                        <LinearLayout
+                            android:id="@+id/llScopes"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="14dp"
+                            android:orientation="vertical">
+
+                            <!-- scope: sleep -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="top"
+                                android:orientation="horizontal">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/ivScopeSleepCheck"
+                                    android:layout_width="16dp"
+                                    android:layout_height="16dp"
+                                    android:layout_marginTop="1dp"
+                                    app:srcCompat="@drawable/ic_check"
+                                    app:tint="@color/good" />
+
+                                <com.google.android.material.textview.MaterialTextView
+                                    android:id="@+id/tvScopeSleep"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/manrope_regular"
+                                    android:lineSpacingMultiplier="1.4"
+                                    android:text="@string/scope_sleep"
+                                    android:textColor="@color/scope_text"
+                                    android:textSize="13sp" />
+
+                            </LinearLayout>
+
+                            <!-- scope: heart -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="11dp"
+                                android:gravity="top"
+                                android:orientation="horizontal">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/ivScopeHeartCheck"
+                                    android:layout_width="16dp"
+                                    android:layout_height="16dp"
+                                    android:layout_marginTop="1dp"
+                                    app:srcCompat="@drawable/ic_check"
+                                    app:tint="@color/good" />
+
+                                <com.google.android.material.textview.MaterialTextView
+                                    android:id="@+id/tvScopeHeart"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/manrope_regular"
+                                    android:lineSpacingMultiplier="1.4"
+                                    android:text="@string/scope_heart"
+                                    android:textColor="@color/scope_text"
+                                    android:textSize="13sp" />
+
+                            </LinearLayout>
+
+                            <!-- scope: activity -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="11dp"
+                                android:gravity="top"
+                                android:orientation="horizontal">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/ivScopeActivityCheck"
+                                    android:layout_width="16dp"
+                                    android:layout_height="16dp"
+                                    android:layout_marginTop="1dp"
+                                    app:srcCompat="@drawable/ic_check"
+                                    app:tint="@color/good" />
+
+                                <com.google.android.material.textview.MaterialTextView
+                                    android:id="@+id/tvScopeActivity"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/manrope_regular"
+                                    android:lineSpacingMultiplier="1.4"
+                                    android:text="@string/scope_activity"
+                                    android:textColor="@color/scope_text"
+                                    android:textSize="13sp" />
+
+                            </LinearLayout>
+
+                            <!-- scope: excluded (no access) -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="11dp"
+                                android:gravity="top"
+                                android:orientation="horizontal">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/ivScopeExcludedMark"
+                                    android:layout_width="16dp"
+                                    android:layout_height="16dp"
+                                    android:layout_marginTop="1dp"
+                                    app:srcCompat="@drawable/ic_plus"
+                                    app:tint="@color/attention" />
+
+                                <com.google.android.material.textview.MaterialTextView
+                                    android:id="@+id/tvScopeExcluded"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/manrope_regular"
+                                    android:lineSpacingMultiplier="1.4"
+                                    android:text="@string/scope_excluded"
+                                    android:textColor="@color/scope_muted"
+                                    android:textSize="13sp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ============ promises list ============ -->
+            <LinearLayout
+                android:id="@+id/llPromises"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:orientation="vertical">
+
+                <!-- promise: read-only -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardPromiseReadonly"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/card"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/hair"
+                    app:strokeWidth="1dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="13dp">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cvPromiseReadonlyIconBg"
+                            android:layout_width="34dp"
+                            android:layout_height="34dp"
+                            app:cardBackgroundColor="@color/lime_10"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="0dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:strokeWidth="0dp">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivPromiseReadonlyIcon"
+                                android:layout_width="17dp"
+                                android:layout_height="17dp"
+                                android:layout_gravity="center"
+                                app:srcCompat="@drawable/ic_lock_card"
+                                app:tint="@color/lime" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvPromiseReadonlyTitle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:fontFamily="@font/manrope_bold"
+                            android:text="@string/promise_readonly_title"
+                            android:textColor="@color/white"
+                            android:textSize="13sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/cvPromiseReadonlyIconBg"
+                            app:layout_constraintTop_toTopOf="@id/cvPromiseReadonlyIconBg" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvPromiseReadonlyDesc"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:fontFamily="@font/manrope_regular"
+                            android:lineSpacingMultiplier="1.1"
+                            android:text="@string/promise_readonly_desc"
+                            android:textColor="@color/ink3"
+                            android:textSize="11.5sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/tvPromiseReadonlyTitle"
+                            app:layout_constraintTop_toBottomOf="@id/tvPromiseReadonlyTitle" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- promise: de-identified -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardPromiseDeidentified"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
+                    app:cardBackgroundColor="@color/card"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/hair"
+                    app:strokeWidth="1dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="13dp">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cvPromiseDeidentifiedIconBg"
+                            android:layout_width="34dp"
+                            android:layout_height="34dp"
+                            app:cardBackgroundColor="@color/lime_10"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="0dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:strokeWidth="0dp">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivPromiseDeidentifiedIcon"
+                                android:layout_width="17dp"
+                                android:layout_height="17dp"
+                                android:layout_gravity="center"
+                                app:srcCompat="@drawable/ic_eye"
+                                app:tint="@color/lime" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvPromiseDeidentifiedTitle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:fontFamily="@font/manrope_bold"
+                            android:text="@string/promise_deidentified_title"
+                            android:textColor="@color/white"
+                            android:textSize="13sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/cvPromiseDeidentifiedIconBg"
+                            app:layout_constraintTop_toTopOf="@id/cvPromiseDeidentifiedIconBg" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvPromiseDeidentifiedDesc"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:fontFamily="@font/manrope_regular"
+                            android:lineSpacingMultiplier="1.1"
+                            android:text="@string/promise_deidentified_desc"
+                            android:textColor="@color/ink3"
+                            android:textSize="11.5sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/tvPromiseDeidentifiedTitle"
+                            app:layout_constraintTop_toBottomOf="@id/tvPromiseDeidentifiedTitle" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- promise: revoke -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardPromiseRevoke"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
+                    app:cardBackgroundColor="@color/card"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/hair"
+                    app:strokeWidth="1dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="13dp">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cvPromiseRevokeIconBg"
+                            android:layout_width="34dp"
+                            android:layout_height="34dp"
+                            app:cardBackgroundColor="@color/lime_10"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="0dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:strokeWidth="0dp">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivPromiseRevokeIcon"
+                                android:layout_width="17dp"
+                                android:layout_height="17dp"
+                                android:layout_gravity="center"
+                                app:srcCompat="@drawable/ic_unlink"
+                                app:tint="@color/lime" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvPromiseRevokeTitle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:fontFamily="@font/manrope_bold"
+                            android:text="@string/promise_revoke_title"
+                            android:textColor="@color/white"
+                            android:textSize="13sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/cvPromiseRevokeIconBg"
+                            app:layout_constraintTop_toTopOf="@id/cvPromiseRevokeIconBg" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvPromiseRevokeDesc"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:fontFamily="@font/manrope_regular"
+                            android:lineSpacingMultiplier="1.1"
+                            android:text="@string/promise_revoke_desc"
+                            android:textColor="@color/ink3"
+                            android:textSize="11.5sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/tvPromiseRevokeTitle"
+                            app:layout_constraintTop_toBottomOf="@id/tvPromiseRevokeTitle" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_100dp"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnAllowReadOnly"
+        app:srcCompat="@drawable/bg_black_gradient" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnAllowReadOnly"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/manrope_bold"
+        android:text="@string/allow_read_only_access"
+        android:textAllCaps="false"
+        android:textColor="@color/insights_btn_text_dark"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:backgroundTint="@color/lime"
+        app:cornerRadius="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/tvNotNow" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvNotNow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginBottom="12dp"
+        android:gravity="center"
+        android:text="@string/not_now"
+        android:textColor="@color/ink4"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

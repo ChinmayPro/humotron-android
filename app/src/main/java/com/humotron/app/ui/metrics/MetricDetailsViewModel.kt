@@ -12,7 +12,7 @@ import com.humotron.app.domain.modal.param.RingReadingParam
 import com.humotron.app.domain.modal.param.WristBandApiParam
 import com.humotron.app.domain.modal.response.DailyCalculatedMetricsResponse
 import com.humotron.app.domain.modal.response.MetricType
-import com.humotron.app.domain.modal.response.TemperatureResponse
+import com.humotron.app.domain.modal.response.DeviceMetricReadingResponse
 import com.humotron.app.domain.modal.response.WristBandSleepDurationResponse
 import com.humotron.app.domain.repository.SleepRepository
 import com.humotron.app.util.DefaultDayReadingTimeSlotNavigator
@@ -71,14 +71,14 @@ class MetricDetailsViewModel @Inject constructor(
     private val _dateRange = MutableStateFlow(DateRange(null, null))
     val dateRange = _dateRange.asStateFlow()
 
-    private val getRingReadingTemperatureLiveData: MutableLiveData<Resource<TemperatureResponse>> =
+    private val getRingReadingTemperatureLiveData: MutableLiveData<Resource<DeviceMetricReadingResponse>> =
         MutableLiveData()
 
-    fun getRingReadingTemperatureData(): LiveData<Resource<TemperatureResponse>> {
+    fun getRingReadingTemperatureData(): LiveData<Resource<DeviceMetricReadingResponse>> {
         return getRingReadingTemperatureLiveData
     }
 
-    private val temperatureCache = mutableMapOf<String, Resource<TemperatureResponse>>()
+    private val temperatureCache = mutableMapOf<String, Resource<DeviceMetricReadingResponse>>()
 
     fun getDailyCalculatedMetrics(
         deviceId: String,
@@ -130,29 +130,14 @@ class MetricDetailsViewModel @Inject constructor(
         }
     }
 
-    fun getRingReadingGraphData(ringId: String, param: RingReadingParam) {
-        val cacheKey = "ring_${ringId}_${param.range}_${param.startDate}_${param.endDate}"
-        if (temperatureCache.containsKey(cacheKey)) {
-            getRingReadingTemperatureLiveData.value = temperatureCache[cacheKey]
-            return
-        }
-
-        sleepRepository.getRingReadingGraphData(ringId, param).onEach { state ->
-            if (state.status == Status.SUCCESS) {
-                temperatureCache[cacheKey] = state
-            }
-            getRingReadingTemperatureLiveData.value = state
-        }.launchIn(viewModelScope)
-    }
-
-    fun getWristBandGraphData(deviceId: String, param: WristBandApiParam) {
+    fun getDeviceMetricReading(deviceId: String, param: WristBandApiParam) {
         val cacheKey = "wristBand_${deviceId}_${param.range}_${param.startDate}_${param.endDate}"
         if (temperatureCache.containsKey(cacheKey)) {
             getRingReadingTemperatureLiveData.value = temperatureCache[cacheKey]
             return
         }
 
-        sleepRepository.getWristBandGraphData(
+        sleepRepository.getDeviceMetricReading(
             deviceId,
             param
         ).onEach { state ->

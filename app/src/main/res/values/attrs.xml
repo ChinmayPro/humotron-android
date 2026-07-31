@@ -154,4 +154,32 @@
         <attr name="showValueLabel" format="boolean" />
         <attr name="showStepLabels" format="boolean" />
     </declare-styleable>
+
+    <!-- ConicSweepView: rotating conic-gradient glow behind the progress ring -->
+    <declare-styleable name="ConicSweepView">
+        <attr name="accentColor" format="color" />
+    </declare-styleable>
+
+    <!-- RingProgressView: circular progress ring (.sc-prog) -->
+    <declare-styleable name="RingProgressView">
+        <attr name="trackColorRP" format="color" />
+        <attr name="progressColorRP" format="color" />
+        <attr name="ringStrokeWidth" format="dimension" />
+        <attr name="progressPercent" format="float" />
+    </declare-styleable>
+
+    <!-- PulseRingView: single expanding / fading ring (.sc-pulse) -->
+    <declare-styleable name="PulseRingView">
+        <attr name="ringColor" format="color" />
+        <attr name="baseRadius" format="dimension" />
+        <attr name="pulseStrokeWidth" format="dimension" />
+    </declare-styleable>
+
+    <!-- NodeGraphView: hex spoke diagram with breathing nodes (.sc-graph) -->
+    <declare-styleable name="NodeGraphView">
+        <attr name="nodeColor" format="color" />
+        <attr name="graphAccentColor" format="color" />
+        <attr name="centerDotSize" format="dimension" />
+        <attr name="centerDotColor" format="color" />
+    </declare-styleable>
 </resources>

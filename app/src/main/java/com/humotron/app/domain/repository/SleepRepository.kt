@@ -37,13 +37,16 @@ import com.humotron.app.domain.modal.param.BandUploadData
 import com.humotron.app.domain.modal.param.BandUploadDeviceData
 import com.humotron.app.domain.modal.param.BaselineScanDataParam
 import com.humotron.app.domain.modal.param.DailyCalculatedMetricsParam
+import com.humotron.app.domain.modal.param.ConfirmWearableConnectionParam
+import com.humotron.app.domain.modal.param.ConnectGoogleHealthParam
+import com.humotron.app.domain.modal.param.ConnectProviderParam
+import com.humotron.app.domain.modal.param.SyncWearableDataParam
 import com.humotron.app.domain.modal.param.DetailActivityData
 import com.humotron.app.domain.modal.param.DeviceMetaDataParam
 import com.humotron.app.domain.modal.param.GetAllScanByTypeParam
 import com.humotron.app.domain.modal.param.HeartRateData
 import com.humotron.app.domain.modal.param.RingActivityIntensity
 import com.humotron.app.domain.modal.param.RingHistoricalReading
-import com.humotron.app.domain.modal.param.RingReadingParam
 import com.humotron.app.domain.modal.param.RingSleepEvent
 import com.humotron.app.domain.modal.param.RingSleepSession
 import com.humotron.app.domain.modal.param.RingUploadData
@@ -59,16 +62,22 @@ import com.humotron.app.domain.modal.response.AddHardwareResponse
 import com.humotron.app.domain.modal.response.AddScaleDataResponse
 import com.humotron.app.domain.modal.response.AllMetricsResponse
 import com.humotron.app.domain.modal.response.CommonResponse
+import com.humotron.app.domain.modal.response.ConfirmWearableConnectionResponse
+import com.humotron.app.domain.modal.response.ConnectWearableResponse
+import com.humotron.app.domain.modal.response.SyncWearableDataResponse
+import com.humotron.app.domain.modal.response.WearableProviderResponse
 import com.humotron.app.domain.modal.response.DailyCalculatedMetricsResponse
 import com.humotron.app.domain.modal.response.GetAllDeviceResponse
+import com.humotron.app.domain.modal.response.GoogleHealthBackfillResponse
 import com.humotron.app.domain.modal.response.HardwareListData
 import com.humotron.app.domain.modal.response.HealthScanResponse
 import com.humotron.app.domain.modal.response.HrvSaveScanResponse
 import com.humotron.app.domain.modal.response.MergedAssessmentResponse
 import com.humotron.app.domain.modal.response.MetricResponse
 import com.humotron.app.domain.modal.response.PastScanResponse
+import com.humotron.app.domain.modal.response.ProviderResponse
 import com.humotron.app.domain.modal.response.RingReadingData
-import com.humotron.app.domain.modal.response.TemperatureResponse
+import com.humotron.app.domain.modal.response.DeviceMetricReadingResponse
 import com.humotron.app.domain.modal.response.WristBandSleepDurationResponse
 import com.humotron.app.util.PrefUtils
 import com.humotron.app.util.TAG
@@ -106,6 +115,11 @@ class SleepRepository(
         MutableStateFlow<Resource<GetAllDeviceResponse>?>(null)
 
     val deviceCache = _deviceCache.asStateFlow()
+
+    private val _wearableProviderCache =
+        MutableStateFlow<Resource<WearableProviderResponse>?>(null)
+
+    val wearableProviderCache = _wearableProviderCache.asStateFlow()
 
     suspend fun saveSleepData(data: SleepEntity) {
         sleepDao.insert(data)
@@ -354,9 +368,9 @@ class SleepRepository(
         val ringSleepSessionList = ringSleepSessionFlow.first()
 
         val isEmpty = ringHistoricalList.isEmpty()
-            && ringSleepEventList.isEmpty()
-            && ringActivityIntensityList.isEmpty()
-            && ringSleepSessionList.isEmpty()
+                && ringSleepEventList.isEmpty()
+                && ringActivityIntensityList.isEmpty()
+                && ringSleepSessionList.isEmpty()
 
         if (isEmpty) {
             emit(Resource.success(AddDeviceDataResponse(null, null, null)))
@@ -482,9 +496,9 @@ class SleepRepository(
         ringSleepSessionList: List<RingSleepSessionEntity>,
     ): Resource<AddDeviceDataResponse> {
         val isEmpty = ringHistoricalList.isEmpty()
-            && ringSleepEventList.isEmpty()
-            && ringActivityIntensityList.isEmpty()
-            && ringSleepSessionList.isEmpty()
+                && ringSleepEventList.isEmpty()
+                && ringActivityIntensityList.isEmpty()
+                && ringSleepSessionList.isEmpty()
         if (isEmpty) {
             PlutoLog.e(TAG_RING_DEBUG, "empty ring data in SQl")
             return Resource.success(AddDeviceDataResponse(null, null, null))
@@ -694,6 +708,21 @@ class SleepRepository(
         }
     }
 
+    fun getWearableProviderData(forceRefresh: Boolean = false) {
+        if (!forceRefresh && _wearableProviderCache.value != null) return
+        CoroutineScope(Dispatchers.IO).launch {
+            _wearableProviderCache.value = Resource.loading()
+            try {
+                val response =
+                    responseHandler.handleResponse(api.getAllWearableProviders(), false)
+                _wearableProviderCache.value = response
+            } catch (e: Exception) {
+                _wearableProviderCache.value =
+                    responseHandler.handleException(e)
+            }
+        }
+    }
+
     fun getHardwareList(): Flow<Resource<HardwareListData>> = flow {
         try {
             val response =
@@ -733,54 +762,14 @@ class SleepRepository(
         emit(responseHandler.handleException(ValidationException(it.message)))
     }
 
-    fun getRingReadingGraphData(
-        ringId: String,
-        param: RingReadingParam,
-    ): Flow<Resource<TemperatureResponse>> = flow {
-        emit(Resource.loading())
-        try {
-            val response =
-                responseHandler.handleResponse(
-                    api.getRingReadingGraphData(ringId, param),
-                    false
-                )
-            emit(response)
-        } catch (e: Exception) {
-            emit(responseHandler.handleException(e))
-            e.printStackTrace()
-        }
-    }.catch {
-        emit(responseHandler.handleException(ValidationException(it.message)))
-    }
-
-    fun getBasicWeightScaleData(
-        deviceId: String,
-        param: com.humotron.app.domain.modal.param.ScaleReadingParam,
-    ): Flow<Resource<TemperatureResponse>> = flow {
-        emit(Resource.loading())
-        try {
-            val response =
-                responseHandler.handleResponse(
-                    api.getBasicWeightScaleData(deviceId, param),
-                    false
-                )
-            emit(response)
-        } catch (e: Exception) {
-            emit(responseHandler.handleException(e))
-            e.printStackTrace()
-        }
-    }.catch {
-        emit(responseHandler.handleException(ValidationException(it.message)))
-    }
-
-    fun getWristBandGraphData(
-        deviceId: String,
+    fun getDeviceMetricReading(
+        deviceId: String?,
         param: WristBandApiParam,
-    ): Flow<Resource<TemperatureResponse>> = flow {
+    ): Flow<Resource<DeviceMetricReadingResponse>> = flow {
         emit(Resource.loading())
         try {
             val response =
-                responseHandler.handleResponse(api.getWristBandGraphData(deviceId, param), false)
+                responseHandler.handleResponse(api.getDeviceMetricReading(deviceId, param), false)
             emit(response)
         } catch (e: Exception) {
             emit(responseHandler.handleException(e))
@@ -920,6 +909,109 @@ class SleepRepository(
     }.catch {
         emit(responseHandler.handleException(ValidationException(it.message)))
     }
+
+    fun getAllProvider(): Flow<Resource<ProviderResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response =
+                responseHandler.handleResponse(api.getAllProvider(), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun connectWearableProvider(param: ConnectProviderParam): Flow<Resource<ConnectWearableResponse>> =
+        flow {
+            emit(Resource.loading())
+            try {
+                val response =
+                    responseHandler.handleResponse(api.connectWearableProvider(param), false)
+                emit(response)
+            } catch (e: Exception) {
+                emit(responseHandler.handleException(e))
+                e.printStackTrace()
+            }
+        }.catch {
+            emit(responseHandler.handleException(ValidationException(it.message)))
+        }
+
+    fun connectGoogleHealth(param: ConnectGoogleHealthParam): Flow<Resource<ConnectWearableResponse>> =
+        flow {
+            emit(Resource.loading())
+            try {
+                val response =
+                    responseHandler.handleResponse(api.connectGoogleHealth(param), false)
+                emit(response)
+            } catch (e: Exception) {
+                emit(responseHandler.handleException(e))
+                e.printStackTrace()
+            }
+        }.catch {
+            emit(responseHandler.handleException(ValidationException(it.message)))
+        }
+
+    fun confirmWearableConnection(
+        param: ConfirmWearableConnectionParam,
+    ): Flow<Resource<ConfirmWearableConnectionResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response =
+                responseHandler.handleResponse(api.confirmWearableConnection(param), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun getGoogleHealthStatus(): Flow<Resource<ConfirmWearableConnectionResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response =
+                responseHandler.handleResponse(api.getGoogleHealthStatus(), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun backfillGoogleHealth(): Flow<Resource<GoogleHealthBackfillResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response =
+                responseHandler.handleResponse(api.backfillGoogleHealth(), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun syncWearableData(param: SyncWearableDataParam): Flow<Resource<SyncWearableDataResponse>> =
+        flow {
+            emit(Resource.loading())
+            try {
+                val response =
+                    responseHandler.handleResponse(api.syncWearableData(param), false)
+                emit(response)
+            } catch (e: Exception) {
+                emit(responseHandler.handleException(e))
+                e.printStackTrace()
+            }
+        }.catch {
+            emit(responseHandler.handleException(ValidationException(it.message)))
+        }
 
     suspend fun updateData(data: AddDeviceDataResponse.Data) {
         //PlutoLog.e(TAG_RING_DEBUG,"Mark data as synced")

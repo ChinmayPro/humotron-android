@@ -85,7 +85,6 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.e(TAG, "onViewCreated: ")
         binding = FragmentDeviceDataBinding.bind(view)
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -114,7 +113,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
                 findNavController().navigate(
                     R.id.fragmentMetric,
                     bundleOf(
-                        NavKeys.KEY_ID to deviceId,
+                        NavKeys.KEY_DEVICE_ID to deviceId,
                         NavKeys.KEY_DATE_TIME to dateTime,
                         NavKeys.KEY_METRIC to item,
                         NavKeys.KEY_DEVICE_NAME to deviceName,
@@ -132,7 +131,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
             when (deviceType) {
                 DeviceType.BAND -> {
                     binding.ivDevice.setImageResource(R.drawable.ic_band_vectr)
-                    setupHealthScanAdapter()
+                    //setupHealthScanAdapter()
                     binding.clTabMetrics.groupViewsRingBand.isVisible = true
                     observeBand()
                     viewModel.getAllMetricsByDeviceId(deviceId)
@@ -140,7 +139,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
 
                 DeviceType.RING -> {
                     binding.ivDevice.setImageResource(R.drawable.ic_ring_vector)
-                    setupHealthScanAdapter()
+                    //setupHealthScanAdapter()
                     binding.clTabMetrics.groupViewsRingBand.isVisible = true
                     observeRing()
                     viewModel.getRingReadingData(deviceId)
@@ -180,7 +179,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
                 .load("${it[0]}")
                 .into(binding.ivDevice)
         }*/
-        binding.tvDeviceName.text = userDevice?.deviceName ?: ""
+        binding.tvDeviceName.text = userDevice?.deviceFacingName ?: ""
         binding.header.tvTitle.text = "${userDevice?.deviceFacingName} Metrics"
 
         if (!userDevice?.dataSync.isNullOrEmpty()) {
@@ -438,7 +437,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
 
     private fun updateConnectionUiConnecting() = with(binding) {
         ivDeviceStatus.setImageResource(R.drawable.dot_connecting)
-        tvDeviceStatus.text = "Connecting"
+        tvDeviceStatus.text = resources.getString(R.string.connecting)
         tvDeviceStatus.setTextColor(
             ContextCompat.getColor(
                 requireContext(),
@@ -501,13 +500,15 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
                 }
 
                 Status.ERROR -> {
+                    Log.e(TAG, "subscribeToApiObserver: ")
                 }
 
                 Status.EXCEPTION -> {
+                    Log.e(TAG, "subscribeToApiObserver: ")
                 }
 
                 Status.LOADING -> {
-
+                    Log.e(TAG, "subscribeToApiObserver: ")
                 }
             }
         }
@@ -557,15 +558,17 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
                 }
 
                 Status.ERROR -> {
-                    // Handle error
+                    Log.e(TAG, "subscribeToApiObserver: ")
                 }
 
                 Status.EXCEPTION -> {
                     // Handle exception
+                    Log.e(TAG, "subscribeToApiObserver: ")
                 }
 
                 Status.LOADING -> {
                     // Handle loading
+                    Log.e(TAG, "subscribeToApiObserver: ")
                 }
             }
         }
@@ -698,7 +701,7 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
             binding.ivDevice -> {
             }
 
-                binding.btnTakeReading -> {
+            binding.btnTakeReading -> {
                 val deviceType = DeviceType.from(userDevice?.deviceName)
                 if (deviceType == DeviceType.RING || deviceType == DeviceType.BAND) {
                     findNavController().navigate(
@@ -842,32 +845,29 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
     }
 
     private fun updateBtStatusIcon(isEnabled: Boolean) {
-        if (isEnabled) {
-            /*binding.ivBtStatus.setImageResource(R.drawable.ic_bluetooth_24px)
+        /*if (isEnabled) {
+            binding.ivBtStatus.setImageResource(R.drawable.ic_bluetooth_24px)
             binding.ivBtStatus.alpha = 1f
-            binding.ivBtStatus.isVisible = false*/
+            binding.ivBtStatus.isVisible = false
         } else {
-            /*binding.ivBtStatus.isVisible = true
+            binding.ivBtStatus.isVisible = true
             binding.ivBtStatus.setImageResource(R.drawable.ic_bluetooth_off)
-            binding.ivBtStatus.alpha = 0.5f*/
-        }
+            binding.ivBtStatus.alpha = 0.5f
+        }*/
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         app.ringDeviceManager.unregisterCb()
-        Log.e(TAG, "onDestroyView: ")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.e(TAG, "onDestroy: ")
     }
 
     override fun onStop() {
         super.onStop()
         stopBp2wRealtime()
-        Log.e(TAG, "onStop: ")
     }
 
     fun stopBp2wRealtime() {

@@ -29,12 +29,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/_24dp"
+                android:layout_marginTop="@dimen/_14dp"
+                android:fontFamily="@font/manrope_extra_bold"
                 android:text="@string/your_latest_reading"
                 android:textAlignment="center"
                 android:textColor="@color/text_title_primary"
-                android:textSize="28sp"
-                android:textStyle="bold" />
+                android:textSize="22sp" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardLatestReading"
@@ -66,18 +66,19 @@
                             android:id="@+id/tvTemperatureValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_extra_bold"
                             android:text="00.00"
                             android:textColor="@color/white"
-                            android:textSize="40sp"
-                            android:textStyle="bold" />
+                            android:textSize="40sp" />
 
                         <TextView
                             android:id="@+id/tvUnit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_7dp"
+                            android:fontFamily="@font/manrope_bold"
                             android:textColor="@color/ink3"
-                            android:textSize="18sp"
+                            android:textSize="16sp"
                             tools:text="°C" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -87,9 +88,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:fontFamily="@font/manrope_bold"
                         android:text="Temperature"
                         android:textColor="#cfdad8"
-                        android:textSize="18sp"
+                        android:textSize="15sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/ll_temp" />
@@ -107,13 +109,13 @@
                         app:layout_constraintTop_toBottomOf="@id/tvTypeLabel" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/llSource"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="Source: HumotronRing"
                         android:textColor="@color/white_50"
                         android:textSize="12sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tvDateTime">
@@ -121,19 +123,44 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_regular"
                             android:text="@string/source"
                             android:textColor="@color/ink4"
-                            android:textSize="12sp" />
+                            android:textSize="11sp" />
 
                         <TextView
                             android:id="@+id/tvSource"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="2dp"
+                            android:fontFamily="@font/manrope_regular"
                             android:textColor="@color/ink4"
-                            android:textSize="12sp" />
+                            android:textSize="11sp" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_14dp"
+                        app:cardBackgroundColor="@color/lime_18"
+                        app:cardCornerRadius="9dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/llSource"
+                        app:strokeWidth="0dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_regular"
+                            android:paddingHorizontal="11dp"
+                            android:paddingVertical="5dp"
+                            android:text="OPTIMAL"
+                            android:textColor="@color/lime"
+                            android:textSize="11sp" />
+
+                    </com.google.android.material.card.MaterialCardView>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -172,12 +199,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="48dp"
+                android:layout_marginTop="28dp"
+                android:fontFamily="@font/manrope_extra_bold"
                 android:text="@string/decode_your_reading"
                 android:textAlignment="center"
                 android:textColor="@color/text_title_primary"
-                android:textSize="28sp"
-                android:textStyle="bold" />
+                android:textSize="22sp" />
 
             <TextView
                 android:id="@+id/tvAiInsights"
@@ -225,12 +252,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="28dp"
+                android:fontFamily="@font/manrope_extra_bold"
                 android:text="@string/how_you_are_doing"
                 android:textAlignment="center"
                 android:textColor="@color/text_title_primary"
-                android:textSize="28sp"
-                android:textStyle="bold" />
+                android:textSize="22sp" />
 
             <TextView
                 android:id="@+id/tvMetricFreq"
@@ -247,7 +274,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="24dp">
+                android:layout_marginTop="14dp">
 
                 <TextView
                     android:id="@+id/tvAverageTemp"
@@ -330,20 +357,21 @@
                 android:layout_marginTop="24dp"
                 android:background="@drawable/bg_red_rounded"
                 android:minHeight="48dp"
-                android:padding="@dimen/_12dp" />
+                android:padding="@dimen/_12dp"
+                android:textColor="#dfe9e3" />
 
             <TextView
                 android:id="@+id/tvTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="80dp"
+                android:layout_marginTop="28dp"
+                android:fontFamily="@font/manrope_extra_bold"
                 android:gravity="center"
                 android:text="What you can do\nabout it?"
                 android:textAlignment="center"
-                android:textColor="@color/white_70"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textColor="@color/text_title_primary"
+                android:textSize="22sp" />
 
             <TextView
                 android:id="@+id/tvSubtitle"
@@ -400,11 +428,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/_80dp"
+                android:layout_marginTop="@dimen/_28dp"
+                android:fontFamily="@font/manrope_extra_bold"
                 android:text="@string/suggested_supplements"
-                android:textColor="@color/white_90"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textColor="@color/text_title_primary"
+                android:textSize="22sp" />
 
             <com.yarolegovich.discretescrollview.DiscreteScrollView
                 android:id="@+id/dsvSupplements"
@@ -449,11 +477,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/_80dp"
+                android:layout_marginTop="@dimen/_28dp"
+                android:fontFamily="@font/manrope_extra_bold"
                 android:text="Suggested Recipe Bundles"
-                android:textColor="@color/white_90"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textColor="@color/text_title_primary"
+                android:textSize="22sp" />
 
             <com.yarolegovich.discretescrollview.DiscreteScrollView
                 android:id="@+id/dsvRecipes"
@@ -498,7 +526,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_24dp"
-                android:layout_marginTop="@dimen/_60dp"
+                android:layout_marginTop="@dimen/_28dp"
                 app:cardBackgroundColor="@color/card_bg_2"
                 app:cardCornerRadius="20dp"
                 app:strokeWidth="0dp">
@@ -577,7 +605,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_24dp"
                 android:layout_marginTop="@dimen/_40dp"
-                android:layout_marginBottom="@dimen/_40dp"
                 app:cardBackgroundColor="@color/card_bg_2"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="0dp"
@@ -659,11 +686,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/_28dp"
+                android:fontFamily="@font/manrope_extra_bold"
                 android:text="Go deeper"
-                android:textColor="@color/white"
-                android:textSize="28sp"
-                android:textStyle="bold" />
+                android:textColor="@color/text_title_primary"
+                android:textSize="22sp" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardAskTron"
@@ -672,7 +699,7 @@
                 android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="24dp"
                 app:cardBackgroundColor="#0AFFFFFF"
-                app:cardCornerRadius="20dp"
+                app:cardCornerRadius="14dp"
                 app:cardElevation="0dp"
                 app:strokeColor="@color/card_stroke"
                 app:strokeWidth="1dp">
@@ -684,8 +711,8 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivTronIcon"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
                         android:src="@drawable/ic_bot"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -696,9 +723,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
+                        android:fontFamily="@font/manrope_semibold"
                         android:text="Ask the Tron about this reading"
                         android:textColor="@color/white"
-                        android:textSize="16sp"
+                        android:textSize="13sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/ivChevron1"
                         app:layout_constraintStart_toEndOf="@id/ivTronIcon"
@@ -725,7 +753,7 @@
                 android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="12dp"
                 app:cardBackgroundColor="#0AFFFFFF"
-                app:cardCornerRadius="20dp"
+                app:cardCornerRadius="14dp"
                 app:cardElevation="0dp"
                 app:strokeColor="@color/card_stroke"
                 app:strokeWidth="1dp">
@@ -737,8 +765,8 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivExpertIcon"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
                         android:src="@drawable/ic_user_analyst"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -749,9 +777,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
+                        android:fontFamily="@font/manrope_semibold"
                         android:text="Expert review · £69"
                         android:textColor="@color/white"
-                        android:textSize="16sp"
+                        android:textSize="13sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/ivChevron2"
                         app:layout_constraintStart_toEndOf="@id/ivExpertIcon"
@@ -776,9 +805,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="32dp"
+                android:fontFamily="@font/manrope_regular"
                 android:text="Follow-up questions"
-                android:textColor="@color/white_50"
-                android:textSize="14sp" />
+                android:textColor="@color/ink4"
+                android:textSize="12sp" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardQuestion1"
@@ -787,7 +817,7 @@
                 android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="16dp"
                 app:cardBackgroundColor="#0AFFFFFF"
-                app:cardCornerRadius="20dp"
+                app:cardCornerRadius="14dp"
                 app:cardElevation="0dp"
                 app:strokeColor="@color/card_stroke"
                 app:strokeWidth="1dp">
@@ -799,8 +829,8 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivSparkle1"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
                         android:src="@drawable/ic_sparkle"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -811,9 +841,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
+                        android:fontFamily="@font/manrope_semibold"
                         android:text="Why did this change overnight?"
                         android:textColor="@color/white"
-                        android:textSize="16sp"
+                        android:textSize="13sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/ivSparkle1"
@@ -830,7 +861,7 @@
                 android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="12dp"
                 app:cardBackgroundColor="#0AFFFFFF"
-                app:cardCornerRadius="20dp"
+                app:cardCornerRadius="14dp"
                 app:cardElevation="0dp"
                 app:strokeColor="@color/card_stroke"
                 app:strokeWidth="1dp">
@@ -842,8 +873,8 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivSparkle2"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
                         android:src="@drawable/ic_sparkle"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -854,9 +885,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
+                        android:fontFamily="@font/manrope_semibold"
                         android:text="Show me my 90-day trend"
                         android:textColor="@color/white"
-                        android:textSize="16sp"
+                        android:textSize="13sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/ivSparkle2"
@@ -874,7 +906,7 @@
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="40dp"
                 app:cardBackgroundColor="#0AFFFFFF"
-                app:cardCornerRadius="20dp"
+                app:cardCornerRadius="14dp"
                 app:cardElevation="0dp"
                 app:strokeColor="@color/card_stroke"
                 app:strokeWidth="1dp">
@@ -886,8 +918,8 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivSparkle3"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
                         android:src="@drawable/ic_sparkle"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -898,9 +930,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
+                        android:fontFamily="@font/manrope_semibold"
                         android:text="What should I change first?"
                         android:textColor="@color/white"
-                        android:textSize="16sp"
+                        android:textSize="13sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/ivSparkle3"

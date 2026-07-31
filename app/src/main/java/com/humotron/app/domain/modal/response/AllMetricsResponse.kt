@@ -14,9 +14,9 @@ data class AllMetricsResponse(
     val message: String? = null,
 
     @SerializedName("data")
-    val data: Data? = null
+    val data: Data? = null,
 
-) : Parcelable {
+    ) : Parcelable {
 
     @Parcelize
     data class Data(
@@ -46,9 +46,9 @@ data class AllMetricsResponse(
         val updatedAt: String? = null,
 
         @SerializedName("wristbandMetrics")
-        val wristbandMetrics: WristbandMetrics? = null
+        val wristbandMetrics: WristbandMetrics? = null,
 
-    ) : Parcelable {
+        ) : Parcelable {
 
         @Parcelize
         data class Device(
@@ -96,9 +96,9 @@ data class AllMetricsResponse(
             val deviceCategoryName: String? = null,
 
             @SerializedName("metrics")
-            val metrics: List<DeviceMetric>? = null
+            val metrics: List<DeviceMetric>? = null,
 
-        ) : Parcelable {
+            ) : Parcelable {
 
             @Parcelize
             data class DeviceMetric(
@@ -113,9 +113,9 @@ data class AllMetricsResponse(
                 val unit: String? = null,
 
                 @SerializedName("shortMetricName")
-                val shortMetricName: String? = null
+                val shortMetricName: String? = null,
 
-            ) : Parcelable
+                ) : Parcelable
         }
 
         @Parcelize
@@ -134,7 +134,7 @@ data class AllMetricsResponse(
             val metricUserFacingName: String? = null,
 
             @SerializedName("deviceId")
-            val deviceId: String? = null,
+            val deviceId: List<String>? = null,
 
             @SerializedName("status")
             val status: String? = null,
@@ -153,6 +153,45 @@ data class AllMetricsResponse(
 
             @SerializedName("metricOrder")
             val metricOrder: Int? = null,
+
+            @SerializedName("allMetrics")
+            val allMetrics: DisplayConfig? = null,
+
+            @SerializedName("categoryId")
+            val categoryId: String? = null,
+
+            @SerializedName("chat")
+            val chat: FeatureConfig? = null,
+
+            @SerializedName("insight")
+            val insight: FeatureConfig? = null,
+
+            @SerializedName("intro")
+            val intro: String? = null,
+
+            @SerializedName("practice")
+            val practice: String? = null,
+
+            @SerializedName("thingsAccuracy")
+            val thingsAccuracy: List<String>? = null,
+
+            @SerializedName("whyMatters")
+            val whyMatters: String? = null,
+
+            @SerializedName("frequencyUnit")
+            val frequencyUnit: String? = null,
+
+            @SerializedName("readingFrequency")
+            val readingFrequency: String? = null,
+
+            @SerializedName("metricType")
+            val metricType: String? = null,
+
+            @SerializedName("graphTypeConfig")
+            val graphTypeConfig: List<GraphTypeConfig>? = null,
+
+            @SerializedName("metricSlug")
+            val metricSlug: String? = null,
 
             @SerializedName("metricRecommendedName")
             val metricRecommendedName: String? = null,
@@ -188,9 +227,45 @@ data class AllMetricsResponse(
             val supplementCount: Int? = null,
 
             @SerializedName("recipeCount")
-            val recipeCount: Int? = null
+            val recipeCount: Int? = null,
 
-        ) : Parcelable {
+            ) : Parcelable {
+
+            @Parcelize
+            data class DisplayConfig(
+
+                @SerializedName("enabled")
+                val enabled: Boolean? = null,
+
+                @SerializedName("displayType")
+                val displayType: String? = null,
+
+                ) : Parcelable
+
+            @Parcelize
+            data class FeatureConfig(
+
+                @SerializedName("enabled")
+                val enabled: Boolean? = null,
+
+                @SerializedName("displayType")
+                val displayType: String? = null,
+
+                @SerializedName("minData")
+                val minData: Int? = null,
+
+                ) : Parcelable
+
+            @Parcelize
+            data class GraphTypeConfig(
+
+                @SerializedName("range")
+                val range: String? = null,
+
+                @SerializedName("type")
+                val type: String? = null,
+
+                ) : Parcelable
 
             @Parcelize
             data class MetricValue(
@@ -202,9 +277,9 @@ data class AllMetricsResponse(
                 val value: String? = null,
 
                 @SerializedName("timestamp")
-                val timestamp: String? = null
+                val timestamp: String? = null,
 
-            ) : Parcelable
+                ) : Parcelable
 
             @Parcelize
             data class Recommendation(
@@ -219,9 +294,9 @@ data class AllMetricsResponse(
                 val recommendationsTag: String? = null,
 
                 @SerializedName("isPreview")
-                val isPreview: Boolean? = null
+                val isPreview: Boolean? = null,
 
-            ) : Parcelable
+                ) : Parcelable
         }
 
         @Parcelize
@@ -236,7 +311,7 @@ data class AllMetricsResponse(
             val exerciseIntensityMetric: ExerciseIntensityMetric? = null,
 
             @SerializedName("physicalRecoveryMetric")
-            val physicalRecoveryMetric: PhysicalRecoveryMetric? = null
+            val physicalRecoveryMetric: PhysicalRecoveryMetric? = null,
         ) : Parcelable
     }
 }

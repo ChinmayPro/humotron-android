@@ -3,6 +3,7 @@ package com.humotron.app.ui.device.ringband
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.activity.addCallback
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.fragment.findNavController
@@ -47,7 +48,13 @@ class RingBandScanReportFragment :
 
     private fun initClicks() {
         binding.header.btnBack.setOnClickListener {
-            findNavController().popBackStack()
+            findNavController().popBackStack(R.id.fragmentDeviceData, false)
+        }
+        binding.btnDone.setOnClickListener {
+            findNavController().popBackStack(R.id.fragmentDeviceData, false)
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            findNavController().popBackStack(R.id.fragmentDeviceData, false)
         }
     }
 

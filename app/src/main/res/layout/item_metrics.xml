@@ -17,33 +17,36 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvValue"
-            style="@style/Text.24x.Manrope.Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/manrope_extra_bold"
             android:text="00"
             android:textColor="@color/white"
+            android:textSize="22sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvMetricUnit"
-            style="@style/Text.12x.Manrope.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_5dp"
             android:layout_marginBottom="@dimen/_3dp"
+            android:fontFamily="@font/manrope_bold"
             android:text="C"
             android:textColor="@color/ink3"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/tvValue"
             app:layout_constraintStart_toEndOf="@+id/tvValue" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvType"
-            style="@style/Text.18x.Manrope.Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/manrope_bold"
             android:text="@string/heart_rate"
             android:textColor="#cfdad8"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvValue" />
 
@@ -57,11 +60,12 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvDateTime"
-                style="@style/Text.10x.Manrope.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/manrope_regular"
                 android:text="@string/heart_rate"
-                android:textColor="@color/ink4" />
+                android:textColor="@color/ink4"
+                android:textSize="10.5sp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mcvWearableRow"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="9dp"
+    app:cardBackgroundColor="@color/deep_dives_card"
+    app:cardCornerRadius="15dp"
+    app:strokeColor="@color/hair"
+    app:strokeWidth="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="14dp"
+        android:paddingTop="13dp"
+        android:paddingEnd="14dp"
+        android:paddingBottom="13dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvWhoopMark"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:cardBackgroundColor="@color/black"
+            app:cardCornerRadius="11dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeWidth="0dp">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvWhoopLetter"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/manrope_extra_bold"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                tools:text="W" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvWhoopName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="13dp"
+            android:fontFamily="@font/manrope_bold"
+            android:textColor="@color/white"
+            android:textSize="14.5sp"
+            app:layout_constraintEnd_toStartOf="@id/vWhoopRadio"
+            app:layout_constraintStart_toEndOf="@id/cvWhoopMark"
+            app:layout_constraintTop_toTopOf="@id/cvWhoopMark"
+            tools:text="Whoop" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvWhoopMeta"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:textColor="@color/ink4"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toStartOf="@id/vWhoopRadio"
+            app:layout_constraintStart_toStartOf="@id/tvWhoopName"
+            app:layout_constraintTop_toBottomOf="@id/tvWhoopName"
+            tools:text="Strap 4.0" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/vWhoopRadio"
+            android:layout_width="@dimen/_24dp"
+            android:layout_height="@dimen/_24dp"
+            android:background="@drawable/custom_checkbox_icon"
+            android:button="@null"
+            android:clickable="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

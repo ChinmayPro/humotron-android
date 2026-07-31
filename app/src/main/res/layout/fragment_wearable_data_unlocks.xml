@@ -1,0 +1,597 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@drawable/ic_bg_main_2"
+    tools:context=".ui.connect.wearable.WearableDataUnlocksFragment">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header_3" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <LinearLayout
+            android:id="@+id/llContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/_20dp"
+            android:paddingBottom="@dimen/_20dp">
+
+            <!-- headline block -->
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvHeadline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/manrope_extra_bold"
+                android:letterSpacing="-0.025"
+                android:text="@string/headline_ext_unlock"
+                android:textColor="@color/white"
+                android:textSize="23sp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvSubheadline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/manrope_medium"
+                android:lineSpacingMultiplier="1.1"
+                android:text="@string/subheadline_ext_unlock"
+                android:textColor="@color/ink2"
+                android:textSize="14.5sp" />
+
+            <!-- ============ card: Supplements ============ -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardSupplements"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:cardBackgroundColor="@color/card"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/hair"
+                app:strokeWidth="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cvSupplementsIconBg"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        app:cardBackgroundColor="@color/lime_14"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="0dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:strokeWidth="0dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivSupplementsIcon"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            app:srcCompat="@drawable/ic_unlock_supplements"
+                            app:tint="@color/lime" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvSupplementsName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="13dp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:text="@string/unlock_supplements_name"
+                        android:textColor="@color/white"
+                        android:textSize="14.5sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/cvSupplementsIconBg"
+                        app:layout_constraintTop_toTopOf="@id/cvSupplementsIconBg" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvSupplementsDesc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/manrope_regular"
+                        android:lineSpacingMultiplier="1.1"
+                        android:text="@string/unlock_supplements_desc"
+                        android:textColor="@color/ink3"
+                        android:textSize="12.5sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/tvSupplementsName"
+                        app:layout_constraintTop_toBottomOf="@id/tvSupplementsName" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cvSupplementsCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="9dp"
+                        app:cardBackgroundColor="@color/white05"
+                        app:cardCornerRadius="9dp"
+                        app:cardElevation="0dp"
+                        app:layout_constraintStart_toStartOf="@id/tvSupplementsName"
+                        app:layout_constraintTop_toBottomOf="@id/tvSupplementsDesc"
+                        app:strokeWidth="0dp">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvSupplementsCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_extra_bold"
+                            android:paddingStart="9dp"
+                            android:paddingTop="4dp"
+                            android:paddingEnd="9dp"
+                            android:paddingBottom="4dp"
+                            android:text="@string/unlock_supplements_count"
+                            android:textColor="@color/ink2"
+                            android:textSize="10.5sp" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ============ card: Recipes & nutrition ============ -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardNutrition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                app:cardBackgroundColor="@color/card"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/hair"
+                app:strokeWidth="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cvNutritionIconBg"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        app:cardBackgroundColor="@color/series_14"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="0dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:strokeWidth="0dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivNutritionIcon"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            app:srcCompat="@drawable/ic_unlock_nutrition"
+                            app:tint="@color/series" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvNutritionName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="13dp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:text="@string/unlock_nutrition_name"
+                        android:textColor="@color/white"
+                        android:textSize="14.5sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/cvNutritionIconBg"
+                        app:layout_constraintTop_toTopOf="@id/cvNutritionIconBg" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvNutritionDesc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/manrope_regular"
+                        android:lineSpacingMultiplier="1.1"
+                        android:text="@string/unlock_nutrition_desc"
+                        android:textColor="@color/ink3"
+                        android:textSize="12.5sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/tvNutritionName"
+                        app:layout_constraintTop_toBottomOf="@id/tvNutritionName" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cvNutritionCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="9dp"
+                        app:cardBackgroundColor="@color/white05"
+                        app:cardCornerRadius="9dp"
+                        app:cardElevation="0dp"
+                        app:layout_constraintStart_toStartOf="@id/tvNutritionName"
+                        app:layout_constraintTop_toBottomOf="@id/tvNutritionDesc"
+                        app:strokeWidth="0dp">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvNutritionCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_extra_bold"
+                            android:paddingStart="9dp"
+                            android:paddingTop="4dp"
+                            android:paddingEnd="9dp"
+                            android:paddingBottom="4dp"
+                            android:text="@string/unlock_nutrition_count"
+                            android:textColor="@color/ink2"
+                            android:textSize="10.5sp" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ============ card: Protocols & habits ============ -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardProtocols"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                app:cardBackgroundColor="@color/card"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/hair"
+                app:strokeWidth="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cvProtocolsIconBg"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        app:cardBackgroundColor="@color/cool_14"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="0dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:strokeWidth="0dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivProtocolsIcon"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            app:srcCompat="@drawable/ic_unlock_protocols"
+                            app:tint="@color/cool" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvProtocolsName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="13dp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:text="@string/unlock_protocols_name"
+                        android:textColor="@color/white"
+                        android:textSize="14.5sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/cvProtocolsIconBg"
+                        app:layout_constraintTop_toTopOf="@id/cvProtocolsIconBg" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvProtocolsDesc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/manrope_regular"
+                        android:lineSpacingMultiplier="1.1"
+                        android:text="@string/unlock_protocols_desc"
+                        android:textColor="@color/ink3"
+                        android:textSize="12.5sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/tvProtocolsName"
+                        app:layout_constraintTop_toBottomOf="@id/tvProtocolsName" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cvProtocolsCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="9dp"
+                        app:cardBackgroundColor="@color/white05"
+                        app:cardCornerRadius="9dp"
+                        app:cardElevation="0dp"
+                        app:layout_constraintStart_toStartOf="@id/tvProtocolsName"
+                        app:layout_constraintTop_toBottomOf="@id/tvProtocolsDesc"
+                        app:strokeWidth="0dp">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvProtocolsCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_extra_bold"
+                            android:paddingStart="9dp"
+                            android:paddingTop="4dp"
+                            android:paddingEnd="9dp"
+                            android:paddingBottom="4dp"
+                            android:text="@string/unlock_protocols_count"
+                            android:textColor="@color/ink2"
+                            android:textSize="10.5sp" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ============ card: Expert reviews ============ -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardExpert"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                app:cardBackgroundColor="@color/card"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/hair"
+                app:strokeWidth="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cvExpertIconBg"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        app:cardBackgroundColor="@color/watch_14"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="0dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:strokeWidth="0dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivExpertIcon"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            app:srcCompat="@drawable/ic_unlock_expert"
+                            app:tint="@color/watch" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvExpertName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="13dp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:text="@string/unlock_expert_name"
+                        android:textColor="@color/white"
+                        android:textSize="14.5sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/cvExpertIconBg"
+                        app:layout_constraintTop_toTopOf="@id/cvExpertIconBg" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvExpertDesc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/manrope_regular"
+                        android:lineSpacingMultiplier="1.1"
+                        android:text="@string/unlock_expert_desc"
+                        android:textColor="@color/ink3"
+                        android:textSize="12.5sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/tvExpertName"
+                        app:layout_constraintTop_toBottomOf="@id/tvExpertName" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cvExpertCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="9dp"
+                        app:cardBackgroundColor="@color/white05"
+                        app:cardCornerRadius="9dp"
+                        app:cardElevation="0dp"
+                        app:layout_constraintStart_toStartOf="@id/tvExpertName"
+                        app:layout_constraintTop_toBottomOf="@id/tvExpertDesc"
+                        app:strokeWidth="0dp">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvExpertCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_extra_bold"
+                            android:paddingStart="9dp"
+                            android:paddingTop="4dp"
+                            android:paddingEnd="9dp"
+                            android:paddingBottom="4dp"
+                            android:text="@string/unlock_expert_count"
+                            android:textColor="@color/ink2"
+                            android:textSize="10.5sp" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ============ card: Curated kit ============ -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardKit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                app:cardBackgroundColor="@color/card"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/hair"
+                app:strokeWidth="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cvKitIconBg"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        app:cardBackgroundColor="@color/good_14"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="0dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:strokeWidth="0dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivKitIcon"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            app:srcCompat="@drawable/ic_unlock_kit"
+                            app:tint="@color/good" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvKitName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="13dp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:text="@string/unlock_kit_name"
+                        android:textColor="@color/white"
+                        android:textSize="14.5sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/cvKitIconBg"
+                        app:layout_constraintTop_toTopOf="@id/cvKitIconBg" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvKitDesc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/manrope_regular"
+                        android:lineSpacingMultiplier="1.1"
+                        android:text="@string/unlock_kit_desc"
+                        android:textColor="@color/ink3"
+                        android:textSize="12.5sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/tvKitName"
+                        app:layout_constraintTop_toBottomOf="@id/tvKitName" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cvKitCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="9dp"
+                        app:cardBackgroundColor="@color/white05"
+                        app:cardCornerRadius="9dp"
+                        app:cardElevation="0dp"
+                        app:layout_constraintStart_toStartOf="@id/tvKitName"
+                        app:layout_constraintTop_toBottomOf="@id/tvKitDesc"
+                        app:strokeWidth="0dp">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvKitCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_extra_bold"
+                            android:paddingStart="9dp"
+                            android:paddingTop="4dp"
+                            android:paddingEnd="9dp"
+                            android:paddingBottom="4dp"
+                            android:text="@string/unlock_kit_count"
+                            android:textColor="@color/ink2"
+                            android:textSize="10.5sp" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ============ privacy / shield footer note ============ -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:gravity="top"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivFooterShield"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_marginTop="1dp"
+                    app:srcCompat="@drawable/ic_shield_check"
+                    app:tint="@color/lime" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvFooterNote"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="11dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/manrope_regular"
+                    android:lineSpacingMultiplier="1.1"
+                    android:text="@string/unlock_footer_note"
+                    android:textColor="@color/ink3"
+                    android:textSize="11.5sp" />
+
+            </LinearLayout>
+
+            <Space
+                android:id="@+id/bottomSpacerView"
+                android:layout_width="match_parent"
+                android:layout_height="60dp" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnChooseDevice"
+        app:srcCompat="@drawable/bg_black_gradient" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnChooseDevice"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/manrope_bold"
+        android:text="@string/connect_my_wearable"
+        android:textAllCaps="false"
+        android:textColor="@color/insights_btn_text_dark"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:backgroundTint="@color/lime"
+        app:cornerRadius="32dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -33,11 +33,10 @@ import com.humotron.app.R
 import com.humotron.app.core.base.BaseFragment
 import com.humotron.app.data.network.Status
 import com.humotron.app.databinding.FragmentMetricDetailsBinding
-import com.humotron.app.domain.modal.param.RingReadingParam
 import com.humotron.app.domain.modal.param.WristBandApiParam
 import com.humotron.app.domain.modal.response.DailyMetricItem
 import com.humotron.app.domain.modal.response.MetricType
-import com.humotron.app.domain.modal.response.TemperatureResponse
+import com.humotron.app.domain.modal.response.DeviceMetricReadingResponse
 import com.humotron.app.domain.modal.response.WristBandSleepDurationItem
 import com.humotron.app.domain.modal.response.splitBloodPressure
 import com.humotron.app.ui.device.adapter.SleepMetricsAdapter
@@ -415,7 +414,7 @@ class MetricDetailsFragment : BaseFragment(R.layout.fragment_metric_details) {
                         }
 
                         //to split value in two entries if receive like 125/70
-                        val expandedList = mutableListOf<TemperatureResponse.TemperatureData>()
+                        val expandedList = mutableListOf<DeviceMetricReadingResponse.DeviceMetricData>()
                         it.data.data.forEach { item ->
                             expandedList.addAll(item.splitBloodPressure())
                         }
@@ -505,7 +504,7 @@ class MetricDetailsFragment : BaseFragment(R.layout.fragment_metric_details) {
                                 metricName = metricName ?: ""
                             )
                             deviceId?.let { deviceId ->
-                                viewModel.getWristBandGraphData(
+                                viewModel.getDeviceMetricReading(
                                     deviceId,
                                     param
                                 )
@@ -655,7 +654,7 @@ class MetricDetailsFragment : BaseFragment(R.layout.fragment_metric_details) {
     }
 
     private fun createLineChartEntries(
-        list: List<TemperatureResponse.TemperatureData>,
+        list: List<DeviceMetricReadingResponse.DeviceMetricData>,
         tab: String?,
     ): List<Entry> {
 
@@ -703,7 +702,7 @@ class MetricDetailsFragment : BaseFragment(R.layout.fragment_metric_details) {
     }
 
     private fun createCandleChartEntries(
-        list: List<TemperatureResponse.TemperatureData>,
+        list: List<DeviceMetricReadingResponse.DeviceMetricData>,
     ): List<CandleEntry> {
         val entries = mutableListOf<CandleEntry>()
 

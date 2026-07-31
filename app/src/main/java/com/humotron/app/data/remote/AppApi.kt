@@ -4,6 +4,10 @@ import com.humotron.app.data.local.entity.UploadData
 import com.humotron.app.domain.modal.param.AddHardware
 import com.humotron.app.domain.modal.param.AddToCartParam
 import com.humotron.app.domain.modal.param.CompleteOnboardingParam
+import com.humotron.app.domain.modal.param.ConfirmWearableConnectionParam
+import com.humotron.app.domain.modal.param.ConnectGoogleHealthParam
+import com.humotron.app.domain.modal.param.ConnectProviderParam
+import com.humotron.app.domain.modal.param.SyncWearableDataParam
 import com.humotron.app.domain.modal.param.CreateNuggetPrefParam
 import com.humotron.app.domain.modal.param.DailyCalculatedMetricsParam
 import com.humotron.app.domain.modal.param.BPMachineUploadRequest
@@ -12,7 +16,6 @@ import com.humotron.app.domain.modal.param.GetConversationsParam
 import com.humotron.app.domain.modal.param.NuggetsInteraction
 import com.humotron.app.domain.modal.param.PostFollowUpConversationParam
 import com.humotron.app.domain.modal.param.RemovePdfParam
-import com.humotron.app.domain.modal.param.RingReadingParam
 import com.humotron.app.domain.modal.param.RingUploadData
 import com.humotron.app.domain.modal.param.BandUploadData
 import com.humotron.app.domain.modal.param.BaselineScanDataParam
@@ -37,6 +40,11 @@ import com.humotron.app.domain.modal.response.BookDetailResponse
 import com.humotron.app.domain.modal.response.BookLikeResponse
 import com.humotron.app.domain.modal.response.BookPreferenceResponse
 import com.humotron.app.domain.modal.response.CommonResponse
+import com.humotron.app.domain.modal.response.ConfirmWearableConnectionResponse
+import com.humotron.app.domain.modal.response.ConnectWearableResponse
+import com.humotron.app.domain.modal.response.GoogleHealthBackfillResponse
+import com.humotron.app.domain.modal.response.SyncWearableDataResponse
+import com.humotron.app.domain.modal.response.WearableProviderResponse
 import com.humotron.app.domain.modal.response.ConversationThreadsResponse
 import com.humotron.app.domain.modal.response.DailyCalculatedMetricsResponse
 import com.humotron.app.domain.modal.response.ExtractMetricsResponse
@@ -65,7 +73,7 @@ import com.humotron.app.domain.modal.response.PromptContextResponse
 import com.humotron.app.domain.modal.response.RingReadingData
 import com.humotron.app.domain.modal.response.SubmitAnswerRequest
 import com.humotron.app.domain.modal.response.SubmitAnswerResponse
-import com.humotron.app.domain.modal.response.TemperatureResponse
+import com.humotron.app.domain.modal.response.DeviceMetricReadingResponse
 import com.humotron.app.domain.modal.response.UseCaseResponse
 import com.humotron.app.domain.modal.response.VerifyOtpResponse
 import com.humotron.app.domain.modal.response.SupportHomeResponse
@@ -76,6 +84,7 @@ import com.humotron.app.domain.modal.response.TopicsByCategoryResponse
 import com.humotron.app.domain.modal.response.WristBandSleepDurationResponse
 import com.humotron.app.domain.modal.response.YetToTrackMetricResponse
 import com.humotron.app.domain.modal.response.ProductDetailResponse
+import com.humotron.app.domain.modal.response.ProviderResponse
 import com.humotron.app.domain.modal.response.InsightMetricsOverviewResponse
 import com.humotron.app.domain.modal.response.InsightTimelineResponse
 import com.humotron.app.domain.modal.response.InsightSummaryResponse
@@ -103,7 +112,6 @@ import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
-import retrofit2.http.Headers
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
@@ -226,17 +234,11 @@ interface AppApi {
         @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0)),
     ): Response<CommonResponse>
 
-    @POST("device/ringReadingHandler/{ringId}")
-    suspend fun getRingReadingGraphData(
-        @Path("ringId") ringId: String,
-        @Body param: RingReadingParam,
-    ): Response<TemperatureResponse>
-
-    @POST("device/wristBandApi/{device_id}")
-    suspend fun getWristBandGraphData(
-        @Path("device_id") deviceId: String,
+    @POST("device/getDeviceMetricReading/{device_id}")
+    suspend fun getDeviceMetricReading(
+        @Path("device_id") deviceId: String?,
         @Body param: WristBandApiParam,
-    ): Response<TemperatureResponse>
+    ): Response<DeviceMetricReadingResponse>
 
     @POST("device/getDailyCalculatedMetrics/{device_id}")
     suspend fun getDailyCalculatedMetrics(
@@ -269,12 +271,6 @@ interface AppApi {
         @Body param: GetAllScanByTypeParam,
     ): Response<PastScanResponse>
 
-    @POST("device/getBasicWeightScaleData/{deviceId}")
-    suspend fun getBasicWeightScaleData(
-        @Path("deviceId") deviceId: String,
-        @Body param: com.humotron.app.domain.modal.param.ScaleReadingParam,
-    ): Response<TemperatureResponse>
-
     @GET("device/getWristBandSleepDurationData/{device_id}")
     suspend fun getWristBandSleepDurationData(
         @Path("device_id") deviceId: String,
@@ -282,6 +278,32 @@ interface AppApi {
         @Query("endDate") endDate: String,
         @Query("offset") offset: String,
     ): Response<WristBandSleepDurationResponse>
+
+    @GET("provider/getAllProvider")
+    suspend fun getAllProvider(): Response<ProviderResponse>
+
+    @POST("syncWearables/connectWearableProvider")
+    suspend fun connectWearableProvider(@Body param: ConnectProviderParam): Response<ConnectWearableResponse>
+
+    @POST("googleHealth/connect")
+    suspend fun connectGoogleHealth(@Body param: ConnectGoogleHealthParam): Response<ConnectWearableResponse>
+
+    @GET("googleHealth/status")
+    suspend fun getGoogleHealthStatus(): Response<ConfirmWearableConnectionResponse>
+
+    @POST("googleHealth/backfill")
+    suspend fun backfillGoogleHealth(): Response<GoogleHealthBackfillResponse>
+
+    @POST("syncWearables/confirmWearableConnection")
+    suspend fun confirmWearableConnection(
+        @Body param: ConfirmWearableConnectionParam
+    ): Response<ConfirmWearableConnectionResponse>
+
+    @POST("syncWearables/syncWearableData")
+    suspend fun syncWearableData(@Body param: SyncWearableDataParam): Response<SyncWearableDataResponse>
+
+    @GET("syncWearables/getConnectedWearableDevices")
+    suspend fun getAllWearableProviders(): Response<WearableProviderResponse>
 
 
     // Nuggets
