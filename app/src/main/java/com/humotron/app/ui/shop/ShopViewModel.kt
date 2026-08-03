@@ -141,6 +141,15 @@ class ShopViewModel @Inject constructor(
     private val createBookCartLiveData: SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.BookAddToCartResponse>> = SingleLiveEvent()
     fun getCreateBookCartLiveData(): SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.BookAddToCartResponse>> = createBookCartLiveData
 
+    private val placeOrderLiveData: SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.PlaceOrderResponse>> = SingleLiveEvent()
+    fun getPlaceOrderLiveData(): SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.PlaceOrderResponse>> = placeOrderLiveData
+
+    private val createPaymentIntentLiveData: SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.CreatePaymentIntentResponse>> = SingleLiveEvent()
+    fun getCreatePaymentIntentLiveData(): SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.CreatePaymentIntentResponse>> = createPaymentIntentLiveData
+
+    private var currentOrderId: String? = null
+    fun getCurrentOrderId() = currentOrderId
+
     private val deleteCartItemLiveData: SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.CommonResponse>> = SingleLiveEvent()
     fun getDeleteCartItemLiveData(): SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.CommonResponse>> = deleteCartItemLiveData
 
@@ -162,6 +171,67 @@ class ShopViewModel @Inject constructor(
     fun createBookCart(param: com.humotron.app.domain.modal.param.AddToCartParam) {
         repository.createBookCart(param).onEach { state ->
             createBookCartLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
+
+    fun startBookingCheckout(param: com.humotron.app.domain.modal.param.AddToCartParam, addressId: String, payableAmount: Double) {
+        createPaymentIntentLiveData.value = Resource.loading()
+        repository.createBookCart(param).onEach { cartState ->
+            createBookCartLiveData.value = cartState
+            when (cartState.status) {
+                com.humotron.app.data.network.Status.SUCCESS -> {
+                    repository.getCartByUserId().onEach { getCartState ->
+                        when (getCartState.status) {
+                            com.humotron.app.data.network.Status.SUCCESS -> {
+                                val cartData = getCartState.data?.data
+                                val deliveryMethodId = cartData?.deliveryMethods?.firstOrNull()?.id ?: ""
+                                val validAddressId = if (addressId.isNotBlank()) addressId else (cartData?.address?.id ?: "")
+
+                                val request = HashMap<String, Any>()
+                                request["addressId"] = validAddressId
+                                request["deliveryMethodId"] = deliveryMethodId
+                                request["couponCode"] = cartData?.couponDetails?.promoCode ?: ""
+                                request["paymentId"] = ""
+                                request["payableAmount"] = payableAmount.toInt().toString()
+                                request["offerDiscount"] = ""
+                                request["couponAmount"] = cartData?.couponDetails?.discountValue?.toInt()?.toString() ?: ""
+
+                                repository.placeOrder(request).onEach { orderState ->
+                                    placeOrderLiveData.value = orderState
+                                    when (orderState.status) {
+                                        com.humotron.app.data.network.Status.SUCCESS -> {
+                                            currentOrderId = orderState.data?.orderId
+                                            val paymentIntentRequest = HashMap<String, Any>()
+                                            paymentIntentRequest["amount"] = payableAmount
+                                            paymentIntentRequest["orderId"] = orderState.data?.orderId ?: ""
+                                            paymentIntentRequest["currency"] = "gbp"
+
+                                            repository.createPaymentIntent(paymentIntentRequest).onEach { paymentState ->
+                                                createPaymentIntentLiveData.value = paymentState
+                                            }.launchIn(viewModelScope)
+                                        }
+                                        com.humotron.app.data.network.Status.ERROR, com.humotron.app.data.network.Status.EXCEPTION -> {
+                                            val err = orderState.error ?: com.humotron.app.data.network.error.Error()
+                                            createPaymentIntentLiveData.value = Resource.error(err)
+                                        }
+                                        com.humotron.app.data.network.Status.LOADING -> {}
+                                    }
+                                }.launchIn(viewModelScope)
+                            }
+                            com.humotron.app.data.network.Status.ERROR, com.humotron.app.data.network.Status.EXCEPTION -> {
+                                val err = getCartState.error ?: com.humotron.app.data.network.error.Error()
+                                createPaymentIntentLiveData.value = Resource.error(err)
+                            }
+                            com.humotron.app.data.network.Status.LOADING -> {}
+                        }
+                    }.launchIn(viewModelScope)
+                }
+                com.humotron.app.data.network.Status.ERROR, com.humotron.app.data.network.Status.EXCEPTION -> {
+                    val err = cartState.error ?: com.humotron.app.data.network.error.Error()
+                    createPaymentIntentLiveData.value = Resource.error(err)
+                }
+                com.humotron.app.data.network.Status.LOADING -> {}
+            }
         }.launchIn(viewModelScope)
     }
 

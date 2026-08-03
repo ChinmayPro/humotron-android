@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardSlot"
+    android:layout_width="match_parent"
+    android:layout_height="44dp"
+    android:layout_margin="4dp"
+    app:cardBackgroundColor="#8C080F10"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="0dp"
+    app:strokeColor="#1AFFFFFF"
+    app:strokeWidth="1dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvSlotTime"
+        style="@style/Text.14x.Manrope.Bold"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        tools:text="08:00" />
+
+</com.google.android.material.card.MaterialCardView>

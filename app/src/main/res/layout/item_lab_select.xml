@@ -5,76 +5,161 @@
     android:id="@+id/cardLab"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="20dp"
-    android:layout_marginTop="12dp"
-    app:cardBackgroundColor="@color/surface_dark"
-    app:cardCornerRadius="12dp"
+    android:layout_marginHorizontal="22dp"
+    android:layout_marginTop="10dp"
+    app:cardBackgroundColor="#8C080F10"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp"
     app:contentPadding="16dp"
-    app:strokeColor="#333333"
+    app:strokeColor="#14FFFFFF"
     app:strokeWidth="1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
+        <!-- Lab Name -->
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvLabName"
-            style="@style/Text.16x.Manrope.Bold"
+            style="@style/Text.14x.Manrope.Bold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
             android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="14.5sp"
+            app:layout_constraintEnd_toStartOf="@id/ivRadio"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Test Centre Name" />
+            tools:text="Humotron Partner Lab · Canary Wharf" />
 
-        <TextView
+        <!-- Radio Circle -->
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivRadio"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginStart="12dp"
+            android:src="@drawable/ic_radio_off"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Address -->
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvAddress"
-            style="@style/Text.14x.Manrope.Regular"
+            style="@style/Text.12x.Manrope.Regular"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textColor="@color/white70"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="3dp"
+            android:textColor="#859390"
+            android:textSize="12.5sp"
+            app:layout_constraintEnd_toEndOf="@id/tvLabName"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvLabName"
-            tools:text="120 Harley Street" />
+            tools:text="12 Cabot Square, London E14 4QT" />
 
-        <TextView
-            android:id="@+id/tvCity"
-            style="@style/Text.14x.Manrope.Regular"
+        <!-- Meta Row: distance, rating, hours -->
+        <LinearLayout
+            android:id="@+id/llMetaRow"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textColor="@color/white70"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvAddress"
-            tools:text="London" />
+            app:layout_constraintTop_toBottomOf="@id/tvAddress">
 
-        <TextView
-            android:id="@+id/tvPostcode"
-            style="@style/Text.14x.Manrope.Regular"
+            <!-- Distance -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:src="@drawable/ic_pin_location"
+                app:tint="#5FB7C4" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDistance"
+                style="@style/Text.10x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:textColor="#859390"
+                android:textSize="11.5sp"
+                tools:text="0.8 mi" />
+
+            <!-- Spacer -->
+            <View
+                android:layout_width="14dp"
+                android:layout_height="1dp" />
+
+            <!-- Rating -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:src="@drawable/ic_time_afternoon"
+                app:tint="#E7A93C" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvRating"
+                style="@style/Text.10x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:textColor="#859390"
+                android:textSize="11.5sp"
+                tools:text="4.9" />
+
+            <!-- Spacer -->
+            <View
+                android:layout_width="14dp"
+                android:layout_height="1dp" />
+
+            <!-- Hours -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:src="@drawable/ic_clock"
+                app:tint="#6F7E7D" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvHours"
+                style="@style/Text.10x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:textColor="#859390"
+                android:textSize="11.5sp"
+                tools:text="Mon-Sat · 7am-7pm" />
+
+        </LinearLayout>
+
+        <!-- Next Available -->
+        <LinearLayout
+            android:id="@+id/llNextAvailable"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textColor="@color/white70"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvCity"
-            tools:text="W1G 7JL" />
+            app:layout_constraintTop_toBottomOf="@id/llMetaRow">
 
-        <TextView
-            android:id="@+id/tvCountry"
-            style="@style/Text.14x.Manrope.Regular"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textColor="@color/white70"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvPostcode"
-            tools:text="UK" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:src="@drawable/ic_check_thin"
+                app:tint="#7BD88F" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvNextAvailable"
+                style="@style/Text.12x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:textColor="#7BD88F"
+                android:textSize="12sp"
+                tools:text="Next available: Tomorrow, 09:00" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

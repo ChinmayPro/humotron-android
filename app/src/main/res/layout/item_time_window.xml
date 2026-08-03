@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="22dp"
+    android:layout_marginBottom="11dp"
+    app:cardBackgroundColor="#8C080F10"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp"
+    app:contentPadding="15dp"
+    app:strokeColor="#1AFFFFFF"
+    app:strokeWidth="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Icon Container -->
+        <FrameLayout
+            android:id="@+id/flIcon"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="@drawable/bg_btn_round_corner"
+            android:backgroundTint="#1F5FB7C4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivIcon"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_clock"
+                app:tint="#5FB7C4" />
+        </FrameLayout>
+
+        <!-- Window Name -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvWindowName"
+            style="@style/Text.15x.Manrope.Bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toStartOf="@id/tvSlotsBadge"
+            app:layout_constraintStart_toEndOf="@id/flIcon"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Morning" />
+
+        <!-- Window Time Range -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvWindowTime"
+            style="@style/Text.12x.Manrope.Regular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="#859390"
+            android:textSize="12.5sp"
+            app:layout_constraintEnd_toStartOf="@id/tvSlotsBadge"
+            app:layout_constraintStart_toStartOf="@id/tvWindowName"
+            app:layout_constraintTop_toBottomOf="@id/tvWindowName"
+            tools:text="8:00 – 11:00" />
+
+        <!-- Slots Badge -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSlotsBadge"
+            style="@style/Text.11x.Manrope.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#7BD88F"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="6 slots" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

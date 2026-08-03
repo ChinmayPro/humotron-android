@@ -1,5 +1,6 @@
 package com.humotron.app.ui.shop.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -37,23 +38,50 @@ class BookingTypeAdapter(private val onItemSelected: (BookingType?) -> Unit) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: BookingType, isSelected: Boolean) {
-            binding.tvTitle.text = item.title
-            binding.tvDescription.text = item.description
-            binding.tvPrice.text = binding.root.context.getString(R.string.price_format, item.currency ?: "$", item.price)
+            binding.tvTitle.text = item.title ?: ""
+            binding.tvDescription.text = item.description ?: ""
+            
+            val formattedPrice = item.price?.let { priceStr ->
+                if (priceStr.startsWith("£") || priceStr.startsWith("$")) priceStr else "£$priceStr"
+            } ?: "£19.99"
+            binding.tvPrice.text = formattedPrice
 
-            // Handle selection UI
+            val titleLower = item.title?.lowercase() ?: ""
+            when {
+                titleLower.contains("self") -> {
+                    binding.tvHintText.text = "Kit posted to your address"
+                    binding.ivHintIcon.setImageResource(R.drawable.ic_opt_document)
+                }
+                titleLower.contains("home") -> {
+                    binding.tvHintText.text = "Choose a date, time & where to visit"
+                    binding.ivHintIcon.setImageResource(R.drawable.ic_opt_heart)
+                }
+                titleLower.contains("lab") -> {
+                    binding.tvHintText.text = "Choose a lab, date & time"
+                    binding.ivHintIcon.setImageResource(R.drawable.ic_opt_flask)
+                }
+                else -> {
+                    binding.tvHintText.text = "Select option to proceed"
+                    binding.ivHintIcon.setImageResource(R.drawable.ic_check_thin)
+                }
+            }
+
+            val context = binding.root.context
             if (isSelected) {
-                binding.cardView.strokeColor = ContextCompat.getColor(binding.root.context, R.color.colorBgBtn)
-                binding.cardView.strokeWidth = dpToPx(binding.root.context, 2)
+                binding.cardView.setCardBackgroundColor(Color.parseColor("#15C4F23E"))
+                binding.cardView.strokeColor = Color.parseColor("#C4F23E")
+                binding.cardView.strokeWidth = dpToPx(context, 1.5f)
             } else {
-                binding.cardView.strokeColor = ContextCompat.getColor(binding.root.context, R.color.gray_400)
-                binding.cardView.strokeWidth = dpToPx(binding.root.context, 1)
+                binding.cardView.setCardBackgroundColor(Color.parseColor("#8C080F10"))
+                binding.cardView.strokeColor = Color.parseColor("#1AFFFFFF")
+                binding.cardView.strokeWidth = dpToPx(context, 1f)
             }
 
             binding.root.setOnClickListener {
-                if (adapterPosition == RecyclerView.NO_POSITION) return@setOnClickListener
+                val position = bindingAdapterPosition
+                if (position == RecyclerView.NO_POSITION) return@setOnClickListener
                 val previousSelected = selectedPosition
-                selectedPosition = adapterPosition
+                selectedPosition = position
                 notifyItemChanged(previousSelected)
                 notifyItemChanged(selectedPosition)
                 onItemSelected(items[selectedPosition])
@@ -61,7 +89,7 @@ class BookingTypeAdapter(private val onItemSelected: (BookingType?) -> Unit) :
         }
     }
 
-    private fun dpToPx(context: android.content.Context, dp: Int): Int {
+    private fun dpToPx(context: android.content.Context, dp: Float): Int {
         return (dp * context.resources.displayMetrics.density).toInt()
     }
 }

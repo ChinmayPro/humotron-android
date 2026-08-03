@@ -21,6 +21,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentShop_to_fragmentShopTestDetail"
+            app:destination="@id/fragmentShopTestDetail"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -31,6 +38,13 @@
         <action
             android:id="@+id/action_fragmentBookingType_to_fragmentSelectAddress"
             app:destination="@id/fragmentSelectAddress"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentBookingType_to_fragmentChooseDateTime"
+            app:destination="@id/fragmentChooseDateTime"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
@@ -56,6 +70,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentSelectAddress_to_fragmentVerifyBooking"
+            app:destination="@id/fragmentVerifyBooking"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -63,6 +84,13 @@
         android:name="com.humotron.app.ui.shop.ChooseDateTimeFragment"
         android:label="Choose Date &amp; Time"
         tools:layout="@layout/fragment_choose_date_time">
+        <action
+            android:id="@+id/action_fragmentChooseDateTime_to_fragmentSelectAddress"
+            app:destination="@id/fragmentSelectAddress"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_fragmentChooseDateTime_to_fragmentVerifyBooking"
             app:destination="@id/fragmentVerifyBooking"
@@ -138,5 +166,19 @@
         android:name="com.humotron.app.ui.shop.ShopPlanDetailFragment"
         android:label="Plan Details"
         tools:layout="@layout/fragment_shop_plan_detail" />
+
+    <fragment
+        android:id="@+id/fragmentShopTestDetail"
+        android:name="com.humotron.app.ui.shop.ShopTestDetailFragment"
+        android:label="Test Details"
+        tools:layout="@layout/fragment_shop_test_detail">
+        <action
+            android:id="@+id/action_fragmentShopTestDetail_to_fragmentBookingType"
+            app:destination="@id/fragmentBookingType"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
 
 </navigation>

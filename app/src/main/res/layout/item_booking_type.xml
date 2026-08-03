@@ -5,52 +5,85 @@
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="20dp"
-    android:layout_marginVertical="8dp"
-    app:cardBackgroundColor="@color/black"
-    app:cardCornerRadius="12dp"
-    app:contentPadding="10dp"
-    app:strokeColor="@color/gray_400"
+    android:layout_marginHorizontal="22dp"
+    android:layout_marginBottom="12dp"
+    app:cardBackgroundColor="#8C080F10"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp"
+    app:contentPadding="16dp"
+    app:strokeColor="#1AFFFFFF"
     app:strokeWidth="1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
+        <!-- Title -->
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTitle"
-            style="@style/Text.18x.Manrope.Bold"
+            style="@style/Text.15x.Manrope.Bold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            tools:text="At-Home Service"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="12dp"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toStartOf="@id/tvPrice"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Self-collection kit" />
 
-        <TextView
+        <!-- Price (Top-Right in Lime Green) -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPrice"
+            style="@style/Text.16x.Manrope.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#C4F23E"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="£19.99" />
+
+        <!-- Description -->
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvDescription"
             style="@style/Text.12x.Manrope.Regular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            tools:text="Have a professional visit your home for sample collection."
-            android:textColor="@color/white70"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+            android:layout_marginTop="4dp"
+            android:lineSpacingExtra="3dp"
+            android:textColor="#859390"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            tools:text="Use our easy kit and drop it off when you are ready." />
 
-        <TextView
-            android:id="@+id/tvPrice"
-            style="@style/Text.20x.Manrope.Bold"
-            android:layout_width="0dp"
+        <!-- Sub Hint Icon & Text Container -->
+        <LinearLayout
+            android:id="@+id/llHintContainer"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            tools:text="$ 29.99"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvDescription" />
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/tvDescription">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivHintIcon"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_marginEnd="6dp"
+                android:src="@drawable/ic_check_thin"
+                app:tint="#5FB7C4" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvHintText"
+                style="@style/Text.12x.Manrope.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#5FB7C4"
+                android:textSize="11.5sp"
+                tools:text="Kit posted to your address" />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
