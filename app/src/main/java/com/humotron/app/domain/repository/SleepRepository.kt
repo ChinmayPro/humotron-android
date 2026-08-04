@@ -570,8 +570,8 @@ class SleepRepository(
 
         return try {
             PlutoLog.e(TAG, "Send Ring Data to Server")
-            // val response = responseHandler.handleResponse(api.sendRingDataToServer(payload), false)
-            val response = Resource.success(AddDeviceDataResponse(null, null, null))
+            val response = responseHandler.handleResponse(api.sendRingDataToServer(payload), false)
+            //val response = Resource.success(AddDeviceDataResponse(null, null, null))
             if (response.status == Status.SUCCESS) {
                 sleepDao.syncRingHistoricalData(ringHistoricalList.map { it.id })
                 sleepDao.syncRingSleepEventData(ringSleepEventList.map { it.id })

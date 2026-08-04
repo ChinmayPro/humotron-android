@@ -1,7 +1,19 @@
 package com.humotron.app.ui.connect.wearable
 
+import android.content.Intent
+import android.graphics.Color
+import android.graphics.Typeface
+import android.net.Uri
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColorInt
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -64,6 +76,63 @@ class WearableAuthoriseAccessFragment : Fragment(R.layout.fragment_wearable_auth
             } catch (e: Exception) {
             }
         }
+
+        if (provider.providerValue?.lowercase() == "fitbit") {
+            binding.llFitbitNotice.visibility = View.VISIBLE
+            setupFitbitDescription()
+        } else {
+            binding.llFitbitNotice.visibility = View.GONE
+        }
+    }
+
+    private fun setupFitbitDescription() {
+        val fullText =
+            getString(R.string.to_connect_with_fitbit)
+        val spannableString = SpannableString(fullText)
+        val wordToSpan = "create"
+        val startIndex = fullText.indexOf(wordToSpan)
+        val endIndex = startIndex + wordToSpan.length
+
+        if (startIndex >= 0) {
+            val clickableSpan = object : ClickableSpan() {
+                override fun onClick(widget: View) {
+                    try {
+                        val intent =
+                            Intent(Intent.ACTION_VIEW, Uri.parse("https://fitbit.google.com/auth/signup"))
+                        startActivity(intent)
+                    } catch (e: Exception) {
+                    }
+                }
+
+                override fun updateDrawState(ds: TextPaint) {
+                    super.updateDrawState(ds)
+                    ds.isUnderlineText = false
+                }
+            }
+
+            spannableString.setSpan(
+                clickableSpan,
+                startIndex,
+                endIndex,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            spannableString.setSpan(
+                ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.support_link_blue)),
+                startIndex,
+                endIndex,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            spannableString.setSpan(
+                StyleSpan(Typeface.BOLD),
+                startIndex,
+                endIndex,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
+
+        binding.tvFitbitNoticeDesc.text = spannableString
+        binding.tvFitbitNoticeDesc.movementMethod = LinkMovementMethod.getInstance()
+        binding.tvFitbitNoticeDesc.highlightColor = Color.TRANSPARENT
     }
 
     private fun initClicks() {

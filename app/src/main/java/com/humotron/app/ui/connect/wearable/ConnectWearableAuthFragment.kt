@@ -1,6 +1,8 @@
 package com.humotron.app.ui.connect.wearable
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -23,6 +25,7 @@ import com.humotron.app.ui.dialogs.LoadingDialog
 import com.humotron.app.ui.dialogs.StatusBottomSheetDialog
 import com.humotron.app.util.TAG
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.core.net.toUri
 
 @AndroidEntryPoint
 class ConnectWearableAuthFragment : Fragment(R.layout.fragment_connect_wearable_auth) {
@@ -70,19 +73,26 @@ class ConnectWearableAuthFragment : Fragment(R.layout.fragment_connect_wearable_
                         when (status) {
                             "success" -> handleAuthSuccess()
                             "action_required" -> {
-                                val reason = request.url?.getQueryParameter("reason")
+                                //val reason = request.url?.getQueryParameter("reason")
+                                val reason = getString(R.string.to_connect_with_fitbit)
                                 val setupUrl = request.url?.getQueryParameter("setupUrl")
 
                                 showStatusDialog(
                                     false,
                                     "Action Required",
-                                    reason ?: getString(R.string.something_went_wrong),
+                                    reason,
                                     "Close"
                                 ) {
                                     if (!setupUrl.isNullOrBlank()) {
                                         Log.e(TAG, "Opening setupUrl: $setupUrl")
-                                        view?.loadUrl(setupUrl)
-                                        //startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(setupUrl)))
+                                        //view?.loadUrl(setupUrl)
+                                        /*startActivity(
+                                            Intent(
+                                                Intent.ACTION_VIEW,
+                                                setupUrl.toUri()
+                                            )
+                                        )*/
+                                        findNavController().popBackStack()
                                     } else {
                                         findNavController().popBackStack()
                                     }

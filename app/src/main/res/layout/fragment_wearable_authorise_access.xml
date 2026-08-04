@@ -530,18 +530,51 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_100dp"/>
+                android:layout_height="220dp" />
 
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
 
     <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivBottomGradient"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnAllowReadOnly"
+        app:layout_constraintTop_toTopOf="@+id/llFitbitNotice"
         app:srcCompat="@drawable/bg_black_gradient" />
+
+    <LinearLayout
+        android:id="@+id/llFitbitNotice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_14dp"
+        android:layout_marginBottom="16dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/btnAllowReadOnly"
+        tools:visibility="visible">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvFitbitNoticeTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/manrope_bold"
+            android:text="Fitbit account required"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvFitbitNoticeDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/manrope_medium"
+            android:lineSpacingMultiplier="1.2"
+            android:textColor="@color/ink2"
+            android:textSize="12sp" />
+
+    </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnAllowReadOnly"

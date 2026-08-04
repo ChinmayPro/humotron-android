@@ -1661,5 +1661,6 @@ To get started:\n
     <string name="headline_ext_synth">Building your Humotron baseline</string>
     <string name="synth_stage_label">Reading 90 days of signal</string>
     <string name="synth_stage_sub">2,160 hours streaming in</string>
+    <string name="to_connect_with_fitbit">To connect with Fitbit, you must have a Fitbit account. Please create one and then return to sign in.</string>
 
 </resources>
