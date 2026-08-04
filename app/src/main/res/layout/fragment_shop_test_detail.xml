@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ic_bg_main_2">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_back_arrow">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/toolbarTitle"
+            style="@style/ToolbarTitleStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Test details" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsvContent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@id/layoutFooter"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="32dp">
+
+            <!-- Test Title -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTestTitle"
+                style="@style/Text.24x.Manrope.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:text="Cardiac Biomarker Test" />
+
+            <!-- Subtitle / Brand info -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTestSubTitle"
+                style="@style/Text.14x.Manrope.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:textColor="#5FB7C4"
+                android:textSize="14sp"
+                android:text="Humotron Deep Scan · 60+ biomarkers" />
+
+            <!-- Section 1: Overview Label -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvOverviewLabel"
+                style="@style/Text.16x.Manrope.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:text="Test overview"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <!-- Section 1: Overview Text -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvOverviewText"
+                style="@style/Text.14x.Manrope.Regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:lineSpacingExtra="4dp"
+                android:text="Gain comprehensive insight into your heart health. This panel measures LDL, HDL, Triglycerides and HbA1c — together a detailed picture of your cardiovascular health."
+                android:textColor="#9DACA9"
+                android:textSize="14sp" />
+
+            <!-- Section 2: Preparation Label -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPrepLabel"
+                style="@style/Text.16x.Manrope.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Preparation"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <!-- Preparation Items List -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical">
+
+                <!-- Prep Item 1 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:gravity="top"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="12dp"
+                        android:src="@drawable/ic_check_thin"
+                        app:tint="#C4F23E" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Text.14x.Manrope.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:lineSpacingExtra="3dp"
+                        android:text="Fast for 8–12 hours before your sample for accurate results."
+                        android:textColor="#9DACA9"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <!-- Prep Item 2 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:gravity="top"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="12dp"
+                        android:src="@drawable/ic_check_thin"
+                        app:tint="#C4F23E" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Text.14x.Manrope.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:lineSpacingExtra="3dp"
+                        android:text="Continue your medications unless your doctor advises otherwise."
+                        android:textColor="#9DACA9"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <!-- Prep Item 3 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:gravity="top"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="12dp"
+                        android:src="@drawable/ic_check_thin"
+                        app:tint="#C4F23E" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Text.14x.Manrope.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:lineSpacingExtra="3dp"
+                        android:text="Drink plenty of water — it helps with collection."
+                        android:textColor="#9DACA9"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <!-- Prep Item 4 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:gravity="top"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="12dp"
+                        android:src="@drawable/ic_check_thin"
+                        app:tint="#C4F23E" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Text.14x.Manrope.Regular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:lineSpacingExtra="3dp"
+                        android:text="Mornings are ideal, when your body is rested."
+                        android:textColor="#9DACA9"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Sticky Footer -->
+    <FrameLayout
+        android:id="@+id/layoutFooter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_scan_footer_gradient"
+        android:paddingHorizontal="24dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnProceedToBooking"
+            style="@style/Text.16x.Manrope.Bold"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@drawable/bg_btn_round_corner"
+            android:backgroundTint="@color/green_1"
+            android:text="Proceed to booking"
+            android:textAllCaps="false"
+            android:textColor="#071517" />
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

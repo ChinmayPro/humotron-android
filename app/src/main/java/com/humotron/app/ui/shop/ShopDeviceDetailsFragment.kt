@@ -1,28 +1,29 @@
 package com.humotron.app.ui.shop
 
+import android.graphics.Color
+import android.graphics.Typeface
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
 import android.view.View
-import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
 import com.humotron.app.R
 import com.humotron.app.core.base.BaseFragment
 import com.humotron.app.data.network.Status
 import com.humotron.app.databinding.FragmentShopDeviceDetailsBinding
-import com.humotron.app.domain.modal.response.GetShopDevicesResponse
-import androidx.recyclerview.widget.RecyclerView
-import android.content.Intent
-import android.net.Uri
-import com.humotron.app.ui.shop.adapter.ShopMetricAdapter
-import androidx.viewpager2.widget.CompositePageTransformer
-import androidx.viewpager2.widget.MarginPageTransformer
-import androidx.viewpager2.widget.ViewPager2
-import com.humotron.app.ui.shop.adapter.DeviceGalleryAdapter
-import com.humotron.app.domain.modal.response.DeviceDetailResponse
 import com.humotron.app.domain.modal.response.DeviceFaqResponse
+import com.humotron.app.domain.modal.response.GetShopDevicesResponse
+import com.humotron.app.ui.shop.adapter.ShopMetricAdapter
 import com.humotron.app.ui.shop.dialog.ShopDeviceFaqBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
+
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 
 @AndroidEntryPoint
 class ShopDeviceDetailsFragment : BaseFragment(R.layout.fragment_shop_device_details) {
@@ -32,19 +33,29 @@ class ShopDeviceDetailsFragment : BaseFragment(R.layout.fragment_shop_device_det
     private var device: GetShopDevicesResponse.Device? = null
     private var faqsList: List<DeviceFaqResponse.FaqData> = emptyList()
     private var isDeviceLiked: Boolean = false
-    private var galleryPageChangeCallback: ViewPager2.OnPageChangeCallback? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentShopDeviceDetailsBinding.bind(view)
-        
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.nsvContent) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(
+                v.paddingLeft,
+                v.paddingTop,
+                v.paddingRight,
+                systemBars.bottom + dpToPx(24)
+            )
+            insets
+        }
+
         device = arguments?.getParcelable("device")
-        
+
         setupObservers()
         initViews()
 
-        device?.id?.let { 
-            viewModel.fetchDeviceDetail(it) 
+        device?.id?.let {
+            viewModel.fetchDeviceDetail(it)
             viewModel.fetchDeviceFaqs(it)
         }
     }
@@ -53,42 +64,89 @@ class ShopDeviceDetailsFragment : BaseFragment(R.layout.fragment_shop_device_det
         viewModel.getDeviceDetailLiveData().observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
                 Status.SUCCESS -> {
-                    binding.layoutLoader.root.visibility = android.view.View.GONE
-                    binding.nsvContent.visibility = android.view.View.VISIBLE
-                    binding.tvNoData.visibility = android.view.View.GONE
-                    
+                    binding.layoutLoader.root.visibility = View.GONE
+                    binding.nsvContent.visibility = View.VISIBLE
+                    binding.tvNoData.visibility = View.GONE
+
                     val detail = resource.data?.data?.firstOrNull()
                     if (detail != null) {
-                        binding.tvNoData.visibility = android.view.View.GONE
-                        binding.nsvContent.visibility = android.view.View.VISIBLE
-                        
-                        binding.tvDeviceName.text = detail.deviceFacingName ?: detail.deviceName
-                        
-                        binding.tvPrice.text = "£${detail.deviceModel?.deviceModelPrice}"
-                        binding.tvDescription.text = detail.deviceCategory?.deviceCategoryLongDesc
-                        binding.tvWorksWith.text = getString(R.string.works_with_app)
+                        binding.tvNoData.visibility = View.GONE
+                        binding.nsvContent.visibility = View.VISIBLE
 
-                        val category = detail.deviceCategoryName ?: ""
+                        val deviceTitle = detail.deviceFacingName ?: detail.deviceName ?: device?.deviceFacingName ?: device?.deviceName ?: ""
+                        binding.tvDeviceName.text = deviceTitle
+
+                        val rawPrice = detail.deviceModel?.deviceModelPrice ?: device?.deviceModel?.deviceModelPrice ?: ""
+                        val formattedPrice = if (rawPrice.startsWith("£")) rawPrice else "£$rawPrice"
+                        binding.tvPrice.text = formattedPrice
+                        binding.tvDescription.text = detail.deviceCategory?.deviceCategoryLongDesc ?: detail.deviceTextMessage ?: ""
+                        binding.tvWorksWith.text = "Works with the Humotron App"
+
+                        val category = detail.deviceCategoryName ?: detail.deviceCategory?.deviceCategoryName ?: ""
                         val subCategory = detail.deviceSubCategory?.deviceSubCategoryName ?: ""
                         binding.tvBreadcrumb.text = if (subCategory.isNotEmpty()) {
-                            "$category > $subCategory"
+                            "$category › $subCategory"
                         } else {
                             category
                         }
-                        
-                        setupGallery(detail.deviceImage ?: emptyList())
-                        
-                        // Setup Connect with app text with bold "click here"
-                        val connectText = getString(R.string.connect_app_desc)
-                        val spannable = android.text.SpannableStringBuilder(connectText)
-                        val clickHere = getString(R.string.click_here)
-                        val clickStart = connectText.indexOf(clickHere)
-                        if (clickStart != -1) {
+
+                        // Combine args & API detail attributes (handling backend keys like BPMACHINE, WEIGHTMACHINE, URINESTRIP)
+                        val argName = device?.deviceName ?: ""
+                        val argFacing = device?.deviceFacingName ?: ""
+
+                        val detailName = detail.deviceName ?: ""
+                        val detailFacing = detail.deviceFacingName ?: ""
+                        val detailCategory = detail.deviceCategoryName ?: detail.deviceCategory?.deviceCategoryName ?: ""
+                        val detailSubCategory = detail.deviceSubCategory?.deviceSubCategoryName ?: ""
+
+                        val combinedText = "$argName $argFacing $detailName $detailFacing $detailCategory $detailSubCategory"
+                        val heroIconRes = getDeviceHeroIcon(combinedText)
+                        val accentColor = getDeviceAccentColor(combinedText)
+
+                        binding.ivDeviceHeroIcon.setImageResource(heroIconRes)
+                        binding.ivDeviceHeroIcon.clearColorFilter() // Preserve native 1.8dp vector line paths
+                        binding.ivDeviceHeroIcon.visibility = View.VISIBLE
+
+                        // Setup dynamic radial background glow matching device accent color
+                        val r = Color.red(accentColor)
+                        val g = Color.green(accentColor)
+                        val b = Color.blue(accentColor)
+                        val glowDrawable = GradientDrawable().apply {
+                            shape = GradientDrawable.OVAL
+                            gradientType = GradientDrawable.RADIAL_GRADIENT
+                            gradientRadius = dpToPx(85).toFloat()
+                            colors = intArrayOf(
+                                Color.argb(80, r, g, b),
+                                Color.argb(20, r, g, b),
+                                Color.argb(0, r, g, b)
+                            )
+                        }
+                        binding.vHeroGlow.background = glowDrawable
+
+                        // Floating Pill is ALWAYS bright lime green matching HTML .phero .pill
+                        binding.vHeroPill.background = ContextCompat.getDrawable(requireContext(), R.drawable.bg_hero_pill_glowing)
+                        binding.vHeroPill.visibility = View.VISIBLE
+
+                        binding.vpImageGallery.visibility = View.GONE
+                        binding.llIndicator.visibility = View.GONE
+
+                        // Setup Connect with app text matching HTML design
+                        val fullText = "Already own this device? Connect it to the app ›"
+                        val highlightText = "Connect it to the app ›"
+                        val spannable = SpannableStringBuilder(fullText)
+                        val start = fullText.indexOf(highlightText)
+                        if (start != -1) {
                             spannable.setSpan(
-                                android.text.style.StyleSpan(android.graphics.Typeface.BOLD),
-                                clickStart,
-                                clickStart + clickHere.length,
-                                android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                                ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.lime)),
+                                start,
+                                start + highlightText.length,
+                                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                            )
+                            spannable.setSpan(
+                                StyleSpan(Typeface.BOLD),
+                                start,
+                                start + highlightText.length,
+                                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                             )
                         }
                         binding.tvConnectApp.text = spannable
@@ -134,7 +192,7 @@ class ShopDeviceDetailsFragment : BaseFragment(R.layout.fragment_shop_device_det
 
                         // Like button
                         isDeviceLiked = detail.isLiked ?: false
-                        binding.btnLike.setImageResource(if (isDeviceLiked) R.drawable.ic_fav_selected else R.drawable.ic_fav_checkbox)
+                        updateLikeButtonState(isDeviceLiked)
                         var lastClickTime: Long = 0
                         binding.btnLike.setOnClickListener {
                             if (android.os.SystemClock.elapsedRealtime() - lastClickTime < 1000) {
@@ -143,23 +201,23 @@ class ShopDeviceDetailsFragment : BaseFragment(R.layout.fragment_shop_device_det
                             lastClickTime = android.os.SystemClock.elapsedRealtime()
                             device?.id?.let { id ->
                                 isDeviceLiked = !isDeviceLiked
-                                binding.btnLike.setImageResource(if (isDeviceLiked) R.drawable.ic_fav_selected else R.drawable.ic_fav_checkbox)
+                                updateLikeButtonState(isDeviceLiked)
                                 viewModel.likeDislikeDevice(id)
                             }
                         }
                     } else {
-                        binding.tvNoData.visibility = android.view.View.VISIBLE
-                        binding.nsvContent.visibility = android.view.View.GONE
+                        binding.tvNoData.visibility = View.VISIBLE
+                        binding.nsvContent.visibility = View.GONE
                     }
                 }
                 Status.ERROR, Status.EXCEPTION -> {
-                    binding.layoutLoader.root.visibility = android.view.View.GONE
-                    binding.tvNoData.visibility = android.view.View.VISIBLE
+                    binding.layoutLoader.root.visibility = View.GONE
+                    binding.tvNoData.visibility = View.VISIBLE
                 }
                 Status.LOADING -> {
-                    binding.layoutLoader.root.visibility = android.view.View.VISIBLE
-                    binding.nsvContent.visibility = android.view.View.GONE
-                    binding.tvNoData.visibility = android.view.View.GONE
+                    binding.layoutLoader.root.visibility = View.VISIBLE
+                    binding.nsvContent.visibility = View.GONE
+                    binding.tvNoData.visibility = View.GONE
                 }
             }
         }
@@ -169,92 +227,52 @@ class ShopDeviceDetailsFragment : BaseFragment(R.layout.fragment_shop_device_det
                 Status.SUCCESS -> {
                     faqsList = resource.data?.data ?: emptyList()
                     val hasFaqs = faqsList.isNotEmpty()
-                    binding.tvFaq.visibility = if (hasFaqs) android.view.View.VISIBLE else android.view.View.GONE
+                    binding.llFaqContainer.visibility = if (hasFaqs) View.VISIBLE else View.GONE
                 }
                 Status.ERROR, Status.EXCEPTION -> {
                     faqsList = emptyList()
-                    binding.tvFaq.visibility = android.view.View.GONE
+                    binding.llFaqContainer.visibility = View.GONE
                 }
                 Status.LOADING -> {
-                    binding.tvFaq.visibility = android.view.View.GONE
+                    binding.llFaqContainer.visibility = View.GONE
                 }
             }
         }
     }
 
-    private fun setupGallery(images: List<String>) {
-        if (images.isEmpty()) return
-        
-        // Only set the adapter if it's currently null or has changed
-        if (binding.vpImageGallery.adapter == null) {
-            val adapter = DeviceGalleryAdapter(images)
-            binding.vpImageGallery.adapter = adapter
-            
-            val compositePageTransformer = CompositePageTransformer()
-            compositePageTransformer.addTransformer(MarginPageTransformer(resources.getDimensionPixelSize(R.dimen._20dp)))
-            compositePageTransformer.addTransformer { page, position ->
-                val r = 1 - Math.abs(position)
-                page.scaleY = 0.85f + r * 0.15f
-                page.alpha = 0.5f + r * 0.5f
-            }
-            
-            binding.vpImageGallery.apply {
-                setPageTransformer(compositePageTransformer)
-                offscreenPageLimit = 3
-                getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
-            }
-        }
-        
-        setupIndicators(images.size)
-        
-        // Manage listeners correctly
-        galleryPageChangeCallback?.let { binding.vpImageGallery.unregisterOnPageChangeCallback(it) }
-        galleryPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                updateIndicator(position)
-            }
-        }
-        galleryPageChangeCallback?.let { binding.vpImageGallery.registerOnPageChangeCallback(it) }
-        
-        // Initial state
-        updateIndicator(binding.vpImageGallery.currentItem)
-    }
-
-    private fun setupIndicators(count: Int) {
-        // Only re-add if count changed
-        if (binding.llIndicator.childCount == count) return
-        
-        binding.llIndicator.removeAllViews()
-        if (count <= 1) return
-        
-        val margin = dpToPx(6)
-        for (i in 0 until count) {
-            val dot = android.widget.ImageView(requireContext())
-            val params = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply {
-                setMargins(margin, 0, margin, 0)
-            }
-            dot.layoutParams = params
-            dot.setImageResource(R.drawable.bg_gallery_indicator_inactive)
-            binding.llIndicator.addView(dot)
+    private fun getDeviceHeroIcon(text: String): Int {
+        val name = text.uppercase()
+        return when {
+            name.contains("BPMACHINE") || name.contains("CUFF") || name.contains("PRESSURE") || name.contains("BLOOD") -> R.drawable.ic_smart_cuff_vector
+            name.contains("RING") -> R.drawable.ic_ring_vector
+            name.contains("BAND") || name.contains("WRIST") -> R.drawable.ic_band_vectr
+            name.contains("URINE") || name.contains("FLASK") || name.contains("TEST") || name.contains("STRIP") -> R.drawable.ic_opt_flask
+            name.contains("WEIGHT") || name.contains("SCALE") -> R.drawable.ic_smart_scale_hero
+            else -> R.drawable.ic_smart_scale_hero
         }
     }
 
-    private fun updateIndicator(position: Int) {
-        if (binding.llIndicator.childCount == 0) return
-        
-        for (i in 0 until binding.llIndicator.childCount) {
-            val child = binding.llIndicator.getChildAt(i)
-            if (child is android.widget.ImageView) {
-                if (i == position) {
-                    child.setImageResource(R.drawable.bg_gallery_indicator_active)
-                } else {
-                    child.setImageResource(R.drawable.bg_gallery_indicator_inactive)
-                }
-            }
+    private fun getDeviceAccentColor(text: String): Int {
+        val name = text.uppercase()
+        return when {
+            name.contains("BPMACHINE") || name.contains("CUFF") || name.contains("PRESSURE") || name.contains("BLOOD") -> ContextCompat.getColor(requireContext(), R.color.cool) // Cool Teal #5FB7C4
+            name.contains("BAND") || name.contains("WRIST") -> Color.parseColor("#E6A2B5") // Pink / Coral
+            name.contains("URINE") || name.contains("FLASK") || name.contains("TEST") || name.contains("STRIP") -> ContextCompat.getColor(requireContext(), R.color.watch) // Gold / Yellow
+            name.contains("RING") -> ContextCompat.getColor(requireContext(), R.color.lime)
+            name.contains("WEIGHT") || name.contains("SCALE") -> ContextCompat.getColor(requireContext(), R.color.lime)
+            else -> ContextCompat.getColor(requireContext(), R.color.lime)
+        }
+    }
+
+    private fun updateLikeButtonState(liked: Boolean) {
+        if (liked) {
+            binding.btnLike.setImageResource(R.drawable.ic_fav_selected)
+            binding.btnLike.imageTintList = null
+            binding.btnLike.alpha = 1.0f
+        } else {
+            binding.btnLike.setImageResource(R.drawable.ic_fav_checkbox)
+            binding.btnLike.imageTintList = android.content.res.ColorStateList.valueOf(requireContext().getColor(R.color.white))
+            binding.btnLike.alpha = 0.7f
         }
     }
 
@@ -267,7 +285,7 @@ class ShopDeviceDetailsFragment : BaseFragment(R.layout.fragment_shop_device_det
             findNavController().popBackStack()
         }
 
-        binding.tvFaq.setOnClickListener {
+        binding.llFaqContainer.setOnClickListener {
             val dName = device?.deviceName ?: ""
             if (faqsList.isNotEmpty()) {
                 val bottomSheet = ShopDeviceFaqBottomSheet.newInstance(dName, faqsList)

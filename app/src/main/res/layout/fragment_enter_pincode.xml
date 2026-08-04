@@ -4,111 +4,245 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@drawable/ic_bg_main_2"
     android:focusable="true"
-    android:focusableInTouchMode="true"
-    android:padding="24dp">
+    android:focusableInTouchMode="true">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/btnClose"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/ic_close"
-        android:layout_marginTop="@dimen/_15dp"
-        app:layout_constraintEnd_toEndOf="parent"
+    <!-- Header Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/white" />
+        app:navigationIcon="@drawable/ic_back_arrow">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvTitle"
-        style="@style/Text.24x.Manrope.Bold"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/enable_location_pincode_title"
-        android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnClose"
-        app:layout_constraintTop_toTopOf="@+id/btnClose" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnAccessLocation"
-        style="@style/Text.16x.Manrope.SemiBold"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginTop="48dp"
-        android:background="@drawable/bg_btn_outline_white"
-        android:text="@string/access_to_location"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/toolbar_title"
+                style="@style/ToolbarTitleStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Book a scan"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btnClose"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_close"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/white" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <!-- Step Progress Segments Bar -->
     <LinearLayout
-        android:id="@+id/llOrDivider"
+        android:id="@+id/llProgressBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:gravity="center"
+        android:layout_height="4dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="4dp"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/btnAccessLocation">
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1"
-            android:background="@color/white20" />
+    <!-- Scrollable Content Area -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@id/layoutFooter"
+        app:layout_constraintTop_toBottomOf="@id/llProgressBar">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            style="@style/Text.14x.Manrope.Medium"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:text="@string/or"
-            android:textColor="@color/white50" />
+            android:orientation="vertical"
+            android:paddingBottom="24dp">
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1"
-            android:background="@color/white20" />
+            <!-- Step Eyebrow -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvStepEyebrow"
+                style="@style/Text.10x.Manrope.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="10dp"
+                android:letterSpacing="0.06"
+                android:text="STEP 2 OF 6 · CONFIRM LOCATION"
+                android:textAllCaps="true"
+                android:textColor="#5FB7C4"
+                android:textSize="11sp" />
+
+            <!-- Main Heading -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTitle"
+                style="@style/Text.22x.Manrope.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="2dp"
+                android:text="Where are you looking?"
+                android:textColor="@color/white"
+                android:textSize="22sp" />
+
+            <!-- Subtitle -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvSubtitle"
+                style="@style/Text.14x.Manrope.Regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="4dp"
+                android:text="We use your location to show the nearest partner labs."
+                android:textColor="#9DACA9"
+                android:textSize="13.5sp" />
+
+            <!-- Use My Location Button (teal outlined) -->
+            <FrameLayout
+                android:id="@+id/btnAccessLocation"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_btn_location_teal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/ic_pin_location" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Text.14x.Manrope.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="9dp"
+                        android:text="Use my current location"
+                        android:textColor="#5FB7C4"
+                        android:textSize="14.5sp" />
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <!-- Or Divider -->
+            <LinearLayout
+                android:id="@+id/llOrDivider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="22dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="#14FFFFFF" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Text.12x.Manrope.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="12dp"
+                    android:text="or"
+                    android:textColor="#6F7E7D"
+                    android:textSize="12sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="#14FFFFFF" />
+
+            </LinearLayout>
+
+            <!-- Enter a postcode label -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvEnterPincodeLabel"
+                style="@style/Text.10x.Manrope.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="22dp"
+                android:text="Enter a postcode"
+                android:textColor="#859390"
+                android:textSize="11sp" />
+
+            <!-- Postcode Input Field -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="22dp"
+                android:layout_marginTop="7dp"
+                app:cardBackgroundColor="#08FFFFFF"
+                app:cardCornerRadius="13dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#14FFFFFF"
+                app:strokeWidth="1dp">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etPincode"
+                    style="@style/Text.14x.Manrope.SemiBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="e.g. E14 4QT"
+                    android:imeOptions="actionDone"
+                    android:maxLines="1"
+                    android:paddingHorizontal="15dp"
+                    android:paddingVertical="15dp"
+                    android:singleLine="true"
+                    android:textColor="@color/white"
+                    android:textColorHint="#6F7E7D"
+                    android:textSize="14.5sp" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Sticky Footer -->
+    <LinearLayout
+        android:id="@+id/layoutFooter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_scan_footer_gradient"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingHorizontal="24dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnContinue"
+            style="@style/Text.16x.Manrope.Bold"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@drawable/selector_btn_booking"
+            android:text="Continue"
+            android:textAllCaps="false"
+            android:textColor="@color/selector_btn_text_booking" />
+
     </LinearLayout>
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvEnterPincodeLabel"
-        style="@style/Text.18x.Manrope.Bold"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="@string/enter_pincode_label"
-        android:textColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/llOrDivider" />
-
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/etPincode"
-        style="@style/Text.16x.Manrope.Medium"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@null"
-        android:hint="@string/enter_pincode_label"
-        android:imeOptions="actionDone"
-        android:maxLines="1"
-        android:paddingVertical="12dp"
-        android:singleLine="true"
-        android:text="W1G 7JL"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white30"
-        app:layout_constraintTop_toBottomOf="@id/tvEnterPincodeLabel" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnContinue"
-        style="@style/Text.16x.Manrope.SemiBold"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginTop="48dp"
-        android:background="@drawable/bg_btn_round_corner"
-        android:text="@string/_continue"
-        android:textAllCaps="false"
-        android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/etPincode" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

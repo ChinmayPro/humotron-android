@@ -30,9 +30,7 @@ class OnBoardingActivity : AppCompatActivity() {
         val isLogin = prefUtils.isLogin()
         val onboardSeen = prefUtils.getBoolean("onboard_seen")
 
-        val startDestination = if (isLogin && !isPrivacy) {
-            R.id.onBoardPrivacyFragment
-        } else if (onboardSeen || isPrivacy) {
+        val startDestination = if (onboardSeen || isPrivacy || isLogin) {
             R.id.loginFragment
         } else {
             R.id.onBoardFragment

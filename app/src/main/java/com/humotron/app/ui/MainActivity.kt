@@ -169,25 +169,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             val decorView = window.decorView
             val controller = WindowInsetsControllerCompat(window, decorView)
 
-            when (destination.id) {
-                R.id.fragmentUploadedReports, R.id.fragmentBookingType, R.id.fragmentSelectAddress, R.id.fragmentChooseDateTime, R.id.fragmentVerifyBooking -> {
-                    window.statusBarColor = android.graphics.Color.BLACK
-                    binding.vStatusBarBg.setBackgroundColor(android.graphics.Color.BLACK)
-                    controller.isAppearanceLightStatusBars = false
-                }
-
-                R.id.fragmentShop, R.id.fragmentProfile -> {
-                    window.statusBarColor = android.graphics.Color.TRANSPARENT
-                    binding.vStatusBarBg.setBackgroundColor(android.graphics.Color.TRANSPARENT)
-                    controller.isAppearanceLightStatusBars = false
-                }
-
-                else -> {
-                    window.statusBarColor = android.graphics.Color.TRANSPARENT
-                    binding.vStatusBarBg.setBackgroundColor(android.graphics.Color.TRANSPARENT)
-                    controller.isAppearanceLightStatusBars = false
-                }
-            }
+            window.statusBarColor = android.graphics.Color.TRANSPARENT
+            binding.vStatusBarBg.setBackgroundColor(android.graphics.Color.TRANSPARENT)
+            controller.isAppearanceLightStatusBars = false
         }
         highlightView(0)
         //Force initialize HomeViewModel here so its init{} runs before any Fragment uses it, otherwise homeViewModel?.loadDateData() not work in RingDeviceManager

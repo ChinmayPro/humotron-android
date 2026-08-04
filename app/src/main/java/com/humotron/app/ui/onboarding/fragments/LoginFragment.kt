@@ -34,8 +34,6 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
     private val viewModel: LoginViewModel by viewModels()
     private lateinit var binding: FragmentLoginBinding
 
-    private var isLoginMode = false
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentLoginBinding.bind(view)
@@ -45,32 +43,9 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
         val termsHtml = "By continuing you agree to our <font color='#C4F23E'>Terms</font> and <font color='#C4F23E'>Privacy Policy</font>."
         binding.tvTerms.text = HtmlCompat.fromHtml(termsHtml, HtmlCompat.FROM_HTML_MODE_LEGACY)
 
-        binding.rgAuthType.setOnCheckedChangeListener { _, checkedId ->
-            if (checkedId == R.id.rbLogin) {
-                isLoginMode = true
-                binding.tvTitle.text = getString(R.string.welcome_back)
-                binding.tvSubTitle.text = getString(R.string.pick_up_exactly)
-            } else {
-                isLoginMode = false
-                binding.tvTitle.text = getString(R.string.start_your_read)
-                binding.tvSubTitle.text = getString(R.string.two_minutes_to_set_up)
-            }
-        }
-
         binding.btnSubmit.setOnClickListener {
             val email = binding.etEmail.text.toString()
-            if (isLoginMode) {
-                viewModel.loginUser(
-                    LoginParam(
-                        userType = "USER",
-                        mode = "NORMAL",
-                        loginType = "Mobile",
-                        email = email
-                    )
-                )
-            } else {
-                viewModel.sendOtp(SendOtpParam(email))
-            }
+            viewModel.sendOtp(SendOtpParam(email))
         }
 
         binding.btnGoogle.setOnClickListener {
@@ -147,25 +122,34 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
                     if (data?.token != null) {
                         prefUtils.setAuthToken(data.token ?: "")
                         prefUtils.setString(Preference.LOGIN_USER_EMAIL, data.user?.email ?: "")
-                        data.user?.let { prefUtils.setLoginResponse(it) }
+                        val user = data.user
+                        user?.let { prefUtils.setLoginResponse(it) }
 
-                        if (!prefUtils.getBoolean(Preference.ONBOARD_PRIVACY)) {
-                            findNavController().navigate(R.id.onBoardPrivacyFragment)
-                        } else if (data.user?.isOnBoarding == true) {
-                            startActivity(Intent(requireContext(), MainActivity::class.java))
-                            requireActivity().finish()
-                        } else {
-                            val user = data.user
-                            if (user?.name.isNullOrEmpty()) {
-                                findNavController().navigate(R.id.personalizeFragment)
-                            } else if (user.height.isNullOrEmpty()) {
-                                val bundle = Bundle().apply {
-                                    putInt("position", 1)
-                                }
-                                findNavController().navigate(R.id.personalizeFragment, bundle)
-                            } else {
+                        val isReturningUser = user?.isOnBoarding == true || !user?.name.isNullOrEmpty()
+
+                        if (isReturningUser) {
+                            prefUtils.setBoolean(Preference.ONBOARD_PRIVACY, true)
+                            if (user?.isOnBoarding == true) {
                                 startActivity(Intent(requireContext(), MainActivity::class.java))
                                 requireActivity().finish()
+                            } else {
+                                if (user?.name.isNullOrEmpty()) {
+                                    findNavController().navigate(R.id.personalizeFragment)
+                                } else if (user.height.isNullOrEmpty()) {
+                                    val bundle = Bundle().apply {
+                                        putInt("position", 1)
+                                    }
+                                    findNavController().navigate(R.id.personalizeFragment, bundle)
+                                } else {
+                                    startActivity(Intent(requireContext(), MainActivity::class.java))
+                                    requireActivity().finish()
+                                }
+                            }
+                        } else {
+                            if (!prefUtils.getBoolean(Preference.ONBOARD_PRIVACY)) {
+                                findNavController().navigate(R.id.onBoardPrivacyFragment)
+                            } else {
+                                findNavController().navigate(R.id.personalizeFragment)
                             }
                         }
                     } else {

@@ -33,49 +33,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <RadioGroup
-                android:id="@+id/rgAuthType"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_26dp"
-                android:background="@drawable/bg_segment_container"
-                android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@id/tvAppTitle">
-
-                <RadioButton
-                    android:id="@+id/rbCreate"
-                    style="@style/Text.12x.Manrope.Bold"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/selector_segment_bg"
-                    android:button="@null"
-                    android:checked="true"
-                    android:gravity="center"
-                    android:minHeight="0dp"
-                    android:minWidth="0dp"
-                    android:paddingVertical="9dp"
-                    android:text="@string/create_account_tab"
-                    android:textColor="@color/selector_segment_text"
-                    android:textSize="12.5sp" />
-
-                <RadioButton
-                    android:id="@+id/rbLogin"
-                    style="@style/Text.12x.Manrope.Bold"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/selector_segment_bg"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:minHeight="0dp"
-                    android:minWidth="0dp"
-                    android:paddingVertical="9dp"
-                    android:text="@string/sign_in_tab"
-                    android:textColor="@color/selector_segment_text"
-                    android:textSize="12.5sp" />
-            </RadioGroup>
-
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvTitle"
                 style="@style/Text.OnBoard.Title"
@@ -86,7 +43,7 @@
                 android:letterSpacing="-0.025"
                 android:text="@string/start_your_read"
                 android:textSize="23sp"
-                app:layout_constraintTop_toBottomOf="@id/rgAuthType" />
+                app:layout_constraintTop_toBottomOf="@id/tvAppTitle" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvSubTitle"

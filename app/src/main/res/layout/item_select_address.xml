@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="22dp"
+    android:layout_marginBottom="11dp"
+    app:cardBackgroundColor="#8C080F10"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp"
+    app:contentPadding="16dp"
+    app:strokeColor="#1AFFFFFF"
+    app:strokeWidth="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Radio Circle Icon -->
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivRadio"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_radio_selected_cyan"
+            app:layout_constraintBottom_toBottomOf="@id/tvAddressName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvAddressName" />
+
+        <!-- Name -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvAddressName"
+            style="@style/Text.15x.Manrope.Bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toStartOf="@id/tvEditAddress"
+            app:layout_constraintStart_toEndOf="@id/ivRadio"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Chinmay Bhatt" />
+
+        <!-- Edit Action Text -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvEditAddress"
+            style="@style/Text.13x.Manrope.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="4dp"
+            android:paddingVertical="2dp"
+            android:text="Edit"
+            android:textColor="#5FB7C4"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Phone -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvAddressPhone"
+            style="@style/Text.12x.Manrope.Regular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="#9DACA9"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tvAddressName"
+            app:layout_constraintTop_toBottomOf="@id/tvAddressName"
+            tools:text="+44 7417 519358" />
+
+        <!-- Full Address -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvAddressDetails"
+            style="@style/Text.12x.Manrope.Regular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:lineSpacingExtra="2.5dp"
+            android:textColor="#9DACA9"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tvAddressName"
+            app:layout_constraintTop_toBottomOf="@id/tvAddressPhone"
+            tools:text="113 Masthead House, 14 Rope Terrace, London, E16 2PH" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

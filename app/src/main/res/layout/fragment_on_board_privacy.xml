@@ -90,10 +90,9 @@
                     android:layout_marginStart="16dp"
                     android:text="@string/onboard_privacy_title1"
                     android:textSize="16sp"
-                    app:layout_constraintStart_toEndOf="@id/cbPrivacy"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/cbPrivacy"
-                    app:layout_constraintBottom_toBottomOf="@id/cbPrivacy" />
+                    app:layout_constraintStart_toEndOf="@id/cbPrivacy"
+                    app:layout_constraintTop_toTopOf="@id/cbPrivacy" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvPrivacyDesc"
@@ -103,8 +102,8 @@
                     android:layout_marginTop="12dp"
                     android:text="@string/onboard_privacy_desc1"
                     android:textSize="13sp"
-                    app:layout_constraintStart_toStartOf="@id/tvPrivacyTitle"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tvPrivacyTitle"
                     app:layout_constraintTop_toBottomOf="@id/tvPrivacyTitle" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -137,10 +136,9 @@
                     android:layout_marginStart="16dp"
                     android:text="@string/onboard_data_policy_title"
                     android:textSize="16sp"
-                    app:layout_constraintStart_toEndOf="@id/cbDataProcessing"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/cbDataProcessing"
-                    app:layout_constraintBottom_toBottomOf="@id/cbDataProcessing" />
+                    app:layout_constraintStart_toEndOf="@id/cbDataProcessing"
+                    app:layout_constraintTop_toTopOf="@id/cbDataProcessing" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvDataProcessingDesc"

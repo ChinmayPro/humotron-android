@@ -16,10 +16,12 @@ import dagger.hilt.android.AndroidEntryPoint
 
 import androidx.core.view.updatePadding
 
+import androidx.fragment.app.activityViewModels
+
 @AndroidEntryPoint
 class ShopFragment : BaseFragment(R.layout.fragment_shop) {
 
-    private val viewModel by viewModels<ShopViewModel>()
+    private val viewModel by activityViewModels<ShopViewModel>()
     private lateinit var binding: FragmentShopBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -30,6 +32,7 @@ class ShopFragment : BaseFragment(R.layout.fragment_shop) {
         arguments?.getInt("selectedTabId")?.let { tabId ->
             if (tabId != 0) {
                 viewModel.lastSelectedTabId = tabId
+                arguments?.remove("selectedTabId")
             }
         }
 

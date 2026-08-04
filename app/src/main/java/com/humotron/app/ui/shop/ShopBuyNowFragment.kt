@@ -86,7 +86,7 @@ class ShopBuyNowFragment : BaseFragment(R.layout.fragment_shop_buy_now) {
                     isLiked = data?.isLiked ?: false
                     deviceUrl = data?.deviceUrl?.firstOrNull()
                     
-                    binding.btnLike.setImageResource(if (isLiked) R.drawable.ic_fav_selected else R.drawable.ic_fav_checkbox)
+                    updateLikeButtonState(isLiked)
 
                     // Bind Product Info
                     binding.tvDeviceName.text = data?.deviceName
@@ -215,7 +215,7 @@ class ShopBuyNowFragment : BaseFragment(R.layout.fragment_shop_buy_now) {
             
             deviceId?.let { id ->
                 isLiked = !isLiked
-                binding.btnLike.setImageResource(if (isLiked) R.drawable.ic_fav_selected else R.drawable.ic_fav_checkbox)
+                updateLikeButtonState(isLiked)
                 viewModel.likeDislikeDevice(id)
             }
         }
@@ -316,6 +316,18 @@ class ShopBuyNowFragment : BaseFragment(R.layout.fragment_shop_buy_now) {
         // Update price if size-specific
         color.price?.let { price ->
             binding.tvPrice.text = getString(R.string.currency_symbol) + price
+        }
+    }
+
+    private fun updateLikeButtonState(liked: Boolean) {
+        if (liked) {
+            binding.btnLike.setImageResource(R.drawable.ic_fav_selected)
+            binding.btnLike.imageTintList = null
+            binding.btnLike.alpha = 1.0f
+        } else {
+            binding.btnLike.setImageResource(R.drawable.ic_fav_checkbox)
+            binding.btnLike.imageTintList = android.content.res.ColorStateList.valueOf(requireContext().getColor(R.color.white))
+            binding.btnLike.alpha = 0.7f
         }
     }
 

@@ -36,6 +36,11 @@ class ManageAccountFragment : BaseFragment(R.layout.fragment_manage_account) {
         initViews()
     }
 
+    override fun onResume() {
+        super.onResume()
+        initViews()
+    }
+
     private fun initViews() {
         val user = prefUtils.getLoginResponse()
 
@@ -81,7 +86,7 @@ class ManageAccountFragment : BaseFragment(R.layout.fragment_manage_account) {
         }
 
         binding.btnEditDetails.setOnClickListener {
-            Toast.makeText(requireContext(), "Edit details clicked", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.action_fragmentManageAccount_to_fragmentUpdateProfile)
         }
     }
 }

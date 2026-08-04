@@ -121,19 +121,19 @@ class OTPView @JvmOverloads constructor(
                 importantForAutofillLocal =
                     getInteger(R.styleable.OTPView_android_importantForAutofill, 0)
                 autofillHints = getString(R.styleable.OTPView_android_autofillHints)
-                itemWidth = getDimensionPixelSize(R.styleable.OTPView_otp_itemWidth, 44)
-                itemHeight = getDimensionPixelSize(R.styleable.OTPView_otp_itemHeight, 44)
+                itemWidth = getDimensionPixelSize(R.styleable.OTPView_otp_itemWidth, 46.dpTopX)
+                itemHeight = getDimensionPixelSize(R.styleable.OTPView_otp_itemHeight, 60.dpTopX)
                 cursorColor = getColor(R.styleable.OTPView_otp_cursorColor, Color.BLACK)
                 allCaps = getBoolean(R.styleable.OTPView_otp_allcaps, false)
                 marginBetween = getDimensionPixelSize(
                     R.styleable.OTPView_otp_marginBetween,
-                    8.dpTopX
+                    6.dpTopX
                 )
                 isPassword = getBoolean(R.styleable.OTPView_otp_ispassword, false)
 
                 textSizeDefault =
-                    getDimensionPixelSize(R.styleable.OTPView_otp_textSize, 14.dpTopX)
-                textColor = getInteger(R.styleable.OTPView_otp_textColor, Color.BLACK)
+                    getDimensionPixelSize(R.styleable.OTPView_otp_textSize, 16.dpTopX)
+                textColor = getInteger(R.styleable.OTPView_otp_textColor, Color.WHITE)
                 backgroundImage =
                     getDrawable(R.styleable.OTPView_otp_backgroundImage) ?: customBackground()
                 font =
@@ -333,12 +333,11 @@ class OTPView @JvmOverloads constructor(
 
         et.isAllCaps = allCaps
 
-        val leftDp = if (index == 0) 8.dpTopX else 0.dpTopX
-
+        val leftMargin = if (index == 0) 0 else marginBetween
         params.setMargins(
-            leftDp,
+            leftMargin,
             8.dpTopX,
-            marginBetween,
+            0,
             8.dpTopX
         )
         et.layoutParams = params

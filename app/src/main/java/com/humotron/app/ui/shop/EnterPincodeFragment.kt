@@ -1,7 +1,13 @@
 package com.humotron.app.ui.shop
 
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.humotron.app.R
@@ -19,20 +25,63 @@ class EnterPincodeFragment : BaseFragment(R.layout.fragment_enter_pincode) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentEnterPincodeBinding.bind(view)
 
-        // Set Status Bar Color to Black
-        activity?.window?.statusBarColor = androidx.core.content.ContextCompat.getColor(requireContext(), com.humotron.app.R.color.black)
+        activity?.window?.statusBarColor = Color.TRANSPARENT
 
+        setupInsets()
+        setupProgressBar()
         initViews()
     }
 
+    private fun setupInsets() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            val density = resources.displayMetrics.density
+            binding.layoutFooter.updatePadding(bottom = systemBars.bottom + (16 * density).toInt())
+            insets
+        }
+    }
+
+    private fun setupProgressBar() {
+        binding.llProgressBar.removeAllViews()
+        val density = resources.displayMetrics.density
+        val totalSteps = 6
+        val currentStep = 1 // 0-indexed, step 2 = index 1
+
+        for (i in 0 until totalSteps) {
+            val segment = View(requireContext())
+            val params = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f)
+            if (i < totalSteps - 1) {
+                params.marginEnd = (6 * density).toInt()
+            }
+            segment.layoutParams = params
+
+            val bgDrawable = GradientDrawable().apply {
+                cornerRadius = 2 * density
+                if (i <= currentStep) {
+                    setColor(Color.parseColor("#5FB7C4"))
+                } else {
+                    setColor(Color.parseColor("#1AFFFFFF"))
+                }
+            }
+            segment.background = bgDrawable
+            binding.llProgressBar.addView(segment)
+        }
+
+        binding.tvStepEyebrow.text = "STEP 2 OF 6 · CONFIRM LOCATION"
+    }
+
     private fun initViews() {
-        binding.btnClose.setOnClickListener {
+        binding.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
 
+        binding.btnClose.setOnClickListener {
+            findNavController().popBackStack(R.id.fragmentBookingType, false)
+        }
+
         binding.btnAccessLocation.setOnClickListener {
-            // Logic for location access can be added here
-            // For now, just a placeholder
+            // Request location permission and auto-fill postcode
+            // For now, placeholder
         }
 
         binding.etPincode.setOnEditorActionListener { _, actionId, _ ->
@@ -46,12 +95,9 @@ class EnterPincodeFragment : BaseFragment(R.layout.fragment_enter_pincode) {
         }
 
         binding.btnContinue.setOnClickListener {
-            val pincode = binding.etPincode.text.toString()
-            if (pincode.isNotEmpty()) {
-                // Navigate to Select Lab screen
-                val bundle = androidx.core.os.bundleOf("postcode" to pincode)
-                findNavController().navigate(R.id.action_enterPincodeFragment_to_fragmentSelectLab, bundle)
-            }
+            val pincode = binding.etPincode.text.toString().trim()
+            val bundle = androidx.core.os.bundleOf("postcode" to pincode)
+            findNavController().navigate(R.id.action_enterPincodeFragment_to_fragmentSelectLab, bundle)
         }
     }
 

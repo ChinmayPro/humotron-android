@@ -2,42 +2,69 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="150dp"
-    android:layout_height="190dp"
+    android:layout_width="168dp"
+    android:layout_height="180dp"
     android:layout_marginEnd="@dimen/_12dp"
-    app:cardBackgroundColor="@color/black"
-    app:cardCornerRadius="@dimen/_12dp"
+    app:cardBackgroundColor="#BA080F10"
+    app:cardCornerRadius="16dp"
     app:strokeWidth="1dp"
-    app:strokeColor="@color/white10">
+    app:strokeColor="#12FFFFFF">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/_15dp">
+        android:layout_height="match_parent"
+        android:padding="15dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivMetricIcon"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:background="@drawable/bg_metric_icon_box"
+            android:padding="7dp"
+            android:src="@drawable/ic_metrics_spark"
+            app:tint="@color/cool"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvMetricName"
-            style="@style/Text.18x.Manrope.SemiBold"
+            style="@style/Text.14x.Manrope.Bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
             android:ellipsize="end"
             android:maxLines="2"
             android:textColor="@color/white"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Heart Rate" />
+            android:textSize="14.5sp"
+            app:layout_constraintTop_toBottomOf="@id/ivMetricIcon"
+            tools:text="Weight" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvMetricUnit"
+            style="@style/Text.10x.Manrope.Bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:letterSpacing="0.08"
+            android:textAllCaps="true"
+            android:textColor="@color/lime"
+            android:textSize="9.5sp"
+            app:layout_constraintTop_toBottomOf="@id/tvMetricName"
+            tools:text="KG" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvMetricWhat"
-            style="@style/Text.14x.Manrope.Medium"
+            style="@style/Text.12x.Manrope.Medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_15dp"
+            android:layout_marginTop="8dp"
             android:ellipsize="end"
-            android:maxLines="4"
-            android:lineSpacingExtra="@dimen/_2dp"
-            android:textColor="@color/white50"
-            app:layout_constraintTop_toBottomOf="@id/tvMetricName"
-            tools:text="Heart rate measures how many times your heart beats per minute..." />
+            android:lineSpacingExtra="2dp"
+            android:maxLines="3"
+            android:textColor="@color/ink3"
+            android:textSize="11.5sp"
+            app:layout_constraintTop_toBottomOf="@id/tvMetricUnit"
+            tools:text="Total body mass, captured to 50g and trended over time." />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

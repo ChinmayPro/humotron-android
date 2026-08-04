@@ -29,7 +29,11 @@ class SizeVariantAdapter(
         val item = list[position]
         holder.binding.tvSize.text = item.size
 
-        holder.binding.clMain.isSelected = selectedPosition == position
+        val isSelected = selectedPosition == position
+        holder.binding.clMain.isSelected = isSelected
+        holder.binding.tvSize.setTextColor(
+            if (isSelected) android.graphics.Color.parseColor("#C4F23E") else android.graphics.Color.parseColor("#9DACA9")
+        )
 
         holder.binding.root.setOnClickListener {
             val oldPosition = selectedPosition
