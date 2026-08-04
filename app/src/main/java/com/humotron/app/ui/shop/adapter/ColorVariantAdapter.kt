@@ -37,7 +37,12 @@ class ColorVariantAdapter(
                 .into(holder.binding.ivColor)
         }
 
-        holder.binding.clMain.isSelected = selectedPosition == position
+        val isSelected = selectedPosition == position
+        holder.binding.clMain.isSelected = isSelected
+        holder.binding.ivCheck.visibility = if (isSelected) android.view.View.VISIBLE else android.view.View.GONE
+        holder.binding.tvColorName.setTextColor(
+            if (isSelected) android.graphics.Color.WHITE else android.graphics.Color.parseColor("#9DACA9")
+        )
 
         holder.binding.root.setOnClickListener {
             val oldPosition = selectedPosition
