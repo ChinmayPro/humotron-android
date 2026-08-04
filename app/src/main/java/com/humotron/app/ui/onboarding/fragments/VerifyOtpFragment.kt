@@ -81,15 +81,17 @@ class VerifyOtpFragment : BaseFragment(R.layout.fragment_verify_otp) {
                             Preference.LOGIN_USER_EMAIL,
                             data.data.user?.email ?: ""
                         )
-                        data.data.user?.let { prefUtils.setLoginResponse(it) }
-                        if (!prefUtils.getBoolean(Preference.ONBOARD_PRIVACY)) {
-                            findNavController().navigate(R.id.onBoardPrivacyFragment)
-                        } else {
-                            if (data.data.user?.isOnBoarding == true) {
+                        val user = data.data.user
+                        user?.let { prefUtils.setLoginResponse(it) }
+
+                        val isReturningUser = user?.isOnBoarding == true || !user?.name.isNullOrEmpty()
+
+                        if (isReturningUser) {
+                            prefUtils.setBoolean(Preference.ONBOARD_PRIVACY, true)
+                            if (user?.isOnBoarding == true) {
                                 startActivity(Intent(requireContext(), MainActivity::class.java))
                                 requireActivity().finish()
                             } else {
-                                val user = data.data.user
                                 if (user?.name.isNullOrEmpty()) {
                                     findNavController().navigate(R.id.personalizeFragment)
                                 } else if (user.height.isNullOrEmpty()) {
@@ -97,12 +99,18 @@ class VerifyOtpFragment : BaseFragment(R.layout.fragment_verify_otp) {
                                         putInt("position", 1)
                                     }
                                     findNavController().navigate(R.id.personalizeFragment, bundle)
-                                } else if (user.isOnBoarding == false) {
+                                } else {
                                     val bundle = Bundle().apply {
                                         putInt("position", 3)
                                     }
                                     findNavController().navigate(R.id.personalizeFragment, bundle)
                                 }
+                            }
+                        } else {
+                            if (!prefUtils.getBoolean(Preference.ONBOARD_PRIVACY)) {
+                                findNavController().navigate(R.id.onBoardPrivacyFragment)
+                            } else {
+                                findNavController().navigate(R.id.personalizeFragment)
                             }
                         }
 
