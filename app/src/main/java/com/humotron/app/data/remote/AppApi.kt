@@ -113,6 +113,7 @@ import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Multipart
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.Path
@@ -683,6 +684,37 @@ interface AppApi {
     suspend fun getWorkdayStressReportById(
         @Path("id") reportId: String
     ): Response<com.humotron.app.domain.modal.response.WorkdayStressReportDetailResponse>
+
+    @GET("data-sources")
+    suspend fun getDataSources(): Response<com.humotron.app.domain.modal.response.DataSourcesResponse>
+
+    @GET("data-sources/{sourceKey}")
+    suspend fun getDataSourceDetail(
+        @Path("sourceKey") sourceKey: String
+    ): Response<com.humotron.app.domain.modal.response.DataSourceDetailResponse>
+
+    @PATCH("data-sources/{sourceKey}/usage")
+    suspend fun updateDataSourceUsage(
+        @Path("sourceKey") sourceKey: String,
+        @Body param: com.humotron.app.domain.modal.param.UpdateDataSourceUsageParam
+    ): Response<com.humotron.app.domain.modal.response.CommonResponse>
+
+    @PATCH("data-sources/{sourceKey}/pause")
+    suspend fun pauseDataSource(
+        @Path("sourceKey") sourceKey: String,
+        @Body param: com.humotron.app.domain.modal.param.PauseDataSourceParam
+    ): Response<com.humotron.app.domain.modal.response.CommonResponse>
+
+    @PATCH("data-sources/{sourceKey}/topics")
+    suspend fun updateDataSourceTopics(
+        @Path("sourceKey") sourceKey: String,
+        @Body body: Map<String, Boolean>
+    ): Response<com.humotron.app.domain.modal.response.CommonResponse>
+
+    @DELETE("data-sources/{sourceKey}/data")
+    suspend fun deleteDataSourceData(
+        @Path("sourceKey") sourceKey: String
+    ): Response<com.humotron.app.domain.modal.response.CommonResponse>
 
     @POST("workdayStressReport/generate")
     suspend fun generateWorkdayStressReport(
