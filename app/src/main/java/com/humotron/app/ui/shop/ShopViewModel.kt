@@ -12,7 +12,9 @@ import com.humotron.app.domain.modal.response.GetOptimizedRecommendationDetailRe
 import com.humotron.app.domain.modal.response.GetShopDevicesResponse
 import com.humotron.app.domain.modal.response.ProductDetailResponse
 import com.humotron.app.domain.modal.response.BookingTypeResponse
+import com.humotron.app.domain.modal.param.CreateAddressRequest
 import com.humotron.app.domain.modal.param.UpdateAddressRequest
+import com.humotron.app.domain.modal.response.CreateAddressResponse
 import com.humotron.app.domain.modal.response.UpdateAddressResponse
 import com.humotron.app.domain.modal.response.GetAllAddressResponse
 import com.humotron.app.domain.modal.response.GetCartResponse
@@ -281,6 +283,15 @@ class ShopViewModel @Inject constructor(
     fun updateAddress(addressId: String, request: UpdateAddressRequest) {
         repository.updateAddressById(addressId, request).onEach { state ->
             updateAddressLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
+
+    private val createAddressLiveData: SingleLiveEvent<Resource<CreateAddressResponse>> = SingleLiveEvent()
+    fun getCreateAddressLiveData(): SingleLiveEvent<Resource<CreateAddressResponse>> = createAddressLiveData
+
+    fun createAddress(request: CreateAddressRequest) {
+        repository.createAddress(request).onEach { state ->
+            createAddressLiveData.value = state
         }.launchIn(viewModelScope)
     }
 

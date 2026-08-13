@@ -38,20 +38,24 @@ class ResponseHandler(val context: Context, val errorUtils: ErrorUtils) {
 
         } else if (response.code() == 400) {
 
-            val errorBody = response.errorBody()
-            val error = JSONObject(errorBody?.string() ?: "").toString()
+            val errorBodyStr = response.errorBody()?.string() ?: ""
+            val parsedMsg = try {
+                val json = JSONObject(errorBodyStr)
+                json.optString("message", json.optString("error", errorBodyStr))
+            } catch (e: Exception) {
+                errorBodyStr
+            }
 
-
-            return if (errorBody != null) {
+            return if (errorBodyStr.isNotBlank()) {
                 if (isAutoHandleError) {
                     Resource.error(
                         errorUtils.handleError(
-                            ValidationException(error),
+                            ValidationException(parsedMsg),
                             ""
                         )
                     )
                 } else {
-                    Resource.error(Error(error = error))
+                    Resource.error(Error(errorMessage = parsedMsg, error = errorBodyStr))
                 }
 
             } else {

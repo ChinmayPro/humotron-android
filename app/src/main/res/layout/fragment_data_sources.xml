@@ -11,9 +11,19 @@
         layout="@layout/layout_header_2"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.core.widget.NestedScrollView
+    <include
+        android:id="@+id/shimmerView"
+        layout="@layout/shimmer_data_sources"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/contentScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header">
@@ -109,27 +119,12 @@
                 android:textSize="13sp" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llExternalContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@drawable/bg_config_item"
-                android:paddingVertical="8dp">
-
-                <!-- Apple Watch -->
-                <include
-                    layout="@layout/item_data_source"
-                    android:id="@+id/dsAppleWatch" />
-                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#1AFFFFFF" android:layout_marginHorizontal="16dp" />
-                <!-- Whoop -->
-                <include
-                    layout="@layout/item_data_source"
-                    android:id="@+id/dsWhoop" />
-                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#1AFFFFFF" android:layout_marginHorizontal="16dp" />
-                <!-- Garmin -->
-                <include
-                    layout="@layout/item_data_source"
-                    android:id="@+id/dsGarmin" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
+                android:paddingVertical="8dp" />
 
             <!-- Digital sources -->
             <androidx.appcompat.widget.AppCompatTextView
@@ -151,20 +146,12 @@
                 android:textSize="13sp" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llDigitalContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@drawable/bg_config_item"
-                android:paddingVertical="8dp">
-
-                <include
-                    layout="@layout/item_data_source"
-                    android:id="@+id/dsEnv" />
-                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#1AFFFFFF" android:layout_marginHorizontal="16dp" />
-                <include
-                    layout="@layout/item_data_source"
-                    android:id="@+id/dsCalendar" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
+                android:paddingVertical="8dp" />
 
             <!-- Imported sources -->
             <androidx.appcompat.widget.AppCompatTextView
@@ -186,20 +173,12 @@
                 android:textSize="13sp" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llImportedContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@drawable/bg_config_item"
-                android:paddingVertical="8dp">
-
-                <include
-                    layout="@layout/item_data_source"
-                    android:id="@+id/dsReports" />
-                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#1AFFFFFF" android:layout_marginHorizontal="16dp" />
-                <include
-                    layout="@layout/item_data_source"
-                    android:id="@+id/dsDeepScan" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
+                android:paddingVertical="8dp" />
 
             <!-- Your assessments -->
             <androidx.appcompat.widget.AppCompatTextView
@@ -221,24 +200,12 @@
                 android:textSize="13sp" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llAssessmentContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@drawable/bg_config_item"
-                android:paddingVertical="8dp">
-
-                <include
-                    layout="@layout/item_data_source"
-                    android:id="@+id/dsLifestyle" />
-                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#1AFFFFFF" android:layout_marginHorizontal="16dp" />
-                <include
-                    layout="@layout/item_data_source"
-                    android:id="@+id/dsHealth" />
-                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#1AFFFFFF" android:layout_marginHorizontal="16dp" />
-                <include
-                    layout="@layout/item_data_source"
-                    android:id="@+id/dsGoals" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
+                android:paddingVertical="8dp" />
 
             <!-- Footer Promise -->
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -288,7 +255,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/manrope_regular"
-                        android:lineSpacingMultiplier="1.45"
                         android:text="Processed securely and never sold. Learn how your data is used."
                         android:textColor="#859390"
                         android:textSize="11.5sp"

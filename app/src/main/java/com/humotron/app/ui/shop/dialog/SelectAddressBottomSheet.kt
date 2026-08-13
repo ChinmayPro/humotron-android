@@ -91,6 +91,10 @@ class SelectAddressBottomSheet : BaseBottomSheetDialogFragment() {
         }
     }
 
+    override fun getTheme(): Int {
+        return com.humotron.app.R.style.TransparentBottomSheetDialogTheme
+    }
+
     override fun onCreateDialog(savedInstanceState: Bundle?): android.app.Dialog {
         val dialog = super.onCreateDialog(savedInstanceState) as com.google.android.material.bottomsheet.BottomSheetDialog
         dialog.setOnShowListener { dialogInterface ->
@@ -101,9 +105,43 @@ class SelectAddressBottomSheet : BaseBottomSheetDialogFragment() {
                 behavior.state = com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
                 behavior.skipCollapsed = true
                 it.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
+                it.setBackgroundColor(android.graphics.Color.TRANSPARENT)
+                androidx.core.view.ViewCompat.setOnApplyWindowInsetsListener(it) { _, insets -> insets }
             }
         }
+        dialog.window?.let { window ->
+            androidx.core.view.WindowCompat.setDecorFitsSystemWindows(window, false)
+            window.setBackgroundDrawable(android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT))
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+                window.isNavigationBarContrastEnforced = false
+            }
+            window.navigationBarColor = android.graphics.Color.TRANSPARENT
+            window.statusBarColor = android.graphics.Color.TRANSPARENT
+        }
         return dialog
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val dialog = dialog as? com.google.android.material.bottomsheet.BottomSheetDialog
+        val bottomSheet = dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+        bottomSheet?.let {
+            val behavior = com.google.android.material.bottomsheet.BottomSheetBehavior.from(it)
+            it.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
+            it.setBackgroundColor(android.graphics.Color.TRANSPARENT)
+            behavior.state = com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
+            behavior.skipCollapsed = true
+            androidx.core.view.ViewCompat.setOnApplyWindowInsetsListener(it) { _, insets -> insets }
+        }
+        dialog?.window?.let { window ->
+            androidx.core.view.WindowCompat.setDecorFitsSystemWindows(window, false)
+            window.setBackgroundDrawable(android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT))
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+                window.isNavigationBarContrastEnforced = false
+            }
+            window.navigationBarColor = android.graphics.Color.TRANSPARENT
+            window.statusBarColor = android.graphics.Color.TRANSPARENT
+        }
     }
 
     override fun onDestroyView() {

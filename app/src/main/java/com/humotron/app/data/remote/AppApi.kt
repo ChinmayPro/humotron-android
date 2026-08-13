@@ -1,5 +1,6 @@
 package com.humotron.app.data.remote
 
+import com.humotron.app.core.AppConstant
 import com.humotron.app.data.local.entity.UploadData
 import com.humotron.app.domain.modal.param.AddHardware
 import com.humotron.app.domain.modal.param.AddToCartParam
@@ -94,10 +95,13 @@ import com.humotron.app.domain.modal.response.GetAllLikesResponse
 import com.humotron.app.domain.modal.response.BookingTypeResponse
 import com.humotron.app.domain.modal.response.ShopAddToCartResponse
 import com.humotron.app.domain.modal.response.GetDefaultConfigResponse
+import com.humotron.app.domain.modal.param.CreateAddressRequest
 import com.humotron.app.domain.modal.param.UpdateAddressRequest
+import com.humotron.app.domain.modal.response.CreateAddressResponse
 import com.humotron.app.domain.modal.response.UpdateAddressResponse
 import com.humotron.app.domain.modal.response.AddressAutocompleteResponse
 import com.humotron.app.domain.modal.response.FullAddressResponse
+import com.humotron.app.domain.modal.response.IdealPostcodesResponse
 import com.humotron.app.domain.modal.response.GetAllAddressResponse
 import com.humotron.app.domain.modal.response.GetAllLabResponse
 import com.humotron.app.domain.modal.param.DefaultConfigRequest
@@ -113,6 +117,7 @@ import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Multipart
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.Path
@@ -479,6 +484,17 @@ interface AppApi {
         @Body request: UpdateAddressRequest,
     ): Response<UpdateAddressResponse>
 
+    @POST("address/createAddress")
+    suspend fun createAddress(
+        @Body request: CreateAddressRequest,
+    ): Response<CreateAddressResponse>
+
+    @GET("${AppConstant.IDEAL_POSTCODES_BASE_URL}postcodes/{term}")
+    suspend fun getIdealPostcode(
+        @Path("term") term: String,
+        @Query("api_key") apiKey: String = AppConstant.IDEAL_POSTCODES_API_KEY,
+    ): Response<IdealPostcodesResponse>
+
     @GET("https://api.getaddress.io/autocomplete/{term}")
     suspend fun getAddressAutocomplete(
         @Path("term") term: String,
@@ -683,6 +699,37 @@ interface AppApi {
     suspend fun getWorkdayStressReportById(
         @Path("id") reportId: String
     ): Response<com.humotron.app.domain.modal.response.WorkdayStressReportDetailResponse>
+
+    @GET("data-sources")
+    suspend fun getDataSources(): Response<com.humotron.app.domain.modal.response.DataSourcesResponse>
+
+    @GET("data-sources/{sourceKey}")
+    suspend fun getDataSourceDetail(
+        @Path("sourceKey") sourceKey: String
+    ): Response<com.humotron.app.domain.modal.response.DataSourceDetailResponse>
+
+    @PATCH("data-sources/{sourceKey}/usage")
+    suspend fun updateDataSourceUsage(
+        @Path("sourceKey") sourceKey: String,
+        @Body param: com.humotron.app.domain.modal.param.UpdateDataSourceUsageParam
+    ): Response<com.humotron.app.domain.modal.response.CommonResponse>
+
+    @PATCH("data-sources/{sourceKey}/pause")
+    suspend fun pauseDataSource(
+        @Path("sourceKey") sourceKey: String,
+        @Body param: com.humotron.app.domain.modal.param.PauseDataSourceParam
+    ): Response<com.humotron.app.domain.modal.response.CommonResponse>
+
+    @PATCH("data-sources/{sourceKey}/topics")
+    suspend fun updateDataSourceTopics(
+        @Path("sourceKey") sourceKey: String,
+        @Body body: Map<String, Boolean>
+    ): Response<com.humotron.app.domain.modal.response.CommonResponse>
+
+    @DELETE("data-sources/{sourceKey}/data")
+    suspend fun deleteDataSourceData(
+        @Path("sourceKey") sourceKey: String
+    ): Response<com.humotron.app.domain.modal.response.CommonResponse>
 
     @POST("workdayStressReport/generate")
     suspend fun generateWorkdayStressReport(

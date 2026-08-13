@@ -16,11 +16,16 @@ import com.humotron.app.domain.modal.response.GetShopDevicesResponse
 import com.humotron.app.domain.modal.response.ProductDetailResponse
 import com.humotron.app.domain.modal.response.ProductVariantResponse
 import com.humotron.app.domain.modal.response.BookingTypeResponse
+import com.humotron.app.domain.modal.param.CreateAddressRequest
 import com.humotron.app.domain.modal.param.UpdateAddressRequest
+import com.humotron.app.domain.modal.response.CreateAddressResponse
 import com.humotron.app.domain.modal.response.UpdateAddressResponse
 import com.humotron.app.domain.modal.response.GetAllAddressResponse
 import com.humotron.app.domain.modal.response.AddressAutocompleteResponse
+import com.humotron.app.domain.modal.response.AddressSuggestion
 import com.humotron.app.domain.modal.response.FullAddressResponse
+import com.humotron.app.domain.modal.response.IdealPostcodeResult
+import java.util.concurrent.ConcurrentHashMap
 import com.humotron.app.domain.modal.response.GetAllLabResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -31,6 +36,7 @@ class ShopRepository @Inject constructor(
     private val api: AppApi,
     private val responseHandler: ResponseHandler
 ) {
+    private val cachedIdealPostcodeResults = ConcurrentHashMap<String, IdealPostcodeResult>()
     fun getShopDevices(): Flow<Resource<GetShopDevicesResponse>> = flow {
         emit(Resource.loading())
         try {
@@ -294,10 +300,10 @@ class ShopRepository @Inject constructor(
         emit(responseHandler.handleException(com.humotron.app.data.network.exceptions.ValidationException(it.message)))
     }
 
-    fun getAddressAutocomplete(term: String): Flow<Resource<AddressAutocompleteResponse>> = flow {
+    fun createAddress(request: CreateAddressRequest): Flow<Resource<CreateAddressResponse>> = flow {
         emit(Resource.loading())
         try {
-            val response = responseHandler.handleResponse(api.getAddressAutocomplete(term), false)
+            val response = responseHandler.handleResponse(api.createAddress(request), false)
             emit(response)
         } catch (e: Exception) {
             emit(responseHandler.handleException(e))
@@ -307,11 +313,71 @@ class ShopRepository @Inject constructor(
         emit(responseHandler.handleException(com.humotron.app.data.network.exceptions.ValidationException(it.message)))
     }
 
+    fun getAddressAutocomplete(term: String): Flow<Resource<AddressAutocompleteResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val cleanTerm = term.trim().replace(" ", "").uppercase()
+            val response = api.getIdealPostcode(cleanTerm)
+            if (response.isSuccessful && response.body()?.result != null) {
+                val results = response.body()?.result ?: emptyList()
+                val suggestions = results.mapIndexed { index, item ->
+                    val id = item.id ?: "ideal_$index"
+                    cachedIdealPostcodeResults[id] = item
+                    val line1 = item.line1.orEmpty().ifBlank { item.premise.orEmpty() }
+                    val line2AndTown = listOfNotNull(
+                        item.line2.takeIf { !it.isNullOrBlank() },
+                        item.postTown.takeIf { !it.isNullOrBlank() }
+                    ).joinToString(", ")
+                    val formattedAddress = if (line2AndTown.isNotBlank()) {
+                        "$line1\n$line2AndTown"
+                    } else {
+                        line1
+                    }
+                    AddressSuggestion(
+                        address = formattedAddress,
+                        url = null,
+                        id = id
+                    )
+                }
+                emit(Resource.success(AddressAutocompleteResponse(suggestions = suggestions)))
+            } else {
+                val fallbackResponse = responseHandler.handleResponse(api.getAddressAutocomplete(term), false)
+                emit(fallbackResponse)
+            }
+        } catch (e: Exception) {
+            try {
+                val fallbackResponse = responseHandler.handleResponse(api.getAddressAutocomplete(term), false)
+                emit(fallbackResponse)
+            } catch (ex: Exception) {
+                emit(responseHandler.handleException(e))
+                e.printStackTrace()
+            }
+        }
+    }.catch {
+        emit(responseHandler.handleException(com.humotron.app.data.network.exceptions.ValidationException(it.message)))
+    }
+
     fun getFullAddress(id: String): Flow<Resource<FullAddressResponse>> = flow {
         emit(Resource.loading())
         try {
-            val response = responseHandler.handleResponse(api.getFullAddress(id), false)
-            emit(response)
+            val cachedItem = cachedIdealPostcodeResults[id]
+            if (cachedItem != null) {
+                val fullAddress = FullAddressResponse(
+                    postcode = cachedItem.postcode,
+                    line1 = cachedItem.line1,
+                    line2 = cachedItem.line2,
+                    line3 = cachedItem.line3,
+                    line4 = null,
+                    locality = cachedItem.postTown,
+                    townOrCity = cachedItem.postTown ?: cachedItem.county,
+                    county = cachedItem.postalCounty ?: cachedItem.county,
+                    country = cachedItem.country
+                )
+                emit(Resource.success(fullAddress))
+            } else {
+                val response = responseHandler.handleResponse(api.getFullAddress(id), false)
+                emit(response)
+            }
         } catch (e: Exception) {
             emit(responseHandler.handleException(e))
             e.printStackTrace()
@@ -350,11 +416,29 @@ class ShopRepository @Inject constructor(
     fun getAllLabName(postcode: String): Flow<Resource<GetAllLabResponse>> = flow {
         emit(Resource.loading())
         try {
-            val response = responseHandler.handleResponse(api.getAllLabName(postcode), false)
-            emit(response)
+            val res = api.getAllLabName(postcode)
+            if (res.isSuccessful && res.body()?.data?.labList?.isNotEmpty() == true) {
+                emit(responseHandler.handleResponse(res, false))
+            } else {
+                // If lab not found for current postcode, fallback to default UK lab postcode
+                val fallbackRes = api.getAllLabName("E14 4QT")
+                if (fallbackRes.isSuccessful) {
+                    emit(responseHandler.handleResponse(fallbackRes, false))
+                } else {
+                    emit(responseHandler.handleResponse(res, false))
+                }
+            }
         } catch (e: Exception) {
-            emit(responseHandler.handleException(e))
-            e.printStackTrace()
+            try {
+                val fallbackRes = api.getAllLabName("E14 4QT")
+                if (fallbackRes.isSuccessful) {
+                    emit(responseHandler.handleResponse(fallbackRes, false))
+                } else {
+                    emit(responseHandler.handleException(e))
+                }
+            } catch (ex: Exception) {
+                emit(responseHandler.handleException(e))
+            }
         }
     }.catch {
         emit(responseHandler.handleException(ValidationException(it.message)))
