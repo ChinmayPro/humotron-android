@@ -4,56 +4,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="@color/black40"
-    android:layout_marginHorizontal="@dimen/_24dp"
-    app:strokeWidth="0dp"
-    android:layout_marginTop="@dimen/_40dp"
-    tools:background="@color/black">
+    android:layout_marginHorizontal="22dp"
+    android:layout_marginTop="12dp"
+    android:layout_marginBottom="16dp"
+    app:cardBackgroundColor="#0F1E21"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="0dp"
+    app:strokeColor="#335FB7C4"
+    app:strokeWidth="1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="16dp">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTitle"
-            style="@style/Text.20x.Manrope.Bold"
+            style="@style/Text.14x.Manrope.Bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_24dp"
-            android:layout_marginTop="@dimen/_25dp"
             android:text="@string/book_nuggets_title"
             android:textColor="@color/textColorWhite"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvDescription"
-            style="@style/Text.14x.Manrope.Bold"
+            style="@style/Text.12_5x.Manrope.Medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_24dp"
-            android:layout_marginTop="@dimen/_12dp"
+            android:layout_marginTop="6dp"
+            android:lineSpacingExtra="2dp"
             android:text="@string/book_nuggets_desc"
-            android:textColor="@color/d80"
+            android:textColor="#9DACA9"
             app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvExploreNuggets"
-            style="@style/Text.14x.Manrope.Bold"
+            style="@style/Text.13x.Manrope.Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_24dp"
-            android:layout_marginTop="@dimen/_12dp"
-            android:layout_marginBottom="@dimen/_30dp"
+            android:layout_marginTop="12dp"
             android:drawableEnd="@drawable/ic_arrow_right_begin"
-            android:drawablePadding="@dimen/_12dp"
-            android:drawableTint="@color/textColorPink"
+            android:drawablePadding="6dp"
+            android:drawableTint="@color/booster_accent_cool"
             android:text="@string/start_exploring_nuggets"
-            android:textColor="@color/textColorPink"
+            android:textColor="@color/booster_accent_cool"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvDescription" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </com.google.android.material.card.MaterialCardView>

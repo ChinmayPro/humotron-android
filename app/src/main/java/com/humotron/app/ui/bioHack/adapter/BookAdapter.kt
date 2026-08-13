@@ -38,24 +38,54 @@ class BookAdapter(val action: OnBookItemActions) :
     ) {
 
         val book = list[position]
+        val context = holder.binding.root.context
         holder.binding.apply {
             tvTitle.text = book.bookTitle
-            tvAuthor.text = book.author1
-            tvTags.text = "${book.category?.tagName}, ${book.primaryTag?.tagName}"
+            tvAuthor.text = book.author1?.uppercase() ?: ""
+
+            val tagText = when {
+                !book.primaryTag?.tagName.isNullOrEmpty() && book.primaryTag?.tagName != "Metabolic Science" -> book.primaryTag?.tagName
+                !book.category?.tagName.isNullOrEmpty() && book.category?.tagName != "Metabolic Science" -> book.category?.tagName
+                !book.primaryTag?.tagName.isNullOrEmpty() -> book.primaryTag?.tagName
+                else -> book.category?.tagName ?: ""
+            }
+            if (!tagText.isNullOrEmpty()) {
+                tvTags.text = tagText
+                tvTags.visibility = android.view.View.VISIBLE
+            } else {
+                tvTags.visibility = android.view.View.GONE
+            }
+
             tvPrice.text = "£${book.price}"
-            ivFav.isChecked = book.isLiked == true
+
+            if (book.isLiked == true) {
+                llFav.background = androidx.core.content.ContextCompat.getDrawable(context, R.drawable.bg_heart_active)
+                ivFav.setImageResource(R.drawable.ic_fav_selected)
+                ivFav.imageTintList = ColorStateList.valueOf(Color.parseColor("#F0795E"))
+            } else {
+                llFav.background = androidx.core.content.ContextCompat.getDrawable(context, R.drawable.bg_circle_icon)
+                ivFav.setImageResource(R.drawable.ic_fav)
+                ivFav.imageTintList = ColorStateList.valueOf(Color.parseColor("#7E8E8C"))
+            }
 
             if (book.isCart == true) {
-                btnAddToCart.text = holder.binding.root.context.getString(R.string.remove_cart)
-                btnAddToCart.backgroundTintList = ColorStateList.valueOf(Color.RED)
+                btnAddToCart.text = context.getString(R.string.remove_cart)
+                btnAddToCart.background = androidx.core.content.ContextCompat.getDrawable(context, R.drawable.bg_shop_remove_btn)
+                btnAddToCart.setTextColor(Color.WHITE)
+                btnAddToCart.compoundDrawableTintList = ColorStateList.valueOf(Color.WHITE)
             } else {
-                btnAddToCart.text = holder.binding.root.context.getString(R.string.buy_now)
-                btnAddToCart.backgroundTintList =
-                    holder.binding.root.context.getColorStateList(R.color.btn_pink)
+                btnAddToCart.text = "Add"
+                btnAddToCart.background = androidx.core.content.ContextCompat.getDrawable(context, R.drawable.bg_shop_add_btn)
+                btnAddToCart.setTextColor(Color.parseColor("#0D1618"))
+                btnAddToCart.compoundDrawableTintList = ColorStateList.valueOf(Color.parseColor("#0D1618"))
             }
 
             llFav.setOnClickListener {
                 book.id?.let { bookId -> action.likeBooks(bookId) }
+            }
+
+            flBookIconContainer.setOnClickListener {
+                book.id?.let { bookId -> action.openSummary(bookId) }
             }
 
             ivBookSummary.setOnClickListener {
@@ -66,7 +96,6 @@ class BookAdapter(val action: OnBookItemActions) :
                 if (book.isCart != true) {
                     book.id?.let { bookId -> action.addToCart(bookId) }
                 }
-
             }
 
         }

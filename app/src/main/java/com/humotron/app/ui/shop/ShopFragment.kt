@@ -88,13 +88,28 @@ class ShopFragment : BaseFragment(R.layout.fragment_shop) {
         resetTab(binding.header.tabBooks, binding.header.ivBooks, binding.header.tvBooks, unselectedColor)
         resetTab(binding.header.tabTools, binding.header.ivTools, binding.header.tvTools, unselectedColor)
 
-        // Highlight selected tab
+        // Highlight selected tab & update title
         when (destinationId) {
-            R.id.fragmentShopDevices -> highlightTab(binding.header.tabDevices, binding.header.ivDevices, binding.header.tvDevices, selectedColor)
-            R.id.fragmentShopScans -> highlightTab(binding.header.tabScans, binding.header.ivScans, binding.header.tvScans, selectedColor)
-            R.id.fragmentShopOptimize -> highlightTab(binding.header.tabOptimize, binding.header.ivOptimize, binding.header.tvOptimize, selectedColor)
-            R.id.fragmentShopBooks -> highlightTab(binding.header.tabBooks, binding.header.ivBooks, binding.header.tvBooks, selectedColor)
-            R.id.fragmentShopTools -> highlightTab(binding.header.tabTools, binding.header.ivTools, binding.header.tvTools, selectedColor)
+            R.id.fragmentShopDevices -> {
+                binding.header.tvShopTitle.text = "Devices"
+                highlightTab(binding.header.tabDevices, binding.header.ivDevices, binding.header.tvDevices, selectedColor)
+            }
+            R.id.fragmentShopScans -> {
+                binding.header.tvShopTitle.text = "Scans"
+                highlightTab(binding.header.tabScans, binding.header.ivScans, binding.header.tvScans, selectedColor)
+            }
+            R.id.fragmentShopOptimize -> {
+                binding.header.tvShopTitle.text = "Optimize"
+                highlightTab(binding.header.tabOptimize, binding.header.ivOptimize, binding.header.tvOptimize, selectedColor)
+            }
+            R.id.fragmentShopBooks -> {
+                binding.header.tvShopTitle.text = "Books"
+                highlightTab(binding.header.tabBooks, binding.header.ivBooks, binding.header.tvBooks, selectedColor)
+            }
+            R.id.fragmentShopTools -> {
+                binding.header.tvShopTitle.text = "Tools"
+                highlightTab(binding.header.tabTools, binding.header.ivTools, binding.header.tvTools, selectedColor)
+            }
         }
     }
 
