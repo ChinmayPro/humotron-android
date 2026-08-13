@@ -75,4 +75,66 @@ class ProfileViewModel @Inject constructor(
     fun clearPromoCodeDetailsLiveData() {
         promoCodeDetailsLiveData.value = null
     }
+
+    var isReturningFromDetail: Boolean = false
+
+    private val dataSourcesLiveData: androidx.lifecycle.MutableLiveData<Resource<com.humotron.app.domain.modal.response.DataSourcesResponse>> = androidx.lifecycle.MutableLiveData()
+    fun getDataSourcesLiveData(): androidx.lifecycle.LiveData<Resource<com.humotron.app.domain.modal.response.DataSourcesResponse>> = dataSourcesLiveData
+
+    fun fetchDataSources() {
+        repository.getDataSources().onEach { state ->
+            dataSourcesLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
+
+    private val dataSourceDetailLiveData: SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.DataSourceDetailResponse>> = SingleLiveEvent()
+    fun getDataSourceDetailLiveData(): SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.DataSourceDetailResponse>> = dataSourceDetailLiveData
+
+    fun fetchDataSourceDetail(sourceKey: String) {
+        repository.getDataSourceDetail(sourceKey).onEach { state ->
+            dataSourceDetailLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
+
+    private val updateDataSourceUsageLiveData: SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.CommonResponse>> = SingleLiveEvent()
+    fun getUpdateDataSourceUsageLiveData(): SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.CommonResponse>> = updateDataSourceUsageLiveData
+
+    fun updateDataSourceUsage(
+        sourceKey: String,
+        param: com.humotron.app.domain.modal.param.UpdateDataSourceUsageParam
+    ) {
+        repository.updateDataSourceUsage(sourceKey, param).onEach { state ->
+            updateDataSourceUsageLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
+
+    private val pauseDataSourceLiveData: SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.CommonResponse>> = SingleLiveEvent()
+    fun getPauseDataSourceLiveData(): SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.CommonResponse>> = pauseDataSourceLiveData
+
+    fun pauseDataSource(
+        sourceKey: String,
+        param: com.humotron.app.domain.modal.param.PauseDataSourceParam
+    ) {
+        repository.pauseDataSource(sourceKey, param).onEach { state ->
+            pauseDataSourceLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
+
+    private val updateDataSourceTopicsLiveData: SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.CommonResponse>> = SingleLiveEvent()
+    fun getUpdateDataSourceTopicsLiveData(): SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.CommonResponse>> = updateDataSourceTopicsLiveData
+
+    fun updateDataSourceTopics(sourceKey: String, body: Map<String, Boolean>) {
+        repository.updateDataSourceTopics(sourceKey, body).onEach { state ->
+            updateDataSourceTopicsLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
+
+    private val deleteDataSourceDataLiveData: SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.CommonResponse>> = SingleLiveEvent()
+    fun getDeleteDataSourceDataLiveData(): SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.CommonResponse>> = deleteDataSourceDataLiveData
+
+    fun deleteDataSourceData(sourceKey: String) {
+        repository.deleteDataSourceData(sourceKey).onEach { state ->
+            deleteDataSourceDataLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
 }

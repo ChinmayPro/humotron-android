@@ -7,6 +7,9 @@ object AppConstant {
     const val BASE_URL: String = "https://api.humotron.com:4200/api/v1/"
     //const val BASE_URL: String = "https://staging-api.humotron.com/api/v1/" //Test or staging
 
+    const val IDEAL_POSTCODES_BASE_URL: String = "https://api.ideal-postcodes.co.uk/v1/"
+    const val IDEAL_POSTCODES_API_KEY: String = "ak_mpcfw6vuZjaHui1DYW4iJjQqYdShu"
+
     const val ASSESSMENT_ID = "assessmentId"
     val GOOGLE_WEB_CLIENT_ID = BuildConfig.GOOGLE_CLIENT_ID
 

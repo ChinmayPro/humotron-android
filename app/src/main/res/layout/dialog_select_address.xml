@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     app:cardCornerRadius="0dp"
     app:cardElevation="0dp"
-    app:cardBackgroundColor="@android:color/transparent"
+    app:cardBackgroundColor="@color/black"
     app:shapeAppearanceOverlay="@style/BottomSheetShape"
     app:strokeColor="@android:color/transparent"
     app:strokeWidth="0dp">
@@ -14,13 +14,13 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/black">
 
         <View
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/bg_dialog_top_rounded"
-            android:backgroundTint="#1C1C1C" />
+            android:background="@drawable/bg_select_address_dialog" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

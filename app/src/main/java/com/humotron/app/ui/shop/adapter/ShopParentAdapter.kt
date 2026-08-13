@@ -90,20 +90,18 @@ class ShopParentAdapter(
         val adapter = ShopBookAdapter(action)
 
         init {
-            binding.dsvBooks.adapter = adapter
-            binding.dsvBooks.setItemTransformer(
-                ScaleTransformer.Builder()
-                    .setMaxScale(1.05f)
-                    .setMinScale(0.8f)
-                    .setPivotX(Pivot.X.CENTER)
-                    .setPivotY(Pivot.Y.CENTER)
-                    .build()
-            )
+            binding.rvBooks.adapter = adapter
+            binding.rvBooks.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(binding.root.context)
+            binding.rvBooks.isNestedScrollingEnabled = false
         }
 
         fun bind(book: BookPreferenceResponse.BookData.Book) {
-            binding.tvCategory.text = book.primaryTag
-            binding.tvTag.text = book.category
+            val categoryTitle = when {
+                !book.primaryTag.isNullOrEmpty() -> book.primaryTag
+                !book.category.isNullOrEmpty() -> book.category
+                else -> ""
+            }
+            binding.tvCategory.text = categoryTitle.uppercase()
             book.bookRecommendation?.let { adapter.setData(it) }
         }
     }

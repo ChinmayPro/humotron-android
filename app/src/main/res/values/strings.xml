@@ -580,11 +580,12 @@ To get started:\n
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="postal_code">Postal Code</string>
+    <string name="postal_code_hint">e.g. E14 4QT</string>
     <string name="search">Search</string>
     <string name="save_address">Save Address</string>
     <string name="phone_number">Phone Number</string>
     <string name="error_occurred">An error occurred</string>
-    <string name="phone_hint">+919876543210</string>
+    <string name="phone_hint">9876543210</string>
     <string name="address_line_1_hint">Address Line 1</string>
     <string name="address_line_2_hint">Address Line 2</string>
     <string name="address_line_3_hint">Address Line 3</string>

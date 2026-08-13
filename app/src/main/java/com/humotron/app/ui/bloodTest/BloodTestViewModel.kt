@@ -10,6 +10,7 @@ import com.humotron.app.data.network.error.Error
 import com.humotron.app.domain.modal.response.CommonResponse
 import com.humotron.app.domain.modal.response.ExtractMetricsResponse
 import com.humotron.app.domain.modal.response.GenerateMetricResponse
+import com.humotron.app.domain.modal.response.toPdfReportData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
@@ -224,6 +225,39 @@ class BloodTestViewModel @Inject constructor(
         _metricState.value = null
         _error.value = null
         lastParsedPdfId = null
+    }
+
+    fun fetchUploadedReports() {
+        viewModelScope.launch {
+            medicalRepository.getAllPdfList().collect { resource ->
+                when (resource.status) {
+                    com.humotron.app.data.network.Status.SUCCESS -> {
+                        val pdfs = resource.data?.data?.pdfData ?: emptyList()
+                        val convertedList = pdfs.map { it.toPdfReportData() }
+                        val metricsData = com.humotron.app.domain.modal.response.MetricsData(
+                            pdfData = convertedList,
+                            userId = resource.data?.data?.userId ?: "",
+                            uploadType = "MANUAL",
+                            pdfCount = resource.data?.data?.pdfCount ?: convertedList.size,
+                            id = ""
+                        )
+                        _uploadState.value = Resource.success(
+                            com.humotron.app.domain.modal.response.ExtractMetricsResponse(
+                                status = resource.data?.status ?: "200",
+                                message = resource.data?.message ?: "Success",
+                                data = metricsData
+                            )
+                        )
+                    }
+                    com.humotron.app.data.network.Status.ERROR, com.humotron.app.data.network.Status.EXCEPTION -> {
+                        _uploadState.value = Resource.error(resource.error ?: com.humotron.app.data.network.error.Error(errorMessage = "Failed to fetch reports"))
+                    }
+                    com.humotron.app.data.network.Status.LOADING -> {
+                        _uploadState.value = Resource.loading()
+                    }
+                }
+            }
+        }
     }
 
     fun resetUploadState() {

@@ -382,7 +382,7 @@
         android:background="@drawable/bg_footer_gradient"
         android:paddingHorizontal="22dp"
         android:paddingTop="16dp"
-        android:paddingBottom="20dp"
+        android:paddingBottom="0dp"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <!-- Owned bar (hidden by default) -->
@@ -433,10 +433,10 @@
             style="@style/Text.14x.Manrope.Bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="11dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/bg_btn_ghost"
             android:gravity="center"
-            android:paddingVertical="14dp"
+            android:paddingVertical="12dp"
             android:textColor="@color/booster_text_ghost"
             app:layout_constraintTop_toBottomOf="@id/btnBuyNow"
             tools:text="Or get it in the Pro plan" />

@@ -1,21 +1,33 @@
 package com.humotron.app.ui.profile
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.LinearLayout
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import com.humotron.app.R
 import com.humotron.app.core.base.BaseFragment
+import com.humotron.app.data.network.Status
 import com.humotron.app.databinding.FragmentDataSourcesBinding
+import com.humotron.app.databinding.ItemDataSourceBinding
+import com.humotron.app.domain.modal.response.DataSourcesResponse
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DataSourcesFragment : BaseFragment(R.layout.fragment_data_sources) {
 
     private lateinit var binding: FragmentDataSourcesBinding
+    private val viewModel: ProfileViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentDataSourcesBinding.bind(view)
+
+        setupInsets()
 
         // Header Title
         binding.header.title.text = "Data Sources"
@@ -30,98 +42,193 @@ class DataSourcesFragment : BaseFragment(R.layout.fragment_data_sources) {
             android.text.Html.FROM_HTML_MODE_LEGACY
         )
 
-        // Setup individual items based on HTML mockup data
-        
-        // External
-        setupItem(binding.dsAppleWatch, R.drawable.ic_alarm_24px, "#EE4D3D", "Apple Watch", "Activity, heart rate & workouts", "Connected", true)
-        setupItem(binding.dsWhoop, R.drawable.ic_start_stress, "#5FB7C4", "Whoop", "Strain, recovery & sleep", "Connected", true)
-        setupItem(binding.dsGarmin, R.drawable.ic_wrist_band, "#9b87f5", "Garmin", "Training load & GPS activity", "Connected", true)
+        // Observe API response & fetch fresh data sources so detail screen changes (e.g. Pause/Resume) reflect immediately
+        setupObservers()
+        viewModel.fetchDataSources()
+    }
 
-        // Digital
-        setupItem(binding.dsEnv, R.drawable.ic_weather, "#5FB7C4", "Environmental Context", "Weather & environmental correlations", "Active", true)
-        setupItem(binding.dsCalendar, R.drawable.ic_appointments, "#9b87f5", "Calendar & Workday", "Schedule-based stress & recovery", "Connected", true)
+    private fun setupInsets() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            val extraBottomPadding = (20 * resources.displayMetrics.density).toInt()
+            binding.contentScrollView.updatePadding(bottom = systemBars.bottom + extraBottomPadding)
+            insets
+        }
+    }
 
-        // Imported
-        setupItem(binding.dsReports, R.drawable.ic_sheet_document, "#9b87f5", "Uploaded Reports", "PDFs, scans & imported records", "12 reports", false)
-        setupItem(binding.dsDeepScan, R.drawable.ic_spark, "#C4F23E", "Deep Scan", "Full-body scan results & history", "2 scans", false)
+    private fun setupObservers() {
+        viewModel.getDataSourcesLiveData().observe(viewLifecycleOwner) { resource ->
+            when (resource.status) {
+                Status.SUCCESS -> {
+                    showShimmer(false)
+                    resource.data?.data?.sections?.let { sections ->
+                        bindDataSourcesFromApi(sections)
+                    }
+                }
+                Status.ERROR, Status.EXCEPTION -> {
+                    showShimmer(false)
+                }
+                Status.LOADING -> {
+                    showShimmer(true)
+                }
+            }
+        }
+    }
 
-        // Assessments
-        setupItem(binding.dsLifestyle, R.drawable.ic_menu_24px, "#5FB7C4", "Lifestyle Assessment", "Diet, sleep, activity & habits", "Updated 12 Jun", false)
-        setupItem(binding.dsHealth, R.drawable.ic_onboard_heart, "#EE4D3D", "Health History", "Conditions, medications & family history", "Updated 2 May", false)
-        setupItem(binding.dsGoals, R.drawable.ic_target, "#C4F23E", "Goals & Symptoms", "What you're tracking and why", "Updated 18 Jun", false)
+    private fun showShimmer(show: Boolean) {
+        if (show) {
+            binding.shimmerView.shimmerView.visibility = View.VISIBLE
+            binding.shimmerView.shimmerView.startShimmer()
+            binding.contentScrollView.visibility = View.GONE
+        } else {
+            binding.shimmerView.shimmerView.stopShimmer()
+            binding.shimmerView.shimmerView.visibility = View.GONE
+            binding.contentScrollView.visibility = View.VISIBLE
+        }
+    }
 
-        // Add Click listeners for navigation to detail screens
-        val navigateToSourceDetail: (String, String, Int, String, String, String) -> Unit = { id, name, iconRes, desc, color, status ->
-            val action = DataSourcesFragmentDirections.actionFragmentDataSourcesToFragmentDataSourceDetail(
-                sourceId = id,
-                sourceName = name,
-                sourceIcon = iconRes,
-                sourceDesc = desc,
-                sourceColor = color,
-                sourceStatus = status
-            )
-            findNavController().navigate(action)
-        }
+    private fun bindDataSourcesFromApi(sections: List<DataSourcesResponse.Section>) {
+        val layoutInflater = LayoutInflater.from(requireContext())
 
-        binding.dsAppleWatch.root.setOnClickListener {
-            navigateToSourceDetail("applewatch", "Apple Watch", R.drawable.ic_alarm_24px, "Activity, heart rate & workouts", "#EE4D3D", "Connected")
-        }
-        binding.dsWhoop.root.setOnClickListener {
-            navigateToSourceDetail("whoop", "Whoop", R.drawable.ic_start_stress, "Strain, recovery & sleep", "#5FB7C4", "Connected")
-        }
-        binding.dsGarmin.root.setOnClickListener {
-            navigateToSourceDetail("garmin", "Garmin", R.drawable.ic_wrist_band, "Training load & GPS activity", "#9b87f5", "Connected")
-        }
-        binding.dsEnv.root.setOnClickListener {
-            navigateToSourceDetail("environment", "Environmental Context", R.drawable.ic_weather, "Weather & environmental correlations", "#5FB7C4", "Active")
-        }
-        binding.dsCalendar.root.setOnClickListener {
-            navigateToSourceDetail("calendar", "Calendar & Workday", R.drawable.ic_appointments, "Schedule-based stress & recovery", "#9b87f5", "Connected")
-        }
-        binding.dsDeepScan.root.setOnClickListener {
-            navigateToSourceDetail("deepscan", "Deep Scan", R.drawable.ic_spark, "Full-body scan results & history", "#C4F23E", "2 scans")
-        }
+        for (section in sections) {
+            val container = when (section.section) {
+                "EXTERNAL_DEVICE" -> binding.llExternalContainer
+                "DIGITAL" -> binding.llDigitalContainer
+                "IMPORTED" -> binding.llImportedContainer
+                "ASSESSMENT" -> binding.llAssessmentContainer
+                else -> null
+            } ?: continue
 
-        binding.dsReports.root.setOnClickListener {
-            findNavController().navigate(R.id.action_fragmentDataSources_to_fragmentUploadedReports)
-        }
+            val sources = section.sources ?: emptyList()
+            if (sources.isEmpty()) continue
 
-        val navigateToAssessmentDetail: (String, String, Int, String, String, String) -> Unit = { id, name, iconRes, desc, color, status ->
+            container.removeAllViews()
+
+            sources.forEachIndexed { index, source ->
+                val itemBinding = ItemDataSourceBinding.inflate(layoutInflater, container, false)
+
+                val iconRes = getIconResForSourceKey(source.sourceKey)
+                val colorHex = source.accentColor ?: "#5FB7C4"
+                val title = source.name ?: ""
+                val desc = source.description ?: ""
+
+                val isPaused = source.isPaused == true || source.status.equals("Paused", ignoreCase = true)
+                val isConnected = source.isConnected == true ||
+                        source.status.equals("Connected", ignoreCase = true) ||
+                        source.status.equals("Active", ignoreCase = true)
+
+                val statusText = when {
+                    isPaused -> "Paused"
+                    !source.meta.isNullOrEmpty() -> source.meta
+                    source.status != null -> source.status
+                    isConnected -> "Connected"
+                    else -> "Not connected"
+                }
+
+                val showDot = isConnected && !isPaused
+
+                setupItem(itemBinding, iconRes, colorHex, title, desc, statusText, showDot, isPaused)
+
+                // Dynamic click handler passing live source data
+                itemBinding.root.setOnClickListener {
+                    handleSourceClick(source)
+                }
+
+                container.addView(itemBinding.root)
+
+                // Add 1dp divider line between items except after the last item
+                if (index < sources.size - 1) {
+                    val divider = View(requireContext()).apply {
+                        layoutParams = LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            (1 * resources.displayMetrics.density).toInt()
+                        ).apply {
+                            setMargins(
+                                (16 * resources.displayMetrics.density).toInt(), 0,
+                                (16 * resources.displayMetrics.density).toInt(), 0
+                            )
+                        }
+                        setBackgroundColor(android.graphics.Color.parseColor("#1AFFFFFF"))
+                    }
+                    container.addView(divider)
+                }
+            }
+        }
+    }
+
+    private fun handleSourceClick(source: DataSourcesResponse.Source) {
+        viewModel.isReturningFromDetail = true
+
+        val id = source.sourceKey ?: ""
+        val name = source.name ?: ""
+        val iconRes = getIconResForSourceKey(source.sourceKey)
+        val desc = source.description ?: ""
+        val color = source.accentColor ?: "#5FB7C4"
+        val statusText = source.status ?: source.meta ?: "Connected"
+
+        if (source.section == "ASSESSMENT" || id in listOf("lifestyle", "health_history", "goals_symptoms")) {
             val action = DataSourcesFragmentDirections.actionFragmentDataSourcesToFragmentAssessmentDetail(
                 assessmentId = id,
                 assessmentName = name,
                 assessmentIcon = iconRes,
                 assessmentDesc = desc,
                 assessmentColor = color,
-                assessmentDate = status
+                assessmentDate = statusText
+            )
+            findNavController().navigate(action)
+        } else {
+            val action = DataSourcesFragmentDirections.actionFragmentDataSourcesToFragmentDataSourceDetail(
+                sourceId = id,
+                sourceName = name,
+                sourceIcon = iconRes,
+                sourceDesc = desc,
+                sourceColor = color,
+                sourceStatus = statusText
             )
             findNavController().navigate(action)
         }
+    }
 
-        binding.dsLifestyle.root.setOnClickListener {
-            navigateToAssessmentDetail("lifestyle", "Lifestyle Assessment", R.drawable.ic_menu_24px, "Diet, sleep, activity & habits", "#5FB7C4", "Updated 12 Jun")
-        }
-        binding.dsHealth.root.setOnClickListener {
-            navigateToAssessmentDetail("health_history", "Health History", R.drawable.ic_onboard_heart, "Conditions, medications & family history", "#EE4D3D", "Updated 2 May")
-        }
-        binding.dsGoals.root.setOnClickListener {
-            navigateToAssessmentDetail("goals_symptoms", "Goals & Symptoms", R.drawable.ic_target, "What you're tracking and why", "#C4F23E", "Updated 18 Jun")
+    private fun getIconResForSourceKey(sourceKey: String?): Int {
+        val key = sourceKey?.lowercase() ?: return R.drawable.ic_spark
+        return when {
+            key.contains("apple") || key.contains("watch") -> R.drawable.ic_smart_band
+            key.contains("whoop") -> R.drawable.ic_start_stress
+            key.contains("garmin") -> R.drawable.ic_wrist_band
+            key.contains("oura") || key.contains("ring") -> R.drawable.ic_wrist_band
+            key.contains("polar") -> R.drawable.ic_onboard_heart
+            key.contains("strava") -> R.drawable.ic_menu_24px
+            key.contains("ultrahuman") -> R.drawable.ic_wrist_band
+            key.contains("google") -> R.drawable.ic_scan_node
+            key.contains("env") || key.contains("environment") -> R.drawable.ic_weather
+            key.contains("calendar") || key.contains("workday") -> R.drawable.ic_appointments
+            key.contains("report") -> R.drawable.ic_sheet_document
+            key.contains("deep") || key.contains("scan") -> R.drawable.ic_spark
+            key.contains("lifestyle") -> R.drawable.ic_menu_24px
+            key.contains("health") || key.contains("history") -> R.drawable.ic_onboard_heart
+            key.contains("goal") || key.contains("symptom") -> R.drawable.ic_target
+            else -> R.drawable.ic_spark
         }
     }
 
     private fun setupItem(
-        itemBinding: com.humotron.app.databinding.ItemDataSourceBinding,
+        itemBinding: ItemDataSourceBinding,
         iconRes: Int,
         colorHex: String,
         title: String,
         desc: String,
         status: String,
-        showDot: Boolean
+        showDot: Boolean,
+        isPaused: Boolean = false
     ) {
-        val colorInt = android.graphics.Color.parseColor(colorHex)
+        val colorInt = try {
+            android.graphics.Color.parseColor(colorHex)
+        } catch (e: Exception) {
+            android.graphics.Color.parseColor("#5FB7C4")
+        }
         itemBinding.ivDeviceIcon.setImageResource(iconRes)
         itemBinding.ivDeviceIcon.imageTintList = android.content.res.ColorStateList.valueOf(colorInt)
-        
+
         // 22% opacity background for the icon box
         val bgTint = android.graphics.Color.argb(
             (255 * 0.22).toInt(),

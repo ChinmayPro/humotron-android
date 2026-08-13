@@ -55,7 +55,6 @@
         android:layout_marginTop="2dp"
         android:textColor="#859390"
         android:textSize="11.5sp"
-        android:lineSpacingMultiplier="1.2"
         app:layout_constraintEnd_toStartOf="@id/llStatus"
         app:layout_constraintStart_toStartOf="@id/tvDeviceName"
         app:layout_constraintTop_toBottomOf="@id/tvDeviceName"

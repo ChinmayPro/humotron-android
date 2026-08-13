@@ -57,21 +57,18 @@ class ShopBoosterDetailFragment : BaseFragment(R.layout.fragment_shop_booster_de
             findNavController().popBackStack()
         }
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.nsvContent) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.clFooter) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            val defaultPadding = (12 * resources.displayMetrics.density).toInt()
+            val bottomPadding = if (systemBars.bottom > 0) systemBars.bottom else defaultPadding
             v.setPadding(
                 v.paddingLeft,
                 v.paddingTop,
                 v.paddingRight,
-                systemBars.bottom
+                bottomPadding
             )
-            insets
-        }
-
-        ViewCompat.setOnApplyWindowInsetsListener(binding.clFooter) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                bottomMargin = systemBars.bottom
+                bottomMargin = 0
             }
             insets
         }

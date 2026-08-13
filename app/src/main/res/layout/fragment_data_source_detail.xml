@@ -12,9 +12,19 @@
         android:layout_height="@dimen/_56dp"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.core.widget.NestedScrollView
+    <include
+        android:id="@+id/shimmerView"
+        layout="@layout/shimmer_data_source_detail"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/contentScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header">
@@ -118,6 +128,7 @@
             <!-- Used For Section (.cfgsec) -->
             <!-- .cq: color:#fff; font-size:15px; font-weight:800 -->
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvUseForHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="22dp"
@@ -131,6 +142,7 @@
 
             <!-- .ch: color:ink3=#859390; font-size:12.5px -->
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvUseForSubHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="22dp"
@@ -143,12 +155,14 @@
 
             <!-- Used For Switches Card (.cfgcard) -->
             <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llUsedForCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="22dp"
                 android:layout_marginTop="12dp"
                 android:background="@drawable/bg_cfg_card"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="invisible">
 
                 <!-- Row 1: Insights & correlations (.mgrow .mn: font-size:14px) -->
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -158,6 +172,7 @@
                     android:paddingVertical="15dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvInsightsTitle"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/manrope_bold"
@@ -166,16 +181,32 @@
                         android:textColor="#FFFFFF"
                         android:textSize="15.5sp"
                         app:fontFamily="@font/manrope_bold"
+                        app:layout_constraintBottom_toTopOf="@id/tvInsightsDesc"
+                        app:layout_constraintEnd_toStartOf="@id/switchInsights"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_chainStyle="packed" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvInsightsDesc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/manrope_regular"
+                        android:textColor="#859390"
+                        android:textSize="11.5sp"
+                        android:visibility="gone"
+                        app:fontFamily="@font/manrope_regular"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/switchInsights"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@id/tvInsightsTitle" />
 
                     <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/switchInsights"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:checked="true"
+                        android:checked="false"
                         app:thumbTint="@color/switch_thumb_color"
                         app:trackTint="@color/switch_track_color"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -197,6 +228,7 @@
                     android:paddingVertical="15dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvSuggestionsTitle"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/manrope_bold"
@@ -205,16 +237,32 @@
                         android:textColor="#FFFFFF"
                         android:textSize="15.5sp"
                         app:fontFamily="@font/manrope_bold"
+                        app:layout_constraintBottom_toTopOf="@id/tvSuggestionsDesc"
+                        app:layout_constraintEnd_toStartOf="@id/switchSuggestions"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_chainStyle="packed" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvSuggestionsDesc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/manrope_regular"
+                        android:textColor="#859390"
+                        android:textSize="11.5sp"
+                        android:visibility="gone"
+                        app:fontFamily="@font/manrope_regular"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/switchSuggestions"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@id/tvSuggestionsTitle" />
 
                     <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/switchSuggestions"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:checked="true"
+                        android:checked="false"
                         app:thumbTint="@color/switch_thumb_color"
                         app:trackTint="@color/switch_track_color"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -236,6 +284,7 @@
                     android:paddingVertical="15dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvChatTitle"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/manrope_bold"
@@ -244,16 +293,92 @@
                         android:textColor="#FFFFFF"
                         android:textSize="15.5sp"
                         app:fontFamily="@font/manrope_bold"
+                        app:layout_constraintBottom_toTopOf="@id/tvChatDesc"
+                        app:layout_constraintEnd_toStartOf="@id/switchChat"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_chainStyle="packed" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvChatDesc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/manrope_regular"
+                        android:textColor="#859390"
+                        android:textSize="11.5sp"
+                        android:visibility="gone"
+                        app:fontFamily="@font/manrope_regular"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/switchChat"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@id/tvChatTitle" />
 
                     <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/switchChat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:checked="true"
+                        android:checked="false"
+                        app:thumbTint="@color/switch_thumb_color"
+                        app:trackTint="@color/switch_track_color"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!-- Divider for Deep Dives -->
+                <View
+                    android:id="@+id/divDeepDives"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#12FFFFFF"
+                    android:visibility="gone" />
+
+                <!-- Row 4: Deep Dives -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clDeepDives"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="15dp"
+                    android:paddingVertical="15dp"
+                    android:visibility="gone">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvDeepDivesTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/manrope_bold"
+                        android:textStyle="bold"
+                        android:text="Deep Dives"
+                        android:textColor="#FFFFFF"
+                        android:textSize="15.5sp"
+                        app:fontFamily="@font/manrope_bold"
+                        app:layout_constraintBottom_toTopOf="@id/tvDeepDivesDesc"
+                        app:layout_constraintEnd_toStartOf="@id/switchDeepDives"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_chainStyle="packed" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvDeepDivesDesc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/manrope_regular"
+                        android:textColor="#859390"
+                        android:textSize="11.5sp"
+                        android:visibility="gone"
+                        app:fontFamily="@font/manrope_regular"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/switchDeepDives"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvDeepDivesTitle" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switchDeepDives"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
                         app:thumbTint="@color/switch_thumb_color"
                         app:trackTint="@color/switch_track_color"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -297,6 +422,7 @@
 
                     <!-- .ph: color:#fff; font-size:13px; font-weight:700 -->
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPrivacyTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/manrope_bold"
@@ -308,11 +434,11 @@
 
                     <!-- .pp: color:ink3=#859390; font-size:11.5px -->
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPrivacyDesc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/manrope_regular"
-                        android:lineSpacingMultiplier="1.45"
                         android:text="Used only to personalise your analysis. Never shared."
                         android:textColor="#859390"
                         android:textSize="11.5sp"
@@ -320,8 +446,68 @@
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
 
+            <!-- MANAGE YOUR REPORTS Section (visible for Uploaded Reports) -->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llManageReportsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="22dp"
+                    android:layout_marginTop="22dp"
+                    android:fontFamily="@font/manrope_extra_bold"
+                    android:textStyle="bold"
+                    android:text="MANAGE YOUR REPORTS"
+                    android:textColor="#859390"
+                    android:textSize="12.5sp"
+                    app:fontFamily="@font/manrope_extra_bold" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/llViewReportsButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginHorizontal="22dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_ctrl_row"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="16dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_list_24px"
+                        app:tint="#C4F23E" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvViewReportsText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/manrope_bold"
+                        android:text="View reports • 4"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14.5sp"
+                        app:fontFamily="@font/manrope_bold" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_chevron_right_24px"
+                        app:tint="#859390" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
             <!-- Your Controls Section (.cfgsec) -->
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvYourControlsHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="22dp"
@@ -356,9 +542,10 @@
                     android:gravity="center">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:src="@drawable/ic_alarm_24px"
+                        android:id="@+id/ivPauseIcon"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_clock"
                         app:tint="#E7A93C" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -371,6 +558,7 @@
 
                     <!-- .cn: color:#fff; font-size:14.5px; font-weight:700 -->
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPauseTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/manrope_bold"
@@ -432,6 +620,7 @@
 
                     <!-- .cn with color:series -->
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvDeleteTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/manrope_bold"
@@ -461,5 +650,146 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>
+
+    <!-- Pause / Resume Stepper & Success Fullscreen Overlay -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/flPauseProgressOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#DB0B1211"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone">
+
+        <!-- Stepper View (Image 2) -->
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/llStepperContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvStepperTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/manrope_bold"
+                android:text="Pausing"
+                android:textColor="#FFFFFF"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:fontFamily="@font/manrope_bold" />
+
+            <!-- Steps Inner Container (Left-aligned relative to each other) -->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:gravity="start"
+                android:orientation="vertical">
+
+                <!-- Step 1 Row -->
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvStep1Badge"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/bg_step_circle_active"
+                        android:fontFamily="@font/manrope_bold"
+                        android:gravity="center"
+                        android:text="1"
+                        android:textColor="#111827"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvStep1Text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="14dp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:text="Updating preference"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp"
+                        app:fontFamily="@font/manrope_bold" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <!-- Step 2 Row -->
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvStep2Badge"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/bg_step_circle_inactive"
+                        android:fontFamily="@font/manrope_bold"
+                        android:gravity="center"
+                        android:text="2"
+                        android:textColor="#A0B3AF"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvStep2Text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="14dp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:text="Confirming"
+                        android:textColor="#6F7E7D"
+                        android:textSize="16sp"
+                        app:fontFamily="@font/manrope_bold" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <!-- Success Container (Image 3) -->
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/llSuccessContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivSuccessCheck"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@drawable/ic_check_big"
+                app:tint="#C4F23E" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvSuccessTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/manrope_bold"
+                android:text="Source paused"
+                android:textColor="#FFFFFF"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:fontFamily="@font/manrope_bold" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

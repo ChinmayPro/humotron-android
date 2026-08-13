@@ -36,8 +36,17 @@ class UploadedReportsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().window.statusBarColor = android.graphics.Color.BLACK
         initViews()
         observeViewModel()
+        if (viewModel.uploadState.value?.data == null) {
+            viewModel.fetchUploadedReports()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        requireActivity().window.statusBarColor = android.graphics.Color.BLACK
     }
 
 
@@ -45,18 +54,6 @@ class UploadedReportsFragment : Fragment() {
 
 
     private fun initViews() {
-        // Handle status bar insets only if NOT opened from TrackFragment
-        val isFromTrack = arguments?.getBoolean("isFromTrack") ?: false
-        if (!isFromTrack) {
-            androidx.core.view.ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar) { view, insets ->
-                val statusBars = insets.getInsets(androidx.core.view.WindowInsetsCompat.Type.statusBars())
-                val params = view.layoutParams as android.view.ViewGroup.MarginLayoutParams
-                params.topMargin = statusBars.top
-                view.layoutParams = params
-                insets
-            }
-        }
-
         binding.toolbar.setNavigationOnClickListener {
             if (findNavController().previousBackStackEntry == null) {
                 requireActivity().finish()
@@ -154,6 +151,7 @@ class UploadedReportsFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        activity?.window?.statusBarColor = android.graphics.Color.TRANSPARENT
         _binding = null
     }
 }

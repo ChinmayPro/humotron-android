@@ -537,6 +537,9 @@
         <argument
             android:name="sourceStatus"
             app:argType="string" />
+        <action
+            android:id="@+id/action_fragmentDataSourceDetail_to_fragmentUploadedReports"
+            app:destination="@id/fragmentUploadedReports" />
     </fragment>
 
     <fragment
@@ -562,6 +565,9 @@
         <argument
             android:name="assessmentDate"
             app:argType="string" />
+        <action
+            android:id="@+id/action_fragmentAssessmentDetail_to_fragmentManageAccount"
+            app:destination="@id/fragmentManageAccount" />
     </fragment>
 
     <fragment
