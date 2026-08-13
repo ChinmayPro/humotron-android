@@ -44,7 +44,12 @@ class AssessmentDetailFragment : BaseFragment(R.layout.fragment_assessment_detai
 
     // Questions dictionary matching HTML ASSESS_Q
     private val assessQuestions = mapOf(
-        "lifestyle" to listOf("Alcohol intake", "Smoking status", "Caffeine habits", "Sleep schedule"),
+        "lifestyle" to listOf(
+            "Alcohol intake",
+            "Smoking status",
+            "Caffeine habits",
+            "Sleep schedule"
+        ),
         "health_history" to listOf("Family history", "Current medications", "Past conditions"),
         "goals_symptoms" to listOf("Primary goal", "Current symptoms", "Stress level")
     )
@@ -97,54 +102,58 @@ class AssessmentDetailFragment : BaseFragment(R.layout.fragment_assessment_detai
         // Setup Edit answers click
         binding.llEditAnswers.setOnClickListener {
             // Find corresponding MergedAssessment object from LiveData list
-            val mergedAssessmentList = deviceViewModel.mergedAssessmentListLiveData.value?.data?.data
+            val mergedAssessmentList =
+                deviceViewModel.mergedAssessmentListLiveData.value?.data?.data
+
             val matchedAssessment = mergedAssessmentList?.find {
                 it.assessmentName.equals(args.assessmentName, ignoreCase = true) ||
-                it.assessmentId.equals(args.assessmentId, ignoreCase = true)
+                        it.assessmentId.equals(args.assessmentId, ignoreCase = true)
             }
 
             if (matchedAssessment != null) {
                 val json = Gson().toJson(matchedAssessment)
+
                 when (matchedAssessment.status) {
                     "Start Now" -> {
                         val sheet = CardiovascularAssessmentBottomSheet.newInstance(json)
+
                         sheet.onProceedClicked = {
                             if (isAdded) {
-                                val intent = Intent(requireContext(), AssessmentActivity::class.java).apply {
+                                val intent = Intent(
+                                    requireContext(),
+                                    AssessmentActivity::class.java
+                                ).apply {
                                     putExtra(NavKeys.ASSESSMENT, json)
                                 }
+
                                 startActivity(intent)
                             }
                         }
-                        sheet.show(parentFragmentManager, CardiovascularAssessmentBottomSheet.TAG)
+
+                        sheet.show(
+                            parentFragmentManager,
+                            CardiovascularAssessmentBottomSheet.TAG
+                        )
                     }
+
                     else -> {
-                        val intent = Intent(requireContext(), AssessmentActivity::class.java).apply {
+                        val intent = Intent(
+                            requireContext(),
+                            AssessmentActivity::class.java
+                        ).apply {
                             putExtra(NavKeys.ASSESSMENT, json)
                         }
+
                         startActivity(intent)
                     }
-            try {
-                findNavController().navigate(R.id.action_fragmentAssessmentDetail_to_fragmentManageAccount)
-            } catch (e: Exception) {
-                try {
-                    findNavController().navigate(R.id.fragmentManageAccount)
-                } catch (ex: Exception) {
-                    ex.printStackTrace()
                 }
             } else {
                 // If not found in API list, show placeholder toast
-                ToastUtils.showShort(requireContext(), "Launch questionnaire for ${args.assessmentName}")
+                ToastUtils.showShort(
+                    requireContext(),
+                    "Launch questionnaire for ${args.assessmentName}"
+                )
             }
-        }
-
-        // Setup Pause / Delete buttons
-        binding.llPauseAssessment.setOnClickListener {
-            showPauseConfirmationDialog(!isPausedState)
-        }
-
-        binding.llDeleteAssessment.setOnClickListener {
-            showDeleteConfirmationDialog()
         }
     }
 
@@ -153,13 +162,15 @@ class AssessmentDetailFragment : BaseFragment(R.layout.fragment_assessment_detai
         if (isPaused) {
             binding.tvStatus.text = "Paused"
             binding.vStatusDot.visibility = View.VISIBLE
-            binding.vStatusDot.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#A0B3AF"))
+            binding.vStatusDot.backgroundTintList =
+                ColorStateList.valueOf(Color.parseColor("#A0B3AF"))
             binding.tvStatus.setTextColor(Color.parseColor("#A0B3AF"))
 
             binding.switchInclude.isChecked = false
 
             binding.ivPauseIcon.setImageResource(R.drawable.ic_play)
-            binding.ivPauseIcon.imageTintList = ColorStateList.valueOf(Color.parseColor("#E7A93C"))
+            binding.ivPauseIcon.imageTintList =
+                ColorStateList.valueOf(Color.parseColor("#E7A93C"))
             binding.tvPauseTitle.text = "Resume this assessment"
             binding.tvPauseDesc.text = "Start using ${args.assessmentName} answers again"
         } else {
@@ -168,20 +179,23 @@ class AssessmentDetailFragment : BaseFragment(R.layout.fragment_assessment_detai
                 && !rawStatus.contains("Paused", ignoreCase = true)
                 && !rawStatus.contains("excluded", ignoreCase = true)
                 && !rawStatus.contains("scan", ignoreCase = true)
-                && !rawStatus.contains("report", ignoreCase = true)) {
+                && !rawStatus.contains("report", ignoreCase = true)
+            ) {
                 rawStatus
             } else {
                 "Connected"
             }
             binding.tvStatus.text = statusDisplay
             binding.vStatusDot.visibility = View.VISIBLE
-            binding.vStatusDot.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#C4F23E"))
+            binding.vStatusDot.backgroundTintList =
+                ColorStateList.valueOf(Color.parseColor("#C4F23E"))
             binding.tvStatus.setTextColor(Color.parseColor("#cfdad8"))
 
             binding.switchInclude.isChecked = true
 
             binding.ivPauseIcon.setImageResource(R.drawable.ic_clock)
-            binding.ivPauseIcon.imageTintList = ColorStateList.valueOf(Color.parseColor("#E7A93C"))
+            binding.ivPauseIcon.imageTintList =
+                ColorStateList.valueOf(Color.parseColor("#E7A93C"))
             binding.tvPauseTitle.text = "Pause this assessment"
             binding.tvPauseDesc.text = "Temporarily exclude all answers"
         }
@@ -219,7 +233,8 @@ class AssessmentDetailFragment : BaseFragment(R.layout.fragment_assessment_detai
 
         if (targetPaused) {
             dialogBinding.tvDialogTitle.text = "Pause this assessment?"
-            dialogBinding.tvDialogSubTitle.text = "We'll stop using it for analysis until you resume."
+            dialogBinding.tvDialogSubTitle.text =
+                "We'll stop using it for analysis until you resume."
             dialogBinding.btnConfirm.text = "Pause"
         } else {
             dialogBinding.tvDialogTitle.text = "Resume this assessment?"
@@ -244,14 +259,16 @@ class AssessmentDetailFragment : BaseFragment(R.layout.fragment_assessment_detai
         binding.tvStepperTitle.text = if (targetPaused) "Pausing" else "Resuming"
 
         context?.let { ctx ->
-            binding.tvStep1Badge.background = ContextCompat.getDrawable(ctx, R.drawable.bg_step_circle_active)
+            binding.tvStep1Badge.background =
+                ContextCompat.getDrawable(ctx, R.drawable.bg_step_circle_active)
         }
         binding.tvStep1Badge.setTextColor(Color.parseColor("#111827"))
         binding.tvStep1Text.text = "Updating preference"
         binding.tvStep1Text.setTextColor(Color.parseColor("#FFFFFF"))
 
         context?.let { ctx ->
-            binding.tvStep2Badge.background = ContextCompat.getDrawable(ctx, R.drawable.bg_step_circle_inactive)
+            binding.tvStep2Badge.background =
+                ContextCompat.getDrawable(ctx, R.drawable.bg_step_circle_inactive)
         }
         binding.tvStep2Badge.setTextColor(Color.parseColor("#A0B3AF"))
         binding.tvStep2Text.text = "Confirming"
@@ -283,7 +300,8 @@ class AssessmentDetailFragment : BaseFragment(R.layout.fragment_assessment_detai
 
         handler.postDelayed({
             context?.let { ctx ->
-                binding.tvStep2Badge.background = ContextCompat.getDrawable(ctx, R.drawable.bg_step_circle_active)
+                binding.tvStep2Badge.background =
+                    ContextCompat.getDrawable(ctx, R.drawable.bg_step_circle_active)
             }
             binding.tvStep2Badge.setTextColor(Color.parseColor("#111827"))
             binding.tvStep2Text.setTextColor(Color.parseColor("#FFFFFF"))
@@ -292,7 +310,8 @@ class AssessmentDetailFragment : BaseFragment(R.layout.fragment_assessment_detai
                 .scaleX(1.2f).scaleY(1.2f)
                 .setDuration(120)
                 .withEndAction {
-                    binding.tvStep2Badge.animate().scaleX(1f).scaleY(1f).setDuration(120).start()
+                    binding.tvStep2Badge.animate().scaleX(1f).scaleY(1f).setDuration(120)
+                        .start()
                 }.start()
 
             handler.postDelayed({
@@ -302,7 +321,8 @@ class AssessmentDetailFragment : BaseFragment(R.layout.fragment_assessment_detai
                     .withEndAction {
                         binding.llStepperContainer.visibility = View.GONE
 
-                        binding.tvSuccessTitle.text = if (isPausedState) "Assessment paused" else "Assessment resumed"
+                        binding.tvSuccessTitle.text =
+                            if (isPausedState) "Assessment paused" else "Assessment resumed"
                         binding.llSuccessContainer.visibility = View.VISIBLE
                         binding.llSuccessContainer.animate()
                             .alpha(1f)
@@ -346,7 +366,8 @@ class AssessmentDetailFragment : BaseFragment(R.layout.fragment_assessment_detai
         }
 
         dialogBinding.tvDialogTitle.text = "Delete all data?"
-        dialogBinding.tvDialogSubTitle.text = "This permanently removes all answers from ${args.assessmentName}. This can't be undone."
+        dialogBinding.tvDialogSubTitle.text =
+            "This permanently removes all answers from ${args.assessmentName}. This can't be undone."
 
         dialogBinding.btnCancel.setOnClickListener {
             dialog.dismiss()
@@ -364,14 +385,16 @@ class AssessmentDetailFragment : BaseFragment(R.layout.fragment_assessment_detai
         binding.tvStepperTitle.text = "Deleting"
 
         context?.let { ctx ->
-            binding.tvStep1Badge.background = ContextCompat.getDrawable(ctx, R.drawable.bg_step_circle_active)
+            binding.tvStep1Badge.background =
+                ContextCompat.getDrawable(ctx, R.drawable.bg_step_circle_active)
         }
         binding.tvStep1Badge.setTextColor(Color.parseColor("#111827"))
         binding.tvStep1Text.text = "Deleting data"
         binding.tvStep1Text.setTextColor(Color.parseColor("#FFFFFF"))
 
         context?.let { ctx ->
-            binding.tvStep2Badge.background = ContextCompat.getDrawable(ctx, R.drawable.bg_step_circle_inactive)
+            binding.tvStep2Badge.background =
+                ContextCompat.getDrawable(ctx, R.drawable.bg_step_circle_inactive)
         }
         binding.tvStep2Badge.setTextColor(Color.parseColor("#A0B3AF"))
         binding.tvStep2Text.text = "Confirming"
@@ -400,7 +423,8 @@ class AssessmentDetailFragment : BaseFragment(R.layout.fragment_assessment_detai
 
         handler.postDelayed({
             context?.let { ctx ->
-                binding.tvStep2Badge.background = ContextCompat.getDrawable(ctx, R.drawable.bg_step_circle_active)
+                binding.tvStep2Badge.background =
+                    ContextCompat.getDrawable(ctx, R.drawable.bg_step_circle_active)
             }
             binding.tvStep2Badge.setTextColor(Color.parseColor("#111827"))
             binding.tvStep2Text.setTextColor(Color.parseColor("#FFFFFF"))
@@ -409,7 +433,8 @@ class AssessmentDetailFragment : BaseFragment(R.layout.fragment_assessment_detai
                 .scaleX(1.2f).scaleY(1.2f)
                 .setDuration(120)
                 .withEndAction {
-                    binding.tvStep2Badge.animate().scaleX(1f).scaleY(1f).setDuration(120).start()
+                    binding.tvStep2Badge.animate().scaleX(1f).scaleY(1f).setDuration(120)
+                        .start()
                 }.start()
 
             handler.postDelayed({
@@ -477,6 +502,7 @@ class AssessmentDetailFragment : BaseFragment(R.layout.fragment_assessment_detai
                         }
                     }
                 }
+
                 Status.ERROR, Status.EXCEPTION, Status.LOADING -> {}
             }
         }
@@ -492,6 +518,7 @@ class AssessmentDetailFragment : BaseFragment(R.layout.fragment_assessment_detai
                         profileViewModel.fetchDataSources()
                     }
                 }
+
                 Status.ERROR, Status.EXCEPTION -> {
                     binding.flPauseProgressOverlay.visibility = View.GONE
                     lastTargetPaused?.let {
@@ -503,40 +530,47 @@ class AssessmentDetailFragment : BaseFragment(R.layout.fragment_assessment_detai
                         ?: "Failed to update assessment"
                     ToastUtils.showShort(requireContext(), msg)
                 }
+
                 Status.LOADING -> {}
             }
         }
 
-        profileViewModel.getUpdateDataSourceTopicsLiveData().observe(viewLifecycleOwner) { resource ->
-            when (resource.status) {
-                Status.SUCCESS -> {
-                    profileViewModel.fetchDataSources()
-                }
-                Status.ERROR, Status.EXCEPTION -> {
-                    val msg = resource.error?.errorMessage?.takeIf { it.isNotBlank() }
-                        ?: resource.error?.error?.takeIf { it.isNotBlank() }
-                        ?: "Failed to update topics"
-                    ToastUtils.showShort(requireContext(), msg)
-                }
-                Status.LOADING -> {}
-            }
-        }
+        profileViewModel.getUpdateDataSourceTopicsLiveData()
+            .observe(viewLifecycleOwner) { resource ->
+                when (resource.status) {
+                    Status.SUCCESS -> {
+                        profileViewModel.fetchDataSources()
+                    }
 
-        profileViewModel.getDeleteDataSourceDataLiveData().observe(viewLifecycleOwner) { resource ->
-            when (resource.status) {
-                Status.SUCCESS -> {
-                    handleDeleteApiSuccess()
+                    Status.ERROR, Status.EXCEPTION -> {
+                        val msg = resource.error?.errorMessage?.takeIf { it.isNotBlank() }
+                            ?: resource.error?.error?.takeIf { it.isNotBlank() }
+                            ?: "Failed to update topics"
+                        ToastUtils.showShort(requireContext(), msg)
+                    }
+
+                    Status.LOADING -> {}
                 }
-                Status.ERROR, Status.EXCEPTION -> {
-                    binding.flPauseProgressOverlay.visibility = View.GONE
-                    val msg = resource.error?.errorMessage?.takeIf { it.isNotBlank() }
-                        ?: resource.error?.error?.takeIf { it.isNotBlank() }
-                        ?: "Failed to delete data"
-                    ToastUtils.showShort(requireContext(), msg)
-                }
-                Status.LOADING -> {}
             }
-        }
+
+        profileViewModel.getDeleteDataSourceDataLiveData()
+            .observe(viewLifecycleOwner) { resource ->
+                when (resource.status) {
+                    Status.SUCCESS -> {
+                        handleDeleteApiSuccess()
+                    }
+
+                    Status.ERROR, Status.EXCEPTION -> {
+                        binding.flPauseProgressOverlay.visibility = View.GONE
+                        val msg = resource.error?.errorMessage?.takeIf { it.isNotBlank() }
+                            ?: resource.error?.error?.takeIf { it.isNotBlank() }
+                            ?: "Failed to delete data"
+                        ToastUtils.showShort(requireContext(), msg)
+                    }
+
+                    Status.LOADING -> {}
+                }
+            }
     }
 
     private val topicStatesMap = mutableMapOf<String, Boolean>()
@@ -556,7 +590,8 @@ class AssessmentDetailFragment : BaseFragment(R.layout.fragment_assessment_detai
                 val words = question.trim().split(" ")
                 if (words.isEmpty()) ""
                 else words.first().lowercase() + words.drop(1).joinToString("") { word ->
-                    word.lowercase().replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
+                    word.lowercase()
+                        .replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
                 }
             }
         }
@@ -615,12 +650,18 @@ class AssessmentDetailFragment : BaseFragment(R.layout.fragment_assessment_detai
                 )
                 isChecked = topicStatesMap[topicKey] ?: true
                 thumbTintList = ColorStateList.valueOf(Color.WHITE)
-                trackTintList = resources.getColorStateList(R.color.switch_track_color, requireContext().theme)
+                trackTintList = resources.getColorStateList(
+                    R.color.switch_track_color,
+                    requireContext().theme
+                )
 
                 setOnCheckedChangeListener { _, isChecked ->
                     if (topicKey.isNotBlank()) {
                         topicStatesMap[topicKey] = isChecked
-                        profileViewModel.updateDataSourceTopics(args.assessmentId, topicStatesMap)
+                        profileViewModel.updateDataSourceTopics(
+                            args.assessmentId,
+                            topicStatesMap
+                        )
                     }
                 }
             }
@@ -644,7 +685,8 @@ class AssessmentDetailFragment : BaseFragment(R.layout.fragment_assessment_detai
 
     private fun setupInsets() {
         androidx.core.view.ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
-            val systemBars = insets.getInsets(androidx.core.view.WindowInsetsCompat.Type.systemBars())
+            val systemBars =
+                insets.getInsets(androidx.core.view.WindowInsetsCompat.Type.systemBars())
             val extraBottomPadding = (10 * resources.displayMetrics.density).toInt()
             androidx.core.view.ViewCompat.setPaddingRelative(
                 binding.contentScrollView,
