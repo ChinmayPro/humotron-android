@@ -1,4 +1,4 @@
-package com.humotron.app.ui.assesment
+package com.humotron.app.ui.assessment
 
 // ── Question types ──────────────────────────────────────────────
 sealed class QuestionType {

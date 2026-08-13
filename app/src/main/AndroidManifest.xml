@@ -60,7 +60,7 @@
             android:name=".ui.onboarding.OnBoardingActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.assesment.AssessmentActivity"
+            android:name=".ui.assessment.AssessmentActivity"
             android:exported="true" />
         <activity
             android:name=".ui.bloodTest.BloodTestActivity"

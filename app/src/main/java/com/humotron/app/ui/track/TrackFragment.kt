@@ -2,16 +2,15 @@ package com.humotron.app.ui.track
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.google.gson.Gson
 import com.humotron.app.R
-import com.humotron.app.core.AppConstant.ASSESSMENT
 import com.humotron.app.core.Preference
 import com.humotron.app.core.base.BaseFragment
 import com.humotron.app.data.network.Status
@@ -19,18 +18,14 @@ import com.humotron.app.databinding.FragmentTrackBinding
 import com.humotron.app.domain.modal.DeviceType
 import com.humotron.app.domain.modal.response.GetAllDeviceResponse.Data.UserDevice
 import com.humotron.app.domain.modal.response.MedicalPdf
-import com.humotron.app.domain.modal.response.MergedAssessment
-import com.humotron.app.ui.assesment.AssessmentActivity
+import com.humotron.app.domain.modal.response.toPdfReportData
 import com.humotron.app.ui.bloodTest.BloodTestActivity
 import com.humotron.app.ui.bloodTest.BloodTestViewModel
-import com.humotron.app.ui.assesment.CardiovascularAssessmentBottomSheet
 import com.humotron.app.ui.connect.adapter.DeviceInfo
 import com.humotron.app.ui.connect.dialog.DeviceSelectionBottomSheet
 import com.humotron.app.ui.device.DeviceViewModel
-import com.humotron.app.ui.navigation.NavKeys
-import com.humotron.app.domain.modal.response.toPdfReportData
-import androidx.fragment.app.activityViewModels
 import com.humotron.app.ui.dialogs.DeleteConfirmationBottomSheet
+import com.humotron.app.ui.navigation.NavKeys
 import com.humotron.app.util.fadeIn
 import com.humotron.app.util.showWithFade
 import com.humotron.app.util.toast
@@ -38,7 +33,6 @@ import com.yarolegovich.discretescrollview.transform.Pivot
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import androidx.core.content.ContextCompat
 
 @AndroidEntryPoint
 class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
@@ -48,8 +42,6 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
     private val bloodTestViewModel: BloodTestViewModel by activityViewModels()
     private var deviceAdapter: DeviceAdapter? = null
     private var wearableProviderAdapter: WearableProviderAdapter? = null
-
-    private var assessmentAdapter: AssessmentAdapter? = null
     private var healthReportAdapter: HealthReportAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -94,7 +86,7 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
             // binding.dsvHealthMonitoring.isVisible = true
         }
 
-        viewModel.getMergedAssessmentList()
+        // viewModel.getMergedAssessmentList()
         viewModel.getMedicalPdfList()
     }
 
@@ -103,7 +95,7 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
         binding.swipeRefreshLayout.isRefreshing = false
         viewModel.refreshUserDeviceData(true)
         viewModel.refreshWearableDeviceData(true)
-        viewModel.getMergedAssessmentList(true)
+        // viewModel.getMergedAssessmentList(true)
         viewModel.getMedicalPdfList(true)
     }
 
@@ -120,14 +112,14 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
             binding.swipeRefreshLayout.isRefreshing = false
             viewModel.refreshUserDeviceData(true)
             //viewModel.refreshWearableDeviceData(true)
-            viewModel.getMergedAssessmentList(true)
+            // viewModel.getMergedAssessmentList(true)
             viewModel.getMedicalPdfList(true)
         }
         binding.swipeRefreshSources.setOnRefreshListener {
             binding.swipeRefreshSources.isRefreshing = false
             viewModel.refreshUserDeviceData(true)
             viewModel.refreshWearableDeviceData(true)
-            viewModel.getMergedAssessmentList(true)
+            // viewModel.getMergedAssessmentList(true)
             viewModel.getMedicalPdfList(true)
         }
     }
@@ -352,7 +344,7 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
             }
         }
 
-        viewModel.mergedAssessmentListLiveData.observe(viewLifecycleOwner) {
+        /*viewModel.mergedAssessmentListLiveData.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
                     hideProgress()
@@ -379,7 +371,7 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
                     //showProgress()
                 }
             }
-        }
+        }*/
 
         viewModel.medicalPdfListLiveData.observe(viewLifecycleOwner) {
             when (it.status) {
@@ -431,59 +423,6 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
         }
     }
 
-    private fun showAssessmentSheet(assessment: MergedAssessment) {
-
-        val json = Gson().toJson(assessment)
-        Log.e("TAG", "showAddddssessmentSheet: ${json} ")
-        Log.e("TAG", "showAddddssessmentSheet00: ${assessment} ")
-
-        val sheet = CardiovascularAssessmentBottomSheet.newInstance(json)
-
-        sheet.onProceedClicked = {
-
-            if (isAdded) {
-                val intent = Intent(requireContext(), AssessmentActivity::class.java)
-                intent.putExtra(ASSESSMENT, json)
-                startActivity(intent)
-            }
-        }
-
-        sheet.show(parentFragmentManager, CardiovascularAssessmentBottomSheet.TAG)
-    }
-
-    private fun setupAssessmentRecyclerView(assessments: List<MergedAssessment>) {
-        if (assessmentAdapter == null) {
-            assessmentAdapter = AssessmentAdapter(requireActivity(), assessments) { assessment ->
-                // ... click handling remains same
-                when (assessment.status) {
-                    "Completed" -> toast("the assessment is completed")
-                    "Resume" -> {
-                        if (isAdded) {
-                            val json = Gson().toJson(assessment)
-                            val intent = Intent(requireContext(), AssessmentActivity::class.java)
-                            intent.putExtra(ASSESSMENT, json)
-                            startActivity(intent)
-                        }
-                    }
-
-                    "Start Now" -> showAssessmentSheet(assessment)
-                }
-            }
-        } else {
-            assessmentAdapter?.updateData(assessments)
-        }
-
-        // Always re-set adapter and transformer for the new view instance
-        binding.dsvAssessments.adapter = assessmentAdapter
-        binding.dsvAssessments.setItemTransformer(
-            ScaleTransformer.Builder()
-                .setMaxScale(1.05f)
-                .setMinScale(0.8f)
-                .setPivotX(Pivot.X.CENTER)
-                .setPivotY(Pivot.Y.CENTER)
-                .build()
-        )
-    }
 
     private fun setupHealthReportRecyclerView(reports: List<MedicalPdf>) {
         if (healthReportAdapter == null) {

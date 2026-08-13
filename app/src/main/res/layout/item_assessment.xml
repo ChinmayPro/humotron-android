@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardAssessment"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="11dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="@color/card"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/hair"
+    app:strokeWidth="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/vAssessAccent"
+            android:layout_width="3dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvAssessIconBg"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeWidth="0dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivAssessIcon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_edit_2" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvAssessName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/manrope_bold"
+            android:textColor="@color/white"
+            android:textSize="14.5sp"
+            app:layout_constraintEnd_toStartOf="@id/pillAssessStatus"
+            app:layout_constraintStart_toEndOf="@id/cvAssessIconBg"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Sleep Quality" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvAssessMeta"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:fontFamily="@font/manrope_regular"
+            android:lineSpacingMultiplier="1.4"
+            android:textColor="@color/ink4"
+            android:textSize="11.5sp"
+            app:layout_constraintEnd_toEndOf="@id/tvAssessName"
+            app:layout_constraintStart_toStartOf="@id/tvAssessName"
+            app:layout_constraintTop_toBottomOf="@id/tvAssessName"
+            tools:text="Ring detected restless nights" />
+
+        <ProgressBar
+            android:id="@+id/pbAssessProgress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="4dp"
+            android:layout_marginTop="@dimen/_14dp"
+            android:layout_marginEnd="9dp"
+            android:layout_marginBottom="15dp"
+            android:maxHeight="4dp"
+            android:minHeight="4dp"
+            android:progressDrawable="@drawable/bg_assessment_progress"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tvAssessProgressFraction"
+            app:layout_constraintStart_toStartOf="@id/tvAssessName"
+            app:layout_constraintTop_toBottomOf="@id/tvAssessMeta"
+            app:layout_constraintVertical_bias="0"
+            tools:progress="60" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvAssessProgressFraction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/manrope_regular"
+            android:text="3/5"
+            android:textColor="@color/ink3"
+            android:textSize="10.5sp"
+            app:layout_constraintBottom_toBottomOf="@id/pbAssessProgress"
+            app:layout_constraintEnd_toEndOf="@id/tvAssessName"
+            app:layout_constraintTop_toTopOf="@id/pbAssessProgress" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/pillAssessStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="16dp"
+            app:cardCornerRadius="9dp"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeWidth="0dp">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvAssessPillLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/manrope_extra_bold"
+                android:includeFontPadding="false"
+                android:letterSpacing="0.02"
+                android:paddingStart="10dp"
+                android:paddingTop="7dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="7dp"
+                android:textSize="11sp"
+                tools:text="Resume" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

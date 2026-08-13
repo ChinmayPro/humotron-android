@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?><!-- Put this in res/values/arrays_processing_view.xml (or merge into an existing arrays.xml) -->
+<resources>
+    <string-array name="processing_labels">
+        <item>Activity</item>
+        <item>Stress</item>
+        <item>Sleep</item>
+        <item>Tobacco</item>
+        <item>Family</item>
+        <item>BP</item>
+    </string-array>
+
+    <string-array name="processing_subtitles">
+        <item>Weighing your risk factors</item>
+        <item>Cross-checking your history</item>
+        <item>Comparing against population baselines</item>
+        <item>Almost there</item>
+    </string-array>
+</resources>

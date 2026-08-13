@@ -21,7 +21,92 @@
     <fragment
         android:id="@+id/fragmentAddSource"
         android:name="com.humotron.app.ui.track.AddSourceFragment"
-        tools:layout="@layout/fragment_add_source" />
+        tools:layout="@layout/fragment_add_source">
+        <action
+            android:id="@+id/action_fragmentAddSource_to_fragmentAssessmentList"
+            app:destination="@id/fragmentAssessmentList"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentAddSource_to_fragmentUploadReportIntro"
+            app:destination="@id/fragmentUploadReportIntro"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentAssessmentList"
+        android:name="com.humotron.app.ui.assessment.AssessmentListFragment"
+        tools:layout="@layout/fragment_assessment_list">
+        <action
+            android:id="@+id/action_fragmentAssessmentList_to_fragmentAssessmentInstruction"
+            app:destination="@id/fragmentAssessmentInstruction"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentAssessmentList_to_assessmentFragment"
+            app:destination="@id/assessmentFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentAssessmentList_to_fragmentReviewEditAnswers"
+            app:destination="@id/fragmentReviewEditAnswers"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentAssessmentInstruction"
+        android:name="com.humotron.app.ui.assessment.AssessmentInstructionFragment"
+        tools:layout="@layout/fragment_assessment_instruction">
+        <argument
+            android:name="assessment"
+            app:argType="com.humotron.app.domain.modal.response.MergedAssessment" />
+        <action
+            android:id="@+id/action_fragmentAssessmentInstruction_to_assessmentFragment"
+            app:destination="@id/assessmentFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentReviewEditAnswers"
+        android:name="com.humotron.app.ui.assessment.ReviewEditAnswersFragment"
+        tools:layout="@layout/fragment_review_edit_answers">
+        <argument
+            android:name="assessment"
+            app:argType="com.humotron.app.domain.modal.response.MergedAssessment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentUploadReportIntro"
+        android:name="com.humotron.app.ui.bloodreport.UploadReportIntroFragment"
+        tools:layout="@layout/fragment_upload_report_intro">
+        <action
+            android:id="@+id/action_fragmentUploadReportIntro_to_fragmentUploadPDFFromDevice"
+            app:destination="@id/fragmentUploadPDFFromDevice"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentUploadPDFFromDevice"
+        android:name="com.humotron.app.ui.bloodreport.UploadPDFFromDeviceFragment"
+        tools:layout="@layout/fragment_upload_pdf_from_device" />
 
     <fragment
         android:id="@+id/fragmentPairHumotronDevice"
@@ -84,8 +169,8 @@
         tools:layout="@layout/fragment_workday_details">
         <argument
             android:name="reportId"
-            app:argType="string"
-            android:defaultValue="" />
+            android:defaultValue=""
+            app:argType="string" />
     </fragment>
 
     <fragment
@@ -107,8 +192,8 @@
         tools:layout="@layout/fragment_weather_detail">
         <argument
             android:name="weatherId"
-            app:argType="string"
-            android:defaultValue="a" />
+            android:defaultValue="a"
+            app:argType="string" />
     </fragment>
 
     <fragment
@@ -364,38 +449,38 @@
             app:nullable="true" />
         <argument
             android:name="scaleMeasuredAt"
-            app:argType="string"
             android:defaultValue="@null"
+            app:argType="string"
             app:nullable="true" />
         <argument
             android:name="scaleWeight"
-            app:argType="string"
             android:defaultValue="@null"
+            app:argType="string"
             app:nullable="true" />
         <argument
             android:name="scaleBmi"
-            app:argType="string"
             android:defaultValue="@null"
+            app:argType="string"
             app:nullable="true" />
         <argument
             android:name="scaleBodyFat"
-            app:argType="string"
             android:defaultValue="@null"
+            app:argType="string"
             app:nullable="true" />
         <argument
             android:name="scaleLeanBodyWeight"
-            app:argType="string"
             android:defaultValue="@null"
+            app:argType="string"
             app:nullable="true" />
         <argument
             android:name="scaleMuscleMass"
-            app:argType="string"
             android:defaultValue="@null"
+            app:argType="string"
             app:nullable="true" />
         <argument
             android:name="scaleBoneMass"
-            app:argType="string"
             android:defaultValue="@null"
+            app:argType="string"
             app:nullable="true" />
     </fragment>
 
@@ -422,8 +507,26 @@
 
     <fragment
         android:id="@+id/assessmentFragment"
-        android:name="com.humotron.app.ui.assesment.AssessmentFragment"
-        android:label="Assessment" />
+        android:name="com.humotron.app.ui.assessment.AssessmentFragment"
+        android:label="Assessment">
+        <argument
+            android:name="assessment"
+            android:defaultValue="@null"
+            app:argType="com.humotron.app.domain.modal.response.MergedAssessment"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_assessmentFragment_to_assessmentBuildingFragment"
+            app:destination="@id/assessmentBuildingFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/assessmentBuildingFragment"
+        android:name="com.humotron.app.ui.assessment.AssessmentBuildingFragment"
+        tools:layout="@layout/fragment_assessment_building" />
 
     <fragment
         android:id="@+id/fragmentMetricDetails"
@@ -666,7 +769,8 @@
             android:name="wearable"
             app:argType="com.humotron.app.domain.modal.response.GetAllDeviceResponse$Data$UserDevice"
             app:nullable="true" />
-    </fragment>    <fragment
+    </fragment>
+    <fragment
         android:id="@+id/fragmentShopBoosterDetail"
         android:name="com.humotron.app.ui.shop.ShopBoosterDetailFragment"
         android:label="Booster Details"
@@ -747,8 +851,8 @@
             app:argType="string" />
         <argument
             android:name="insightId"
-            app:argType="string"
-            android:defaultValue="" />
+            android:defaultValue=""
+            app:argType="string" />
     </fragment>
 
     <fragment

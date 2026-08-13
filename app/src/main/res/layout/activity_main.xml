@@ -33,10 +33,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/bottom_nav_bg"
-        android:paddingTop="12dp"
-        android:paddingBottom="10dp"
         android:clipChildren="false"
         android:clipToPadding="false"
+        android:paddingTop="12dp"
+        android:paddingBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -134,11 +134,11 @@
             android:id="@+id/llProfile"
             android:layout_width="@dimen/_60dp"
             android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
             android:elevation="@dimen/_5dp"
             android:gravity="center"
             android:orientation="vertical"
-            android:clipChildren="false"
-            android:clipToPadding="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/llBioHack"
@@ -167,11 +167,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:fontFamily="@font/manrope_extra_bold"
-                    android:textSize="11sp"
-                    android:textColor="@color/lime"
-                    android:textStyle="bold"
                     android:includeFontPadding="false"
                     android:letterSpacing="-0.03"
+                    android:textColor="@color/lime"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
                     tools:text="C" />
 
                 <!-- Optional User image profile overlay -->

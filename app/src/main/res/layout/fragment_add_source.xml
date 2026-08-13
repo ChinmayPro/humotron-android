@@ -50,194 +50,618 @@
                 android:textColor="@color/ink2" />
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardPicture"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_14dp"
-                app:cardBackgroundColor="@color/deep_dives_card"
-                app:cardCornerRadius="@dimen/_20dp"
+                android:layout_marginTop="14dp"
+                app:cardBackgroundColor="@color/card"
+                app:cardCornerRadius="20dp"
                 app:cardElevation="0dp"
-                app:cardUseCompatPadding="false"
-                app:strokeColor="@color/card_stroke"
-                app:strokeWidth="0dp">
+                app:layout_constraintTop_toBottomOf="@id/viewCoverageDivider"
+                app:strokeColor="@color/hair"
+                app:strokeWidth="1dp">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/_17dp">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/tvPictureTitle"
-                        style="@style/Text.14x.Manrope.Bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:includeFontPadding="false"
-                        android:text="@string/track_your_picture"
-                        android:textColor="@color/white"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/tvCoverageCount"
-                        style="@style/Text.12x.Manrope.Bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:includeFontPadding="false"
-                        android:text="@string/track_areas_covered_complete"
-                        android:textColor="@color/lime"
-                        app:layout_constraintBaseline_toBaselineOf="@id/tvPictureTitle"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                    android:orientation="vertical">
 
                     <LinearLayout
-                        android:id="@+id/layoutCoveragePips"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_14dp"
                         android:orientation="vertical"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tvPictureTitle">
+                        android:paddingStart="17dp"
+                        android:paddingTop="17dp"
+                        android:paddingEnd="17dp"
+                        android:paddingBottom="17dp">
 
                         <LinearLayout
-                            android:id="@+id/layoutCoverageBars"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="14dp"
-                            android:orientation="horizontal"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/tvPictureTitle">
+                            android:layout_marginBottom="14dp"
+                            android:orientation="horizontal">
 
-                            <View
+                            <LinearLayout
                                 android:layout_width="0dp"
-                                android:layout_height="5dp"
+                                android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:background="@drawable/bg_track_progress_fill_lime_1" />
+                                android:orientation="vertical">
 
-                            <View
-                                android:layout_width="0dp"
-                                android:layout_height="5dp"
-                                android:layout_marginStart="7dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/bg_track_progress_fill_lime_1" />
+                                <com.google.android.material.textview.MaterialTextView
+                                    android:id="@+id/tvPictureTitle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/manrope_extra_bold"
+                                    android:text="@string/picture_title"
+                                    android:textColor="@color/white"
+                                    android:textSize="15sp" />
 
-                            <View
-                                android:layout_width="0dp"
-                                android:layout_height="5dp"
-                                android:layout_marginStart="7dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/bg_track_progress_fill_lime_1" />
+                                <com.google.android.material.textview.MaterialTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="3dp"
+                                    android:fontFamily="@font/manrope_regular"
+                                    android:lineSpacingMultiplier="1.4"
+                                    android:text="@string/picture_sub"
+                                    android:textColor="@color/ink3"
+                                    android:textSize="11.5sp" />
 
-                            <View
-                                android:layout_width="0dp"
-                                android:layout_height="5dp"
-                                android:layout_marginStart="7dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/bg_track_progress_fill_lime_1" />
+                            </LinearLayout>
 
-                            <View
-                                android:layout_width="0dp"
-                                android:layout_height="5dp"
-                                android:layout_marginStart="7dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/bg_track_progress_fill_lime_1" />
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="end"
+                                android:orientation="vertical">
 
-                            <View
-                                android:layout_width="0dp"
-                                android:layout_height="5dp"
-                                android:layout_marginStart="7dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/bg_track_progress_track_1" />
+                                <com.google.android.material.textview.MaterialTextView
+                                    android:id="@+id/tvPictureScore"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/manrope_extra_bold"
+                                    android:text="@string/picture_score"
+                                    android:textColor="@color/lime"
+                                    android:textSize="21sp" />
+
+                                <com.google.android.material.textview.MaterialTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:fontFamily="@font/manrope_bold"
+                                    android:letterSpacing="0.05"
+                                    android:text="@string/picture_score_label"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/ink4"
+                                    android:textSize="9.5sp" />
+
+                            </LinearLayout>
+
                         </LinearLayout>
 
+                        <!-- pa-grid row 1: Heart / Sleep -->
                         <LinearLayout
-                            android:id="@+id/layoutCoverageLabels"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="7dp"
-                            android:gravity="center"
-                            android:orientation="horizontal"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/layoutCoverageBars">
+                            android:orientation="horizontal">
 
-                            <TextView
+                            <com.google.android.material.card.MaterialCardView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:fontFamily="@font/manrope_bold"
-                                android:gravity="center"
-                                android:text="Heart"
-                                android:textColor="@color/ink2"
-                                android:textSize="9sp" />
+                                app:cardBackgroundColor="@color/white_4"
+                                app:cardCornerRadius="13dp"
+                                app:cardElevation="0dp"
+                                app:strokeColor="@color/hair"
+                                app:strokeWidth="1dp">
 
-                            <TextView
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:padding="12dp">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center_vertical"
+                                        android:orientation="horizontal">
+
+                                        <androidx.appcompat.widget.AppCompatImageView
+                                            android:layout_width="17dp"
+                                            android:layout_height="17dp"
+                                            app:srcCompat="@drawable/ic_heart_tile"
+                                            app:tint="@color/series" />
+
+                                        <LinearLayout
+                                            android:layout_width="0dp"
+                                            android:layout_height="14dp"
+                                            android:layout_weight="1"
+                                            android:gravity="bottom|end"
+                                            android:orientation="horizontal">
+
+                                            <com.humotron.app.view.RoundCornerView
+                                                android:layout_width="4dp"
+                                                android:layout_height="6dp"
+                                                android:layout_marginStart="3dp"
+                                                android:background="@color/lime"
+                                                app:appCornerRadius="@dimen/_10dp" />
+
+                                            <com.humotron.app.view.RoundCornerView
+                                                android:layout_width="4dp"
+                                                android:layout_height="10dp"
+                                                android:layout_marginStart="3dp"
+                                                android:background="@color/lime"
+                                                app:appCornerRadius="@dimen/_10dp" />
+
+                                            <com.humotron.app.view.RoundCornerView
+                                                android:layout_width="4dp"
+                                                android:layout_height="14dp"
+                                                android:layout_marginStart="3dp"
+                                                android:background="@color/lime"
+                                                app:appCornerRadius="@dimen/_10dp" />
+
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+                                    <com.google.android.material.textview.MaterialTextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="10dp"
+                                        android:fontFamily="@font/manrope_bold"
+                                        android:text="@string/tile_heart_name"
+                                        android:textColor="@color/stage_text"
+                                        android:textSize="12.5sp" />
+
+                                    <com.google.android.material.textview.MaterialTextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="2dp"
+                                        android:fontFamily="@font/manrope_extra_bold"
+                                        android:text="@string/tile_heart_level"
+                                        android:textColor="@color/lime"
+                                        android:textSize="10.5sp" />
+
+                                </LinearLayout>
+
+                            </com.google.android.material.card.MaterialCardView>
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="9dp"
+                                android:layout_weight="1"
+                                app:cardBackgroundColor="@color/white_4"
+                                app:cardCornerRadius="13dp"
+                                app:cardElevation="0dp"
+                                app:strokeColor="@color/hair"
+                                app:strokeWidth="1dp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:padding="12dp">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center_vertical"
+                                        android:orientation="horizontal">
+
+                                        <androidx.appcompat.widget.AppCompatImageView
+                                            android:layout_width="17dp"
+                                            android:layout_height="17dp"
+                                            app:srcCompat="@drawable/ic_moon_tile"
+                                            app:tint="@color/cool" />
+
+                                        <LinearLayout
+                                            android:layout_width="0dp"
+                                            android:layout_height="14dp"
+                                            android:layout_weight="1"
+                                            android:gravity="bottom|end"
+                                            android:orientation="horizontal">
+
+                                            <com.humotron.app.view.RoundCornerView
+                                                android:layout_width="4dp"
+                                                android:layout_height="6dp"
+                                                android:layout_marginStart="3dp"
+                                                android:background="@color/lime"
+                                                app:appCornerRadius="@dimen/_10dp" />
+
+                                            <com.humotron.app.view.RoundCornerView
+                                                android:layout_width="4dp"
+                                                android:layout_height="10dp"
+                                                android:layout_marginStart="3dp"
+                                                android:background="@color/lime"
+                                                app:appCornerRadius="@dimen/_10dp" />
+
+                                            <com.humotron.app.view.RoundCornerView
+                                                android:layout_width="4dp"
+                                                android:layout_height="14dp"
+                                                android:layout_marginStart="3dp"
+                                                android:background="@color/lime"
+                                                app:appCornerRadius="@dimen/_10dp" />
+
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+                                    <com.google.android.material.textview.MaterialTextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="10dp"
+                                        android:fontFamily="@font/manrope_bold"
+                                        android:text="@string/tile_sleep_name"
+                                        android:textColor="@color/stage_text"
+                                        android:textSize="12.5sp" />
+
+                                    <com.google.android.material.textview.MaterialTextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="2dp"
+                                        android:fontFamily="@font/manrope_extra_bold"
+                                        android:text="@string/tile_sleep_level"
+                                        android:textColor="@color/lime"
+                                        android:textSize="10.5sp" />
+
+                                </LinearLayout>
+
+                            </com.google.android.material.card.MaterialCardView>
+
+                        </LinearLayout>
+
+                        <!-- pa-grid row 2: Movement / Body -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="9dp"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.card.MaterialCardView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:fontFamily="@font/manrope_bold"
-                                android:gravity="center"
-                                android:text="Sleep"
-                                android:textColor="@color/ink2"
-                                android:textSize="9sp" />
+                                app:cardBackgroundColor="@color/white_4"
+                                app:cardCornerRadius="13dp"
+                                app:cardElevation="0dp"
+                                app:strokeColor="@color/hair"
+                                app:strokeWidth="1dp">
 
-                            <TextView
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:padding="12dp">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center_vertical"
+                                        android:orientation="horizontal">
+
+                                        <androidx.appcompat.widget.AppCompatImageView
+                                            android:layout_width="17dp"
+                                            android:layout_height="17dp"
+                                            app:srcCompat="@drawable/ic_movement_tile"
+                                            app:tint="@color/good" />
+
+                                        <LinearLayout
+                                            android:layout_width="0dp"
+                                            android:layout_height="14dp"
+                                            android:layout_weight="1"
+                                            android:gravity="bottom|end"
+                                            android:orientation="horizontal">
+
+                                            <com.humotron.app.view.RoundCornerView
+                                                android:layout_width="4dp"
+                                                android:layout_height="6dp"
+                                                android:layout_marginStart="3dp"
+                                                android:background="@color/good"
+                                                app:appCornerRadius="@dimen/_10dp" />
+
+                                            <com.humotron.app.view.RoundCornerView
+                                                android:layout_width="4dp"
+                                                android:layout_height="10dp"
+                                                android:layout_marginStart="3dp"
+                                                android:background="@color/good"
+                                                app:appCornerRadius="@dimen/_10dp" />
+
+                                            <com.humotron.app.view.RoundCornerView
+                                                android:layout_width="4dp"
+                                                android:layout_height="14dp"
+                                                android:layout_marginStart="3dp"
+                                                android:background="@color/white_12"
+                                                app:appCornerRadius="@dimen/_10dp" />
+
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+                                    <com.google.android.material.textview.MaterialTextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="10dp"
+                                        android:fontFamily="@font/manrope_bold"
+                                        android:text="@string/tile_movement_name"
+                                        android:textColor="@color/stage_text"
+                                        android:textSize="12.5sp" />
+
+                                    <com.google.android.material.textview.MaterialTextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="2dp"
+                                        android:fontFamily="@font/manrope_extra_bold"
+                                        android:text="@string/tile_movement_level"
+                                        android:textColor="@color/good"
+                                        android:textSize="10.5sp" />
+
+                                </LinearLayout>
+
+                            </com.google.android.material.card.MaterialCardView>
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="9dp"
+                                android:layout_weight="1"
+                                app:cardBackgroundColor="@color/white_4"
+                                app:cardCornerRadius="13dp"
+                                app:cardElevation="0dp"
+                                app:strokeColor="@color/hair"
+                                app:strokeWidth="1dp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:padding="12dp">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center_vertical"
+                                        android:orientation="horizontal">
+
+                                        <androidx.appcompat.widget.AppCompatImageView
+                                            android:layout_width="17dp"
+                                            android:layout_height="17dp"
+                                            app:srcCompat="@drawable/ic_scale"
+                                            app:tint="@color/cool" />
+
+                                        <LinearLayout
+                                            android:layout_width="0dp"
+                                            android:layout_height="14dp"
+                                            android:layout_weight="1"
+                                            android:gravity="bottom|end"
+                                            android:orientation="horizontal">
+
+                                            <com.humotron.app.view.RoundCornerView
+                                                android:layout_width="4dp"
+                                                android:layout_height="6dp"
+                                                android:layout_marginStart="3dp"
+                                                android:background="@color/good"
+                                                app:appCornerRadius="@dimen/_10dp" />
+
+                                            <com.humotron.app.view.RoundCornerView
+                                                android:layout_width="4dp"
+                                                android:layout_height="10dp"
+                                                android:layout_marginStart="3dp"
+                                                android:background="@color/good"
+                                                app:appCornerRadius="@dimen/_10dp" />
+
+                                            <com.humotron.app.view.RoundCornerView
+                                                android:layout_width="4dp"
+                                                android:layout_height="14dp"
+                                                android:layout_marginStart="3dp"
+                                                android:background="@color/white_12"
+                                                app:appCornerRadius="@dimen/_10dp" />
+
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+                                    <com.google.android.material.textview.MaterialTextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="10dp"
+                                        android:fontFamily="@font/manrope_bold"
+                                        android:text="@string/tile_body_name"
+                                        android:textColor="@color/stage_text"
+                                        android:textSize="12.5sp" />
+
+                                    <com.google.android.material.textview.MaterialTextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="2dp"
+                                        android:fontFamily="@font/manrope_extra_bold"
+                                        android:text="@string/tile_body_level"
+                                        android:textColor="@color/good"
+                                        android:textSize="10.5sp" />
+
+                                </LinearLayout>
+
+                            </com.google.android.material.card.MaterialCardView>
+
+                        </LinearLayout>
+
+                        <!-- pa-grid row 3: Bloods / Mind -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="9dp"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.card.MaterialCardView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:fontFamily="@font/manrope_bold"
-                                android:gravity="center"
-                                android:text="Movement"
-                                android:textColor="@color/ink2"
-                                android:textSize="9sp" />
+                                app:cardBackgroundColor="@color/white_4"
+                                app:cardCornerRadius="13dp"
+                                app:cardElevation="0dp"
+                                app:strokeColor="@color/hair"
+                                app:strokeWidth="1dp">
 
-                            <TextView
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:padding="12dp">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center_vertical"
+                                        android:orientation="horizontal">
+
+                                        <androidx.appcompat.widget.AppCompatImageView
+                                            android:layout_width="17dp"
+                                            android:layout_height="17dp"
+                                            app:srcCompat="@drawable/ic_droplet_tile"
+                                            app:tint="@color/watch" />
+
+                                        <LinearLayout
+                                            android:layout_width="0dp"
+                                            android:layout_height="14dp"
+                                            android:layout_weight="1"
+                                            android:gravity="bottom|end"
+                                            android:orientation="horizontal">
+
+                                            <com.humotron.app.view.RoundCornerView
+                                                android:layout_width="4dp"
+                                                android:layout_height="6dp"
+                                                android:layout_marginStart="3dp"
+                                                android:background="@color/watch"
+                                                app:appCornerRadius="@dimen/_10dp" />
+
+                                            <com.humotron.app.view.RoundCornerView
+                                                android:layout_width="4dp"
+                                                android:layout_height="10dp"
+                                                android:layout_marginStart="3dp"
+                                                android:background="@color/white_12"
+                                                app:appCornerRadius="@dimen/_10dp" />
+
+                                            <com.humotron.app.view.RoundCornerView
+                                                android:layout_width="4dp"
+                                                android:layout_height="14dp"
+                                                android:layout_marginStart="3dp"
+                                                android:background="@color/white_12"
+                                                app:appCornerRadius="@dimen/_10dp" />
+
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+                                    <com.google.android.material.textview.MaterialTextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="10dp"
+                                        android:fontFamily="@font/manrope_bold"
+                                        android:text="@string/tile_bloods_name"
+                                        android:textColor="@color/stage_text"
+                                        android:textSize="12.5sp" />
+
+                                    <com.google.android.material.textview.MaterialTextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="2dp"
+                                        android:fontFamily="@font/manrope_extra_bold"
+                                        android:text="@string/tile_bloods_level"
+                                        android:textColor="@color/watch"
+                                        android:textSize="10.5sp" />
+
+                                </LinearLayout>
+
+                            </com.google.android.material.card.MaterialCardView>
+
+                            <com.google.android.material.card.MaterialCardView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_marginStart="9dp"
                                 android:layout_weight="1"
-                                android:fontFamily="@font/manrope_bold"
-                                android:gravity="center"
-                                android:text="Body"
-                                android:textColor="@color/ink2"
-                                android:textSize="9sp" />
+                                app:cardBackgroundColor="@color/white_4"
+                                app:cardCornerRadius="13dp"
+                                app:cardElevation="0dp"
+                                app:strokeColor="@color/hair"
+                                app:strokeWidth="1dp">
 
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/manrope_bold"
-                                android:gravity="center"
-                                android:text="Bloods"
-                                android:textColor="@color/ink2"
-                                android:textSize="9sp" />
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:padding="12dp">
 
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/manrope_bold"
-                                android:gravity="center"
-                                android:text="Mind"
-                                android:textColor="@color/ink2"
-                                android:textSize="9sp" />
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center_vertical"
+                                        android:orientation="horizontal">
+
+                                        <androidx.appcompat.widget.AppCompatImageView
+                                            android:layout_width="17dp"
+                                            android:layout_height="17dp"
+                                            app:srcCompat="@drawable/ic_target_tile"
+                                            app:tint="@color/lime" />
+
+                                        <LinearLayout
+                                            android:layout_width="0dp"
+                                            android:layout_height="14dp"
+                                            android:layout_weight="1"
+                                            android:gravity="bottom|end"
+                                            android:orientation="horizontal">
+
+                                            <com.humotron.app.view.RoundCornerView
+                                                android:layout_width="4dp"
+                                                android:layout_height="6dp"
+                                                android:layout_marginStart="3dp"
+                                                android:background="@color/good"
+                                                app:appCornerRadius="@dimen/_10dp" />
+
+                                            <com.humotron.app.view.RoundCornerView
+                                                android:layout_width="4dp"
+                                                android:layout_height="10dp"
+                                                android:layout_marginStart="3dp"
+                                                android:background="@color/good"
+                                                app:appCornerRadius="@dimen/_10dp" />
+
+                                            <com.humotron.app.view.RoundCornerView
+                                                android:layout_width="4dp"
+                                                android:layout_height="14dp"
+                                                android:layout_marginStart="3dp"
+                                                android:background="@color/white_12"
+                                                app:appCornerRadius="@dimen/_10dp" />
+
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+                                    <com.google.android.material.textview.MaterialTextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="10dp"
+                                        android:fontFamily="@font/manrope_bold"
+                                        android:text="@string/tile_mind_name"
+                                        android:textColor="@color/stage_text"
+                                        android:textSize="12.5sp" />
+
+                                    <com.google.android.material.textview.MaterialTextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="2dp"
+                                        android:fontFamily="@font/manrope_extra_bold"
+                                        android:text="@string/tile_mind_level"
+                                        android:textColor="@color/good"
+                                        android:textSize="10.5sp" />
+
+                                </LinearLayout>
+
+                            </com.google.android.material.card.MaterialCardView>
+
                         </LinearLayout>
 
                     </LinearLayout>
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/tvCoverageNote"
-                        style="@style/Text.12x.Manrope.Regular"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_14dp"
-                        android:includeFontPadding="false"
-                        android:lineSpacingExtra="2dp"
-                        android:text="@string/track_coverage_note_complete"
-                        android:textColor="@color/ink3"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/layoutCoveragePips" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -386,7 +810,7 @@
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:layout_width="@dimen/_12dp"
                                 android:layout_height="@dimen/_12dp"
-                                app:srcCompat="@drawable/ic_sparkle"
+                                app:srcCompat="@drawable/ic_spark"
                                 app:tint="@color/ink4" />
 
                             <com.google.android.material.textview.MaterialTextView
@@ -403,6 +827,7 @@
                         <View
                             android:layout_width="16dp"
                             android:layout_height="16dp"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/layoutWearableBenefit" />
 
                         <androidx.appcompat.widget.AppCompatImageView
@@ -537,7 +962,7 @@
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:layout_width="@dimen/_12dp"
                                 android:layout_height="@dimen/_12dp"
-                                app:srcCompat="@drawable/ic_sparkle"
+                                app:srcCompat="@drawable/ic_spark"
                                 app:tint="@color/ink4" />
 
                             <com.google.android.material.textview.MaterialTextView
@@ -548,11 +973,13 @@
                                 android:text="@string/track_adds_live_readings"
                                 android:textColor="@color/ink4"
                                 android:textSize="11sp" />
+
                         </LinearLayout>
 
                         <View
                             android:layout_width="16dp"
                             android:layout_height="16dp"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/llPair" />
 
                         <androidx.appcompat.widget.AppCompatImageView
@@ -686,7 +1113,7 @@
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:layout_width="@dimen/_12dp"
                                 android:layout_height="@dimen/_12dp"
-                                app:srcCompat="@drawable/ic_sparkle"
+                                app:srcCompat="@drawable/ic_spark"
                                 app:tint="@color/ink4" />
 
                             <com.google.android.material.textview.MaterialTextView
@@ -702,6 +1129,7 @@
                         <View
                             android:layout_width="16dp"
                             android:layout_height="16dp"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/llBook" />
 
                         <androidx.appcompat.widget.AppCompatImageView
@@ -720,6 +1148,7 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/mcvFillAssessment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_11dp"
@@ -811,7 +1240,7 @@
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:layout_width="@dimen/_12dp"
                                 android:layout_height="@dimen/_12dp"
-                                app:srcCompat="@drawable/ic_sparkle"
+                                app:srcCompat="@drawable/ic_spark"
                                 app:tint="@color/ink4" />
 
                             <com.google.android.material.textview.MaterialTextView
@@ -827,6 +1256,7 @@
                         <View
                             android:layout_width="16dp"
                             android:layout_height="16dp"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/llFill" />
 
                         <androidx.appcompat.widget.AppCompatImageView
@@ -845,6 +1275,7 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/mcvUploadReport"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_11dp"
@@ -936,7 +1367,7 @@
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:layout_width="@dimen/_12dp"
                                 android:layout_height="@dimen/_12dp"
-                                app:srcCompat="@drawable/ic_sparkle"
+                                app:srcCompat="@drawable/ic_spark"
                                 app:tint="@color/ink4" />
 
                             <com.google.android.material.textview.MaterialTextView
@@ -953,6 +1384,7 @@
                         <View
                             android:layout_width="16dp"
                             android:layout_height="16dp"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/llUpload" />
 
                         <androidx.appcompat.widget.AppCompatImageView

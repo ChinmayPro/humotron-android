@@ -32,10 +32,12 @@
     <color name="assessment_unselect_stroke">#4DA1A1A1</color>
 
     <color name="white_3">#08FFFFFF</color>
+    <color name="white_4">#09FFFFFF</color>
     <color name="white05">#0DFFFFFF</color>
     <color name="white_7">#12FFFFFF</color>
     <color name="white_8">#14FFFFFF</color>
     <color name="white10">#1AFFFFFF</color>
+    <color name="white_12">#1FFFFFFF</color>
     <color name="white_14">#24FFFFFF</color>
     <color name="white20">#33FFFFFF</color>
     <color name="white30">#4DFFFFFF</color>
@@ -142,9 +144,12 @@
     <color name="lime">#C4F23E</color>
     <color name="lime_6">#0FC4F23E</color>
     <color name="lime_7">#12C4F23E</color>
+    <color name="lime_8">#14C4F23E</color>
     <color name="lime_10">#1AC4F23E</color>
     <color name="lime_12">#1FC4F23E</color>
+    <color name="lime_13">#21C4F23E</color>
     <color name="lime_14">#24C4F23E</color>
+    <color name="lime_16">#29C4F23E</color>
     <color name="lime_18">#2EC4F23E</color>
     <color name="lime_20">#33C4F23E</color>
     <color name="lime_40">#66C4F23E</color>
@@ -155,7 +160,9 @@
     <color name="series_14">#24F0795E</color>
     <color name="series_40">#66F0795E</color>
     <color name="cool">#5FB7C4</color>
+    <color name="cool_13">#215FB7C4</color>
     <color name="cool_14">#245FB7C4</color>
+    <color name="cool_26">#425FB7C4</color>
     <color name="cool_40">#665FB7C4</color>
     <color name="good">#7BD88F</color>
     <color name="good_14">#247BD88F</color>
@@ -165,6 +172,7 @@
     <color name="hair">#12FFFFFF</color>
     <color name="teal_12">#1F5FB7C4</color>
     <color name="card">#8C080F10</color>
+    <color name="card_40">#66080F10</color>
     <color name="card_open">#D1070C0D</color>
     <color name="scope_text">#FFDFE9E3</color>
     <color name="auth_card_bg">#0AF5F5F7</color>
@@ -172,6 +180,8 @@
     <color name="scope_muted">#FF9AA8A6</color>
     <color name="success_box_bg">#FF0C1416</color>
     <color name="node_dot">#FFA9C2BE</color>
+    <color name="picture_add_sub">#FFA9CDBA</color>
+    <color name="stage_text">#FFCFDAD8</color>
 
     <color name="lime_transparent">#29C4F23E</color>
     <color name="cool_transparent">#295FB7C4</color>
@@ -263,4 +273,8 @@
     <color name="booster_accent_watch">#E7A93C</color>
     <color name="booster_text_benefit">#DFE9E3</color>
     <color name="booster_text_ghost">#CFDAD8</color>
+
+    <color name="nudge_border">#29FFFFFF</color>
+    <color name="nudge_bg">#03FFFFFF</color>
+    <color name="addcard_chevron">#FF7E8E8C</color>
 </resources>

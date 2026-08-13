@@ -1,12 +1,15 @@
-package com.humotron.app.ui.assesment
+package com.humotron.app.ui.assessment
 
+import android.content.res.Resources
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.compose.ui.unit.dp
 import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
@@ -14,6 +17,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.humotron.app.R
 import com.humotron.app.databinding.BottomSheetMultiSelectBinding
+import androidx.core.graphics.toColorInt
 
 class MultiSelectBottomSheet : BottomSheetDialogFragment() {
 
@@ -24,7 +28,7 @@ class MultiSelectBottomSheet : BottomSheetDialogFragment() {
     private var onSave: ((List<String>) -> Unit)? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
         _binding = BottomSheetMultiSelectBinding.inflate(inflater, container, false)
         return binding.root
@@ -100,17 +104,13 @@ class MultiSelectBottomSheet : BottomSheetDialogFragment() {
             )
 
             val tvLabel = row.findViewById<TextView>(R.id.tvOptionLabel)
-            val checkbox = row.findViewById<View>(R.id.viewCheckbox)
-            val checkboxBg = row.findViewById<View>(R.id.viewCheckboxBg)
+            val checkbox = row.findViewById<CheckBox>(R.id.viewCheckbox)
 
             tvLabel.text = option
 
             fun updateCheckbox() {
                 val isSelected = selectedItems.contains(option)
-                checkboxBg.setBackgroundResource(
-                    if (isSelected) R.drawable.bg_checkbox_selected
-                    else R.drawable.bg_checkbox_unselected
-                )
+                checkbox.isChecked = isSelected
             }
             updateCheckbox()
 
@@ -128,8 +128,10 @@ class MultiSelectBottomSheet : BottomSheetDialogFragment() {
                     layoutParams = LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         1
-                    )
-                    setBackgroundColor(Color.parseColor("#4E4E4E"))
+                    ).apply {
+                        setMargins(20.dp, 0, 20.dp, 0)
+                    }
+                    setBackgroundColor("#12FFFFFF".toColorInt())
                 }
                 binding.optionsContainer.addView(divider)
             }
@@ -140,6 +142,9 @@ class MultiSelectBottomSheet : BottomSheetDialogFragment() {
             dismiss()
         }
     }
+
+    val Int.dp: Int
+        get() = (this * Resources.getSystem().displayMetrics.density).toInt()
 
     private fun dismissWithAnimation() {
         val bottomSheet = dialog?.findViewById<View>(
@@ -167,7 +172,7 @@ class MultiSelectBottomSheet : BottomSheetDialogFragment() {
         fun newInstance(
             options: List<String>,
             selectedItems: List<String>,
-            onSave: (List<String>) -> Unit
+            onSave: (List<String>) -> Unit,
         ): MultiSelectBottomSheet {
             return MultiSelectBottomSheet().apply {
                 this.onSave = onSave

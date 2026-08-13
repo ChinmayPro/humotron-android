@@ -1,17 +1,19 @@
-
-package com.humotron.app.ui.assesment
+package com.humotron.app.ui.assessment
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.humotron.app.data.network.Resource
 import com.humotron.app.data.network.Status
 import com.humotron.app.data.repository.AssessmentRepository
 import com.humotron.app.domain.modal.response.AnswerItem
 import com.humotron.app.domain.modal.response.Assessment
 import com.humotron.app.domain.modal.response.MergedAssessment
+import com.humotron.app.domain.modal.response.MergedAssessmentResponse
 import com.humotron.app.domain.modal.response.SubmitAnswerRequest
+import com.humotron.app.domain.modal.response.SubmitAnswerResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import toAssessmentQuestion
@@ -21,6 +23,17 @@ import javax.inject.Inject
 class AssessmentViewModel @Inject constructor(
     private val repository: AssessmentRepository,
 ) : ViewModel() {
+
+    private val _mergedAssessmentListLiveData = MutableLiveData<Resource<MergedAssessmentResponse>>()
+    val mergedAssessmentListLiveData: LiveData<Resource<MergedAssessmentResponse>> = _mergedAssessmentListLiveData
+
+    fun getMergedAssessmentList() {
+        viewModelScope.launch {
+            repository.getMergedAssessmentList().collect { resource ->
+                _mergedAssessmentListLiveData.value = resource
+            }
+        }
+    }
 
     private val _questions = MutableLiveData<List<AssessmentQuestion>>(emptyList())
     private val _questionsReady = MutableLiveData(false)
@@ -49,14 +62,13 @@ class AssessmentViewModel @Inject constructor(
     private var currentAssessmentId: String = ""
     private var currentAuthToken: String = ""
 
-    fun loadAssessment(assessmentId: String, authToken: String) {
+    fun loadAssessment(assessmentId: String) {
         currentAssessmentId = assessmentId
-        currentAuthToken = authToken
+        //currentAuthToken = authToken
 
         viewModelScope.launch {
             repository.getAssessment(
-                id = assessmentId,
-                token = "Bearer $authToken"
+                id = assessmentId
             ).collect { resource ->
                 when (resource.status) {
                     Status.LOADING -> _isLoading.value = true
@@ -82,8 +94,9 @@ class AssessmentViewModel @Inject constructor(
                                 when (q.assessmentAnswerType.uppercase()) {
 
                                     "MULTIOPTIONS" -> {
-                                        val existingAnswer = q.assessmentQuestionAnswer.firstOrNull()
-                                            ?: return@forEachIndexed
+                                        val existingAnswer =
+                                            q.assessmentQuestionAnswer.firstOrNull()
+                                                ?: return@forEachIndexed
                                         val options = q.options.map { it.value }
                                         val selectedIndex = options.indexOf(existingAnswer)
                                         if (selectedIndex >= 0) {
@@ -95,12 +108,13 @@ class AssessmentViewModel @Inject constructor(
                                     }
 
                                     "YESNO" -> {
-                                        val existingAnswer = q.assessmentQuestionAnswer.firstOrNull()
-                                            ?: return@forEachIndexed
+                                        val existingAnswer =
+                                            q.assessmentQuestionAnswer.firstOrNull()
+                                                ?: return@forEachIndexed
                                         val selectedIndex = when (existingAnswer.lowercase()) {
                                             "yes" -> 1
-                                            "no"  -> 0
-                                            else  -> return@forEachIndexed
+                                            "no" -> 0
+                                            else -> return@forEachIndexed
                                         }
                                         answers[questionId] = AssessmentAnswer(
                                             questionId = questionId,
@@ -125,7 +139,7 @@ class AssessmentViewModel @Inject constructor(
                         }
                     }
 
-                    Status.ERROR     -> _isLoading.value = false
+                    Status.ERROR -> _isLoading.value = false
                     Status.EXCEPTION -> _isLoading.value = false
                 }
             }
@@ -147,8 +161,10 @@ class AssessmentViewModel @Inject constructor(
                 when (val type = question.type) {
                     is QuestionType.YesNo ->
                         if (answer.selectedIndex == 1) listOf("Yes") else listOf("No")
+
                     is QuestionType.RadioList ->
                         listOf(type.options.getOrElse(answer.selectedIndex) { "" })
+
                     is QuestionType.MultiSelect ->
                         listOf(type.options.getOrElse(answer.selectedIndex) { "" })
                 }
@@ -180,10 +196,12 @@ class AssessmentViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 repository.submitAnswers(
-                    token = "Bearer $currentAuthToken",
                     request = SubmitAnswerRequest(data = listOf(answerItem))
                 ).collect { resource ->
-                    Log.d("TAG", "saveAnswerToApi: ${resource.status} for questionId=${answer.questionId}")
+                    Log.d(
+                        "TAG",
+                        "saveAnswerToApi: ${resource.status} for questionId=${answer.questionId}"
+                    )
                 }
             } catch (e: Exception) {
                 Log.e("TAG", "saveAnswerToApi: silently failed", e)
@@ -192,7 +210,7 @@ class AssessmentViewModel @Inject constructor(
     }
 
     // ✅ Final Save button pe — sabhi answers ek saath bhejo (safety net)
-    fun submitAllAnswers(mergedAssessment: MergedAssessment?, authToken: String?) {
+    fun submitAllAnswers(mergedAssessment: MergedAssessment?) {
         val followUpQuestionId = _assessment.value?.assessmentQuestions
             ?.find { it.followUpQuestionId.isNotEmpty() }
             ?.followUpQuestionId
@@ -208,8 +226,10 @@ class AssessmentViewModel @Inject constructor(
                     when (val type = question.type) {
                         is QuestionType.YesNo ->
                             if (answer.selectedIndex == 1) listOf("Yes") else listOf("No")
+
                         is QuestionType.RadioList ->
                             listOf(type.options.getOrElse(answer.selectedIndex) { "" })
+
                         is QuestionType.MultiSelect ->
                             listOf(type.options.getOrElse(answer.selectedIndex) { "" })
                     }
@@ -241,7 +261,6 @@ class AssessmentViewModel @Inject constructor(
         viewModelScope.launch {
             Log.e("TAG", "submitAllAnswers: $answerItems")
             repository.submitAnswers(
-                token = "Bearer $authToken",
                 request = SubmitAnswerRequest(data = answerItems)
             ).collect { resource ->
                 when (resource.status) {
@@ -251,7 +270,8 @@ class AssessmentViewModel @Inject constructor(
                         _submitSuccess.value = true
                         _errorMessage.value = resource.data?.message
                     }
-                    Status.ERROR     -> _isLoading.value = false
+
+                    Status.ERROR -> _isLoading.value = false
                     Status.EXCEPTION -> _isLoading.value = false
                 }
             }

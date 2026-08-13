@@ -1,57 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <!-- Selector trigger row -->
-    <LinearLayout
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/layoutSelector"
         android:layout_width="match_parent"
         android:layout_height="52dp"
-        android:orientation="horizontal"
-        android:background="@drawable/bg_selector_field"
-        android:gravity="center_vertical"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:layout_marginBottom="12dp">
+        android:layout_marginBottom="12dp"
+        app:cardBackgroundColor="@color/card"
+        app:cardCornerRadius="14dp"
+        app:cardElevation="0dp"
+        app:strokeColor="@color/white10"
+        app:strokeWidth="1dp">
 
-        <TextView
-            android:id="@+id/tvSelectorValue"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Select"
-            android:textColor="#FFFFFF"
-            android:textSize="15sp" />
-
-        <!-- Green + button -->
-        <FrameLayout
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:background="@drawable/bg_add_button">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
 
             <TextView
-                android:layout_width="9dp"
+                android:id="@+id/tvSelectorValue"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="+"
-                android:textColor="#000000"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-        </FrameLayout>
+                android:layout_weight="1"
+                android:fontFamily="@font/manrope_semibold"
+                android:text="Select"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
 
-    </LinearLayout>
+            <!-- Green + button -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_add_24px"
+                app:tint="@color/lime" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
     <!-- Selected chips -->
     <com.google.android.flexbox.FlexboxLayout
         android:id="@+id/chipGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:flexWrap="wrap"
-        app:flexDirection="row"
         app:alignItems="flex_start"
+        app:flexDirection="row"
+        app:flexWrap="wrap"
         app:justifyContent="flex_start" />
 
 </LinearLayout>

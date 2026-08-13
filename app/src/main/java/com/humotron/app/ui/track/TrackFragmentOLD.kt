@@ -12,7 +12,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.gson.Gson
 import com.humotron.app.R
-import com.humotron.app.core.AppConstant.ASSESSMENT
 import com.humotron.app.core.Preference
 import com.humotron.app.core.base.BaseFragment
 import com.humotron.app.data.network.Status
@@ -24,8 +23,9 @@ import com.humotron.app.domain.modal.response.MedicalPdf
 import com.humotron.app.domain.modal.response.MergedAssessment
 import com.humotron.app.domain.modal.response.MetricsData
 import com.humotron.app.domain.modal.response.toPdfReportData
-import com.humotron.app.ui.assesment.AssessmentActivity
-import com.humotron.app.ui.assesment.CardiovascularAssessmentBottomSheet
+import com.humotron.app.ui.assessment.AssessmentActivity
+import com.humotron.app.ui.assessment.AssessmentAdapter
+import com.humotron.app.ui.assessment.CardiovascularAssessmentBottomSheet
 import com.humotron.app.ui.bloodTest.BloodTestActivity
 import com.humotron.app.ui.bloodTest.BloodTestViewModel
 import com.humotron.app.ui.connect.adapter.DeviceInfo
@@ -33,6 +33,7 @@ import com.humotron.app.ui.connect.dialog.DeviceSelectionBottomSheet
 import com.humotron.app.ui.device.DeviceViewModel
 import com.humotron.app.ui.dialogs.DeleteConfirmationBottomSheet
 import com.humotron.app.ui.navigation.NavKeys
+import com.humotron.app.ui.navigation.NavKeys.ASSESSMENT
 import com.humotron.app.util.fadeIn
 import com.humotron.app.util.showWithFade
 import com.humotron.app.util.toast
@@ -344,22 +345,24 @@ class TrackFragmentOLD : BaseFragment(R.layout.fragment_track_old), OnClickListe
 
     private fun setupAssessmentRecyclerView(assessments: List<MergedAssessment>) {
         if (assessmentAdapter == null) {
-            assessmentAdapter = AssessmentAdapter(requireActivity(), assessments) { assessment ->
-                // ... click handling remains same
-                when (assessment.status) {
-                    "Completed" -> toast("the assessment is completed")
-                    "Resume" -> {
-                        if (isAdded) {
-                            val json = Gson().toJson(assessment)
-                            val intent = Intent(requireContext(), AssessmentActivity::class.java)
-                            intent.putExtra(ASSESSMENT, json)
-                            startActivity(intent)
+            assessmentAdapter =
+                AssessmentAdapter(requireActivity(), assessments) { assessment ->
+                    // ... click handling remains same
+                    when (assessment.status) {
+                        "Completed" -> toast("the assessment is completed")
+                        "Resume" -> {
+                            if (isAdded) {
+                                val json = Gson().toJson(assessment)
+                                val intent =
+                                    Intent(requireContext(), AssessmentActivity::class.java)
+                                intent.putExtra(ASSESSMENT, json)
+                                startActivity(intent)
+                            }
                         }
-                    }
 
-                    "Start Now" -> showAssessmentSheet(assessment)
+                        "Start Now" -> showAssessmentSheet(assessment)
+                    }
                 }
-            }
         } else {
             assessmentAdapter?.updateData(assessments)
         }

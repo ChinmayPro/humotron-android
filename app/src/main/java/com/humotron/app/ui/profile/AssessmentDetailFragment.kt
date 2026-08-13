@@ -5,23 +5,20 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
-import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.gson.Gson
 import com.humotron.app.R
-import com.humotron.app.core.AppConstant.ASSESSMENT
 import com.humotron.app.core.base.BaseFragment
 import com.humotron.app.databinding.FragmentAssessmentDetailBinding
-import com.humotron.app.domain.modal.response.MergedAssessment
-import com.humotron.app.ui.assesment.AssessmentActivity
-import com.humotron.app.ui.assesment.CardiovascularAssessmentBottomSheet
+import com.humotron.app.ui.assessment.AssessmentActivity
+import com.humotron.app.ui.assessment.CardiovascularAssessmentBottomSheet
 import com.humotron.app.ui.device.DeviceViewModel
+import com.humotron.app.ui.navigation.NavKeys
 import com.humotron.app.util.ToastUtils
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -94,7 +91,7 @@ class AssessmentDetailFragment : BaseFragment(R.layout.fragment_assessment_detai
                         sheet.onProceedClicked = {
                             if (isAdded) {
                                 val intent = Intent(requireContext(), AssessmentActivity::class.java).apply {
-                                    putExtra(ASSESSMENT, json)
+                                    putExtra(NavKeys.ASSESSMENT, json)
                                 }
                                 startActivity(intent)
                             }
@@ -103,7 +100,7 @@ class AssessmentDetailFragment : BaseFragment(R.layout.fragment_assessment_detai
                     }
                     else -> {
                         val intent = Intent(requireContext(), AssessmentActivity::class.java).apply {
-                            putExtra(ASSESSMENT, json)
+                            putExtra(NavKeys.ASSESSMENT, json)
                         }
                         startActivity(intent)
                     }

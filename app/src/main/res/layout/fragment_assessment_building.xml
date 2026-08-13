@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@drawable/ic_bg_main_2"
+    tools:context=".ui.assessment.AssessmentBuildingFragment">
+
+    <com.humotron.app.view.ProcessingView
+        android:id="@+id/processingView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="@dimen/_100dp"
+        android:padding="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:pv_accentColor="#F0795E"
+        app:pv_artSize="230dp"
+        app:pv_autoStart="true"
+        app:pv_centerIconTint="#0D1618"
+        app:pv_chipBackgroundColor="#0DFFFFFF"
+        app:pv_chipStrokeColor="#17FFFFFF"
+        app:pv_chipTextColor="#A9C2BE"
+        app:pv_footerTextColor="#6F7E7D"
+        app:pv_labels="@array/processing_labels"
+        app:pv_maxContentWidth="280dp"
+        app:pv_subtitleColor="#8FA7A3"
+        app:pv_subtitleCycleIntervalMs="2400"
+        app:pv_subtitles="@array/processing_subtitles"
+        app:pv_titleColor="#FFFFFF" />
+
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/manrope_extra_bold"
+        android:text="@string/building_your_picture"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/processingView" />
+
+    <com.humotron.app.view.ProcessingSubtitleView
+        android:id="@+id/tvSubTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:fontFamily="@font/manrope_regular"
+        android:text="@string/building_your_picture"
+        android:textColor="@color/insights_subtitle_grey"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+        app:pv_subtitleCycleIntervalMs="2400"
+        app:pv_subtitles="@array/processing_subtitles" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_40dp"
+        android:layout_marginTop="@dimen/_20dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/tvSubTitle">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/_13dp"
+            android:layout_height="@dimen/_13dp"
+            app:srcCompat="@drawable/ic_verified_user_24px"
+            app:tint="@color/series" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10dp"
+            android:fontFamily="@font/manrope_regular"
+            android:includeFontPadding="false"
+            android:text="@string/this_sharpens_your_guidance"
+            android:textColor="@color/insights_subtitle_grey"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
