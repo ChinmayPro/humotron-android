@@ -1,5 +1,6 @@
 package com.humotron.app.data.remote
 
+import com.humotron.app.core.AppConstant
 import com.humotron.app.data.local.entity.UploadData
 import com.humotron.app.domain.modal.param.AddHardware
 import com.humotron.app.domain.modal.param.AddToCartParam
@@ -94,10 +95,13 @@ import com.humotron.app.domain.modal.response.GetAllLikesResponse
 import com.humotron.app.domain.modal.response.BookingTypeResponse
 import com.humotron.app.domain.modal.response.ShopAddToCartResponse
 import com.humotron.app.domain.modal.response.GetDefaultConfigResponse
+import com.humotron.app.domain.modal.param.CreateAddressRequest
 import com.humotron.app.domain.modal.param.UpdateAddressRequest
+import com.humotron.app.domain.modal.response.CreateAddressResponse
 import com.humotron.app.domain.modal.response.UpdateAddressResponse
 import com.humotron.app.domain.modal.response.AddressAutocompleteResponse
 import com.humotron.app.domain.modal.response.FullAddressResponse
+import com.humotron.app.domain.modal.response.IdealPostcodesResponse
 import com.humotron.app.domain.modal.response.GetAllAddressResponse
 import com.humotron.app.domain.modal.response.GetAllLabResponse
 import com.humotron.app.domain.modal.param.DefaultConfigRequest
@@ -479,6 +483,17 @@ interface AppApi {
         @Path("addressId") addressId: String,
         @Body request: UpdateAddressRequest,
     ): Response<UpdateAddressResponse>
+
+    @POST("address/createAddress")
+    suspend fun createAddress(
+        @Body request: CreateAddressRequest,
+    ): Response<CreateAddressResponse>
+
+    @GET("${AppConstant.IDEAL_POSTCODES_BASE_URL}postcodes/{term}")
+    suspend fun getIdealPostcode(
+        @Path("term") term: String,
+        @Query("api_key") apiKey: String = AppConstant.IDEAL_POSTCODES_API_KEY,
+    ): Response<IdealPostcodesResponse>
 
     @GET("https://api.getaddress.io/autocomplete/{term}")
     suspend fun getAddressAutocomplete(

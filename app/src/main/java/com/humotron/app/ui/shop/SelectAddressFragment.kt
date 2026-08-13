@@ -68,8 +68,8 @@ class SelectAddressFragment : BaseFragment(R.layout.fragment_select_address) {
                 binding.btnContinue.isEnabled = true
                 binding.btnContinue.alpha = 1.0f
             },
-            onEditAddress = { address ->
-                showEditAddressBottomSheet(address)
+            onEditAddress = { _ ->
+                showSelectAddressBottomSheet()
             }
         )
         binding.rvAddresses.adapter = adapter
@@ -120,19 +120,25 @@ class SelectAddressFragment : BaseFragment(R.layout.fragment_select_address) {
         binding.tvStepEyebrow.text = "STEP $stepNumber OF $totalSteps · $stepName"
     }
 
-    private fun showEditAddressBottomSheet(address: Address) {
-        EditAddressBottomSheet.newInstance(address) { updatedAddress ->
-            selectedAddress = updatedAddress
-            viewModel.setSelectedAddress(updatedAddress)
-            viewModel.fetchCart()
-        }.show(childFragmentManager, EditAddressBottomSheet::class.java.simpleName)
+    private fun showSelectAddressBottomSheet() {
+        val bottomSheet = com.humotron.app.ui.shop.dialog.SelectAddressBottomSheet.newInstance(selectedAddress?.id) { selected ->
+            selectedAddress = selected
+            adapter.setData(listOf(selected))
+            binding.btnContinue.isEnabled = true
+            binding.btnContinue.alpha = 1.0f
+        }
+        bottomSheet.show(childFragmentManager, com.humotron.app.ui.shop.dialog.SelectAddressBottomSheet::class.java.simpleName)
     }
 
     private fun showEnterAddressBottomSheet() {
-        EnterAddressBottomSheet.newInstance().show(
-            childFragmentManager,
-            EnterAddressBottomSheet::class.java.simpleName
-        )
+        val bottomSheet = EnterAddressBottomSheet.newInstance()
+        bottomSheet.onAddressSaved = {
+            viewModel.fetchDefaultConfig(
+                payload = "BU69YsgWhF9NOGAKzexgvQ==",
+                iv = "SZcndf9QS08vbx9UYPeK4A=="
+            )
+        }
+        bottomSheet.show(childFragmentManager, EnterAddressBottomSheet::class.java.simpleName)
     }
 
     private fun initObservers() {
@@ -142,12 +148,24 @@ class SelectAddressFragment : BaseFragment(R.layout.fragment_select_address) {
                     hideLoader()
                     val apiAddress = resource.data?.address
                     val addresses = createMockAddressList(apiAddress)
-                    adapter.setData(addresses)
+                    val defaultAddress = addresses.find { it.isDefault == true } ?: addresses.firstOrNull()
+                    if (defaultAddress != null) {
+                        selectedAddress = defaultAddress
+                        adapter.setData(listOf(defaultAddress))
+                        binding.btnContinue.isEnabled = true
+                        binding.btnContinue.alpha = 1.0f
+                    }
                 }
                 Status.ERROR, Status.EXCEPTION -> {
                     hideLoader()
                     val addresses = createMockAddressList(null)
-                    adapter.setData(addresses)
+                    val defaultAddress = addresses.find { it.isDefault == true } ?: addresses.firstOrNull()
+                    if (defaultAddress != null) {
+                        selectedAddress = defaultAddress
+                        adapter.setData(listOf(defaultAddress))
+                        binding.btnContinue.isEnabled = true
+                        binding.btnContinue.alpha = 1.0f
+                    }
                 }
                 Status.LOADING -> {
                     showLoader()

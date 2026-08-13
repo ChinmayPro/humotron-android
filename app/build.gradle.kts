@@ -228,6 +228,7 @@ dependencies {
     // -------------------- Others --------------------
     implementation(libs.lottie)
     implementation(libs.play.billing.ktx)
+    implementation("com.google.android.gms:play-services-location:21.3.0")
 
     implementation("com.google.android.flexbox:flexbox:3.0.0")
     implementation("com.caverock:androidsvg-aar:1.4")
