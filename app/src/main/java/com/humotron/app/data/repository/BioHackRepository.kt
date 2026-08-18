@@ -94,6 +94,19 @@ constructor(
         emit(responseHandler.handleException(ValidationException(it.message)))
     }
 
+    fun getUserPreferences(): Flow<Resource<Any>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.getUserPreferences())
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
     fun getNuggetDetails(id: String): Flow<Resource<NuggetDetailResponse>> = flow {
         emit(Resource.loading())
         try {

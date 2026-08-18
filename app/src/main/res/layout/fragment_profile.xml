@@ -674,7 +674,7 @@
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/btnDevices"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_marginEnd="5dp"
                         android:layout_weight="1"
                         android:background="@drawable/bg_config_item"
@@ -703,7 +703,7 @@
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/btnDataSources"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_marginStart="5dp"
                         android:layout_weight="1"
                         android:background="@drawable/bg_config_item"
@@ -741,7 +741,7 @@
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/btnGoals"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_marginEnd="5dp"
                         android:layout_weight="1"
                         android:background="@drawable/bg_config_item"
@@ -770,7 +770,7 @@
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/btnInsights"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_marginStart="5dp"
                         android:layout_weight="1"
                         android:background="@drawable/bg_config_item"
@@ -808,7 +808,7 @@
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/btnChatWithAI"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_marginEnd="5dp"
                         android:layout_weight="1"
                         android:background="@drawable/bg_config_item"
@@ -837,7 +837,7 @@
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/btnRecipeGenerator"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_marginStart="5dp"
                         android:layout_weight="1"
                         android:background="@drawable/bg_config_item"
@@ -875,7 +875,7 @@
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/btnLearning"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_marginEnd="5dp"
                         android:layout_weight="1"
                         android:background="@drawable/bg_config_item"
@@ -904,7 +904,7 @@
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/btnShopping"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_marginStart="5dp"
                         android:layout_weight="1"
                         android:background="@drawable/bg_config_item"

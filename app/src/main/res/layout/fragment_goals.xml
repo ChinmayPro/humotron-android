@@ -16,8 +16,8 @@
         android:layout_height="0dp"
         android:fillViewport="true"
         android:clipToPadding="false"
-        android:paddingBottom="120dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:paddingBottom="24dp"
+        app:layout_constraintBottom_toTopOf="@id/btnSaveGoals"
         app:layout_constraintTop_toBottomOf="@id/header">
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -82,28 +82,14 @@
                 android:textColor="#80A0B3AF"
                 android:textSize="13sp" />
 
-            <androidx.appcompat.widget.LinearLayoutCompat
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvGoals"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <include
-                    layout="@layout/item_goal"
-                    android:id="@+id/goalSbp" />
-
-                <include
-                    layout="@layout/item_goal"
-                    android:id="@+id/goalHrv" />
-
-                <include
-                    layout="@layout/item_goal"
-                    android:id="@+id/goalRecovery" />
-
-                <include
-                    layout="@layout/item_goal"
-                    android:id="@+id/goalAsym" />
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="4"
+                tools:listitem="@layout/item_goal" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/Text.14x.Manrope.Regular"
@@ -132,10 +118,10 @@
         android:layout_height="56dp"
         android:layout_marginHorizontal="22dp"
         android:layout_marginBottom="24dp"
-        android:background="@drawable/bg_btn_lime_pill"
+        android:background="@drawable/selector_btn_lime_pill"
         android:text="Save goals"
         android:textAllCaps="false"
-        android:textColor="#0d1618"
+        android:textColor="@color/selector_btn_lime_text"
         android:textSize="15sp"
         android:textStyle="bold"
         android:letterSpacing="-0.01"

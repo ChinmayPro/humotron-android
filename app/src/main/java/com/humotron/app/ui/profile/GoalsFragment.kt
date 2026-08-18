@@ -3,16 +3,25 @@ package com.humotron.app.ui.profile
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.humotron.app.R
 import com.humotron.app.core.base.BaseFragment
+import com.humotron.app.data.network.Status
 import com.humotron.app.databinding.FragmentGoalsBinding
+import com.humotron.app.domain.modal.response.HealthProfileConfigResponse.HealthItem
+import com.humotron.app.ui.profile.dialog.SavingGoalsDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class GoalsFragment : BaseFragment(R.layout.fragment_goals) {
 
     private lateinit var binding: FragmentGoalsBinding
+    private val viewModel: GoalsViewModel by viewModels()
+    private var adapter: GoalAdapter? = null
+    private val selectedGoals = mutableSetOf<String>()
+    private val initialSelectedGoals = mutableSetOf<String>()
+    private var savingGoalsDialog: SavingGoalsDialog? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -25,53 +34,135 @@ class GoalsFragment : BaseFragment(R.layout.fragment_goals) {
             findNavController().navigateUp()
         }
 
-        // Default checked state array (mocking goal selection)
-        val selectedGoals = mutableSetOf("Recovery")
-
-        // Setup individual items based on HTML mockup data with colored status
-        setupItem(binding.goalSbp, "Systolic BP", "128 mmHg · <font color=\"#7BD88F\">improving</font> · 2h ago", selectedGoals.contains("Systolic BP"))
-        setupItem(binding.goalHrv, "HRV", "48 ms · <font color=\"#7BD88F\">improving</font> · today", selectedGoals.contains("HRV"))
-        setupItem(binding.goalRecovery, "Recovery", "65 % · <font color=\"#7BD88F\">improving</font> · today", selectedGoals.contains("Recovery"))
-        setupItem(binding.goalAsym, "Walking Asymmetry", "1.4 % · <font color=\"#7BD88F\">improving</font> · 17 Jun", selectedGoals.contains("Walking Asymmetry"))
+        // Disable Save button initially until selection changes
+        updateSaveButtonState(false)
 
         binding.btnSaveGoals.setOnClickListener {
-            Toast.makeText(context, "Goals saved", Toast.LENGTH_SHORT).show()
+            showSavingDialogAndTriggerSave()
+        }
+
+        initData()
+        observeData()
+    }
+
+    private fun updateSaveButtonState(enabled: Boolean) {
+        binding.btnSaveGoals.isEnabled = enabled
+    }
+
+    private fun checkSelectionChanged() {
+        val hasChanged = selectedGoals != initialSelectedGoals
+        updateSaveButtonState(hasChanged)
+    }
+
+    private fun showSavingDialogAndTriggerSave() {
+        if (savingGoalsDialog?.isShowing == true) return
+
+        savingGoalsDialog = SavingGoalsDialog(requireContext()) {
             findNavController().navigateUp()
         }
+        savingGoalsDialog?.show()
+
+        viewModel.saveGoals(selectedGoals.toList())
     }
 
-    private fun setupItem(
-        itemBinding: com.humotron.app.databinding.ItemGoalBinding,
-        title: String,
-        desc: String,
-        isSelected: Boolean
-    ) {
-        itemBinding.tvGoalName.text = title
-        itemBinding.tvGoalDesc.text = android.text.Html.fromHtml(desc, android.text.Html.FROM_HTML_MODE_LEGACY)
+    private fun initData() {
+        viewModel.fetchHealthProfileConfig()
+    }
 
-        updateSelectionState(itemBinding, isSelected)
+    private fun observeData() {
+        viewModel.getHealthProfileConfigLiveData().observe(viewLifecycleOwner) { resource ->
+            when (resource.status) {
+                Status.SUCCESS -> {
+                    hideProgress()
+                    val data = resource.data?.data
+                    val prefs = data?.preferences
+                    val config = data?.configuration
 
-        itemBinding.root.setOnClickListener {
-            val currentlySelected = itemBinding.ivCheckbox.tag as? Boolean ?: false
-            updateSelectionState(itemBinding, !currentlySelected)
+                    selectedGoals.clear()
+                    initialSelectedGoals.clear()
+
+                    prefs?.healthGoals?.let {
+                        selectedGoals.addAll(it)
+                        initialSelectedGoals.addAll(it)
+                    }
+
+                    val healthGoals = config?.healthGoals ?: emptyList()
+                    
+                    // Also collect default selected items from configuration if any
+                    healthGoals.forEach { item ->
+                        if (item.isSelected == true && item.name != null) {
+                            selectedGoals.add(item.name)
+                            initialSelectedGoals.add(item.name)
+                        }
+                    }
+
+                    setupRecyclerView(healthGoals)
+                    updateSaveButtonState(false)
+                }
+
+                Status.ERROR, Status.EXCEPTION -> {
+                    hideProgress()
+                    setupRecyclerView(getDefaultFallbackGoals())
+                    updateSaveButtonState(false)
+                }
+
+                Status.LOADING -> {
+                    if (adapter == null || adapter?.itemCount == 0) {
+                        showProgress()
+                    }
+                }
+
+                else -> {}
+            }
+        }
+
+        viewModel.getSaveGoalsLiveData().observe(viewLifecycleOwner) { resource ->
+            when (resource.status) {
+                Status.SUCCESS -> {
+                    savingGoalsDialog?.onApiSuccess()
+                }
+
+                Status.ERROR, Status.EXCEPTION -> {
+                    savingGoalsDialog?.onApiError()
+                    val msg = resource.error?.errorMessage ?: resource.data?.message ?: "Failed to save goals"
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                }
+
+                Status.LOADING -> {
+                    // Progress animation handled in SavingGoalsDialog
+                }
+
+                else -> {}
+            }
         }
     }
 
-    private fun updateSelectionState(
-        itemBinding: com.humotron.app.databinding.ItemGoalBinding,
-        isSelected: Boolean
-    ) {
-        itemBinding.ivCheckbox.tag = isSelected
-        if (isSelected) {
-            itemBinding.ivCheckbox.setImageResource(R.drawable.bg_checkbox_checked_mockup)
-            itemBinding.ivCheckbox.imageTintList = null // Use natural colors from mockup checked checkbox drawable
-            itemBinding.ivGoalIcon.imageTintList = android.content.res.ColorStateList.valueOf(android.graphics.Color.parseColor("#C4F23E"))
-            itemBinding.llDeviceIcon.backgroundTintList = android.content.res.ColorStateList.valueOf(android.graphics.Color.parseColor("#24C4F23E")) // 14% opacity lime
+    private fun setupRecyclerView(items: List<HealthItem>) {
+        if (adapter == null || binding.rvGoals.adapter == null) {
+            adapter = GoalAdapter(items, selectedGoals) { _, _ ->
+                checkSelectionChanged()
+            }
+            binding.rvGoals.adapter = adapter
         } else {
-            itemBinding.ivCheckbox.setImageResource(R.drawable.ic_checkbox_unselected)
-            itemBinding.ivCheckbox.imageTintList = android.content.res.ColorStateList.valueOf(android.graphics.Color.parseColor("#4DFFFFFF")) // Translucent white border
-            itemBinding.ivGoalIcon.imageTintList = android.content.res.ColorStateList.valueOf(android.graphics.Color.parseColor("#8EA09E"))
-            itemBinding.llDeviceIcon.backgroundTintList = android.content.res.ColorStateList.valueOf(android.graphics.Color.parseColor("#0DFFFFFF")) // 5% opacity white
+            adapter?.updateData(items)
         }
+    }
+
+    private fun getDefaultFallbackGoals(): List<HealthItem> {
+        return listOf(
+            HealthItem(name = "Cardiovascular Health", isSelected = true),
+            HealthItem(name = "Foot Comfort", isSelected = true),
+            HealthItem(name = "Athletic Performance", isSelected = false),
+            HealthItem(name = "Recovery", isSelected = false),
+            HealthItem(name = "Sleep Improvement", isSelected = false),
+            HealthItem(name = "Stress Reduction", isSelected = false)
+        )
+    }
+
+    override fun onDestroyView() {
+        savingGoalsDialog?.dismiss()
+        savingGoalsDialog = null
+        adapter = null
+        super.onDestroyView()
     }
 }

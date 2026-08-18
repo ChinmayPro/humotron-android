@@ -80,6 +80,123 @@ class ProfileRepository @Inject constructor(
         emit(responseHandler.handleException(ValidationException(it.message)))
     }
 
+    fun getHealthProfileConfigAndPreferences(): Flow<Resource<com.humotron.app.domain.modal.response.HealthProfileConfigResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.getHealthProfileConfigAndPreferences(), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun saveHealthProfileConfigAndPreferences(param: com.humotron.app.domain.modal.param.HealthProfileConfigRequest): Flow<Resource<com.humotron.app.domain.modal.response.HealthProfileConfigResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.saveHealthProfileConfigAndPreferences(param), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun getInsightConfigAndPreferences(): Flow<Resource<com.humotron.app.domain.modal.response.InsightConfigResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.getInsightConfigAndPreferences(), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun saveInsightConfigAndPreferences(param: com.humotron.app.domain.modal.param.InsightConfigRequest): Flow<Resource<com.humotron.app.domain.modal.response.InsightConfigResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.saveInsightConfigAndPreferences(param), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun getChatConfigAndPreferences(): Flow<Resource<com.humotron.app.domain.modal.response.ChatConfigResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.getChatConfigAndPreferences(), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun saveChatConfigAndPreferences(param: com.humotron.app.domain.modal.param.ChatConfigRequest): Flow<Resource<com.humotron.app.domain.modal.response.ChatConfigResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.saveChatConfigAndPreferences(param), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun getRecipeConfigAndPreferences(): Flow<Resource<com.humotron.app.domain.modal.response.RecipeConfigResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.getRecipeConfigAndPreferences(), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun saveRecipeConfigAndPreferences(param: com.humotron.app.domain.modal.param.RecipeConfigRequest): Flow<Resource<com.humotron.app.domain.modal.response.RecipeConfigResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.saveRecipeConfigAndPreferences(param), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun getAllDeviceData(): Flow<Resource<com.humotron.app.domain.modal.response.GetAllDeviceResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.getAllDeviceData(), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
     fun getPromoCodeDetailsByPromoCode(promoCode: String): Flow<Resource<com.humotron.app.domain.modal.response.PromoCodeDetailsResponse>> = flow {
         emit(Resource.loading<com.humotron.app.domain.modal.response.PromoCodeDetailsResponse>())
         try {

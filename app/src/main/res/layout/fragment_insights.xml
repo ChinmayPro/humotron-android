@@ -16,8 +16,8 @@
         android:layout_height="0dp"
         android:fillViewport="true"
         android:clipToPadding="false"
-        android:paddingBottom="120dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:paddingBottom="24dp"
+        app:layout_constraintBottom_toTopOf="@id/btnSaveInsights"
         app:layout_constraintTop_toBottomOf="@id/header">
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -86,13 +86,10 @@
                 app:fontFamily="@font/manrope_regular" />
 
             <com.google.android.flexbox.FlexboxLayout
+                android:id="@+id/flexInsightStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:flexWrap="wrap">
-                <include layout="@layout/item_insight_style_chip" android:id="@+id/chipStyleSimple" />
-                <include layout="@layout/item_insight_style_chip" android:id="@+id/chipStyleBalanced" />
-                <include layout="@layout/item_insight_style_chip" android:id="@+id/chipStyleDeep" />
-            </com.google.android.flexbox.FlexboxLayout>
+                app:flexWrap="wrap" />
 
             <!-- Frequency -->
             <androidx.appcompat.widget.AppCompatTextView
@@ -118,14 +115,10 @@
                 app:fontFamily="@font/manrope_regular" />
 
             <com.google.android.flexbox.FlexboxLayout
+                android:id="@+id/flexFrequency"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:flexWrap="wrap">
-                <include layout="@layout/item_insight_chip" android:id="@+id/chipFreqDaily" />
-                <include layout="@layout/item_insight_chip" android:id="@+id/chipFreq7" />
-                <include layout="@layout/item_insight_chip" android:id="@+id/chipFreq14" />
-                <include layout="@layout/item_insight_chip" android:id="@+id/chipFreq21" />
-            </com.google.android.flexbox.FlexboxLayout>
+                app:flexWrap="wrap" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
@@ -162,14 +155,10 @@
                 app:fontFamily="@font/manrope_regular" />
 
             <com.google.android.flexbox.FlexboxLayout
+                android:id="@+id/flexFocusAreas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:flexWrap="wrap">
-                <include layout="@layout/item_insight_chip" android:id="@+id/chipFocusRecovery" />
-                <include layout="@layout/item_insight_chip" android:id="@+id/chipFocusStress" />
-                <include layout="@layout/item_insight_chip" android:id="@+id/chipFocusSleep" />
-                <include layout="@layout/item_insight_chip" android:id="@+id/chipFocusActivity" />
-            </com.google.android.flexbox.FlexboxLayout>
+                app:flexWrap="wrap" />
 
             <!-- Insight triggers -->
             <androidx.appcompat.widget.AppCompatTextView
@@ -195,13 +184,10 @@
                 app:fontFamily="@font/manrope_regular" />
 
             <com.google.android.flexbox.FlexboxLayout
+                android:id="@+id/flexTriggers"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:flexWrap="wrap">
-                <include layout="@layout/item_insight_chip" android:id="@+id/chipTriggerApp" />
-                <include layout="@layout/item_insight_chip" android:id="@+id/chipTriggerEmails" />
-                <include layout="@layout/item_insight_chip" android:id="@+id/chipTriggerBoth" />
-            </com.google.android.flexbox.FlexboxLayout>
+                app:flexWrap="wrap" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>
@@ -220,10 +206,10 @@
         android:layout_height="56dp"
         android:layout_marginHorizontal="22dp"
         android:layout_marginBottom="24dp"
-        android:background="@drawable/bg_btn_lime_pill"
+        android:background="@drawable/selector_btn_lime_pill"
         android:text="Save"
         android:textAllCaps="false"
-        android:textColor="#0d1618"
+        android:textColor="@color/selector_btn_lime_text"
         android:textSize="15sp"
         android:textStyle="bold"
         android:letterSpacing="-0.01"

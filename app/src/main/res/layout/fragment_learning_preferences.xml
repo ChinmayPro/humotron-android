@@ -53,47 +53,51 @@
                 android:letterSpacing="-0.02" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvSubtitle"
                 style="@style/Text.14x.Manrope.Regular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="24dp"
                 android:lineSpacingMultiplier="1.5"
-                android:text="3 categories, 15 sub-categories. Your books, nuggets and tests are catalogued from these — view and tune what they're drawn from."
+                android:text="3 categories, 12 sub-categories. Your books, nuggets and tests are catalogued from these — view and tune what they're drawn from."
                 android:textColor="#A0B3AF"
                 android:textSize="13sp" />
 
-            <!-- Card 1: Metabolic Science -->
-            <include layout="@layout/item_learning_card" android:id="@+id/cardMetabolic" />
-
-            <!-- Card 2: Brain & Cognitive -->
-            <include layout="@layout/item_learning_card" android:id="@+id/cardBrain" />
-
-            <!-- Card 3: Environmental & Lifestyle -->
-            <include layout="@layout/item_learning_card" android:id="@+id/cardEnvironment" />
-
-            <!-- Re-run Master Biohacking -->
+            <!-- Dynamic Category Cards Container -->
             <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llCardsContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:orientation="vertical" />
+
+            <!-- Re-run Master Biohacking setup -->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/btnRerunMasterSetup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/bg_rerun_setup_card"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="18dp">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
                     android:src="@drawable/ic_target"
-                    app:tint="#8ea09e" />
+                    app:tint="#C4F23E" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/Text.14x.Manrope.SemiBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="10dp"
                     android:text="Re-run Master Biohacking setup"
-                    android:textColor="#8ea09e"
-                    android:textSize="13sp" />
+                    android:textColor="#E1EBEA"
+                    android:textSize="14sp" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.appcompat.widget.LinearLayoutCompat>

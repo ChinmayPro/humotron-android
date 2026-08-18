@@ -162,7 +162,10 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         }
 
         binding.btnShopping.setOnClickListener {
-            findNavController().navigate(R.id.action_fragmentProfile_to_fragmentShopping)
+            val bundle = Bundle().apply {
+                putInt("selectedTabId", R.id.fragmentShopDevices)
+            }
+            findNavController().navigate(R.id.action_fragmentProfile_to_nav_graph_shop, bundle)
         }
 
         binding.clDeleteAccount.setOnClickListener {
