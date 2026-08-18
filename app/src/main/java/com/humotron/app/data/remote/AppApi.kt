@@ -418,12 +418,10 @@ interface AppApi {
     @GET("assessment/getAssessmentById/{id}")
     suspend fun getAssessment(
         @Path("id") id: String,
-        @Header("Authorization") token: String,
     ): Response<AssessmentResponse>
 
     @POST("assessmentsQuestionAnswer/createAssessmentQuestionAnswer")
     suspend fun submitAssessmentAnswers(
-        @Header("Authorization") token: String,
         @Body request: SubmitAnswerRequest,
     ): Response<SubmitAnswerResponse>
 

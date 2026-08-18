@@ -40,7 +40,7 @@ data class Question(
     @SerializedName("assessmentQuestionName")
     val assessmentQuestionName: String,
     @SerializedName("assessmentQuestionNumber")
-    val assessmentQuestionNumber: Int,
+    val assessmentQuestionNumber: Double,
     @SerializedName("assessmentQuestionPrompt")
     val assessmentQuestionPrompt: String,
     @SerializedName("assessmentAnswerType")

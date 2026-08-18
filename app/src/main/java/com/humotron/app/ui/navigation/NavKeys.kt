@@ -18,4 +18,6 @@ object NavKeys {
     const val SCALE_LEAN_BODY_WEIGHT = "scaleLeanBodyWeight"
     const val SCALE_MUSCLE_MASS = "scaleMuscleMass"
     const val SCALE_BONE_MASS = "scaleBoneMass"
+
+    const val ASSESSMENT = "assessment"
 }

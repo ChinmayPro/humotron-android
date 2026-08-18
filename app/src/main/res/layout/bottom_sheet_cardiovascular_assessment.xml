@@ -9,10 +9,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="24dp"
-        android:paddingTop="24dp"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:paddingHorizontal="24dp"
+        android:paddingTop="24dp">
 
         <TextView
             android:id="@+id/tvTitle"
@@ -61,10 +61,10 @@
                 android:textSize="18sp" />
 
             <TextView
+                android:id="@+id/tv_assessment_trigger"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                android:id="@+id/tv_assessment_trigger"
                 android:fontFamily="@font/manrope_medium"
                 android:text="Male, 40+ Years Old"
                 android:textColor="@color/d80"
@@ -81,10 +81,10 @@
                 android:textSize="17sp" />
 
             <TextView
+                android:id="@+id/tv_understanding"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                android:id="@+id/tv_understanding"
                 android:text="As men age, the risk for heart diseases can increase. This assessment is designed to help you understand your heart health and pinpoint risk factors for cardiovascular diseases."
                 android:textColor="@color/d80"
                 android:textSize="14sp" />
@@ -100,12 +100,12 @@
                 android:textSize="17sp" />
 
             <TextView
+                android:id="@+id/why_this_matter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
                 android:text="Aging and lifestyle can affect cardiovascular health. This assessment helps identify risk factors for heart diseases."
                 android:textColor="@color/d80"
-                android:id="@+id/why_this_matter"
                 android:textSize="14sp" />
 
             <!-- Explore -->
@@ -119,12 +119,12 @@
                 android:textSize="17sp" />
 
             <TextView
+                android:id="@+id/tv_what_explore"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
                 android:text="Your heart health through various indicators.\nPotential risk factors you might be facing.\nImpact of lifestyle choices on your cardiovascular health."
                 android:textColor="@color/d80"
-                android:id="@+id/tv_what_explore"
                 android:textSize="14sp" />
 
             <!-- Suggested -->
@@ -138,10 +138,10 @@
                 android:textSize="17sp" />
 
             <TextView
+                android:id="@+id/tv_suggested_steps"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                android:id="@+id/tv_suggested_steps"
                 android:text="Complete this brief assessment to better understand your heart health and explore potential preventative measures."
                 android:textColor="@color/d80"
                 android:textSize="14sp" />
@@ -166,10 +166,10 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tv_duration"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/_10_mins"
-                        android:id="@+id/tv_duration"
                         android:textColor="@color/d80" />
                 </LinearLayout>
 
@@ -187,10 +187,10 @@
                         android:textColor="@color/white" />
 
                     <TextView
+                        android:id="@+id/tv_total_questions"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="5"
-                        android:id="@+id/tv_total_questions"
                         android:textColor="@color/d80" />
                 </LinearLayout>
 

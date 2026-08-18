@@ -1664,4 +1664,52 @@ To get started:\n
     <string name="synth_stage_sub">2,160 hours streaming in</string>
     <string name="to_connect_with_fitbit">To connect with Fitbit, you must have a Fitbit account. Please create one and then return to sign in.</string>
 
+    <!-- your picture / coverage -->
+    <string name="picture_title">Your picture</string>
+    <string name="picture_sub">How fully Humotron can read you</string>
+    <string name="picture_score">5</string>
+    <string name="picture_score_label">of 6 strong</string>
+
+    <string name="tile_heart_name">Heart</string>
+    <string name="tile_heart_level">Rich</string>
+    <string name="tile_sleep_name">Sleep</string>
+    <string name="tile_sleep_level">Rich</string>
+    <string name="tile_movement_name">Movement</string>
+    <string name="tile_movement_level">Solid</string>
+    <string name="tile_body_name">Body</string>
+    <string name="tile_body_level">Solid</string>
+    <string name="tile_bloods_name">Bloods</string>
+    <string name="tile_bloods_level">Sparse</string>
+    <string name="tile_mind_name">Mind</string>
+    <string name="tile_mind_level">Solid</string>
+
+    <string name="add_source_title">Add a source</string>
+    <string name="add_source_sub">Bloods is your thinnest area — a source sharpens it</string>
+    <string name="assess_subheadline">Short questionnaires matched to your profile — they capture the context your devices can’t see, and feed straight into your guidance.</string>
+    <string name="nudge_deepscan_full">Want hard numbers too? A Deep Scan adds 60+ biomarkers alongside your answers.</string>
+    <string name="this_doesn_t_replace_professional_medical">This doesn’t replace professional medical advice. For significant health issues, consult a provider directly.</string>
+    <string name="assess_intro_understanding_title">Understanding</string>
+    <string name="assess_intro_why_title">Why this matters</string>
+    <string name="assess_intro_explore_title">What we’ll explore</string>
+    <string name="skip_this_question">Skip this question</string>
+    <string name="building_your_picture">Building your picture</string>
+    <string name="this_sharpens_your_guidance">This sharpens your guidance — it never replaces professional medical advice.</string>
+    <string name="review_answers">Review answers</string>
+    <string name="finish_amp_get_my_guidance"><![CDATA[Finish & get my guidance]]></string>
+    <string name="all_5_answered_review_anything">All 5 answered. Review anything below and edit it before you finish.</string>
+    <string name="edit_1">Edit</string>
+    <string name="upload_blood_test">Upload blood test</string>
+    <string name="upload_headline">Turn any blood test into living metrics.</string>
+    <string name="upload_subheadline">Drop in a lab PDF and Humotron reads every marker, tracks it over time, and folds it into your guidance.</string>
+    <string name="nudge_deepscan_upload">No recent report? Book a Deep Scan and we’ll generate one for you.</string>
+    <string name="upchip_tracked">Tracked over time</string>
+    <string name="upchip_guidance">Folded into guidance</string>
+    <string name="upchip_private">Private to you</string>
+    <string name="addcard_pdf_name">Upload a PDF</string>
+    <string name="addcard_pdf_desc">Pick a lab report from your phone — we extract every marker in seconds.</string>
+    <string name="addcard_pdf_badge">Fastest way in</string>
+    <string name="addcard_email_name">Import from email</string>
+    <string name="addcard_email_desc">Search your inbox for lab reports and bring matching attachments straight in.</string>
+    <string name="addcard_email_badge">Finds reports you forgot</string>
+    <string name="addcat_label">Bring in your report</string>
 </resources>

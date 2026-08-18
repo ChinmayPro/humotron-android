@@ -52,5 +52,11 @@ class AddSourceFragment : BaseFragment(R.layout.fragment_add_source) {
         binding.mcvConnectWearable.setOnClickListener {
             findNavController().navigate(R.id.fragmentConnectWearable)
         }
+        binding.mcvFillAssessment.setOnClickListener {
+            findNavController().navigate(R.id.action_fragmentAddSource_to_fragmentAssessmentList)
+        }
+        binding.mcvUploadReport.setOnClickListener {
+            findNavController().navigate(R.id.action_fragmentAddSource_to_fragmentUploadReportIntro)
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.humotron.app.ui.assesment
+package com.humotron.app.ui.assessment
 
 import android.os.Bundle
 import android.util.Log
@@ -11,9 +11,9 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.gson.Gson
 import com.humotron.app.R
-import com.humotron.app.core.AppConstant.ASSESSMENT
 import com.humotron.app.databinding.BottomSheetCardiovascularAssessmentBinding
 import com.humotron.app.domain.modal.response.MergedAssessment
+import com.humotron.app.ui.navigation.NavKeys
 
 class CardiovascularAssessmentBottomSheet : BottomSheetDialogFragment() {
 
@@ -26,7 +26,7 @@ class CardiovascularAssessmentBottomSheet : BottomSheetDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        assessmentJson = arguments?.getString(ASSESSMENT)
+        assessmentJson = arguments?.getString(NavKeys.ASSESSMENT)
     }
 
     override fun onCreateView(
@@ -116,7 +116,7 @@ class CardiovascularAssessmentBottomSheet : BottomSheetDialogFragment() {
         fun newInstance(assessmentJson: String): CardiovascularAssessmentBottomSheet {
             val fragment = CardiovascularAssessmentBottomSheet()
             val bundle = Bundle()
-            bundle.putString(ASSESSMENT, assessmentJson)
+            bundle.putString(NavKeys.ASSESSMENT, assessmentJson)
             fragment.arguments = bundle
             return fragment
         }

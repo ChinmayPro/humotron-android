@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@drawable/ic_bg_main_2"
+    tools:context=".ui.assessment.AssessmentListFragment">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header_3" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/_20dp"
+            android:paddingBottom="@dimen/_20dp">
+
+            <!-- headline block -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvAssessHeadline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_extra_bold"
+                    android:letterSpacing="-0.025"
+                    android:lineSpacingMultiplier="1.13"
+                    android:text="@string/assessments_title"
+                    android:textColor="@color/white"
+                    android:textSize="23sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvAssessSubheadline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:fontFamily="@font/manrope_medium"
+                    android:lineSpacingMultiplier="1.1"
+                    android:text="@string/assess_subheadline"
+                    android:textColor="@color/ink2"
+                    android:textSize="14.5sp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="14dp" />
+
+            <!-- assessments list -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvAssessments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_assessment" />
+
+            <!-- deep scan nudge -->
+            <LinearLayout
+                android:id="@+id/llDeepScanNudge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/bg_nudge"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="15dp"
+                android:paddingTop="13dp"
+                android:paddingEnd="15dp"
+                android:paddingBottom="13dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivNudgeIcon"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    app:srcCompat="@drawable/ic_vial"
+                    app:tint="@color/watch" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvNudgeText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/manrope_regular"
+                    android:lineSpacingMultiplier="1.45"
+                    android:text="@string/nudge_deepscan_full"
+                    android:textColor="@color/ink2"
+                    android:textSize="12.5sp" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivNudgeChevron"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="8dp"
+                    app:srcCompat="@drawable/ic_chevron_right_24px"
+                    app:tint="@color/ink4" />
+
+            </LinearLayout>
+
+            <Space
+                android:id="@+id/bottomSpacerView"
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

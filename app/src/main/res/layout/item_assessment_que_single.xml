@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mcvQue"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/_10dp"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardBackgroundColor="@color/card"
+    app:cardCornerRadius="14dp"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/transparent"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingTop="15dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="15dp">
+
+        <RadioButton
+            android:id="@+id/rbQue"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/selector_contact_radio"
+            android:button="@null"
+            android:clickable="false"
+            android:focusable="false" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvQue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/manrope_semibold"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            tools:text="Never" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

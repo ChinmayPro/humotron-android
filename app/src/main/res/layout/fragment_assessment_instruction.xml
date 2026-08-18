@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@drawable/ic_bg_main_2"
+    tools:context=".ui.assessment.AssessmentInstructionFragment">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header_3" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/_20dp"
+            android:paddingBottom="@dimen/_20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvHeadline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_extra_bold"
+                    android:letterSpacing="-0.025"
+                    android:lineSpacingMultiplier="1.13"
+                    android:textColor="@color/white"
+                    android:textSize="23sp"
+                    tools:text="Sleep Quality Assessment" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvTrigger"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="@font/manrope_bold"
+                    android:textColor="@color/lime"
+                    android:textSize="12.5sp"
+                    tools:text="Assessment trigger · Ring detected restless nights" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvUnderstandingTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/manrope_bold"
+                    android:text="@string/assess_intro_understanding_title"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvUnderstandingDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:fontFamily="@font/manrope_regular"
+                    android:lineSpacingMultiplier="1.1"
+                    android:textColor="@color/ink3"
+                    android:textSize="13sp"
+                    tools:text="Your wearables flagged fragmented sleep. This assessment fills the context your devices can’t see — habits, environment and how you feel." />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvWhyTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:fontFamily="@font/manrope_bold"
+                    android:text="@string/assess_intro_why_title"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvWhyDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:fontFamily="@font/manrope_regular"
+                    android:lineSpacingMultiplier="1.1"
+                    android:textColor="@color/ink3"
+                    android:textSize="13sp"
+                    tools:text="Sleep underpins recovery, focus and nearly every other metric. The full picture needs your input, not just sensors." />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvExploreTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:fontFamily="@font/manrope_bold"
+                    android:text="@string/assess_intro_explore_title"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvExploreDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:fontFamily="@font/manrope_regular"
+                    android:lineSpacingMultiplier="1.1"
+                    android:textColor="@color/ink3"
+                    android:textSize="13sp"
+                    tools:text="Your wind-down routine, environment and daytime energy, alongside what the Ring already measures." />
+
+            </LinearLayout>
+
+            <Space
+                android:id="@+id/bottomSpacerView"
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnProceed"
+        app:srcCompat="@drawable/bg_black_gradient" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnProceed"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/manrope_bold"
+        android:text="@string/proceed_to_assessment"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:backgroundTint="@color/lime"
+        app:cornerRadius="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/tvTakeReadingNow" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvTakeReadingNow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginBottom="12dp"
+        android:gravity="center"
+        android:text="@string/this_doesn_t_replace_professional_medical"
+        android:textColor="@color/ink4"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

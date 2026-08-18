@@ -1,6 +1,6 @@
 import com.humotron.app.domain.modal.response.Question
-import com.humotron.app.ui.assesment.AssessmentQuestion
-import com.humotron.app.ui.assesment.QuestionType
+import com.humotron.app.ui.assessment.AssessmentQuestion
+import com.humotron.app.ui.assessment.QuestionType
 
 /*
 package com.humotron.app.ui.assesment
