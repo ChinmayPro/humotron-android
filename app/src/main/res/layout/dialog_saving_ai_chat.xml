@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E6081315"
+    android:clickable="true"
+    android:focusable="true">
+
+    <!-- State 1: Saving AI Chat Progress -->
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/layoutSavingState"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingHorizontal="32dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Saving AI Chat"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:fontFamily="@font/manrope_bold" />
+
+        <!-- Circular Progress Box -->
+        <FrameLayout
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginBottom="36dp">
+
+            <com.humotron.app.view.ProgressRingView
+                android:id="@+id/circularProgress"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPercentage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#FFFFFF"
+                    android:textSize="36sp"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/manrope_bold"
+                    tools:text="24" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:letterSpacing="0.08"
+                    android:text="PROCESSING"
+                    android:textColor="#A0B3AF"
+                    android:textSize="10.5sp"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/manrope_bold" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </FrameLayout>
+
+        <!-- Steps Container -->
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Step 1 -->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvStep1Number"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:background="@drawable/bg_circle_step_lime"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textColor="#0D1618"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/manrope_bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvStep1Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:text="Updating AI preferences"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/manrope_bold" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!-- Step 2 -->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvStep2Number"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:background="@drawable/bg_circle_step_dark"
+                    android:gravity="center"
+                    android:text="2"
+                    android:textColor="#6E837F"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/manrope_bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvStep2Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:text="Re-tuning Tron AI assistant"
+                    android:textColor="#6E837F"
+                    android:textSize="15sp"
+                    app:fontFamily="@font/manrope_regular" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <!-- State 2: AI Chat Saved Success -->
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/layoutSuccessState"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingHorizontal="32dp"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/ic_success_check_ring" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="AI Chat saved"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:fontFamily="@font/manrope_bold" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="Tron AI assistant now speaks with your preferences"
+            android:textColor="#A0B3AF"
+            android:textSize="14sp"
+            app:fontFamily="@font/manrope_regular" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</FrameLayout>

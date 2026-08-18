@@ -110,7 +110,7 @@
             app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_fragmentProfile_to_fragmentShopping"
-            app:destination="@id/fragmentShopping"
+            app:destination="@id/nav_graph_shop"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
@@ -200,7 +200,21 @@
         android:id="@+id/fragmentLearningPreferences"
         android:name="com.humotron.app.ui.profile.LearningPreferencesFragment"
         android:label="Learning Preferences"
-        tools:layout="@layout/fragment_learning_preferences" />
+        tools:layout="@layout/fragment_learning_preferences">
+        <action
+            android:id="@+id/action_fragmentLearningPreferences_to_fragmentEditCategoryPreferences"
+            app:destination="@id/fragmentEditCategoryPreferences"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentEditCategoryPreferences"
+        android:name="com.humotron.app.ui.profile.EditCategoryPreferencesFragment"
+        android:label="Edit Category Preference"
+        tools:layout="@layout/fragment_edit_category_preference" />
 
     <fragment
         android:id="@+id/fragmentShopping"

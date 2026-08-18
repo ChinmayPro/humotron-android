@@ -101,6 +101,21 @@ class NuggetsViewModel @Inject constructor(
         }
     }
 
+    private val getUserPreferencesLiveData: SingleLiveEvent<Resource<Any>> =
+        SingleLiveEvent()
+
+    fun getUserPreferencesData(): SingleLiveEvent<Resource<Any>> {
+        return getUserPreferencesLiveData
+    }
+
+    fun getUserPreferences() {
+        viewModelScope.launch {
+            repository.getUserPreferences().onEach { state ->
+                getUserPreferencesLiveData.value = state
+            }.launchIn(viewModelScope)
+        }
+    }
+
     private val nuggetsDetailLiveData: SingleLiveEvent<Resource<NuggetDetailResponse>> =
         SingleLiveEvent()
 

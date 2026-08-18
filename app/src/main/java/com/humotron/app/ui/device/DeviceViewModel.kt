@@ -72,20 +72,6 @@ class DeviceViewModel @Inject constructor(
     private val _dateRange = MutableStateFlow(DateRange(null, null))
     val dateRange = _dateRange.asStateFlow()
 
-    init {
-        updateText()
-    }
-
-    val deviceData = MutableStateFlow(DeviceDataState())
-
-    fun getDeviceData() {
-        getHrLatestData()
-        getHrvLatestData()
-        getTempLatestData()
-        getStepLatestData()
-        getSleepData()
-    }
-
     private val getDeviceListLiveData: MutableLiveData<Resource<GetAllDeviceResponse>> =
         MutableLiveData()
 
@@ -98,6 +84,21 @@ class DeviceViewModel @Inject constructor(
 
     fun getWearableProviderListData(): LiveData<Resource<WearableProviderResponse>> {
         return wearableProviderLiveData
+    }
+
+    init {
+        updateText()
+        observeUserDeviceData()
+    }
+
+    val deviceData = MutableStateFlow(DeviceDataState())
+
+    fun getDeviceData() {
+        getHrLatestData()
+        getHrvLatestData()
+        getTempLatestData()
+        getStepLatestData()
+        getSleepData()
     }
 
     /* fun getUserDeviceData() {

@@ -163,6 +163,38 @@ interface AppApi {
         @Body data: HashMap<String, Any>,
     ): Response<com.humotron.app.domain.modal.response.CommonResponse>
 
+    @GET("user/getHealthProfileConfigAndPreferences")
+    suspend fun getHealthProfileConfigAndPreferences(): Response<com.humotron.app.domain.modal.response.HealthProfileConfigResponse>
+
+    @POST("user/getHealthProfileConfigAndPreferences")
+    suspend fun saveHealthProfileConfigAndPreferences(
+        @Body param: com.humotron.app.domain.modal.param.HealthProfileConfigRequest
+    ): Response<com.humotron.app.domain.modal.response.HealthProfileConfigResponse>
+
+    @GET("user/getInsightConfigAndPreferences")
+    suspend fun getInsightConfigAndPreferences(): Response<com.humotron.app.domain.modal.response.InsightConfigResponse>
+
+    @POST("user/getInsightConfigAndPreferences")
+    suspend fun saveInsightConfigAndPreferences(
+        @Body param: com.humotron.app.domain.modal.param.InsightConfigRequest
+    ): Response<com.humotron.app.domain.modal.response.InsightConfigResponse>
+
+    @GET("user/getChatConfigAndPreferences")
+    suspend fun getChatConfigAndPreferences(): Response<com.humotron.app.domain.modal.response.ChatConfigResponse>
+
+    @POST("user/getChatConfigAndPreferences")
+    suspend fun saveChatConfigAndPreferences(
+        @Body param: com.humotron.app.domain.modal.param.ChatConfigRequest
+    ): Response<com.humotron.app.domain.modal.response.ChatConfigResponse>
+
+    @GET("user/getRecipeConfigWithPreferences")
+    suspend fun getRecipeConfigAndPreferences(): Response<com.humotron.app.domain.modal.response.RecipeConfigResponse>
+
+    @POST("user/getRecipeConfigWithPreferences")
+    suspend fun saveRecipeConfigAndPreferences(
+        @Body param: com.humotron.app.domain.modal.param.RecipeConfigRequest
+    ): Response<com.humotron.app.domain.modal.response.RecipeConfigResponse>
+
     @GET("promoCode/removePromoCodeByUser/{userId}")
     suspend fun removePromoCodeByUser(
         @Path("userId") userId: String,
@@ -312,6 +344,9 @@ interface AppApi {
     // Nuggets
     @POST("nugget/getAllNuggetPreference")
     suspend fun getNuggetsPreference(): Response<NuggetPreference>
+
+    @POST("nugget/getUserPreferences")
+    suspend fun getUserPreferences(): Response<Any>
 
     @GET("nuggetTag/getNuggetTagByTypeAndLevel")
     suspend fun getNuggetsTypeAndLevel(): Response<NuggetsTypeAndLevelResponse>
