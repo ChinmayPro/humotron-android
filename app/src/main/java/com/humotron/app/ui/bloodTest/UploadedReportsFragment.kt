@@ -7,12 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.humotron.app.data.network.Status
 import com.humotron.app.databinding.FragmentUploadedReportsBinding
 import com.yarolegovich.discretescrollview.transform.Pivot
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer
-import com.humotron.app.data.network.Resource
-import com.humotron.app.data.network.Status
-import com.humotron.app.domain.modal.response.GenerateMetricResponse
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -68,7 +66,7 @@ class UploadedReportsFragment : Fragment() {
     private fun setupRecyclerView() {
         adapter = UploadedReportAdapter(emptyList()) { item ->
             // Carousel item click handled here
-            item.pdfId?.let { pdfId ->
+            item.id.let { pdfId ->
                 viewModel.generateMetricByPdfId(pdfId)
             }
         }
@@ -85,7 +83,7 @@ class UploadedReportsFragment : Fragment() {
         binding.dsvUploadedReports.addOnItemChangedListener { viewHolder, adapterPosition ->
             if (adapterPosition != androidx.recyclerview.widget.RecyclerView.NO_POSITION) {
                 val pdf = adapter?.getItem(adapterPosition)
-                pdf?.pdfId?.let { pdfId ->
+                pdf?.id?.let { pdfId ->
                     viewModel.generateMetricByPdfId(pdfId)
                 }
             }
@@ -108,7 +106,7 @@ class UploadedReportsFragment : Fragment() {
                         binding.dsvUploadedReports.scrollToPosition(initialIndex)
                         
                         // Automatically trigger parsing for the initially selected report
-                        pdfList[initialIndex].pdfId?.let { pdfId ->
+                        pdfList[initialIndex].id.let { pdfId ->
                             viewModel.generateMetricByPdfId(pdfId)
                         }
                     }

@@ -15,4 +15,36 @@
         <item>Comparing against population baselines</item>
         <item>Almost there</item>
     </string-array>
+
+    <string-array name="humotron_metrics">
+        <item>LDL</item>
+        <item>HDL</item>
+        <item>HbA1c</item>
+        <item>Triglycerides</item>
+        <item>Glucose</item>
+        <item>CRP</item>
+    </string-array>
+
+    <string-array name="humotron_sync_steps">
+        <item>Extracting values from your PDF</item>
+        <item>Mapping them to your Humotron metrics</item>
+        <item>Checking against reference ranges</item>
+        <item>Encrypting &amp; syncing to your profile</item>
+    </string-array>
+
+    <string-array name="searching_email_labels">
+        <item>Connect</item>
+        <item>Scan</item>
+        <item>Filter</item>
+        <item>Match</item>
+        <item>Verify</item>
+        <item>Done</item>
+    </string-array>
+
+    <string-array name="searching_email_steps">
+        <item>Connecting securely to Gmail</item>
+        <item>Scanning for matching attachments</item>
+        <item>Filtering by your keywords</item>
+        <item>Nothing unrelated is opened</item>
+    </string-array>
 </resources>

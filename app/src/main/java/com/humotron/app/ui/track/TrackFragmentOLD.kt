@@ -20,6 +20,8 @@ import com.humotron.app.domain.modal.DeviceType
 import com.humotron.app.domain.modal.response.ExtractMetricsResponse
 import com.humotron.app.domain.modal.response.GetAllDeviceResponse.Data.UserDevice
 import com.humotron.app.domain.modal.response.MedicalPdf
+import com.humotron.app.domain.modal.response.MedicalPdfData
+import com.humotron.app.domain.modal.response.MedicalPdfResponse
 import com.humotron.app.domain.modal.response.MergedAssessment
 import com.humotron.app.domain.modal.response.MetricsData
 import com.humotron.app.domain.modal.response.toPdfReportData
@@ -388,11 +390,11 @@ class TrackFragmentOLD : BaseFragment(R.layout.fragment_track_old), OnClickListe
                             // Map all current PDFs to PdfReportData for the carousel detail view
                             val pdfReportDataList = reports.map { it.toPdfReportData() }
                             val extractMetricsResponse =
-                                ExtractMetricsResponse(
+                                MedicalPdfResponse(
                                     status = "success",
                                     message = "Data found",
-                                    data = MetricsData(
-                                        pdfData = pdfReportDataList,
+                                    data = MedicalPdfData(
+                                        pdfData = /*pdfReportDataList*/reports,
                                         userId = "",
                                         uploadType = "MANUAL",
                                         pdfCount = pdfReportDataList.size,

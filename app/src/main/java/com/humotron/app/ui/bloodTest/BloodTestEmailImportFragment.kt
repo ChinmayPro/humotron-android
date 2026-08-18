@@ -19,14 +19,14 @@ class BloodTestEmailImportFragment : Fragment() {
 
     private var _binding: FragmentBloodTestEmailImportBinding? = null
     private val binding get() = _binding!!
-    
+
     private val viewModel: BloodTestViewModel by activityViewModels()
     private lateinit var adapter: PdfImportAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentBloodTestEmailImportBinding.inflate(inflater, container, false)
         return binding.root
@@ -34,14 +34,19 @@ class BloodTestEmailImportFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
+
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             val ime = insets.getInsets(WindowInsetsCompat.Type.ime())
-            v.setPadding(bars.left, bars.top, bars.right, if (ime.bottom > bars.bottom) ime.bottom else bars.bottom)
+            v.setPadding(
+                bars.left,
+                bars.top,
+                bars.right,
+                if (ime.bottom > bars.bottom) ime.bottom else bars.bottom
+            )
             insets
         }
-        
+
         setupUI()
         observeViewModel()
     }
@@ -51,7 +56,7 @@ class BloodTestEmailImportFragment : Fragment() {
             viewModel.clearResults()
             findNavController().navigateUp()
         }
-        
+
         adapter = PdfImportAdapter(emptyList()) { count ->
             val formattedCount = String.format("%02d", count)
             binding.tvSelectedCountNumber.text = formattedCount
@@ -59,7 +64,8 @@ class BloodTestEmailImportFragment : Fragment() {
             binding.btnImport.alpha = if (count > 0) 1.0f else 0.5f
         }
         binding.rvEmails.adapter = adapter
-        binding.rvEmails.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext())
+        binding.rvEmails.layoutManager =
+            androidx.recyclerview.widget.LinearLayoutManager(requireContext())
 
         binding.btnImport.setOnClickListener {
             val selectedItems = adapter.getSelectedItems()
@@ -74,26 +80,33 @@ class BloodTestEmailImportFragment : Fragment() {
             binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
             binding.btnImport.isEnabled = !isLoading && adapter.getSelectedItems().isNotEmpty()
         }
-        
+
         viewModel.uploadState.observe(viewLifecycleOwner) { resource ->
             if (resource == null) return@observe
-            
+
             when (resource.status) {
                 com.humotron.app.data.network.Status.LOADING -> {
                     // Handled by isLoading observer
                 }
+
                 com.humotron.app.data.network.Status.SUCCESS -> {
                     // Navigate to Uploaded Reports
                     findNavController().navigate(R.id.action_fragmentBloodTestEmailImport_to_fragmentUploadedReports)
                 }
+
                 com.humotron.app.data.network.Status.ERROR -> {
                     val errorMessage = resource.error?.errorMessage ?: ""
                     if (errorMessage.isNotEmpty()) {
-                        android.widget.Toast.makeText(requireContext(), "Error: $errorMessage", android.widget.Toast.LENGTH_LONG).show()
+                        android.widget.Toast.makeText(
+                            requireContext(),
+                            "Error: $errorMessage",
+                            android.widget.Toast.LENGTH_LONG
+                        ).show()
                         android.util.Log.e("EmailImport", "Upload error: $errorMessage")
                     }
                     viewModel.resetUploadState()
                 }
+
                 else -> {}
             }
         }

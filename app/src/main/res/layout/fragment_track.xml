@@ -187,7 +187,7 @@
                         android:layout_marginHorizontal="@dimen/_20dp"
                         android:orientation="vertical"
                         android:visibility="visible"
-                        tools:visibility="visible">
+                        tools:visibility="gone">
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rvDevices"
@@ -969,15 +969,15 @@
                         android:id="@+id/llTestCheckInsContent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/_20dp"
                         android:orientation="vertical"
                         android:visibility="gone"
-                        tools:visibility="gone">
+                        tools:visibility="visible">
 
                         <!-- Clinical & lab section -->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/_20dp"
                             android:orientation="vertical"
                             android:paddingTop="16dp"
                             android:paddingBottom="6dp">
@@ -1005,6 +1005,7 @@
                         <com.google.android.material.card.MaterialCardView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/_20dp"
                             android:layout_marginBottom="11dp"
                             app:cardBackgroundColor="@color/transparent"
                             app:cardCornerRadius="18dp"
@@ -1098,6 +1099,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/_20dp"
                             android:orientation="vertical"
                             android:paddingTop="16dp"
                             android:paddingBottom="6dp">
@@ -1120,358 +1122,23 @@
                                 android:textSize="11.5sp" />
                         </LinearLayout>
 
-                        <!-- Cardiovascular Health Card -->
-                        <com.google.android.material.card.MaterialCardView
+                        <!-- assessments list -->
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvAssessments"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="11dp"
-                            app:cardBackgroundColor="@color/transparent"
-                            app:cardCornerRadius="18dp"
-                            app:cardElevation="0dp"
-                            app:strokeWidth="0dp">
-
-                            <androidx.constraintlayout.widget.ConstraintLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/bg_track_card">
-
-                                <View
-                                    android:layout_width="3dp"
-                                    android:layout_height="0dp"
-                                    android:background="@color/series"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
-
-                                <FrameLayout
-                                    android:id="@+id/flCardioIcon"
-                                    android:layout_width="42dp"
-                                    android:layout_height="42dp"
-                                    android:layout_marginVertical="@dimen/_15dp"
-                                    android:layout_marginStart="13dp"
-                                    android:background="@drawable/bg_track_icon_bg"
-                                    android:backgroundTint="@color/series_14"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent">
-
-                                    <androidx.appcompat.widget.AppCompatImageView
-                                        android:layout_width="20dp"
-                                        android:layout_height="20dp"
-                                        android:layout_gravity="center"
-                                        android:tint="@color/series"
-                                        app:srcCompat="@drawable/ic_edit_2" />
-
-                                </FrameLayout>
-
-                                <LinearLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="13dp"
-                                    android:layout_marginEnd="@dimen/_15dp"
-                                    android:orientation="vertical"
-                                    android:paddingVertical="@dimen/_15dp"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toEndOf="@id/flCardioIcon"
-                                    app:layout_constraintTop_toTopOf="parent">
-
-                                    <androidx.constraintlayout.widget.ConstraintLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content">
-
-                                        <TextView
-                                            android:layout_width="0dp"
-                                            android:layout_height="wrap_content"
-                                            android:fontFamily="@font/manrope_bold"
-                                            android:text="@string/cardio_health_title"
-                                            android:textColor="@color/white"
-                                            android:textSize="14.5sp"
-                                            app:layout_constraintEnd_toStartOf="@id/tvResumePill"
-                                            app:layout_constraintStart_toStartOf="parent"
-                                            app:layout_constraintTop_toTopOf="parent" />
-
-                                        <TextView
-                                            android:id="@+id/tvResumePill"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:background="@drawable/bg_track_pill_amber"
-                                            android:fontFamily="@font/manrope_extra_bold"
-                                            android:paddingHorizontal="10dp"
-                                            android:paddingVertical="5dp"
-                                            android:text="@string/resume"
-                                            android:textColor="@color/watch"
-                                            android:textSize="11sp"
-                                            app:layout_constraintEnd_toEndOf="parent"
-                                            app:layout_constraintTop_toTopOf="parent" />
-                                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="3dp"
-                                        android:fontFamily="@font/manrope_medium"
-                                        android:text="@string/male_40_years"
-                                        android:textColor="@color/ink4"
-                                        android:textSize="11.5sp" />
-
-                                    <View
-                                        android:layout_width="match_parent"
-                                        android:layout_height="5dp"
-                                        android:layout_marginTop="9dp"
-                                        android:background="@drawable/bg_mini_prog_track" />
-
-                                    <View
-                                        android:layout_width="160dp"
-                                        android:layout_height="5dp"
-                                        android:layout_marginTop="-5dp"
-                                        android:background="@drawable/bg_mini_prog_fill_amber" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="7dp"
-                                        android:fontFamily="@font/manrope_bold"
-                                        android:text="@string/questions_answered_format"
-                                        android:textColor="@color/watch"
-                                        android:textSize="11.5sp"
-                                        tools:text="3/5 questions answered" />
-
-                                </LinearLayout>
-
-                            </androidx.constraintlayout.widget.ConstraintLayout>
-
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <!-- Sleep Quality Card -->
-                        <com.google.android.material.card.MaterialCardView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="11dp"
-                            app:cardBackgroundColor="@color/transparent"
-                            app:cardCornerRadius="18dp"
-                            app:cardElevation="0dp"
-                            app:strokeWidth="0dp">
-
-                            <androidx.constraintlayout.widget.ConstraintLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/bg_track_card">
-
-                                <View
-                                    android:layout_width="3dp"
-                                    android:layout_height="0dp"
-                                    android:background="@color/cool"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
-
-                                <FrameLayout
-                                    android:id="@+id/flSleepIcon"
-                                    android:layout_width="42dp"
-                                    android:layout_height="42dp"
-                                    android:layout_marginVertical="@dimen/_15dp"
-                                    android:layout_marginStart="13dp"
-                                    android:background="@drawable/bg_track_icon_bg"
-                                    android:backgroundTint="@color/cool_14"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent">
-
-                                    <androidx.appcompat.widget.AppCompatImageView
-                                        android:layout_width="20dp"
-                                        android:layout_height="20dp"
-                                        android:layout_gravity="center"
-                                        android:tint="@color/cool"
-                                        app:srcCompat="@drawable/ic_edit_2" />
-                                </FrameLayout>
-
-                                <LinearLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="13dp"
-                                    android:layout_marginEnd="@dimen/_15dp"
-                                    android:orientation="vertical"
-                                    android:paddingVertical="@dimen/_15dp"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toEndOf="@id/flSleepIcon"
-                                    app:layout_constraintTop_toTopOf="parent">
-
-                                    <androidx.constraintlayout.widget.ConstraintLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content">
-
-                                        <TextView
-                                            android:layout_width="0dp"
-                                            android:layout_height="wrap_content"
-                                            android:fontFamily="@font/manrope_bold"
-                                            android:text="@string/sleep_quality_title"
-                                            android:textColor="@color/white"
-                                            android:textSize="14.5sp"
-                                            app:layout_constraintEnd_toStartOf="@id/tvStartPill"
-                                            app:layout_constraintStart_toStartOf="parent"
-                                            app:layout_constraintTop_toTopOf="parent" />
-
-                                        <TextView
-                                            android:id="@+id/tvStartPill"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:background="@drawable/bg_track_pill_grey"
-                                            android:fontFamily="@font/manrope_extra_bold"
-                                            android:paddingHorizontal="10dp"
-                                            android:paddingVertical="5dp"
-                                            android:text="@string/start"
-                                            android:textColor="#9aa8a6"
-                                            android:textSize="11sp"
-                                            app:layout_constraintEnd_toEndOf="parent"
-                                            app:layout_constraintTop_toTopOf="parent" />
-                                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="3dp"
-                                        android:fontFamily="@font/manrope_medium"
-                                        android:text="@string/ring_detected_restless"
-                                        android:textColor="@color/ink4"
-                                        android:textSize="11.5sp" />
-
-                                    <View
-                                        android:layout_width="match_parent"
-                                        android:layout_height="5dp"
-                                        android:layout_marginTop="9dp"
-                                        android:background="@drawable/bg_mini_prog_track" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="7dp"
-                                        android:fontFamily="@font/manrope_bold"
-                                        android:text="@string/questions_answered_format"
-                                        android:textColor="@color/ink4"
-                                        android:textSize="11.5sp"
-                                        tools:text="0/3 questions answered" />
-                                </LinearLayout>
-
-                            </androidx.constraintlayout.widget.ConstraintLayout>
-
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <!-- Stress & Resilience Card -->
-                        <com.google.android.material.card.MaterialCardView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="11dp"
-                            app:cardBackgroundColor="@color/transparent"
-                            app:cardCornerRadius="18dp"
-                            app:cardElevation="0dp"
-                            app:strokeWidth="0dp">
-
-                            <androidx.constraintlayout.widget.ConstraintLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/bg_track_card">
-
-                                <View
-                                    android:layout_width="3dp"
-                                    android:layout_height="0dp"
-                                    android:background="@color/watch"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
-
-                                <FrameLayout
-                                    android:id="@+id/flStressIcon"
-                                    android:layout_width="42dp"
-                                    android:layout_height="42dp"
-                                    android:layout_marginVertical="@dimen/_15dp"
-                                    android:layout_marginStart="13dp"
-                                    android:background="@drawable/bg_track_icon_bg"
-                                    android:backgroundTint="@color/series_14"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent">
-
-                                    <androidx.appcompat.widget.AppCompatImageView
-                                        android:layout_width="20dp"
-                                        android:layout_height="20dp"
-                                        android:layout_gravity="center"
-                                        android:tint="@color/watch"
-                                        app:srcCompat="@drawable/ic_edit_2" />
-
-                                </FrameLayout>
-
-                                <LinearLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="13dp"
-                                    android:layout_marginEnd="15dp"
-                                    android:orientation="vertical"
-                                    android:paddingVertical="15dp"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toEndOf="@id/flStressIcon"
-                                    app:layout_constraintTop_toTopOf="parent">
-
-                                    <androidx.constraintlayout.widget.ConstraintLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content">
-
-                                        <TextView
-                                            android:layout_width="0dp"
-                                            android:layout_height="wrap_content"
-                                            android:fontFamily="@font/manrope_bold"
-                                            android:text="@string/stress_resilience_title"
-                                            android:textColor="@color/white"
-                                            android:textSize="14.5sp"
-                                            app:layout_constraintEnd_toStartOf="@id/tvCompletePill"
-                                            app:layout_constraintStart_toStartOf="parent"
-                                            app:layout_constraintTop_toTopOf="parent" />
-
-                                        <TextView
-                                            android:id="@+id/tvCompletePill"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:background="@drawable/bg_track_pill_lime"
-                                            android:fontFamily="@font/manrope_extra_bold"
-                                            android:paddingHorizontal="10dp"
-                                            android:paddingVertical="5dp"
-                                            android:text="@string/complete"
-                                            android:textColor="@color/good"
-                                            android:textSize="11sp"
-                                            app:layout_constraintEnd_toEndOf="parent"
-                                            app:layout_constraintTop_toTopOf="parent" />
-                                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="3dp"
-                                        android:fontFamily="@font/manrope_medium"
-                                        android:text="@string/elevated_heart_rate_desc"
-                                        android:textColor="@color/ink4"
-                                        android:textSize="11.5sp" />
-
-                                    <View
-                                        android:layout_width="match_parent"
-                                        android:layout_height="5dp"
-                                        android:layout_marginTop="9dp"
-                                        android:background="@drawable/bg_mini_prog_fill_green" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="7dp"
-                                        android:fontFamily="@font/manrope_bold"
-                                        android:text="@string/questions_answered_format"
-                                        android:textColor="@color/good"
-                                        android:textSize="11.5sp"
-                                        tools:text="3/3 questions answered" />
-                                </LinearLayout>
-
-                            </androidx.constraintlayout.widget.ConstraintLayout>
-
-                        </com.google.android.material.card.MaterialCardView>
+                            android:layout_marginHorizontal="@dimen/_20dp"
+                            android:nestedScrollingEnabled="false"
+                            android:overScrollMode="never"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            tools:itemCount="3"
+                            tools:listitem="@layout/item_assessment" />
 
                         <!-- Health reports section -->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/_20dp"
                             android:orientation="vertical"
                             android:paddingTop="16dp"
                             android:paddingBottom="6dp">
@@ -1495,102 +1162,24 @@
                         </LinearLayout>
 
                         <!-- Health Report Card -->
-                        <com.google.android.material.card.MaterialCardView
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvReportsTrack"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="11dp"
+                            android:orientation="horizontal"
                             app:cardBackgroundColor="@color/transparent"
                             app:cardCornerRadius="18dp"
                             app:cardElevation="0dp"
-                            app:strokeWidth="0dp">
-
-                            <androidx.constraintlayout.widget.ConstraintLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/bg_track_card">
-
-                                <View
-                                    android:layout_width="3dp"
-                                    android:layout_height="0dp"
-                                    android:background="@color/cool"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
-
-                                <FrameLayout
-                                    android:id="@+id/flReportIcon"
-                                    android:layout_width="42dp"
-                                    android:layout_height="42dp"
-                                    android:layout_marginStart="13dp"
-                                    android:background="@drawable/bg_track_icon_bg"
-                                    android:backgroundTint="@color/cool_14"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent">
-
-                                    <androidx.appcompat.widget.AppCompatImageView
-                                        android:layout_width="20dp"
-                                        android:layout_height="20dp"
-                                        android:layout_gravity="center"
-                                        android:tint="@color/cool"
-                                        app:srcCompat="@drawable/ic_sheet_document" />
-                                </FrameLayout>
-
-                                <LinearLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="13dp"
-                                    android:layout_marginEnd="10dp"
-                                    android:orientation="vertical"
-                                    android:paddingVertical="15dp"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toStartOf="@id/tvViewPill"
-                                    app:layout_constraintStart_toEndOf="@id/flReportIcon"
-                                    app:layout_constraintTop_toTopOf="parent">
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:fontFamily="@font/manrope_bold"
-                                        android:text="@string/blood_count_pdf"
-                                        android:textColor="@color/white"
-                                        android:textSize="14.5sp" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="3dp"
-                                        android:fontFamily="@font/manrope_medium"
-                                        android:text="@string/data_points_synced_format"
-                                        android:textColor="@color/ink4"
-                                        android:textSize="11.5sp"
-                                        tools:text="7 data points · Synced" />
-                                </LinearLayout>
-
-                                <TextView
-                                    android:id="@+id/tvViewPill"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginEnd="15dp"
-                                    android:background="@drawable/bg_track_pill_lime"
-                                    android:fontFamily="@font/manrope_extra_bold"
-                                    android:paddingHorizontal="10dp"
-                                    android:paddingVertical="5dp"
-                                    android:text="@string/view"
-                                    android:textColor="@color/good"
-                                    android:textSize="11sp"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
-
-                            </androidx.constraintlayout.widget.ConstraintLayout>
-
-                        </com.google.android.material.card.MaterialCardView>
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            app:strokeWidth="0dp"
+                            tools:listitem="@layout/item_report_track" />
 
                         <!-- Upload or sync link -->
                         <LinearLayout
+                            android:id="@+id/llUploadSyncReport"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/_20dp"
                             android:layout_marginTop="12dp"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">

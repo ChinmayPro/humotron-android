@@ -41,11 +41,14 @@ class UploadReportIntroFragment : Fragment(R.layout.fragment_upload_report_intro
     }
 
     private fun initClicks() {
+        binding.header.btnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
         binding.cardUploadPdf.setOnClickListener {
             findNavController().navigate(R.id.action_fragmentUploadReportIntro_to_fragmentUploadPDFFromDevice)
         }
         binding.cardImportEmail.setOnClickListener {
-
+            findNavController().navigate(R.id.action_fragmentUploadReportIntro_to_fragmentUploadReportEmailIntro)
         }
         binding.llDeepScanNudge.setOnClickListener {
 

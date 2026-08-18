@@ -361,14 +361,14 @@ To get started:\n
     <string name="privacy_first">Privacy First!</string>
     <string name="gmail_privacy_desc">This feature does not access your email directly or store any unrelated information!</string>
     <string name="how_it_works_colon">How it works:</string>
-    <string name="step_1_connect_gmail">Step 1 - Connect your Gmail</string>
-    <string name="step_1_connect_gmail_desc">Allow access for Gmail to identify emails based on your keywords.</string>
-    <string name="step_2_specify_keywords">Step 2 - Specify Keywords</string>
-    <string name="step_2_specify_keywords_desc">Input keywords for Gmail to locate relevant emails with the health reports.</string>
-    <string name="step_3_select_reports">Step 3 - Select Reports</string>
-    <string name="step_3_select_reports_desc">Choose specific reports from the search results for import.</string>
-    <string name="step_4_confirm_import">Step 4 - Confirm Import</string>
-    <string name="step_4_confirm_import_desc">Confirm to upload these reports to your Humotron profile.</string>
+    <string name="step_1_connect_gmail">Connect your Gmail</string>
+    <string name="step_1_connect_gmail_desc">Allow read access so we can find emails matching your keywords.</string>
+    <string name="step_2_specify_keywords">Specify Keywords</string>
+    <string name="step_2_specify_keywords_desc">Tell Gmail what to look for to locate health reports.</string>
+    <string name="step_3_select_reports">Select Reports</string>
+    <string name="step_3_select_reports_desc">Choose which results to import.</string>
+    <string name="step_4_confirm_import">Confirm Import</string>
+    <string name="step_4_confirm_import_desc">Upload these reports to your Humotron profile.</string>
     <string name="email_import">Email Import</string>
     <string name="review_permissions">Review the permissions</string>
     <string name="keywords">Keywords</string>
@@ -1712,4 +1712,27 @@ To get started:\n
     <string name="addcard_email_desc">Search your inbox for lab reports and bring matching attachments straight in.</string>
     <string name="addcard_email_badge">Finds reports you forgot</string>
     <string name="addcat_label">Bring in your report</string>
+    <string name="upload_from_this_device">Upload from this device</string>
+    <string name="upload_device_description">Pick a PDF from your files. We extract the data points and sync them to your profile.</string>
+    <string name="upload_device_choose_file">Choose a file</string>
+    <string name="upload_device_file_limit">PDF · up to 20 MB</string>
+    <string name="reading_your_report">Reading your report</string>
+    <string name="parsing_runs_on_humotron">Parsing runs on Humotron’s secure pipeline. Your raw file is encrypted and never shared with a commerce partner.</string>
+    <string name="nextstep_title">Extracted from your PDF</string>
+    <string name="nextstep_subtitle">Each marker is now a reading in Humotron — tap any to learn more</string>
+    <string name="lab_pdf_synced">Lab PDF · synced %1$s</string>
+    <string name="extracting_data_points">Extracting data points...</string>
+    <string name="data_points_extracted">%1$d  \u00A0data points extracted</string>
+
+    <string name="oauth_dialog_title">“Humotron” Wants to Use “accounts.google.com” to Sign In</string>
+    <string name="oauth_dialog_desc">This allows the app and website to share information about you.</string>
+    <string name="tell_us_what_to_look_for">Tell us what to look for. We only read matching attachments.</string>
+
+    <string name="filter_keywords_value">Blood test</string>
+    <string name="filter_attachments_value">Yes</string>
+    <string name="filter_daterange_value">Past 2 years</string>
+    <string name="humotron_only_reads_attachments">Humotron only reads attachments that match the filters you set — and never stores the rest.</string>
+    <string name="searching_your_inbox">Searching your inbox</string>
+    <string name="email_found">Email found</string>
+    <string name="this_file_hasn_t_been_saved">This file hasn’t been saved to your profile yet. Choose the one to upload.</string>
 </resources>

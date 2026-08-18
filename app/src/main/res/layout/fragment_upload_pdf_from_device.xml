@@ -30,6 +30,95 @@
             android:paddingHorizontal="@dimen/_20dp"
             android:paddingBottom="@dimen/_20dp">
 
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvUploadDeviceTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/manrope_extra_bold"
+                android:letterSpacing="-0.025"
+                android:text="@string/upload_from_this_device"
+                android:textColor="@color/white"
+                android:textSize="23sp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvUploadDeviceDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:layout_marginBottom="18dp"
+                android:fontFamily="@font/manrope_medium"
+                android:lineSpacingExtra="5sp"
+                android:text="@string/upload_device_description"
+                android:textColor="@color/ink2"
+                android:textSize="14.5sp" />
+
+            <!-- Upload card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mcvUploadDeviceFilePicker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:minHeight="172dp"
+                app:cardBackgroundColor="@color/transparent"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp"
+                app:rippleColor="@color/lime_10"
+                app:strokeColor="@color/white20"
+                app:strokeWidth="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clUploadDeviceFilePicker"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_nudge"
+                    android:minHeight="172dp"
+                    android:paddingStart="20dp"
+                    android:paddingTop="34dp"
+                    android:paddingEnd="20dp"
+                    android:paddingBottom="34dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivUploadDeviceFile"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_upload"
+                        app:tint="@color/lime" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvUploadDeviceChooseFile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/manrope_extra_bold"
+                        android:text="@string/upload_device_choose_file"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/ivUploadDeviceFile" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvUploadDeviceFileLimit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:fontFamily="@font/manrope_medium"
+                        android:text="@string/upload_device_file_limit"
+                        android:textColor="@color/ink4"
+                        android:textSize="11.5sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvUploadDeviceChooseFile" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
             <Space
                 android:id="@+id/bottomSpacerView"
                 android:layout_width="match_parent"
@@ -38,40 +127,5 @@
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnChooseDevice"
-        app:srcCompat="@drawable/bg_black_gradient" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnChooseDevice"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:layout_marginHorizontal="@dimen/_20dp"
-        android:layout_marginBottom="10dp"
-        android:fontFamily="@font/manrope_bold"
-        android:text="@string/choose_your_device"
-        android:textAllCaps="false"
-        android:textColor="#7d8a89"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:backgroundTint="@color/white10"
-        app:cornerRadius="32dp"
-        app:layout_constraintBottom_toTopOf="@+id/tvTakeReadingNow" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tvTakeReadingNow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_20dp"
-        android:layout_marginBottom="12dp"
-        android:gravity="center"
-        android:text="@string/one_secure_sign_in"
-        android:textColor="@color/ink4"
-        android:textSize="13sp"
-        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

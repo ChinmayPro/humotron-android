@@ -1,6 +1,7 @@
 package com.humotron.app.ui.track
 
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
 import android.view.View.OnClickListener
@@ -10,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.humotron.app.R
 import com.humotron.app.core.Preference
 import com.humotron.app.core.base.BaseFragment
@@ -18,7 +20,11 @@ import com.humotron.app.databinding.FragmentTrackBinding
 import com.humotron.app.domain.modal.DeviceType
 import com.humotron.app.domain.modal.response.GetAllDeviceResponse.Data.UserDevice
 import com.humotron.app.domain.modal.response.MedicalPdf
+import com.humotron.app.domain.modal.response.MedicalPdfData
+import com.humotron.app.domain.modal.response.MedicalPdfResponse
+import com.humotron.app.domain.modal.response.MergedAssessment
 import com.humotron.app.domain.modal.response.toPdfReportData
+import com.humotron.app.ui.assessment.AssessmentAdapter
 import com.humotron.app.ui.bloodTest.BloodTestActivity
 import com.humotron.app.ui.bloodTest.BloodTestViewModel
 import com.humotron.app.ui.connect.adapter.DeviceInfo
@@ -43,6 +49,8 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
     private var deviceAdapter: DeviceAdapter? = null
     private var wearableProviderAdapter: WearableProviderAdapter? = null
     private var healthReportAdapter: HealthReportAdapter? = null
+    private var healthReportTrackAdapter: HealthReportTrackAdapter? = null
+    private var assessmentAdapter: AssessmentAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -76,6 +84,45 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
         }
         binding.rvWearableDevices.adapter = wearableProviderAdapter
 
+        binding.rvAssessments.layoutManager =
+            androidx.recyclerview.widget.LinearLayoutManager(requireContext())
+        assessmentAdapter = AssessmentAdapter(requireContext(), emptyList<MergedAssessment>()) { assessment ->
+            handleAssessmentClick(assessment)
+        }
+        binding.rvAssessments.adapter = assessmentAdapter
+
+        binding.rvReportsTrack.layoutManager =
+            androidx.recyclerview.widget.LinearLayoutManager(
+                requireContext(),
+                androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL,
+                false
+            )
+
+        val startSpacing = resources.getDimensionPixelSize(R.dimen._20dp)
+        val itemSpacing = resources.getDimensionPixelSize(R.dimen._10dp)
+
+        binding.rvReportsTrack.addItemDecoration(object : RecyclerView.ItemDecoration() {
+            override fun getItemOffsets(
+                outRect: Rect,
+                view: View,
+                parent: RecyclerView,
+                state: RecyclerView.State,
+            ) {
+                val position = parent.getChildAdapterPosition(view)
+                val itemCount = state.itemCount
+
+                if (position == 0) {
+                    outRect.left = startSpacing
+                } else {
+                    //outRect.left = itemSpacing
+                }
+
+                if (position == itemCount - 1) {
+                    //outRect.right = startSpacing
+                }
+            }
+        })
+
         if (prefUtils.getHardwareDetailsList().isEmpty()) {
             // binding.dsvWearables.isVisible = false
             // binding.dsvHealthMonitoring.isVisible = false
@@ -86,7 +133,7 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
             // binding.dsvHealthMonitoring.isVisible = true
         }
 
-        // viewModel.getMergedAssessmentList()
+        viewModel.getMergedAssessmentList()
         viewModel.getMedicalPdfList()
     }
 
@@ -121,6 +168,9 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
             viewModel.refreshWearableDeviceData(true)
             // viewModel.getMergedAssessmentList(true)
             viewModel.getMedicalPdfList(true)
+        }
+        binding.llUploadSyncReport.setOnClickListener {
+            findNavController().navigate(R.id.action_fragmentTrack_to_fragmentUploadReportIntro)
         }
     }
 
@@ -209,9 +259,11 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
                         binding.rvWearableDevices.isVisible = false
                     }
                 }
+
                 Status.ERROR, Status.EXCEPTION -> {
                     hideProgress()
                 }
+
                 Status.LOADING -> {
                     if (wearableProviderAdapter?.itemCount == 0) {
                         showProgress()
@@ -344,18 +396,18 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
             }
         }
 
-        /*viewModel.mergedAssessmentListLiveData.observe(viewLifecycleOwner) {
+        viewModel.mergedAssessmentListLiveData.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
                     hideProgress()
                     val data = it.data?.data ?: return@observe
                     if (data.isNotEmpty()) {
-                        setupAssessmentRecyclerView(data)
-                        binding.dsvAssessments.fadeIn()
-                        binding.clNoPictureData.isVisible = false
+                        /*binding.dsvAssessments.fadeIn()
+                        binding.clNoPictureData.isVisible = false*/
+                        assessmentAdapter?.updateData(data)
                     } else {
-                        binding.dsvAssessments.isVisible = false
-                        binding.clNoPictureData.fadeIn()
+                        /*binding.dsvAssessments.isVisible = false
+                        binding.clNoPictureData.fadeIn()*/
                     }
                 }
 
@@ -371,7 +423,7 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
                     //showProgress()
                 }
             }
-        }*/
+        }
 
         viewModel.medicalPdfListLiveData.observe(viewLifecycleOwner) {
             when (it.status) {
@@ -379,7 +431,8 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
                     hideProgress()
                     val data = it.data?.data?.pdfData ?: return@observe
                     if (data.isNotEmpty()) {
-                        setupHealthReportRecyclerView(data)
+                        // setupHealthReportRecyclerView(data)
+                        setupHealthReportTrackRecyclerView(data)
                         binding.clHealthReportsHeader.fadeIn()
                     } else {
                         binding.clHealthReportsHeader.isVisible = false
@@ -424,6 +477,57 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
     }
 
 
+    private fun handleAssessmentClick(assessment: MergedAssessment) {
+        when (assessment.status) {
+            "Completed" -> {
+                toast("The assessment is complete.")
+            }
+
+            "Resume" -> {
+                findNavController().navigate(R.id.assessmentFragment, Bundle().apply {
+                    putParcelable(NavKeys.ASSESSMENT, assessment)
+                })
+            }
+
+            "Start Now" -> {
+                findNavController().navigate(R.id.fragmentAssessmentInstruction, Bundle().apply {
+                    putParcelable(NavKeys.ASSESSMENT, assessment)
+                })
+            }
+        }
+    }
+
+    private fun setupHealthReportTrackRecyclerView(reports: List<MedicalPdf>) {
+        if (healthReportTrackAdapter == null) {
+            healthReportTrackAdapter =
+                HealthReportTrackAdapter(requireContext(), reports) { report, position, currentList ->
+                    val extractMetricsResponse =
+                        MedicalPdfResponse(
+                            status = "success",
+                            message = "Data found",
+                            data = MedicalPdfData(
+                                pdfData = currentList,
+                                userId = "",
+                                uploadType = "MANUAL",
+                                pdfCount = currentList.size,
+                                id = ""
+                            )
+                        )
+                    findNavController().navigate(
+                        R.id.action_fragmentTrack_to_fragmentPDFReportList,
+                        Bundle().apply {
+                            putParcelable("extractMetricsResponse", extractMetricsResponse)
+                            putInt("selectedPosition", position)
+                        }
+                    )
+                }
+        } else {
+            healthReportTrackAdapter?.updateData(reports)
+        }
+        binding.rvReportsTrack.adapter = healthReportTrackAdapter
+    }
+
+
     private fun setupHealthReportRecyclerView(reports: List<MedicalPdf>) {
         if (healthReportAdapter == null) {
             healthReportAdapter =
@@ -433,11 +537,11 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
                             // Map all current PDFs to PdfReportData for the carousel detail view
                             val pdfReportDataList = reports.map { it.toPdfReportData() }
                             val extractMetricsResponse =
-                                com.humotron.app.domain.modal.response.ExtractMetricsResponse(
+                                MedicalPdfResponse(
                                     status = "success",
                                     message = "Data found",
-                                    data = com.humotron.app.domain.modal.response.MetricsData(
-                                        pdfData = pdfReportDataList,
+                                    data = MedicalPdfData(
+                                        pdfData = /*pdfReportDataList*/reports,
                                         userId = "",
                                         uploadType = "MANUAL",
                                         pdfCount = pdfReportDataList.size,

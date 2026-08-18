@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "376945095750",
+    "project_id": "humotron",
+    "storage_bucket": "humotron.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:376945095750:android:3ae00645f803e58f370647",
+        "android_client_info": {
+          "package_name": "com.humotron.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "376945095750-t2207istdsnpop35fj4vaojd31rb06s8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.humotron.app",
+            "certificate_hash": "5530d8938ea61196b6928142678de5abdac1a0cd"
+          }
+        },
+        {
+          "client_id": "376945095750-ftk5mg1dsvid0lb7ehkqh517jgu4ocjp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQV0EFYqT4Wtc0PQcKpHToZ3h8AAv55MI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "376945095750-4g87r8ggnpr0e2magaqdud8nm769gocb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "376945095750-8kb1fr18j22ls66ajtioscot5f8kp949.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.humotron.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

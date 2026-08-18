@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@drawable/ic_bg_main_2"
+    tools:context=".ui.bloodreport.UploadReportEmailIntroFragment">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header_3" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/_20dp"
+            android:paddingBottom="@dimen/_20dp">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvPrivacyFirst"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/manrope_extra_bold"
+                android:text="@string/privacy_first"
+                android:textColor="@color/lime"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvPrivacyDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/manrope_medium"
+                android:lineSpacingMultiplier="1.1"
+                android:text="@string/gmail_privacy_desc"
+                android:textColor="@color/ink3"
+                android:textSize="13sp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvHowItWorksTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/manrope_bold"
+                android:text="@string/how_it_works_colon"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20dp">
+
+                <!-- Step 1 -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cvStep1"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:cardBackgroundColor="@color/lime_12"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:strokeWidth="0dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/manrope_bold"
+                        android:text="1"
+                        android:textColor="@color/lime"
+                        android:textSize="11sp" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvStep1Title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:fontFamily="@font/manrope_bold"
+                    android:text="@string/step_1_connect_gmail"
+                    android:textColor="@color/white"
+                    android:textSize="13.5sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/cvStep1"
+                    app:layout_constraintTop_toTopOf="@id/cvStep1" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvStep1Desc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/manrope_medium"
+                    android:lineSpacingMultiplier="1.1"
+                    android:text="@string/step_1_connect_gmail_desc"
+                    android:textColor="@color/ink3"
+                    android:textSize="11.5sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tvStep1Title"
+                    app:layout_constraintTop_toBottomOf="@id/tvStep1Title" />
+
+                <!-- Step 2 -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cvStep2"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="18dp"
+                    app:cardBackgroundColor="@color/lime_12"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvStep1Desc"
+                    app:strokeWidth="0dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/manrope_bold"
+                        android:text="2"
+                        android:textColor="@color/lime"
+                        android:textSize="11sp" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvStep2Title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:fontFamily="@font/manrope_bold"
+                    android:text="@string/step_2_specify_keywords"
+                    android:textColor="@color/white"
+                    android:textSize="13.5sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/cvStep2"
+                    app:layout_constraintTop_toTopOf="@id/cvStep2" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvStep2Desc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/manrope_medium"
+                    android:lineSpacingMultiplier="1.1"
+                    android:text="@string/step_2_specify_keywords_desc"
+                    android:textColor="@color/ink3"
+                    android:textSize="11.5sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tvStep2Title"
+                    app:layout_constraintTop_toBottomOf="@id/tvStep2Title" />
+
+                <!-- Step 3 -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cvStep3"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="18dp"
+                    app:cardBackgroundColor="@color/lime_12"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvStep2Desc"
+                    app:strokeWidth="0dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/manrope_bold"
+                        android:text="3"
+                        android:textColor="@color/lime"
+                        android:textSize="11sp" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvStep3Title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:fontFamily="@font/manrope_bold"
+                    android:text="@string/step_3_select_reports"
+                    android:textColor="@color/white"
+                    android:textSize="13.5sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/cvStep3"
+                    app:layout_constraintTop_toTopOf="@id/cvStep3" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvStep3Desc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/manrope_medium"
+                    android:lineSpacingMultiplier="1.1"
+                    android:text="@string/step_3_select_reports_desc"
+                    android:textColor="@color/ink3"
+                    android:textSize="11.5sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tvStep3Title"
+                    app:layout_constraintTop_toBottomOf="@id/tvStep3Title" />
+
+                <!-- Step 4 -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cvStep4"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="18dp"
+                    app:cardBackgroundColor="@color/lime_12"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvStep3Desc"
+                    app:strokeWidth="0dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/manrope_bold"
+                        android:text="4"
+                        android:textColor="@color/lime"
+                        android:textSize="11sp" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvStep4Title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:fontFamily="@font/manrope_bold"
+                    android:text="@string/step_4_confirm_import"
+                    android:textColor="@color/white"
+                    android:textSize="13.5sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/cvStep4"
+                    app:layout_constraintTop_toTopOf="@id/cvStep4" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvStep4Desc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/manrope_medium"
+                    android:lineSpacingMultiplier="1.1"
+                    android:text="@string/step_4_confirm_import_desc"
+                    android:textColor="@color/ink3"
+                    android:textSize="11.5sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tvStep4Title"
+                    app:layout_constraintTop_toBottomOf="@id/tvStep4Title" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Space
+                android:id="@+id/bottomSpacerView"
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnContinue"
+        app:srcCompat="@drawable/bg_black_gradient" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnContinue"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginBottom="@dimen/_20dp"
+        android:fontFamily="@font/manrope_bold"
+        android:text="@string/_continue"
+        android:textAllCaps="false"
+        android:textColor="@color/insights_btn_text_dark"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:backgroundTint="@color/lime"
+        app:cornerRadius="32dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
