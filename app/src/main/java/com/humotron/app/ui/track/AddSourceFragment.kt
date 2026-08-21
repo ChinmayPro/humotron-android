@@ -2,6 +2,7 @@ package com.humotron.app.ui.track
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.fragment.findNavController
@@ -48,6 +49,9 @@ class AddSourceFragment : BaseFragment(R.layout.fragment_add_source) {
         }
         binding.mcvPairHumotronDevice.setOnClickListener {
             findNavController().navigate(R.id.fragmentPairHumotronDevice)
+        }
+        binding.mcvBookDeepScan.setOnClickListener {
+            findNavController().navigate("humotron://shop/test_detail".toUri())
         }
         binding.mcvConnectWearable.setOnClickListener {
             findNavController().navigate(R.id.fragmentConnectWearable)

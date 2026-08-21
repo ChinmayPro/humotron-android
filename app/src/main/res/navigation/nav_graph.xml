@@ -30,6 +30,38 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentTrack_to_fragmentYetToTrackDetails"
+            app:destination="@id/fragmentYetToTrackDetails"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentTrack_to_fragmentGroupedMetricsDetails"
+            app:destination="@id/fragmentGroupedMetricsDetails"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentGroupedMetricsDetails"
+        android:name="com.humotron.app.ui.track.GroupedMetricsDetailsFragment"
+        tools:layout="@layout/fragment_grouped_metrics_details">
+        <argument
+            android:name="groupedMetric"
+            app:argType="com.humotron.app.domain.modal.response.GroupedMetricData" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentYetToTrackDetails"
+        android:name="com.humotron.app.ui.track.YetToTrackDetailsFragment"
+        tools:layout="@layout/fragment_yet_to_track_details">
+        <argument
+            android:name="metric"
+            app:argType="com.humotron.app.domain.modal.response.UntrackedMetricData" />
     </fragment>
 
     <fragment

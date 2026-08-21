@@ -23,9 +23,13 @@ import com.humotron.app.domain.modal.response.HardwareListData
 import com.humotron.app.domain.modal.response.MedicalPdfResponse
 import com.humotron.app.domain.modal.response.MergedAssessmentResponse
 import com.humotron.app.domain.modal.response.MetricResponse
+import com.humotron.app.domain.modal.response.MetricTrackingResponse
 import com.humotron.app.domain.modal.response.PastScanResponse
 import com.humotron.app.domain.modal.response.RingReadingData
 import com.humotron.app.domain.modal.response.DeviceMetricReadingResponse
+import com.humotron.app.domain.modal.response.HealthMetricTrackingResponse
+import com.humotron.app.domain.modal.response.UntrackedMetricResponse
+import com.humotron.app.domain.modal.response.YetToTrackMetricDetailsResponse
 import com.humotron.app.domain.repository.SleepRepository
 import com.humotron.app.util.DefaultDayReadingTimeSlotNavigator
 import com.humotron.app.util.DefaultHourReadingTimeSlotNavigator
@@ -220,6 +224,42 @@ class DeviceViewModel @Inject constructor(
 
         sleepRepository.getMergedAssessmentList().onEach { state ->
             _mergedAssessmentListLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
+
+    private val _healthMetricTrackingLiveData: MutableLiveData<Resource<HealthMetricTrackingResponse>> =
+        MutableLiveData()
+
+    val healthMetricTrackingLiveData: LiveData<Resource<HealthMetricTrackingResponse>> =
+        _healthMetricTrackingLiveData
+
+    fun getHealthMetricTrackingByUserId() {
+        sleepRepository.getHealthMetricTrackingByUserId().onEach { state ->
+            _healthMetricTrackingLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
+
+    private val _untrackedMetricLiveData: MutableLiveData<Resource<UntrackedMetricResponse>> =
+        MutableLiveData()
+
+    val untrackedMetricLiveData: LiveData<Resource<UntrackedMetricResponse>> =
+        _untrackedMetricLiveData
+
+    fun getUntrackedMetricByUserId() {
+        sleepRepository.getUntrackedMetricByUserId().onEach { state ->
+            _untrackedMetricLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
+
+    private val _metricTrackingDetailsLiveData: MutableLiveData<Resource<YetToTrackMetricDetailsResponse>> =
+        MutableLiveData()
+
+    val metricTrackingDetailsLiveData: LiveData<Resource<YetToTrackMetricDetailsResponse>> =
+        _metricTrackingDetailsLiveData
+
+    fun getMetricTrackingDetails(id: String) {
+        sleepRepository.getMetricTrackingDetails(id).onEach { state ->
+            _metricTrackingDetailsLiveData.value = state
         }.launchIn(viewModelScope)
     }
 

@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@drawable/ic_bg_main_2"
+    tools:context=".ui.track.GroupedMetricsDetailsFragment">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header_3" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            android:paddingBottom="20dp">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvCategoryName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/manrope_extra_bold"
+                android:text="@string/activity_metrics"
+                android:textColor="@color/white"
+                android:textSize="26sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivLock"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    app:srcCompat="@drawable/ic_lock_card"
+                    app:tint="@color/ink2" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/manrope_medium"
+                    android:text="@string/not_yet_tracking"
+                    android:textColor="@color/ink2"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvStartTrackingLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/manrope_medium"
+                android:text="@string/start_tracking_with"
+                android:textColor="@color/ink2"
+                android:textSize="12sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAppleWatch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:backgroundTint="@color/lime_8"
+                android:fontFamily="@font/manrope_bold"
+                android:paddingHorizontal="16dp"
+                android:text="@string/apple_watch_with_arrow"
+                android:textAllCaps="false"
+                android:textColor="@color/lime"
+                app:cornerRadius="12dp"
+                app:icon="@drawable/ic_arrow_right_alt_24px"
+                app:iconGravity="textEnd"
+                app:iconSize="@dimen/_20dp"
+                app:rippleColor="@color/lime_20"
+                app:strokeColor="@color/lime_14"
+                app:strokeWidth="1dp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvMetrics"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="26dp"
+                app:cardBackgroundColor="@color/card_55"
+                app:cardCornerRadius="22dp"
+                app:strokeWidth="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="24dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvInCategoryTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/manrope_extra_bold"
+                        android:text="@string/in_this_category"
+                        android:textColor="@color/white"
+                        android:textSize="28sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvMetricUnitLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/manrope_medium"
+                        android:text="@string/metric_unit"
+                        android:textColor="@color/ink2"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvInCategoryTitle" />
+
+                    <!-- Metric 1 -->
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvDistanceWalking"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvMetricUnitLabel"
+                        tools:text="@string/distance_walking" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvDistanceWalkingDesc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/manrope_regular"
+                        android:textColor="@color/ink2"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvDistanceWalking"
+                        tools:text="@string/distance_walking_desc" />
+
+                    <!-- Metric 2 -->
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvFlightsClimbed"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvDistanceWalkingDesc"
+                        tools:text="@string/flights_climbed" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvFlightsClimbedDesc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/manrope_regular"
+                        android:textColor="@color/ink2"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvFlightsClimbed"
+                        tools:text="@string/flights_climbed_desc" />
+
+                    <!-- Metric 3 -->
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvStepCount"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:text="@string/step_count"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvFlightsClimbedDesc"
+                        tools:textColor="@color/white" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvStepCountDesc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/manrope_regular"
+                        android:text="@string/step_count_desc"
+                        android:textColor="@color/ink2"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvStepCount" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvWhatIsTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="48dp"
+                android:fontFamily="@font/manrope_extra_bold"
+                android:gravity="center"
+                android:text="@string/what_is_activity_metrics"
+                android:textColor="@color/ink2"
+                android:textSize="26sp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvIntro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                app:cardBackgroundColor="@color/deep_dives_bg"
+                app:cardCornerRadius="20dp"
+                app:strokeWidth="0dp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvIntroText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_regular"
+                    android:padding="20dp"
+                    android:textColor="@color/ink2"
+                    android:textSize="14sp"
+                    tools:text="@string/movement_drives_daily_health" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvWhyTrackTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="48dp"
+                android:fontFamily="@font/manrope_extra_bold"
+                android:gravity="center"
+                android:text="@string/why_should_you_track"
+                android:textColor="@color/ink2"
+                android:textSize="26sp"
+                tools:text="Why should you track\nActivity Metrics?" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvWhyTrack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                app:cardBackgroundColor="@color/card_55"
+                app:cardCornerRadius="20dp"
+                app:strokeWidth="0dp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvWhyTrackDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_regular"
+                    android:padding="20dp"
+                    android:textColor="@color/ink2"
+                    android:textSize="14sp"
+                    tools:text="Low activity can affect energy balance, recovery, and long-term health outcomes." />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvHowToTrackTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:fontFamily="@font/manrope_extra_bold"
+                android:text="@string/how_to_track_effectively"
+                android:textColor="@color/ink2"
+                android:textSize="26sp"
+                tools:text="How to Track\nHRV Effectively" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvBestPracticeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/manrope_bold"
+                android:text="@string/best_practice"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvBestPracticeDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/manrope_regular"
+                android:text="@string/step_count_desc"
+                android:textColor="@color/ink2"
+                android:textSize="14sp"
+                tools:text="Wear device consistently throughout the day for full activity capture." />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvWhyContinuousMattersTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/manrope_bold"
+                android:text="@string/why_continuous_tracking_matters"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvWhyContinuousMattersDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/manrope_regular"
+                android:text="@string/why_continuous_tracking_desc"
+                android:textColor="@color/ink2"
+                android:textSize="14sp"
+                tools:text="Low activity can affect energy balance, recovery, and long-term health outcomes." />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvThingsAffectTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/manrope_bold"
+                android:text="@string/things_that_affect_readings"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                tools:text="Things that affect Activity Metrics readings" />
+
+            <LinearLayout
+                android:id="@+id/llThingsAffect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical" />
+
+            <Space
+                android:id="@+id/bottomSpacerView"
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

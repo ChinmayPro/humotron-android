@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mcvTrackCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_14dp"
+    android:checkable="true"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardBackgroundColor="@color/card"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/hair"
+    app:strokeWidth="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clCardContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="15dp">
+
+        <!-- ============ trk-top : value + unit ============ -->
+
+        <View
+            android:id="@+id/mtvValue"
+            android:layout_width="80dp"
+            android:layout_height="24dp"
+            android:background="@color/white10"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/mtvValueUnit"
+            android:layout_width="45dp"
+            android:layout_height="12dp"
+            android:layout_marginStart="4dp"
+            android:background="@color/white10"
+            app:layout_constraintBottom_toBottomOf="@id/mtvValue"
+            app:layout_constraintStart_toEndOf="@id/mtvValue"
+            android:layout_marginBottom="2dp" />
+
+        <!-- ============ trk-top : open-metric chevron ============ -->
+
+        <View
+            android:id="@+id/ivOpenMetric"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:background="@color/white10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- ============ trk-nm ============ -->
+
+        <View
+            android:id="@+id/mtvMetricName"
+            android:layout_width="140dp"
+            android:layout_height="16dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/white10"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mtvValue" />
+
+        <!-- ============ trk-ts : dot + timestamp ============ -->
+
+        <View
+            android:id="@+id/mcvTimestampDot"
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white10"
+            app:layout_constraintBottom_toBottomOf="@id/mtvTimestamp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mtvMetricName" />
+
+        <View
+            android:id="@+id/mtvTimestamp"
+            android:layout_width="200dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/white10"
+            app:layout_constraintStart_toEndOf="@id/mcvTimestampDot"
+            app:layout_constraintTop_toBottomOf="@id/mtvMetricName" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

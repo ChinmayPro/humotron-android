@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mcvTrackCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_14dp"
+    android:checkable="true"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardBackgroundColor="@color/card"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/hair"
+    app:strokeWidth="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clCardContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="15dp">
+
+        <!-- ============ trk-top : value + unit ============ -->
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtvValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/manrope_extra_bold"
+            android:includeFontPadding="false"
+            android:letterSpacing="-0.02"
+            android:textColor="@color/good"
+            android:textSize="25sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SpUsage"
+            tools:text="122/70" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtvValueUnit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:fontFamily="@font/manrope_bold"
+            android:textColor="@color/ink3"
+            android:textSize="13sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/mtvValue"
+            app:layout_constraintStart_toEndOf="@id/mtvValue"
+            tools:text="mmHg" />
+
+        <!-- ============ trk-top : open-metric chevron ============ -->
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivOpenMetric"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_chevron_right_24px"
+            app:tint="@color/ink4" />
+
+        <!-- ============ trk-nm ============ -->
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtvMetricName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:fontFamily="@font/manrope_bold"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toStartOf="@id/ivOpenMetric"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mtvValue"
+            tools:text="Blood Pressure" />
+
+        <!-- ============ trk-ts : dot + timestamp ============ -->
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcvTimestampDot"
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:layout_marginTop="6dp"
+            app:cardBackgroundColor="@color/ink4"
+            app:cardCornerRadius="2.5dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/mtvTimestamp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mtvMetricName"
+            app:strokeWidth="0dp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtvTimestamp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:fontFamily="@font/manrope_bold"
+            android:textColor="@color/ink4"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toStartOf="@id/ivOpenMetric"
+            app:layout_constraintStart_toEndOf="@id/mcvTimestampDot"
+            app:layout_constraintTop_toBottomOf="@id/mtvMetricName"
+            tools:text="20 May – 17 Jun 26 · Humotron Band" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrierTopRow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="mtvTimestamp,mcvTimestampDot,ivOpenMetric" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cvTrackingExpand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/barrierTopRow"
+            tools:visibility="visible">
+
+            <!-- ============ trk-exp : top hairline divider ============ -->
+
+            <View
+                android:id="@+id/vDividerTop"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="14dp"
+                android:background="@color/hair"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- ============ status-badge ============ -->
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mcvStatusBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                app:cardBackgroundColor="@color/good_18"
+                app:cardCornerRadius="9dp"
+                app:cardElevation="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/vDividerTop"
+                app:strokeWidth="0dp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/mtvStatusBadge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_extra_bold"
+                    android:letterSpacing="0.04"
+                    android:paddingHorizontal="11dp"
+                    android:paddingVertical="5dp"
+                    android:text="Normal"
+                    android:textAllCaps="true"
+                    android:textColor="@color/good"
+                    android:textSize="11sp" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ============ trk-guide ============ -->
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/mtvGuide"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/manrope_regular"
+                android:lineSpacingMultiplier="1.1"
+                android:textColor="@color/stage_text"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/mcvStatusBadge"
+                tools:text="our blood pressure is sitting in a healthy range. Keep your current movement and salt habits." />
+
+            <!-- ============ trk-recs : recommendation 1 (good) ============ -->
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mcvRecIcon1"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_marginTop="12dp"
+                app:cardBackgroundColor="@color/good_15"
+                app:cardCornerRadius="7dp"
+                app:cardElevation="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/mtvGuide"
+                app:strokeWidth="0dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivRecIcon1"
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_bolt_outline"
+                    app:tint="@color/good" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/mtvRecText1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="9dp"
+                android:fontFamily="@font/manrope_medium"
+                android:lineSpacingMultiplier="1.1"
+                android:textColor="@color/ink2"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/mcvRecIcon1"
+                app:layout_constraintTop_toTopOf="@id/mcvRecIcon1"
+                tools:text="Keep up regular movement to support circulation." />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrierRec1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="mcvRecIcon1,mtvRecText1" />
+
+            <!-- ============ trk-recs : recommendation 2 (watch) ============ -->
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mcvRecIcon2"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_marginTop="9dp"
+                app:cardBackgroundColor="@color/plan_pill_amber_bg"
+                app:cardCornerRadius="7dp"
+                app:cardElevation="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/barrierRec1"
+                app:strokeWidth="0dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivRecIcon2"
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_alert_dip"
+                    app:tint="@color/watch" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/mtvRecText2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="9dp"
+                android:fontFamily="@font/manrope_medium"
+                android:lineSpacingMultiplier="1.1"
+                android:textColor="@color/ink2"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/mcvRecIcon2"
+                app:layout_constraintTop_toTopOf="@id/mcvRecIcon2"
+                tools:text="Hold steady on sodium to keep readings stable." />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrierRec2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="mcvRecIcon2,mtvRecText2" />
+
+            <!-- ============ trk-cta : action buttons ============ -->
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSupplements"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="4.5dp"
+                android:fontFamily="@font/manrope_bold"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:paddingVertical="11dp"
+                android:singleLine="true"
+                android:text="@string/trk_btn_supplements"
+                android:textAllCaps="false"
+                android:textColor="@color/scope_text"
+                android:textSize="11sp"
+                app:backgroundTint="@color/white05"
+                app:cornerRadius="13dp"
+                app:icon="@drawable/ic_chevron_right_24px"
+                app:iconGravity="textEnd"
+                app:iconSize="13dp"
+                app:iconTint="@color/scope_text"
+                app:layout_constraintEnd_toStartOf="@id/btnRecipes"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/barrierRec2"
+                app:strokeColor="@color/hair"
+                app:strokeWidth="1dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnRecipes"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4.5dp"
+                android:layout_marginTop="14dp"
+                android:fontFamily="@font/manrope_bold"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:paddingVertical="11dp"
+                android:text="@string/trk_btn_recipes"
+                android:textAllCaps="false"
+                android:textColor="@color/scope_text"
+                android:textSize="11sp"
+                app:backgroundTint="@color/white05"
+                app:cornerRadius="13dp"
+                app:icon="@drawable/ic_chevron_right_24px"
+                app:iconGravity="textEnd"
+                app:iconSize="13dp"
+                app:iconTint="@color/scope_text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btnSupplements"
+                app:layout_constraintTop_toBottomOf="@id/barrierRec2"
+                app:strokeColor="@color/hair"
+                app:strokeWidth="1dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

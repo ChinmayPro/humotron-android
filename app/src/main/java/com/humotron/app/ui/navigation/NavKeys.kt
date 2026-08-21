@@ -20,4 +20,5 @@ object NavKeys {
     const val SCALE_BONE_MASS = "scaleBoneMass"
 
     const val ASSESSMENT = "assessment"
+    const val GROUPED_METRIC = "groupedMetric"
 }

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mcvBuyDevice"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    app:cardBackgroundColor="@color/ink5_65"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/hair_7"
+    app:strokeWidth="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clBuyDevice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="18dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcvDeviceIcon"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            app:cardBackgroundColor="@color/surface"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeWidth="0dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivDeviceIcon"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_gravity="center"
+                tools:srcCompat="@drawable/ic_band_vectr"
+                tools:tint="@color/lime" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvDeviceName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:fontFamily="@font/manrope_extra_bold"
+            android:textColor="@color/ink"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/mcvDeviceIcon"
+            app:layout_constraintTop_toTopOf="@id/mcvDeviceIcon"
+            tools:text="@string/band_name" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvDevicePrice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/manrope_semibold"
+            android:textColor="@color/ink3"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/mcvDeviceIcon"
+            app:layout_constraintTop_toBottomOf="@id/tvDeviceName"
+            tools:text="@string/band_price" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvDeviceDesc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:fontFamily="@font/manrope_regular"
+            android:lineSpacingMultiplier="1.1"
+            android:textColor="@color/ink2"
+            android:textSize="12.5sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mcvDeviceIcon"
+            tools:text="@string/band_desc" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDeviceBuy"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/manrope_extra_bold"
+            android:includeFontPadding="false"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:paddingTop="13dp"
+            android:paddingBottom="13dp"
+            android:text="@string/action_explore_buy_1"
+            android:textAllCaps="false"
+            android:textColor="@color/deepInk"
+            android:textSize="13sp"
+            app:backgroundTint="@color/lime"
+            app:cornerRadius="16dp"
+            app:elevation="0dp"
+            app:icon="@drawable/ic_chevron_right_24px"
+            app:iconGravity="textEnd"
+            app:iconPadding="7dp"
+            app:iconTint="@color/deepInk"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvDeviceDesc" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

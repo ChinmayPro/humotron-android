@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="14dp"
+    app:cardBackgroundColor="#8C080F10"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/card_stroke"
+    app:strokeWidth="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/clSleepIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:cardBackgroundColor="@color/cool_14"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeWidth="0dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivYetToTrack"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_metrics_moon"
+                app:tint="@color/cool" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivSleepLock"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_lock_card"
+            app:tint="@color/ink4" />
+
+        <TextView
+            android:id="@+id/tvSleepTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:fontFamily="@font/manrope_extra_bold"
+            android:includeFontPadding="false"
+            android:text="@string/metrics_total_sleep_duration"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toStartOf="@id/ivSleepLock"
+            app:layout_constraintStart_toEndOf="@id/clSleepIcon"
+            app:layout_constraintTop_toTopOf="@id/clSleepIcon" />
+
+        <TextView
+            android:id="@+id/tvSleepDesc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/manrope_medium"
+            android:lineSpacingExtra="2dp"
+            android:text="@string/metrics_total_sleep_desc"
+            android:textColor="@color/ink3"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/clSleepIcon"
+            app:layout_constraintTop_toBottomOf="@id/tvSleepTitle" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSleepTrack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="@color/lime_10"
+            android:fontFamily="@font/manrope_bold"
+            android:insetLeft="0dp"
+            android:insetRight="0dp"
+            android:minHeight="0dp"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="7dp"
+            android:text="@string/metrics_track_with_ring"
+            android:textAllCaps="false"
+            android:textColor="@color/lime"
+            android:textSize="11sp"
+            app:icon="@drawable/ic_add_24px"
+            app:iconGravity="textStart"
+            app:iconPadding="4dp"
+            app:iconSize="14dp"
+            app:iconTint="@color/lime"
+            app:layout_constraintStart_toEndOf="@id/clSleepIcon"
+            app:layout_constraintTop_toBottomOf="@id/tvSleepDesc"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

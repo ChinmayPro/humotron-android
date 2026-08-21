@@ -172,6 +172,7 @@
         android:name="com.humotron.app.ui.shop.ShopTestDetailFragment"
         android:label="Test Details"
         tools:layout="@layout/fragment_shop_test_detail">
+        <deepLink app:uri="humotron://shop/test_detail" />
         <action
             android:id="@+id/action_fragmentShopTestDetail_to_fragmentBookingType"
             app:destination="@id/fragmentBookingType"

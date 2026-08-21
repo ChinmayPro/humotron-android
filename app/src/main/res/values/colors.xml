@@ -136,10 +136,12 @@
     <color name="card_stroke">#12FFFFFF</color>
     <color name="bottom_nav_bg">#DB040809</color>
 
+    <color name="ink">#FFFFFFFF</color>
     <color name="ink_white">#FFFFFF</color>
     <color name="ink2">#9DACA9</color>
     <color name="ink3">#859390</color>
     <color name="ink4">#6F7E7D</color>
+    <color name="deepInk">#FF0D1618</color>
     <color name="eyebrow">#73827F</color>
 
     <color name="lime">#C4F23E</color>
@@ -161,18 +163,22 @@
     <color name="series_14">#24F0795E</color>
     <color name="series_40">#66F0795E</color>
     <color name="cool">#5FB7C4</color>
+    <color name="cool_10">#1A5FB7C4</color>
     <color name="cool_13">#215FB7C4</color>
     <color name="cool_14">#245FB7C4</color>
+    <color name="cool_16">#295FB7C4</color>
     <color name="cool_26">#425FB7C4</color>
     <color name="cool_40">#665FB7C4</color>
     <color name="cool_60">#995FB7C4</color>
     <color name="cool_80">#CC5FB7C4</color>
     <color name="good">#7BD88F</color>
     <color name="good_14">#247BD88F</color>
+    <color name="good_18">#2E7BD88F</color>
     <color name="good_15">#267BD88F</color>
     <color name="good_40">#667BD88F</color>
 
     <color name="hair">#12FFFFFF</color>
+    <color name="hair_7">#12FFFFFF</color>
     <color name="teal_12">#1F5FB7C4</color>
     <color name="card">#8C080F10</color>
     <color name="card_40">#66080F10</color>
@@ -243,7 +249,8 @@
     <color name="deep_dives_card_bg_solid">#0C1618</color> <!-- Solid version for fallback -->
     <color name="deep_dives_day_chip_bg">#0AFFFFFF</color> <!-- rgba(255,255,255,.04) -->
     <color name="deep_dives_day_chip_selected_bg">#1FC4F23E</color> <!-- rgba(196,242,62,.12) -->
-    <color name="deep_dives_day_chip_selected_stroke">#61C4F23E</color> <!-- rgba(196,242,62,.38) -->
+    <color name="deep_dives_day_chip_selected_stroke">#61C4F23E
+    </color> <!-- rgba(196,242,62,.38) -->
     <color name="deep_dives_zone_track_bg">#0FFFFFFF</color> <!-- rgba(255,255,255,.06) -->
     <color name="heatmap_empty_cell">#1B2321</color>
     <color name="tab_unselected_text_color">#90A0A0</color>
@@ -258,7 +265,7 @@
     <!-- Console redesign: danger/delete red -->
     <color name="console_danger_red">#F0795E</color>
     <color name="console_bg">#0B1315</color>
-    
+
     <!-- Shop Redesign Colors -->
     <color name="shop_card_bg">#8C080F10</color>
     <color name="shop_icon_bg">#0c1416</color>
@@ -285,4 +292,8 @@
     <color name="reading_bg">#99040809</color>
     <color name="reading_chevron">#FF7E8E8C</color>
     <color name="light_97">#F7F5F5F5</color>
+    <color name="surface">#FF0C1416</color>
+    <color name="sectionTitle">#FFCDD6D5</color>
+    <color name="ink5_65">#A6040809</color>
+    <color name="card_55">#8C080F10</color>
 </resources>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mcvTrackCardGrouped"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_14dp"
+    android:checkable="true"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardBackgroundColor="@color/card"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/hair"
+    app:strokeWidth="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clCardContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="15dp">
+
+        <!-- ============ trk-nm ============ -->
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtvCategoryName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/manrope_bold"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toStartOf="@id/ivOpenMetric"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Blood Pressure" />
+
+        <!-- ============ trk-ts : dot + timestamp ============ -->
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcvTimestampDot"
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:layout_marginTop="2dp"
+            app:cardBackgroundColor="@color/ink4"
+            app:cardCornerRadius="2.5dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/mtvDeviceName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mtvCategoryName"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle"
+            app:strokeWidth="0dp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtvDeviceName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:fontFamily="@font/manrope_bold"
+            android:textColor="@color/ink4"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toStartOf="@id/ivOpenMetric"
+            app:layout_constraintStart_toEndOf="@id/mcvTimestampDot"
+            app:layout_constraintTop_toBottomOf="@id/mtvCategoryName"
+            tools:text="UrineStrip" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivOpenMetric"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_chevron_right_24px"
+            app:tint="@color/ink4" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

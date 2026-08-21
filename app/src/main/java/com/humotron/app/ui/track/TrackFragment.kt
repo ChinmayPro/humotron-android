@@ -12,12 +12,17 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.AutoTransition
+import androidx.transition.TransitionManager
 import com.humotron.app.R
 import com.humotron.app.core.Preference
 import com.humotron.app.core.base.BaseFragment
 import com.humotron.app.data.network.Status
 import com.humotron.app.databinding.FragmentTrackBinding
+import androidx.core.net.toUri
+import androidx.core.os.bundleOf
 import com.humotron.app.domain.modal.DeviceType
+import com.humotron.app.domain.modal.response.AllMetricsResponse
 import com.humotron.app.domain.modal.response.GetAllDeviceResponse.Data.UserDevice
 import com.humotron.app.domain.modal.response.MedicalPdf
 import com.humotron.app.domain.modal.response.MedicalPdfData
@@ -51,6 +56,14 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
     private var healthReportAdapter: HealthReportAdapter? = null
     private var healthReportTrackAdapter: HealthReportTrackAdapter? = null
     private var assessmentAdapter: AssessmentAdapter? = null
+    private var trackingAdapter: TrackingAdapter? = null
+    private var trackingGroupedAdapter: TrackingGroupedAdapter? = null
+    private var yetToTrackAdapter: YetToTrackAdapter? = null
+    private var yetToTrackGroupedAdapter: YetToTrackGroupedAdapter? = null
+
+    private var selectedMainTabId = R.id.btnSources
+    private var selectedSourcesSubTabId = R.id.tvLiveStreaming
+    private var selectedMetricsSubTabId = R.id.llTabTracking
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -61,15 +74,33 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
         initObservers()
     }
 
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        syncSmartSuggestions()
+    }
+
     private fun initViews() {
         val calendar = java.util.Calendar.getInstance()
         val dateFormat = java.text.SimpleDateFormat("EEEE, MMMM dd", java.util.Locale.getDefault())
         binding.tvTrackDate.text = dateFormat.format(calendar.time)
         binding.tvGreeting.text = "Hello, ${prefUtils.getLoginResponse().firstName ?: "User"}"
-        showSourcesTab()
 
-        binding.rvDevices.layoutManager =
-            androidx.recyclerview.widget.LinearLayoutManager(requireContext())
+        // Sync UI with persisted state
+        when (selectedMainTabId) {
+            R.id.btnMetrics -> showMetricsTab()
+            else -> showSourcesTab()
+        }
+
+        when (selectedSourcesSubTabId) {
+            R.id.tvTestCheckIns -> showTestCheckInsTab()
+            else -> showLiveStreamingTab()
+        }
+
+        when (selectedMetricsSubTabId) {
+            R.id.llTabYetToTrack -> showYetToTrackTab()
+            else -> showTrackingTab()
+        }
+
         deviceAdapter = DeviceAdapter(emptyList()) { userDevice ->
             findNavController().navigate(R.id.fragmentDeviceData, Bundle().apply {
                 putParcelable(NavKeys.WEARABLE, userDevice)
@@ -77,51 +108,91 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
         }
         binding.rvDevices.adapter = deviceAdapter
 
-        binding.rvWearableDevices.layoutManager =
-            androidx.recyclerview.widget.LinearLayoutManager(requireContext())
+
         wearableProviderAdapter = WearableProviderAdapter(emptyList()) { provider ->
             // handle click if needed
         }
         binding.rvWearableDevices.adapter = wearableProviderAdapter
 
-        binding.rvAssessments.layoutManager =
-            androidx.recyclerview.widget.LinearLayoutManager(requireContext())
-        assessmentAdapter = AssessmentAdapter(requireContext(), emptyList<MergedAssessment>()) { assessment ->
-            handleAssessmentClick(assessment)
-        }
+        assessmentAdapter =
+            AssessmentAdapter(requireContext(), emptyList<MergedAssessment>()) { assessment ->
+                handleAssessmentClick(assessment)
+            }
         binding.rvAssessments.adapter = assessmentAdapter
 
-        binding.rvReportsTrack.layoutManager =
-            androidx.recyclerview.widget.LinearLayoutManager(
-                requireContext(),
-                androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL,
-                false
+
+        trackingAdapter = TrackingAdapter(emptyList()) { metric ->
+
+            val deviceId = metric.deviceId?.firstOrNull()
+            val deviceName = metric.deviceName
+            val deviceType = DeviceType.from(deviceName).value
+            val dateTime = metric.metricValue?.timestamp ?: ""
+
+            val mappedMetric = AllMetricsResponse.Data.Metric(
+                id = metric.id,
+                metricName = metric.metricName,
+                metricUnit = metric.metricUnit,
+                metricUserFacingName = metric.metricUserFacingName,
+                deviceId = metric.deviceId,
+                status = metric.status,
+                metricWhat = metric.metricWhat,
+                metricWhy = metric.metricWhy,
+                observationLens = metric.observationLens,
+                metricOrder = metric.metricOrder,
+                allMetrics = metric.allMetrics?.let {
+                    AllMetricsResponse.Data.Metric.DisplayConfig(it.enabled, it.displayType)
+                },
+                categoryId = metric.categoryId,
+                metricType = metric.metricType,
+                metricReading = metric.metricReading,
+                metricValue = metric.metricValue?.let {
+                    AllMetricsResponse.Data.Metric.MetricValue(
+                        it.fieldLabel,
+                        it.value,
+                        it.timestamp
+                    )
+                },
+                insightCount = metric.insightCount,
+                supplementCount = metric.supplementCount,
+                recipeCount = metric.recipeCount
             )
 
-        val startSpacing = resources.getDimensionPixelSize(R.dimen._20dp)
-        val itemSpacing = resources.getDimensionPixelSize(R.dimen._10dp)
+            findNavController().navigate(
+                R.id.fragmentMetric,
+                bundleOf(
+                    NavKeys.KEY_DEVICE_ID to deviceId,
+                    NavKeys.KEY_DATE_TIME to dateTime,
+                    NavKeys.KEY_METRIC to mappedMetric,
+                    NavKeys.KEY_DEVICE_NAME to deviceName,
+                    NavKeys.KEY_DEVICE_TYPE to deviceType
+                )
+            )
+        }
+        binding.rvTracking.adapter = trackingAdapter
 
-        binding.rvReportsTrack.addItemDecoration(object : RecyclerView.ItemDecoration() {
-            override fun getItemOffsets(
-                outRect: Rect,
-                view: View,
-                parent: RecyclerView,
-                state: RecyclerView.State,
-            ) {
-                val position = parent.getChildAdapterPosition(view)
-                val itemCount = state.itemCount
 
-                if (position == 0) {
-                    outRect.left = startSpacing
-                } else {
-                    //outRect.left = itemSpacing
-                }
+        trackingGroupedAdapter = TrackingGroupedAdapter(emptyList()) { groupedMetric ->
+            findNavController().navigate(R.id.fragmentGroupedMetricsDetails, Bundle().apply {
+                putParcelable(NavKeys.GROUPED_METRIC, groupedMetric)
+            })
+        }
+        binding.rvTrackingGrouped.adapter = trackingGroupedAdapter
 
-                if (position == itemCount - 1) {
-                    //outRect.right = startSpacing
-                }
-            }
-        })
+
+        yetToTrackAdapter = YetToTrackAdapter(emptyList()) { metric ->
+            findNavController().navigate(R.id.fragmentYetToTrackDetails, Bundle().apply {
+                putParcelable(NavKeys.KEY_METRIC, metric)
+            })
+        }
+        binding.rvYetToTrack.adapter = yetToTrackAdapter
+
+
+        yetToTrackGroupedAdapter = YetToTrackGroupedAdapter(emptyList()) { groupedMetric ->
+            findNavController().navigate(R.id.fragmentGroupedMetricsDetails, Bundle().apply {
+                putParcelable(NavKeys.GROUPED_METRIC, groupedMetric)
+            })
+        }
+        binding.rvYetToTrackGrouped.adapter = yetToTrackGroupedAdapter
 
         if (prefUtils.getHardwareDetailsList().isEmpty()) {
             // binding.dsvWearables.isVisible = false
@@ -135,32 +206,44 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
 
         viewModel.getMergedAssessmentList()
         viewModel.getMedicalPdfList()
+        viewModel.getHealthMetricTrackingByUserId()
+        viewModel.getUntrackedMetricByUserId()
     }
 
     override fun onResume() {
         super.onResume()
-        binding.swipeRefreshLayout.isRefreshing = false
+        binding.swipeRefreshMetrics.isRefreshing = false
         viewModel.refreshUserDeviceData(true)
         viewModel.refreshWearableDeviceData(true)
         // viewModel.getMergedAssessmentList(true)
         viewModel.getMedicalPdfList(true)
+        viewModel.getHealthMetricTrackingByUserId()
+        viewModel.getUntrackedMetricByUserId()
     }
 
     private fun initClicks() {
-        binding.btnSources.setOnClickListener(this)
-        binding.btnMetrics.setOnClickListener(this)
+        binding.toggleGroupMainTabs.addOnButtonCheckedListener { _, checkedId, isChecked ->
+            if (isChecked) {
+                when (checkedId) {
+                    R.id.btnSources -> showSourcesTab()
+                    R.id.btnMetrics -> showMetricsTab()
+                }
+            }
+        }
         binding.tvLiveStreaming.setOnClickListener(this)
         binding.tvTestCheckIns.setOnClickListener(this)
         binding.llTabTracking.setOnClickListener(this)
         binding.llTabYetToTrack.setOnClickListener(this)
         binding.layoutAddSourceRow.setOnClickListener(this)
         binding.tvUpload.setOnClickListener(this)
-        binding.swipeRefreshLayout.setOnRefreshListener {
-            binding.swipeRefreshLayout.isRefreshing = false
+        binding.swipeRefreshMetrics.setOnRefreshListener {
+            binding.swipeRefreshMetrics.isRefreshing = false
             viewModel.refreshUserDeviceData(true)
             //viewModel.refreshWearableDeviceData(true)
             // viewModel.getMergedAssessmentList(true)
             viewModel.getMedicalPdfList(true)
+            viewModel.getHealthMetricTrackingByUserId()
+            viewModel.getUntrackedMetricByUserId()
         }
         binding.swipeRefreshSources.setOnRefreshListener {
             binding.swipeRefreshSources.isRefreshing = false
@@ -168,23 +251,43 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
             viewModel.refreshWearableDeviceData(true)
             // viewModel.getMergedAssessmentList(true)
             viewModel.getMedicalPdfList(true)
+            viewModel.getHealthMetricTrackingByUserId()
+            viewModel.getUntrackedMetricByUserId()
         }
         binding.llUploadSyncReport.setOnClickListener {
             findNavController().navigate(R.id.action_fragmentTrack_to_fragmentUploadReportIntro)
         }
+        binding.switchSmartSuggestionsYetToTrack.setOnClickListener {
+            binding.llGuidancePlan.isVisible = binding.switchSmartSuggestionsYetToTrack.isChecked
+        }
+        binding.switchSmartSuggestionsTracking.setOnClickListener {
+            trackingAdapter?.setSmartSuggestionsEnabled(binding.switchSmartSuggestionsTracking.isChecked)
+        }
+        binding.tvBookPill.setOnClickListener {
+            findNavController().navigate("humotron://shop/test_detail".toUri())
+        }
     }
 
     private fun showSourcesTab() {
+        selectedMainTabId = R.id.btnSources
         binding.clTabSources.isVisible = true
         binding.clTabMetrics.isVisible = false
+        if (binding.toggleGroupMainTabs.checkedButtonId != R.id.btnSources) {
+            binding.toggleGroupMainTabs.check(R.id.btnSources)
+        }
     }
 
     private fun showMetricsTab() {
+        selectedMainTabId = R.id.btnMetrics
         binding.clTabSources.isVisible = false
         binding.clTabMetrics.isVisible = true
+        if (binding.toggleGroupMainTabs.checkedButtonId != R.id.btnMetrics) {
+            binding.toggleGroupMainTabs.check(R.id.btnMetrics)
+        }
     }
 
     private fun showLiveStreamingTab() {
+        selectedSourcesSubTabId = R.id.tvLiveStreaming
         binding.llLiveStreamingContent.isVisible = true
         binding.llTestCheckInsContent.isVisible = false
 
@@ -199,6 +302,7 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
     }
 
     private fun showTestCheckInsTab() {
+        selectedSourcesSubTabId = R.id.tvTestCheckIns
         binding.llTestCheckInsContent.isVisible = true
         binding.llLiveStreamingContent.isVisible = false
 
@@ -213,19 +317,20 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
     }
 
     private fun showTrackingTab() {
+        selectedMetricsSubTabId = R.id.llTabTracking
         binding.llTrackContent.isVisible = true
         binding.llYetToTrackContent.isVisible = false
         binding.llTabTracking.setBackgroundResource(R.drawable.bg_metrics_chip_selected)
         binding.llTabYetToTrack.setBackgroundResource(R.drawable.bg_metrics_chip_unselected)
         binding.viewTracking.setBackgroundResource(R.drawable.bg_track_progress_fill_lime)
         binding.viewYetToTrack.setBackgroundResource(R.drawable.bg_track_progress_track)
-        binding.tvYetToTrack.setBackgroundResource(0)
 
         binding.tvTracking.setTextColor(ContextCompat.getColor(requireContext(), R.color.lime))
         binding.tvYetToTrack.setTextColor(ContextCompat.getColor(requireContext(), R.color.ink4))
     }
 
     private fun showYetToTrackTab() {
+        selectedMetricsSubTabId = R.id.llTabYetToTrack
         binding.llYetToTrackContent.isVisible = true
         binding.llTrackContent.isVisible = false
         binding.llTabTracking.setBackgroundResource(R.drawable.bg_metrics_chip_unselected)
@@ -233,8 +338,6 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
 
         binding.viewYetToTrack.setBackgroundResource(R.drawable.bg_track_progress_fill_lime)
         binding.viewTracking.setBackgroundResource(R.drawable.bg_track_progress_track)
-
-        binding.tvYetToTrack.setBackgroundResource(R.drawable.bg_track_progress_track)
 
         binding.tvTracking.setTextColor(
             ContextCompat.getColor(requireContext(), R.color.ink4)
@@ -457,6 +560,76 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
             }
         }
 
+        viewModel.healthMetricTrackingLiveData.observe(viewLifecycleOwner) {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    binding.shimmerTracking.isVisible = false
+                    val data = it.data?.data ?: return@observe
+
+                    val individualMetrics = data.individualMetrics
+                    if (!individualMetrics.isNullOrEmpty()) {
+                        binding.rvTracking.isVisible = true
+                        trackingAdapter?.updateData(individualMetrics)
+                    } else {
+                        binding.rvTracking.isVisible = false
+                    }
+
+                    val groupedMetrics = data.groupedMetrics
+                    if (!groupedMetrics.isNullOrEmpty()) {
+                        binding.rvTrackingGrouped.isVisible = true
+                        trackingGroupedAdapter?.updateData(groupedMetrics)
+                    } else {
+                        binding.rvTrackingGrouped.isVisible = false
+                    }
+                }
+
+                Status.ERROR, Status.EXCEPTION -> {
+                    binding.shimmerTracking.isVisible = false
+                }
+
+                Status.LOADING -> {
+                    binding.shimmerTracking.isVisible = true
+                    binding.rvTracking.isVisible = false
+                    binding.rvTrackingGrouped.isVisible = false
+                }
+            }
+        }
+
+        viewModel.untrackedMetricLiveData.observe(viewLifecycleOwner) {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    binding.shimmerYetToTrack.isVisible = false
+                    val data = it.data?.data ?: return@observe
+
+                    val individualMetrics = data.individualMetrics
+                    if (!individualMetrics.isNullOrEmpty()) {
+                        binding.rvYetToTrack.isVisible = true
+                        yetToTrackAdapter?.updateData(individualMetrics)
+                    } else {
+                        binding.rvYetToTrack.isVisible = false
+                    }
+
+                    val groupedMetrics = data.groupedMetrics
+                    if (!groupedMetrics.isNullOrEmpty()) {
+                        binding.rvYetToTrackGrouped.isVisible = true
+                        yetToTrackGroupedAdapter?.updateData(groupedMetrics)
+                    } else {
+                        binding.rvYetToTrackGrouped.isVisible = false
+                    }
+                }
+
+                Status.ERROR, Status.EXCEPTION -> {
+                    binding.shimmerYetToTrack.isVisible = false
+                }
+
+                Status.LOADING -> {
+                    binding.shimmerYetToTrack.isVisible = true
+                    binding.rvYetToTrack.isVisible = false
+                    binding.rvYetToTrackGrouped.isVisible = false
+                }
+            }
+        }
+
         viewModel.removePdfLiveData.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
@@ -500,7 +673,10 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
     private fun setupHealthReportTrackRecyclerView(reports: List<MedicalPdf>) {
         if (healthReportTrackAdapter == null) {
             healthReportTrackAdapter =
-                HealthReportTrackAdapter(requireContext(), reports) { report, position, currentList ->
+                HealthReportTrackAdapter(
+                    requireContext(),
+                    reports
+                ) { report, position, currentList ->
                     val extractMetricsResponse =
                         MedicalPdfResponse(
                             status = "success",
@@ -590,8 +766,6 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
         when (v) {
             binding.llTabTracking -> showTrackingTab()
             binding.llTabYetToTrack -> showYetToTrackTab()
-            binding.btnSources -> showSourcesTab()
-            binding.btnMetrics -> showMetricsTab()
             binding.tvLiveStreaming -> showLiveStreamingTab()
             binding.tvTestCheckIns -> showTestCheckInsTab()
             binding.layoutAddSourceRow -> {
@@ -640,6 +814,11 @@ class TrackFragment : BaseFragment(R.layout.fragment_track), OnClickListener {
                 startActivity(Intent(requireContext(), BloodTestActivity::class.java))
             }
         }
+    }
+
+    private fun syncSmartSuggestions() {
+        trackingAdapter?.setSmartSuggestionsEnabled(binding.switchSmartSuggestionsTracking.isChecked)
+        binding.llGuidancePlan.isVisible = binding.switchSmartSuggestionsYetToTrack.isChecked
     }
 
     fun getTimeAgo(timeInMillis: Long): String {

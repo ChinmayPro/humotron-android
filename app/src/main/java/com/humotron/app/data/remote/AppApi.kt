@@ -59,6 +59,7 @@ import com.humotron.app.domain.modal.response.FullAddressResponse
 import com.humotron.app.domain.modal.response.GenerateMetricResponse
 import com.humotron.app.domain.modal.response.GetAllAddressResponse
 import com.humotron.app.domain.modal.response.GetAllDeviceResponse
+import com.humotron.app.domain.modal.response.HealthMetricTrackingResponse
 import com.humotron.app.domain.modal.response.GetAllLabResponse
 import com.humotron.app.domain.modal.response.GetAllLikesResponse
 import com.humotron.app.domain.modal.response.GetCartResponse
@@ -102,11 +103,13 @@ import com.humotron.app.domain.modal.response.SupportHomeResponse
 import com.humotron.app.domain.modal.response.SupportTopicDetailResponse
 import com.humotron.app.domain.modal.response.SyncWearableDataResponse
 import com.humotron.app.domain.modal.response.TopicsByCategoryResponse
+import com.humotron.app.domain.modal.response.UntrackedMetricResponse
 import com.humotron.app.domain.modal.response.UpdateAddressResponse
 import com.humotron.app.domain.modal.response.UseCaseResponse
 import com.humotron.app.domain.modal.response.VerifyOtpResponse
 import com.humotron.app.domain.modal.response.WearableProviderResponse
 import com.humotron.app.domain.modal.response.WristBandSleepDurationResponse
+import com.humotron.app.domain.modal.response.YetToTrackMetricDetailsResponse
 import com.humotron.app.domain.modal.response.YetToTrackMetricResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -114,6 +117,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.Multipart
 import retrofit2.http.PATCH
 import retrofit2.http.POST
@@ -168,7 +172,7 @@ interface AppApi {
 
     @POST("user/getHealthProfileConfigAndPreferences")
     suspend fun saveHealthProfileConfigAndPreferences(
-        @Body param: com.humotron.app.domain.modal.param.HealthProfileConfigRequest
+        @Body param: com.humotron.app.domain.modal.param.HealthProfileConfigRequest,
     ): Response<com.humotron.app.domain.modal.response.HealthProfileConfigResponse>
 
     @GET("user/getInsightConfigAndPreferences")
@@ -176,7 +180,7 @@ interface AppApi {
 
     @POST("user/getInsightConfigAndPreferences")
     suspend fun saveInsightConfigAndPreferences(
-        @Body param: com.humotron.app.domain.modal.param.InsightConfigRequest
+        @Body param: com.humotron.app.domain.modal.param.InsightConfigRequest,
     ): Response<com.humotron.app.domain.modal.response.InsightConfigResponse>
 
     @GET("user/getChatConfigAndPreferences")
@@ -184,7 +188,7 @@ interface AppApi {
 
     @POST("user/getChatConfigAndPreferences")
     suspend fun saveChatConfigAndPreferences(
-        @Body param: com.humotron.app.domain.modal.param.ChatConfigRequest
+        @Body param: com.humotron.app.domain.modal.param.ChatConfigRequest,
     ): Response<com.humotron.app.domain.modal.response.ChatConfigResponse>
 
     @GET("user/getRecipeConfigWithPreferences")
@@ -192,7 +196,7 @@ interface AppApi {
 
     @POST("user/getRecipeConfigWithPreferences")
     suspend fun saveRecipeConfigAndPreferences(
-        @Body param: com.humotron.app.domain.modal.param.RecipeConfigRequest
+        @Body param: com.humotron.app.domain.modal.param.RecipeConfigRequest,
     ): Response<com.humotron.app.domain.modal.response.RecipeConfigResponse>
 
     @GET("promoCode/removePromoCodeByUser/{userId}")
@@ -331,7 +335,7 @@ interface AppApi {
 
     @POST("syncWearables/confirmWearableConnection")
     suspend fun confirmWearableConnection(
-        @Body param: ConfirmWearableConnectionParam
+        @Body param: ConfirmWearableConnectionParam,
     ): Response<ConfirmWearableConnectionResponse>
 
     @POST("syncWearables/syncWearableData")
@@ -439,8 +443,25 @@ interface AppApi {
     @POST("metric/getHealthMetricTrackingByUserId")
     suspend fun getHealthMetricTrackingByUserId(): Response<MetricTrackingResponse>
 
+    //@Headers("Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdE5hbWUiOiJDaGlubWF5IiwibGFzdE5hbWUiOiJCaGF0dCIsImVtYWlsIjoiY2hpbm1heS5iaGF0dEBnbWFpbC5jb20iLCJ1c2VySWQiOiI2NWMxNzBjODc3Yjk1Yzc4Y2QzZmEyYmMiLCJtb2RlIjoiTk9STUFMIiwidXNlclR5cGUiOiJVU0VSIiwiaWF0IjoxNzg3MTEzOTQxLCJleHAiOjE3OTQ4ODk5NDF9.xOnIfkmx0fC1-9hL9z5RDTk0h08odiGcfU2UAGs64Mk")
+    @POST("metric/getHealthMetricTrackingByUserId")
+    suspend fun getHealthTrackingByUserId(): Response<HealthMetricTrackingResponse>
+
     @POST("metric/getYetToTrackMetricByUserId")
     suspend fun getYetToTrackMetricByUserId(): Response<YetToTrackMetricResponse>
+
+    @POST("metric/getYetToTrackMetricByUserId")
+    suspend fun getUntrackedMetricByUserId(): Response<UntrackedMetricResponse>
+
+    @GET("metric/getMetricCategoryDetailsById/{categoryId}")
+    suspend fun getMetricCategoryDetailsById(
+        @Path("categoryId") categoryId: String
+    ): Response<com.humotron.app.domain.modal.response.GroupedMetricsDetailsResponse>
+
+    @POST("metric/getMetricTrackingDetails/{id}")
+    suspend fun getMetricTrackingDetails(
+        @Path("id") id: String
+    ): Response<YetToTrackMetricDetailsResponse>
 
     @POST("conversation/getConversationsByUserId")
     suspend fun getConversationsByUserId(
@@ -485,7 +506,7 @@ interface AppApi {
     @POST("metric/getOptimizedRecommendationDetail/{id}")
     suspend fun getOptimizedRecommendationDetail(
         @Path("id") id: String,
-        @Body body: Map<String, String>
+        @Body body: Map<String, String>,
     ): Response<GetOptimizedRecommendationDetailResponse>
 
     @POST("product/getAllTestBookingsType")
@@ -593,30 +614,30 @@ interface AppApi {
     suspend fun getAllLikes(
         @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0)),
     ): Response<GetAllLikesResponse>
-    
+
     @POST("order/placeOrder")
     suspend fun placeOrder(
-        @Body request: HashMap<String, Any>
+        @Body request: HashMap<String, Any>,
     ): Response<com.humotron.app.domain.modal.response.PlaceOrderResponse>
-    
+
     @POST("stripe/createPaymentIntent")
     suspend fun createPaymentIntent(
-        @Body request: HashMap<String, Any>
+        @Body request: HashMap<String, Any>,
     ): Response<com.humotron.app.domain.modal.response.CreatePaymentIntentResponse>
 
     @POST("booster/getAllBooster")
     suspend fun getAllBooster(
-        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0))
+        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0)),
     ): Response<com.humotron.app.domain.modal.response.BoosterResponse>
 
     @POST("plan/getAllPlan")
     suspend fun getAllPlan(
-        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0))
+        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0)),
     ): Response<com.humotron.app.domain.modal.response.PlanResponse>
 
     @GET("booster/getBoosterById/{boosterId}")
     suspend fun getBoosterById(
-        @Path("boosterId") boosterId: String
+        @Path("boosterId") boosterId: String,
     ): Response<com.humotron.app.domain.modal.response.BoosterDetailResponse>
 
     @GET("metricInsight/getInsightMetricsOverview")
@@ -624,24 +645,24 @@ interface AppApi {
 
     @GET("metricInsight/getInsightTimeline/{metricId}")
     suspend fun getInsightTimeline(
-        @Path("metricId") metricId: String
+        @Path("metricId") metricId: String,
     ): Response<InsightTimelineResponse>
 
     @GET("metricInsight/getInsightSummaryByMetricId/{metricId}")
     suspend fun getInsightSummaryByMetricId(
-        @Path("metricId") metricId: String
+        @Path("metricId") metricId: String,
     ): Response<InsightSummaryResponse>
 
     @GET("metricInsight/getInsightById/{insightId}")
     suspend fun getInsightById(
-        @Path("insightId") insightId: String
+        @Path("insightId") insightId: String,
     ): Response<InsightDetailResponse>
 
     @POST("digitalProductOrder/createDigitalProductOrder")
     suspend fun createDigitalProductOrder(
-        @Body request: HashMap<String, Any>
+        @Body request: HashMap<String, Any>,
     ): Response<com.humotron.app.domain.modal.response.CommonResponse>
-    
+
     @Multipart
     @POST("supportTicket/saveTicket")
     suspend fun saveTicket(
@@ -657,7 +678,7 @@ interface AppApi {
         @Part("device_type") deviceType: RequestBody?,
         @Part("region") region: RequestBody?,
         @Part("ticket_id") ticketId: RequestBody?,
-        @Part attachments: List<MultipartBody.Part>
+        @Part attachments: List<MultipartBody.Part>,
     ): Response<com.humotron.app.domain.modal.response.SaveTicketResponse>
 
     @GET("supportTopic/getSupportHome")
@@ -670,32 +691,32 @@ interface AppApi {
     suspend fun searchTopics(
         @Query("page") page: Int,
         @Query("q") query: String,
-        @Query("limit") limit: Int
+        @Query("limit") limit: Int,
     ): Response<SearchTopicsResponse>
 
     @GET("supportTopic/topicDetail/{topicId}")
     suspend fun getTopicDetail(
-        @Path("topicId") topicId: String
+        @Path("topicId") topicId: String,
     ): Response<SupportTopicDetailResponse>
 
     @GET("supportTopic/topicsByCategory/{categoryKey}")
     suspend fun getTopicsByCategory(
-        @Path("categoryKey") categoryKey: String
+        @Path("categoryKey") categoryKey: String,
     ): Response<TopicsByCategoryResponse>
 
     @GET("supportCategory/getSupportCategoryByKey/{categoryKey}")
     suspend fun getSupportCategoryByKey(
-        @Path("categoryKey") categoryKey: String
+        @Path("categoryKey") categoryKey: String,
     ): Response<TopicsByCategoryResponse>
 
     @POST("supportTopic/getAllTopics")
     suspend fun getAllTopics(
-        @Body request: HashMap<String, Any>
+        @Body request: HashMap<String, Any>,
     ): Response<com.humotron.app.domain.modal.response.AllTopicsResponse>
 
     @GET("supportTicket/ticketDetail/{ticketId}")
     suspend fun getTicketDetail(
-        @Path("ticketId") ticketId: String
+        @Path("ticketId") ticketId: String,
     ): Response<com.humotron.app.domain.modal.response.TicketDetailResponse>
 
     @Multipart
@@ -703,7 +724,7 @@ interface AppApi {
     suspend fun replyTicket(
         @Path("ticketId") ticketId: String,
         @Part("message") message: okhttp3.RequestBody,
-        @Part attachments: List<okhttp3.MultipartBody.Part>
+        @Part attachments: List<okhttp3.MultipartBody.Part>,
     ): Response<com.humotron.app.domain.modal.response.CommonResponse>
 
     @GET("weatherResilienceReport/impact-overview")
@@ -711,7 +732,7 @@ interface AppApi {
 
     @POST("device/getWorkDayStress")
     suspend fun getWorkDayStress(
-        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0))
+        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0)),
     ): Response<com.humotron.app.domain.modal.response.WorkDayStressResponse>
 
     @GET("weatherResilienceReport/overview")
@@ -728,7 +749,7 @@ interface AppApi {
 
     @GET("workdayStressReport/report/{id}")
     suspend fun getWorkdayStressReportById(
-        @Path("id") reportId: String
+        @Path("id") reportId: String,
     ): Response<com.humotron.app.domain.modal.response.WorkdayStressReportDetailResponse>
 
     @GET("data-sources")
@@ -736,34 +757,34 @@ interface AppApi {
 
     @GET("data-sources/{sourceKey}")
     suspend fun getDataSourceDetail(
-        @Path("sourceKey") sourceKey: String
+        @Path("sourceKey") sourceKey: String,
     ): Response<com.humotron.app.domain.modal.response.DataSourceDetailResponse>
 
     @PATCH("data-sources/{sourceKey}/usage")
     suspend fun updateDataSourceUsage(
         @Path("sourceKey") sourceKey: String,
-        @Body param: com.humotron.app.domain.modal.param.UpdateDataSourceUsageParam
+        @Body param: com.humotron.app.domain.modal.param.UpdateDataSourceUsageParam,
     ): Response<com.humotron.app.domain.modal.response.CommonResponse>
 
     @PATCH("data-sources/{sourceKey}/pause")
     suspend fun pauseDataSource(
         @Path("sourceKey") sourceKey: String,
-        @Body param: com.humotron.app.domain.modal.param.PauseDataSourceParam
+        @Body param: com.humotron.app.domain.modal.param.PauseDataSourceParam,
     ): Response<com.humotron.app.domain.modal.response.CommonResponse>
 
     @PATCH("data-sources/{sourceKey}/topics")
     suspend fun updateDataSourceTopics(
         @Path("sourceKey") sourceKey: String,
-        @Body body: Map<String, Boolean>
+        @Body body: Map<String, Boolean>,
     ): Response<com.humotron.app.domain.modal.response.CommonResponse>
 
     @DELETE("data-sources/{sourceKey}/data")
     suspend fun deleteDataSourceData(
-        @Path("sourceKey") sourceKey: String
+        @Path("sourceKey") sourceKey: String,
     ): Response<com.humotron.app.domain.modal.response.CommonResponse>
 
     @POST("workdayStressReport/generate")
     suspend fun generateWorkdayStressReport(
-        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0))
+        @Body emptyBody: okhttp3.RequestBody = okhttp3.RequestBody.create(null, ByteArray(0)),
     ): Response<com.humotron.app.domain.modal.response.WorkdayStressReportDetailResponse>
 }

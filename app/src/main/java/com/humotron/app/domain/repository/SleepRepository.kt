@@ -66,8 +66,10 @@ import com.humotron.app.domain.modal.response.ConfirmWearableConnectionResponse
 import com.humotron.app.domain.modal.response.ConnectWearableResponse
 import com.humotron.app.domain.modal.response.SyncWearableDataResponse
 import com.humotron.app.domain.modal.response.WearableProviderResponse
+import com.humotron.app.domain.modal.response.YetToTrackMetricDetailsResponse
 import com.humotron.app.domain.modal.response.DailyCalculatedMetricsResponse
 import com.humotron.app.domain.modal.response.GetAllDeviceResponse
+import com.humotron.app.domain.modal.response.HealthMetricTrackingResponse
 import com.humotron.app.domain.modal.response.GoogleHealthBackfillResponse
 import com.humotron.app.domain.modal.response.HardwareListData
 import com.humotron.app.domain.modal.response.HealthScanResponse
@@ -78,6 +80,7 @@ import com.humotron.app.domain.modal.response.PastScanResponse
 import com.humotron.app.domain.modal.response.ProviderResponse
 import com.humotron.app.domain.modal.response.RingReadingData
 import com.humotron.app.domain.modal.response.DeviceMetricReadingResponse
+import com.humotron.app.domain.modal.response.UntrackedMetricResponse
 import com.humotron.app.domain.modal.response.WristBandSleepDurationResponse
 import com.humotron.app.util.PrefUtils
 import com.humotron.app.util.TAG
@@ -901,6 +904,48 @@ class SleepRepository(
         try {
             val response =
                 responseHandler.handleResponse(api.getMergedAssessmentList(), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun getHealthMetricTrackingByUserId(): Flow<Resource<HealthMetricTrackingResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response =
+                responseHandler.handleResponse(api.getHealthTrackingByUserId(), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun getUntrackedMetricByUserId(): Flow<Resource<UntrackedMetricResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response =
+                responseHandler.handleResponse(api.getUntrackedMetricByUserId(), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun getMetricTrackingDetails(id: String): Flow<Resource<YetToTrackMetricDetailsResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response =
+                responseHandler.handleResponse(api.getMetricTrackingDetails(id), false)
             emit(response)
         } catch (e: Exception) {
             emit(responseHandler.handleException(e))

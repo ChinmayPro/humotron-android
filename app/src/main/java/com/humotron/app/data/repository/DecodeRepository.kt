@@ -136,6 +136,21 @@ constructor(
         emit(responseHandler.handleException(ValidationException(it.message)))
     }
 
+    fun getMetricCategoryDetailsById(categoryId: String): Flow<Resource<com.humotron.app.domain.modal.response.GroupedMetricsDetailsResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response =
+                responseHandler.handleResponse(api.getMetricCategoryDetailsById(categoryId))
+
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
     fun getConversationsByUserId(param: GetConversationsParam): Flow<Resource<GetConversationsResponse>> = flow {
         emit(Resource.loading<GetConversationsResponse>())
         try {

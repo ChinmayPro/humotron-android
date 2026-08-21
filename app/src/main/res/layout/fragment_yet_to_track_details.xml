@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@drawable/ic_bg_main_2"
+    tools:context=".ui.track.YetToTrackDetailsFragment">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header_3" />
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/_20dp">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/shimmer_bg_border" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/shimmer_bg_border" />
+
+            <View
+                android:layout_width="150dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/shimmer_bg_border" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/shimmer_bg_border" />
+
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/_20dp"
+            android:paddingBottom="@dimen/_20dp">
+
+            <!-- ===== HERO METRIC CARD ===== -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mcvHero"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardCornerRadius="22dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/hair_7"
+                app:strokeWidth="1dp">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_hero_gradient" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clHero"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="22dp">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/mcvTileIcon"
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            app:cardBackgroundColor="@color/cool_16"
+                            app:cardCornerRadius="18dp"
+                            app:cardElevation="0dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:strokeWidth="0dp">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivTileIcon"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_gravity="center"
+                                app:srcCompat="@drawable/ic_moon_tile"
+                                app:tint="@color/cool" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvUnitValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="14dp"
+                            android:fontFamily="@font/manrope_extra_bold"
+                            android:letterSpacing="-0.02"
+                            android:text="hours"
+                            android:textColor="@color/ink"
+                            android:textSize="30sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/mcvTileIcon" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvUnitLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="@font/manrope_bold"
+                            android:letterSpacing="0.1"
+                            android:text="@string/label_unit_caption"
+                            android:textAllCaps="true"
+                            android:textColor="@color/ink4"
+                            android:textSize="10.5sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tvUnitValue" />
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/mcvPill"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="14dp"
+                            app:cardBackgroundColor="@color/white_6"
+                            app:cardCornerRadius="14dp"
+                            app:cardElevation="0dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tvUnitLabel"
+                            app:strokeWidth="0dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:paddingStart="12dp"
+                                android:paddingTop="6dp"
+                                android:paddingEnd="12dp"
+                                android:paddingBottom="6dp">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/ivPillIcon"
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
+                                    android:layout_marginEnd="6dp"
+                                    android:contentDescription="@string/cd_not_tracking_icon"
+                                    app:srcCompat="@drawable/ic_lock"
+                                    app:tint="@color/ink2" />
+
+                                <com.google.android.material.textview.MaterialTextView
+                                    android:id="@+id/tvPillLabel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/manrope_bold"
+                                    android:text="@string/label_not_tracking"
+                                    android:textColor="@color/ink2"
+                                    android:textSize="11.5sp" />
+
+                            </LinearLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </FrameLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ===== CTA ===== -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/manrope_bold"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:letterSpacing="-0.01"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:text="@string/cta_start_tracking"
+                android:textAllCaps="false"
+                android:textColor="@color/deepInk"
+                android:textSize="15sp"
+                app:backgroundTint="@color/lime"
+                app:cornerRadius="26dp"
+                app:elevation="0dp"
+                app:icon="@drawable/ic_ring"
+                app:iconGravity="textStart"
+                app:iconPadding="9dp"
+                app:iconTint="@color/deepInk" />
+
+            <!-- ===== WHAT IS SECTION ===== -->
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvSectionWhatIs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/manrope_extra_bold"
+                android:gravity="center"
+                android:letterSpacing="-0.01"
+                android:paddingStart="22dp"
+                android:paddingEnd="22dp"
+                android:text="@string/section_what_is"
+                android:textColor="@color/sectionTitle"
+                android:textSize="22sp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mcvInfoWhatIs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                app:cardBackgroundColor="@color/card_55"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/hair_7"
+                app:strokeWidth="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clInfoWhatIs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvInfoWhatIsBody"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/manrope_regular"
+                        android:lineSpacingMultiplier="1.1"
+                        android:text="@string/body_what_is"
+                        android:textColor="@color/ink3"
+                        android:textSize="13sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ===== WHY TRACK SECTION ===== -->
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvSectionWhyTrack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="26dp"
+                android:fontFamily="@font/manrope_extra_bold"
+                android:gravity="center"
+                android:letterSpacing="-0.01"
+                android:paddingStart="22dp"
+                android:paddingEnd="22dp"
+                android:text="@string/section_why_track"
+                android:textColor="@color/sectionTitle"
+                android:textSize="22sp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mcvInfoWhyTrack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                app:cardBackgroundColor="@color/card_55"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/hair_7"
+                app:strokeWidth="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clInfoWhyTrack"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvInfoWhyTrackBody"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/manrope_regular"
+                        android:lineSpacingMultiplier="1.1"
+                        android:text="@string/body_why_track"
+                        android:textColor="@color/ink3"
+                        android:textSize="13sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ===== START TRACKING TODAY SECTION ===== -->
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvSectionStartToday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="26dp"
+                android:fontFamily="@font/manrope_extra_bold"
+                android:gravity="center"
+                android:letterSpacing="-0.01"
+                android:paddingBottom="4dp"
+                android:text="@string/section_start_today"
+                android:textColor="@color/sectionTitle"
+                android:textSize="22sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvBuyDevices"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="2"
+                tools:listitem="@layout/item_buy_device" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
