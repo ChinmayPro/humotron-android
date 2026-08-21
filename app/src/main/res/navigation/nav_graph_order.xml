@@ -79,4 +79,10 @@
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
+    <fragment
+        android:id="@+id/fragmentContactSupport"
+        android:name="com.humotron.app.ui.support.ContactSupportFragment"
+        android:label="Contact Support"
+        tools:layout="@layout/fragment_contact_support" />
+
 </navigation>

@@ -69,14 +69,17 @@ class TrackOrderFragment : BaseFragment(R.layout.fragment_track_order) {
     }
 
     private fun showCancelOrderDialog() {
-        DeleteConfirmationBottomSheet.newInstance(
-            title = getString(R.string.alert_title),
-            message = getString(R.string.cancel_order_confirmation)
-        ) {
-            orderInternalId?.let { id ->
-                viewModel.cancelOrder(id)
+        com.humotron.app.ui.dialogs.CancelConfirmationBottomSheet.newInstance(
+            title = getString(R.string.cancel_order_title),
+            subtitle = getString(R.string.cancel_order_confirmation_why),
+            keepButtonText = getString(R.string.keep_order),
+            cancelButtonText = getString(R.string.cancel_order_title),
+            onCancel = { _ ->
+                orderInternalId?.let { id ->
+                    viewModel.cancelOrder(id)
+                }
             }
-        }.show(childFragmentManager, DeleteConfirmationBottomSheet.TAG)
+        ).show(childFragmentManager, com.humotron.app.ui.dialogs.CancelConfirmationBottomSheet.TAG)
     }
 
     private fun initObservers() {
@@ -119,14 +122,21 @@ class TrackOrderFragment : BaseFragment(R.layout.fragment_track_order) {
                 }
                 Status.SUCCESS -> {
                     hideProgress()
-                    val msg = resource.data?.message ?: "Order cancelled successfully"
-                    ToastUtils.showShort(requireContext(), msg)
-                    findNavController().getBackStackEntry(R.id.fragmentOrder).savedStateHandle.set("refresh_orders", true)
-                    findNavController().popBackStack(R.id.fragmentOrder, false)
+                    val response = resource.data
+                    if (response?.status == "fail" || response?.status == "error") {
+                        val errorMsg = if (!response.message.isNullOrEmpty()) response.message else getString(R.string.something_went_wrong)
+                        com.humotron.app.util.DialogUtils.showInfoAlertDialog(requireContext(), message = errorMsg)
+                    } else {
+                        val msg = response?.message ?: "Order cancelled successfully"
+                        ToastUtils.showShort(requireContext(), msg)
+                        findNavController().getBackStackEntry(R.id.fragmentOrder).savedStateHandle.set("refresh_orders", true)
+                        findNavController().popBackStack(R.id.fragmentOrder, false)
+                    }
                 }
                 Status.ERROR, Status.EXCEPTION -> {
                     hideProgress()
-                    ToastUtils.showShort(requireContext(), resource.error?.errorMessage ?: getString(R.string.error_occurred))
+                    val errorMsg = resource.error?.errorMessage ?: getString(R.string.error_occurred)
+                    com.humotron.app.util.DialogUtils.showInfoAlertDialog(requireContext(), message = errorMsg)
                 }
             }
         }

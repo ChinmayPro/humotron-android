@@ -35,6 +35,24 @@ class SubAppointmentsFragment : BaseFragment(R.layout.fragment_sub_appointments)
 
     private fun initRecyclerView() {
         binding.rvAppointments.adapter = appointmentAdapter
+        appointmentAdapter.onCancelClick = { appointment ->
+            val cancelId = appointment.bookingId ?: appointment.id ?: appointment.orderId
+            if (!cancelId.isNullOrEmpty()) {
+                showCancelAppointmentDialog(cancelId)
+            }
+        }
+    }
+
+    private fun showCancelAppointmentDialog(bookingId: String) {
+        com.humotron.app.ui.dialogs.CancelConfirmationBottomSheet.newInstance(
+            title = getString(R.string.cancel_appointment),
+            subtitle = getString(R.string.cancel_appointment_confirmation),
+            keepButtonText = getString(R.string.keep_appointment),
+            cancelButtonText = getString(R.string.cancel_appointment),
+            onCancel = { reason ->
+                viewModel.cancelBloodTestBooking(bookingId, reason)
+            }
+        ).show(childFragmentManager, com.humotron.app.ui.dialogs.CancelConfirmationBottomSheet.TAG)
     }
 
     private fun setupObservers() {
@@ -79,6 +97,31 @@ class SubAppointmentsFragment : BaseFragment(R.layout.fragment_sub_appointments)
                     binding.tvMainLabel.visibility = View.VISIBLE
                     binding.tvSubLabel.visibility = View.VISIBLE
                     binding.rvAppointments.visibility = View.GONE
+                }
+            }
+        }
+
+        viewModel.getCancelOrderLiveData().observe(viewLifecycleOwner) { resource ->
+            when (resource.status) {
+                Status.LOADING -> {
+                    showProgress()
+                }
+                Status.SUCCESS -> {
+                    hideProgress()
+                    val response = resource.data
+                    if (response?.status == "fail" || response?.status == "error") {
+                        val errorMsg = if (!response.message.isNullOrEmpty()) response.message else getString(R.string.something_went_wrong)
+                        com.humotron.app.util.DialogUtils.showInfoAlertDialog(requireContext(), message = errorMsg)
+                    } else {
+                        val msg = response?.message ?: getString(R.string.appointment_cancelled_successfully)
+                        Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+                        fetchData()
+                    }
+                }
+                Status.ERROR, Status.EXCEPTION -> {
+                    hideProgress()
+                    val errorMsg = getErrorMessage(resource.error)
+                    com.humotron.app.util.DialogUtils.showInfoAlertDialog(requireContext(), message = errorMsg)
                 }
             }
         }

@@ -665,7 +665,15 @@ To get started:\n
     <string name="track_order">Track Order</string>
     <string name="contact_support">Contact Support</string>
     <string name="cancel_order">Cancel Order</string>
+    <string name="cancel_order_title">Cancel order</string>
     <string name="cancel_order_confirmation">Are you sure you want to cancel this order?</string>
+    <string name="cancel_order_confirmation_why">Are you sure you want to cancel this order?\nPlease tell us why.</string>
+    <string name="cancel_appointment">Cancel appointment</string>
+    <string name="cancel_appointment_confirmation">Are you sure you want to cancel this appointment?\nPlease tell us why.</string>
+    <string name="cancel_reason_hint">e.g. Changed my mind</string>
+    <string name="keep_appointment">Keep appointment</string>
+    <string name="keep_order">Keep order</string>
+    <string name="appointment_cancelled_successfully">Appointment cancelled successfully</string>
     <string name="order_timeline">Order Timeline</string>
     <string name="timestamp_event">Timestamp Event</string>
     <string name="free">Free</string>
