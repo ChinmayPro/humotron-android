@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:background="@drawable/ic_bg_main_2"
     tools:context=".ui.bloodTest.BloodTestEmailSearchFragment">
 
     <androidx.appcompat.widget.Toolbar
@@ -88,8 +89,8 @@
                     android:id="@+id/btnAddKeyword"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:scaleType="center"
                     android:background="?attr/selectableItemBackgroundBorderless"
+                    android:scaleType="center"
                     android:src="@drawable/ic_add"
                     app:tint="@color/white" />
 
@@ -106,8 +107,8 @@
                     android:id="@+id/cgKeywords"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:singleLine="true"
-                    app:chipSpacingHorizontal="8dp" />
+                    app:chipSpacingHorizontal="8dp"
+                    app:singleLine="true" />
             </HorizontalScrollView>
 
             <!-- Attachments Section -->
@@ -215,8 +216,8 @@
                     android:id="@+id/btnAddLabel"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:scaleType="center"
                     android:background="?attr/selectableItemBackgroundBorderless"
+                    android:scaleType="center"
                     android:src="@drawable/ic_add"
                     app:tint="@color/white" />
 
@@ -233,11 +234,12 @@
                     android:id="@+id/cgLabels"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:singleLine="true"
-                    app:chipSpacingHorizontal="8dp" />
+                    app:chipSpacingHorizontal="8dp"
+                    app:singleLine="true" />
             </HorizontalScrollView>
 
         </LinearLayout>
+
     </androidx.core.widget.NestedScrollView>
 
     <LinearLayout

@@ -5,7 +5,6 @@ import com.humotron.app.data.network.ResponseHandler
 import com.humotron.app.data.remote.AppApi
 import com.humotron.app.domain.modal.param.RemovePdfParam
 import com.humotron.app.domain.modal.response.CommonResponse
-import com.humotron.app.domain.modal.response.ExtractMetricsResponse
 import com.humotron.app.domain.modal.response.GenerateMetricResponse
 import com.humotron.app.domain.modal.response.MedicalPdfResponse
 import kotlinx.coroutines.flow.Flow
@@ -13,7 +12,6 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
@@ -30,7 +28,7 @@ class MedicalRepository @Inject constructor(
         isCreateNugget: Boolean,
         uploadType: String,
         file: File
-    ): Flow<Resource<ExtractMetricsResponse>> = flow {
+    ): Flow<Resource<MedicalPdfResponse>> = flow {
         emit(Resource.loading())
         
         val uploadTypeBody = uploadType.toRequestBody("text/plain".toMediaTypeOrNull())

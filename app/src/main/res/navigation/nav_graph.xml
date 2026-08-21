@@ -16,6 +16,20 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentTrack_to_fragmentUploadReportIntro"
+            app:destination="@id/fragmentUploadReportIntro"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentTrack_to_fragmentPDFReportList"
+            app:destination="@id/fragmentPDFReportList"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -101,12 +115,130 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentUploadReportIntro_to_fragmentUploadReportEmailIntro"
+            app:destination="@id/fragmentUploadReportEmailIntro"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
         android:id="@+id/fragmentUploadPDFFromDevice"
         android:name="com.humotron.app.ui.bloodreport.UploadPDFFromDeviceFragment"
-        tools:layout="@layout/fragment_upload_pdf_from_device" />
+        tools:layout="@layout/fragment_upload_pdf_from_device">
+        <action
+            android:id="@+id/action_fragmentUploadPDFFromDevice_to_fragmentUploadPDFReport"
+            app:destination="@id/fragmentUploadPDFReport"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentUploadPDFReport"
+        android:name="com.humotron.app.ui.bloodreport.UploadPDFReportFragment"
+        tools:layout="@layout/fragment_upload_pdf_report">
+        <action
+            android:id="@+id/action_fragmentUploadPDFReport_to_fragmentPDFReportList"
+            app:destination="@id/fragmentPDFReportList"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/fragmentUploadReportIntro"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentPDFReportList"
+        android:name="com.humotron.app.ui.bloodreport.PDFReportListFragment"
+        tools:layout="@layout/fragment_pdf_report_list">
+        <argument
+            android:name="extractMetricsResponse"
+            app:argType="com.humotron.app.domain.modal.response.MedicalPdfResponse" />
+        <argument
+            android:name="selectedPosition"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentUploadReportEmailIntro"
+        android:name="com.humotron.app.ui.bloodreport.UploadReportEmailIntroFragment"
+        tools:layout="@layout/fragment_upload_report_email_intro">
+        <action
+            android:id="@+id/action_fragmentUploadReportEmailIntro_to_fragmentEmailImportReviewPermissions"
+            app:destination="@id/fragmentEmailImportReviewPermissions"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentEmailImportReviewPermissions"
+        android:name="com.humotron.app.ui.bloodreport.EmailImportReviewPermissionsFragment"
+        tools:layout="@layout/fragment_email_import_review_permissions">
+        <action
+            android:id="@+id/action_fragmentEmailImportReviewPermissions_to_fragmentSearchingEmailReports"
+            app:destination="@id/fragmentSearchingEmailReports"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentSearchingEmailReports"
+        android:name="com.humotron.app.ui.bloodreport.SearchingEmailReportsFragment"
+        tools:layout="@layout/fragment_searching_email_reports">
+        <argument
+            android:name="filters"
+            app:argType="com.humotron.app.domain.modal.GmailSearchFilters" />
+        <action
+            android:id="@+id/action_fragmentSearchingEmailReports_to_fragmentReportEmailList"
+            app:destination="@id/fragmentReportEmailList"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/fragmentEmailImportReviewPermissions"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentReportEmailList"
+        android:name="com.humotron.app.ui.bloodreport.ReportEmailListFragment"
+        tools:layout="@layout/fragment_report_email_list">
+        <action
+            android:id="@+id/action_fragmentReportEmailList_to_fragmentUploadEmailReport"
+            app:destination="@id/fragmentUploadEmailReport"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentUploadEmailReport"
+        android:name="com.humotron.app.ui.bloodreport.UploadEmailReportFragment"
+        tools:layout="@layout/fragment_upload_email_report">
+        <argument
+            android:name="selectedPdfs"
+            app:argType="com.humotron.app.data.repository.ClinicalDocumentInfo[]" />
+        <action
+            android:id="@+id/action_fragmentUploadEmailReport_to_fragmentPDFReportList"
+            app:destination="@id/fragmentPDFReportList"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/fragmentUploadReportIntro"
+            app:popUpToInclusive="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/fragmentPairHumotronDevice"

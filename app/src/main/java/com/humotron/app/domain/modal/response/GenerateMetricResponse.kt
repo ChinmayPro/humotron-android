@@ -49,11 +49,43 @@ data class MetricReadingData(
 @Parcelize
 data class MetricRecommendation(
     @SerializedName("products")
-    val products: List<String>? = null,
+    val products: List<MetricRecommendationItem>? = null,
     @SerializedName("recipeBundles")
-    val recipeBundles: List<String>? = null,
+    val recipeBundles: List<MetricRecommendationItem>? = null,
     @SerializedName("chatPrompts")
-    val chatPrompts: List<String>? = null,
+    val chatPrompts: List<ChatPrompt>? = null,
     @SerializedName("recommendation")
-    val recommendation: List<String>? = null
+    val recommendation: List<MetricRecommendationItem>? = null
+) : Parcelable
+
+@Parcelize
+data class MetricRecommendationItem(
+    @SerializedName("type")
+    val type: String? = null,
+    @SerializedName("id")
+    val id: String? = null,
+    @SerializedName("title")
+    val title: String? = null,
+    @SerializedName("short")
+    val short: String? = null,
+    @SerializedName("helps")
+    val helps: List<String>? = null,
+    @SerializedName("why_this")
+    val whyThis: String? = null,
+    @SerializedName("why_you")
+    val whyYou: String? = null,
+    @SerializedName("why_now")
+    val whyNow: String? = null,
+    @SerializedName("image")
+    val image: String? = null,
+    @SerializedName("category")
+    val category: List<String>? = null,
+    @SerializedName("sub_category")
+    val subCategory: List<String>? = null,
+    @SerializedName("chatPrompt")
+    val chatPrompt: ChatPrompt? = null,
+    @SerializedName("priority_rank")
+    val priorityRank: Int? = null,
+    @SerializedName("recipeCount")
+    val recipeCount: Int? = null
 ) : Parcelable

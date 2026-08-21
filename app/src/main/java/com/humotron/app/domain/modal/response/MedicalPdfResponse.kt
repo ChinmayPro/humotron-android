@@ -1,7 +1,10 @@
 package com.humotron.app.domain.modal.response
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class MedicalPdfResponse(
     @SerializedName("status")
     val status: String,
@@ -9,17 +12,23 @@ data class MedicalPdfResponse(
     val message: String,
     @SerializedName("data")
     val data: MedicalPdfData
-)
+) : Parcelable
 
+@Parcelize
 data class MedicalPdfData(
     @SerializedName("pdfData")
     val pdfData: List<MedicalPdf>,
     @SerializedName("userId")
     val userId: String? = null,
     @SerializedName("pdfCount")
-    val pdfCount: Int = 0
-)
+    val pdfCount: Int = 0,
+    @SerializedName("uploadType")
+    val uploadType: String,
+    @SerializedName("_id")
+    val id: String
+) : Parcelable
 
+@Parcelize
 data class MedicalPdf(
     @SerializedName("pdfId")
     val id: String,
@@ -41,8 +50,9 @@ data class MedicalPdf(
     val isSynced: Boolean = true,
     @SerializedName("metrics")
     val metrics: List<MedicalPdfMetric>? = null
-)
+) : Parcelable
 
+@Parcelize
 data class MedicalPdfMetric(
     @SerializedName("metricName")
     val metricName: String?,
@@ -52,8 +62,9 @@ data class MedicalPdfMetric(
     val metricReading: String?,
     @SerializedName("metricUnit")
     val metricUnit: String?
-)
+) : Parcelable
 
+@Parcelize
 data class MedicalPdfDetails(
     @SerializedName("patientName")
     val patientName: String? = null,
@@ -63,10 +74,10 @@ data class MedicalPdfDetails(
     val labNo: String? = null,
     @SerializedName("date")
     val date: String? = null
-)
+) : Parcelable
 
-fun MedicalPdf.toPdfReportData(): com.humotron.app.domain.modal.response.PdfReportData {
-    return com.humotron.app.domain.modal.response.PdfReportData(
+fun MedicalPdf.toPdfReportData(): PdfReportData {
+    return PdfReportData(
         originalName = this.fileName ?: "",
         fileName = this.serverFileName ?: this.fileName ?: "",
         pdfId = this.id ?: "",

@@ -69,7 +69,10 @@ class UploadBloodTestInfoFragment : BaseFragment(R.layout.fragment_upload_bloodt
                     pdfPickerLauncher.launch("application/pdf")
                 }
             }
-            bottomSheet.show(childFragmentManager, com.humotron.app.ui.bloodTest.dialog.ChooseUploadMethodBottomSheet.TAG)
+            bottomSheet.show(
+                childFragmentManager,
+                com.humotron.app.ui.bloodTest.dialog.ChooseUploadMethodBottomSheet.TAG
+            )
         }
 
         binding.tvFooter.setOnClickListener {

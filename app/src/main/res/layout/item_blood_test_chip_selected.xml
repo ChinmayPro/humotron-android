@@ -1,34 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="36dp"
-    android:orientation="horizontal"
-    android:background="@drawable/bg_blood_test_chip"
-    android:gravity="center_vertical"
-    android:paddingStart="12dp"
-    android:paddingEnd="12dp"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp">
+    app:cardBackgroundColor="@color/white10"
+    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle"
+    app:strokeWidth="0dp">
 
-    <TextView
-        android:id="@+id/tvChipLabel"
-        style="@style/Text.12x.Manrope.Regular"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:textColor="@color/white"
-        tools:text="Label" />
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="12dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="8dp">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/btnChipRemove"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:src="@drawable/ic_close"
-        android:clickable="true"
-        android:focusable="true"
-        app:tint="@color/white" />
+        <TextView
+            android:id="@+id/tvChipLabel"
+            style="@style/Text.12x.Manrope.Regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:textColor="@color/white"
+            tools:text="Label" />
 
-</LinearLayout>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnChipRemove"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_close"
+            app:tint="@color/white" />
+
+    </LinearLayout>
+
+
+</com.google.android.material.card.MaterialCardView>

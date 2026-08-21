@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:background="@drawable/ic_bg_main_2"
-    tools:context=".ui.assessment.AssessmentBuildingFragment">
+    tools:context=".ui.bloodreport.UploadPDFReportFragment">
 
     <com.humotron.app.view.ProcessingView
         android:id="@+id/processingView"
@@ -20,19 +20,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:pv_accentColor="#F0795E"
+        app:pv_accentColor="@color/lime"
         app:pv_artSize="230dp"
         app:pv_autoStart="true"
+        app:pv_centerIcon="@drawable/ic_report"
         app:pv_centerIconTint="#0D1618"
         app:pv_chipBackgroundColor="#0DFFFFFF"
         app:pv_chipStrokeColor="#17FFFFFF"
         app:pv_chipTextColor="#A9C2BE"
         app:pv_footerTextColor="#6F7E7D"
-        app:pv_labels="@array/processing_labels"
+        app:pv_labels="@array/humotron_metrics"
         app:pv_maxContentWidth="280dp"
         app:pv_subtitleColor="#8FA7A3"
         app:pv_subtitleCycleIntervalMs="2400"
-        app:pv_subtitles="@array/processing_subtitles"
+        app:pv_subtitles="@array/humotron_sync_steps"
         app:pv_titleColor="#FFFFFF" />
 
     <TextView
@@ -40,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/manrope_extra_bold"
-        android:text="@string/building_your_picture"
+        android:text="@string/reading_your_report"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -60,7 +61,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTitle"
         app:pv_subtitleCycleIntervalMs="2400"
-        app:pv_subtitles="@array/processing_subtitles" />
+        app:pv_subtitles="@array/humotron_sync_steps" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -74,7 +75,7 @@
             android:layout_width="@dimen/_13dp"
             android:layout_height="@dimen/_13dp"
             app:srcCompat="@drawable/ic_verified_user_24px"
-            app:tint="@color/series" />
+            app:tint="@color/lime" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -82,7 +83,7 @@
             android:layout_marginStart="@dimen/_10dp"
             android:fontFamily="@font/manrope_regular"
             android:includeFontPadding="false"
-            android:text="@string/this_sharpens_your_guidance"
+            android:text="@string/parsing_runs_on_humotron"
             android:textColor="@color/insights_subtitle_grey"
             android:textSize="13sp"
             app:layout_constraintEnd_toEndOf="parent"

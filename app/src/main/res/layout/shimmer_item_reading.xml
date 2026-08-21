@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    app:cardBackgroundColor="@color/reading_bg"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/hair"
+    app:strokeWidth="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:id="@+id/llReadingValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <View
+                android:layout_width="56dp"
+                android:layout_height="26dp"
+                android:background="@color/white10" />
+
+            <View
+                android:layout_width="32dp"
+                android:layout_height="14dp"
+                android:layout_gravity="bottom"
+                android:layout_marginStart="3dp"
+                android:layout_marginBottom="2dp"
+                android:background="@color/white10" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/vReadingName"
+            android:layout_width="120dp"
+            android:layout_height="18dp"
+            android:layout_marginTop="3dp"
+            android:background="@color/white10"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/llReadingValue" />
+
+        <View
+            android:id="@+id/vReadingRange"
+            android:layout_width="160dp"
+            android:layout_height="12dp"
+            android:layout_marginTop="4dp"
+            android:background="@color/white10"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vReadingName" />
+
+        <LinearLayout
+            android:id="@+id/llReadingStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <View
+                android:layout_width="64dp"
+                android:layout_height="22dp"
+                android:background="@color/white10" />
+
+            <View
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginStart="9dp"
+                android:background="@color/white10" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
