@@ -30,13 +30,12 @@
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:background="@drawable/bg_shop_device_icon_box"
-                android:padding="18dp">
+                android:padding="8dp">
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivDeviceImage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="fitCenter"
-                    app:tint="@color/booster_accent_cool"
                     tools:src="@drawable/ic_bg_main" />
             </FrameLayout>
 

@@ -5,139 +5,263 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="22dp"
-    android:layout_marginBottom="12dp"
-    app:cardBackgroundColor="#132123"
-    app:cardCornerRadius="16dp"
+    android:layout_marginBottom="14dp"
+    app:cardBackgroundColor="#0C1719"
+    app:cardCornerRadius="18dp"
     app:cardElevation="0dp"
-    app:strokeColor="#12FFFFFF"
+    app:strokeColor="#1A2B2D"
     app:strokeWidth="1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="18dp">
 
+        <!-- Top Header Row: #OrderNumber · Date + Status Pill Badge -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvOrderHeader"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/manrope_semibold"
+                android:textColor="#5E7574"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tvStatusBadge"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="#BT-20260819-C6A0 · 21 Aug 2026" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvStatusBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_status_pill_confirmed"
+                android:fontFamily="@font/manrope_bold"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="4dp"
+                android:textColor="#3ED9D1"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Confirmed" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Title: At-Home Service -->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/manrope_bold"
-            android:textColor="#FFFFFF"
-            android:textSize="15sp"
-            tools:text="Comprehensive Full Body Checkup" />
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            tools:text="At-Home Service" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvOrderNumber"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:fontFamily="@font/manrope_medium"
-            android:textColor="#8ea09e"
-            android:textSize="12sp"
-            tools:text="#793599044 · Self-collection kit" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="14dp"
-            android:background="#12FFFFFF" />
-
+        <!-- Subtitle Row: Icon + At home collection · $179 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingVertical="14dp">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvSubTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/manrope_medium"
-                android:textColor="#cfdad8"
-                android:textSize="13sp"
-                tools:text="113 Masthead House, 14 Rope Terrace, London E16 2PH" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvAppointmentDateTime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/manrope_bold"
-                android:textColor="#FFFFFF"
-                android:textSize="15sp"
-                tools:text="18 Jun 2026 · 12:26" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#12FFFFFF" />
-
-        <LinearLayout
-            android:id="@+id/llAddToCalendar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:background="@drawable/bg_appointment_followup"
+            android:layout_marginTop="6dp"
             android:gravity="center_vertical"
-            android:paddingHorizontal="14dp"
-            android:paddingVertical="12dp"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivFlaskIcon"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:src="@drawable/ic_appointments"
-                app:tint="#C4F23E" />
+                android:src="@drawable/ic_flask"
+                app:tint="#6B7C7C" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvAddToCalendar"
-                android:layout_width="wrap_content"
+                android:id="@+id/tvCollectionTypePrice"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:fontFamily="@font/manrope_semibold"
-                android:text="Add to calendar"
-                android:textColor="#cfdad8"
-                android:textSize="13sp" />
+                android:fontFamily="@font/manrope_medium"
+                android:textColor="#90A0A0"
+                android:textSize="13sp"
+                tools:text="At home collection · $179" />
         </LinearLayout>
 
-        <LinearLayout
+        <!-- Secondary Subtitle Row: Date · At home collection OR Card declined · no charge taken -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSubInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/manrope_medium"
+            android:textColor="#D0DCDC"
+            android:textSize="13sp"
+            tools:text="21 Aug 2026 · At home collection" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvReschedule"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="4.5dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_appointment_trk_btn"
-                android:fontFamily="@font/manrope_bold"
-                android:gravity="center"
-                android:paddingVertical="11dp"
-                android:text="Reschedule"
-                android:textColor="#dfe9e3"
-                android:textSize="12sp" />
+        <!-- 5-Step Stepper Progress Bar (Only visible when confirmed/active) -->
+        <LinearLayout
+            android:id="@+id/llStepperContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/btnCancel"
-                android:layout_width="0dp"
+            <!-- Stepper Nodes & Line -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4.5dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_appointment_trk_btn"
-                android:fontFamily="@font/manrope_bold"
-                android:gravity="center"
-                android:paddingVertical="11dp"
-                android:text="Cancel"
-                android:textColor="#dfe9e3"
-                android:textSize="12sp" />
+                android:layout_marginHorizontal="10dp">
+
+                <View
+                    android:id="@+id/vStepTrack"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="#1B3335"
+                    app:layout_constraintBottom_toBottomOf="@id/vStep1"
+                    app:layout_constraintTop_toTopOf="@id/vStep1" />
+
+                <View
+                    android:id="@+id/vStep1"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:background="@drawable/bg_step_node_active"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/vStep2"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/vStep2"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:background="@drawable/bg_step_node_inactive"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/vStep3"
+                    app:layout_constraintStart_toEndOf="@id/vStep1"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/vStep3"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:background="@drawable/bg_step_node_inactive"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/vStep4"
+                    app:layout_constraintStart_toEndOf="@id/vStep2"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/vStep4"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:background="@drawable/bg_step_node_inactive"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/vStep5"
+                    app:layout_constraintStart_toEndOf="@id/vStep3"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/vStep5"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:background="@drawable/bg_step_node_inactive"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/vStep4"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Stepper Labels -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvStepLabel1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/manrope_bold"
+                    android:gravity="center"
+                    android:text="Confirmed"
+                    android:textColor="#3ED9D1"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tvStepLabel2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/manrope_regular"
+                    android:gravity="center"
+                    android:text="Kit sent"
+                    android:textColor="#5E7574"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tvStepLabel3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/manrope_regular"
+                    android:gravity="center"
+                    android:text="Sample"
+                    android:textColor="#5E7574"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tvStepLabel4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/manrope_regular"
+                    android:gravity="center"
+                    android:text="Results"
+                    android:textColor="#5E7574"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tvStepLabel5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/manrope_regular"
+                    android:gravity="center"
+                    android:text="Done"
+                    android:textColor="#5E7574"
+                    android:textSize="10sp" />
+            </LinearLayout>
+
         </LinearLayout>
 
-        <!-- Keep missing ids as gone -->
+        <!-- Cancel / Action Button -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnCancel"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_btn_appointment_cancel"
+            android:fontFamily="@font/manrope_bold"
+            android:text="Cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <!-- Keep unused views hidden for backward compatibility -->
+        <View android:id="@+id/tvOrderNumber" android:layout_width="0dp" android:layout_height="0dp" android:visibility="gone" />
+        <View android:id="@+id/tvSubTitle" android:layout_width="0dp" android:layout_height="0dp" android:visibility="gone" />
+        <View android:id="@+id/tvAppointmentDateTime" android:layout_width="0dp" android:layout_height="0dp" android:visibility="gone" />
+        <View android:id="@+id/llAddToCalendar" android:layout_width="0dp" android:layout_height="0dp" android:visibility="gone" />
+        <View android:id="@+id/tvAddToCalendar" android:layout_width="0dp" android:layout_height="0dp" android:visibility="gone" />
+        <View android:id="@+id/tvReschedule" android:layout_width="0dp" android:layout_height="0dp" android:visibility="gone" />
         <View android:id="@+id/ivBookingIcon" android:layout_width="0dp" android:layout_height="0dp" android:visibility="gone" />
         <View android:id="@+id/ivCall" android:layout_width="0dp" android:layout_height="0dp" android:visibility="gone" />
         <View android:id="@+id/ivMessage" android:layout_width="0dp" android:layout_height="0dp" android:visibility="gone" />
@@ -146,5 +270,6 @@
         <TextView android:id="@+id/tvBookingDate" android:layout_width="0dp" android:layout_height="0dp" android:visibility="gone" />
         <TextView android:id="@+id/tvBookingDetailsLabel" android:layout_width="0dp" android:layout_height="0dp" android:visibility="gone" />
         <TextView android:id="@+id/tvPrepare" android:layout_width="0dp" android:layout_height="0dp" android:visibility="gone" />
+
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

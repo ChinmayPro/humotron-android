@@ -18,6 +18,7 @@ import com.humotron.app.data.network.Status
 import com.humotron.app.databinding.FragmentShopDeviceDetailsBinding
 import com.humotron.app.domain.modal.response.DeviceFaqResponse
 import com.humotron.app.domain.modal.response.GetShopDevicesResponse
+import com.humotron.app.ui.shop.adapter.DeviceGalleryAdapter
 import com.humotron.app.ui.shop.adapter.ShopMetricAdapter
 import com.humotron.app.ui.shop.dialog.ShopDeviceFaqBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
@@ -103,9 +104,20 @@ class ShopDeviceDetailsFragment : BaseFragment(R.layout.fragment_shop_device_det
                         val heroIconRes = getDeviceHeroIcon(combinedText)
                         val accentColor = getDeviceAccentColor(combinedText)
 
-                        binding.ivDeviceHeroIcon.setImageResource(heroIconRes)
-                        binding.ivDeviceHeroIcon.clearColorFilter() // Preserve native 1.8dp vector line paths
-                        binding.ivDeviceHeroIcon.visibility = View.VISIBLE
+                        val images = (detail.deviceImage ?: device?.deviceImage)?.filter { !it.isNullOrBlank() }
+                        if (!images.isNullOrEmpty()) {
+                            binding.vpImageGallery.adapter = DeviceGalleryAdapter(images, heroIconRes)
+                            binding.vpImageGallery.visibility = View.VISIBLE
+                            binding.ivDeviceHeroIcon.visibility = View.GONE
+
+                            binding.llIndicator.visibility = View.GONE
+                        } else {
+                            binding.ivDeviceHeroIcon.setImageResource(heroIconRes)
+                            binding.ivDeviceHeroIcon.clearColorFilter() // Preserve native 1.8dp vector line paths
+                            binding.ivDeviceHeroIcon.visibility = View.VISIBLE
+                            binding.vpImageGallery.visibility = View.GONE
+                            binding.llIndicator.visibility = View.GONE
+                        }
 
                         // Setup dynamic radial background glow matching device accent color
                         val r = Color.red(accentColor)
@@ -126,9 +138,6 @@ class ShopDeviceDetailsFragment : BaseFragment(R.layout.fragment_shop_device_det
                         // Floating Pill is ALWAYS bright lime green matching HTML .phero .pill
                         binding.vHeroPill.background = ContextCompat.getDrawable(requireContext(), R.drawable.bg_hero_pill_glowing)
                         binding.vHeroPill.visibility = View.VISIBLE
-
-                        binding.vpImageGallery.visibility = View.GONE
-                        binding.llIndicator.visibility = View.GONE
 
                         // Setup Connect with app text matching HTML design
                         val fullText = "Already own this device? Connect it to the app ›"

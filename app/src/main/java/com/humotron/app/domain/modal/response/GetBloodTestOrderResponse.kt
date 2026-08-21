@@ -18,6 +18,10 @@ data class GetBloodTestOrderResponse(
     data class BloodTestOrder(
         @SerializedName("orderId")
         val orderId: String?,
+        @SerializedName("_id")
+        val id: String? = null,
+        @SerializedName("bookingId")
+        val bookingId: String? = null,
         @SerializedName("orderNumber")
         val orderNumber: String?,
         @SerializedName("title")
@@ -32,6 +36,12 @@ data class GetBloodTestOrderResponse(
         val paymentMethod: String?,
         @SerializedName("amountPaid")
         val amountPaid: Double?,
+        @SerializedName("currency")
+        val currency: String? = null,
+        @SerializedName("formattedAmount")
+        val formattedAmount: String? = null,
+        @SerializedName("serviceType")
+        val serviceType: String? = null,
         @SerializedName("productType")
         val productType: String?,
         @SerializedName("bookingType")

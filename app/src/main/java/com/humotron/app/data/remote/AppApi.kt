@@ -571,6 +571,17 @@ interface AppApi {
         @Path("orderId") orderId: String,
     ): Response<CommonResponse>
 
+    @POST("expert-booking/bookings/cancel/{bookingId}")
+    suspend fun cancelBooking(
+        @Path("bookingId") bookingId: String,
+    ): Response<CommonResponse>
+
+    @POST("blood-test/bookings/cancel/{bookingId}")
+    suspend fun cancelBloodTestBooking(
+        @Path("bookingId") bookingId: String,
+        @Body body: Map<String, String>,
+    ): Response<CommonResponse>
+
     @POST("order/getOrderTrackingDetails/{orderNumber}")
     suspend fun getOrderTrackingDetails(
         @Path("orderNumber") orderNumber: String,

@@ -49,4 +49,41 @@ object DialogUtils {
         val width = (270 * context.resources.displayMetrics.density).toInt()
         dialog.window?.setLayout(width, WindowManager.LayoutParams.WRAP_CONTENT)
     }
+
+    fun showInfoAlertDialog(
+        context: Context,
+        title: String? = null,
+        message: String,
+        btnText: String = "Okay",
+        onDismiss: (() -> Unit)? = null
+    ) {
+        val dialog = AlertDialog.Builder(context, R.style.CustomAlertDialog)
+            .create()
+
+        val dialogView = LayoutInflater.from(context).inflate(R.layout.layout_info_dialog, null)
+        val tvTitle = dialogView.findViewById<TextView>(R.id.tvTitle)
+        val tvMessage = dialogView.findViewById<TextView>(R.id.tvMessage)
+        val btnOkay = dialogView.findViewById<TextView>(R.id.btnOkay)
+
+        if (!title.isNullOrEmpty()) {
+            tvTitle.text = title
+            tvTitle.visibility = android.view.View.VISIBLE
+        } else {
+            tvTitle.visibility = android.view.View.GONE
+        }
+
+        tvMessage.text = message
+        btnOkay.text = btnText
+
+        btnOkay.setOnClickListener {
+            dialog.dismiss()
+            onDismiss?.invoke()
+        }
+
+        dialog.setView(dialogView)
+        dialog.show()
+
+        val width = (280 * context.resources.displayMetrics.density).toInt()
+        dialog.window?.setLayout(width, WindowManager.LayoutParams.WRAP_CONTENT)
+    }
 }

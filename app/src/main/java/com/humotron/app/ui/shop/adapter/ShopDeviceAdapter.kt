@@ -10,6 +10,7 @@ import com.humotron.app.databinding.ItemShopCategoryHeaderBinding
 import com.humotron.app.databinding.ItemShopDeviceBinding
 import com.humotron.app.databinding.ItemShopDeviceHeaderBinding
 import com.humotron.app.domain.modal.response.GetShopDevicesResponse
+import com.humotron.app.util.loadImage
 
 class ShopDeviceAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -108,37 +109,29 @@ class ShopDeviceAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             val price = device.deviceModel?.deviceModelPrice
             binding.tvPrice.text = if (!price.isNullOrEmpty()) "£$price" else "£---"
 
-            // Load remote image with Glide, fallback to local generated placeholders
-            val localDrawableRes = when {
+            // Load remote image from API with fallback to local placeholders
+            val imageUrl = device.deviceImage?.firstOrNull { !it.isNullOrBlank() }
+            val placeholderRes = when {
                 device.deviceFacingName?.contains("Scale", true) == true || 
                 device.deviceName?.contains("Scale", true) == true -> R.drawable.ic_device_scale
                 device.deviceFacingName?.contains("Cuff", true) == true || 
                 device.deviceName?.contains("Cuff", true) == true -> R.drawable.ic_device_cuff
                 device.deviceFacingName?.contains("Strip", true) == true || 
                 device.deviceName?.contains("Strip", true) == true -> R.drawable.ic_scan_droplet
-                else -> null
+                device.deviceFacingName?.contains("Ring", true) == true || 
+                device.deviceName?.contains("Ring", true) == true -> R.drawable.ic_ring
+                device.deviceFacingName?.contains("Band", true) == true || 
+                device.deviceName?.contains("Band", true) == true -> R.drawable.ic_wrist_band
+                else -> R.drawable.ic_bg_main
             }
 
-            if (localDrawableRes != null) {
-                binding.ivDeviceImage.setImageResource(localDrawableRes)
+            if (!imageUrl.isNullOrEmpty()) {
+                binding.ivDeviceImage.clearColorFilter()
+                binding.ivDeviceImage.imageTintList = null
+                binding.ivDeviceImage.loadImage(imageUrl, placeholderRes)
             } else {
-                val imageUrl = device.deviceImage?.firstOrNull()
-                if (!imageUrl.isNullOrEmpty()) {
-                    Glide.with(binding.ivDeviceImage.context)
-                        .load(imageUrl)
-                        .placeholder(R.drawable.ic_bg_main)
-                        .error(R.drawable.ic_bg_main)
-                        .into(binding.ivDeviceImage)
-                } else {
-                    val placeholderRes = when {
-                        device.deviceFacingName?.contains("Ring", true) == true || 
-                        device.deviceName?.contains("Ring", true) == true -> R.drawable.ic_ring
-                        device.deviceFacingName?.contains("Band", true) == true || 
-                        device.deviceName?.contains("Band", true) == true -> R.drawable.ic_wrist_band
-                        else -> R.drawable.ic_bg_main
-                    }
-                    binding.ivDeviceImage.setImageResource(placeholderRes)
-                }
+                binding.ivDeviceImage.imageTintList = androidx.core.content.ContextCompat.getColorStateList(binding.ivDeviceImage.context, R.color.booster_accent_cool)
+                binding.ivDeviceImage.setImageResource(placeholderRes)
             }
         }
     }

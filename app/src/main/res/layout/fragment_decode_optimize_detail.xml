@@ -76,7 +76,7 @@
         android:layout_height="0dp"
         android:overScrollMode="never"
         android:clipToPadding="false"
-        android:paddingBottom="120dp"
+        android:paddingBottom="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/clTopBar">
 
@@ -859,50 +859,6 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <!-- Translucent Bottom CTA overlay bar matching design -->
-    <View
-        android:id="@+id/vBottomGradient"
-        android:layout_width="match_parent"
-        android:layout_height="110dp"
-        android:background="@drawable/bg_footer_gradient"
-        app:layout_constraintBottom_toBottomOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/llCtaBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingHorizontal="20dp"
-        android:paddingBottom="24dp"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <!-- Buy on Humotron Button -->
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnBuyOnHumotron"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/bg_btn_lime_pill"
-            android:text="Buy on Humotron →"
-            android:textColor="#050808"
-            android:fontFamily="sans-serif-black"
-            android:textSize="14sp"
-            android:textAllCaps="false" />
-
-        <!-- See Retailers Button -->
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnSeeRetailers"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:background="@drawable/bg_btn_outline_white"
-            android:text="See retailers"
-            android:textColor="@color/white"
-            android:fontFamily="sans-serif-medium"
-            android:textSize="14sp"
-            android:textAllCaps="false" />
-
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

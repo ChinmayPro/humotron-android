@@ -58,11 +58,7 @@ class DecodeOptimizeDetailFragment : BaseFragment(R.layout.fragment_decode_optim
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
 
-            binding.llCtaBar.updatePadding(bottom = systemBars.bottom + dpToPx(24))
-            binding.vBottomGradient.updateLayoutParams<ViewGroup.LayoutParams> {
-                height = dpToPx(110) + systemBars.bottom
-            }
-            binding.nsvContent.updatePadding(bottom = dpToPx(120) + systemBars.bottom)
+            binding.nsvContent.updatePadding(bottom = dpToPx(24) + systemBars.bottom)
 
             insets
         }
@@ -86,28 +82,20 @@ class DecodeOptimizeDetailFragment : BaseFragment(R.layout.fragment_decode_optim
                     resource.data?.data?.let {
                         bindRecommendationData(it)
                         binding.nsvContent.visibility = View.VISIBLE
-                        binding.llCtaBar.visibility = View.VISIBLE
-                        binding.vBottomGradient.visibility = View.VISIBLE
                         binding.tvNoData.visibility = View.GONE
                     } ?: run {
                         binding.tvNoData.visibility = View.VISIBLE
                         binding.nsvContent.visibility = View.GONE
-                        binding.llCtaBar.visibility = View.GONE
-                        binding.vBottomGradient.visibility = View.GONE
                     }
                 }
                 Status.ERROR -> {
                     handleLoader(false)
                     binding.tvNoData.visibility = View.VISIBLE
                     binding.nsvContent.visibility = View.GONE
-                    binding.llCtaBar.visibility = View.GONE
-                    binding.vBottomGradient.visibility = View.GONE
                 }
                 Status.LOADING -> {
                     handleLoader(true)
                     binding.nsvContent.visibility = View.GONE
-                    binding.llCtaBar.visibility = View.GONE
-                    binding.vBottomGradient.visibility = View.GONE
                     binding.tvNoData.visibility = View.GONE
                 }
                 Status.EXCEPTION -> {
@@ -775,33 +763,7 @@ class DecodeOptimizeDetailFragment : BaseFragment(R.layout.fragment_decode_optim
             }
         }
 
-        // Setup CTA buttons
-        val primaryText = data.ctaPrimary ?: "Buy on Humotron"
-        binding.btnBuyOnHumotron.text = if (primaryText.endsWith("→")) primaryText else "$primaryText →"
-        binding.btnBuyOnHumotron.setOnClickListener {
-            val bundle = Bundle().apply {
-                putString("productId", data.id ?: "")
-                putString("productTitle", titleText)
-                putFloat("productPrice", (data.price ?: 0.0).toFloat())
-                putString("productType", data.type ?: "")
-            }
-            findNavController().navigate(R.id.fragmentBuyOnHumotron, bundle)
-        }
 
-        binding.btnSeeRetailers.setOnClickListener {
-            val matchPercent = when (data.attributes?.matchConfidence?.lowercase()) {
-                "high" -> 95
-                "moderate" -> 91
-                else -> 85
-            }
-            val bundle = Bundle().apply {
-                putString("productId", data.id)
-                putString("productTitle", data.title)
-                putInt("matchPercentage", matchPercent)
-                putString("productUrl", data.url)
-            }
-            findNavController().navigate(R.id.fragmentSeeRetailers, bundle)
-        }
     }
 
     inner class RecipesAdapter(private val items: List<RecipeDetailItem>) :

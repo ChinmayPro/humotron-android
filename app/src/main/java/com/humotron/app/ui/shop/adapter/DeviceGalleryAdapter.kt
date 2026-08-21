@@ -3,11 +3,13 @@ package com.humotron.app.ui.shop.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.humotron.app.databinding.ItemDeviceGalleryImageBinding
+import com.humotron.app.util.loadImage
 
-class DeviceGalleryAdapter(private val images: List<String>) :
-    RecyclerView.Adapter<DeviceGalleryAdapter.ViewHolder>() {
+class DeviceGalleryAdapter(
+    private val images: List<String>,
+    private val placeholderRes: Int? = null
+) : RecyclerView.Adapter<DeviceGalleryAdapter.ViewHolder>() {
 
     class ViewHolder(val binding: ItemDeviceGalleryImageBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -22,9 +24,7 @@ class DeviceGalleryAdapter(private val images: List<String>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Glide.with(holder.itemView.context)
-            .load(images[position])
-            .into(holder.binding.ivGalleryItem)
+        holder.binding.ivGalleryItem.loadImage(images[position], placeholderRes)
     }
 
     override fun getItemCount(): Int = images.size

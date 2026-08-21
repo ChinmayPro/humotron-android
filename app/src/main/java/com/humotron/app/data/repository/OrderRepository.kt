@@ -53,6 +53,33 @@ class OrderRepository @Inject constructor(
         emit(responseHandler.handleException(com.humotron.app.data.network.exceptions.ValidationException(it.message)))
     }
 
+    fun cancelBooking(bookingId: String): Flow<Resource<com.humotron.app.domain.modal.response.CommonResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.cancelBooking(bookingId), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(com.humotron.app.data.network.exceptions.ValidationException(it.message)))
+    }
+
+    fun cancelBloodTestBooking(bookingId: String, reason: String): Flow<Resource<com.humotron.app.domain.modal.response.CommonResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val body = mapOf("reason" to reason)
+            val response = responseHandler.handleResponse(api.cancelBloodTestBooking(bookingId, body), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(com.humotron.app.data.network.exceptions.ValidationException(it.message)))
+    }
+
     fun getOrderTrackingDetails(orderNumber: String): Flow<Resource<com.humotron.app.domain.modal.response.GetOrderTrackingResponse>> = flow {
         emit(Resource.loading())
         try {

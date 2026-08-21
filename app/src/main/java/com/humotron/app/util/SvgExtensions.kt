@@ -68,7 +68,24 @@ fun ImageView.loadImage(url: String?, @DrawableRes placeholder: Int? = null) {
         return
     }
 
-    if (url.contains(".svg", ignoreCase = true)) {
+    val baseUrl = com.humotron.app.core.AppConstant.BASE_URL
+        .removeSuffix("api/v1/")
+        .removeSuffix("/")
+
+    val formattedUrl = when {
+        url.startsWith("http://") || url.startsWith("https://") -> url
+        url.startsWith("/") -> "$baseUrl$url"
+        else -> "$baseUrl/$url"
+    }
+
+    if (this is androidx.appcompat.widget.AppCompatImageView) {
+        clearColorFilter()
+        imageTintList = null
+    } else {
+        clearColorFilter()
+    }
+
+    if (formattedUrl.contains(".svg", ignoreCase = true)) {
         // Dynamically register SVG decoder with Glide if loading an SVG
         SvgRegistry.register(context.applicationContext)
         setLayerType(View.LAYER_TYPE_SOFTWARE, null)
@@ -76,7 +93,7 @@ fun ImageView.loadImage(url: String?, @DrawableRes placeholder: Int? = null) {
         setLayerType(View.LAYER_TYPE_NONE, null)
     }
 
-    var builder = Glide.with(context).asDrawable().load(url)
+    var builder = Glide.with(context).asDrawable().load(formattedUrl)
     if (placeholder != null) {
         builder = builder.placeholder(placeholder).error(placeholder)
     }

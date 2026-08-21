@@ -74,6 +74,18 @@ class OrderViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
+    fun cancelBooking(bookingId: String) {
+        repository.cancelBooking(bookingId).onEach { state ->
+            cancelOrderLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
+
+    fun cancelBloodTestBooking(bookingId: String, reason: String) {
+        repository.cancelBloodTestBooking(bookingId, reason).onEach { state ->
+            cancelOrderLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
+
     fun fetchOrderTrackingDetails(orderNumber: String) {
         repository.getOrderTrackingDetails(orderNumber).onEach { state ->
             orderTrackingLiveData.value = state
