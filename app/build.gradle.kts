@@ -12,7 +12,8 @@ plugins {
     id("kotlin-parcelize")
     alias(libs.plugins.kotlin.compose)
     id("androidx.navigation.safeargs.kotlin")
-    //id("com.google.gms.google-services")
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.firebase.crashlytics)
 }
 
 android {
@@ -221,9 +222,10 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    // -------------------- Firebase (Commented) ------------
-    //implementation(platform("com.google.firebase:firebase-bom:34.0.0"))
-    //implementation("com.google.firebase:firebase-auth")
+    // -------------------- Firebase -----------------------
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
 
     // -------------------- Others --------------------
     implementation(libs.lottie)

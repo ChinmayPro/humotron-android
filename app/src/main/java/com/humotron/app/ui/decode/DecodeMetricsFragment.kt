@@ -14,6 +14,8 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 @AndroidEntryPoint
 class DecodeMetricsFragment : BaseFragment(R.layout.fragment_decode_metrics) {
@@ -35,6 +37,31 @@ class DecodeMetricsFragment : BaseFragment(R.layout.fragment_decode_metrics) {
         viewModel.getHealthMetricTrackingByUserId()
     }
 
+    private fun formatMetricDate(timestamp: String?): String {
+        if (timestamp.isNullOrBlank()) return ""
+        return try {
+            val tsClean = timestamp.replace("Z", "+0000")
+            val sdfIn = if (tsClean.contains("+")) {
+                SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.ENGLISH)
+            } else {
+                SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
+            }
+            val date = sdfIn.parse(tsClean)
+            if (date != null) {
+                SimpleDateFormat("d MMM yy", Locale.ENGLISH).format(date)
+            } else ""
+        } catch (e: Exception) {
+            try {
+                val date = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(timestamp.take(10))
+                if (date != null) {
+                    SimpleDateFormat("d MMM yy", Locale.ENGLISH).format(date)
+                } else ""
+            } catch (e2: Exception) {
+                ""
+            }
+        }
+    }
+
     private fun initObservers() {
         viewModel.metricTrackingData().observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
@@ -48,19 +75,27 @@ class DecodeMetricsFragment : BaseFragment(R.layout.fragment_decode_metrics) {
                     
                     resource.data?.data?.individualMetrics?.let { list ->
                         val activeMetrics = list.map {
-                            val readingVal = it.metricReading
-                            val readingStr = if (readingVal != null && readingVal.toString().trim().isNotEmpty()) {
+                            val readingVal = it.metricReading ?: it.metricValue?.value
+                            val valStr = if (!readingVal.isNullOrBlank()) {
                                 "${readingVal} ${it.metricUnit ?: it.metricReadingUnit ?: ""}".trim()
                             } else {
                                 ""
                             }
+                            val dateStr = formatMetricDate(it.metricValue?.timestamp)
+                            val displayValue = when {
+                                valStr.isNotEmpty() && dateStr.isNotEmpty() -> "$valStr · $dateStr"
+                                valStr.isNotEmpty() -> valStr
+                                dateStr.isNotEmpty() -> dateStr
+                                else -> ""
+                            }
+                            val isReady = it.hasMinimumData == true
                             ActiveMetric(
                                 id = it.id ?: "",
-                                value = readingStr,
+                                value = displayValue,
                                 label = it.metricUserFacingName ?: it.metricName ?: "",
                                 dateRange = it.metricDuration ?: "",
                                 deviceName = it.deviceName ?: "",
-                                status = it.status
+                                status = if (isReady) "ready" else "unready"
                             )
                         }
                         setupActiveMetrics(activeMetrics)
@@ -68,13 +103,14 @@ class DecodeMetricsFragment : BaseFragment(R.layout.fragment_decode_metrics) {
 
                     resource.data?.data?.groupMetrics?.let { list ->
                         val groupMetrics = list.map {
+                            val isReady = it.hasMinimumData == true
                             ActiveMetric(
                                 id = it.categoryId ?: "",
                                 value = "",
                                 label = it.categoryName ?: "",
                                 dateRange = "",
                                 deviceName = it.deviceName ?: "",
-                                status = if (it.hasMinimumData == true) "ready" else "unready"
+                                status = if (isReady) "ready" else "unready"
                             )
                         }
                         setupGroupMetrics(groupMetrics)
@@ -112,7 +148,7 @@ class DecodeMetricsFragment : BaseFragment(R.layout.fragment_decode_metrics) {
             // Navigate directly to TronChat — preserves backstack: Decode → Metrics → TronChat
             val bundle = Bundle().apply {
                 putString("chat_prompt_id", it.id)
-                putString("chat_prompt_title", getString(R.string.chat_analyze_metric_prompt, it.label ?: ""))
+                putString("chat_prompt_title", getString(R.string.chat_analyze_metric_prompt, it.label))
             }
             findNavController().navigate(R.id.fragmentTronChat, bundle)
         }
@@ -125,7 +161,7 @@ class DecodeMetricsFragment : BaseFragment(R.layout.fragment_decode_metrics) {
             // Navigate directly to TronChat — preserves backstack: Decode → Metrics → TronChat
             val bundle = Bundle().apply {
                 putString("chat_prompt_id", it.id)
-                putString("chat_prompt_title", getString(R.string.chat_analyze_metric_prompt, it.label ?: ""))
+                putString("chat_prompt_title", getString(R.string.chat_analyze_metric_prompt, it.label))
             }
             findNavController().navigate(R.id.fragmentTronChat, bundle)
         }

@@ -3,9 +3,23 @@ package com.humotron.app.ui.recipes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.humotron.app.data.network.Resource
+import com.humotron.app.data.network.Status
+import com.humotron.app.data.repository.ProfileRepository
+import com.humotron.app.domain.modal.response.GetRecipesByMetricReadingResponse
+import com.humotron.app.domain.modal.response.RecipeItemDetail
+import com.humotron.app.domain.modal.response.RecipesByMetricData
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import java.util.UUID
+import javax.inject.Inject
 
-class RecipesViewModel : ViewModel() {
+@HiltViewModel
+class RecipesViewModel @Inject constructor(
+    private val repository: ProfileRepository
+) : ViewModel() {
 
     private val _metricCapsules = MutableLiveData<List<MetricCapsule>>()
     val metricCapsules: LiveData<List<MetricCapsule>> = _metricCapsules
@@ -19,18 +33,227 @@ class RecipesViewModel : ViewModel() {
     private val _recipeLogs = MutableLiveData<List<RecipeLog>>()
     val recipeLogs: LiveData<List<RecipeLog>> = _recipeLogs
 
+    private val _recipesResponseState = MutableLiveData<Resource<GetRecipesByMetricReadingResponse>>()
+    val recipesResponseState: LiveData<Resource<GetRecipesByMetricReadingResponse>> = _recipesResponseState
+
     init {
         loadMockData()
+    }
+
+    fun fetchRecipesByMetric(metricId: String) {
+        if (metricId.isBlank()) return
+
+        repository.getRecipesByMetricReading(metricId).onEach { resource ->
+            _recipesResponseState.value = resource
+
+            if (resource.status == Status.SUCCESS) {
+                resource.data?.data?.let { responseData ->
+                    processApiResponseData(responseData, metricId)
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    private fun processApiResponseData(data: RecipesByMetricData, selectedId: String) {
+        val apiMetric = data.metric
+
+        if (apiMetric != null) {
+            val title = apiMetric.metricUserFacingName ?: apiMetric.metricName ?: "Metric"
+            val value = apiMetric.metricReading ?: apiMetric.latestReading?.toString() ?: "0"
+            val unit = apiMetric.metricReadingUnit ?: ""
+            val isImproving = apiMetric.metricInterpretation?.equals("Normal", ignoreCase = true) == true ||
+                    apiMetric.metricDeltaInfo?.direction?.equals("improving", ignoreCase = true) == true
+            val isUpward = apiMetric.metricDeltaInfo?.direction?.equals("up", ignoreCase = true) == true
+            val trendVal = apiMetric.metricDelta ?: "0%"
+
+            val updatedCapsule = MetricCapsule(
+                id = apiMetric.metricId ?: selectedId,
+                title = title,
+                value = value,
+                unit = if (unit.isNotBlank()) " $unit" else "",
+                isSelected = true,
+                isImproving = isImproving,
+                isUpwardTrend = isUpward,
+                trendValue = trendVal,
+                replacedMeals = 5,
+                targetMeals = 20,
+                sparkData = listOf(75f, 74f, 73f, 72f, 71f, 71f, 71f)
+            )
+
+            // Update capsule list ensuring selected capsule is focused
+            val currentCapsules = _metricCapsules.value.orEmpty()
+            val existingIndex = currentCapsules.indexOfFirst { it.id == updatedCapsule.id }
+
+            val newCapsules = if (existingIndex >= 0) {
+                currentCapsules.map {
+                    if (it.id == updatedCapsule.id) updatedCapsule else it.copy(isSelected = false)
+                }
+            } else {
+                val resetCapsules = currentCapsules.map { it.copy(isSelected = false) }
+                listOf(updatedCapsule) + resetCapsules
+            }
+
+            _metricCapsules.value = newCapsules
+            _selectedMetric.value = updatedCapsule
+        }
+
+        // Process Recipe categories from map
+        val categoryOrder = listOf("Breakfast", "Lunch", "Dinner", "Snack", "Anytime")
+        val recipeMap = data.recipe.orEmpty()
+
+        val parsedCategories = mutableListOf<RecipeCategory>()
+
+        // Add ordered categories first
+        for (catName in categoryOrder) {
+            val recipeList = recipeMap[catName]
+            if (!recipeList.isNullOrEmpty()) {
+                val categoryId = catName.lowercase()
+                val cards = recipeList.map { detail ->
+                    mapDetailToRecipeCard(detail, apiMetric?.metricUserFacingName ?: apiMetric?.metricName ?: "Metric")
+                }
+                parsedCategories.add(RecipeCategory(categoryId, catName, cards))
+            }
+        }
+
+        // Add any remaining categories not in standard order
+        for ((catName, recipeList) in recipeMap) {
+            if (!categoryOrder.contains(catName) && !recipeList.isNullOrEmpty()) {
+                val categoryId = catName.lowercase()
+                val cards = recipeList.map { detail ->
+                    mapDetailToRecipeCard(detail, apiMetric?.metricUserFacingName ?: apiMetric?.metricName ?: "Metric")
+                }
+                parsedCategories.add(RecipeCategory(categoryId, catName, cards))
+            }
+        }
+
+        if (parsedCategories.isNotEmpty()) {
+            _recipeCategories.value = parsedCategories
+        }
+    }
+
+    private fun mapDetailToRecipeCard(detail: RecipeItemDetail, metricTitle: String): RecipeCard {
+        val title = detail.recipeName ?: detail.recipeNameAlt ?: "Recipe"
+        val image = detail.recipeImage ?: "https://humotron-images.s3.eu-west-2.amazonaws.com/recipesImage/Beef+Chicken+Soup+2.png"
+        val timeMins = parseCookingTime(detail.cookingTime)
+        val difficulty = detail.complexity ?: "Easy"
+        val calories = detail.caloriesPerServing ?: 350
+        val ingredientsList = parseIngredients(detail.ingredients)
+        val logsCount = detail.consumedCount ?: 0
+        val isFav = detail.interaction.equals("like", ignoreCase = true)
+
+        val macros = mutableListOf<Pair<String, String>>()
+        if (!detail.nutritionInfo.isNullOrBlank()) {
+            parseNutritionInfo(detail.nutritionInfo).forEach { (k, v) ->
+                macros.add(v to k)
+            }
+        } else {
+            macros.addAll(listOf("18" to "Protein", "20" to "Fat", "8" to "Carbs", "5" to "Omega-3"))
+        }
+
+        val meta = listOf(
+            (detail.mealType ?: detail.mealTypeAlt ?: "Meal") to "Meal type",
+            (detail.cookingTime ?: "10 mins") to "Cooking time",
+            (detail.tasteProfile ?: "Savoury") to "Taste profile",
+            (detail.dietaryFilters?.firstOrNull() ?: "Omnivore") to "Dietary preference",
+            (detail.cuisineType ?: "Global") to "Cuisine type"
+        )
+
+        val tags = detail.dietaryFilters.orEmpty()
+        val steps = parseCookingInstructions(detail.cookingInstructions)
+
+        val benefits = mutableListOf<Pair<String, String>>()
+        detail.whyReasons?.forEach { reason ->
+            if (!reason.name.isNullOrBlank() && !reason.description.isNullOrBlank()) {
+                benefits.add(reason.name to reason.description)
+            }
+        }
+        if (benefits.isEmpty() && !detail.whyThis.isNullOrBlank()) {
+            benefits.add("Why this meal" to detail.whyThis)
+        }
+
+        return RecipeCard(
+            id = detail.id ?: UUID.randomUUID().toString(),
+            title = title,
+            imageUrl = image,
+            timeMinutes = timeMins,
+            metricPillText = metricTitle,
+            difficulty = difficulty,
+            kcalPerServing = calories,
+            ingredients = ingredientsList,
+            logsCount = logsCount,
+            isFavorite = isFav,
+            macros = macros,
+            meta = meta,
+            tags = tags,
+            steps = steps,
+            benefits = benefits
+        )
+    }
+
+    private fun parseCookingTime(timeStr: String?): Int {
+        if (timeStr.isNullOrBlank()) return 10
+        val regex = "(\\d+)".toRegex()
+        val match = regex.find(timeStr)
+        return match?.value?.toIntOrNull() ?: 10
+    }
+
+    private fun parseIngredients(ingredientsStr: String?): List<String> {
+        if (ingredientsStr.isNullOrBlank()) return emptyList()
+        return ingredientsStr.split(";").map { raw ->
+            val parts = raw.split(":")
+            if (parts.size >= 2) {
+                parts[0].trim()
+            } else {
+                raw.trim()
+            }
+        }.filter { it.isNotBlank() }
+    }
+
+    private fun parseCookingInstructions(instructionsStr: String?): List<String> {
+        if (instructionsStr.isNullOrBlank()) {
+            return listOf("Prepare fresh ingredients.", "Combine according to taste and serve.")
+        }
+        val sentences = instructionsStr.split(".").map { it.trim() }.filter { it.isNotBlank() }
+        return if (sentences.isNotEmpty()) sentences else listOf(instructionsStr)
+    }
+
+    private fun parseNutritionInfo(nutritionStr: String): List<Pair<String, String>> {
+        val result = mutableListOf<Pair<String, String>>()
+        try {
+            val parts = nutritionStr.replace("Per serving - ", "").split(";")
+            for (part in parts) {
+                val kv = part.split(":")
+                if (kv.size == 2) {
+                    val key = kv[0].trim()
+                    val value = kv[1].trim()
+                    result.add(key to value)
+                }
+            }
+        } catch (_: Exception) { }
+        return result
     }
 
     private fun loadMockData() {
         val capsules = listOf(
             MetricCapsule(
+                id = "698ea56c286301cbff27cd0a",
+                title = "Resting Heart Rate",
+                value = "71",
+                unit = " bpm",
+                isSelected = true,
+                isImproving = true,
+                isUpwardTrend = false,
+                trendValue = "0.0",
+                replacedMeals = 5,
+                targetMeals = 20,
+                sparkData = listOf(74f, 73f, 72f, 71f, 71f, 71f, 71f)
+            ),
+            MetricCapsule(
                 id = "sbp",
                 title = "Systolic BP",
                 value = "128",
                 unit = " mmHg",
-                isSelected = true,
+                isSelected = false,
                 isImproving = true,
                 isUpwardTrend = false,
                 trendValue = "3%",
@@ -210,6 +433,9 @@ class RecipesViewModel : ViewModel() {
         }
         _metricCapsules.value = updatedList
         _selectedMetric.value = updatedList.find { it.isSelected }
+
+        // Fetch recipes from backend API for the selected metric ID
+        fetchRecipesByMetric(id)
     }
 
     fun logRecipe(recipeId: String) {

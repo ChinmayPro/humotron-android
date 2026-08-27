@@ -9,24 +9,85 @@ import androidx.navigation.fragment.findNavController
 import com.humotron.app.R
 import com.humotron.app.core.base.BaseFragment
 import com.humotron.app.databinding.FragmentShopScansBinding
+import androidx.fragment.app.activityViewModels
+import com.humotron.app.data.network.Status
 import dagger.hilt.android.AndroidEntryPoint
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 @AndroidEntryPoint
 class ShopScansFragment : BaseFragment(R.layout.fragment_shop_scans) {
 
     private lateinit var binding: FragmentShopScansBinding
+    private val viewModel: ShopViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentShopScansBinding.bind(view)
 
         setupInsets()
+        initObservers()
+        viewModel.fetchBloodTestServices()
 
         binding.btnBookNow.setOnClickListener {
-            parentFragment?.parentFragment?.findNavController()?.navigate(R.id.action_fragmentShop_to_fragmentShopTestDetail)
+            binding.btnBookNow.isEnabled = false
+            viewModel.fetchBloodTestOrders()
         }
 
         startAnimations()
+    }
+
+    private fun initObservers() {
+        viewModel.getBloodTestServicesLiveData().observe(viewLifecycleOwner) { resource ->
+            when (resource.status) {
+                Status.SUCCESS -> {
+                    val service = resource.data?.data?.services?.firstOrNull()
+                    if (service != null) {
+                        val priceFormatted = service.price?.formatted
+                            ?: if (service.price?.amount != null) "${service.price?.symbol ?: "$"}${service.price?.amount}"
+                            else null
+                        if (!priceFormatted.isNullOrEmpty()) {
+                            binding.btnBookNow.text = "Book a scan · $priceFormatted"
+                        }
+                    }
+                }
+                else -> {}
+            }
+        }
+
+        viewModel.getBloodTestOrdersLiveData().observe(viewLifecycleOwner) { resource ->
+            binding.btnBookNow.isEnabled = true
+            when (resource.status) {
+                Status.SUCCESS -> {
+                    val orders = resource.data?.orderList
+                    val hasActiveBooking = orders?.any { order ->
+                        val st = order.status?.lowercase() ?: ""
+                        st != "cancelled" && st != "completed" && st != "refunded"
+                    } == true
+
+                    if (hasActiveBooking) {
+                        showAlreadyBookedDialog()
+                    } else {
+                        parentFragment?.parentFragment?.findNavController()?.navigate(R.id.action_fragmentShop_to_fragmentShopTestDetail)
+                    }
+                }
+                Status.ERROR, Status.EXCEPTION -> {
+                    parentFragment?.parentFragment?.findNavController()?.navigate(R.id.action_fragmentShop_to_fragmentShopTestDetail)
+                }
+                Status.LOADING -> {
+                    binding.btnBookNow.isEnabled = false
+                }
+            }
+        }
+    }
+
+    private fun showAlreadyBookedDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setMessage("You already have a Deep Scan booked. We'll let you know when your kit ships.")
+            .setPositiveButton("Okay") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
     private fun setupInsets() {

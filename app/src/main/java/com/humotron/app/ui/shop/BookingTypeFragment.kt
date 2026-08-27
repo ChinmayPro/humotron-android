@@ -33,6 +33,7 @@ class BookingTypeFragment : BaseFragment(R.layout.fragment_booking_type) {
         setupInsets()
         initViews()
         initObservers()
+        viewModel.fetchBloodTestServices()
         viewModel.fetchBookingTypes()
     }
 
@@ -122,6 +123,32 @@ class BookingTypeFragment : BaseFragment(R.layout.fragment_booking_type) {
     }
 
     private fun initObservers() {
+        viewModel.getBloodTestServicesLiveData().observe(viewLifecycleOwner) { resource ->
+            when (resource.status) {
+                Status.SUCCESS -> {
+                    hideLoader()
+                    val services = resource.data?.data?.services
+                    if (!services.isNullOrEmpty()) {
+                        val mappedServices = services.map { s ->
+                            BookingType(
+                                id = s.id ?: "",
+                                title = s.name ?: s.serviceTypeLabel ?: "",
+                                description = s.shortDescription ?: s.longDescription ?: "",
+                                price = s.price?.formatted ?: if (s.price?.amount != null) "${s.price?.symbol ?: "$"}${s.price?.amount}" else ""
+                            )
+                        }
+                        adapter.setData(mappedServices)
+                    }
+                }
+                Status.LOADING -> {
+                    showLoader()
+                }
+                else -> {
+                    // Fall back to getBookingTypeLiveData
+                }
+            }
+        }
+
         viewModel.getBookingTypeLiveData().observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
                 Status.SUCCESS -> {
@@ -132,16 +159,20 @@ class BookingTypeFragment : BaseFragment(R.layout.fragment_booking_type) {
                         BookingType(id = "home", title = "At-home service", description = "A professional visits your home to collect the sample.", price = "£29.99"),
                         BookingType(id = "lab", title = "Lab visit", description = "Visit a partner lab for a quick, professional blood draw.", price = "£29.99")
                     )
-                    adapter.setData(if (!data.isNullOrEmpty()) data else mockData)
+                    if (adapter.itemCount == 0) {
+                        adapter.setData(if (!data.isNullOrEmpty()) data else mockData)
+                    }
                 }
                 Status.ERROR, Status.EXCEPTION -> {
                     hideLoader()
-                    val mockData = listOf(
-                        BookingType(id = "self", title = "Self-collection kit", description = "Use our easy kit and drop it off when you are ready.", price = "£19.99"),
-                        BookingType(id = "home", title = "At-home service", description = "A professional visits your home to collect the sample.", price = "£29.99"),
-                        BookingType(id = "lab", title = "Lab visit", description = "Visit a partner lab for a quick, professional blood draw.", price = "£29.99")
-                    )
-                    adapter.setData(mockData)
+                    if (adapter.itemCount == 0) {
+                        val mockData = listOf(
+                            BookingType(id = "self", title = "Self-collection kit", description = "Use our easy kit and drop it off when you are ready.", price = "£19.99"),
+                            BookingType(id = "home", title = "At-home service", description = "A professional visits your home to collect the sample.", price = "£29.99"),
+                            BookingType(id = "lab", title = "Lab visit", description = "Visit a partner lab for a quick, professional blood draw.", price = "£29.99")
+                        )
+                        adapter.setData(mockData)
+                    }
                 }
                 Status.LOADING -> {
                     showLoader()

@@ -63,7 +63,7 @@ class RecipeCardAdapter(
 
             // Ingredients
             llIngredients.removeAllViews()
-            item.ingredients.forEach { ingredient ->
+            item.ingredients.take(3).forEach { ingredient ->
                 val chipView = LayoutInflater.from(itemView.context)
                     .inflate(R.layout.view_recipe_ingredient_chip, llIngredients, false)
                 chipView.findViewById<TextView>(R.id.tvIngredient).text = ingredient

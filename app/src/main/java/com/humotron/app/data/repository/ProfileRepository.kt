@@ -363,4 +363,19 @@ class ProfileRepository @Inject constructor(
     }.catch {
         emit(responseHandler.handleException(ValidationException(it.message)))
     }
+
+    fun getRecipesByMetricReading(
+        metricId: String
+    ): Flow<Resource<com.humotron.app.domain.modal.response.GetRecipesByMetricReadingResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.getRecipesByMetricReading(metricId), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
 }

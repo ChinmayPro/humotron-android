@@ -84,12 +84,13 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvBasicDesc"
                 style="@style/Text.14x.Manrope.Medium"
-                android:layout_width="@dimen/_200dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="9dp"
                 android:lineSpacingExtra="2dp"
                 android:text="Your essential dashboard — track sources, read metrics and follow guidance."
                 android:textColor="@color/white50"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvBasicTitle" />
 
@@ -170,12 +171,13 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvProDesc"
                 style="@style/Text.14x.Manrope.Medium"
-                android:layout_width="230dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="9dp"
                 android:lineSpacingExtra="4dp"
                 android:text="Everything in Basic, plus AI insights, computed metrics, AI chat and personalised guidance."
                 android:textColor="@color/white50"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvProTitle" />
 

@@ -90,13 +90,21 @@
                 </LinearLayout>
 
                 <!-- Macros Row -->
-                <LinearLayout
-                    android:id="@+id/llMacros"
+                <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="22dp"
                     android:layout_marginTop="20dp"
-                    android:orientation="horizontal" />
+                    android:clipToPadding="false"
+                    android:fillViewport="true"
+                    android:paddingHorizontal="22dp"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:id="@+id/llMacros"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" />
+                </HorizontalScrollView>
 
                 <!-- Meta Grid Details -->
                 <GridLayout

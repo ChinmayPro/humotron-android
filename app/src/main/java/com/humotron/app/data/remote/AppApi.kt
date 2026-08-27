@@ -68,6 +68,7 @@ import com.humotron.app.domain.modal.response.GetDefaultConfigResponse
 import com.humotron.app.domain.modal.response.GetDeviceConfigResponse
 import com.humotron.app.domain.modal.response.GetOptimizedRecipeWithMetricsResponse
 import com.humotron.app.domain.modal.response.GetOptimizedRecommendationDetailResponse
+import com.humotron.app.domain.modal.response.GetRecipesByMetricReadingResponse
 import com.humotron.app.domain.modal.response.GetOptimizedRecommendationsWithMetricsResponse
 import com.humotron.app.domain.modal.response.GetShopDevicesResponse
 import com.humotron.app.domain.modal.response.GoogleHealthBackfillResponse
@@ -289,6 +290,11 @@ interface AppApi {
     suspend fun getRecommendationsByMetricId(
         @Path("metricId") metricId: String,
     ): Response<MetricResponse>
+
+    @POST("metric/getRecipesByMetricReading/{metricId}")
+    suspend fun getRecipesByMetricReading(
+        @Path("metricId") metricId: String,
+    ): Response<GetRecipesByMetricReadingResponse>
 
     @POST("device/getAllMetricsByDeviceId/{deviceId}")
     suspend fun getAllMetricsByDeviceId(
@@ -594,6 +600,9 @@ interface AppApi {
     suspend fun cancelBooking(
         @Path("bookingId") bookingId: String,
     ): Response<CommonResponse>
+
+    @GET("blood-test/services")
+    suspend fun getBloodTestServices(): Response<com.humotron.app.domain.modal.response.BloodTestServicesResponse>
 
     @POST("blood-test/bookings/cancel/{bookingId}")
     suspend fun cancelBloodTestBooking(

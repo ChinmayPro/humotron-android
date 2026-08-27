@@ -248,6 +248,32 @@ class ShopRepository @Inject constructor(
         emit(responseHandler.handleException(ValidationException(it.message)))
     }
 
+    fun getBloodTestServices(): Flow<Resource<com.humotron.app.domain.modal.response.BloodTestServicesResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.getBloodTestServices(), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
+    fun getBloodTestOrders(): Flow<Resource<com.humotron.app.domain.modal.response.GetBloodTestOrderResponse>> = flow {
+        emit(Resource.loading())
+        try {
+            val response = responseHandler.handleResponse(api.getBloodTestOrders(), false)
+            emit(response)
+        } catch (e: Exception) {
+            emit(responseHandler.handleException(e))
+            e.printStackTrace()
+        }
+    }.catch {
+        emit(responseHandler.handleException(ValidationException(it.message)))
+    }
+
     fun getAllTestBookingsType(): Flow<Resource<BookingTypeResponse>> = flow {
         emit(Resource.loading())
         try {

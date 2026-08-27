@@ -12,7 +12,9 @@
         android:id="@+id/tvIngredient"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:ellipsize="end"
         android:fontFamily="sans-serif-medium"
+        android:maxLines="1"
         android:textColor="@color/textColorWhite"
         android:textSize="11sp"
         tools:text="Berries" />
