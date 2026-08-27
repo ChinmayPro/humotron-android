@@ -249,6 +249,24 @@ class ShopViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
+    private val bloodTestServicesLiveData: SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.BloodTestServicesResponse>> = SingleLiveEvent()
+    fun getBloodTestServicesLiveData(): SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.BloodTestServicesResponse>> = bloodTestServicesLiveData
+
+    fun fetchBloodTestServices() {
+        repository.getBloodTestServices().onEach { state ->
+            bloodTestServicesLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
+
+    private val bloodTestOrdersLiveData: SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.GetBloodTestOrderResponse>> = SingleLiveEvent()
+    fun getBloodTestOrdersLiveData(): SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.GetBloodTestOrderResponse>> = bloodTestOrdersLiveData
+
+    fun fetchBloodTestOrders() {
+        repository.getBloodTestOrders().onEach { state ->
+            bloodTestOrdersLiveData.value = state
+        }.launchIn(viewModelScope)
+    }
+
     private val bookingTypeLiveData: SingleLiveEvent<Resource<BookingTypeResponse>> = SingleLiveEvent()
     fun getBookingTypeLiveData(): SingleLiveEvent<Resource<BookingTypeResponse>> = bookingTypeLiveData
 

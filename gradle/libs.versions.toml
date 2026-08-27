@@ -81,6 +81,11 @@ espressoCore = "3.6.1"
 lottie = "6.7.1"
 billing = "7.0.0"
 
+#Firebase
+firebaseBom = "33.10.0"
+googleServices = "4.4.2"
+firebaseCrashlytics = "3.0.3"
+
 [libraries]
 
 #Android Core
@@ -168,7 +173,14 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie" }
 play-billing-ktx = { module = "com.android.billingclient:billing-ktx", version.ref = "billing" }
 
+#Firebase
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
+firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlytics" }

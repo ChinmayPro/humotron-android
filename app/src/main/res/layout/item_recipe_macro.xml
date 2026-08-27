@@ -1,20 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_weight="1"
-    android:layout_marginHorizontal="4dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:minWidth="92dp"
+    android:minHeight="72dp"
+    android:layout_marginEnd="10dp"
     android:background="@drawable/bg_recipe_card"
     android:orientation="vertical"
     android:gravity="center"
-    android:paddingVertical="12dp">
+    android:paddingHorizontal="14dp"
+    android:paddingVertical="10dp">
 
     <TextView
         android:id="@+id/tvValue"
-        style="@style/Text.20x.Manrope.Bold"
+        style="@style/Text.16x.Manrope.Bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white" />
+        android:gravity="center"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        tools:text="320 kcal" />
+
+    <TextView
+        android:id="@+id/tvSubValue"
+        style="@style/Text.10x.Manrope.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textColor="@color/textColorMuted"
+        android:visibility="gone"
+        tools:text="(26% NRV)" />
 
     <TextView
         android:id="@+id/tvTitle"
@@ -22,6 +39,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
+        android:gravity="center"
         android:textColor="@color/textColorMuted"
-        android:textAllCaps="true" />
+        android:textAllCaps="true"
+        android:singleLine="true"
+        tools:text="ENERGY" />
 </LinearLayout>

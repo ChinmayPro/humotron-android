@@ -24,7 +24,9 @@ import com.humotron.app.databinding.FragmentRecipeDetailBinding
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RecipeDetailFragment : Fragment() {
 
     private var _binding: FragmentRecipeDetailBinding? = null
@@ -121,8 +123,22 @@ class RecipeDetailFragment : Fragment() {
         binding.llMacros.removeAllViews()
         recipe.macros.forEach { (value, title) ->
             val macroView = layoutInflater.inflate(R.layout.item_recipe_macro, binding.llMacros, false)
-            macroView.findViewById<TextView>(R.id.tvValue).text = value
-            macroView.findViewById<TextView>(R.id.tvTitle).text = title
+            val tvValue = macroView.findViewById<TextView>(R.id.tvValue)
+            val tvSubValue = macroView.findViewById<TextView>(R.id.tvSubValue)
+            val tvTitle = macroView.findViewById<TextView>(R.id.tvTitle)
+
+            if (value.contains("(")) {
+                val mainVal = value.substringBefore("(").trim()
+                val subVal = "(" + value.substringAfter("(")
+                tvValue.text = mainVal
+                tvSubValue.text = subVal
+                tvSubValue.visibility = View.VISIBLE
+            } else {
+                tvValue.text = value
+                tvSubValue.visibility = View.GONE
+            }
+
+            tvTitle.text = title
             binding.llMacros.addView(macroView)
         }
 

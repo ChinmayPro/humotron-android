@@ -12,12 +12,13 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.humotron.app.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RecipesFragment : Fragment() {
 
     private val viewModel: RecipesViewModel by activityViewModels()
@@ -53,6 +54,9 @@ class RecipesFragment : Fragment() {
         setupAdapters()
         setupListeners()
         observeViewModel()
+
+        val metricId = arguments?.getString("metricId") ?: "698ea56c286301cbff27cd0a"
+        viewModel.fetchRecipesByMetric(metricId)
     }
 
     private fun initViews(view: View) {

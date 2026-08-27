@@ -35,7 +35,27 @@ data class GroupMetricData(
     @SerializedName("metrics")
     val metrics: List<MetricTrackingData>? = null,
     @SerializedName("hasMinimumData")
-    val hasMinimumData: Boolean? = null
+    val hasMinimumData: Boolean? = null,
+    @SerializedName("deviceId")
+    val deviceId: List<String>? = null
+) : Parcelable
+
+@Parcelize
+data class MetricCategoryData(
+    @SerializedName("_id")
+    val id: String? = null,
+    @SerializedName("name")
+    val name: String? = null,
+    @SerializedName("deviceId")
+    val deviceId: List<String>? = null
+) : Parcelable
+
+@Parcelize
+data class MetricChatConfig(
+    @SerializedName("enabled")
+    val enabled: Boolean? = null,
+    @SerializedName("displayType")
+    val displayType: String? = null
 ) : Parcelable
 
 @Parcelize
@@ -49,7 +69,7 @@ data class MetricTrackingData(
     @SerializedName("metricUserFacingName")
     val metricUserFacingName: String? = null,
     @SerializedName("deviceId")
-    val deviceId: String? = null,
+    val deviceId: List<String>? = null,
     @SerializedName("status")
     val status: String? = null,
     @SerializedName("metricWhat")
@@ -87,7 +107,13 @@ data class MetricTrackingData(
     @SerializedName("deviceName")
     val deviceName: String? = null,
     @SerializedName("metricReadingUnit")
-    val metricReadingUnit: String? = null
+    val metricReadingUnit: String? = null,
+    @SerializedName("chat")
+    val chat: MetricChatConfig? = null,
+    @SerializedName("category")
+    val category: MetricCategoryData? = null,
+    @SerializedName("hasMinimumData")
+    val hasMinimumData: Boolean? = null
 ) : Parcelable
 
 @Parcelize
