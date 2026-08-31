@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import com.humotron.app.data.remote.AppApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
@@ -61,6 +62,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
+    private val mainViewModel by viewModels<MainViewModel>()
     private val homeViewModel by viewModels<HomeViewModel>()
     private val bpViewModel by viewModels<BpMachineViewModel>()
 
@@ -177,9 +179,40 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         //Force initialize HomeViewModel here so its init{} runs before any Fragment uses it, otherwise homeViewModel?.loadDateData() not work in RingDeviceManager
         homeViewModel
         checkBlePermissionsAndStart()
+        showAppUpdateDialog()
+    }
+
+    private fun showAppUpdateDialog() {
+        try {
+            val pInfo = packageManager.getPackageInfo(packageName, 0)
+            val currentVersion = pInfo.versionName ?: "1.0.0"
+            mainViewModel.checkAppVersion(currentVersion)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun initObservers() {
+        lifecycleScope.launch {
+            mainViewModel.versionCheckState.collect { state ->
+                if (state is VersionCheckState.Success) {
+                    val updateStatus = state.response.data?.updateStatus
+                    if (updateStatus == "FORCE" || updateStatus == "OPTIONAL") {
+                        val isRequired = updateStatus == "FORCE"
+                        val releaseNotes = state.response.data?.releaseNotes
+                        val title = releaseNotes?.title?.takeIf { it.isNotBlank() }
+                        val message = releaseNotes?.message?.takeIf { it.isNotBlank() }
+                        val updateDialog = com.humotron.app.ui.dialogs.AppUpdateDialogFragment.newInstance(
+                            isRequired = isRequired,
+                            title = title,
+                            description = message
+                        )
+                        updateDialog.show(supportFragmentManager, com.humotron.app.ui.dialogs.AppUpdateDialogFragment.TAG)
+                    }
+                }
+            }
+        }
+
         app.ringDeviceManager.connected.observe(this) { isConnected ->
             if (isConnected) {
                 device?.let {

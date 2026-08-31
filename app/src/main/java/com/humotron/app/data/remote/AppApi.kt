@@ -98,6 +98,7 @@ import com.humotron.app.domain.modal.response.ProviderResponse
 import com.humotron.app.domain.modal.response.RingReadingData
 import com.humotron.app.domain.modal.response.SearchTopicsResponse
 import com.humotron.app.domain.modal.response.ShopAddToCartResponse
+import com.humotron.app.domain.modal.response.CheckVersionBaseResponse
 import com.humotron.app.domain.modal.response.SubmitAnswerRequest
 import com.humotron.app.domain.modal.response.SubmitAnswerResponse
 import com.humotron.app.domain.modal.response.SupportHomeResponse
@@ -138,6 +139,12 @@ interface AppApi {
 
     @GET("chatFeltOff/questions")
     suspend fun getFeltOffQuestions(): Response<FeltOffQuestionsResponse>
+
+    @GET("appRelease/checkVersion")
+    suspend fun checkVersion(
+        @Query("platform") platform: String = "ANDROID",
+        @Query("version") version: String
+    ): Response<CheckVersionBaseResponse>
 
     @GET("chatNutritionIdea/questions")
     suspend fun getNutritionIdeaQuestions(): Response<FeltOffQuestionsResponse>

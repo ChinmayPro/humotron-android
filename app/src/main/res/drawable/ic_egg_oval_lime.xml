@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="300dp"
+    android:height="430dp"
+    android:viewportWidth="300"
+    android:viewportHeight="430">
+
+    <!-- Glowing Radial Fill Path -->
+    <path
+        android:pathData="M 150,12 C 245,12 288,115 288,220 C 288,335 240,418 150,418 C 60,418 12,335 12,220 C 12,115 55,12 150,12 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:type="radial"
+                android:centerX="150"
+                android:centerY="160"
+                android:gradientRadius="240"
+                android:startColor="#38C4F23E"
+                android:centerColor="#12C4F23E"
+                android:endColor="#02C4F23E" />
+        </aapt:attr>
+    </path>
+
+    <!-- Glowing Outline Stroke Line -->
+    <path
+        android:pathData="M 150,12 C 245,12 288,115 288,220 C 288,335 240,418 150,418 C 60,418 12,335 12,220 C 12,115 55,12 150,12 Z"
+        android:strokeColor="#65C4F23E"
+        android:strokeWidth="1.5"
+        android:fillColor="#00000000" />
+</vector>

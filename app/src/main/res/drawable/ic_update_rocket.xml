@@ -1,0 +1,38 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="40dp"
+    android:height="40dp"
+    android:viewportWidth="40"
+    android:viewportHeight="40">
+
+    <!-- Rocket Body -->
+    <path
+        android:pathData="M20,3 C27,9 28,18 27,25 L13,25 C12,18 13,9 20,3 Z"
+        android:strokeColor="#C4F23E"
+        android:strokeWidth="2.2"
+        android:strokeLineJoin="round"
+        android:fillColor="#00000000" />
+
+    <!-- Porthole Window -->
+    <path
+        android:pathData="M20,15m-3.4,0a3.4,3.4 0 1,0 6.8,0a3.4,3.4 0 1,0 -6.8,0"
+        android:strokeColor="#C4F23E"
+        android:strokeWidth="2"
+        android:fillColor="#00000000" />
+
+    <!-- Rocket Fins (Left & Right) -->
+    <path
+        android:pathData="M13,25 L8,31 L13,30 M27,25 L32,31 L27,30"
+        android:strokeColor="#C4F23E"
+        android:strokeWidth="2"
+        android:strokeLineJoin="round"
+        android:fillColor="#00000000" />
+
+    <!-- Rocket Flame Engine -->
+    <path
+        android:pathData="M17,27 L20,34 L23,27"
+        android:strokeColor="#C4F23E"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:fillColor="#00000000" />
+</vector>
