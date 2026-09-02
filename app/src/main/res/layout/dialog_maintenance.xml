@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_maintenance_gradient"
+    android:paddingStart="24dp"
+    android:paddingEnd="24dp">
+
+    <!-- Hero container matching HTML .fs .hero (150px x 150px) -->
+    <FrameLayout
+        android:id="@+id/flHeroContainer"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/tvEyebrow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed">
+
+        <!-- Base ring + ticks (120dp x 120dp centered) -->
+        <ImageView
+            android:id="@+id/ivRecalStatic"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_recal_static" />
+
+        <!-- Rotating Arc (120dp x 120dp centered) -->
+        <ImageView
+            android:id="@+id/ivRecalArc"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_recal_arc" />
+
+        <!-- Breathing center dot (10dp x 10dp centered) -->
+        <View
+            android:id="@+id/vCenterDot"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_recal_center_dot" />
+    </FrameLayout>
+
+    <!-- Eyebrow matching HTML .fs .eyebrow -->
+    <TextView
+        android:id="@+id/tvEyebrow"
+        style="@style/Text.12x.Manrope.SemiBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:letterSpacing="0.2"
+        android:text="@string/maintenance_eyebrow"
+        android:textAllCaps="true"
+        android:textColor="@color/insights_subtitle_grey"
+        app:layout_constraintBottom_toTopOf="@+id/tvTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/flHeroContainer" />
+
+    <!-- Title matching HTML .fs h2 -->
+    <TextView
+        android:id="@+id/tvTitle"
+        style="@style/Text.26x.Manrope.Bold"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="14dp"
+        android:gravity="center"
+        android:letterSpacing="-0.02"
+        android:lineSpacingMultiplier="1.15"
+        android:text="@string/maintenance_default_title"
+        android:textColor="@color/textColorWhite"
+        app:layout_constraintBottom_toTopOf="@+id/tvDescription"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvEyebrow" />
+
+    <!-- Description matching HTML .fs p -->
+    <TextView
+        android:id="@+id/tvDescription"
+        style="@style/Text.16x.Manrope.Regular"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:lineSpacingExtra="5dp"
+        android:text="@string/maintenance_default_desc"
+        android:textColor="@color/textColorMuted"
+        app:layout_constraintBottom_toTopOf="@+id/llEta"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+        app:layout_constraintWidth_max="310dp" />
+
+    <!-- ETA Pill matching HTML .verrow -->
+    <LinearLayout
+        android:id="@+id/llEta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/bg_maintenance_pill"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="14dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="14dp"
+        android:paddingBottom="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDescription"
+        tools:visibility="visible">
+
+        <TextView
+            style="@style/Text.13x.Manrope.Regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/maintenance_back_by"
+            android:textColor="@color/colorTextGrey" />
+
+        <TextView
+            android:id="@+id/tvEta"
+            style="@style/Text.13x.Manrope.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/lime"
+            tools:text="~14:30 GMT" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

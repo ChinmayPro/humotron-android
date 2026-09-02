@@ -196,18 +196,28 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         lifecycleScope.launch {
             mainViewModel.versionCheckState.collect { state ->
                 if (state is VersionCheckState.Success) {
-                    val updateStatus = state.response.data?.updateStatus
-                    if (updateStatus == "FORCE" || updateStatus == "OPTIONAL") {
-                        val isRequired = updateStatus == "FORCE"
-                        val releaseNotes = state.response.data?.releaseNotes
-                        val title = releaseNotes?.title?.takeIf { it.isNotBlank() }
-                        val message = releaseNotes?.message?.takeIf { it.isNotBlank() }
-                        val updateDialog = com.humotron.app.ui.dialogs.AppUpdateDialogFragment.newInstance(
-                            isRequired = isRequired,
-                            title = title,
-                            description = message
+                    val maintenance = state.response.data?.maintenance
+                    if (maintenance?.isActive == true) {
+                        val maintenanceDialog = com.humotron.app.ui.dialogs.MaintenanceDialogFragment.newInstance(
+                            title = maintenance.title?.takeIf { it.isNotBlank() },
+                            description = maintenance.message?.takeIf { it.isNotBlank() },
+                            endAt = maintenance.endAt?.takeIf { it.isNotBlank() }
                         )
-                        updateDialog.show(supportFragmentManager, com.humotron.app.ui.dialogs.AppUpdateDialogFragment.TAG)
+                        maintenanceDialog.show(supportFragmentManager, com.humotron.app.ui.dialogs.MaintenanceDialogFragment.TAG)
+                    } else {
+                        val updateStatus = state.response.data?.updateStatus
+                        if (updateStatus == "FORCE" || updateStatus == "OPTIONAL") {
+                            val isRequired = updateStatus == "FORCE"
+                            val releaseNotes = state.response.data?.releaseNotes
+                            val title = releaseNotes?.title?.takeIf { it.isNotBlank() }
+                            val message = releaseNotes?.message?.takeIf { it.isNotBlank() }
+                            val updateDialog = com.humotron.app.ui.dialogs.AppUpdateDialogFragment.newInstance(
+                                isRequired = isRequired,
+                                title = title,
+                                description = message
+                            )
+                            updateDialog.show(supportFragmentManager, com.humotron.app.ui.dialogs.AppUpdateDialogFragment.TAG)
+                        }
                     }
                 }
             }

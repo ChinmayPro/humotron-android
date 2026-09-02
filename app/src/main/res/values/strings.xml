@@ -1787,4 +1787,10 @@ To get started:\n
     <string name="why_continuous_tracking_desc">Low activity can affect energy balance, recovery, and long-term health outcomes.</string>
     <string name="things_that_affect_readings">Things that affect %1$s readings</string>
     <string name="bullet_dot">•</string>
+
+    <!-- Maintenance Mode -->
+    <string name="maintenance_eyebrow">SCHEDULED MAINTENANCE</string>
+    <string name="maintenance_default_title">Recalibrating the engine</string>
+    <string name="maintenance_default_desc">We\'re making Humotron better and will be back shortly. Nothing you\'ve logged is affected.</string>
+    <string name="maintenance_back_by">Back by</string>
 </resources>
