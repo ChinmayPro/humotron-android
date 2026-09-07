@@ -48,4 +48,13 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment{
             dialog?.dismiss()
         }
     }
+
+    fun showApiError(error: com.humotron.app.data.network.error.Error?, fallbackMessage: String? = null) {
+        val message = error?.errorMessage?.takeIf { it.isNotBlank() }
+            ?: fallbackMessage?.takeIf { it.isNotBlank() }
+            ?: getString(com.humotron.app.R.string.something_went_wrong)
+        context?.let { ctx ->
+            com.humotron.app.util.ToastUtils.showShort(ctx, message)
+        }
+    }
 }

@@ -258,7 +258,8 @@ class DecodeChatConversationsFragment : DialogFragment() {
         }
 
         binding.llSettings.setOnClickListener {
-            Toast.makeText(requireContext(), "Opening Settings", Toast.LENGTH_SHORT).show()
+            parentFragmentManager.setFragmentResult("open_ai_chat_settings", Bundle())
+            dismissWithAnimation()
         }
     }
 }

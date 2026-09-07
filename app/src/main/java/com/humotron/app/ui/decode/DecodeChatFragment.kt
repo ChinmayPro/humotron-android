@@ -140,6 +140,13 @@ class DecodeChatFragment : BaseFragment(R.layout.fragment_decode_chat) {
                 startNewChat()
             }
         }
+        childFragmentManager.setFragmentResultListener("open_ai_chat_settings", viewLifecycleOwner) { _, _ ->
+            try {
+                findNavController().navigate(R.id.fragmentDecodeChatSettings)
+            } catch (e: Exception) {
+                findNavController().navigate(R.id.action_global_fragmentDecodeChatSettings)
+            }
+        }
     }
 
     private fun startNewChat() {

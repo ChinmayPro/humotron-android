@@ -73,9 +73,11 @@ class SelectAddressBottomSheet : BaseBottomSheetDialogFragment() {
                     resource.data?.data?.let { list ->
                         // If we don't have a selection, or after an edit, 
                         // find the default address and select it
-                        val defaultAddress = list.find { it.isDefault == true }
-                        if (defaultAddress != null) {
-                            selectedAddressId = defaultAddress.id
+                        if (selectedAddressId == null) {
+                            val defaultAddress = list.find { it.isDefault == true }
+                            if (defaultAddress != null) {
+                                selectedAddressId = defaultAddress.id
+                            }
                         }
                         adapter.submitList(list, selectedAddressId)
                     }

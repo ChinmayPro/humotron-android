@@ -87,12 +87,9 @@ class BookSummaryFragment : BaseBottomSheetDialogFragment(R.layout.fragment_book
                     }
                 }
 
-                Status.ERROR -> {
+                Status.ERROR, Status.EXCEPTION -> {
                     hideProgress()
-                }
-
-                Status.EXCEPTION -> {
-                    hideProgress()
+                    showApiError(networkStatus.error)
                 }
 
                 Status.LOADING -> {

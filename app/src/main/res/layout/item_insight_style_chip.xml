@@ -8,7 +8,7 @@
     android:background="@drawable/bg_insight_chip_unselected"
     android:orientation="vertical"
     android:paddingHorizontal="20dp"
-    android:paddingVertical="16dp">
+    android:paddingVertical="12dp">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvChipTitle"

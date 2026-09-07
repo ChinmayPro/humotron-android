@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.bumptech.glide.Glide
 import com.humotron.app.R
 import com.humotron.app.core.Preference
 import com.humotron.app.core.base.BaseFragment
@@ -63,8 +64,42 @@ class ManageAccountFragment : BaseFragment(R.layout.fragment_manage_account) {
         }
         binding.tvAvatarInitials.text = initial
 
-        binding.ivAvatarBg.visibility = View.GONE
-        binding.tvAvatarInitials.visibility = View.VISIBLE
+        val profileImageUrl = user.profileImages
+        if (!profileImageUrl.isNullOrBlank() && profileImageUrl != "null") {
+            binding.ivAvatarBg.visibility = View.VISIBLE
+            binding.tvAvatarInitials.visibility = View.GONE
+            Glide.with(this)
+                .load(profileImageUrl)
+                .circleCrop()
+                .listener(object : com.bumptech.glide.request.RequestListener<android.graphics.drawable.Drawable> {
+                    override fun onLoadFailed(
+                        e: com.bumptech.glide.load.engine.GlideException?,
+                        model: Any?,
+                        target: com.bumptech.glide.request.target.Target<android.graphics.drawable.Drawable>,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        binding.ivAvatarBg.visibility = View.GONE
+                        binding.tvAvatarInitials.visibility = View.VISIBLE
+                        return false
+                    }
+
+                    override fun onResourceReady(
+                        resource: android.graphics.drawable.Drawable,
+                        model: Any,
+                        target: com.bumptech.glide.request.target.Target<android.graphics.drawable.Drawable>?,
+                        dataSource: com.bumptech.glide.load.DataSource,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        binding.ivAvatarBg.visibility = View.VISIBLE
+                        binding.tvAvatarInitials.visibility = View.GONE
+                        return false
+                    }
+                })
+                .into(binding.ivAvatarBg)
+        } else {
+            binding.ivAvatarBg.visibility = View.GONE
+            binding.tvAvatarInitials.visibility = View.VISIBLE
+        }
 
         // Set data (Fallback defaults per design)
         binding.tvGender.text = user.gender?.takeIf { it.isNotBlank() } ?: "Male"

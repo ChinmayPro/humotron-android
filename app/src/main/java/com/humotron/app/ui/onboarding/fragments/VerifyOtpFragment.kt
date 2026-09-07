@@ -118,16 +118,13 @@ class VerifyOtpFragment : BaseFragment(R.layout.fragment_verify_otp) {
                 }
 
                 Status.ERROR -> {
-                    Toast.makeText(
-                        requireContext(),
-                        networkStatus.error?.errorMessage,
-                        Toast.LENGTH_SHORT
-                    ).show()
                     hideProgress()
+                    showApiError(networkStatus.error)
                 }
 
                 Status.EXCEPTION -> {
                     hideProgress()
+                    showApiError(networkStatus.error)
                 }
 
                 Status.LOADING -> {
@@ -146,10 +143,12 @@ class VerifyOtpFragment : BaseFragment(R.layout.fragment_verify_otp) {
 
                 Status.ERROR -> {
                     hideProgress()
+                    showApiError(networkStatus.error)
                 }
 
                 Status.EXCEPTION -> {
                     hideProgress()
+                    showApiError(networkStatus.error)
                 }
 
                 Status.LOADING -> {

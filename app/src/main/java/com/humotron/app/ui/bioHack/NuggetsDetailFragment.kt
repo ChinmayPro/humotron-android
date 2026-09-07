@@ -133,10 +133,8 @@ class NuggetsDetailFragment : BaseFragment(R.layout.fragment_nuggets_detail),
 
                 }
 
-                Status.ERROR -> {
-                }
-
-                Status.EXCEPTION -> {
+                Status.ERROR, Status.EXCEPTION -> {
+                    showApiError(it.error)
                 }
 
                 Status.LOADING -> {
@@ -154,12 +152,9 @@ class NuggetsDetailFragment : BaseFragment(R.layout.fragment_nuggets_detail),
 
                 }
 
-                Status.ERROR -> {
+                Status.ERROR, Status.EXCEPTION -> {
                     hideProgress()
-                }
-
-                Status.EXCEPTION -> {
-                    hideProgress()
+                    showApiError(it.error)
                 }
 
                 Status.LOADING -> {
@@ -179,12 +174,9 @@ class NuggetsDetailFragment : BaseFragment(R.layout.fragment_nuggets_detail),
 
                 }
 
-                Status.ERROR -> {
+                Status.ERROR, Status.EXCEPTION -> {
                     hideProgress()
-                }
-
-                Status.EXCEPTION -> {
-                    hideProgress()
+                    showApiError(it.error)
                 }
 
                 Status.LOADING -> {

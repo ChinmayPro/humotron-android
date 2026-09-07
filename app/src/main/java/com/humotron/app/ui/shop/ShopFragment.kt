@@ -54,12 +54,16 @@ class ShopFragment : BaseFragment(R.layout.fragment_shop) {
     private fun setupTabs() {
         binding.header.tabDevices.setOnClickListener { selectTab(R.id.fragmentShopDevices) }
         binding.header.tabScans.setOnClickListener { selectTab(R.id.fragmentShopScans) }
-        binding.header.tabOptimize.setOnClickListener { selectTab(R.id.fragmentShopOptimize) }
         binding.header.tabBooks.setOnClickListener { selectTab(R.id.fragmentShopBooks) }
         binding.header.tabTools.setOnClickListener { selectTab(R.id.fragmentShopTools) }
 
-        // Set default selection from ViewModel
-        selectTab(viewModel.lastSelectedTabId)
+        // Set default selection from ViewModel (fallback to Devices if lastSelectedTabId was Optimize)
+        val defaultTabId = if (viewModel.lastSelectedTabId == R.id.fragmentShopOptimize) {
+            R.id.fragmentShopDevices
+        } else {
+            viewModel.lastSelectedTabId
+        }
+        selectTab(defaultTabId)
     }
 
     private fun selectTab(destinationId: Int) {
@@ -84,7 +88,6 @@ class ShopFragment : BaseFragment(R.layout.fragment_shop) {
         // Reset all tabs
         resetTab(binding.header.tabDevices, binding.header.ivDevices, binding.header.tvDevices, unselectedColor)
         resetTab(binding.header.tabScans, binding.header.ivScans, binding.header.tvScans, unselectedColor)
-        resetTab(binding.header.tabOptimize, binding.header.ivOptimize, binding.header.tvOptimize, unselectedColor)
         resetTab(binding.header.tabBooks, binding.header.ivBooks, binding.header.tvBooks, unselectedColor)
         resetTab(binding.header.tabTools, binding.header.ivTools, binding.header.tvTools, unselectedColor)
 
@@ -97,10 +100,6 @@ class ShopFragment : BaseFragment(R.layout.fragment_shop) {
             R.id.fragmentShopScans -> {
                 binding.header.tvShopTitle.text = "Scans"
                 highlightTab(binding.header.tabScans, binding.header.ivScans, binding.header.tvScans, selectedColor)
-            }
-            R.id.fragmentShopOptimize -> {
-                binding.header.tvShopTitle.text = "Optimize"
-                highlightTab(binding.header.tabOptimize, binding.header.ivOptimize, binding.header.tvOptimize, selectedColor)
             }
             R.id.fragmentShopBooks -> {
                 binding.header.tvShopTitle.text = "Books"

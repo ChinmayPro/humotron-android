@@ -499,12 +499,9 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
                     )
                 }
 
-                Status.ERROR -> {
+                Status.ERROR, Status.EXCEPTION -> {
                     Log.e(TAG, "subscribeToApiObserver: ")
-                }
-
-                Status.EXCEPTION -> {
-                    Log.e(TAG, "subscribeToApiObserver: ")
+                    showApiError(state.error)
                 }
 
                 Status.LOADING -> {
@@ -557,13 +554,9 @@ class DeviceDataFragment : BaseFragment(R.layout.fragment_device_data), View.OnC
                     }
                 }
 
-                Status.ERROR -> {
+                Status.ERROR, Status.EXCEPTION -> {
                     Log.e(TAG, "subscribeToApiObserver: ")
-                }
-
-                Status.EXCEPTION -> {
-                    // Handle exception
-                    Log.e(TAG, "subscribeToApiObserver: ")
+                    showApiError(state.error)
                 }
 
                 Status.LOADING -> {

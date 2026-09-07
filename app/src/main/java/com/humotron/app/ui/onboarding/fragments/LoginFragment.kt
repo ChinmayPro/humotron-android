@@ -158,9 +158,11 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
                 }
                 Status.ERROR -> {
                     hideProgress()
+                    showApiError(networkStatus.error)
                 }
                 Status.EXCEPTION -> {
                     hideProgress()
+                    showApiError(networkStatus.error)
                 }
                 Status.LOADING -> {
                     showProgress()
@@ -179,9 +181,11 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
                 }
                 Status.ERROR -> {
                     hideProgress()
+                    showApiError(networkStatus.error)
                 }
                 Status.EXCEPTION -> {
                     hideProgress()
+                    showApiError(networkStatus.error)
                 }
                 Status.LOADING -> {
                     showProgress()

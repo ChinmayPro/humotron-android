@@ -5,6 +5,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonParseException
 import com.humotron.app.R
 import com.humotron.app.core.ErrorCode
+import com.humotron.app.data.network.exceptions.NoConnectivityException
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
@@ -30,7 +31,7 @@ class ErrorUtils(val context: Context) {
                     )
                 }
 
-                is ConnectException, is UnknownHostException -> {
+                is ConnectException, is UnknownHostException, is NoConnectivityException -> {
                     Error(
                         ErrorCode.INTERNET_ERROR,
                         context.getString(R.string.no_internet),

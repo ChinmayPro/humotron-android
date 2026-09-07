@@ -416,16 +416,13 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
                     }
                 }
 
-                Status.ERROR -> {
+                Status.ERROR, Status.EXCEPTION -> {
                     hideProgress()
+                    showApiError(it.error)
                 }
 
                 Status.LOADING -> {
                     showProgress()
-                }
-
-                Status.EXCEPTION -> {
-
                 }
             }
         }
@@ -520,21 +517,17 @@ class MetricFragment : BaseFragment(R.layout.fragment_metric) {
                     }
                 }
 
-                Status.ERROR -> {
+                Status.ERROR, Status.EXCEPTION -> {
                     hideProgress()
                     binding.trackTrends.tvNoGraphData.visibility = View.VISIBLE
                     binding.trackTrends.lineChart.visibility = View.GONE
                     binding.trackTrends.candleChart.visibility = View.GONE
+                    showApiError(it.error)
                 }
 
                 Status.LOADING -> {
                     showProgress()
                     binding.trackTrends.tvNoGraphData.visibility = View.GONE
-                }
-
-                Status.EXCEPTION -> {
-                    hideProgress()
-                    binding.trackTrends.tvNoGraphData.visibility = View.VISIBLE
                 }
             }
         }

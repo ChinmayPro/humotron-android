@@ -129,10 +129,12 @@ class ProgressFragment : BaseFragment(R.layout.fragment_progress) {
 
                 Status.ERROR -> {
                     PlutoLog.e("ERROR", it.error?.errorMessage ?: "")
+                    showApiError(it.error)
                 }
 
                 Status.EXCEPTION -> {
                     PlutoLog.e("Exception", it.error?.errorMessage ?: "")
+                    showApiError(it.error)
                 }
 
                 Status.LOADING -> {

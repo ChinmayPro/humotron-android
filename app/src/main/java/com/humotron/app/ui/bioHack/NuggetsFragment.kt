@@ -124,10 +124,8 @@ class NuggetsFragment : BaseFragment(R.layout.fragment_nuggets), CardStackListen
                     }
                 }
 
-                Status.ERROR -> {
-                }
-
-                Status.EXCEPTION -> {
+                Status.ERROR, Status.EXCEPTION -> {
+                    showApiError(it.error)
                 }
 
                 Status.LOADING -> {

@@ -87,11 +87,11 @@ class CartViewModel @Inject constructor(
     private val createPaymentIntentLiveData: SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.CreatePaymentIntentResponse>> = SingleLiveEvent()
     fun getCreatePaymentIntentLiveData(): SingleLiveEvent<Resource<com.humotron.app.domain.modal.response.CreatePaymentIntentResponse>> = createPaymentIntentLiveData
 
-    fun startCheckout(finalAmount: Double) {
+    fun startCheckout(finalAmount: Double, customAddressId: String? = null) {
         val data = cartData ?: return
         
         val request = HashMap<String, Any>()
-        request["addressId"] = data.address?.id ?: ""
+        request["addressId"] = customAddressId ?: data.address?.id ?: ""
         request["deliveryMethodId"] = selectedDeliveryMethod?.id ?: ""
         request["couponCode"] = data.couponDetails?.promoCode ?: ""
         request["paymentId"] = ""

@@ -114,7 +114,7 @@ class PastScansFragment : BaseFragment(R.layout.fragment_past_scans) {
 
                 Status.ERROR, Status.EXCEPTION -> {
                     binding.progress.isVisible = false
-                    // Handle error
+                    showApiError(state.error)
                 }
             }
         }

@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
             android:paddingHorizontal="14dp"
-            android:weightSum="5"
+            android:weightSum="4"
             android:baselineAligned="false"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/titleDivider">
@@ -118,38 +118,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="@string/header_scans"
-                    android:textSize="12sp"
-                    android:textColor="@color/white50"
-                    android:fontFamily="@font/manrope_bold"
-                    app:fontFamily="@font/manrope_bold" />
-            </LinearLayout>
-
-            <!-- Optimize Tab -->
-            <LinearLayout
-                android:id="@+id/tabOptimize"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:paddingHorizontal="2dp"
-                android:paddingVertical="9dp">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivOptimize"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_shop_optimize"
-                    app:tint="@color/white50" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvOptimize"
-                    style="@style/Text.10x.Manrope.Bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/optimize"
                     android:textSize="12sp"
                     android:textColor="@color/white50"
                     android:fontFamily="@font/manrope_bold"

@@ -94,12 +94,9 @@ class BioHackBookFragment : BaseFragment(R.layout.fragment_bio_hack_book),
 
                 }
 
-                Status.ERROR -> {
+                Status.ERROR, Status.EXCEPTION -> {
                     hideProgress()
-                }
-
-                Status.EXCEPTION -> {
-                    hideProgress()
+                    showApiError(it.error)
                 }
 
                 Status.LOADING -> {
@@ -132,12 +129,9 @@ class BioHackBookFragment : BaseFragment(R.layout.fragment_bio_hack_book),
                     }
                 }
 
-                Status.ERROR -> {
+                Status.ERROR, Status.EXCEPTION -> {
                     hideProgress()
-                }
-
-                Status.EXCEPTION -> {
-                    hideProgress()
+                    showApiError(it.error)
                 }
 
                 Status.LOADING -> {
@@ -170,12 +164,9 @@ class BioHackBookFragment : BaseFragment(R.layout.fragment_bio_hack_book),
                     }
                 }
 
-                Status.ERROR -> {
+                Status.ERROR, Status.EXCEPTION -> {
                     hideProgress()
-                }
-
-                Status.EXCEPTION -> {
-                    hideProgress()
+                    showApiError(it.error)
                 }
 
                 Status.LOADING -> {

@@ -141,6 +141,13 @@ class TronChatFragment : BaseFragment(R.layout.fragment_tron_chat) {
                 startNewChat()
             }
         }
+        childFragmentManager.setFragmentResultListener("open_ai_chat_settings", viewLifecycleOwner) { _, _ ->
+            try {
+                findNavController().navigate(R.id.fragmentDecodeChatSettings)
+            } catch (e: Exception) {
+                findNavController().navigate(R.id.action_global_fragmentDecodeChatSettings)
+            }
+        }
     }
 
     private fun startNewChat() {
@@ -149,7 +156,18 @@ class TronChatFragment : BaseFragment(R.layout.fragment_tron_chat) {
         
         // Redirect specifically to the Decode selection screen (Chat Tab)
         DecodeFragment.selectedTabPosition = 3
-        findNavController().navigate(R.id.fragmentDecode)
+        val popped = try {
+            findNavController().popBackStack(R.id.fragmentDecode, false)
+        } catch (e: Exception) {
+            false
+        }
+        if (!popped) {
+            try {
+                findNavController().navigate(R.id.fragmentDecode)
+            } catch (e: Exception) {
+                findNavController().popBackStack()
+            }
+        }
     }
 
     private fun loadConversation(conversationId: String, title: String? = null) {

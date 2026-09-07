@@ -1,8 +1,10 @@
 package com.humotron.app.core.di
 
+import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.humotron.app.core.AppConstant.BASE_URL
+import com.humotron.app.data.network.interceptor.NetworkConnectionInterceptor
 import com.humotron.app.data.remote.AppApi
 import com.humotron.app.data.remote.AuthApi
 import com.humotron.app.util.PrefUtils
@@ -10,6 +12,7 @@ import com.pluto.plugins.network.interceptors.okhttp.PlutoOkhttpInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -42,8 +45,12 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient.Builder {
+    fun provideOkHttpClient(
+        @ApplicationContext context: Context,
+        loggingInterceptor: HttpLoggingInterceptor
+    ): OkHttpClient.Builder {
         val okHttpBuilder: OkHttpClient.Builder = OkHttpClient.Builder()
+        okHttpBuilder.addInterceptor(NetworkConnectionInterceptor(context))
         okHttpBuilder.addNetworkInterceptor(loggingInterceptor)
         okHttpBuilder.addInterceptor { chain ->
             chain.proceed(

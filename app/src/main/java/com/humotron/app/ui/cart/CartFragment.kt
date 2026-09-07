@@ -32,6 +32,7 @@ class CartFragment : BaseFragment(R.layout.fragment_cart) {
     private lateinit var paymentSheet: PaymentSheet
     
     private var itemIdBeingDeleted: String? = null
+    private var selectedAddress: GetCartResponse.Address? = null
     private var selectedDeliveryMethod: GetCartResponse.DeliveryMethod? = null
     private var finalPayableAmount: Double = 0.0
 
@@ -304,7 +305,7 @@ class CartFragment : BaseFragment(R.layout.fragment_cart) {
         
         cartAdapter.setItems(items, data?.couponDetails?.promoCode)
 
-        bindAddress(data?.address)
+        bindAddress(selectedAddress ?: data?.address)
         bindShippingMethod(selectedDeliveryMethod)
         bindDetailedBill(data)
         bindTotal(data)
@@ -394,6 +395,7 @@ class CartFragment : BaseFragment(R.layout.fragment_cart) {
     }
 
     private fun bindAddress(address: GetCartResponse.Address?) {
+        selectedAddress = address
         if (address != null) {
             binding.clAddress.setBackgroundResource(R.drawable.bg_insight_chip_selected)
             binding.tvShippingAddressLabel.visibility = View.GONE
@@ -506,7 +508,7 @@ class CartFragment : BaseFragment(R.layout.fragment_cart) {
         }
 
         binding.btnChangeAddress.setOnClickListener {
-            val currentAddressId = viewModel.getCartLiveData().value?.data?.data?.address?.id
+            val currentAddressId = selectedAddress?.id ?: viewModel.getCartLiveData().value?.data?.data?.address?.id
             val selectAddressBottomSheet = com.humotron.app.ui.shop.dialog.SelectAddressBottomSheet.newInstance(currentAddressId) { selectedAddress ->
                 // Update UI locally first for instant feedback
                 bindAddress(selectedAddress)
@@ -566,7 +568,7 @@ class CartFragment : BaseFragment(R.layout.fragment_cart) {
             if (binding.btnCheckout.text == getString(R.string.browse_the_store)) {
                 findNavController().navigate(R.id.nav_graph_shop)
             } else {
-                viewModel.startCheckout(finalPayableAmount)
+                viewModel.startCheckout(finalPayableAmount, selectedAddress?.id)
             }
         }
     }

@@ -299,7 +299,7 @@ To get started:\n
     <string name="how_it_works">How It Works</string>
     <string name="why_product">Why Product?</string>
     <string name="buy_now_with_arrow">Buy Now →</string>
-    <string name="chat_manage_settings_info">Manage AI Chat Settings\nin the Control Panel</string>
+    <string name="chat_manage_settings_info">Manage AI Chat Settings in the Control Panel</string>
     <string name="chat_choose_metric_headline">Choose a metric to talk to Tron about</string>
     <string name="chat_choose_metrics_header">Choose Metrics</string>
     <string name="chat_active_metrics_header">Active Metrics</string>

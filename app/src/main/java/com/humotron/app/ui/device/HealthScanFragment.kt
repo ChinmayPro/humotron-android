@@ -487,7 +487,8 @@ class HealthScanFragment : BaseFragment(R.layout.fragment_health_scan) {
                     }
                 }
 
-                Status.ERROR -> {
+                Status.ERROR, Status.EXCEPTION -> {
+                    showApiError(resource.error)
                 }
 
                 Status.LOADING -> {
@@ -517,11 +518,13 @@ class HealthScanFragment : BaseFragment(R.layout.fragment_health_scan) {
                     binding.shimmerBaseline.hideShimmer()
                     binding.mcvBaseline.visibility = View.GONE
                     binding.cardNoBaseline.visibility = View.VISIBLE
+                    showApiError(resource.error)
                 }
 
                 Status.EXCEPTION -> {
                     binding.shimmerBaseline.stopShimmer()
                     binding.shimmerBaseline.hideShimmer()
+                    showApiError(resource.error)
                 }
 
                 Status.LOADING -> {
