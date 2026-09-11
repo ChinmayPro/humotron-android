@@ -27,13 +27,15 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvTitle"
-                style="@style/Text.18x.Manrope.Bold"
+                style="@style/Text.14x.Manrope.Regular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_24dp"
-                android:layout_marginTop="@dimen/_24dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="16dp"
+                android:lineSpacingMultiplier="1.2"
                 android:text="@string/biohack_book_tiltle"
-                android:textColor="@color/d400"
+                android:textColor="#94A3B8"
+                android:textSize="14sp"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView

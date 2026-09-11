@@ -1,57 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/header"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_56dp">
+    android:layout_height="wrap_content">
 
     <androidx.appcompat.widget.AppCompatTextView
-        style="@style/Text.16x.Manrope.SemiBold"
+        android:id="@+id/tvHeaderTitle"
+        style="@style/Text.20x.Manrope.Bold"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginTop="16dp"
         android:text="@string/master_biohacking"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/ivNuggets"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Legacy hidden ImageViews to maintain backward compatibility -->
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivNuggets"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ivNuggets"
-        android:layout_width="@dimen/_20dp"
-        android:layout_height="@dimen/_20dp"
-        android:layout_marginEnd="@dimen/_20dp"
-        android:src="@drawable/ic_nuggets_disable"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/ivBooks"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivBooks"
-        android:layout_width="@dimen/_20dp"
-        android:layout_height="@dimen/_20dp"
-        android:layout_marginEnd="@dimen/_20dp"
-        android:src="@drawable/ic_books_disable"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/ivProgress"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivProgress"
-        android:layout_width="@dimen/_20dp"
-        android:layout_height="@dimen/_20dp"
-        android:layout_marginEnd="@dimen/_20dp"
-        android:src="@drawable/ic_biohack_progress_disable"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Tab 1: Nuggets -->
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvNuggets"
+        style="@style/Text.15x.Manrope.SemiBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_20dp"
+        android:layout_marginTop="16dp"
+        android:paddingBottom="10dp"
+        android:text="Nuggets"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvHeaderTitle" />
 
-    <com.google.android.material.divider.MaterialDivider
-        android:layout_width="match_parent"
+    <View
+        android:id="@+id/tabNuggets"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/tvNuggets"
+        app:layout_constraintEnd_toEndOf="@id/tvNuggets"
+        app:layout_constraintStart_toStartOf="@id/tvNuggets"
+        app:layout_constraintTop_toTopOf="@id/tvNuggets" />
+
+    <!-- Tab 2: Books -->
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvBooks"
+        style="@style/Text.15x.Manrope.SemiBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:paddingBottom="10dp"
+        android:text="Books"
+        android:textColor="#94A3B8"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@id/tvNuggets"
+        app:layout_constraintStart_toEndOf="@id/tvNuggets"
+        app:layout_constraintTop_toTopOf="@id/tvNuggets" />
+
+    <View
+        android:id="@+id/tabBooks"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/tvBooks"
+        app:layout_constraintEnd_toEndOf="@id/tvBooks"
+        app:layout_constraintStart_toStartOf="@id/tvBooks"
+        app:layout_constraintTop_toTopOf="@id/tvBooks" />
+
+    <!-- Tab 3: Progress -->
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvProgress"
+        style="@style/Text.15x.Manrope.SemiBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:paddingBottom="10dp"
+        android:text="Progress"
+        android:textColor="#94A3B8"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@id/tvNuggets"
+        app:layout_constraintStart_toEndOf="@id/tvBooks"
+        app:layout_constraintTop_toTopOf="@id/tvNuggets" />
+
+    <View
+        android:id="@+id/tabProgress"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/tvProgress"
+        app:layout_constraintEnd_toEndOf="@id/tvProgress"
+        app:layout_constraintStart_toStartOf="@id/tvProgress"
+        app:layout_constraintTop_toTopOf="@id/tvProgress" />
+
+    <!-- Horizontal Divider Line with 20dp Margin -->
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
         android:layout_height="1dp"
-        app:dividerColor="@color/d9"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:background="#203734"
+        app:layout_constraintBottom_toBottomOf="@id/tvNuggets"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Selected Lime Indicators (Overlapping divider line directly!) -->
+    <View
+        android:id="@+id/indicatorNuggets"
+        android:layout_width="0dp"
+        android:layout_height="2.5dp"
+        android:background="@drawable/bg_tab_indicator_lime"
+        app:layout_constraintBottom_toBottomOf="@id/divider"
+        app:layout_constraintEnd_toEndOf="@id/tvNuggets"
+        app:layout_constraintStart_toStartOf="@id/tvNuggets"
+        app:layout_constraintTop_toTopOf="@id/divider" />
+
+    <View
+        android:id="@+id/indicatorBooks"
+        android:layout_width="0dp"
+        android:layout_height="2.5dp"
+        android:background="@drawable/bg_tab_indicator_lime"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/divider"
+        app:layout_constraintEnd_toEndOf="@id/tvBooks"
+        app:layout_constraintStart_toStartOf="@id/tvBooks"
+        app:layout_constraintTop_toTopOf="@id/divider" />
+
+    <View
+        android:id="@+id/indicatorProgress"
+        android:layout_width="0dp"
+        android:layout_height="2.5dp"
+        android:background="@drawable/bg_tab_indicator_lime"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/divider"
+        app:layout_constraintEnd_toEndOf="@id/tvProgress"
+        app:layout_constraintStart_toStartOf="@id/tvProgress"
+        app:layout_constraintTop_toTopOf="@id/divider" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

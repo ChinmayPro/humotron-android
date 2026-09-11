@@ -23,6 +23,11 @@ import com.humotron.app.ui.shop.adapter.ShopMetricAdapter
 import com.humotron.app.ui.shop.dialog.ShopDeviceFaqBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
 
+import com.humotron.app.domain.modal.DeviceType
+import com.humotron.app.ui.shop.dialog.ShopDeviceConnectBottomSheet
+import com.humotron.app.util.PrefUtils
+import javax.inject.Inject
+
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
@@ -31,6 +36,7 @@ class ShopDeviceDetailsFragment : BaseFragment(R.layout.fragment_shop_device_det
 
     private lateinit var binding: FragmentShopDeviceDetailsBinding
     private val viewModel: ShopViewModel by viewModels()
+
     private var device: GetShopDevicesResponse.Device? = null
     private var faqsList: List<DeviceFaqResponse.FaqData> = emptyList()
     private var isDeviceLiked: Boolean = false
@@ -140,6 +146,9 @@ class ShopDeviceDetailsFragment : BaseFragment(R.layout.fragment_shop_device_det
                         binding.vHeroPill.visibility = View.VISIBLE
 
                         // Setup Connect with app text matching HTML design
+                        val detectedType = getDeviceTypeFromText(combinedText)
+                        val isConnected = checkIsDeviceConnected(detectedType, detail.id ?: device?.id)
+
                         val fullText = "Already own this device? Connect it to the app ›"
                         val highlightText = "Connect it to the app ›"
                         val spannable = SpannableStringBuilder(fullText)
@@ -159,6 +168,21 @@ class ShopDeviceDetailsFragment : BaseFragment(R.layout.fragment_shop_device_det
                             )
                         }
                         binding.tvConnectApp.text = spannable
+
+                        binding.tvConnectApp.setOnClickListener {
+                            val title = detail.deviceFacingName ?: detail.deviceName ?: device?.deviceFacingName ?: device?.deviceName ?: "Device"
+                            if (isConnected) {
+                                com.humotron.app.util.ToastUtils.showShort(requireContext(), "$title is already connected")
+                            } else {
+                                val bottomSheet = ShopDeviceConnectBottomSheet.newInstance(
+                                    deviceTitle = title,
+                                    deviceType = detectedType,
+                                    heroIconRes = heroIconRes,
+                                    isConnected = false
+                                )
+                                bottomSheet.show(childFragmentManager, ShopDeviceConnectBottomSheet.TAG)
+                            }
+                        }
 
                         // Setup metrics
                         detail.metrics?.let { metrics ->
@@ -302,4 +326,30 @@ class ShopDeviceDetailsFragment : BaseFragment(R.layout.fragment_shop_device_det
             }
         }
     }
+
+    private fun getDeviceTypeFromText(text: String): DeviceType {
+        val name = text.uppercase()
+        return when {
+            name.contains("BPMACHINE") || name.contains("CUFF") || name.contains("PRESSURE") || name.contains("BLOOD") -> DeviceType.SMART_CUFF
+            name.contains("RING") -> DeviceType.RING
+            name.contains("BAND") || name.contains("WRIST") -> DeviceType.BAND
+            name.contains("WEIGHT") || name.contains("SCALE") -> DeviceType.WEIGHT_MACHINE
+            else -> DeviceType.WEIGHT_MACHINE
+        }
+    }
+
+    private fun checkIsDeviceConnected(deviceType: DeviceType, deviceId: String?): Boolean {
+        val hardwareList = prefUtils.getHardwareDetailsList()
+        if (!deviceId.isNullOrEmpty() && hardwareList.any { it.id == deviceId }) {
+            return true
+        }
+        return when (deviceType) {
+            DeviceType.WEIGHT_MACHINE -> !prefUtils.getWeightHardwareId().isNullOrEmpty() || !prefUtils.getString(com.humotron.app.core.Preference.WEIGHT_SCALE).isNullOrEmpty()
+            DeviceType.SMART_CUFF -> !prefUtils.getBpHardwareId().isNullOrEmpty() || !prefUtils.getString(com.humotron.app.core.Preference.BP_MACHINE).isNullOrEmpty()
+            DeviceType.RING -> !prefUtils.getRingHardwareId().isNullOrEmpty() || !prefUtils.getString(com.humotron.app.core.Preference.WEARABLE_RING).isNullOrEmpty()
+            DeviceType.BAND -> !prefUtils.getBandHardwareId().isNullOrEmpty() || !prefUtils.getString(com.humotron.app.core.Preference.WEARABLE_BAND).isNullOrEmpty()
+            else -> false
+        }
+    }
 }
+

@@ -2,101 +2,126 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:id="@+id/cardTestRoot"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="@color/black"
-    app:cardCornerRadius="@dimen/_8dp"
-    android:layout_marginEnd="@dimen/_10dp"
+    android:layout_marginBottom="14dp"
+    app:cardBackgroundColor="@android:color/transparent"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="0dp"
     app:strokeWidth="0dp">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="250dp"
-        android:layout_height="160dp"
-        android:orientation="vertical"
-        android:paddingHorizontal="@dimen/_16dp">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_test_card_gradient"
+        android:padding="20dp">
 
+        <!-- Category Tag (Top Left) -->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTag"
-            style="@style/Text.10x.Manrope.SemiBold"
-            android:layout_width="match_parent"
+            style="@style/Text.12x.Manrope.Bold"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20dp"
-            android:includeFontPadding="false"
-            android:textColor="@color/d400"
-            tools:text="Human Body &amp; Biology" />
+            android:layout_marginEnd="10dp"
+            android:textAllCaps="true"
+            android:textColor="#749C95"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="@id/flQuestionContainer"
+            app:layout_constraintEnd_toStartOf="@id/flQuestionContainer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/flQuestionContainer"
+            tools:text="ATTENTION DEFICIT &amp; FOCUS" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvTitle"
-            style="@style/Text.16x.Manrope.SemiBold"
-            android:layout_width="match_parent"
+        <!-- Question Count Pill (Top Right) -->
+        <FrameLayout
+            android:id="@+id/flQuestionContainer"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:includeFontPadding="false"
-            android:maxLines="3"
-            android:textColor="@color/textColorWhite"
-            tools:text="Human Body &amp; Biology" />
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvLevel"
-                style="@style/Text.10x.Manrope.SemiBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:includeFontPadding="false"
-                android:maxLines="3"
-                android:textColor="@color/s400"
-                tools:text="Medium" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                style="@style/Text.10x.Manrope.SemiBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_8dp"
-                android:ellipsize="end"
-                android:includeFontPadding="false"
-                android:maxLines="3"
-                android:text="•"
-                android:textColor="@color/s400" />
-
+            android:background="@drawable/bg_question_pill"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvQuestionNumber"
-                style="@style/Text.10x.Manrope.SemiBold"
+                style="@style/Text.12x.Manrope.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_8dp"
-                android:ellipsize="end"
-                android:includeFontPadding="false"
-                android:maxLines="3"
-                android:text="@string/d_questions"
-                android:textColor="@color/s400" />
+                android:drawableStart="@drawable/ic_target_q"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:textColor="#BEF264"
+                android:textSize="12sp"
+                tools:text="18 Q" />
+        </FrameLayout>
 
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
+        <!-- Test Title -->
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvTakeTest"
-            style="@style/Text.16x.Manrope.SemiBold"
+            android:id="@+id/tvTitle"
+            style="@style/Text.18x.Manrope.Bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@id/flQuestionContainer"
+            tools:text="Dopaminergic &amp; Adaptogenic Stacking" />
+
+        <!-- Difficulty Pill & Points Row -->
+        <LinearLayout
+            android:id="@+id/llDifficultyRow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_15dp"
-            android:drawableEnd="@drawable/ic_arrow_right_begin"
-            android:drawablePadding="@dimen/_10dp"
-            android:drawableTint="@color/textColorPink"
-            android:ellipsize="end"
-            android:includeFontPadding="false"
-            android:maxLines="3"
-            android:text="@string/take_test"
-            android:textColor="@color/textColorPink" />
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle">
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvLevel"
+                style="@style/Text.12x.Manrope.SemiBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_difficulty_pill"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="4dp"
+                android:textColor="#FACC15"
+                android:textSize="12sp"
+                tools:text="Medium" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPoints"
+                style="@style/Text.13x.Manrope.Regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="+1 pts / correct"
+                android:textColor="#749C95"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <!-- Take Test Button -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTakeTest"
+            style="@style/Text.14x.Manrope.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_shop_add_btn"
+            android:backgroundTint="#BEF264"
+            android:paddingHorizontal="22dp"
+            android:paddingVertical="9dp"
+            android:text="Take test →"
+            android:textColor="#0F241F"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/llDifficultyRow" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

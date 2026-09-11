@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rounded_bottom_sheet_background"
+    android:orientation="vertical"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp"
+    android:paddingTop="24dp"
+    android:paddingBottom="32dp">
+
+    <!-- Top Handle / Header Bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnBack"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_chevron_left_24px"
+            app:tint="@color/white" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSheetTitle"
+            style="@style/Text.20x.Manrope.SemiBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:text="Connect Device"
+            android:textColor="@color/white" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnClose"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_close"
+            app:tint="@color/white50" />
+    </LinearLayout>
+
+    <!-- Hero Device Image / Icon with Glow -->
+    <FrameLayout
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="28dp">
+
+        <View
+            android:id="@+id/vGlowBackground"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_hero_pill_glowing"
+            android:alpha="0.2" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivDeviceIcon"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_smart_scale_hero" />
+    </FrameLayout>
+
+    <!-- Device Title -->
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvDeviceTitle"
+        style="@style/Text.18x.Manrope.Bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/white"
+        tools:text="Weight Scale" />
+
+    <!-- Status Description -->
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvConnectStatus"
+        style="@style/Text.14x.Manrope.Regular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:text="Turn on Bluetooth and bring your device close to connect."
+        android:textColor="@color/white70" />
+
+    <!-- Connecting Progress Bar / Loader -->
+    <ProgressBar
+        android:id="@+id/pbConnecting"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:indeterminateTint="@color/lime"
+        android:visibility="gone" />
+
+    <!-- Action Button -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnConnectAction"
+        style="@style/Text.16x.Manrope.Bold"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/bg_btn_lime_pill"
+        android:text="Start Pairing"
+        android:textAllCaps="false"
+        android:textColor="#0D1618" />
+
+</LinearLayout>

@@ -29,35 +29,35 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/scrollRoot"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="40dp">
 
-
+                <!-- Mastery Gauge Circular Progress -->
                 <com.google.android.material.progressindicator.CircularProgressIndicator
                     android:id="@+id/progress"
-                    android:layout_width="@dimen/_150dp"
-                    android:layout_height="@dimen/_150dp"
-                    android:layout_marginTop="@dimen/_40dp"
-                    android:progress="10"
-                    app:indicatorColor="@color/s300"
-                    app:indicatorSize="@dimen/_150dp"
+                    android:layout_width="220dp"
+                    android:layout_height="220dp"
+                    android:layout_marginTop="20dp"
+                    android:progress="0"
+                    app:indicatorColor="#BEF264"
+                    app:indicatorSize="220dp"
                     app:indicatorTrackGapSize="0dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:trackColor="@color/black30"
-                    app:trackCornerRadius="@dimen/_15dp"
-                    app:trackThickness="@dimen/_10dp"
-                    tools:trackColor="@color/white30" />
+                    app:trackColor="#142623"
+                    app:trackCornerRadius="14dp"
+                    app:trackThickness="14dp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvProgress"
+                    android:id="@+id/tvGaugeScore"
                     style="@style/Text.24x.Manrope.Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:includeFontPadding="false"
-                    android:text="15"
-                    android:textColor="@color/s300"
-                    android:textSize="30sp"
+                    android:text="0"
+                    android:textColor="#BEF264"
+                    android:textSize="44sp"
                     app:layout_constraintBottom_toTopOf="@id/tvScore"
                     app:layout_constraintEnd_toStartOf="@id/textview1"
                     app:layout_constraintHorizontal_chainStyle="packed"
@@ -72,257 +72,355 @@
                     android:layout_height="wrap_content"
                     android:includeFontPadding="false"
                     android:text="%"
-                    android:textColor="@color/s300"
-                    android:textSize="24sp"
-                    app:layout_constraintBottom_toBottomOf="@id/tvProgress"
+                    android:textColor="#BEF264"
+                    android:textSize="30sp"
+                    app:layout_constraintBottom_toBottomOf="@id/tvGaugeScore"
                     app:layout_constraintEnd_toEndOf="@id/progress"
-                    app:layout_constraintStart_toEndOf="@id/tvProgress" />
+                    app:layout_constraintStart_toEndOf="@id/tvGaugeScore" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvScore"
-                    style="@style/Text.12x.Manrope.Medium"
+                    style="@style/Text.12x.Manrope.Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_10dp"
+                    android:layout_marginTop="4dp"
                     android:includeFontPadding="false"
-                    android:text="@string/mastery_score"
-                    android:textColor="@color/d100"
+                    android:letterSpacing="0.08"
+                    android:text="MASTERY"
+                    android:textAllCaps="true"
+                    android:textColor="#788887"
+                    android:textSize="13sp"
                     app:layout_constraintBottom_toBottomOf="@id/progress"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvProgress" />
+                    app:layout_constraintTop_toBottomOf="@id/tvGaugeScore" />
 
-
+                <!-- Level Badge (Explorer) -->
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvExplore"
-                    style="@style/Text.16x.Manrope.SemiBold"
+                    style="@style/Text.14x.Manrope.Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_19dp"
-                    android:drawableEnd="@drawable/ic_explorer"
-                    android:drawablePadding="@dimen/_17dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_explorer_pill"
+                    android:drawableStart="@drawable/ic_sparkle_badge"
+                    android:drawablePadding="8dp"
+                    android:drawableTint="#5FE6A6"
+                    android:gravity="center"
                     android:includeFontPadding="false"
-                    android:text="@string/explorer"
-                    android:textColor="@color/textColorYellow"
+                    android:paddingHorizontal="18dp"
+                    android:paddingVertical="7dp"
+                    android:text="Explorer"
+                    android:textColor="#5FE6A6"
+                    android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/progress" />
 
-
+                <!-- Foundation subtitle -->
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/textview2"
-                    style="@style/Text.16x.Manrope.SemiBold"
+                    style="@style/Text.14x.Manrope.Medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_60dp"
-                    android:layout_marginTop="@dimen/_19dp"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="18dp"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:text="@string/you_re__closer_"
-                    android:textColor="@color/d100"
+                    android:lineSpacingMultiplier="1.2"
+                    android:text="You're building your foundation. 537 Nuggets to your next level."
+                    android:textColor="#94A3B8"
+                    android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvExplore" />
 
+                <!-- Level Slider / Progress Bar -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clLevelSlider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="28dp"
+                    app:layout_constraintTop_toBottomOf="@id/textview2">
+
+                    <!-- Custom Track (Multi-color gradient) -->
+                    <View
+                        android:id="@+id/vTrackBg"
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        android:layout_marginTop="9dp"
+                        android:background="@drawable/bg_level_slider_track"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:id="@+id/vTrackMask"
+                        android:layout_width="0dp"
+                        android:layout_height="8dp"
+                        android:background="@drawable/bg_slider_unfilled_mask"
+                        app:layout_constraintBottom_toBottomOf="@id/vTrackBg"
+                        app:layout_constraintEnd_toEndOf="@id/vTrackBg"
+                        app:layout_constraintStart_toStartOf="@id/vThumb"
+                        android:layout_marginStart="13dp"
+                        app:layout_constraintTop_toTopOf="@id/vTrackBg" />
+
+                    <!-- Glowing Thumb Dot Knob -->
+                    <View
+                        android:id="@+id/vThumb"
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:background="@drawable/bg_slider_thumb_glowing"
+                        app:layout_constraintBottom_toBottomOf="@id/vTrackBg"
+                        app:layout_constraintEnd_toEndOf="@id/vTrackBg"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@id/vTrackBg"
+                        app:layout_constraintTop_toTopOf="@id/vTrackBg" />
+
+                    <!-- Labels Row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintTop_toBottomOf="@id/vTrackBg">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/Text.12x.Manrope.Bold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Explorer"
+                                android:textColor="#BEF264"
+                                android:textSize="13sp" />
+
+                            <TextView
+                                style="@style/Text.10x.Manrope.Regular"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="0–750"
+                                android:textColor="#788887"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/Text.12x.Manrope.Medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Analyst"
+                                android:textColor="#94A3B8"
+                                android:textSize="13sp" />
+
+                            <TextView
+                                style="@style/Text.10x.Manrope.Regular"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="751–2500"
+                                android:textColor="#64748B"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/Text.12x.Manrope.Medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Biohacker"
+                                android:textColor="#94A3B8"
+                                android:textSize="13sp" />
+
+                            <TextView
+                                style="@style/Text.10x.Manrope.Regular"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="2500+"
+                                android:textColor="#64748B"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!-- See how levels work button -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cvSeeLevels"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="24dp"
+                    app:cardBackgroundColor="#133633"
+                    app:cardCornerRadius="100dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintTop_toBottomOf="@id/clLevelSlider"
+                    app:strokeColor="#2B5B54"
+                    app:strokeWidth="1.5dp">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="20dp"
+                        android:paddingVertical="13dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Text.15x.Manrope.Bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableEnd="@drawable/ic_level_chart"
+                            android:drawablePadding="10dp"
+                            android:drawableTint="@color/white"
+                            android:gravity="center"
+                            android:text="@string/see_how_levels_work"
+                            android:textColor="@color/white"
+                            android:textSize="15sp" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <!-- Your learning streak section -->
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/textview3"
                     style="@style/Text.20x.Manrope.Bold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_24dp"
-                    android:layout_marginTop="@dimen/_60dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="36dp"
                     android:includeFontPadding="false"
                     android:text="@string/your_learning_streak"
-                    android:textColor="@color/textColorWhite"
-                    app:layout_constraintTop_toBottomOf="@id/textview2" />
-
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    app:layout_constraintTop_toBottomOf="@id/cvSeeLevels" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/textview4"
                     style="@style/Text.14x.Manrope.Medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_24dp"
-                    android:layout_marginTop="@dimen/_10dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="6dp"
                     android:includeFontPadding="false"
+                    android:lineSpacingMultiplier="1.2"
                     android:text="@string/every_nugget_you_consume_builds_your_mastery_keep_the_momentum_going"
-                    android:textColor="@color/d300"
+                    android:textColor="#94A3B8"
+                    android:textSize="14sp"
                     app:layout_constraintTop_toBottomOf="@id/textview3" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvStreak"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_24dp"
+                    android:layout_marginTop="16dp"
                     android:clipToPadding="false"
                     android:orientation="horizontal"
-                    android:paddingHorizontal="@dimen/_24dp"
+                    android:paddingHorizontal="20dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@id/textview4" />
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/llBioHack1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_24dp"
-                    android:layout_marginTop="@dimen/_50dp"
-                    android:background="@drawable/bg_btn_round_rect_8"
-                    android:backgroundTint="@color/black"
-                    android:gravity="center_vertical"
-                    android:paddingHorizontal="@dimen/_18dp"
-                    android:paddingVertical="@dimen/_11dp"
-                    app:layout_constraintTop_toBottomOf="@id/rvStreak">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/Text.14x.Manrope.SemiBold"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/_14dp"
-                        android:layout_weight="1"
-                        android:text="@string/what_is_biohacking"
-                        android:textColor="@color/white" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="@dimen/_12dp"
-                        android:layout_height="@dimen/_12dp"
-                        android:src="@drawable/ic_expand" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/llBioHack2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_24dp"
-                    android:layout_marginTop="@dimen/_16dp"
-                    android:background="@drawable/bg_btn_round_rect_8"
-                    android:backgroundTint="@color/black"
-                    android:gravity="center_vertical"
-                    android:paddingHorizontal="@dimen/_18dp"
-                    android:paddingVertical="@dimen/_11dp"
-                    app:layout_constraintTop_toBottomOf="@id/llBioHack1">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/Text.14x.Manrope.SemiBold"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/_14dp"
-                        android:layout_weight="1"
-                        android:text="@string/why_should_i_consider_to_master_it"
-                        android:textColor="@color/white" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="@dimen/_12dp"
-                        android:layout_height="@dimen/_12dp"
-                        android:src="@drawable/ic_expand" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/llBioHack3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_24dp"
-                    android:layout_marginTop="@dimen/_16dp"
-                    android:background="@drawable/bg_btn_round_rect_8"
-                    android:backgroundTint="@color/black"
-                    android:gravity="center_vertical"
-                    android:paddingHorizontal="@dimen/_18dp"
-                    android:paddingVertical="@dimen/_11dp"
-                    app:layout_constraintTop_toBottomOf="@id/llBioHack2">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/Text.14x.Manrope.SemiBold"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/_14dp"
-                        android:layout_weight="1"
-                        android:text="@string/how_is_the_mastery_score_calculated"
-                        android:textColor="@color/white" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="@dimen/_12dp"
-                        android:layout_height="@dimen/_12dp"
-                        android:src="@drawable/ic_expand" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-
+                <!-- Prove what you know section -->
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/textview5"
                     style="@style/Text.20x.Manrope.Bold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_24dp"
-                    android:layout_marginTop="@dimen/_70dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="36dp"
                     android:includeFontPadding="false"
                     android:text="@string/take_tests_amp_prove_mastery"
-                    android:textColor="@color/textColorWhite"
-                    app:layout_constraintTop_toBottomOf="@id/llBioHack3" />
-
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    app:layout_constraintTop_toBottomOf="@id/rvStreak" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/textview6"
                     style="@style/Text.14x.Manrope.Medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_24dp"
-                    android:layout_marginTop="@dimen/_10dp"
-                    android:layout_marginEnd="@dimen/_70dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="6dp"
                     android:includeFontPadding="false"
+                    android:lineSpacingMultiplier="1.2"
                     android:text="@string/each_test_you_pass_takes_you_closer_to_biohacker_certification"
-                    android:textColor="@color/d300"
+                    android:textColor="#94A3B8"
+                    android:textSize="14sp"
                     app:layout_constraintTop_toBottomOf="@id/textview5" />
-
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvTests"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_20dp"
+                    android:layout_marginTop="16dp"
                     android:clipToPadding="false"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="@dimen/_24dp"
+                    android:nestedScrollingEnabled="false"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="20dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@id/textview6"
                     tools:listitem="@layout/item_biohack_test" />
 
 
+                <!-- Your learning progress section -->
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/textview7"
                     style="@style/Text.20x.Manrope.Bold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_24dp"
-                    android:layout_marginTop="@dimen/_50dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="36dp"
                     android:includeFontPadding="false"
                     android:text="@string/your_learning_progress"
-                    android:textColor="@color/textColorWhite"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
                     app:layout_constraintTop_toBottomOf="@id/rvTests" />
-
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/textview8"
                     style="@style/Text.14x.Manrope.Medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_24dp"
-                    android:layout_marginTop="@dimen/_10dp"
-                    android:layout_marginEnd="@dimen/_70dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="6dp"
                     android:includeFontPadding="false"
+                    android:lineSpacingMultiplier="1.2"
                     android:text="@string/see_how_your_learning_grows_as_you_consume_nuggets_unlock_tests_at_100_in_a_sub_topic"
-                    android:textColor="@color/d300"
+                    android:textColor="#94A3B8"
+                    android:textSize="14sp"
                     app:layout_constraintTop_toBottomOf="@id/textview7" />
-
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvProgress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_20dp"
+                    android:layout_marginTop="16dp"
                     android:clipToPadding="false"
+                    android:nestedScrollingEnabled="false"
                     android:orientation="vertical"
-                    android:paddingHorizontal="@dimen/_24dp"
+                    android:paddingHorizontal="20dp"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:layout_constraintTop_toBottomOf="@id/textview8"
                     app:spanCount="2"
@@ -330,14 +428,47 @@
                     tools:listitem="@layout/item_biohack_progress" />
 
 
-                <androidx.appcompat.widget.LinearLayoutCompat
+                <!-- Load More Button -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cvLoadMore"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_24dp"
-                    android:layout_marginTop="@dimen/_40dp"
-                    android:orientation="vertical"
-                    app:layout_constraintTop_toBottomOf="@id/rvProgress">
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="#133633"
+                    app:cardCornerRadius="100dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintTop_toBottomOf="@id/rvProgress"
+                    app:strokeColor="#2B5D54"
+                    app:strokeWidth="1.5dp">
 
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingVertical="13dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvLoadMore"
+                            style="@style/Text.15x.Manrope.Bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Load more"
+                            android:textColor="#BEF264"
+                            android:textSize="15sp" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <!-- Your learning focus section -->
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/llFocusHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="36dp"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@id/cvLoadMore">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/Text.20x.Manrope.Bold"
@@ -345,53 +476,299 @@
                         android:layout_height="wrap_content"
                         android:includeFontPadding="false"
                         android:text="@string/your_learning_focus"
-                        android:textColor="@color/textColorWhite" />
-
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/Text.14x.Manrope.Medium"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10dp"
+                        android:layout_marginTop="6dp"
                         android:includeFontPadding="false"
+                        android:lineSpacingMultiplier="1.2"
                         android:text="@string/see_where_your_knowledge_is_building_up_across_your_selected_categories"
-                        android:textColor="@color/d300" />
+                        android:textColor="#94A3B8"
+                        android:textSize="14sp" />
 
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="@dimen/_20dp">
-
-                        <com.github.mikephil.charting.charts.PieChart
-                            android:id="@+id/pieChart"
-                            android:layout_width="250dp"
-                            android:layout_height="200dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/Text.10x.Manrope.SemiBold"
+                    <!-- Donut Chart & Legend Card -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cvFocusCard"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_20dp"
-                        android:includeFontPadding="false"
-                        android:text="@string/biohack_progress_desc_bottom"
-                        android:textColor="@color/d400" />
+                        android:layout_marginTop="16dp"
+                        app:cardBackgroundColor="@android:color/transparent"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="0dp"
+                        app:strokeWidth="0dp">
 
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_test_card_gradient"
+                            android:orientation="vertical"
+                            android:padding="20dp">
+
+                            <com.github.mikephil.charting.charts.PieChart
+                                android:id="@+id/pieChart"
+                                android:layout_width="220dp"
+                                android:layout_height="220dp"
+                                android:layout_gravity="center_horizontal" />
+
+                            <!-- Dynamic Legend List Container -->
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:id="@+id/llPieLegend"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp"
+                                android:orientation="vertical" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    </com.google.android.material.card.MaterialCardView>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
+
+                <!-- Good to know Section -->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvGoodToKnow"
+                    style="@style/Text.20x.Manrope.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="36dp"
+                    android:includeFontPadding="false"
+                    android:text="@string/good_to_know"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    app:layout_constraintTop_toBottomOf="@id/llFocusHeader" />
+
+                <!-- FAQ Accordion Layout 1 -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cvBioHack1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="14dp"
+                    app:cardBackgroundColor="#133633"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintTop_toBottomOf="@id/tvGoodToKnow"
+                    app:strokeColor="#2B5D54"
+                    app:strokeWidth="1.5dp">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:id="@+id/llBioHack1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="22dp"
+                            android:paddingVertical="16dp">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Text.17x.Manrope.Bold"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/what_is_biohacking"
+                                android:textColor="@color/white"
+                                android:textSize="16sp" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivArrow1"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/ic_chevdown_profile"
+                                app:tint="#599B8F" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:id="@+id/llAnswer1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="22dp"
+                            android:paddingBottom="20dp"
+                            android:visibility="gone">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Text.14x.Manrope.Medium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:lineSpacingExtra="5dp"
+                                android:text="Biohacking is the science of understanding your body through data and making small, intentional changes to improve health, energy, focus, recovery and longevity.\n\nIt's not just for athletes or fitness freaks. It's for anyone who wants to make smarter decisions about their body. With Humotron, you're not just tracking data — you're uncovering insights, experimenting with what works, and taking charge of your well-being."
+                                android:textColor="#83B6AC"
+                                android:textSize="14sp" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- FAQ Accordion Layout 2 -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cvBioHack2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="10dp"
+                    app:cardBackgroundColor="#133633"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintTop_toBottomOf="@id/cvBioHack1"
+                    app:strokeColor="#2B5D54"
+                    app:strokeWidth="1.5dp">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:id="@+id/llBioHack2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="22dp"
+                            android:paddingVertical="16dp">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Text.17x.Manrope.Bold"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/why_should_i_consider_to_master_it"
+                                android:textColor="@color/white"
+                                android:textSize="16sp" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivArrow2"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/ic_chevdown_profile"
+                                app:tint="#599B8F" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:id="@+id/llAnswer2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="22dp"
+                            android:paddingBottom="20dp"
+                            android:visibility="gone">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Text.14x.Manrope.Medium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:lineSpacingExtra="5dp"
+                                android:text="You don't &quot;feel better&quot; — you see the improvement in your metrics. You don't &quot;try things&quot; — you test, track and optimize. You don't follow trends — you personalize what works for your body.\n\nFor busy professionals it means staying sharp and managing stress. For parents and caregivers, better sleep and energy. For the health-conscious, taking control of well-being beyond the doctor's visit."
+                                android:textColor="#83B6AC"
+                                android:textSize="14sp" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- FAQ Accordion Layout 3 -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cvBioHack3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="10dp"
+                    app:cardBackgroundColor="#133633"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintTop_toBottomOf="@id/cvBioHack2"
+                    app:strokeColor="#2B5D54"
+                    app:strokeWidth="1.5dp">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:id="@+id/llBioHack3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="22dp"
+                            android:paddingVertical="16dp">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Text.17x.Manrope.Bold"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/how_is_the_mastery_score_calculated"
+                                android:textColor="@color/white"
+                                android:textSize="16sp" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivArrow3"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/ic_chevdown_profile"
+                                app:tint="#599B8F" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:id="@+id/llAnswer3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="22dp"
+                            android:paddingBottom="20dp"
+                            android:visibility="gone">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Text.14x.Manrope.Medium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:lineSpacingExtra="5dp"
+                                android:text="Your Mastery Score reflects your progress in biohacking, based on two key actions.\n\nLearning through Nuggets: each Nugget you consume contributes to your mastery, with points earned once you cross the required threshold in each sub-topic.\n\nProving knowledge through tests: passing tests earns significant points — the higher the difficulty, the more points you gain."
+                                android:textColor="#83B6AC"
+                                android:textSize="14sp" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </com.google.android.material.card.MaterialCardView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
 
     </ViewAnimator>
+
+    <FrameLayout
+        android:id="@+id/flLoaderOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#4D000000"
+        android:clickable="true"
+        android:elevation="10dp"
+        android:focusable="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:indeterminateTint="#BEF264" />
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -42,15 +42,18 @@ class BioHackBookFragment : BaseFragment(R.layout.fragment_bio_hack_book),
         binding.rvBooks.adapter = adapter
         binding.rvBooks.layoutManager = LinearLayoutManager(requireContext())
 
-        binding.header.ivNuggets.setImageResource(R.drawable.ic_nuggets_disable)
-        binding.header.ivProgress.setImageResource(R.drawable.ic_biohack_progress_disable)
-        binding.header.ivBooks.setImageResource(R.drawable.ic_books_checked)
+        binding.header.tvBooks.setTextColor(androidx.core.content.ContextCompat.getColor(requireContext(), R.color.white))
+        binding.header.indicatorBooks.visibility = android.view.View.VISIBLE
+        binding.header.tvNuggets.setTextColor(android.graphics.Color.parseColor("#94A3B8"))
+        binding.header.indicatorNuggets.visibility = android.view.View.INVISIBLE
+        binding.header.tvProgress.setTextColor(android.graphics.Color.parseColor("#94A3B8"))
+        binding.header.indicatorProgress.visibility = android.view.View.INVISIBLE
 
-        binding.header.ivNuggets.setOnClickListener {
+        binding.header.tabNuggets.setOnClickListener {
             findNavController().navigate(R.id.fragmentNuggets)
         }
 
-        binding.header.ivProgress.setOnClickListener {
+        binding.header.tabProgress.setOnClickListener {
             findNavController().navigate(R.id.fragmentProgress)
         }
 
@@ -66,6 +69,9 @@ class BioHackBookFragment : BaseFragment(R.layout.fragment_bio_hack_book),
                     val data = it.data?.data ?: return@observe
                     val list = arrayListOf<BookModal>()
                     if (!data.books.isNullOrEmpty()) {
+                        // 1. Gist card at the very top
+                        list.add(BookModal(BookType.GIST.ordinal))
+
                         for ((index, item) in data.books.withIndex()) {
                             list.add(
                                 BookModal(
@@ -79,15 +85,10 @@ class BioHackBookFragment : BaseFragment(R.layout.fragment_bio_hack_book),
                                     bookRecommendation = item.bookRecommendation
                                 )
                             )
-                            if (index == 0) {
-                                list.add(BookModal(BookType.NUGGET.ordinal))
-                            } else if (index == data.books.size / 2) {
-                                list.add(BookModal(BookType.GIST.ordinal))
-                            }
-
                         }
 
-                        list.add(BookModal(BookType.SEE_MORE.ordinal))
+                        // 2. Nugget banner card near the end
+                        list.add(BookModal(BookType.NUGGET.ordinal))
 
                         adapter.setList(list)
                     }

@@ -2,53 +2,55 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="@dimen/_60dp"
-    android:layout_height="@dimen/_70dp"
-    android:layout_marginEnd="@dimen/_12dp"
-    app:strokeWidth="0dp"
-    app:cardBackgroundColor="@color/black"
-    app:cardCornerRadius="@dimen/_8dp">
+    android:id="@+id/cardRoot"
+    android:layout_width="64dp"
+    android:layout_height="78dp"
+    android:layout_marginEnd="10dp"
+    app:cardBackgroundColor="#12332F"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="0dp"
+    app:strokeColor="#1F4A43"
+    app:strokeWidth="1dp">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingHorizontal="4dp"
+        android:paddingVertical="8dp">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvCount"
-            style="@style/Text.20x.Manrope.SemiBold"
+            style="@style/Text.20x.Manrope.Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
             android:includeFontPadding="false"
-            android:maxLines="3"
-            android:textColor="@color/textColorWhite"
-            tools:text="26" />
+            android:textColor="#BEF264"
+            android:textSize="20sp"
+            tools:text="15" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvDate"
-            style="@style/Text.11x.Manrope.SemiBold"
+            style="@style/Text.12x.Manrope.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_3dp"
-            android:ellipsize="end"
+            android:layout_marginTop="4dp"
             android:includeFontPadding="false"
-            android:maxLines="3"
-            android:textColor="@color/d600"
-            tools:text="26" />
-
+            android:textColor="#759D96"
+            android:textSize="11sp"
+            tools:text="02 Sep" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvDay"
-            style="@style/Text.8x.Manrope.SemiBold"
+            style="@style/Text.10x.Manrope.Regular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
+            android:layout_marginTop="2dp"
             android:includeFontPadding="false"
-            android:maxLines="3"
-            android:textColor="@color/d600"
-            tools:text="26" />
+            android:textColor="#5C7C76"
+            android:textSize="10sp"
+            tools:text="Wed" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

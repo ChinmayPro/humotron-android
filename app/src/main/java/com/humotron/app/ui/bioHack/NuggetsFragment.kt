@@ -45,14 +45,17 @@ class NuggetsFragment : BaseFragment(R.layout.fragment_nuggets), CardStackListen
         binding = FragmentNuggetsBinding.bind(view)
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(0, 0, 0, systemBars.bottom + 30)
+            v.setPadding(0, 0, 0, systemBars.bottom)
             insets
         }
 
 
-        binding.header.ivBooks.setImageResource(R.drawable.ic_books_disable)
-        binding.header.ivProgress.setImageResource(R.drawable.ic_biohack_progress_disable)
-        binding.header.ivNuggets.setImageResource(R.drawable.ic_nuggets_checked)
+        binding.header.tvNuggets.setTextColor(androidx.core.content.ContextCompat.getColor(requireContext(), R.color.white))
+        binding.header.indicatorNuggets.visibility = android.view.View.VISIBLE
+        binding.header.tvBooks.setTextColor(android.graphics.Color.parseColor("#94A3B8"))
+        binding.header.indicatorBooks.visibility = android.view.View.INVISIBLE
+        binding.header.tvProgress.setTextColor(android.graphics.Color.parseColor("#94A3B8"))
+        binding.header.indicatorProgress.visibility = android.view.View.INVISIBLE
         initialize()
 
         if (arguments?.getString("is_from") == "setup") {
@@ -87,11 +90,11 @@ class NuggetsFragment : BaseFragment(R.layout.fragment_nuggets), CardStackListen
             findNavController().navigate(R.id.fragmentNuggetDetail, bundle)
         }
 
-        binding.header.ivBooks.setOnClickListener {
+        binding.header.tabBooks.setOnClickListener {
             findNavController().navigate(R.id.fragmentBookDetail)
         }
 
-        binding.header.ivProgress.setOnClickListener {
+        binding.header.tabProgress.setOnClickListener {
             findNavController().navigate(R.id.fragmentProgress)
         }
 
@@ -136,10 +139,10 @@ class NuggetsFragment : BaseFragment(R.layout.fragment_nuggets), CardStackListen
 
     private fun initialize() {
         manager = CardStackLayoutManager(requireContext(), this)
-        manager.setStackFrom(StackFrom.TopAndRight)
-        manager.setVisibleCount(2)
-        manager.setTranslationInterval(8.0f)
-        manager.setScaleInterval(0.95f)
+        manager.setStackFrom(StackFrom.Top)
+        manager.setVisibleCount(3)
+        manager.setTranslationInterval(4.0f)
+        manager.setScaleInterval(0.97f)
         manager.setSwipeThreshold(0.3f)
         manager.setMaxDegree(20.0f)
         manager.setDirections(Direction.FREEDOM)

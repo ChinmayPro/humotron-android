@@ -10,6 +10,7 @@ import com.humotron.app.R
 import com.humotron.app.databinding.ItemBiohackBookBinding
 import com.humotron.app.domain.modal.response.BookLikeResponse
 import com.humotron.app.domain.modal.response.BookRecommendation
+import com.humotron.app.util.loadImage
 
 class ShopBookAdapter(val action: OnBookItemActions) :
     RecyclerView.Adapter<ShopBookAdapter.BookViewHolder>() {
@@ -40,6 +41,7 @@ class ShopBookAdapter(val action: OnBookItemActions) :
         val book = list[position]
         val context = holder.binding.root.context
         holder.binding.apply {
+            ivBookSummary.loadImage(book.coverUrl, R.drawable.ic_book_biohack)
             tvTitle.text = book.bookTitle
             tvAuthor.text = book.author1?.uppercase() ?: ""
 

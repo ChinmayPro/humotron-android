@@ -6,143 +6,133 @@
     android:layout_height="match_parent"
     android:background="?attr/selectableItemBackground"
     android:foreground="?attr/selectableItemBackground"
-    app:cardBackgroundColor="@android:color/black"
-    app:cardCornerRadius="8dp"
+    app:cardBackgroundColor="#080F0E"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="6dp"
     app:cardPreventCornerOverlap="false"
-    app:cardUseCompatPadding="true">
+    app:cardUseCompatPadding="false">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        android:background="#080F0E"
+        android:paddingBottom="12dp">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTitle"
-            style="@style/Text.15x.Manrope.SemiBold"
+            style="@style/Text.14x.Manrope.Medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_30dp"
-            android:layout_marginTop="@dimen/_30dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:ellipsize="end"
+            android:maxLines="2"
             android:text="Cell Functions - The Lifeline of Your Body"
-            android:textColor="@color/textColorPink"
+            android:textColor="#5E6D6B"
+            android:textSize="13sp"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.humotron.app.view.StoryProgressView
             android:id="@+id/storyProgress"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_5dp"
-            android:layout_marginHorizontal="@dimen/_30dp"
-            android:layout_marginTop="@dimen/_20dp"
+            android:layout_height="4dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="14dp"
+            app:progressColor="@color/colorBgBtn"
+            app:segmentColor="#1F2E2C"
+            app:segmentCornerRadius="2dp"
+            app:segmentGap="8dp"
+            app:segmentStrokeWidth="4dp"
             app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
-
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textview1"
+            android:id="@+id/tvAnecdoteCount"
             style="@style/Text.12x.Manrope.Regular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_30dp"
-            android:layout_marginTop="@dimen/_20dp"
-            android:text="@string/did_you_know"
-            android:textColor="@color/_97"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="12dp"
+            android:text="• Tap for next anecdote  •  1 / 5"
+            android:textColor="#788887"
+            android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/storyProgress" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvCategory"
+            style="@style/Text.12x.Manrope.SemiBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_pill_border_amber"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="4dp"
+            android:textColor="#F59E0B"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvAnecdoteCount"
+            tools:text="Myth vs. Science" />
+
+        <TextView
+            android:id="@+id/tvPrimaryTag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvLearning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/textview1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvQuestion"
-            style="@style/Text.26x.Manrope.Medium"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-
-            android:textSize="@dimen/_22dp"
-            android:layout_marginHorizontal="@dimen/_30dp"
-            android:layout_marginTop="@dimen/_10dp"
-            android:text="Did you know that consistent lack of sleep can increase the risk of mental health disorders such as depression and anxiety?"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="12dp"
+            android:fontFamily="@font/manrope_extra_bold"
+            android:lineSpacingMultiplier="1.15"
+            android:text="Did you know that consistent lack of sleep can increase the risk of mental health disorders?"
+            android:textColor="@color/white"
+            android:textSize="26sp"
             app:layout_constraintBottom_toTopOf="@id/tvTags"
-            app:layout_constraintTop_toBottomOf="@id/textview1"
-            tools:ignore="SpUsage" />
-
+            app:layout_constraintTop_toBottomOf="@id/tvCategory" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/tvTags"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_30dp"
-            android:layout_marginBottom="@dimen/_15dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="36dp"
             android:gravity="center_vertical"
-            app:layout_constraintBottom_toTopOf="@id/llTags">
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="@dimen/_17dp"
-                android:layout_height="@dimen/_17dp"
-                android:src="@drawable/ic_tags" />
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_opt_document"
+                app:tint="#5E6D6B" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvSource"
                 style="@style/Text.14x.Manrope.Regular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10dp"
-                android:text="Dopamine Nation - Anna Lembke"
-                android:textColor="@color/d400" />
-
+                android:layout_marginStart="8dp"
+                android:text="Fermented synergy RCT 2026"
+                android:textColor="#5E6D6B"
+                android:textSize="13sp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/llTags"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_40dp"
-            android:paddingHorizontal="@dimen/_30dp"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-            <TextView
-                android:id="@+id/tvCategory"
-                style="@style/Text.12x.Manrope.Regular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_rounded_5"
-                android:paddingHorizontal="@dimen/_8dp"
-                android:textColor="@color/d600"
-                tools:text="TextView 1 sdasd asd" />
-
-            <TextView
-                android:id="@+id/tvPrimaryTag"
-                style="@style/Text.12x.Manrope.Regular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_rounded_5"
-                android:paddingHorizontal="@dimen/_8dp"
-                android:textColor="@color/d600"
-                tools:text="TextView 1 asfds asd asd asd asd" />
-
-            <TextView
-                android:id="@+id/tvLearning"
-                style="@style/Text.12x.Manrope.Regular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_rounded_5"
-                android:paddingHorizontal="@dimen/_8dp"
-                android:textColor="@color/d600"
-                tools:text="TextView 1 adf asa asdfs" />
-
-            <!-- Flow to arrange the TextViews -->
-            <androidx.constraintlayout.helper.widget.Flow
-                android:id="@+id/flow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:constraint_referenced_ids="tvCategory,tvPrimaryTag,tvLearning"
-                app:flow_horizontalAlign="start"
-                app:flow_horizontalGap="6dp"
-                app:flow_verticalGap="6dp"
-                app:flow_wrapMode="aligned"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <androidx.constraintlayout.widget.Guideline

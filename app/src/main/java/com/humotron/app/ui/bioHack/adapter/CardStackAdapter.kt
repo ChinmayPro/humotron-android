@@ -23,7 +23,8 @@ class CardStackAdapter(
         val nugget = nuggets[position]
         Log.e("TAG", "onBindViewHolder: ${nugget.primaryTag}")
         holder.binding.apply {
-            tvCategory.text = nugget.category?.tagName
+            val firstTagName = nugget.anecdotes?.getOrNull(0)?.tagName
+            tvCategory.text = if (!firstTagName.isNullOrEmpty()) firstTagName else nugget.category?.tagName
             tvPrimaryTag.text = nugget.primaryTag?.tagName
             tvLearning.text = nugget.learningLevel
             tvTitle.text = nugget.nuggetTopic
@@ -37,10 +38,17 @@ class CardStackAdapter(
                 storyProgress.setOnProgressChangeListener(object :
                     StoryProgressView.OnProgressChangeListener {
                     override fun onSegmentChanged(segmentIndex: Int) {
-                        tvQuestion.text = nugget.anecdotes?.getOrNull(segmentIndex)?.content ?: ""
-                        tvSource.text = nugget.anecdotes?.getOrNull(segmentIndex)?.source ?: ""
-                        textview1.text = nugget.anecdotes?.getOrNull(segmentIndex)?.tagName ?: ""
-                        onChanged(nugget.id, nugget.anecdotes?.getOrNull(segmentIndex)?.tag)
+                        val currentAnecdote = nugget.anecdotes?.getOrNull(segmentIndex)
+                        tvQuestion.text = currentAnecdote?.content ?: ""
+                        tvSource.text = currentAnecdote?.source ?: ""
+                        if (!currentAnecdote?.tagName.isNullOrEmpty()) {
+                            tvCategory.text = currentAnecdote?.tagName
+                        }
+                        tvAnecdoteCount.text = androidx.core.text.HtmlCompat.fromHtml(
+                            "<font color='#B8FF4F'>•</font> Tap for next anecdote  <font color='#788887'>•</font>  ${segmentIndex + 1} / $anecdoteSize",
+                            androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY
+                        )
+                        onChanged(nugget.id, currentAnecdote?.tag)
                     }
                 })
                 previousStory.setOnClickListener {

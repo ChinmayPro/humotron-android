@@ -31,15 +31,28 @@ class StreakAdapter : RecyclerView.Adapter<StreakAdapter.ViewHolder>() {
 
         val data = list[position]
         holder.binding.apply {
-
-            tvCount.text = "${data.count ?: 0}"
+            val count = data.count ?: 0
+            tvCount.text = "$count"
             tvDate.text = data.formatDate
             tvDay.text = data.day
-            if((data.count?:0)==0){
-                root.alpha = 0.5f
-            }else{
-                root.alpha = 1f
+
+            val dpToPx = holder.itemView.context.resources.displayMetrics.density
+            if (count > 0) {
+                cardRoot.setCardBackgroundColor(android.graphics.Color.parseColor("#143B35"))
+                cardRoot.strokeColor = android.graphics.Color.parseColor("#BEF264")
+                cardRoot.strokeWidth = (1.5f * dpToPx).toInt()
+                tvCount.setTextColor(android.graphics.Color.parseColor("#BEF264"))
+                tvDate.setTextColor(android.graphics.Color.parseColor("#759D96"))
+                tvDay.setTextColor(android.graphics.Color.parseColor("#5C7C76"))
+            } else {
+                cardRoot.setCardBackgroundColor(android.graphics.Color.parseColor("#12332F"))
+                cardRoot.strokeColor = android.graphics.Color.parseColor("#1F4A43")
+                cardRoot.strokeWidth = (1f * dpToPx).toInt()
+                tvCount.setTextColor(android.graphics.Color.parseColor("#5C7C76"))
+                tvDate.setTextColor(android.graphics.Color.parseColor("#5C7C76"))
+                tvDay.setTextColor(android.graphics.Color.parseColor("#4A6761"))
             }
+            root.alpha = 1.0f
         }
 
     }

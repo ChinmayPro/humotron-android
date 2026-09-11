@@ -2,161 +2,132 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="270dp"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="22dp"
+    android:layout_marginTop="12dp"
+    android:layout_marginEnd="14dp"
     android:layout_marginBottom="12dp"
-    app:cardBackgroundColor="#080F10"
-    app:cardCornerRadius="18dp"
+    app:cardBackgroundColor="#080F0E"
+    app:cardCornerRadius="20dp"
     app:cardElevation="0dp"
-    app:strokeColor="#12FFFFFF"
-    app:strokeWidth="1dp">
+    app:strokeWidth="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:padding="20dp">
 
-        <!-- Top Section: Book Icon Box & Book Details -->
-        <LinearLayout
-            android:id="@+id/llTopSection"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
+        <!-- Book Cover Box (Left) -->
+        <FrameLayout
+            android:id="@+id/flBookIconContainer"
+            android:layout_width="100dp"
+            android:layout_height="120dp"
+            android:background="@drawable/bg_rounded_14"
+            android:backgroundTint="#111D1B"
+            android:padding="12dp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <!-- Icon Box Container -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivBookSummary"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_book_biohack" />
+        </FrameLayout>
+
+        <!-- Top Right Action Icons -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- Summary Icon Button -->
             <FrameLayout
-                android:id="@+id/flBookIconContainer"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:background="@drawable/bg_shop_device_icon_box"
-                android:padding="14dp">
+                android:id="@+id/flOpenSummary"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="6dp"
+                android:background="@drawable/bg_circle_icon"
+                android:backgroundTint="#162421">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivBookSummary"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_shop_book_outline"
-                    app:tint="@color/booster_accent_cool" />
+                    android:id="@+id/ivSummaryAction"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_opt_document"
+                    app:tint="#94A3B8" />
             </FrameLayout>
 
-            <!-- Book Info Column -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="14dp"
-                android:orientation="vertical">
+            <!-- Heart / Like Button -->
+            <FrameLayout
+                android:id="@+id/llFav"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_circle_icon"
+                android:backgroundTint="#162421">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvTitle"
-                    style="@style/Text.15_5x.Manrope.ExtraBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="2"
-                    android:textColor="@color/textColorWhite"
-                    tools:text="The Ketogenic Bible" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvAuthor"
-                    style="@style/Text.10_5x.Manrope.Bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
-                    android:textAllCaps="true"
-                    android:letterSpacing="0.04"
-                    android:textColor="#859390"
-                    tools:text="JASON FUNG" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvTags"
-                    style="@style/Text.10_5x.Manrope.Bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/bg_shop_metric_chip"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="4dp"
-                    android:textColor="@color/booster_accent_cool"
-                    tools:text="Fat Adaptation &amp; Ketosis" />
-
-            </LinearLayout>
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivFav"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_onboard_heart"
+                    app:tint="#94A3B8" />
+            </FrameLayout>
         </LinearLayout>
 
-        <!-- Divider Line -->
-        <View
-            android:id="@+id/vDivider"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="14dp"
-            android:background="#12FFFFFF"
-            app:layout_constraintTop_toBottomOf="@id/llTopSection" />
-
-        <!-- Bottom Section: Price & Actions -->
-        <LinearLayout
+        <!-- Book Details below cover -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitle"
+            style="@style/Text.18x.Manrope.Bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/vDivider">
+            android:layout_marginTop="16dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@id/flBookIconContainer"
+            tools:text="Guess What Came to Dinner" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvPrice"
-                style="@style/Text.16x.Manrope.ExtraBold"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@color/textColorWhite"
-                tools:text="£17.99" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvAuthor"
+            style="@style/Text.14x.Manrope.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="#94A3B8"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            tools:text="Ann Louise Gittleman" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTags"
+            style="@style/Text.13x.Manrope.Regular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:lineSpacingExtra="2dp"
+            android:textColor="#5E6D6B"
+            android:textSize="13sp"
+            app:layout_constraintTop_toBottomOf="@id/tvAuthor"
+            tools:text="Gut &amp; Digestive Health, Parasite Cleansing" />
 
-                <!-- Heart Container -->
-                <FrameLayout
-                    android:id="@+id/llFav"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="9dp"
-                    android:background="@drawable/bg_circle_icon"
-                    android:clickable="true"
-                    android:focusable="true">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ivFav"
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_fav"
-                        app:tint="#7E8E8C" />
-                </FrameLayout>
-
-                <!-- Add Button -->
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/btnAddToCart"
-                    style="@style/Text.12_5x.Manrope.ExtraBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="36dp"
-                    android:background="@drawable/bg_shop_add_btn"
-                    android:paddingHorizontal="16dp"
-                    android:gravity="center"
-                    android:text="Add"
-                    android:textColor="#0D1618"
-                    android:drawableStart="@drawable/ic_shopping_cart"
-                    android:drawablePadding="6dp"
-                    android:drawableTint="#0D1618" />
-
-            </LinearLayout>
-
-        </LinearLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btnAddToCart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

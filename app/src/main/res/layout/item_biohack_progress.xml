@@ -2,79 +2,128 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardProgressRoot"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginEnd="@dimen/_10dp"
-    android:layout_marginBottom="@dimen/_20dp"
-    app:cardBackgroundColor="@color/black"
-    app:cardCornerRadius="@dimen/_8dp"
+    android:layout_height="175dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginBottom="12dp"
+    app:cardBackgroundColor="@android:color/transparent"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="0dp"
     app:strokeWidth="0dp">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_130dp"
-        android:orientation="vertical"
-        android:paddingHorizontal="@dimen/_16dp">
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_test_card_gradient">
 
+        <!-- Left Accent Bar -->
+        <View
+            android:id="@+id/vLeftAccent"
+            android:layout_width="4dp"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_accent_bar_left"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20dp"
-            android:orientation="horizontal">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/vLeftAccent"
+            app:layout_constraintTop_toTopOf="parent">
 
+            <!-- Percentage Row -->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llPercent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvLevel"
+                    style="@style/Text.28x.Manrope.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="#BEF264"
+                    android:textSize="26sp"
+                    tools:text="98" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPercent"
+                    style="@style/Text.28x.Manrope.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="%"
+                    android:textColor="#BEF264"
+                    android:textSize="26sp" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!-- Sub-topic Title -->
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvLevel"
-                style="@style/Text.26x.Manrope.SemiBold"
+                android:id="@+id/tvTitle"
+                style="@style/Text.15x.Manrope.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:minLines="2"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/llPercent"
+                tools:text="Blood Sugar &amp; Insulin" />
+
+            <!-- Category Name -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDesc"
+                style="@style/Text.12x.Manrope.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="#749C95"
+                android:textSize="11sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTitle"
+                tools:text="Metabolic Science" />
+
+            <!-- Status Badge (Bottom) -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvStatus"
+                style="@style/Text.12x.Manrope.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:includeFontPadding="false"
-                android:maxLines="3"
-                android:textColor="@color/textColorPink"
-                tools:text="26" />
+                android:drawableStart="@drawable/ic_check_circle_green"
+                android:drawablePadding="6dp"
+                android:gravity="center_vertical"
+                android:text="Cleared"
+                android:textColor="#5FE6A6"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvQuestionNumber"
-                style="@style/Text.16x.Manrope.SemiBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:includeFontPadding="false"
-                android:maxLines="3"
-                android:text="%"
-                android:textColor="@color/textColorPink" />
+            <!-- Divider Line -->
+            <View
+                android:id="@+id/dividerProgress"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="8dp"
+                android:background="#1D4740"
+                app:layout_constraintBottom_toTopOf="@id/tvStatus" />
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvTitle"
-            style="@style/Text.14x.Manrope.SemiBold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_6dp"
-            android:ellipsize="end"
-            android:includeFontPadding="false"
-            android:maxLines="3"
-            android:textColor="@color/textColorWhite"
-            tools:text="Human Body &amp; Biology" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvDesc"
-            style="@style/Text.10x.Manrope.SemiBold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_6dp"
-            android:ellipsize="end"
-            android:includeFontPadding="false"
-            android:maxLines="3"
-            android:textColor="@color/d400"
-            tools:text="Human Body &amp; Biology" />
-
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

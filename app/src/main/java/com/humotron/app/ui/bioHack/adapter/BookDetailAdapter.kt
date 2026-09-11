@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.humotron.app.R
 import com.humotron.app.databinding.ItemBookGistBinding
 import com.humotron.app.databinding.ItemBookHeaderTagBinding
 import com.humotron.app.databinding.ItemBookNuggetBinding
@@ -120,6 +121,16 @@ class BookDetailAdapter(val action: OnBookItemActions) :
                 holder.binding.apply {
                     tvPrimaryTag.text = data.primaryTag?.primaryTag
                     tvCategory.text = data.primaryTag?.category
+                }
+            }
+
+            is NuggetViewHolder -> {
+                holder.binding.tvExploreNuggets.setOnClickListener { view ->
+                    try {
+                        androidx.navigation.Navigation.findNavController(view).navigate(R.id.fragmentNuggets)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
             }
         }

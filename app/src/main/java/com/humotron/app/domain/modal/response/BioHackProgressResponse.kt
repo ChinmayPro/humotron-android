@@ -92,7 +92,11 @@ data class BioHackProgressResponse(
             @SerializedName("testName")
             val testName: String?,
             @SerializedName("totalQuestion")
-            val totalQuestion: String?
+            val totalQuestion: String?,
+            @SerializedName("testStatus")
+            val testStatus: Int? = 0,
+            @SerializedName("percentage")
+            val percentage: String? = null
         ) : Parcelable {
             @Parcelize
             data class PrimaryId(

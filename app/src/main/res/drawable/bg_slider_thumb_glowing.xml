@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Outer Glow Ring -->
+    <item
+        android:width="26dp"
+        android:height="26dp"
+        android:gravity="center">
+        <shape android:shape="oval">
+            <solid android:color="#45BEF264" />
+        </shape>
+    </item>
+    <!-- Inner Solid Circle -->
+    <item
+        android:width="14dp"
+        android:height="14dp"
+        android:gravity="center">
+        <shape android:shape="oval">
+            <solid android:color="#BEF264" />
+        </shape>
+    </item>
+</layer-list>
