@@ -34,6 +34,9 @@ class BillingManager @Inject constructor(
     private var reconnectDelay = 1000L
     private val maxReconnectDelay = 64000L
 
+    private var lastBillingFlowLaunchTime = 0L
+    private val launchDebounceDelay = 1000L
+
     private val _isReady = MutableStateFlow(false)
     val isReady: StateFlow<Boolean> = _isReady.asStateFlow()
 
@@ -202,6 +205,16 @@ class BillingManager @Inject constructor(
         productDetails: ProductDetails,
         offerToken: String? = null
     ): BillingResult {
+        val currentTime = System.currentTimeMillis()
+        if (currentTime - lastBillingFlowLaunchTime < launchDebounceDelay) {
+            Timber.w("Billing flow launch debounced to prevent concurrent requests.")
+            return BillingResult.newBuilder()
+                .setResponseCode(BillingClient.BillingResponseCode.ERROR)
+                .setDebugMessage("Too many requests.")
+                .build()
+        }
+        lastBillingFlowLaunchTime = currentTime
+
         val client = billingClient
         if (client == null || !client.isReady) {
             Timber.w("Billing client is not ready to launch flow.")
