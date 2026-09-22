@@ -22,14 +22,6 @@
           }
         },
         {
-          "client_id": "376945095750-tgq941qf7979ejehrttrt7o1i3q2maqr.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.humotron.app",
-            "certificate_hash": "c4dca070a565284b00a16961856206734f187054"
-          }
-        },
-        {
           "client_id": "376945095750-ftk5mg1dsvid0lb7ehkqh517jgu4ocjp.apps.googleusercontent.com",
           "client_type": 3
         }

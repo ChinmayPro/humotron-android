@@ -9,13 +9,11 @@ import androidx.credentials.CredentialManager
 import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.exceptions.GetCredentialCancellationException
-import androidx.credentials.exceptions.NoCredentialException
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
-import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.humotron.app.R
 import com.humotron.app.core.AppConstant
@@ -74,24 +72,31 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
             try {
                 showProgress()
                 val result = credentialManager.getCredential(requireContext(), request)
-                handleGoogleSignInResult(result.credential)
-            } catch (e: NoCredentialException) {
-                // If no authorized accounts are found, fallback to standard account chooser
-                try {
-                    val signInWithGoogleOption = GetSignInWithGoogleOption.Builder(AppConstant.GOOGLE_WEB_CLIENT_ID)
-                        .build()
-                    val fallbackRequest = GetCredentialRequest.Builder()
-                        .addCredentialOption(signInWithGoogleOption)
-                        .build()
-                    val fallbackResult = credentialManager.getCredential(requireContext(), fallbackRequest)
-                    handleGoogleSignInResult(fallbackResult.credential)
-                } catch (e: GetCredentialCancellationException) {
-                    hideProgress()
-                    Log.d("LoginFragment", "Google Sign-In cancelled by user")
-                } catch (e: Exception) {
-                    hideProgress()
-                    Log.e("LoginFragment", "Google Sign-In fallback error", e)
-                    Toast.makeText(requireContext(), e.localizedMessage ?: "Google Sign-In failed", Toast.LENGTH_SHORT).show()
+                when (val credential = result.credential) {
+                    is CustomCredential -> {
+                        if (credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
+                            val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credential.data)
+                            val idToken = googleIdTokenCredential.idToken
+                            val email = googleIdTokenCredential.id
+
+                            viewModel.loginWithGoogle(
+                                LoginParam(
+                                    email = email,
+                                    googleToken = idToken,
+                                    loginType = "Google",
+                                    userType = "USER",
+                                    mode = "NORMAL"
+                                )
+                            )
+                        } else {
+                            hideProgress()
+                            Toast.makeText(requireContext(), "Unexpected credential type", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    else -> {
+                        hideProgress()
+                        Toast.makeText(requireContext(), "Unrecognized credential", Toast.LENGTH_SHORT).show()
+                    }
                 }
             } catch (e: GetCredentialCancellationException) {
                 hideProgress()
@@ -100,35 +105,6 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
                 hideProgress()
                 Log.e("LoginFragment", "Google Sign-In error", e)
                 Toast.makeText(requireContext(), e.localizedMessage ?: "Google Sign-In failed", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    private fun handleGoogleSignInResult(credential: androidx.credentials.Credential) {
-        when (credential) {
-            is CustomCredential -> {
-                if (credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
-                    val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credential.data)
-                    val idToken = googleIdTokenCredential.idToken
-                    val email = googleIdTokenCredential.id
-
-                    viewModel.loginWithGoogle(
-                        LoginParam(
-                            email = email,
-                            googleToken = idToken,
-                            loginType = "Google",
-                            userType = "USER",
-                            mode = "NORMAL"
-                        )
-                    )
-                } else {
-                    hideProgress()
-                    Toast.makeText(requireContext(), "Unexpected credential type", Toast.LENGTH_SHORT).show()
-                }
-            }
-            else -> {
-                hideProgress()
-                Toast.makeText(requireContext(), "Unrecognized credential", Toast.LENGTH_SHORT).show()
             }
         }
     }
